@@ -1,0 +1,81 @@
+{
+  "title": "Automation Handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slice_id",
+    "status",
+    "summary",
+    "files_touched",
+    "validations_passed",
+    "validations_failed",
+    "risks",
+    "recommended_next_slice",
+    "recommended_next_reason",
+    "dirty_paths_outside_scope",
+    "timestamp"
+  ],
+  "properties": {
+    "slice_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "done",
+        "blocked",
+        "failed"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files_touched": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validations_passed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validations_failed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "recommended_next_slice": {
+      "type": "string"
+    },
+    "recommended_next_reason": {
+      "type": "string"
+    },
+    "dirty_paths_outside_scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

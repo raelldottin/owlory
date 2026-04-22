@@ -1,0 +1,22 @@
+{
+  "slice_id": "today-nonfocus-add-to-focus",
+  "status": "done",
+  "summary": "Added explicit Add to Focus action for Continue rows that do not already derive from Focus Three ownership.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "docs/product/domains/today.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "No manual simulator pass for the new interaction"
+  ],
+  "recommended_next_slice": "today-continue-ui-regression-coverage",
+  "recommended_next_reason": "Adjacent follow-up for the same surface after interaction change.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-21T15:30:00Z"
+}
