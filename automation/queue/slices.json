@@ -36,6 +36,33 @@
       "depends_on": [],
       "max_files_changed": 10,
       "notes": "Generic domain-balance nudges should not imply a required Write note cadence; Write should rely on its capture-pipeline nudge instead."
+    },
+    {
+      "slice_id": "patterns-focus-balance-nudge-copy",
+      "title": "Make domain-balance nudge copy name Focus",
+      "status": "done",
+      "priority": 11,
+      "domain": "patterns",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternTypes.swift",
+        "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+        "SecondBrain/sessions/2026-04-23/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "patterns-suppress-write-domain-balance-nudge"
+      ],
+      "max_files_changed": 8,
+      "notes": "Generic domain-balance copy should say a domain has not shown up in Focus lately, because the backing signal is weekly Today Focus allocation."
     }
   ]
 }

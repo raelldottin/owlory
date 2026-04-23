@@ -1,0 +1,26 @@
+{
+  "slice_id": "patterns-focus-balance-nudge-copy",
+  "status": "done",
+  "summary": "Changed generic domain-balance nudge copy to name Focus explicitly, so the message reflects the actual weekly Today Focus allocation signal instead of implying broad domain inactivity.",
+  "files_touched": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260423T054151Z-patterns-focus-balance-nudge-copy.json",
+    "docs/product/domains/patterns.md",
+    "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+    "SecondBrain/sessions/2026-04-23/014151-focus-balance-nudge-copy.md"
+  ],
+  "validations_passed": [
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Focused XCTest expectations were updated but not package-run in this minimal tracked checkout."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-23T05:41:51Z"
+}

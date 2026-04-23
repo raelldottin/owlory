@@ -36,6 +36,7 @@
 - Missing calendar dates break a stale-item streak, and same-day duplicate entries do not inflate the streak.
 - Keep stale-item alerts and domain-nudge text in `PatternNudgeRules`.
 - Generic domain-balance nudges must not surface Write as "quiet." Domain balance is based on Today Focus allocation, not Write note creation cadence.
+- Generic domain-balance copy must name Focus explicitly, such as "Career hasn't shown up in Focus lately." Do not use broad activity language like "quiet lately" for a Focus-allocation signal.
 - Write-specific nudges should come from `CalibrationRules.writingPipelineNudge`, which is backed by capture pipeline state.
 - Keep readiness-to-outcome policy in `ReadinessOutcomeRules`: readiness is the average of energy, mood, and sleep quality; low days are `<= 2.0`, high days are `>= 4.0`, missing and middle-readiness days do not become outcome samples, and only `.done` focus items count as completed outcomes.
 - Keep the minimum sample gate for surfacing readiness/outcome snapshots in `ReadinessOutcomeRules.minimumSnapshotSampleCount`.

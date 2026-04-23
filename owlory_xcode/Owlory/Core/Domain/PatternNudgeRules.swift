@@ -28,7 +28,16 @@ enum PatternNudgeRules {
         guard let first = balance.neglectedDomains.first(where: { $0 != .writing }) else { return nil }
         return DomainNudge(
             domain: first,
-            message: "\(first.title) has been quiet lately."
+            message: "\(focusBalanceTitle(for: first)) hasn't shown up in Focus lately."
         )
+    }
+
+    private static func focusBalanceTitle(for domain: LifeDomain) -> String {
+        switch domain {
+        case .training: return "Training"
+        case .writing: return "Write"
+        case .career: return "Career"
+        case .home: return "Home"
+        }
     }
 }
