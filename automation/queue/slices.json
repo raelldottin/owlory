@@ -63,6 +63,62 @@
       ],
       "max_files_changed": 8,
       "notes": "Generic domain-balance copy should say a domain has not shown up in Focus lately, because the backing signal is weekly Today Focus allocation."
+    },
+    {
+      "slice_id": "patterns-focus-balance-package-coverage",
+      "title": "Run and align package coverage for Focus balance nudges",
+      "status": "queued",
+      "priority": 20,
+      "domain": "patterns",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "docs/workflows/validation.md",
+        "owlory_xcode/Package.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternTypes.swift",
+        "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+        "SecondBrain/sessions/2026-04-23/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swift test --package-path owlory_xcode --filter PatternNudgeRulesTests",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "patterns-focus-balance-nudge-copy"
+      ],
+      "max_files_changed": 8,
+      "notes": "Follow-up proof slice for the focused PatternNudgeRules XCTest expectations once the package test runner is available in the tracked checkout."
+    },
+    {
+      "slice_id": "today-focus-balance-nudge-presentation-audit",
+      "title": "Audit Today presentation of Focus balance nudges",
+      "status": "queued",
+      "priority": 30,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+        "SecondBrain/sessions/2026-04-23/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "patterns-focus-balance-package-coverage"
+      ],
+      "max_files_changed": 8,
+      "notes": "Adjacent UI-contract slice to ensure Today presentation does not reframe Focus balance nudges as broad domain inactivity."
     }
   ]
 }
