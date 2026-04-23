@@ -1,0 +1,28 @@
+{
+  "slice_id": "patterns-suppress-write-domain-balance-nudge",
+  "status": "done",
+  "summary": "Suppressed generic domain-balance nudges for Write so Today no longer implies a required Write note cadence; Write remains covered by the existing capture-pipeline nudge.",
+  "files_touched": [
+    "AGENTS.md",
+    "docs/product/domains/patterns.md",
+    "docs/product/domains/write.md",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Core/Domain/PatternTypes.swift",
+    "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+    "SecondBrain/sessions/2026-04-23/012834-write-domain-balance-nudge-suppression.md"
+  ],
+  "validations_passed": [
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Focused XCTest coverage was updated but not run as a Swift package test because this clean repository currently tracks only a minimal harness subset, not the full Owlory package tree."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-23T05:28:34Z"
+}

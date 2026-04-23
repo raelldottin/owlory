@@ -9,5 +9,33 @@
       "automation/handoffs/"
     ]
   },
-  "slices": []
+  "slices": [
+    {
+      "slice_id": "patterns-suppress-write-domain-balance-nudge",
+      "title": "Suppress generic domain-balance nudges for Write",
+      "status": "done",
+      "priority": 10,
+      "domain": "patterns",
+      "allowed_paths": [
+        "AGENTS.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "docs/product/domains/write.md",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/PatternTypes.swift",
+        "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift",
+        "SecondBrain/sessions/2026-04-23/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Generic domain-balance nudges should not imply a required Write note cadence; Write should rely on its capture-pipeline nudge instead."
+    }
+  ]
 }
