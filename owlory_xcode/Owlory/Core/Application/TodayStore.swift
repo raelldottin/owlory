@@ -212,16 +212,16 @@ final class TodayStore: OwloryObservableObject {
 
         let hasHomeTasks = !homeTasks.isEmpty
         let allHomeTasksCompleted = hasHomeTasks && homeTasks.allSatisfy { $0.isCompleted && !$0.isSkipped }
+        let hour = calendar.component(.hour, from: now)
+        guard hour >= 18 else {
+            return nil
+        }
+
         if allHomeTasksCompleted {
             return EveningReflectionNudge(
                 title: "Home wrapped",
                 message: "All home tasks are done. Close the day with one quick reflection."
             )
-        }
-
-        let hour = calendar.component(.hour, from: now)
-        guard hour >= 18 else {
-            return nil
         }
 
         return EveningReflectionNudge(
@@ -302,16 +302,17 @@ final class TodayStore: OwloryObservableObject {
         let allHomeTasksCompleted = hasHomeTasks && homeTasks.allSatisfy { $0.isCompleted && !$0.isSkipped }
         let todayStart = calendar.startOfDay(for: now)
         let eveningPrompt = calendar.date(byAdding: .hour, value: 18, to: todayStart) ?? now
+        let isEvening = eveningPrompt <= now
         let deadline: Date
         let kind: PromptNotification.Kind
         let title: String
         let body: String
 
-        if allHomeTasksCompleted {
+        if allHomeTasksCompleted && isEvening {
             deadline = nextPromptSlot(after: now, calendar: calendar)
             kind = .homeWrappedReflection
             title = "Home wrapped"
-            body = "All home work is done. Close the day with one quick reflection."
+            body = "All home tasks are done. Close the day with one quick reflection."
         } else if eveningPrompt > now {
             deadline = eveningPrompt
             kind = .eveningReflection

@@ -200,7 +200,7 @@ final class TodayStoreTests: XCTestCase {
         XCTAssertEqual(nudge?.title, "Evening reflection")
     }
 
-    func testEveningReflectionNudgeAppearsWhenAllHomeTasksCompleted() {
+    func testEveningReflectionNudgeStaysHiddenBeforeEveningWhenAllHomeTasksCompleted() {
         let now = makeDate("2026-04-08T12:00:00Z")
         let entry = DailyEntry(date: now)
 
@@ -214,7 +214,25 @@ final class TodayStoreTests: XCTestCase {
             calendar: makeCalendar()
         )
 
+        XCTAssertNil(nudge)
+    }
+
+    func testEveningReflectionNudgePrioritizesHomeWrappedAfterSixWhenAllHomeTasksCompleted() {
+        let now = makeDate("2026-04-08T18:01:00Z")
+        let entry = DailyEntry(date: now)
+
+        let nudge = TodayStore.eveningReflectionNudge(
+            for: entry,
+            homeTasks: [
+                HomeTask(title: "Clean bathroom", isCompleted: true),
+                HomeTask(title: "Laundry", isCompleted: true)
+            ],
+            now: now,
+            calendar: makeCalendar()
+        )
+
         XCTAssertEqual(nudge?.title, "Home wrapped")
+        XCTAssertEqual(nudge?.message, "All home tasks are done. Close the day with one quick reflection.")
     }
 
     func testEveningReflectionNudgeStaysHiddenWhenReflectionExists() {
@@ -246,7 +264,7 @@ final class TodayStoreTests: XCTestCase {
         XCTAssertEqual(prompts.first?.title, "Check-in")
     }
 
-    func testPromptNotificationsPrioritizeHomeWrappedReflectionWhenHomeWorkIsDone() {
+    func testPromptNotificationsScheduleGenericReflectionBeforeEveningWhenHomeTasksAreDone() {
         let now = makeDate("2026-04-08T12:05:00Z")
         let entry = DailyEntry(date: now)
 
@@ -260,7 +278,27 @@ final class TodayStoreTests: XCTestCase {
             calendar: makeCalendar()
         )
 
-        XCTAssertTrue(prompts.contains(where: { $0.kind == .homeWrappedReflection }))
+        XCTAssertTrue(prompts.contains(where: { $0.kind == .eveningReflection }))
+        XCTAssertFalse(prompts.contains(where: { $0.kind == .homeWrappedReflection }))
+    }
+
+    func testPromptNotificationsPrioritizeHomeWrappedReflectionAfterEveningWhenHomeTasksAreDone() {
+        let now = makeDate("2026-04-08T18:05:00Z")
+        let entry = DailyEntry(date: now)
+
+        let prompts = TodayStore.promptNotifications(
+            for: entry,
+            homeTasks: [
+                HomeTask(title: "Laundry", isCompleted: true),
+                HomeTask(title: "Kitchen", isCompleted: true)
+            ],
+            now: now,
+            calendar: makeCalendar()
+        )
+
+        let homePrompt = prompts.first { $0.kind == .homeWrappedReflection }
+        XCTAssertNotNil(homePrompt)
+        XCTAssertEqual(homePrompt?.body, "All home tasks are done. Close the day with one quick reflection.")
     }
 
     // MARK: - addFocusItem

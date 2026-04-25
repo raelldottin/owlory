@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-04-25
+
+- [today-home-wrapped-evening-gate](sessions/2026-04-25/101939-today-home-wrapped-evening-gate.md)
+
 ## 2026-04-24
 
 - [device-matrix-hig-audit](sessions/2026-04-24/082842-device-matrix-hig-audit.md)
