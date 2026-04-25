@@ -67,7 +67,7 @@
     {
       "slice_id": "patterns-focus-balance-package-coverage",
       "title": "Run and align package coverage for Focus balance nudges",
-      "status": "queued",
+      "status": "done",
       "priority": 20,
       "domain": "patterns",
       "allowed_paths": [
