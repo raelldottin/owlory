@@ -1,0 +1,23 @@
+{
+  "slice_id": "today-focus-balance-nudge-presentation-audit",
+  "status": "done",
+  "summary": "Audited Today's presentation of Pattern-owned domain-balance nudges and documented that Today must preserve the Focus framing instead of relabeling the signal as broad domain inactivity.",
+  "files_touched": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260425T175514Z-today-focus-balance-nudge-presentation-audit.json",
+    "docs/product/domains/today.md"
+  ],
+  "validations_passed": [
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "This slice documented and verified the existing presentation path; it did not add a UI snapshot test for the Today header."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No further pre-classified adjacent slice remains in the supervisor queue.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-25T17:55:14Z"
+}

@@ -71,6 +71,7 @@
 - Today-owned check-in and reflection prompt timing belongs in `TodayStore` static prompt helpers; reminder/runtime code may schedule or mirror those prompts, but it must not redefine when Today should ask for them.
 - Continue runtime diagnostics belong in `ContinuePipelineTrace` and are emitted from `TodayContinuationRules`; keep telemetry out of domain policies.
 - "Close the day" reflection nudges are evening prompts. Home completion may change the prompt title and body after the evening window starts, but it must not ask the user to close the day just because Home tasks finished earlier.
+- Today may present Pattern-owned domain-balance nudges, but it must preserve their Focus framing. Do not relabel them as broad domain inactivity or "quiet lately" messages.
 - Keep `TodayView` focused on presentation and user actions.
 - Today presentation must adapt to Dynamic Type without capping accessibility sizes. When the header or check-in summary no longer fits honestly in its standard one-line layout, prefer shorter date formatting, shorter accessibility-only labels, stacked supporting text, and compact-height summary layouts over compressed or misleading truncation.
 - In compact-height accessibility layouts, do not stack a large Today hero title above the readiness message just because portrait does. Reuse the actual readiness summary as the primary header message when that preserves meaning and keeps the next actionable surface visible.
