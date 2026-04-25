@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -284,11 +285,12 @@ def run_agent(
         context_handle.write("\n")
         context_path = Path(context_handle.name)
 
-    formatted_command = command_template.format(
-        repo_root=str(repo_root),
-        prompt_file=str(prompt_path),
-        context_file=str(context_path),
-        handoff_file=str(handoff_path),
+    formatted_command = format_agent_command(
+        command_template=command_template,
+        repo_root=repo_root,
+        prompt_path=prompt_path,
+        context_path=context_path,
+        handoff_path=handoff_path,
         slice_id=slice_record["slice_id"]
     )
 
@@ -303,6 +305,24 @@ def run_agent(
     finally:
         prompt_path.unlink(missing_ok=True)
         context_path.unlink(missing_ok=True)
+
+
+def format_agent_command(
+    command_template: str,
+    repo_root: Path,
+    prompt_path: Path,
+    context_path: Path,
+    handoff_path: Path,
+    slice_id: str
+) -> str:
+    """Render the shell command with quoted placeholder values."""
+    return command_template.format(
+        repo_root=shlex.quote(str(repo_root)),
+        prompt_file=shlex.quote(str(prompt_path)),
+        context_file=shlex.quote(str(context_path)),
+        handoff_file=shlex.quote(str(handoff_path)),
+        slice_id=shlex.quote(slice_id)
+    )
 
 
 def render_prompt(

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import tempfile
@@ -9,7 +10,11 @@ from pathlib import Path
 
 from automation.context.build_context import build_context_bundle
 from automation.supervisor import policy
-from automation.supervisor.run_next import make_decision_report, render_prompt
+from automation.supervisor.run_next import (
+    format_agent_command,
+    make_decision_report,
+    render_prompt
+)
 
 
 class AutomationHarnessTests(unittest.TestCase):
@@ -32,6 +37,42 @@ class AutomationHarnessTests(unittest.TestCase):
         handoff_schema = policy.load_schema(self.handoff_schema_path)
         validation = policy.validate_document(handoff, handoff_schema)
         self.assertTrue(validation.is_valid, validation.errors)
+
+    def test_live_queue_configures_repo_owned_agent_command(self) -> None:
+        queue_data = policy.load_queue(
+            self.repo_root / "automation/queue/slices.json",
+            self.queue_schema_path
+        )
+        command_template = queue_data["policy"]["agent_command_template"]
+
+        self.assertIn("automation/supervisor/run_agent.sh", command_template)
+        self.assertIn("{repo_root}", command_template)
+        self.assertIn("{prompt_file}", command_template)
+        self.assertIn("{context_file}", command_template)
+        self.assertIn("{handoff_file}", command_template)
+        self.assertIn("{slice_id}", command_template)
+        script_path = self.repo_root / "automation/supervisor/run_agent.sh"
+        self.assertTrue(script_path.exists())
+        self.assertTrue(os.access(script_path, os.X_OK))
+
+    def test_format_agent_command_shell_quotes_placeholder_values(self) -> None:
+        formatted = format_agent_command(
+            command_template=(
+                "runner --repo {repo_root} --prompt {prompt_file} "
+                "--context {context_file} --handoff {handoff_file} --slice {slice_id}"
+            ),
+            repo_root=Path("/tmp/Owlory With Space"),
+            prompt_path=Path("/tmp/prompt file.md"),
+            context_path=Path("/tmp/context file.json"),
+            handoff_path=Path("/tmp/handoff file.json"),
+            slice_id="today slice"
+        )
+
+        self.assertIn("--repo '/tmp/Owlory With Space'", formatted)
+        self.assertIn("--prompt '/tmp/prompt file.md'", formatted)
+        self.assertIn("--context '/tmp/context file.json'", formatted)
+        self.assertIn("--handoff '/tmp/handoff file.json'", formatted)
+        self.assertIn("--slice 'today slice'", formatted)
 
     def test_replay_validation_commands_replays_only_exact_allowlist(self) -> None:
         calls: list[list[str]] = []

@@ -3,7 +3,7 @@
   "policy": {
     "consecutive_autonomous_limit": 2,
     "handoff_timeout_seconds": 1800,
-    "agent_command_template": "your-agent-runner --cwd {repo_root} --prompt-file {prompt_file}",
+    "agent_command_template": "automation/supervisor/run_agent.sh --repo-root {repo_root} --prompt-file {prompt_file} --context-file {context_file} --handoff-file {handoff_file} --slice-id {slice_id}",
     "supervisor_owned_paths": [
       "automation/queue/slices.json",
       "automation/handoffs/"

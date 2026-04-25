@@ -259,7 +259,15 @@ python3 automation/supervisor/run_next.py --dry-run
 
 Run that from a clean worktree or a worktree whose dirt already fits the candidate slice's `allowed_paths`. The dry run uses the same scope gate as a real run.
 
-Run the supervisor with an explicit agent command template:
+Run the supervisor with the repo-owned default agent command:
+
+```bash
+python3 automation/supervisor/run_next.py
+```
+
+The live queue points `policy.agent_command_template` at `automation/supervisor/run_agent.sh`. That wrapper launches a fresh non-interactive Codex process with the rendered prompt on stdin, `workspace-write` sandboxing, and no approval prompts. The prompt still requires the run to write the JSON handoff at the supervisor-provided handoff path.
+
+Run the supervisor with an explicit override only when testing another compatible agent runner:
 
 ```bash
 python3 automation/supervisor/run_next.py \
@@ -274,7 +282,9 @@ Supported command-template placeholders:
 - `{handoff_file}`
 - `{slice_id}`
 
-If the live queue file does not define `policy.agent_command_template`, pass `--agent-cmd`.
+Placeholder values are shell-quoted by the supervisor before execution. Do not add extra quotes around placeholders in the template unless you have tested the rendered command.
+
+If the live queue file does not define `policy.agent_command_template`, pass `--agent-cmd`. The default wrapper can also use `OWLORY_CODEX_BIN` when the Codex binary is not named `codex`.
 
 Smallest end-to-end manual proof with the example artifacts:
 
