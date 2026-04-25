@@ -76,6 +76,44 @@ Validation ownership tiers in the harness are:
 
 Use those tiers to make slice expectations legible. A domain test like `make test-domain DOMAIN=today` is currently `run_report_only`; manual or UI-launch steps should stay outside supervisor ownership.
 
+## Simulator Status Bar For UI Review
+
+Use this when screenshots or manual UI review need a clean, presentation-safe iPhone simulator status bar.
+
+Target review state:
+
+- time: `9:41`
+- cellular: enabled with `4` bars
+- Wi-Fi: enabled with `3` bars
+- battery: `100%`
+
+Checklist:
+
+1. Open or boot the target iPhone simulator profile.
+2. Apply the simulator status-bar override.
+3. Launch the app and confirm the status bar is visible and unobstructed.
+4. Verify there is no app-level status-bar suppression before treating the issue as a product bug.
+
+Standard command:
+
+```bash
+xcrun simctl status_bar booted override \
+  --time "9:41" \
+  --dataNetwork wifi \
+  --wifiMode active \
+  --wifiBars 3 \
+  --cellularMode active \
+  --cellularBars 4 \
+  --batteryState charged \
+  --batteryLevel 100
+```
+
+Notes:
+
+- This is simulator-device state, not app state.
+- The override may need to be repeated for other simulator devices or runtimes.
+- Do not file an Owlory UI bug unless the issue reproduces after simulator status-bar state is correctly configured.
+
 ## Direct Scripts
 
 - `./Tools/architecture-lint.sh`

@@ -1,0 +1,19 @@
+# System metadata noise
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python cache noise
+__pycache__/
+*.pyc
+
+# Xcode local user state
+xcuserdata/
+*.xcuserstate
+
+# Local SwiftPM build output
+.build/

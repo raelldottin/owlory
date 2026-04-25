@@ -3,37 +3,347 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA0000000000000000000020 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000010 /* DomainModels.swift */; };
-		AA0000000000000000000021 /* PatternTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000011 /* PatternTypes.swift */; };
-		AA0000000000000000000022 /* PatternNudgeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000012 /* PatternNudgeRules.swift */; };
-		AA0000000000000000000023 /* PatternNudgeRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000013 /* PatternNudgeRulesTests.swift */; };
+		A001 /* OwloryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101 /* OwloryApp.swift */; };
+		A002 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A102 /* RootTabView.swift */; };
+		A003 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
+		A004 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104 /* Clock.swift */; };
+		A005 /* TodayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A105 /* TodayStore.swift */; };
+		A006 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106 /* TodayView.swift */; };
+		A007 /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107 /* TrainView.swift */; };
+		A008 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108 /* WriteView.swift */; };
+		A009 /* CareerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A109 /* CareerView.swift */; };
+		A010 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A110 /* HomeView.swift */; };
+		A011 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A111 /* AppTheme.swift */; };
+		A012 /* CarryForwardRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112 /* CarryForwardRules.swift */; };
+		A013 /* TodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A113 /* TodayEntryRepository.swift */; };
+		A014 /* FileTodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114 /* FileTodayEntryRepository.swift */; };
+		A015 /* InMemoryTodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A115 /* InMemoryTodayEntryRepository.swift */; };
+		A016 /* WritingStageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116 /* WritingStageRules.swift */; };
+		A017 /* ItemListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A117 /* ItemListRepository.swift */; };
+		A018 /* WriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118 /* WriteStore.swift */; };
+		A019 /* TrainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119 /* TrainStore.swift */; };
+		A020 /* CareerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120 /* CareerStore.swift */; };
+		A021 /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A121 /* HomeStore.swift */; };
+		A022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A122 /* Assets.xcassets */; };
+		A023 /* ReadinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123 /* ReadinessRules.swift */; };
+		A024 /* AudioCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A124 /* AudioCaptureService.swift */; };
+		A025 /* VoiceCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125 /* VoiceCaptureButton.swift */; };
+		A026 /* AudioPlaybackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A126 /* AudioPlaybackButton.swift */; };
+		A027 /* TodayEntryRangeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127 /* TodayEntryRangeRepository.swift */; };
+		A028 /* PatternTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128 /* PatternTypes.swift */; };
+		A029 /* PatternEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129 /* PatternEngine.swift */; };
+		A030 /* CalibrationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130 /* CalibrationRules.swift */; };
+		A031 /* PatternSnapshotRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131 /* PatternSnapshotRepository.swift */; };
+		A032 /* PatternStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A132 /* PatternStore.swift */; };
+		A033 /* WeeklyDigest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A133 /* WeeklyDigest.swift */; };
+		A034 /* WeeklyDigestRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A134 /* WeeklyDigestRules.swift */; };
+		A035 /* DigestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135 /* DigestListView.swift */; };
+		A036 /* DigestDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A136 /* DigestDetailView.swift */; };
+		A037 /* MLSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137 /* MLSuggestion.swift */; };
+		A038 /* StructuredDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A138 /* StructuredDraft.swift */; };
+		A039 /* ModelAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139 /* ModelAvailability.swift */; };
+		A040 /* FoundationModelPromptBudgeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140 /* FoundationModelPromptBudgeting.swift */; };
+		A041 /* MLDraftingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141 /* MLDraftingService.swift */; };
+		A042 /* StructuredCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A142 /* StructuredCaptureService.swift */; };
+		A043 /* ModelAvailabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A143 /* ModelAvailabilityService.swift */; };
+		A044 /* AudioFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A144 /* AudioFileStore.swift */; };
+		A045 /* DigestInsightStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A145 /* DigestInsightStore.swift */; };
+		A046 /* TodayContinuationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A146 /* TodayContinuationRules.swift */; };
+		A047 /* SpeechTranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147 /* SpeechTranscriptionService.swift */; };
+		A048 /* VoiceCaptureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148 /* VoiceCaptureResult.swift */; };
+		A049 /* PerformanceTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149 /* PerformanceTelemetry.swift */; };
+		A050 /* MetricKitTelemetrySubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150 /* MetricKitTelemetrySubscriber.swift */; };
+		A051 /* FoundationModelServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151 /* FoundationModelServices.swift */; };
+		A052 /* BuildInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A152 /* BuildInfo.swift */; };
+		A053 /* BuildInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A153 /* BuildInfoView.swift */; };
+		A054 /* CompletionTimePredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A154 /* CompletionTimePredictor.swift */; };
+		A055 /* CompletionHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A155 /* CompletionHistoryStore.swift */; };
+		A056 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156 /* ReminderScheduler.swift */; };
+		A059 /* RecurrenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158 /* RecurrenceRules.swift */; };
+		A060 /* ContinueRankingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159 /* ContinueRankingRules.swift */; };
+		A061 /* ContinueCandidateRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A160 /* ContinueCandidateRules.swift */; };
+		A062 /* TodayContinueSourceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161 /* TodayContinueSourceComposer.swift */; };
+		A063 /* TodayContinueItemAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162 /* TodayContinueItemAssembler.swift */; };
+		A064 /* ContinuePipelineTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163 /* ContinuePipelineTrace.swift */; };
+		A065 /* RecurringRolloverPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164 /* RecurringRolloverPlanner.swift */; };
+		A066 /* ReminderSchedulingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A165 /* ReminderSchedulingRules.swift */; };
+		A067 /* ReminderScheduleTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A166 /* ReminderScheduleTrace.swift */; };
+		A068 /* WeeklyDigestCadenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167 /* WeeklyDigestCadenceRules.swift */; };
+		A069 /* PatternNudgeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A168 /* PatternNudgeRules.swift */; };
+		A070 /* ReadinessOutcomeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169 /* ReadinessOutcomeRules.swift */; };
+		A071 /* ProtocolLifecycleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A170 /* ProtocolLifecycleRules.swift */; };
+		A072 /* DailyPlanningRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171 /* DailyPlanningRules.swift */; };
+		A073 /* FocusSuggestionRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172 /* FocusSuggestionRules.swift */; };
+		A074 /* VoiceTranscriptionRoutingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A173 /* VoiceTranscriptionRoutingRules.swift */; };
+		A075 /* OwloryDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A174 /* OwloryDeepLink.swift */; };
+		A076 /* OwloryDeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175 /* OwloryDeepLinkRouter.swift */; };
+		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
+		B002 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104 /* Clock.swift */; };
+		B003 /* TodayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A105 /* TodayStore.swift */; };
+		B004 /* CarryForwardRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A112 /* CarryForwardRules.swift */; };
+		B005 /* TodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A113 /* TodayEntryRepository.swift */; };
+		B006 /* InMemoryTodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A115 /* InMemoryTodayEntryRepository.swift */; };
+		B007 /* WritingStageRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116 /* WritingStageRules.swift */; };
+		B008 /* CarryForwardRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101 /* CarryForwardRulesTests.swift */; };
+		B009 /* TodayStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B102 /* TodayStoreTests.swift */; };
+		B010 /* WritingStageRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B103 /* WritingStageRulesTests.swift */; };
+		B011 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B104 /* XCTest.framework */; };
+		B012 /* ItemListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A117 /* ItemListRepository.swift */; };
+		B013 /* WriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118 /* WriteStore.swift */; };
+		B014 /* TrainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119 /* TrainStore.swift */; };
+		B015 /* CareerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A120 /* CareerStore.swift */; };
+		B016 /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A121 /* HomeStore.swift */; };
+		B017 /* WriteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B105 /* WriteStoreTests.swift */; };
+		B018 /* TrainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B106 /* TrainStoreTests.swift */; };
+		B019 /* CareerStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B107 /* CareerStoreTests.swift */; };
+		B020 /* HomeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108 /* HomeStoreTests.swift */; };
+		B021 /* ReadinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123 /* ReadinessRules.swift */; };
+		B022 /* ReadinessRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B109 /* ReadinessRulesTests.swift */; };
+		B023 /* PatternTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128 /* PatternTypes.swift */; };
+		B024 /* PatternEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129 /* PatternEngine.swift */; };
+		B025 /* CalibrationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130 /* CalibrationRules.swift */; };
+		B026 /* PatternSnapshotRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A131 /* PatternSnapshotRepository.swift */; };
+		B027 /* PatternStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A132 /* PatternStore.swift */; };
+		B028 /* TodayEntryRangeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127 /* TodayEntryRangeRepository.swift */; };
+		B029 /* PatternEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110 /* PatternEngineTests.swift */; };
+		B030 /* CalibrationRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111 /* CalibrationRulesTests.swift */; };
+		B031 /* FileTodayEntryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A114 /* FileTodayEntryRepository.swift */; };
+		B032 /* WeeklyDigest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A133 /* WeeklyDigest.swift */; };
+		B033 /* WeeklyDigestRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A134 /* WeeklyDigestRules.swift */; };
+		B034 /* WeeklyDigestRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B112 /* WeeklyDigestRulesTests.swift */; };
+		B035 /* WritingVelocityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B113 /* WritingVelocityTests.swift */; };
+		B036 /* TrainingConsistencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114 /* TrainingConsistencyTests.swift */; };
+		B037 /* MLSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A137 /* MLSuggestion.swift */; };
+		B038 /* StructuredDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A138 /* StructuredDraft.swift */; };
+		B039 /* ModelAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A139 /* ModelAvailability.swift */; };
+		B040 /* FoundationModelPromptBudgeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140 /* FoundationModelPromptBudgeting.swift */; };
+		B041 /* MLDraftingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A141 /* MLDraftingService.swift */; };
+		B042 /* StructuredCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A142 /* StructuredCaptureService.swift */; };
+		B043 /* ModelAvailabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A143 /* ModelAvailabilityService.swift */; };
+		B044 /* MLSuggestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115 /* MLSuggestionTests.swift */; };
+		B045 /* MLServiceContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B116 /* MLServiceContractTests.swift */; };
+		B046 /* DigestInsightStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A145 /* DigestInsightStore.swift */; };
+		B047 /* DigestInsightStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B117 /* DigestInsightStoreTests.swift */; };
+		B048 /* CareerAssistantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B118 /* CareerAssistantTests.swift */; };
+		B049 /* TodayContinuationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A146 /* TodayContinuationRules.swift */; };
+		B050 /* TodayContinuationRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119 /* TodayContinuationRulesTests.swift */; };
+		B051 /* PerformanceTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149 /* PerformanceTelemetry.swift */; };
+		B052 /* PerformanceTelemetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B120 /* PerformanceTelemetryTests.swift */; };
+		B053 /* BuildInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A152 /* BuildInfo.swift */; };
+		B054 /* BuildInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121 /* BuildInfoTests.swift */; };
+		B055 /* CompletionTimePredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A154 /* CompletionTimePredictor.swift */; };
+		B056 /* CompletionHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A155 /* CompletionHistoryStore.swift */; };
+		B057 /* CompletionTimePredictorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122 /* CompletionTimePredictorTests.swift */; };
+		B058 /* RecurrenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158 /* RecurrenceRules.swift */; };
+		B059 /* RecurrenceRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B123 /* RecurrenceRulesTests.swift */; };
+		B060 /* ContinueRankingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159 /* ContinueRankingRules.swift */; };
+		B061 /* ContinueRankingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B124 /* ContinueRankingRulesTests.swift */; };
+		B062 /* ContinueCandidateRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A160 /* ContinueCandidateRules.swift */; };
+		B063 /* ContinueCandidateRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B125 /* ContinueCandidateRulesTests.swift */; };
+		B064 /* TodayContinueSourceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A161 /* TodayContinueSourceComposer.swift */; };
+		B065 /* TodayContinueSourceComposerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126 /* TodayContinueSourceComposerTests.swift */; };
+		B066 /* TodayContinueItemAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A162 /* TodayContinueItemAssembler.swift */; };
+		B067 /* TodayContinueItemAssemblerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127 /* TodayContinueItemAssemblerTests.swift */; };
+		B068 /* ContinuePipelineTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163 /* ContinuePipelineTrace.swift */; };
+		B069 /* ContinuePipelineTraceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B128 /* ContinuePipelineTraceTests.swift */; };
+		B070 /* RecurringRolloverPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164 /* RecurringRolloverPlanner.swift */; };
+		B071 /* RecurringRolloverPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129 /* RecurringRolloverPlannerTests.swift */; };
+		B072 /* ReminderSchedulingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A165 /* ReminderSchedulingRules.swift */; };
+		B073 /* ReminderScheduleTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A166 /* ReminderScheduleTrace.swift */; };
+		B074 /* ReminderSchedulingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130 /* ReminderSchedulingRulesTests.swift */; };
+		B075 /* WeeklyDigestCadenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167 /* WeeklyDigestCadenceRules.swift */; };
+		B076 /* WeeklyDigestCadenceRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B131 /* WeeklyDigestCadenceRulesTests.swift */; };
+		B077 /* PatternNudgeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A168 /* PatternNudgeRules.swift */; };
+		B078 /* PatternNudgeRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B132 /* PatternNudgeRulesTests.swift */; };
+		B079 /* ReadinessOutcomeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A169 /* ReadinessOutcomeRules.swift */; };
+		B080 /* ReadinessOutcomeRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B133 /* ReadinessOutcomeRulesTests.swift */; };
+		B081 /* ProtocolLifecycleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A170 /* ProtocolLifecycleRules.swift */; };
+		B082 /* ProtocolLifecycleRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134 /* ProtocolLifecycleRulesTests.swift */; };
+		B083 /* DailyPlanningRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171 /* DailyPlanningRules.swift */; };
+		B084 /* DailyPlanningRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B135 /* DailyPlanningRulesTests.swift */; };
+		B085 /* FocusSuggestionRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172 /* FocusSuggestionRules.swift */; };
+		B086 /* FocusSuggestionRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B136 /* FocusSuggestionRulesTests.swift */; };
+		B087 /* VoiceTranscriptionRoutingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A173 /* VoiceTranscriptionRoutingRules.swift */; };
+		B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137 /* VoiceTranscriptionRoutingRulesTests.swift */; };
+		B089 /* OwloryDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A174 /* OwloryDeepLink.swift */; };
+		B090 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156 /* ReminderScheduler.swift */; };
+		W002 /* OwloryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = W102 /* OwloryWidgetBundle.swift */; };
+		W004 /* OwloryWidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = W100 /* OwloryWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		W005 /* OwloryTodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W105 /* OwloryTodayWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA0000000000000000000050 /* PBXContainerItemProxy */ = {
+		B500 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AA0000000000000000000090 /* Project object */;
+			containerPortal = A401 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AA0000000000000000000030;
-			remoteInfo = OwloryCore;
+			remoteGlobalIDString = A400;
+			remoteInfo = Owlory;
+		};
+		W500 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A401 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = W400;
+			remoteInfo = OwloryWidgetsExtension;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A203 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				W004 /* OwloryWidgetsExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		AA0000000000000000000010 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
-		AA0000000000000000000011 /* PatternTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternTypes.swift; sourceTree = "<group>"; };
-		AA0000000000000000000012 /* PatternNudgeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternNudgeRules.swift; sourceTree = "<group>"; };
-		AA0000000000000000000013 /* PatternNudgeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternNudgeRulesTests.swift; sourceTree = "<group>"; };
-		AA0000000000000000000014 /* OwloryCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OwloryCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA0000000000000000000015 /* OwloryCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OwloryCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A100 /* Owlory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Owlory.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A101 /* OwloryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryApp.swift; sourceTree = "<group>"; };
+		A102 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		A103 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
+		A104 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		A105 /* TodayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStore.swift; sourceTree = "<group>"; };
+		A106 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		A107 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
+		A108 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		A109 /* CareerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerView.swift; sourceTree = "<group>"; };
+		A110 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A111 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		A112 /* CarryForwardRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarryForwardRules.swift; sourceTree = "<group>"; };
+		A113 /* TodayEntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEntryRepository.swift; sourceTree = "<group>"; };
+		A114 /* FileTodayEntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTodayEntryRepository.swift; sourceTree = "<group>"; };
+		A115 /* InMemoryTodayEntryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryTodayEntryRepository.swift; sourceTree = "<group>"; };
+		A116 /* WritingStageRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingStageRules.swift; sourceTree = "<group>"; };
+		A117 /* ItemListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListRepository.swift; sourceTree = "<group>"; };
+		A118 /* WriteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStore.swift; sourceTree = "<group>"; };
+		A119 /* TrainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainStore.swift; sourceTree = "<group>"; };
+		A120 /* CareerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerStore.swift; sourceTree = "<group>"; };
+		A121 /* HomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStore.swift; sourceTree = "<group>"; };
+		A122 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A123 /* ReadinessRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessRules.swift; sourceTree = "<group>"; };
+		A124 /* AudioCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCaptureService.swift; sourceTree = "<group>"; };
+		A125 /* VoiceCaptureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCaptureButton.swift; sourceTree = "<group>"; };
+		A126 /* AudioPlaybackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackButton.swift; sourceTree = "<group>"; };
+		A127 /* TodayEntryRangeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEntryRangeRepository.swift; sourceTree = "<group>"; };
+		A128 /* PatternTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternTypes.swift; sourceTree = "<group>"; };
+		A129 /* PatternEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternEngine.swift; sourceTree = "<group>"; };
+		A130 /* CalibrationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationRules.swift; sourceTree = "<group>"; };
+		A131 /* PatternSnapshotRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternSnapshotRepository.swift; sourceTree = "<group>"; };
+		A132 /* PatternStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternStore.swift; sourceTree = "<group>"; };
+		A133 /* WeeklyDigest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigest.swift; sourceTree = "<group>"; };
+		A134 /* WeeklyDigestRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestRules.swift; sourceTree = "<group>"; };
+		A135 /* DigestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigestListView.swift; sourceTree = "<group>"; };
+		A136 /* DigestDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigestDetailView.swift; sourceTree = "<group>"; };
+		A137 /* MLSuggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLSuggestion.swift; sourceTree = "<group>"; };
+		A138 /* StructuredDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredDraft.swift; sourceTree = "<group>"; };
+		A139 /* ModelAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAvailability.swift; sourceTree = "<group>"; };
+		A140 /* FoundationModelPromptBudgeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationModelPromptBudgeting.swift; sourceTree = "<group>"; };
+		A141 /* MLDraftingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDraftingService.swift; sourceTree = "<group>"; };
+		A142 /* StructuredCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredCaptureService.swift; sourceTree = "<group>"; };
+		A143 /* ModelAvailabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAvailabilityService.swift; sourceTree = "<group>"; };
+		A144 /* AudioFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileStore.swift; sourceTree = "<group>"; };
+		A145 /* DigestInsightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigestInsightStore.swift; sourceTree = "<group>"; };
+		A146 /* TodayContinuationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinuationRules.swift; sourceTree = "<group>"; };
+		A147 /* SpeechTranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriptionService.swift; sourceTree = "<group>"; };
+		A148 /* VoiceCaptureResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCaptureResult.swift; sourceTree = "<group>"; };
+		A149 /* PerformanceTelemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTelemetry.swift; sourceTree = "<group>"; };
+		A150 /* MetricKitTelemetrySubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitTelemetrySubscriber.swift; sourceTree = "<group>"; };
+		A151 /* FoundationModelServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationModelServices.swift; sourceTree = "<group>"; };
+		A152 /* BuildInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfo.swift; sourceTree = "<group>"; };
+		A153 /* BuildInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoView.swift; sourceTree = "<group>"; };
+		A154 /* CompletionTimePredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionTimePredictor.swift; sourceTree = "<group>"; };
+		A155 /* CompletionHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionHistoryStore.swift; sourceTree = "<group>"; };
+		A156 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
+		A158 /* RecurrenceRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceRules.swift; sourceTree = "<group>"; };
+		A159 /* ContinueRankingRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueRankingRules.swift; sourceTree = "<group>"; };
+		A160 /* ContinueCandidateRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueCandidateRules.swift; sourceTree = "<group>"; };
+		A161 /* TodayContinueSourceComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinueSourceComposer.swift; sourceTree = "<group>"; };
+		A162 /* TodayContinueItemAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinueItemAssembler.swift; sourceTree = "<group>"; };
+		A163 /* ContinuePipelineTrace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuePipelineTrace.swift; sourceTree = "<group>"; };
+		A164 /* RecurringRolloverPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringRolloverPlanner.swift; sourceTree = "<group>"; };
+		A165 /* ReminderSchedulingRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulingRules.swift; sourceTree = "<group>"; };
+		A166 /* ReminderScheduleTrace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduleTrace.swift; sourceTree = "<group>"; };
+		A167 /* WeeklyDigestCadenceRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestCadenceRules.swift; sourceTree = "<group>"; };
+		A168 /* PatternNudgeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternNudgeRules.swift; sourceTree = "<group>"; };
+		A169 /* ReadinessOutcomeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessOutcomeRules.swift; sourceTree = "<group>"; };
+		A170 /* ProtocolLifecycleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolLifecycleRules.swift; sourceTree = "<group>"; };
+		A171 /* DailyPlanningRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPlanningRules.swift; sourceTree = "<group>"; };
+		A172 /* FocusSuggestionRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSuggestionRules.swift; sourceTree = "<group>"; };
+		A173 /* VoiceTranscriptionRoutingRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceTranscriptionRoutingRules.swift; sourceTree = "<group>"; };
+		A174 /* OwloryDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryDeepLink.swift; sourceTree = "<group>"; };
+		A175 /* OwloryDeepLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryDeepLinkRouter.swift; sourceTree = "<group>"; };
+		B100 /* OwloryCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OwloryCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B101 /* CarryForwardRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarryForwardRulesTests.swift; sourceTree = "<group>"; };
+		B102 /* TodayStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStoreTests.swift; sourceTree = "<group>"; };
+		B103 /* WritingStageRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingStageRulesTests.swift; sourceTree = "<group>"; };
+		B104 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
+		B105 /* WriteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStoreTests.swift; sourceTree = "<group>"; };
+		B106 /* TrainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainStoreTests.swift; sourceTree = "<group>"; };
+		B107 /* CareerStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerStoreTests.swift; sourceTree = "<group>"; };
+		B108 /* HomeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreTests.swift; sourceTree = "<group>"; };
+		B109 /* ReadinessRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessRulesTests.swift; sourceTree = "<group>"; };
+		B110 /* PatternEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternEngineTests.swift; sourceTree = "<group>"; };
+		B111 /* CalibrationRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationRulesTests.swift; sourceTree = "<group>"; };
+		B112 /* WeeklyDigestRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestRulesTests.swift; sourceTree = "<group>"; };
+		B113 /* WritingVelocityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingVelocityTests.swift; sourceTree = "<group>"; };
+		B114 /* TrainingConsistencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingConsistencyTests.swift; sourceTree = "<group>"; };
+		B115 /* MLSuggestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLSuggestionTests.swift; sourceTree = "<group>"; };
+		B116 /* MLServiceContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLServiceContractTests.swift; sourceTree = "<group>"; };
+		B117 /* DigestInsightStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigestInsightStoreTests.swift; sourceTree = "<group>"; };
+		B118 /* CareerAssistantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerAssistantTests.swift; sourceTree = "<group>"; };
+		B119 /* TodayContinuationRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinuationRulesTests.swift; sourceTree = "<group>"; };
+		B120 /* PerformanceTelemetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTelemetryTests.swift; sourceTree = "<group>"; };
+		B121 /* BuildInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoTests.swift; sourceTree = "<group>"; };
+		B122 /* CompletionTimePredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionTimePredictorTests.swift; sourceTree = "<group>"; };
+		B123 /* RecurrenceRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceRulesTests.swift; sourceTree = "<group>"; };
+		B124 /* ContinueRankingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueRankingRulesTests.swift; sourceTree = "<group>"; };
+		B125 /* ContinueCandidateRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueCandidateRulesTests.swift; sourceTree = "<group>"; };
+		B126 /* TodayContinueSourceComposerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinueSourceComposerTests.swift; sourceTree = "<group>"; };
+		B127 /* TodayContinueItemAssemblerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinueItemAssemblerTests.swift; sourceTree = "<group>"; };
+		B128 /* ContinuePipelineTraceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuePipelineTraceTests.swift; sourceTree = "<group>"; };
+		B129 /* RecurringRolloverPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringRolloverPlannerTests.swift; sourceTree = "<group>"; };
+		B130 /* ReminderSchedulingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulingRulesTests.swift; sourceTree = "<group>"; };
+		B131 /* WeeklyDigestCadenceRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestCadenceRulesTests.swift; sourceTree = "<group>"; };
+		B132 /* PatternNudgeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternNudgeRulesTests.swift; sourceTree = "<group>"; };
+		B133 /* ReadinessOutcomeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessOutcomeRulesTests.swift; sourceTree = "<group>"; };
+		B134 /* ProtocolLifecycleRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolLifecycleRulesTests.swift; sourceTree = "<group>"; };
+		B135 /* DailyPlanningRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPlanningRulesTests.swift; sourceTree = "<group>"; };
+		B136 /* FocusSuggestionRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSuggestionRulesTests.swift; sourceTree = "<group>"; };
+		B137 /* VoiceTranscriptionRoutingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceTranscriptionRoutingRulesTests.swift; sourceTree = "<group>"; };
+		W100 /* OwloryWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OwloryWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		W102 /* OwloryWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryWidgetBundle.swift; sourceTree = "<group>"; };
+		W104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		W105 /* OwloryTodayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryTodayWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AA0000000000000000000041 /* Frameworks */ = {
+		A200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B011 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W200 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,297 +353,880 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA0000000000000000000001 = {
+		0FE8E5E82F86770D00B05EDC /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000002 /* Owlory */,
-				AA0000000000000000000005 /* OwloryCoreTests */,
-				AA0000000000000000000006 /* Products */,
+				B104 /* XCTest.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A300 = {
+			isa = PBXGroup;
+			children = (
+				A301 /* Owlory */,
+				B300 /* OwloryCoreTests */,
+				W300 /* OwloryWidgets */,
+				A302 /* Products */,
+				0FE8E5E82F86770D00B05EDC /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
-		AA0000000000000000000002 /* Owlory */ = {
+		A301 /* Owlory */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000003 /* Core */,
+				A101 /* OwloryApp.swift */,
+				A102 /* RootTabView.swift */,
+				A310 /* Core */,
+				A311 /* Features */,
+				A312 /* DesignSystem */,
+				A313 /* Resources */,
 			);
 			path = Owlory;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
-		AA0000000000000000000003 /* Core */ = {
+		A302 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000004 /* Domain */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		AA0000000000000000000004 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				AA0000000000000000000010 /* DomainModels.swift */,
-				AA0000000000000000000011 /* PatternTypes.swift */,
-				AA0000000000000000000012 /* PatternNudgeRules.swift */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		AA0000000000000000000005 /* OwloryCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				AA0000000000000000000013 /* PatternNudgeRulesTests.swift */,
-			);
-			path = OwloryCoreTests;
-			sourceTree = "<group>";
-		};
-		AA0000000000000000000006 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AA0000000000000000000014 /* OwloryCore.framework */,
-				AA0000000000000000000015 /* OwloryCoreTests.xctest */,
+				A100 /* Owlory.app */,
+				B100 /* OwloryCoreTests.xctest */,
+				W100 /* OwloryWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A310 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A320 /* Domain */,
+				A321 /* Application */,
+				A322 /* Persistence */,
+				A323 /* Infrastructure */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A311 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A330 /* Today */,
+				A331 /* Train */,
+				A332 /* Write */,
+				A333 /* Career */,
+				A334 /* Home */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A312 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				A111 /* AppTheme.swift */,
+				A125 /* VoiceCaptureButton.swift */,
+				A148 /* VoiceCaptureResult.swift */,
+				A126 /* AudioPlaybackButton.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		A313 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A122 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A320 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				A103 /* DomainModels.swift */,
+				A112 /* CarryForwardRules.swift */,
+				A171 /* DailyPlanningRules.swift */,
+				A172 /* FocusSuggestionRules.swift */,
+				A173 /* VoiceTranscriptionRoutingRules.swift */,
+				A170 /* ProtocolLifecycleRules.swift */,
+				A158 /* RecurrenceRules.swift */,
+				A165 /* ReminderSchedulingRules.swift */,
+				A160 /* ContinueCandidateRules.swift */,
+				A159 /* ContinueRankingRules.swift */,
+				A123 /* ReadinessRules.swift */,
+				A116 /* WritingStageRules.swift */,
+				A128 /* PatternTypes.swift */,
+				A129 /* PatternEngine.swift */,
+				A130 /* CalibrationRules.swift */,
+				A168 /* PatternNudgeRules.swift */,
+				A169 /* ReadinessOutcomeRules.swift */,
+				A133 /* WeeklyDigest.swift */,
+				A134 /* WeeklyDigestRules.swift */,
+				A167 /* WeeklyDigestCadenceRules.swift */,
+				A137 /* MLSuggestion.swift */,
+				A138 /* StructuredDraft.swift */,
+				A139 /* ModelAvailability.swift */,
+				A154 /* CompletionTimePredictor.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A321 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A104 /* Clock.swift */,
+				A105 /* TodayStore.swift */,
+				A118 /* WriteStore.swift */,
+				A119 /* TrainStore.swift */,
+				A120 /* CareerStore.swift */,
+				A121 /* HomeStore.swift */,
+				A132 /* PatternStore.swift */,
+				A140 /* FoundationModelPromptBudgeting.swift */,
+				A141 /* MLDraftingService.swift */,
+				A142 /* StructuredCaptureService.swift */,
+				A143 /* ModelAvailabilityService.swift */,
+				A145 /* DigestInsightStore.swift */,
+				A146 /* TodayContinuationRules.swift */,
+				A161 /* TodayContinueSourceComposer.swift */,
+				A162 /* TodayContinueItemAssembler.swift */,
+				A163 /* ContinuePipelineTrace.swift */,
+				A164 /* RecurringRolloverPlanner.swift */,
+				A166 /* ReminderScheduleTrace.swift */,
+				A149 /* PerformanceTelemetry.swift */,
+				A150 /* MetricKitTelemetrySubscriber.swift */,
+				A152 /* BuildInfo.swift */,
+				A155 /* CompletionHistoryStore.swift */,
+				A174 /* OwloryDeepLink.swift */,
+				A175 /* OwloryDeepLinkRouter.swift */,
+				A156 /* ReminderScheduler.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		A322 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				A113 /* TodayEntryRepository.swift */,
+				A114 /* FileTodayEntryRepository.swift */,
+				A115 /* InMemoryTodayEntryRepository.swift */,
+				A117 /* ItemListRepository.swift */,
+				A127 /* TodayEntryRangeRepository.swift */,
+				A131 /* PatternSnapshotRepository.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		A323 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				A124 /* AudioCaptureService.swift */,
+				A144 /* AudioFileStore.swift */,
+				A147 /* SpeechTranscriptionService.swift */,
+				A151 /* FoundationModelServices.swift */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		A330 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				A106 /* TodayView.swift */,
+				A135 /* DigestListView.swift */,
+				A136 /* DigestDetailView.swift */,
+				A153 /* BuildInfoView.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		A331 /* Train */ = {
+			isa = PBXGroup;
+			children = (
+				A107 /* TrainView.swift */,
+			);
+			path = Train;
+			sourceTree = "<group>";
+		};
+		A332 /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				A108 /* WriteView.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
+		A333 /* Career */ = {
+			isa = PBXGroup;
+			children = (
+				A109 /* CareerView.swift */,
+			);
+			path = Career;
+			sourceTree = "<group>";
+		};
+		A334 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A110 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B300 /* OwloryCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				B101 /* CarryForwardRulesTests.swift */,
+				B135 /* DailyPlanningRulesTests.swift */,
+				B136 /* FocusSuggestionRulesTests.swift */,
+				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
+				B134 /* ProtocolLifecycleRulesTests.swift */,
+				B102 /* TodayStoreTests.swift */,
+				B103 /* WritingStageRulesTests.swift */,
+				B105 /* WriteStoreTests.swift */,
+				B106 /* TrainStoreTests.swift */,
+				B107 /* CareerStoreTests.swift */,
+				B108 /* HomeStoreTests.swift */,
+				B109 /* ReadinessRulesTests.swift */,
+				B110 /* PatternEngineTests.swift */,
+				B111 /* CalibrationRulesTests.swift */,
+				B132 /* PatternNudgeRulesTests.swift */,
+				B133 /* ReadinessOutcomeRulesTests.swift */,
+				B112 /* WeeklyDigestRulesTests.swift */,
+				B131 /* WeeklyDigestCadenceRulesTests.swift */,
+				B113 /* WritingVelocityTests.swift */,
+				B114 /* TrainingConsistencyTests.swift */,
+				B115 /* MLSuggestionTests.swift */,
+				B116 /* MLServiceContractTests.swift */,
+				B117 /* DigestInsightStoreTests.swift */,
+				B118 /* CareerAssistantTests.swift */,
+				B119 /* TodayContinuationRulesTests.swift */,
+				B126 /* TodayContinueSourceComposerTests.swift */,
+				B127 /* TodayContinueItemAssemblerTests.swift */,
+				B128 /* ContinuePipelineTraceTests.swift */,
+				B129 /* RecurringRolloverPlannerTests.swift */,
+				B130 /* ReminderSchedulingRulesTests.swift */,
+				B125 /* ContinueCandidateRulesTests.swift */,
+				B124 /* ContinueRankingRulesTests.swift */,
+				B120 /* PerformanceTelemetryTests.swift */,
+				B121 /* BuildInfoTests.swift */,
+				B122 /* CompletionTimePredictorTests.swift */,
+				B123 /* RecurrenceRulesTests.swift */,
+			);
+			path = OwloryCoreTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		W300 /* OwloryWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				W104 /* Info.plist */,
+				W102 /* OwloryWidgetBundle.swift */,
+				W105 /* OwloryTodayWidget.swift */,
+			);
+			path = OwloryWidgets;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA0000000000000000000030 /* OwloryCore */ = {
+		A400 /* Owlory */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA0000000000000000000071 /* Build configuration list for PBXNativeTarget "OwloryCore" */;
+			buildConfigurationList = A500 /* Build configuration list for PBXNativeTarget "Owlory" */;
 			buildPhases = (
-				AA0000000000000000000042 /* Sources */,
+				A201 /* Sources */,
+				A202 /* Resources */,
+				A200 /* Frameworks */,
+				A203 /* Embed App Extensions */,
+				A700 /* Stamp Build Info */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				W501 /* PBXTargetDependency */,
 			);
-			name = OwloryCore;
-			productName = OwloryCore;
-			productReference = AA0000000000000000000014 /* OwloryCore.framework */;
-			productType = "com.apple.product-type.framework";
+			name = Owlory;
+			productName = Owlory;
+			productReference = A100 /* Owlory.app */;
+			productType = "com.apple.product-type.application";
 		};
-		AA0000000000000000000031 /* OwloryCoreTests */ = {
+		B400 /* OwloryCoreTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA0000000000000000000072 /* Build configuration list for PBXNativeTarget "OwloryCoreTests" */;
+			buildConfigurationList = B700 /* Build configuration list for PBXNativeTarget "OwloryCoreTests" */;
 			buildPhases = (
-				AA0000000000000000000043 /* Sources */,
-				AA0000000000000000000041 /* Frameworks */,
+				B201 /* Sources */,
+				B200 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AA0000000000000000000051 /* PBXTargetDependency */,
+				B501 /* PBXTargetDependency */,
 			);
 			name = OwloryCoreTests;
 			productName = OwloryCoreTests;
-			productReference = AA0000000000000000000015 /* OwloryCoreTests.xctest */;
+			productReference = B100 /* OwloryCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		W400 /* OwloryWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = W700 /* Build configuration list for PBXNativeTarget "OwloryWidgetsExtension" */;
+			buildPhases = (
+				W201 /* Sources */,
+				W202 /* Resources */,
+				W200 /* Frameworks */,
+				W800 /* Stamp Build Info */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OwloryWidgetsExtension;
+			productName = OwloryWidgetsExtension;
+			productReference = W100 /* OwloryWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AA0000000000000000000090 /* Project object */ = {
+		A401 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2640;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					AA0000000000000000000030 = {
-						CreatedOnToolsVersion = 26.4;
+					A400 = {
+						CreatedOnToolsVersion = 16.0;
 					};
-					AA0000000000000000000031 = {
-						CreatedOnToolsVersion = 26.4;
-						TestTargetID = AA0000000000000000000030;
+					B400 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = A400;
+					};
+					W400 = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = AA0000000000000000000070 /* Build configuration list for PBXProject "Owlory" */;
+			buildConfigurationList = A501 /* Build configuration list for PBXProject "Owlory" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = AA0000000000000000000001;
-			preferredProjectObjectVersion = 77;
-			productRefGroup = AA0000000000000000000006 /* Products */;
+			mainGroup = A300;
+			productRefGroup = A302 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA0000000000000000000030 /* OwloryCore */,
-				AA0000000000000000000031 /* OwloryCoreTests */,
+				A400 /* Owlory */,
+				B400 /* OwloryCoreTests */,
+				W400 /* OwloryWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		AA0000000000000000000042 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXResourcesBuildPhase section */
+		A202 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA0000000000000000000020 /* DomainModels.swift in Sources */,
-				AA0000000000000000000021 /* PatternTypes.swift in Sources */,
-				AA0000000000000000000022 /* PatternNudgeRules.swift in Sources */,
+				A022 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA0000000000000000000043 /* Sources */ = {
+		W202 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A700 /* Stamp Build Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Stamp Build Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/../Tools/generate-build-info.sh\"\n";
+		};
+		W800 /* Stamp Build Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Stamp Build Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/../Tools/generate-build-info.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A201 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA0000000000000000000023 /* PatternNudgeRulesTests.swift in Sources */,
+				A001 /* OwloryApp.swift in Sources */,
+				A002 /* RootTabView.swift in Sources */,
+				A003 /* DomainModels.swift in Sources */,
+				A004 /* Clock.swift in Sources */,
+				A005 /* TodayStore.swift in Sources */,
+				A006 /* TodayView.swift in Sources */,
+				A007 /* TrainView.swift in Sources */,
+				A008 /* WriteView.swift in Sources */,
+				A009 /* CareerView.swift in Sources */,
+				A010 /* HomeView.swift in Sources */,
+				A011 /* AppTheme.swift in Sources */,
+				A012 /* CarryForwardRules.swift in Sources */,
+				A072 /* DailyPlanningRules.swift in Sources */,
+				A073 /* FocusSuggestionRules.swift in Sources */,
+				A074 /* VoiceTranscriptionRoutingRules.swift in Sources */,
+				A071 /* ProtocolLifecycleRules.swift in Sources */,
+				A013 /* TodayEntryRepository.swift in Sources */,
+				A014 /* FileTodayEntryRepository.swift in Sources */,
+				A015 /* InMemoryTodayEntryRepository.swift in Sources */,
+				A016 /* WritingStageRules.swift in Sources */,
+				A017 /* ItemListRepository.swift in Sources */,
+				A018 /* WriteStore.swift in Sources */,
+				A019 /* TrainStore.swift in Sources */,
+				A020 /* CareerStore.swift in Sources */,
+				A021 /* HomeStore.swift in Sources */,
+				A023 /* ReadinessRules.swift in Sources */,
+				A024 /* AudioCaptureService.swift in Sources */,
+				A025 /* VoiceCaptureButton.swift in Sources */,
+				A026 /* AudioPlaybackButton.swift in Sources */,
+				A027 /* TodayEntryRangeRepository.swift in Sources */,
+				A028 /* PatternTypes.swift in Sources */,
+				A029 /* PatternEngine.swift in Sources */,
+				A030 /* CalibrationRules.swift in Sources */,
+				A069 /* PatternNudgeRules.swift in Sources */,
+				A070 /* ReadinessOutcomeRules.swift in Sources */,
+				A031 /* PatternSnapshotRepository.swift in Sources */,
+				A032 /* PatternStore.swift in Sources */,
+				A033 /* WeeklyDigest.swift in Sources */,
+				A034 /* WeeklyDigestRules.swift in Sources */,
+				A068 /* WeeklyDigestCadenceRules.swift in Sources */,
+				A035 /* DigestListView.swift in Sources */,
+				A036 /* DigestDetailView.swift in Sources */,
+				A037 /* MLSuggestion.swift in Sources */,
+				A038 /* StructuredDraft.swift in Sources */,
+				A039 /* ModelAvailability.swift in Sources */,
+				A040 /* FoundationModelPromptBudgeting.swift in Sources */,
+				A041 /* MLDraftingService.swift in Sources */,
+				A042 /* StructuredCaptureService.swift in Sources */,
+				A043 /* ModelAvailabilityService.swift in Sources */,
+				A044 /* AudioFileStore.swift in Sources */,
+				A045 /* DigestInsightStore.swift in Sources */,
+				A046 /* TodayContinuationRules.swift in Sources */,
+				A062 /* TodayContinueSourceComposer.swift in Sources */,
+				A063 /* TodayContinueItemAssembler.swift in Sources */,
+				A064 /* ContinuePipelineTrace.swift in Sources */,
+				A065 /* RecurringRolloverPlanner.swift in Sources */,
+				A067 /* ReminderScheduleTrace.swift in Sources */,
+				A047 /* SpeechTranscriptionService.swift in Sources */,
+				A048 /* VoiceCaptureResult.swift in Sources */,
+				A049 /* PerformanceTelemetry.swift in Sources */,
+				A050 /* MetricKitTelemetrySubscriber.swift in Sources */,
+				A051 /* FoundationModelServices.swift in Sources */,
+				A052 /* BuildInfo.swift in Sources */,
+				A053 /* BuildInfoView.swift in Sources */,
+				A054 /* CompletionTimePredictor.swift in Sources */,
+				A075 /* OwloryDeepLink.swift in Sources */,
+				A076 /* OwloryDeepLinkRouter.swift in Sources */,
+				A066 /* ReminderSchedulingRules.swift in Sources */,
+				A055 /* CompletionHistoryStore.swift in Sources */,
+				A056 /* ReminderScheduler.swift in Sources */,
+				A059 /* RecurrenceRules.swift in Sources */,
+				A060 /* ContinueRankingRules.swift in Sources */,
+				A061 /* ContinueCandidateRules.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B001 /* DomainModels.swift in Sources */,
+				B002 /* Clock.swift in Sources */,
+				B003 /* TodayStore.swift in Sources */,
+				B004 /* CarryForwardRules.swift in Sources */,
+				B083 /* DailyPlanningRules.swift in Sources */,
+				B085 /* FocusSuggestionRules.swift in Sources */,
+				B087 /* VoiceTranscriptionRoutingRules.swift in Sources */,
+				B081 /* ProtocolLifecycleRules.swift in Sources */,
+				B005 /* TodayEntryRepository.swift in Sources */,
+				B006 /* InMemoryTodayEntryRepository.swift in Sources */,
+				B007 /* WritingStageRules.swift in Sources */,
+				B008 /* CarryForwardRulesTests.swift in Sources */,
+				B084 /* DailyPlanningRulesTests.swift in Sources */,
+				B086 /* FocusSuggestionRulesTests.swift in Sources */,
+				B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */,
+				B082 /* ProtocolLifecycleRulesTests.swift in Sources */,
+				B009 /* TodayStoreTests.swift in Sources */,
+				B010 /* WritingStageRulesTests.swift in Sources */,
+				B012 /* ItemListRepository.swift in Sources */,
+				B013 /* WriteStore.swift in Sources */,
+				B014 /* TrainStore.swift in Sources */,
+				B015 /* CareerStore.swift in Sources */,
+				B016 /* HomeStore.swift in Sources */,
+				B017 /* WriteStoreTests.swift in Sources */,
+				B018 /* TrainStoreTests.swift in Sources */,
+				B019 /* CareerStoreTests.swift in Sources */,
+				B021 /* ReadinessRules.swift in Sources */,
+				B022 /* ReadinessRulesTests.swift in Sources */,
+				B020 /* HomeStoreTests.swift in Sources */,
+				B023 /* PatternTypes.swift in Sources */,
+				B024 /* PatternEngine.swift in Sources */,
+				B025 /* CalibrationRules.swift in Sources */,
+				B077 /* PatternNudgeRules.swift in Sources */,
+				B079 /* ReadinessOutcomeRules.swift in Sources */,
+				B026 /* PatternSnapshotRepository.swift in Sources */,
+				B027 /* PatternStore.swift in Sources */,
+				B028 /* TodayEntryRangeRepository.swift in Sources */,
+				B029 /* PatternEngineTests.swift in Sources */,
+				B030 /* CalibrationRulesTests.swift in Sources */,
+				B078 /* PatternNudgeRulesTests.swift in Sources */,
+				B080 /* ReadinessOutcomeRulesTests.swift in Sources */,
+				B031 /* FileTodayEntryRepository.swift in Sources */,
+				B032 /* WeeklyDigest.swift in Sources */,
+				B033 /* WeeklyDigestRules.swift in Sources */,
+				B075 /* WeeklyDigestCadenceRules.swift in Sources */,
+				B034 /* WeeklyDigestRulesTests.swift in Sources */,
+				B076 /* WeeklyDigestCadenceRulesTests.swift in Sources */,
+				B035 /* WritingVelocityTests.swift in Sources */,
+				B036 /* TrainingConsistencyTests.swift in Sources */,
+				B037 /* MLSuggestion.swift in Sources */,
+				B038 /* StructuredDraft.swift in Sources */,
+				B039 /* ModelAvailability.swift in Sources */,
+				B040 /* FoundationModelPromptBudgeting.swift in Sources */,
+				B041 /* MLDraftingService.swift in Sources */,
+				B042 /* StructuredCaptureService.swift in Sources */,
+				B043 /* ModelAvailabilityService.swift in Sources */,
+				B044 /* MLSuggestionTests.swift in Sources */,
+				B045 /* MLServiceContractTests.swift in Sources */,
+				B046 /* DigestInsightStore.swift in Sources */,
+				B047 /* DigestInsightStoreTests.swift in Sources */,
+				B048 /* CareerAssistantTests.swift in Sources */,
+				B049 /* TodayContinuationRules.swift in Sources */,
+				B050 /* TodayContinuationRulesTests.swift in Sources */,
+				B064 /* TodayContinueSourceComposer.swift in Sources */,
+				B065 /* TodayContinueSourceComposerTests.swift in Sources */,
+				B066 /* TodayContinueItemAssembler.swift in Sources */,
+				B067 /* TodayContinueItemAssemblerTests.swift in Sources */,
+				B068 /* ContinuePipelineTrace.swift in Sources */,
+				B069 /* ContinuePipelineTraceTests.swift in Sources */,
+				B070 /* RecurringRolloverPlanner.swift in Sources */,
+				B071 /* RecurringRolloverPlannerTests.swift in Sources */,
+				B073 /* ReminderScheduleTrace.swift in Sources */,
+				B051 /* PerformanceTelemetry.swift in Sources */,
+				B052 /* PerformanceTelemetryTests.swift in Sources */,
+				B053 /* BuildInfo.swift in Sources */,
+				B054 /* BuildInfoTests.swift in Sources */,
+				B055 /* CompletionTimePredictor.swift in Sources */,
+				B089 /* OwloryDeepLink.swift in Sources */,
+				B072 /* ReminderSchedulingRules.swift in Sources */,
+				B056 /* CompletionHistoryStore.swift in Sources */,
+				B057 /* CompletionTimePredictorTests.swift in Sources */,
+				B074 /* ReminderSchedulingRulesTests.swift in Sources */,
+				B090 /* ReminderScheduler.swift in Sources */,
+				B058 /* RecurrenceRules.swift in Sources */,
+				B059 /* RecurrenceRulesTests.swift in Sources */,
+				B060 /* ContinueRankingRules.swift in Sources */,
+				B061 /* ContinueRankingRulesTests.swift in Sources */,
+				B062 /* ContinueCandidateRules.swift in Sources */,
+				B063 /* ContinueCandidateRulesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		W201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				W002 /* OwloryWidgetBundle.swift in Sources */,
+				W005 /* OwloryTodayWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AA0000000000000000000051 /* PBXTargetDependency */ = {
+		B501 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AA0000000000000000000030 /* OwloryCore */;
-			targetProxy = AA0000000000000000000050 /* PBXContainerItemProxy */;
+			target = A400 /* Owlory */;
+			targetProxy = B500 /* PBXContainerItemProxy */;
+		};
+		W501 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = W400 /* OwloryWidgetsExtension */;
+			targetProxy = W500 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		AA0000000000000000000060 /* Debug */ = {
+		A600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-		AA0000000000000000000061 /* Release */ = {
+		A601 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
-		AA0000000000000000000062 /* Debug */ = {
+		A602 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Owlory/Owlory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				ENABLE_TESTABILITY = YES;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlory.OwloryCore;
-				PRODUCT_MODULE_NAME = OwloryCore;
+				INFOPLIST_KEY_CFBundleDisplayName = Owlory;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Owlory uses your microphone to capture voice notes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Owlory uses on-device speech recognition to transcribe your voice notes.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-		AA0000000000000000000063 /* Release */ = {
+		A603 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Owlory/Owlory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlory.OwloryCore;
-				PRODUCT_MODULE_NAME = OwloryCore;
+				INFOPLIST_KEY_CFBundleDisplayName = Owlory;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Owlory uses your microphone to capture voice notes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Owlory uses on-device speech recognition to transcribe your voice notes.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
-		AA0000000000000000000064 /* Debug */ = {
+		B600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlory.OwloryCoreTests;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.OwloryCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG SWIFT_PACKAGE";
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "";
-				TEST_TARGET_NAME = OwloryCore;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Owlory.app/Owlory";
+				TEST_TARGET_NAME = Owlory;
 			};
 			name = Debug;
 		};
-		AA0000000000000000000065 /* Release */ = {
+		B601 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlory.OwloryCoreTests;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.OwloryCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "";
-				TEST_TARGET_NAME = OwloryCore;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Owlory.app/Owlory";
+				TEST_TARGET_NAME = Owlory;
+			};
+			name = Release;
+		};
+		W600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OwloryWidgets/OwloryWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OwloryWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		W601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OwloryWidgets/OwloryWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OwloryWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA0000000000000000000070 /* Build configuration list for PBXProject "Owlory" */ = {
+		A500 /* Build configuration list for PBXNativeTarget "Owlory" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA0000000000000000000060 /* Debug */,
-				AA0000000000000000000061 /* Release */,
+				A602 /* Debug */,
+				A603 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA0000000000000000000071 /* Build configuration list for PBXNativeTarget "OwloryCore" */ = {
+		A501 /* Build configuration list for PBXProject "Owlory" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA0000000000000000000062 /* Debug */,
-				AA0000000000000000000063 /* Release */,
+				A600 /* Debug */,
+				A601 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA0000000000000000000072 /* Build configuration list for PBXNativeTarget "OwloryCoreTests" */ = {
+		B700 /* Build configuration list for PBXNativeTarget "OwloryCoreTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA0000000000000000000064 /* Debug */,
-				AA0000000000000000000065 /* Release */,
+				B600 /* Debug */,
+				B601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		W700 /* Build configuration list for PBXNativeTarget "OwloryWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				W600 /* Debug */,
+				W601 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = AA0000000000000000000090 /* Project object */;
+	rootObject = A401 /* Project object */;
 }

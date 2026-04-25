@@ -63,6 +63,7 @@
 
 - Optimize for instant entry and minimal required structure.
 - Stage changes must stay explicit and tested, but they must not become a gate that makes capture feel heavy.
+- Staged note rows should have one primary action: open the note. Secondary actions such as stage advancement belong in note detail or row actions, not nested inline buttons.
 - Future capture refinements should prefer forgiving defaults over correctness rituals.
 - Do not destroy source content or context during promotion.
 - Promotion into the rest of Owlory should remain optional; not every note should become structured work.
