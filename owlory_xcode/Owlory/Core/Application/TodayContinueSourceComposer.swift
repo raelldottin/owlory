@@ -70,6 +70,7 @@ enum TodayContinueSourceComposer {
         writingNotes: [WritingNote]
     ) -> [Candidate] {
         let staleByKey = staleIndex(from: calibration)
+        let actionableTrainingSessionIDs = actionableTrainingSessionIDIndex(from: todaySessions)
         let protocolTitles = homeProtocolTitleIndex(
             protocols: homeProtocols,
             runs: homeRuns
@@ -87,6 +88,7 @@ enum TodayContinueSourceComposer {
                 return carriedForwardFocusCandidates(
                     from: todayEntry.focusThree,
                     staleByKey: staleByKey,
+                    actionableTrainingSessionIDs: actionableTrainingSessionIDs,
                     protocolTitles: protocolTitles,
                     protocolRecordIDs: protocolRecordIDs
                 )
@@ -122,10 +124,18 @@ enum TodayContinueSourceComposer {
     private static func carriedForwardFocusCandidates(
         from items: [FocusItem],
         staleByKey: [String: CalibrationRules.StaleItemAlert],
+        actionableTrainingSessionIDs: Set<UUID>,
         protocolTitles: Set<String>,
         protocolRecordIDs: Set<UUID>
     ) -> [Candidate] {
         items.compactMap { item in
+            guard isLinkedTrainingFocusStillActionable(
+                item,
+                actionableTrainingSessionIDs: actionableTrainingSessionIDs
+            ) else {
+                return nil
+            }
+
             guard !isHomeProtocolFocusArtifact(
                 item,
                 protocolTitles: protocolTitles,
@@ -213,6 +223,16 @@ enum TodayContinueSourceComposer {
         return staleByKey
     }
 
+    private static func actionableTrainingSessionIDIndex(
+        from sessions: [TrainingSession]
+    ) -> Set<UUID> {
+        Set(
+            sessions
+                .filter(ContinueCandidateRules.isDueTodayCandidate)
+                .map(\.id)
+        )
+    }
+
     private static func homeProtocolTitleIndex(
         protocols: [HouseholdProtocol],
         runs: [ProtocolRun]
@@ -225,6 +245,17 @@ enum TodayContinueSourceComposer {
         runs: [ProtocolRun]
     ) -> Set<UUID> {
         Set(protocols.map(\.id) + runs.map(\.id))
+    }
+
+    private static func isLinkedTrainingFocusStillActionable(
+        _ item: FocusItem,
+        actionableTrainingSessionIDs: Set<UUID>
+    ) -> Bool {
+        guard item.domain == .training,
+              let linkedRecordID = item.linkedRecordID else {
+            return true
+        }
+        return actionableTrainingSessionIDs.contains(linkedRecordID)
     }
 
     private static func isHomeProtocolFocusArtifact(

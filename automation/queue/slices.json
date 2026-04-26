@@ -180,6 +180,33 @@
       ],
       "max_files_changed": 10,
       "notes": "Voice note capture should auto-populate speech-to-text while the person is talking instead of waiting silently until recording stops."
+    },
+    {
+      "slice_id": "today-linked-train-carryforward-guard",
+      "title": "Suppress invalid linked Train carry-forward rows",
+      "status": "done",
+      "priority": 60,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "docs/product/domains/train.md",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+        "SecondBrain/sessions/2026-04-26/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=train",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "voice-write-live-transcription-capture"
+      ],
+      "max_files_changed": 8,
+      "notes": "A linked Train Focus item should not appear as carried-forward Train work unless its linked session is still planned and actionable today."
     }
   ]
 }

@@ -1,0 +1,30 @@
+{
+  "slice_id": "today-linked-train-carryforward-guard",
+  "status": "done",
+  "summary": "Added a Today projection guard so linked Train carried-focus rows only surface when the linked training session is still planned and actionable today; skipped, completed, modified, missing, and prior-day linked sessions are suppressed instead of appearing as carried-forward Train work.",
+  "files_touched": [
+    "automation/handoffs/20260426T073220Z-today-linked-train-carryforward-guard.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/product/domains/train.md",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+    "SecondBrain/sessions/2026-04-26/033220-today-linked-train-carryforward-guard.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id today-linked-train-carryforward-guard",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=train",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Unlinked Train focus carry-forward rows still surface as Today Focus carry-forward because there is no source ID to validate against Train."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent pre-classified slice remains; stop for review after linked Train carry-forward guard.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-26T07:32:20Z"
+}

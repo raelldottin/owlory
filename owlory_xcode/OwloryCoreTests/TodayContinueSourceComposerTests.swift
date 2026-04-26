@@ -222,6 +222,106 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertEqual(candidates.first?.source, .homeProtocolRun(run.id))
     }
 
+    func testLinkedTrainingCarryForwardSurfacesOnlyWhenSessionIsActionableToday() {
+        let session = TrainingSession(
+            date: today,
+            plannedActivity: "Intervals",
+            status: .planned
+        )
+        let artifact = FocusItem(
+            title: "Intervals",
+            domain: .training,
+            status: .planned,
+            linkedRecordID: session.id
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today, focusThree: [artifact]),
+            calibration: calibration(
+                staleItems: [
+                    .init(title: "Intervals", domain: .training, consecutiveDays: 4)
+                ]
+            ),
+            todaySessions: [session],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: []
+        )
+
+        XCTAssertEqual(candidates.map(\.source), [
+            .trainingSession(session.id),
+            .carriedFocusItem(artifact.id),
+        ])
+    }
+
+    func testLinkedTrainingCarryForwardSuppressesResolvedOrMissingSessions() {
+        let skipped = TrainingSession(
+            date: today,
+            plannedActivity: "Intervals",
+            status: .skipped
+        )
+        let completed = TrainingSession(
+            date: today,
+            plannedActivity: "Strength",
+            status: .completed
+        )
+        let modified = TrainingSession(
+            date: today,
+            plannedActivity: "Mobility",
+            status: .modified
+        )
+        let skippedArtifact = FocusItem(
+            title: "Intervals",
+            domain: .training,
+            status: .planned,
+            linkedRecordID: skipped.id
+        )
+        let completedArtifact = FocusItem(
+            title: "Strength",
+            domain: .training,
+            status: .planned,
+            linkedRecordID: completed.id
+        )
+        let modifiedArtifact = FocusItem(
+            title: "Mobility",
+            domain: .training,
+            status: .planned,
+            linkedRecordID: modified.id
+        )
+        let missingArtifact = FocusItem(
+            title: "Yoga",
+            domain: .training,
+            status: .planned,
+            linkedRecordID: UUID()
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(
+                date: today,
+                focusThree: [
+                    skippedArtifact,
+                    completedArtifact,
+                    modifiedArtifact,
+                    missingArtifact,
+                ]
+            ),
+            calibration: calibration(
+                staleItems: [
+                    .init(title: "Intervals", domain: .training, consecutiveDays: 4),
+                    .init(title: "Strength", domain: .training, consecutiveDays: 4),
+                    .init(title: "Mobility", domain: .training, consecutiveDays: 4),
+                    .init(title: "Yoga", domain: .training, consecutiveDays: 4),
+                ]
+            ),
+            todaySessions: [skipped, completed, modified],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: []
+        )
+
+        XCTAssertTrue(candidates.isEmpty)
+    }
+
     func testCompositionDoesNotApplyAdmissionCaps() {
         let sessions = [
             TrainingSession(date: today, plannedActivity: "Run", status: .planned),

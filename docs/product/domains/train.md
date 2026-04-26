@@ -33,6 +33,7 @@
 - Keep load-time session rollover in `RecurringRolloverPlanner`; `TrainStore` should only load, apply the planner, persist if changed, and emit the trace.
 - Training rollover dedupes by same planned activity on the current calendar day.
 - A planned session that survives into the next calendar day auto-skips on the next load/foreground rollover pass; recurring sessions may then spawn the next planned instance for the new day.
+- Today may present Train work as actionable only from planned sessions for the current day. Linked carried Focus rows that point at skipped, completed, modified, missing, or prior-day sessions should not imply the session itself carried forward.
 - Keep persistence behind `ItemListRepository`.
 - Keep speech/audio handling in infrastructure and DesignSystem controls.
 - Keep voice-to-text field routing in `VoiceTranscriptionRoutingRules`; `TrainStore` only applies the reflection fallback before persistence.
