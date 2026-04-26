@@ -119,6 +119,35 @@
       ],
       "max_files_changed": 8,
       "notes": "Adjacent UI-contract slice to ensure Today presentation does not reframe Focus balance nudges as broad domain inactivity."
+    },
+    {
+      "slice_id": "today-protocol-carryforward-contract-guardrails",
+      "title": "Harden Today protocol carry-forward guardrails",
+      "status": "done",
+      "priority": 40,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "docs/product/domains/home.md",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinuationRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "SecondBrain/sessions/2026-04-26/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-focus-balance-nudge-presentation-audit"
+      ],
+      "max_files_changed": 8,
+      "notes": "Ensure Home protocol templates and protocol runs do not leak into Today as carried-forward Focus work unless represented by an active Home protocol run source."
     }
   ]
 }

@@ -161,6 +161,34 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertTrue(candidates.isEmpty)
     }
 
+    func testLinkedHomeProtocolTemplateArtifactIsSuppressedEvenWhenTitleChanged() {
+        let protocolID = UUID()
+        let artifact = FocusItem(
+            title: "Afternoon Routine",
+            domain: .home,
+            status: .planned,
+            linkedRecordID: protocolID
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today, focusThree: [artifact]),
+            calibration: calibration(
+                staleItems: [
+                    .init(title: "Afternoon Routine", domain: .home, consecutiveDays: 4)
+                ]
+            ),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            homeProtocols: [
+                HouseholdProtocol(id: protocolID, title: "Evening Routine", steps: ["Reset kitchen"])
+            ],
+            writingNotes: []
+        )
+
+        XCTAssertTrue(candidates.isEmpty)
+    }
+
     func testActiveHomeProtocolRunReplacesCarriedProtocolArtifact() {
         let run = ProtocolRun(
             protocolID: UUID(),

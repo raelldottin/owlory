@@ -74,7 +74,10 @@ enum TodayContinueSourceComposer {
             protocols: homeProtocols,
             runs: homeRuns
         )
-        let protocolRunIDs = Set(homeRuns.map(\.id))
+        let protocolRecordIDs = homeProtocolRecordIDIndex(
+            protocols: homeProtocols,
+            runs: homeRuns
+        )
 
         return sourceOrder.flatMap { step -> [Candidate] in
             switch step {
@@ -85,7 +88,7 @@ enum TodayContinueSourceComposer {
                     from: todayEntry.focusThree,
                     staleByKey: staleByKey,
                     protocolTitles: protocolTitles,
-                    protocolRunIDs: protocolRunIDs
+                    protocolRecordIDs: protocolRecordIDs
                 )
             case .activeHomeProtocolRun:
                 return activeHomeProtocolRunCandidates(from: homeRuns)
@@ -120,13 +123,13 @@ enum TodayContinueSourceComposer {
         from items: [FocusItem],
         staleByKey: [String: CalibrationRules.StaleItemAlert],
         protocolTitles: Set<String>,
-        protocolRunIDs: Set<UUID>
+        protocolRecordIDs: Set<UUID>
     ) -> [Candidate] {
         items.compactMap { item in
             guard !isHomeProtocolFocusArtifact(
                 item,
                 protocolTitles: protocolTitles,
-                protocolRunIDs: protocolRunIDs
+                protocolRecordIDs: protocolRecordIDs
             ) else {
                 return nil
             }
@@ -217,14 +220,21 @@ enum TodayContinueSourceComposer {
         Set((protocols.map(\.title) + runs.map(\.protocolTitle)).compactMap(normalizedTitle))
     }
 
+    private static func homeProtocolRecordIDIndex(
+        protocols: [HouseholdProtocol],
+        runs: [ProtocolRun]
+    ) -> Set<UUID> {
+        Set(protocols.map(\.id) + runs.map(\.id))
+    }
+
     private static func isHomeProtocolFocusArtifact(
         _ item: FocusItem,
         protocolTitles: Set<String>,
-        protocolRunIDs: Set<UUID>
+        protocolRecordIDs: Set<UUID>
     ) -> Bool {
         guard item.domain == .home else { return false }
         if let linkedRecordID = item.linkedRecordID,
-           protocolRunIDs.contains(linkedRecordID) {
+           protocolRecordIDs.contains(linkedRecordID) {
             return true
         }
         guard let title = normalizedTitle(item.title) else { return false }

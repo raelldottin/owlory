@@ -515,7 +515,14 @@ final class TodayStoreTests: XCTestCase {
     func testGarbageCollectHomeProtocolFocusArtifactsRemovesInvalidProtocolLinks() async {
         let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
         let today = makeDate("2026-04-08T10:00:00Z")
+        let protocolTemplateID = UUID()
         let protocolRunID = UUID()
+        let protocolTemplateArtifact = FocusItem(
+            title: "Afternoon routine",
+            domain: .home,
+            status: .planned,
+            linkedRecordID: protocolTemplateID
+        )
         let protocolArtifact = FocusItem(
             title: "Kitchen reset",
             domain: .home,
@@ -537,8 +544,8 @@ final class TodayStoreTests: XCTestCase {
         try? repository.saveEntry(
             DailyEntry(
                 date: today,
-                focusThree: [protocolArtifact, keepFocus],
-                carryForward: [protocolArtifact, keepCarry]
+                focusThree: [protocolTemplateArtifact, protocolArtifact, keepFocus],
+                carryForward: [protocolTemplateArtifact, protocolArtifact, keepCarry]
             )
         )
 
@@ -547,7 +554,9 @@ final class TodayStoreTests: XCTestCase {
         }
 
         await MainActor.run {
-            store.garbageCollectHomeProtocolFocusArtifacts(protocolRunIDs: Set([protocolRunID]))
+            store.garbageCollectHomeProtocolFocusArtifacts(
+                protocolRecordIDs: Set([protocolTemplateID, protocolRunID])
+            )
         }
 
         let state = await MainActor.run { store.entryState }

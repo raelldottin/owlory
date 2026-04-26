@@ -297,7 +297,7 @@ struct RootTabView: View {
 
     private func synchronizeTodayPresentationArtifacts() {
         todayStore.garbageCollectHomeProtocolFocusArtifacts(
-            protocolRunIDs: Set(homeStore.runs.map(\.id))
+            protocolRecordIDs: Set(homeStore.protocols.map(\.id) + homeStore.runs.map(\.id))
         )
     }
 

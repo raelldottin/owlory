@@ -156,28 +156,28 @@ final class TodayStore: OwloryObservableObject {
         )
     }
 
-    func garbageCollectHomeProtocolFocusArtifacts(protocolRunIDs: Set<UUID>) {
-        guard !protocolRunIDs.isEmpty,
+    func garbageCollectHomeProtocolFocusArtifacts(protocolRecordIDs: Set<UUID>) {
+        guard !protocolRecordIDs.isEmpty,
               let entry = currentEntry else { return }
 
         let hasInvalidFocusArtifact = entry.focusThree.contains { item in
             item.domain == .home &&
-                item.linkedRecordID.map(protocolRunIDs.contains) == true
+                item.linkedRecordID.map(protocolRecordIDs.contains) == true
         }
         let hasInvalidCarryForwardArtifact = entry.carryForward.contains { item in
             item.domain == .home &&
-                item.linkedRecordID.map(protocolRunIDs.contains) == true
+                item.linkedRecordID.map(protocolRecordIDs.contains) == true
         }
         guard hasInvalidFocusArtifact || hasInvalidCarryForwardArtifact else { return }
 
         mutateEntry { entry in
             entry.focusThree.removeAll { item in
                 item.domain == .home &&
-                    item.linkedRecordID.map(protocolRunIDs.contains) == true
+                    item.linkedRecordID.map(protocolRecordIDs.contains) == true
             }
             entry.carryForward.removeAll { item in
                 item.domain == .home &&
-                    item.linkedRecordID.map(protocolRunIDs.contains) == true
+                    item.linkedRecordID.map(protocolRecordIDs.contains) == true
             }
         }
     }
