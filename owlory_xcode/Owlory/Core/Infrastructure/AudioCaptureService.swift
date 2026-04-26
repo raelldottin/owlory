@@ -16,11 +16,16 @@ final class AudioCaptureService: OwloryObservableObject {
 
     #if canImport(Combine)
     @Published private(set) var state: State = .idle
+    @Published private(set) var liveTranscription = ""
     #else
     private(set) var state: State = .idle
+    private(set) var liveTranscription = ""
     #endif
 
-    private var audioRecorder: AVAudioRecorder?
+    private var audioEngine: AVAudioEngine?
+    private var audioFile: AVAudioFile?
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private var recognitionTask: SFSpeechRecognitionTask?
     private var currentFileURL: URL?
     private var currentFileName: String?
     private let transcriptionService: any SpeechTranscriptionService
@@ -57,31 +62,56 @@ final class AudioCaptureService: OwloryObservableObject {
     // MARK: - Recording
 
     func startRecording(for recordID: UUID) throws {
+        stopLiveCapture()
+        liveTranscription = ""
+
         let dir = AudioFileStore.audioDirectory()
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let fileName = "\(recordID.uuidString).m4a"
+        let fileName = "\(recordID.uuidString).caf"
         let fileURL = dir.appendingPathComponent(fileName)
-
-        let settings: [String: Any] = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+        try? FileManager.default.removeItem(at: fileURL)
 
         let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, mode: .default)
+        try session.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker])
         try session.setActive(true)
 
-        audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
-        audioRecorder?.record()
+        let engine = AVAudioEngine()
+        let inputNode = engine.inputNode
+        let inputFormat = inputNode.outputFormat(forBus: 0)
+        let recordingFile = try AVAudioFile(forWriting: fileURL, settings: inputFormat.settings)
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        request.shouldReportPartialResults = true
+        request.requiresOnDeviceRecognition = true
+
+        recognitionRequest = request
+        startLiveRecognition(with: request)
+
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: inputFormat) { buffer, _ in
+            request.append(buffer)
+            try? recordingFile.write(from: buffer)
+        }
+
+        engine.prepare()
+        do {
+            try engine.start()
+        } catch {
+            inputNode.removeTap(onBus: 0)
+            request.endAudio()
+            recognitionRequest = nil
+            recognitionTask?.cancel()
+            recognitionTask = nil
+            throw error
+        }
+
+        audioEngine = engine
+        audioFile = recordingFile
         currentFileURL = fileURL
         currentFileName = fileName
         state = .recording
     }
 
     func stopRecordingAndTranscribe() async {
-        audioRecorder?.stop()
+        stopLiveCapture()
         state = .transcribing
 
         guard let fileURL = currentFileURL, let fileName = currentFileName else {
@@ -90,11 +120,16 @@ final class AudioCaptureService: OwloryObservableObject {
         }
 
         let text = await transcriptionService.transcribe(fileURL: fileURL)
-        state = .finished(text: text, fileName: fileName)
+        state = .finished(
+            text: usableTranscription(preferredText: text),
+            fileName: fileName
+        )
     }
 
     func reset() {
+        stopLiveCapture()
         state = .idle
+        liveTranscription = ""
         currentFileURL = nil
         currentFileName = nil
     }
@@ -107,4 +142,34 @@ final class AudioCaptureService: OwloryObservableObject {
         AudioFileStore.audioFileURL(named: fileName)
     }
 
+    private func startLiveRecognition(with request: SFSpeechAudioBufferRecognitionRequest) {
+        guard let recognizer = SFSpeechRecognizer(), recognizer.isAvailable else { return }
+
+        recognitionTask = recognizer.recognitionTask(with: request) { [weak self] result, _ in
+            guard let result else { return }
+            let text = result.bestTranscription.formattedString
+            Task { @MainActor [weak self] in
+                self?.liveTranscription = text
+            }
+        }
+    }
+
+    private func stopLiveCapture() {
+        audioEngine?.inputNode.removeTap(onBus: 0)
+        audioEngine?.stop()
+        audioEngine = nil
+        audioFile = nil
+        recognitionRequest?.endAudio()
+        recognitionRequest = nil
+        recognitionTask?.finish()
+        recognitionTask = nil
+    }
+
+    private func usableTranscription(preferredText: String) -> String {
+        let trimmedPreferred = preferredText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedPreferred.isEmpty {
+            return trimmedPreferred
+        }
+        return liveTranscription.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }

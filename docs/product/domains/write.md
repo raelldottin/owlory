@@ -62,6 +62,7 @@
 ## Change Safely
 
 - Optimize for instant entry and minimal required structure.
+- Voice-assisted capture should populate the editable body while the user is speaking, but it remains draft text until the user saves the note.
 - Stage changes must stay explicit and tested, but they must not become a gate that makes capture feel heavy.
 - Staged note rows should have one primary action: open the note. Secondary actions such as stage advancement belong in note detail or row actions, not nested inline buttons.
 - Future capture refinements should prefer forgiving defaults over correctness rituals.

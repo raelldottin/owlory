@@ -10,6 +10,7 @@ struct WriteView: View {
     @State private var captureBody = ""
     @State private var captureAudioFileName: String?
     @State private var captureAudioTranscription: String?
+    @State private var captureBodyBeforeVoice: String?
     @State private var captureRecordID = UUID()
     @State private var selectedNote: WritingNote?
     @State private var lastPresentedHighlightedNoteSelectionID: UUID?
@@ -227,14 +228,32 @@ struct WriteView: View {
                 TextField("Body", text: $captureBody, axis: .vertical)
                     .lineLimit(3...8)
                 Section("Voice Recording") {
-                    VoiceCaptureButton(recordID: captureRecordID) { text, fileName in
+                    VoiceCaptureButton(
+                        recordID: captureRecordID,
+                        onRecordingStarted: {
+                            captureBodyBeforeVoice = captureBody
+                            captureAudioTranscription = nil
+                        },
+                        onLiveTranscription: { text in
+                            guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                                return
+                            }
+                            captureAudioTranscription = text
+                            captureBody = VoiceTranscriptionRoutingRules.apply(
+                                text,
+                                to: captureBodyBeforeVoice ?? captureBody,
+                                in: .writeCapture
+                            )
+                        }
+                    ) { text, fileName in
                         captureAudioFileName = fileName
                         captureAudioTranscription = text
                         captureBody = VoiceTranscriptionRoutingRules.apply(
                             text,
-                            to: captureBody,
+                            to: captureBodyBeforeVoice ?? captureBody,
                             in: .writeCapture
                         )
+                        captureBodyBeforeVoice = nil
                     }
                     if let audioFile = captureAudioFileName {
                         HStack {
@@ -293,6 +312,7 @@ struct WriteView: View {
         captureBody = ""
         captureAudioFileName = nil
         captureAudioTranscription = nil
+        captureBodyBeforeVoice = nil
         captureRecordID = UUID()
         showingCapture = false
     }

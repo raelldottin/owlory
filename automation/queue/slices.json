@@ -148,6 +148,38 @@
       ],
       "max_files_changed": 8,
       "notes": "Ensure Home protocol templates and protocol runs do not leak into Today as carried-forward Focus work unless represented by an active Home protocol run source."
+    },
+    {
+      "slice_id": "voice-write-live-transcription-capture",
+      "title": "Live-populate Write capture while recording voice",
+      "status": "done",
+      "priority": 50,
+      "domain": "voice",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/voice-transcription.md",
+        "docs/product/domains/write.md",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureResult.swift",
+        "owlory_xcode/Owlory/Core/Infrastructure/AudioCaptureService.swift",
+        "owlory_xcode/Owlory/Core/Infrastructure/SpeechTranscriptionService.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/OwloryCoreTests/VoiceTranscriptionRoutingRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "SecondBrain/sessions/2026-04-26/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=voice",
+        "make test-domain DOMAIN=write",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-protocol-carryforward-contract-guardrails"
+      ],
+      "max_files_changed": 10,
+      "notes": "Voice note capture should auto-populate speech-to-text while the person is talking instead of waiting silently until recording stops."
     }
   ]
 }

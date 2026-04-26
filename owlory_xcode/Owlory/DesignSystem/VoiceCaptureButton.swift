@@ -3,14 +3,20 @@ import SwiftUI
 struct VoiceCaptureButton: View {
     let recordID: UUID
     private let onResult: (VoiceCaptureResult) -> Void
+    private let onRecordingStarted: () -> Void
+    private let onLiveTranscription: (String) -> Void
 
     @StateObject private var service = AudioCaptureService()
 
     init(
         recordID: UUID,
+        onRecordingStarted: @escaping () -> Void = {},
+        onLiveTranscription: @escaping (_ transcribedText: String) -> Void = { _ in },
         onCapture: @escaping (_ transcribedText: String, _ audioFileName: String) -> Void
     ) {
         self.recordID = recordID
+        self.onRecordingStarted = onRecordingStarted
+        self.onLiveTranscription = onLiveTranscription
         self.onResult = { result in
             onCapture(result.transcribedText, result.audioFileName)
         }
@@ -18,9 +24,13 @@ struct VoiceCaptureButton: View {
 
     init(
         recordID: UUID,
+        onRecordingStarted: @escaping () -> Void = {},
+        onLiveTranscription: @escaping (_ transcribedText: String) -> Void = { _ in },
         onResult: @escaping (VoiceCaptureResult) -> Void
     ) {
         self.recordID = recordID
+        self.onRecordingStarted = onRecordingStarted
+        self.onLiveTranscription = onLiveTranscription
         self.onResult = onResult
     }
 
@@ -32,6 +42,9 @@ struct VoiceCaptureButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityText)
+        .onChange(of: service.liveTranscription) { _, text in
+            onLiveTranscription(text)
+        }
     }
 
     @ViewBuilder
@@ -70,7 +83,12 @@ struct VoiceCaptureButton: View {
             case .idle:
                 let granted = await service.requestPermissions()
                 guard granted else { return }
-                try? service.startRecording(for: recordID)
+                do {
+                    try service.startRecording(for: recordID)
+                    onRecordingStarted()
+                } catch {
+                    break
+                }
             case .recording:
                 await service.stopRecordingAndTranscribe()
                 if case .finished(let text, let fileName) = service.state {

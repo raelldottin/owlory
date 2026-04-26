@@ -35,6 +35,7 @@ Unsupported field requests resolve to no target and leave existing text unchange
 - `AudioCaptureService` and `SpeechTranscriptionService` own Apple framework integration.
 - Feature views select the appropriate routing context and field.
 - Stores persist the resulting text and audio metadata.
+- Write capture uses live partial transcription to populate the note body while recording; the final accepted note is still saved only when the user taps Save.
 - Privacy, permission fallback, and draft-only generated-output expectations live in [ML Privacy And Drafts](../runtime/ml-privacy.md).
 - QA fallback categories and real-device speech sanity expectations live in [ML QA](../workflows/ml-qa.md).
 

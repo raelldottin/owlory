@@ -73,6 +73,24 @@ final class VoiceTranscriptionRoutingRulesTests: XCTestCase {
         XCTAssertEqual(appendedResult, "Existing notes\nsecond voice note")
     }
 
+    func testWriteLivePartialsShouldReapplyAgainstStableBaseText() {
+        let existingBody = "Typed context"
+
+        let firstPartial = VoiceTranscriptionRoutingRules.apply(
+            "First partial",
+            to: existingBody,
+            in: .writeCapture
+        )
+        XCTAssertEqual(firstPartial, "Typed context\nFirst partial")
+
+        let expandedPartial = VoiceTranscriptionRoutingRules.apply(
+            "First partial with more words",
+            to: existingBody,
+            in: .writeCapture
+        )
+        XCTAssertEqual(expandedPartial, "Typed context\nFirst partial with more words")
+    }
+
     func testEmptyTranscriptionLeavesCurrentTextUnchanged() {
         XCTAssertEqual(
             VoiceTranscriptionRoutingRules.apply("   ", to: "Existing reflection", in: .todayReflection),

@@ -1,0 +1,32 @@
+{
+  "slice_id": "voice-write-live-transcription-capture",
+  "status": "done",
+  "summary": "Write voice capture now streams partial speech recognition into the editable note body while recording, then replaces it with the final transcript when the recording stops and the user remains responsible for saving the note.",
+  "files_touched": [
+    "automation/handoffs/20260426T064636Z-voice-write-live-transcription-capture.json",
+    "automation/queue/slices.json",
+    "docs/product/voice-transcription.md",
+    "docs/product/domains/write.md",
+    "owlory_xcode/Owlory/Core/Infrastructure/AudioCaptureService.swift",
+    "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/OwloryCoreTests/VoiceTranscriptionRoutingRulesTests.swift",
+    "SecondBrain/sessions/2026-04-26/024636-voice-write-live-transcription-capture.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id voice-write-live-transcription-capture",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=voice",
+    "make test-domain DOMAIN=write",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "No manual real-device microphone pass was run, so live partial timing and permission behavior still need a device sanity check."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent pre-classified slice remains; stop for review after live Write capture support.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-26T06:46:36Z"
+}
