@@ -206,6 +206,60 @@ enum WritingStage: Int, CaseIterable, Identifiable, Codable {
     }
 }
 
+enum WritingSourceType: String, CaseIterable, Identifiable, Codable {
+    case article
+    case book
+    case video
+    case podcast
+    case webpage
+    case conversation
+    case document
+    case other
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .article: return "Article"
+        case .book: return "Book"
+        case .video: return "Video"
+        case .podcast: return "Podcast"
+        case .webpage: return "Webpage"
+        case .conversation: return "Conversation"
+        case .document: return "Document"
+        case .other: return "Other"
+        }
+    }
+}
+
+struct WritingSourceMetadata: Equatable, Codable {
+    var sourceTitle: String
+    var creator: String
+    var url: String
+    var type: WritingSourceType
+    var sourceDate: String
+    var citation: String
+    var quote: String
+
+    init(
+        sourceTitle: String = "",
+        creator: String = "",
+        url: String = "",
+        type: WritingSourceType = .article,
+        sourceDate: String = "",
+        citation: String = "",
+        quote: String = ""
+    ) {
+        self.sourceTitle = sourceTitle
+        self.creator = creator
+        self.url = url
+        self.type = type
+        self.sourceDate = sourceDate
+        self.citation = citation
+        self.quote = quote
+    }
+}
+
 struct WritingNote: Identifiable, Equatable, Codable {
     let id: UUID
     var title: String
@@ -214,8 +268,18 @@ struct WritingNote: Identifiable, Equatable, Codable {
     var createdDate: Date
     var audioFileName: String?
     var audioTranscription: String?
+    var sourceMetadata: WritingSourceMetadata?
 
-    init(id: UUID = UUID(), title: String, body: String, stage: WritingStage = .capture, createdDate: Date = Date(), audioFileName: String? = nil, audioTranscription: String? = nil) {
+    init(
+        id: UUID = UUID(),
+        title: String,
+        body: String,
+        stage: WritingStage = .capture,
+        createdDate: Date = Date(),
+        audioFileName: String? = nil,
+        audioTranscription: String? = nil,
+        sourceMetadata: WritingSourceMetadata? = nil
+    ) {
         self.id = id
         self.title = title
         self.body = body
@@ -223,6 +287,7 @@ struct WritingNote: Identifiable, Equatable, Codable {
         self.createdDate = createdDate
         self.audioFileName = audioFileName
         self.audioTranscription = audioTranscription
+        self.sourceMetadata = sourceMetadata
     }
 }
 

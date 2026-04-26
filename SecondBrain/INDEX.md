@@ -1,5 +1,12 @@
 # Second Brain Index
 
+## 2026-04-26
+
+- [write-lightweight-source-note-conversion](sessions/2026-04-26/034234-write-lightweight-source-note-conversion.md)
+- [today-linked-train-carryforward-guard](sessions/2026-04-26/033220-today-linked-train-carryforward-guard.md)
+- [voice-write-live-transcription-capture](sessions/2026-04-26/024636-voice-write-live-transcription-capture.md)
+- [today-protocol-carryforward-contract-guardrails](sessions/2026-04-26/002830-today-protocol-carryforward-contract-guardrails.md)
+
 ## 2026-04-25
 
 - [today-home-wrapped-evening-gate](sessions/2026-04-25/101939-today-home-wrapped-evening-gate.md)

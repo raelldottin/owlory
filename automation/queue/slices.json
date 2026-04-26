@@ -207,6 +207,34 @@
       ],
       "max_files_changed": 8,
       "notes": "A linked Train Focus item should not appear as carried-forward Train work unless its linked session is still planned and actionable today."
+    },
+    {
+      "slice_id": "write-lightweight-source-note-conversion",
+      "title": "Add lightweight source-note conversion for Write notes",
+      "status": "done",
+      "priority": 70,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-26/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-linked-train-carryforward-guard"
+      ],
+      "max_files_changed": 9,
+      "notes": "Write users should be able to turn an existing note into a source note from note detail without losing note text or performing a desktop-style filing workflow."
     }
   ]
 }

@@ -73,6 +73,26 @@ final class WriteStore: OwloryObservableObject {
         persist()
     }
 
+    @discardableResult
+    func turnIntoSourceNote(id: UUID, metadata: WritingSourceMetadata) -> Bool {
+        guard let index = notes.firstIndex(where: { $0.id == id }) else { return false }
+
+        var updated = notes[index]
+        updated.sourceMetadata = metadata
+
+        if updated.stage != .source {
+            guard let transitioned = try? WritingStageRules.transition(updated, to: .source) else {
+                lastError = "This note can't be turned into a source note from its current stage."
+                return false
+            }
+            updated = transitioned
+        }
+
+        notes[index] = updated
+        persist()
+        return true
+    }
+
     func deleteNote(id: UUID) {
         notes.removeAll { $0.id == id }
         persist()

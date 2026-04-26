@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 struct WriteView: View {
@@ -349,13 +350,33 @@ private struct NoteDetailView: View {
     let onDismiss: () -> Void
     @State private var title: String
     @State private var bodyText: String
+    @State private var stage: WritingStage
+    @State private var showingSourceNoteSheet = false
+    @State private var sourceType: WritingSourceType
+    @State private var sourceTitle: String
+    @State private var sourceCreator: String
+    @State private var sourceURL: String
+    @State private var sourceDate: String
+    @State private var sourceCitation: String
+    @State private var sourceQuote: String
+    @State private var hasSourceMetadata: Bool
 
     init(note: WritingNote, store: WriteStore, onDismiss: @escaping () -> Void) {
         self.note = note
         self.store = store
         self.onDismiss = onDismiss
+        let sourceMetadata = note.sourceMetadata
         self._title = State(initialValue: note.title)
         self._bodyText = State(initialValue: note.body)
+        self._stage = State(initialValue: note.stage)
+        self._sourceType = State(initialValue: sourceMetadata?.type ?? .article)
+        self._sourceTitle = State(initialValue: sourceMetadata?.sourceTitle ?? note.title)
+        self._sourceCreator = State(initialValue: sourceMetadata?.creator ?? "")
+        self._sourceURL = State(initialValue: sourceMetadata?.url ?? Self.firstURL(in: "\(note.title)\n\(note.body)"))
+        self._sourceDate = State(initialValue: sourceMetadata?.sourceDate ?? "")
+        self._sourceCitation = State(initialValue: sourceMetadata?.citation ?? "")
+        self._sourceQuote = State(initialValue: sourceMetadata?.quote ?? "")
+        self._hasSourceMetadata = State(initialValue: sourceMetadata != nil)
     }
 
     var body: some View {
@@ -387,9 +408,32 @@ private struct NoteDetailView: View {
                         }
                     }
                 }
+                if stage == .source || hasSourceMetadata {
+                    Section("Source") {
+                        if hasSourceMetadata {
+                            LabeledContent("Type", value: sourceType.title)
+                            if !sourceTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                LabeledContent("Source Title", value: sourceTitle)
+                            }
+                            if !sourceCreator.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                LabeledContent("Author / Creator", value: sourceCreator)
+                            }
+                            if !sourceURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                LabeledContent("URL", value: sourceURL)
+                            }
+                        } else {
+                            Text("No source details yet.")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Button("Edit Source Details") {
+                            prepareSourceNoteSheet()
+                        }
+                    }
+                }
                 Section("Stage") {
-                    LabeledContent("Current", value: note.stage.title)
-                    if let next = WritingStageRules.nextStage(after: note.stage) {
+                    LabeledContent("Current", value: stage.title)
+                    if let next = WritingStageRules.nextStage(after: stage) {
                         Button("Advance to \(next.title)") {
                             store.advanceStage(id: note.id)
                             onDismiss()
@@ -403,6 +447,18 @@ private struct NoteDetailView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { onDismiss() }
                 }
+                if canTurnIntoSourceNote {
+                    ToolbarItem(placement: .primaryAction) {
+                        Menu {
+                            Button(sourceNoteActionTitle) {
+                                prepareSourceNoteSheet()
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                        }
+                        .accessibilityLabel("Note options")
+                    }
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         store.updateNote(id: note.id, title: title, body: bodyText)
@@ -410,6 +466,106 @@ private struct NoteDetailView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showingSourceNoteSheet) {
+                sourceNoteSheet
+            }
         }
+    }
+
+    private var canTurnIntoSourceNote: Bool {
+        stage == .source || WritingStageRules.canTransition(from: stage, to: .source)
+    }
+
+    private var sourceNoteActionTitle: String {
+        stage == .source ? "Edit Source Details" : "Turn into Source Note"
+    }
+
+    private var sourceNoteSheet: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    Picker("Kind", selection: $sourceType) {
+                        ForEach(WritingSourceType.allCases) { type in
+                            Text(type.title).tag(type)
+                        }
+                    }
+                } header: {
+                    Text("What kind of source is this?")
+                } footer: {
+                    Text("Owlory keeps your original note text and adds source fields quietly.")
+                }
+
+                Section("Source Details") {
+                    TextField("Source title", text: $sourceTitle)
+                    TextField("Author / creator", text: $sourceCreator)
+                    TextField("URL", text: $sourceURL)
+                        .textInputAutocapitalization(.never)
+                        #if os(iOS)
+                        .keyboardType(.URL)
+                        #endif
+                    TextField("Date accessed or created", text: $sourceDate)
+                }
+
+                Section("Optional Reference") {
+                    TextField("Citation", text: $sourceCitation, axis: .vertical)
+                        .lineLimit(2...5)
+                    TextField("Quote", text: $sourceQuote, axis: .vertical)
+                        .lineLimit(2...6)
+                }
+            }
+            .navigationTitle("Source Note")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        showingSourceNoteSheet = false
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        saveSourceNote()
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+    }
+
+    private func prepareSourceNoteSheet() {
+        if sourceTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            sourceTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        if sourceURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            sourceURL = Self.firstURL(in: "\(title)\n\(bodyText)")
+        }
+        showingSourceNoteSheet = true
+    }
+
+    private func saveSourceNote() {
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        let metadata = WritingSourceMetadata(
+            sourceTitle: sourceTitle.trimmingCharacters(in: .whitespacesAndNewlines),
+            creator: sourceCreator.trimmingCharacters(in: .whitespacesAndNewlines),
+            url: sourceURL.trimmingCharacters(in: .whitespacesAndNewlines),
+            type: sourceType,
+            sourceDate: sourceDate.trimmingCharacters(in: .whitespacesAndNewlines),
+            citation: sourceCitation.trimmingCharacters(in: .whitespacesAndNewlines),
+            quote: sourceQuote.trimmingCharacters(in: .whitespacesAndNewlines)
+        )
+
+        if store.turnIntoSourceNote(id: note.id, metadata: metadata) {
+            stage = .source
+            hasSourceMetadata = true
+            showingSourceNoteSheet = false
+        }
+    }
+
+    private static func firstURL(in text: String) -> String {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else {
+            return ""
+        }
+
+        let range = NSRange(text.startIndex..<text.endIndex, in: text)
+        return detector.firstMatch(in: text, options: [], range: range)?.url?.absoluteString ?? ""
     }
 }

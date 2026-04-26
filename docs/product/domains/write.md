@@ -10,6 +10,8 @@
 
 - The current implementation stores notes in explicit stages: capture, source, permanent, draft seed, draft, published, archived.
 - Those stages are support structure for retrieval, incubation, and optional promotion, not a claim that Write is a full note-taking, research, or publishing system.
+- Source note creation is a lightweight classification step: open a note, choose `Turn into Source Note`, add only useful source metadata, and save.
+- Turning a note into a source note must preserve the original note title and body. It adds source fields and moves the note into the source-note role; it must not become a desktop-style filing ritual.
 - Any future refinement should make Write feel more like catching a thought than managing a note.
 - Write has no required daily or weekly note cadence.
 - Today should not use generic domain-balance copy to imply Write is quiet. Use the Write pipeline nudge only when capture notes are piling up and not advancing.
@@ -65,6 +67,7 @@
 - Voice-assisted capture should populate the editable body while the user is speaking, but it remains draft text until the user saves the note.
 - Stage changes must stay explicit and tested, but they must not become a gate that makes capture feel heavy.
 - Staged note rows should have one primary action: open the note. Secondary actions such as stage advancement belong in note detail or row actions, not nested inline buttons.
+- Source metadata should stay forgiving: source title, creator, URL, source type, date, citation, and quote fields are optional aids, not required proof before saving.
 - Future capture refinements should prefer forgiving defaults over correctness rituals.
 - Do not destroy source content or context during promotion.
 - Promotion into the rest of Owlory should remain optional; not every note should become structured work.

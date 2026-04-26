@@ -90,6 +90,51 @@ final class WriteStoreTests: XCTestCase {
         XCTAssertEqual(store.notes[0].body, "New")
     }
 
+    func testTurnIntoSourceNotePreservesTextAndStoresMetadata() {
+        let store = makeStore()
+        store.addNote(title: "Reading Capture", body: "Original note text https://example.com/source")
+        let id = store.notes[0].id
+
+        let metadata = WritingSourceMetadata(
+            sourceTitle: "Example Source",
+            creator: "Rae",
+            url: "https://example.com/source",
+            type: .webpage,
+            sourceDate: "2026-04-26",
+            citation: "Example citation",
+            quote: "Useful quoted passage"
+        )
+
+        let converted = store.turnIntoSourceNote(id: id, metadata: metadata)
+
+        XCTAssertTrue(converted)
+        XCTAssertEqual(store.notes[0].title, "Reading Capture")
+        XCTAssertEqual(store.notes[0].body, "Original note text https://example.com/source")
+        XCTAssertEqual(store.notes[0].stage, .source)
+        XCTAssertEqual(store.notes[0].sourceMetadata, metadata)
+    }
+
+    func testTurnIntoSourceNoteDoesNotSkipInvalidStageTransitions() {
+        let store = makeStore()
+        store.addNote(title: "Draft", body: "Already downstream")
+        let id = store.notes[0].id
+
+        store.advanceStage(id: id)
+        store.advanceStage(id: id)
+        store.advanceStage(id: id)
+        store.advanceStage(id: id)
+        XCTAssertEqual(store.notes[0].stage, .draft)
+
+        let converted = store.turnIntoSourceNote(
+            id: id,
+            metadata: WritingSourceMetadata(sourceTitle: "Invalid", type: .document)
+        )
+
+        XCTAssertFalse(converted)
+        XCTAssertEqual(store.notes[0].stage, .draft)
+        XCTAssertNil(store.notes[0].sourceMetadata)
+    }
+
     func testHighlightedNoteToPresentReturnsNoteForNewRequest() {
         let noteID = UUID()
 
