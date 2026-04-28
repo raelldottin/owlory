@@ -356,6 +356,30 @@
       ],
       "max_files_changed": 14,
       "notes": "Focus must not render as a standalone Today section. Continue is the only Today surface for current, carried, and source-backed Focus work."
+    },
+    {
+      "slice_id": "today-continue-focus-badge-dynamic-type-legibility",
+      "title": "Keep Focus-backed Continue rows legible at large Dynamic Type",
+      "status": "done",
+      "priority": 120,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-continue-owns-focus-surface"
+      ],
+      "max_files_changed": 5,
+      "notes": "Simulator visual pass showed the redundant trailing Focus pill crowds Continue rows at larger Dynamic Type. The row subtitle already carries the Focus reason."
     }
   ]
 }

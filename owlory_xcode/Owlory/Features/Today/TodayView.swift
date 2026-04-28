@@ -363,14 +363,6 @@ struct TodayView: View {
                     .padding(.vertical, 2)
                     .background(OwloryColor.warning.opacity(0.12), in: Capsule())
             }
-            if focusItem(for: item) != nil {
-                Text("Focus")
-                    .font(.caption2.weight(.medium))
-                    .foregroundStyle(OwloryColor.brandPrimary)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(OwloryColor.brandPrimary.opacity(0.10), in: Capsule())
-            }
             Image(systemName: "chevron.right")
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(.tertiary)

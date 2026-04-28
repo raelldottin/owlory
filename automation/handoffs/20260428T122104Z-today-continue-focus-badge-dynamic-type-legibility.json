@@ -1,0 +1,27 @@
+{
+  "slice_id": "today-continue-focus-badge-dynamic-type-legibility",
+  "status": "done",
+  "summary": "Removed the redundant trailing Focus pill from Continue rows so Focus-backed rows remain legible at larger Dynamic Type while preserving the existing Domain · Focus subtitle and accessibility status actions.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-28/122104-today-continue-focus-badge-dynamic-type-legibility.md",
+    "automation/handoffs/20260428T122104Z-today-continue-focus-badge-dynamic-type-legibility.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "The visual pass used simulator-local seeded Today data rather than a full fixture-driven UI test.",
+    "Swipe actions are discoverable through iOS row gestures and accessibility actions, but there is still no always-visible Done button in Continue."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop for review after correcting the visual issue found during the Today simulator pass.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-28T12:21:04Z"
+}

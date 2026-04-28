@@ -2,6 +2,7 @@
 
 ## 2026-04-28
 
+- [today-continue-focus-badge-dynamic-type-legibility](sessions/2026-04-28/122104-today-continue-focus-badge-dynamic-type-legibility.md)
 - [today-continue-owns-focus-surface](sessions/2026-04-28/121301-today-continue-owns-focus-surface.md)
 - [today-focus-completion-contract-actions](sessions/2026-04-28/075238-today-focus-completion-contract-actions.md)
 - [patterns-weekly-digest-count-protocol-step-completions](sessions/2026-04-28/074311-patterns-weekly-digest-count-protocol-step-completions.md)
