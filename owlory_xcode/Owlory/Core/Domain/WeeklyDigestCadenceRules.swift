@@ -13,9 +13,17 @@ enum WeeklyDigestCadenceRules {
             return nil
         }
 
+        return previousCompletedWeekWindow(for: now, calendar: calendar)
+    }
+
+    static func previousCompletedWeekWindow(for now: Date, calendar: Calendar) -> WeekWindow? {
         let todayStart = calendar.startOfDay(for: now)
-        guard let previousMonday = calendar.date(byAdding: .day, value: -7, to: todayStart),
-            let previousSunday = calendar.date(byAdding: .day, value: -1, to: todayStart)
+        let weekday = calendar.component(.weekday, from: todayStart)
+        let daysSinceMonday = (weekday - mondayWeekday + 7) % 7
+
+        guard let currentMonday = calendar.date(byAdding: .day, value: -daysSinceMonday, to: todayStart),
+            let previousMonday = calendar.date(byAdding: .day, value: -7, to: currentMonday),
+            let previousSunday = calendar.date(byAdding: .day, value: -1, to: currentMonday)
         else {
             return nil
         }

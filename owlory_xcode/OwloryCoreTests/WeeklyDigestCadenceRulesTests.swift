@@ -32,6 +32,15 @@ final class WeeklyDigestCadenceRulesTests: XCTestCase {
         XCTAssertNil(window)
     }
 
+    func testPreviousCompletedWeekWindowWorksAfterMonday() {
+        let now = date("2026-04-28T17:30:00Z")
+
+        let window = WeeklyDigestCadenceRules.previousCompletedWeekWindow(for: now, calendar: calendar)
+
+        XCTAssertEqual(window?.weekStarting, date("2026-04-20T00:00:00Z"))
+        XCTAssertEqual(window?.weekEnding, date("2026-04-26T00:00:00Z"))
+    }
+
     func testExistingDigestIsMatchedByNormalizedWeekStart() {
         let window = WeeklyDigestCadenceRules.WeekWindow(
             weekStarting: date("2026-04-06T00:00:00Z"),

@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-04-28
+
+- [today-weekly-digest-truthful-summary-copy](sessions/2026-04-28/030607-today-weekly-digest-truthful-summary-copy.md)
+
 ## 2026-04-26
 
 - [write-lightweight-source-note-conversion](sessions/2026-04-26/034234-write-lightweight-source-note-conversion.md)

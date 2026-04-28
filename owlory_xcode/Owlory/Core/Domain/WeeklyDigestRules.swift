@@ -2,6 +2,38 @@ import Foundation
 
 enum WeeklyDigestRules {
 
+    static func collapsedCompletionSummary(for digest: WeeklyDigest) -> String {
+        guard digest.totalPlanned > 0 else {
+            return "No planned Focus items"
+        }
+
+        return "\(digest.totalDone) of \(digest.totalPlanned) done"
+    }
+
+    static func relativeWeekLabel(
+        for digest: WeeklyDigest,
+        now: Date,
+        calendar: Calendar = .current
+    ) -> String {
+        guard let previousWeek = WeeklyDigestCadenceRules.previousCompletedWeekWindow(
+            for: now,
+            calendar: calendar
+        ) else {
+            return "Most Recent Week"
+        }
+
+        let digestStart = calendar.startOfDay(for: digest.weekStarting)
+        let digestEnd = calendar.startOfDay(for: digest.weekEnding)
+        let previousStart = calendar.startOfDay(for: previousWeek.weekStarting)
+        let previousEnd = calendar.startOfDay(for: previousWeek.weekEnding)
+
+        if digestStart == previousStart && digestEnd == previousEnd {
+            return "Last Week"
+        }
+
+        return "Most Recent Week"
+    }
+
     static func generate(
         entries: [DailyEntry],
         weekStarting: Date,

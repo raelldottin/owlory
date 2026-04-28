@@ -235,6 +235,35 @@
       ],
       "max_files_changed": 9,
       "notes": "Write users should be able to turn an existing note into a source note from note detail without losing note text or performing a desktop-style filing workflow."
+    },
+    {
+      "slice_id": "today-weekly-digest-truthful-summary-copy",
+      "title": "Make Today weekly digest summary copy truthful",
+      "status": "done",
+      "priority": 80,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestCadenceRules.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestCadenceRulesTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=patterns",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "write-lightweight-source-note-conversion"
+      ],
+      "max_files_changed": 10,
+      "notes": "Today should show count-first weekly digest copy, avoid 0% for empty planning, and say Last Week only when the digest matches the immediately previous calendar week."
     }
   ]
 }

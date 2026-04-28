@@ -1,0 +1,32 @@
+{
+  "slice_id": "today-weekly-digest-truthful-summary-copy",
+  "status": "done",
+  "summary": "Changed Today's collapsed weekly digest row from percentage-first copy to count-first truthful copy, showing no planned Focus items when the digest has zero planned items and using Most Recent Week for older stored digests.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-28/030607-today-weekly-digest-truthful-summary-copy.md",
+    "automation/handoffs/20260428T070607Z-today-weekly-digest-truthful-summary-copy.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigestCadenceRules.swift",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryCoreTests/WeeklyDigestCadenceRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id today-weekly-digest-truthful-summary-copy",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=patterns",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "No manual simulator visual pass was performed for the collapsed weekly digest row."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent pre-classified slice remains; stop for review after weekly digest summary copy fix.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-28T07:06:07Z"
+}

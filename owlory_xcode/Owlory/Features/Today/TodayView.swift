@@ -731,10 +731,17 @@ struct TodayView: View {
                     }
                 } label: {
                     HStack {
-                        Label("Last Week", systemImage: "calendar.badge.clock")
+                        Label(
+                            WeeklyDigestRules.relativeWeekLabel(
+                                for: digest,
+                                now: Date(),
+                                calendar: patternStore.weeklyDigestCalendar
+                            ),
+                            systemImage: "calendar.badge.clock"
+                        )
                             .font(.subheadline.weight(.medium))
                         Spacer()
-                        Text("\(Int(digest.completionRate * 100))% done")
+                        Text(WeeklyDigestRules.collapsedCompletionSummary(for: digest))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

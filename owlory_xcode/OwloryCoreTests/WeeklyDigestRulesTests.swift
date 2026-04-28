@@ -336,6 +336,65 @@ final class WeeklyDigestRulesTests: XCTestCase {
         )
     }
 
+    func testCollapsedCompletionSummaryUsesCountsWhenPlannedItemsExist() {
+        let digest = makeDigest(
+            weekStarting: makeDate("2026-04-20T00:00:00Z"),
+            weekEnding: makeDate("2026-04-26T00:00:00Z"),
+            totalPlanned: 3,
+            totalDone: 0
+        )
+
+        XCTAssertEqual(WeeklyDigestRules.collapsedCompletionSummary(for: digest), "0 of 3 done")
+    }
+
+    func testCollapsedCompletionSummaryAvoidsZeroPercentForEmptyPlanning() {
+        let digest = makeDigest(
+            weekStarting: makeDate("2026-04-20T00:00:00Z"),
+            weekEnding: makeDate("2026-04-26T00:00:00Z"),
+            totalPlanned: 0,
+            totalDone: 0
+        )
+
+        XCTAssertEqual(
+            WeeklyDigestRules.collapsedCompletionSummary(for: digest),
+            "No planned Focus items"
+        )
+    }
+
+    func testRelativeWeekLabelUsesLastWeekOnlyForImmediatelyPreviousWeek() {
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let digest = makeDigest(
+            weekStarting: makeDate("2026-04-20T00:00:00Z"),
+            weekEnding: makeDate("2026-04-26T00:00:00Z")
+        )
+
+        let label = WeeklyDigestRules.relativeWeekLabel(
+            for: digest,
+            now: makeDate("2026-04-28T17:30:00Z"),
+            calendar: utcCalendar
+        )
+
+        XCTAssertEqual(label, "Last Week")
+    }
+
+    func testRelativeWeekLabelFallsBackForOlderStoredDigest() {
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let digest = makeDigest(
+            weekStarting: makeDate("2026-04-13T00:00:00Z"),
+            weekEnding: makeDate("2026-04-19T00:00:00Z")
+        )
+
+        let label = WeeklyDigestRules.relativeWeekLabel(
+            for: digest,
+            now: makeDate("2026-04-28T17:30:00Z"),
+            calendar: utcCalendar
+        )
+
+        XCTAssertEqual(label, "Most Recent Week")
+    }
+
     func testKeyInsightForStrongWeek() {
         let monday = makeDate("2026-04-06T09:00:00Z")
         let sunday = makeDate("2026-04-12T09:00:00Z")
@@ -385,15 +444,20 @@ final class WeeklyDigestRulesTests: XCTestCase {
         )
     }
 
-    private func makeDigest(weekStarting: Date, weekEnding: Date) -> WeeklyDigest {
+    private func makeDigest(
+        weekStarting: Date,
+        weekEnding: Date,
+        totalPlanned: Int = 0,
+        totalDone: Int = 0
+    ) -> WeeklyDigest {
         WeeklyDigest(
             weekStarting: weekStarting,
             weekEnding: weekEnding,
             generatedAt: makeDate("2026-04-13T12:00:00Z"),
             daysWithEntries: 0,
-            completionRate: 0,
-            totalPlanned: 0,
-            totalDone: 0,
+            completionRate: totalPlanned > 0 ? Double(totalDone) / Double(totalPlanned) : 0,
+            totalPlanned: totalPlanned,
+            totalDone: totalDone,
             averageReadiness: 0
         )
     }
