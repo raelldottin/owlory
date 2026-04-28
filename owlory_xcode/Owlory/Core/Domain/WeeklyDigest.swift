@@ -1,7 +1,16 @@
 import Foundation
 
+enum WeeklyDigestRuleVersion {
+    /// Current calculation contract for weekly digest completion totals.
+    ///
+    /// Version 2 records the contract that counts completed Today Focus items plus
+    /// timestamped completed Home protocol steps inside the digest week.
+    static let current = 2
+}
+
 struct WeeklyDigest: Identifiable, Codable, Equatable {
     let id: UUID
+    let digestRuleVersion: Int?
     let weekStarting: Date
     let weekEnding: Date
     let generatedAt: Date
@@ -17,13 +26,43 @@ struct WeeklyDigest: Identifiable, Codable, Equatable {
     let streakDays: Int
     let keyInsight: String
 
+    var usesCurrentDigestRuleVersion: Bool {
+        digestRuleVersion == WeeklyDigestRuleVersion.current
+    }
+
+    var isLegacyDigestRuleVersion: Bool {
+        !usesCurrentDigestRuleVersion
+    }
+
     struct DayHighlight: Codable, Equatable {
         let date: Date
         let summary: String
     }
 
+    func withStableID(_ stableID: UUID) -> WeeklyDigest {
+        WeeklyDigest(
+            id: stableID,
+            digestRuleVersion: digestRuleVersion,
+            weekStarting: weekStarting,
+            weekEnding: weekEnding,
+            generatedAt: generatedAt,
+            daysWithEntries: daysWithEntries,
+            completionRate: completionRate,
+            totalPlanned: totalPlanned,
+            totalDone: totalDone,
+            averageReadiness: averageReadiness,
+            bestDay: bestDay,
+            hardestDay: hardestDay,
+            domainActivity: domainActivity,
+            stalledItemCount: stalledItemCount,
+            streakDays: streakDays,
+            keyInsight: keyInsight
+        )
+    }
+
     init(
         id: UUID = UUID(),
+        digestRuleVersion: Int? = WeeklyDigestRuleVersion.current,
         weekStarting: Date,
         weekEnding: Date,
         generatedAt: Date,
@@ -40,6 +79,7 @@ struct WeeklyDigest: Identifiable, Codable, Equatable {
         keyInsight: String = ""
     ) {
         self.id = id
+        self.digestRuleVersion = digestRuleVersion
         self.weekStarting = weekStarting
         self.weekEnding = weekEnding
         self.generatedAt = generatedAt

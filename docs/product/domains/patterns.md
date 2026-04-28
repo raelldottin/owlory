@@ -45,6 +45,7 @@
 - Keep weekly digest output generation and digest date label helpers in `WeeklyDigestRules`; callers must pass the same explicit calendar used for Pattern snapshots so stale counts, streaks, highlight day names, and week-range labels use the same boundary and time-zone semantics.
 - Weekly digest Focus completion is only as truthful as Today Focus status. Today owns Continue-based Done actions and linked-source completion propagation before Pattern digest generation reads `DailyEntry.focusThree`; do not depend on a standalone Today Focus section.
 - Weekly digest completion totals include Today Focus items and timestamped completed Home protocol steps inside the digest window. Pending protocol steps, skipped protocol steps, and completed steps without a completion timestamp do not change the weekly digest completion totals.
+- Weekly digest persistence must be rule-version honest. `WeeklyDigest.digestRuleVersion` records the calculation contract used for the row. `PatternStore` may refresh the latest digest from source data when the stored row is stale, but normal loading must not silently bulk-rewrite older historical digests.
 - Keep repository loading, digest persistence, and latest-digest publishing in `PatternStore`.
 
 ## Verify

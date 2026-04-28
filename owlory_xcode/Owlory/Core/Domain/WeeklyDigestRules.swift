@@ -1,6 +1,7 @@
 import Foundation
 
 enum WeeklyDigestRules {
+    static let currentDigestRuleVersion = WeeklyDigestRuleVersion.current
 
     static func collapsedCompletionSummary(for digest: WeeklyDigest) -> String {
         guard digest.totalPlanned > 0 else {
@@ -8,6 +9,10 @@ enum WeeklyDigestRules {
         }
 
         return "\(digest.totalDone) of \(digest.totalPlanned) done"
+    }
+
+    static func usesCurrentDigestRuleVersion(_ digest: WeeklyDigest) -> Bool {
+        digest.digestRuleVersion == currentDigestRuleVersion
     }
 
     static func relativeWeekLabel(

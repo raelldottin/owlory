@@ -380,6 +380,35 @@
       ],
       "max_files_changed": 5,
       "notes": "Simulator visual pass showed the redundant trailing Focus pill crowds Continue rows at larger Dynamic Type. The row subtitle already carries the Focus reason."
+    },
+    {
+      "slice_id": "patterns-weekly-digest-versioned-stale-refresh",
+      "title": "Add weekly digest versioning and safe regeneration for stale persisted digests",
+      "status": "done",
+      "priority": 130,
+      "domain": "patterns",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigest.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestCadenceRulesTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=patterns",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-continue-focus-badge-dynamic-type-legibility"
+      ],
+      "max_files_changed": 10,
+      "notes": "Weekly digest rule changes may make older persisted rows stale. Refresh only the latest stale digest from source data, preserve older history, and make digest calculation version metadata explicit."
     }
   ]
 }

@@ -1,0 +1,33 @@
+{
+  "slice_id": "patterns-weekly-digest-versioned-stale-refresh",
+  "status": "done",
+  "summary": "Added digestRuleVersion metadata to weekly digests, refreshed only the latest stale digest from source data under the current rule contract, and preserved older persisted digest rows as legacy rather than silently backfilling history.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-28/123713-patterns-weekly-digest-versioned-stale-refresh.md",
+    "automation/handoffs/20260428T123713Z-patterns-weekly-digest-versioned-stale-refresh.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/patterns.md",
+    "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigest.swift",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+    "owlory_xcode/OwloryCoreTests/WeeklyDigestCadenceRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id patterns-weekly-digest-versioned-stale-refresh",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=patterns",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Older historical digests remain legacy/missing-version rows until a deliberate migration or review flow is added.",
+    "PatternStore still does not produce an empty replacement digest when source data for a previously persisted latest digest disappears entirely."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop for review after the data-integrity contract change; historical backfill remains a separate deliberate migration decision.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-28T12:37:13Z"
+}

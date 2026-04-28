@@ -98,10 +98,14 @@ final class PatternStore: OwloryObservableObject {
                     in: existingDigests,
                     weekStarting: targetWindow.weekStarting
                 ) {
-                    latestDigest = try refreshStoredDigestIfNeeded(
-                        existingDigests[existingIndex],
-                        in: existingDigests
-                    )
+                    if isLatestDigestIndex(existingIndex, in: existingDigests) {
+                        latestDigest = try refreshLatestDigestIfNeeded(
+                            existingDigests[existingIndex],
+                            in: existingDigests
+                        )
+                    } else {
+                        latestDigest = latestDigest(in: existingDigests)
+                    }
                     return
                 }
 
@@ -115,7 +119,7 @@ final class PatternStore: OwloryObservableObject {
                     try digestRepository.saveAll(all)
                     latestDigest = digest
                 } else {
-                    latestDigest = existingDigests.last
+                    latestDigest = latestDigest(in: existingDigests)
                 }
             } catch {
                 lastError = "Failed to generate digest: \(error.localizedDescription)"
@@ -133,12 +137,12 @@ final class PatternStore: OwloryObservableObject {
         PerformanceTelemetry.measure("PatternStore.loadLatestDigest", category: .patterns) {
             do {
                 let digests = try digestRepository.loadAll()
-                guard let latest = digests.last else {
+                guard let latest = latestDigest(in: digests) else {
                     latestDigest = nil
                     return
                 }
 
-                latestDigest = try refreshStoredDigestIfNeeded(latest, in: digests)
+                latestDigest = try refreshLatestDigestIfNeeded(latest, in: digests)
             } catch {
                 // Non-critical — digest display is optional
             }
@@ -163,21 +167,30 @@ final class PatternStore: OwloryObservableObject {
         )
     }
 
-    private func refreshStoredDigestIfNeeded(
+    private func refreshLatestDigestIfNeeded(
         _ digest: WeeklyDigest,
         in digests: [WeeklyDigest]
     ) throws -> WeeklyDigest {
+        guard isLatestDigest(digest, in: digests) else {
+            return digest
+        }
+
         guard let index = matchingDigestIndex(
             in: digests,
             weekStarting: digest.weekStarting
         ),
-            let refreshed = try makeDigest(
+            let regenerated = try makeDigest(
                 weekStarting: digest.weekStarting,
                 weekEnding: digest.weekEnding,
                 generatedAt: digest.generatedAt
-            ),
-            refreshed != digest
+            )
         else {
+            return digest
+        }
+
+        let refreshed = regenerated.withStableID(digest.id)
+        let isVersionStale = !WeeklyDigestRules.usesCurrentDigestRuleVersion(digest)
+        guard isVersionStale || refreshed != digest else {
             return digest
         }
 
@@ -195,5 +208,32 @@ final class PatternStore: OwloryObservableObject {
         return digests.firstIndex {
             calendar.startOfDay(for: $0.weekStarting) == targetStart
         }
+    }
+
+    private func latestDigest(in digests: [WeeklyDigest]) -> WeeklyDigest? {
+        guard let index = latestDigestIndex(in: digests) else { return nil }
+        return digests[index]
+    }
+
+    private func latestDigestIndex(in digests: [WeeklyDigest]) -> Int? {
+        digests.indices.max { lhs, rhs in
+            calendar.startOfDay(for: digests[lhs].weekStarting)
+                < calendar.startOfDay(for: digests[rhs].weekStarting)
+        }
+    }
+
+    private func isLatestDigest(_ digest: WeeklyDigest, in digests: [WeeklyDigest]) -> Bool {
+        guard let latest = latestDigest(in: digests) else { return false }
+        return calendar.startOfDay(for: latest.weekStarting)
+            == calendar.startOfDay(for: digest.weekStarting)
+    }
+
+    private func isLatestDigestIndex(_ index: Int, in digests: [WeeklyDigest]) -> Bool {
+        guard digests.indices.contains(index),
+            let latestIndex = latestDigestIndex(in: digests)
+        else {
+            return false
+        }
+        return latestIndex == index
     }
 }

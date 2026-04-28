@@ -66,6 +66,62 @@ final class WeeklyDigestRulesTests: XCTestCase {
         XCTAssertEqual(digest!.completionRate, 0.5)
     }
 
+    func testGeneratedDigestRecordsCurrentRuleVersionAndLinkedFocusCompletion() {
+        let linkedRecordID = UUID()
+        let digest = WeeklyDigestRules.generate(
+            entries: [
+                makeEntry(
+                    date: makeDate("2026-04-07T09:00:00Z"),
+                    items: [
+                        FocusItem(
+                            title: "Complete linked train session",
+                            domain: .training,
+                            status: .done,
+                            linkedRecordID: linkedRecordID
+                        )
+                    ]
+                )
+            ],
+            weekStarting: makeDate("2026-04-06T00:00:00Z"),
+            weekEnding: makeDate("2026-04-12T00:00:00Z"),
+            generatedAt: makeDate("2026-04-13T12:00:00Z")
+        )
+
+        XCTAssertEqual(digest?.digestRuleVersion, WeeklyDigestRules.currentDigestRuleVersion)
+        XCTAssertEqual(digest?.totalPlanned, 1)
+        XCTAssertEqual(digest?.totalDone, 1)
+    }
+
+    func testLegacyDigestWithoutRuleVersionRemainsReadable() throws {
+        let json = """
+        [
+          {
+            "id": "11111111-1111-1111-1111-111111111111",
+            "weekStarting": "2026-04-06T00:00:00Z",
+            "weekEnding": "2026-04-12T00:00:00Z",
+            "generatedAt": "2026-04-13T12:00:00Z",
+            "daysWithEntries": 7,
+            "completionRate": 0,
+            "totalPlanned": 21,
+            "totalDone": 0,
+            "averageReadiness": 0,
+            "domainActivity": [],
+            "stalledItemCount": 0,
+            "streakDays": 0,
+            "keyInsight": "Legacy digest"
+          }
+        ]
+        """
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let digests = try decoder.decode([WeeklyDigest].self, from: Data(json.utf8))
+
+        XCTAssertNil(digests[0].digestRuleVersion)
+        XCTAssertTrue(digests[0].isLegacyDigestRuleVersion)
+        XCTAssertEqual(digests[0].totalPlanned, 21)
+    }
+
     func testCompletedProtocolStepsCountAsCompletedHomeWork() {
         var utcCalendar = Calendar(identifier: .gregorian)
         utcCalendar.timeZone = TimeZone(secondsFromGMT: 0)!
