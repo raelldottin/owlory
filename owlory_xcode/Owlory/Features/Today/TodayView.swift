@@ -107,7 +107,6 @@ struct TodayView: View {
         List {
             dashboardHeader
             checkInSection
-            focusPlanSection
             continueSection
             focusSuggestionSection
             domainTrainCard
@@ -247,120 +246,6 @@ struct TodayView: View {
         return "\(tag("Energy", e)) · \(tag("Mood", m)) · \(tag("Sleep", s))"
     }
 
-    // MARK: - Focus
-
-    @ViewBuilder
-    private var focusPlanSection: some View {
-        if !currentEntry.focusThree.isEmpty {
-            Section {
-                ForEach(currentEntry.focusThree) { item in
-                    focusPlanRow(for: item)
-                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                            if item.status != .done {
-                                Button {
-                                    store.updateStatus(for: item.id, to: .done)
-                                } label: {
-                                    Label("Done", systemImage: "checkmark.circle")
-                                }
-                                .tint(OwloryColor.success)
-                            }
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            if item.status != .deferred {
-                                Button {
-                                    store.updateStatus(for: item.id, to: .deferred)
-                                } label: {
-                                    Label("Defer", systemImage: "clock.arrow.circlepath")
-                                }
-                                .tint(OwloryColor.warning)
-                            }
-
-                            if item.status != .dropped {
-                                Button(role: .destructive) {
-                                    store.updateStatus(for: item.id, to: .dropped)
-                                } label: {
-                                    Label("Drop", systemImage: "xmark.circle")
-                                }
-                            }
-                        }
-                }
-            } header: {
-                Text("Focus")
-            } footer: {
-                Text("Mark Focus items done here. Source-backed Train, Home, and published Write work can also complete linked Focus items.")
-            }
-        }
-    }
-
-    private func focusPlanRow(for item: FocusItem) -> some View {
-        HStack(alignment: .center, spacing: 10) {
-            Image(systemName: domainIcon(item.domain))
-                .font(.subheadline)
-                .foregroundStyle(OwloryColor.brandPrimary)
-                .frame(width: 24)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(item.title)
-                    .font(.subheadline.weight(.medium))
-                    .strikethrough(item.status == .done)
-                    .foregroundStyle(item.status == .done ? .secondary : .primary)
-                HStack(spacing: 6) {
-                    Text(item.domain.title)
-                    Text("·")
-                        .foregroundStyle(.tertiary)
-                    Label(focusStatusLabel(item.status), systemImage: focusStatusIcon(item.status))
-                        .foregroundStyle(focusStatusColor(item.status))
-                }
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            }
-
-            Spacer()
-
-            if item.status == .done {
-                Label("Done", systemImage: "checkmark.circle.fill")
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(OwloryColor.success)
-            } else {
-                Button {
-                    store.updateStatus(for: item.id, to: .done)
-                } label: {
-                    Text("Done")
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.small)
-                .accessibilityLabel("Mark \(item.title) done")
-            }
-        }
-    }
-
-    private func focusStatusLabel(_ status: FocusItemStatus) -> String {
-        switch status {
-        case .planned: return "Planned"
-        case .done: return "Done"
-        case .deferred: return "Deferred"
-        case .dropped: return "Dropped"
-        }
-    }
-
-    private func focusStatusIcon(_ status: FocusItemStatus) -> String {
-        switch status {
-        case .planned: return "circle"
-        case .done: return "checkmark.circle.fill"
-        case .deferred: return "clock.arrow.circlepath"
-        case .dropped: return "xmark.circle"
-        }
-    }
-
-    private func focusStatusColor(_ status: FocusItemStatus) -> Color {
-        switch status {
-        case .planned: return OwloryColor.textTertiary
-        case .done: return OwloryColor.success
-        case .deferred: return OwloryColor.warning
-        case .dropped: return OwloryColor.error
-        }
-    }
-
     // MARK: - Continue
 
     @ViewBuilder
@@ -376,7 +261,7 @@ struct TodayView: View {
                     }
                     .buttonStyle(.plain)
                     .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                        continueAddToFocusSwipeActions(for: item)
+                        continuePrimarySwipeActions(for: item)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         continueStatusSwipeActions(for: item)
@@ -387,15 +272,24 @@ struct TodayView: View {
                 Text("Continue")
             } footer: {
                 if items.contains(where: { $0.staleDayCount != nil }) {
-                    Text("Items with a badge have been carried for a few days. Open them in their domain, or swipe to defer or drop.")
+                    Text("Items with a day badge have been carried for a few days. Focus-backed rows can be swiped to mark done, defer, or drop.")
+                } else if items.contains(where: { focusItem(for: $0) != nil }) {
+                    Text("Focus lives in Continue. Swipe Focus-backed rows to mark done, defer, or drop.")
                 }
             }
         }
     }
 
     @ViewBuilder
-    private func continueAddToFocusSwipeActions(for item: TodayContinuationRules.ContinueItem) -> some View {
-        if store.canAddContinueItemToFocus(item) {
+    private func continuePrimarySwipeActions(for item: TodayContinuationRules.ContinueItem) -> some View {
+        if let focusItem = focusItem(for: item), focusItem.status != .done {
+            Button {
+                store.updateStatus(for: focusItem.id, to: .done)
+            } label: {
+                Label("Done", systemImage: "checkmark.circle")
+            }
+            .tint(OwloryColor.success)
+        } else if store.canAddContinueItemToFocus(item) {
             Button {
                 store.addContinueItemToFocus(item)
             } label: {
@@ -407,25 +301,29 @@ struct TodayView: View {
 
     @ViewBuilder
     private func continueStatusSwipeActions(for item: TodayContinuationRules.ContinueItem) -> some View {
-        if case .carriedFocusItem(let itemID) = item.source {
-            Button {
-                store.updateStatus(for: itemID, to: .deferred)
-            } label: {
-                Label("Defer", systemImage: "clock.arrow.circlepath")
+        if let focusItem = focusItem(for: item) {
+            if focusItem.status != .deferred {
+                Button {
+                    store.updateStatus(for: focusItem.id, to: .deferred)
+                } label: {
+                    Label("Defer", systemImage: "clock.arrow.circlepath")
+                }
+                .tint(OwloryColor.warning)
             }
-            .tint(OwloryColor.warning)
 
-            Button(role: .destructive) {
-                store.updateStatus(for: itemID, to: .dropped)
-            } label: {
-                Label("Drop", systemImage: "xmark.circle")
+            if focusItem.status != .dropped {
+                Button(role: .destructive) {
+                    store.updateStatus(for: focusItem.id, to: .dropped)
+                } label: {
+                    Label("Drop", systemImage: "xmark.circle")
+                }
             }
         }
     }
 
     private func continueAccessibilityHint(for item: TodayContinuationRules.ContinueItem) -> String {
-        if case .carriedFocusItem = item.source {
-            return "Opens \(item.domain.title). Swipe for defer and drop actions."
+        if focusItem(for: item) != nil {
+            return "Opens \(item.domain.title). Swipe for Focus status actions."
         }
         if store.canAddContinueItemToFocus(item) {
             return "Opens \(item.domain.title). Swipe to add this work to Focus Three."
@@ -465,10 +363,50 @@ struct TodayView: View {
                     .padding(.vertical, 2)
                     .background(OwloryColor.warning.opacity(0.12), in: Capsule())
             }
+            if focusItem(for: item) != nil {
+                Text("Focus")
+                    .font(.caption2.weight(.medium))
+                    .foregroundStyle(OwloryColor.brandPrimary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(OwloryColor.brandPrimary.opacity(0.10), in: Capsule())
+            }
             Image(systemName: "chevron.right")
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(.tertiary)
         }
+    }
+
+    private func focusItem(for item: TodayContinuationRules.ContinueItem) -> FocusItem? {
+        switch item.source {
+        case .focusItem(let itemID), .carriedFocusItem(let itemID):
+            return currentEntry.focusThree.first { $0.id == itemID }
+        case .homeProtocolRun:
+            return nil
+        case .trainingSession, .homeTask, .writingNote:
+            if let linkedRecordID = item.focusLinkedRecordID,
+               let exactMatch = currentEntry.focusThree.first(where: {
+                   $0.status == .planned &&
+                       $0.domain == item.domain &&
+                       $0.linkedRecordID == linkedRecordID
+               }) {
+                return exactMatch
+            }
+            return currentEntry.focusThree.first {
+                $0.status == .planned &&
+                    $0.domain == item.domain &&
+                    normalizedFocusTitle($0.title) == normalizedFocusTitle(item.title)
+            }
+        }
+    }
+
+    private func normalizedFocusTitle(_ title: String) -> String {
+        title
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+            .components(separatedBy: .whitespacesAndNewlines)
+            .filter { !$0.isEmpty }
+            .joined(separator: " ")
     }
 
     @ViewBuilder

@@ -3,6 +3,7 @@ import Foundation
 enum TodayContinuationRules {
     enum ContinueSource: Equatable {
         case trainingSession(UUID)
+        case focusItem(UUID)
         case carriedFocusItem(UUID)
         case homeProtocolRun(UUID)
         case homeTask(UUID)
@@ -12,6 +13,8 @@ enum TodayContinuationRules {
             switch self {
             case .trainingSession(let id):
                 return "trainingSession|\(id.uuidString)"
+            case .focusItem(let id):
+                return "focusItem|\(id.uuidString)"
             case .carriedFocusItem(let id):
                 return "carriedFocusItem|\(id.uuidString)"
             case .homeProtocolRun(let id):
@@ -52,7 +55,7 @@ enum TodayContinuationRules {
                 return true
             case .homeProtocolRun:
                 return false
-            case .carriedFocusItem:
+            case .focusItem, .carriedFocusItem:
                 return false
             }
         }
@@ -67,7 +70,7 @@ enum TodayContinuationRules {
                 return id
             case .writingNote(let id):
                 return id
-            case .carriedFocusItem:
+            case .focusItem, .carriedFocusItem:
                 return linkedRecordID
             }
         }
@@ -82,7 +85,7 @@ enum TodayContinuationRules {
                 return .homeTask(id)
             case .writingNote(let id):
                 return .writingNote(id)
-            case .carriedFocusItem:
+            case .focusItem, .carriedFocusItem:
                 guard let linkedRecordID else { return nil }
                 switch domain {
                 case .training:

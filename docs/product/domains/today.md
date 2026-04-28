@@ -30,14 +30,15 @@
 
 - `DailyEntry.carryForward` is persisted historical fact for Previous Days. Do not migrate or rename it unless the persisted schema intentionally changes.
 - Continue is a derived Today projection, not stored carry-forward data. Rendering Continue, refreshing Focus Suggestions, or routing Continue rows must not mutate `carryForward`.
-- Continue can derive rows from planned training due today, stale carried focus items, active Home protocol runs, active Home tasks, and in-progress Writing notes.
+- Continue can derive rows from current Focus items, planned training due today, stale carried Focus items, active Home protocol runs, active Home tasks, and in-progress Writing notes.
+- Continue is the only Today-tab surface for Focus work. Do not add a standalone Focus section to the Today dashboard; current Focus, carried Focus, and source-backed Focus actions must live in Continue.
 - Active Home protocol runs may surface in Continue, but Today must not turn them into duplicate Focus/carry-forward artifacts just to keep them visible across days. Their lifecycle stays Home-owned.
 - Carried Home focus rows that match a Home protocol template or known protocol run are protocol artifacts, not standalone Today work. Suppress them at the Continue projection boundary unless they are represented by an active Home protocol-run source.
 - Carried Train focus rows linked to a training session may surface only when the linked session is still planned and actionable today. If the linked session is skipped, completed, modified, missing, or no longer today's session, suppress the carried row rather than implying the Train session carried forward.
 - Continue rows must be actionable and routable to Train, Write, Career, or Home. If a future candidate cannot map to a real destination or Today-owned action, keep it out of Continue until that contract exists.
-- Continue rows must carry source provenance at derivation time. Current source-backed rows come from planned training sessions, carried focus items, active Home protocol runs, active Home tasks, and active Writing notes.
+- Continue rows must carry source provenance at derivation time. Current source-backed rows come from current Focus items, planned training sessions, carried Focus items, active Home protocol runs, active Home tasks, and active Writing notes.
 - Retired scaffold prompts belong behind centralized candidate rules. Suppress unlinked retired scaffolds such as "Log one writing intention" and "Capture one career win" without suppressing linked or source-backed user records with the same title.
-- Focus Three is a current-day commitment surface, not just planning metadata. The Today dashboard must expose visible status actions for current Focus items, including a direct Done action.
+- Focus Three is a current-day commitment surface, not just planning metadata. The Today dashboard must expose Focus status actions through Continue, including a direct Done action for Focus-backed Continue rows.
 - Source-backed Focus items should be marked done when their linked source has unambiguous completion semantics. Current automatic sources are completed or modified Train sessions, completed Home tasks, and published Write notes. Do not infer completion from ambiguous states such as archived notes, skipped work, pending protocol steps, or reusable protocol templates.
 
 ## Artifact Lifecycle
@@ -56,8 +57,8 @@
 - Tapping an in-progress Write note row should open that note's detail sheet after routing to Write, not stop at the broader note list.
 - Non-carried source-backed Continue rows may expose Add to Focus when Focus Three has capacity and the work is not already represented there. Adding from Continue preserves the source linkage on the created focus item.
 - Active Home protocol runs do not expose Add to Focus. A protocol run already persists as Home-owned active work, and duplicating it into Today Focus creates invalid carry-forward artifacts.
-- Carried focus rows support source-aware Defer and Drop actions against the original focus item.
-- Carried focus rows do not expose Recommit/Add to Focus because they are already in Focus Three; tapping the row routes to the owning domain without resetting carry-forward aging.
+- Focus-backed Continue rows support source-aware Done, Defer, and Drop actions against the original focus item.
+- Current and carried Focus rows do not expose Recommit/Add to Focus because they are already in Focus Three; tapping the row routes to the owning domain without resetting carry-forward aging.
 - Future "Skip for today" behavior should hide the derived row for the day without mutating the source object by default. Domain-native skips, such as Home task skip or Training session skipped status, must remain explicit domain actions.
 - Deep links should use source kind, stable source IDs, or completion keys where available to open or highlight exact records after tab routing.
 
@@ -91,6 +92,7 @@ Continue/carry-forward acceptance checks:
 
 - Previous Days still renders recorded carry-forward facts.
 - Today Continue can show non-carry-forward work.
+- Today Continue can show current Focus commitments without a separate Focus section.
 - Today Continue can show stale carry-forward context with a badge.
 - Tapping a Continue row routes to a concrete domain tab.
 - Continue has no General or otherwise orphaned destination.

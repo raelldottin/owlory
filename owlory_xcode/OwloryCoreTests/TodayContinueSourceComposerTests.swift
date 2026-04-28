@@ -10,6 +10,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertEqual(
             TodayContinueSourceComposer.sourceOrder,
             [
+                .currentFocus,
                 .dueTodayTraining,
                 .carriedForwardFocus,
                 .activeHomeProtocolRun,
@@ -26,6 +27,11 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             status: .planned
         )
         let linkedRecordID = UUID()
+        let currentFocus = FocusItem(
+            title: "Plan launch",
+            domain: .career,
+            status: .planned
+        )
         let focusItem = FocusItem(
             title: "Draft outline",
             domain: .writing,
@@ -41,7 +47,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         let note = WritingNote(title: "Essay source", body: "", stage: .source)
 
         let candidates = TodayContinueSourceComposer.compose(
-            todayEntry: DailyEntry(date: today, focusThree: [focusItem]),
+            todayEntry: DailyEntry(date: today, focusThree: [currentFocus, focusItem]),
             calibration: calibration(
                 staleItems: [
                     .init(title: "Draft outline", domain: .writing, consecutiveDays: 4)
@@ -54,6 +60,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         )
 
         XCTAssertEqual(candidates.map(\.step), [
+            .currentFocus,
             .dueTodayTraining,
             .carriedForwardFocus,
             .activeHomeProtocolRun,
@@ -61,6 +68,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             .inProgressWriting,
         ])
         XCTAssertEqual(candidates.map(\.title), [
+            "Plan launch",
             "Intervals",
             "Draft outline",
             "Kitchen reset",
@@ -68,6 +76,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             "Essay source",
         ])
         XCTAssertEqual(candidates.map(\.reason), [
+            "Focus",
             "Due today",
             "Carried forward",
             "Protocol run",
@@ -76,18 +85,20 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         ])
         XCTAssertEqual(candidates.map(\.priority), [
             .dueToday,
+            .dueToday,
             .carriedForward,
             .active,
             .active,
             .inProgress,
         ])
-        XCTAssertEqual(candidates[0].source, .trainingSession(session.id))
-        XCTAssertEqual(candidates[1].source, .carriedFocusItem(focusItem.id))
-        XCTAssertEqual(candidates[1].linkedRecordID, linkedRecordID)
-        XCTAssertEqual(candidates[1].staleDayCount, 4)
-        XCTAssertEqual(candidates[2].source, .homeProtocolRun(run.id))
-        XCTAssertEqual(candidates[3].source, .homeTask(homeTask.id))
-        XCTAssertEqual(candidates[4].source, .writingNote(note.id))
+        XCTAssertEqual(candidates[0].source, .focusItem(currentFocus.id))
+        XCTAssertEqual(candidates[1].source, .trainingSession(session.id))
+        XCTAssertEqual(candidates[2].source, .carriedFocusItem(focusItem.id))
+        XCTAssertEqual(candidates[2].linkedRecordID, linkedRecordID)
+        XCTAssertEqual(candidates[2].staleDayCount, 4)
+        XCTAssertEqual(candidates[3].source, .homeProtocolRun(run.id))
+        XCTAssertEqual(candidates[4].source, .homeTask(homeTask.id))
+        XCTAssertEqual(candidates[5].source, .writingNote(note.id))
     }
 
     func testCompositionAppliesSourceEligibilityBeforeCandidateCreation() {
@@ -127,12 +138,52 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         )
 
         XCTAssertEqual(candidates.map(\.title), [
+            "Fresh outline",
             "Intervals",
             "Draft outline",
             "Kitchen reset",
             "Laundry",
             "Essay source",
         ])
+    }
+
+    func testCurrentFocusItemsSurfaceInContinueWithoutStaleCarryForward() {
+        let focus = FocusItem(title: "Write pitch", domain: .career, status: .planned)
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today, focusThree: [focus]),
+            calibration: calibration(),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: []
+        )
+
+        XCTAssertEqual(candidates.map(\.step), [.currentFocus])
+        XCTAssertEqual(candidates.first?.source, .focusItem(focus.id))
+        XCTAssertEqual(candidates.first?.reason, "Focus")
+        XCTAssertNil(candidates.first?.staleDayCount)
+    }
+
+    func testSourceBackedFocusItemUsesExistingContinueSourceInsteadOfDuplicateFocusRow() {
+        let note = WritingNote(title: "Essay source", body: "", stage: .source)
+        let focus = FocusItem(
+            title: "Essay source",
+            domain: .writing,
+            status: .planned,
+            linkedRecordID: note.id
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today, focusThree: [focus]),
+            calibration: calibration(),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: [note]
+        )
+
+        XCTAssertEqual(candidates.map(\.source), [.writingNote(note.id)])
     }
 
     func testCarriedHomeProtocolTemplateArtifactIsSuppressedWithoutActiveRun() {
@@ -222,7 +273,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertEqual(candidates.first?.source, .homeProtocolRun(run.id))
     }
 
-    func testLinkedTrainingCarryForwardSurfacesOnlyWhenSessionIsActionableToday() {
+    func testLinkedTrainingCarryForwardUsesActionableSourceWithoutDuplicateFocusRow() {
         let session = TrainingSession(
             date: today,
             plannedActivity: "Intervals",
@@ -248,10 +299,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             writingNotes: []
         )
 
-        XCTAssertEqual(candidates.map(\.source), [
-            .trainingSession(session.id),
-            .carriedFocusItem(artifact.id),
-        ])
+        XCTAssertEqual(candidates.map(\.source), [.trainingSession(session.id)])
     }
 
     func testLinkedTrainingCarryForwardSuppressesResolvedOrMissingSessions() {

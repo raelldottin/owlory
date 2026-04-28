@@ -2,6 +2,7 @@ import Foundation
 
 enum TodayContinueSourceComposer {
     enum Step: String, CaseIterable, Equatable {
+        case currentFocus
         case dueTodayTraining
         case carriedForwardFocus
         case activeHomeProtocolRun
@@ -10,6 +11,8 @@ enum TodayContinueSourceComposer {
 
         var reason: String {
             switch self {
+            case .currentFocus:
+                return "Focus"
             case .dueTodayTraining:
                 return "Due today"
             case .carriedForwardFocus:
@@ -25,6 +28,8 @@ enum TodayContinueSourceComposer {
 
         var priority: ContinuePriority {
             switch self {
+            case .currentFocus:
+                return .dueToday
             case .dueTodayTraining:
                 return .dueToday
             case .carriedForwardFocus:
@@ -53,6 +58,7 @@ enum TodayContinueSourceComposer {
     }
 
     static let sourceOrder: [Step] = [
+        .currentFocus,
         .dueTodayTraining,
         .carriedForwardFocus,
         .activeHomeProtocolRun,
@@ -71,6 +77,8 @@ enum TodayContinueSourceComposer {
     ) -> [Candidate] {
         let staleByKey = staleIndex(from: calibration)
         let actionableTrainingSessionIDs = actionableTrainingSessionIDIndex(from: todaySessions)
+        let activeHomeTaskIDs = activeHomeTaskIDIndex(from: homeTasks)
+        let inProgressWritingNoteIDs = inProgressWritingNoteIDIndex(from: writingNotes)
         let protocolTitles = homeProtocolTitleIndex(
             protocols: homeProtocols,
             runs: homeRuns
@@ -82,6 +90,16 @@ enum TodayContinueSourceComposer {
 
         return sourceOrder.flatMap { step -> [Candidate] in
             switch step {
+            case .currentFocus:
+                return currentFocusCandidates(
+                    from: todayEntry.focusThree,
+                    staleByKey: staleByKey,
+                    actionableTrainingSessionIDs: actionableTrainingSessionIDs,
+                    activeHomeTaskIDs: activeHomeTaskIDs,
+                    inProgressWritingNoteIDs: inProgressWritingNoteIDs,
+                    protocolTitles: protocolTitles,
+                    protocolRecordIDs: protocolRecordIDs
+                )
             case .dueTodayTraining:
                 return dueTodayTrainingCandidates(from: todaySessions)
             case .carriedForwardFocus:
@@ -89,6 +107,8 @@ enum TodayContinueSourceComposer {
                     from: todayEntry.focusThree,
                     staleByKey: staleByKey,
                     actionableTrainingSessionIDs: actionableTrainingSessionIDs,
+                    activeHomeTaskIDs: activeHomeTaskIDs,
+                    inProgressWritingNoteIDs: inProgressWritingNoteIDs,
                     protocolTitles: protocolTitles,
                     protocolRecordIDs: protocolRecordIDs
                 )
@@ -99,6 +119,50 @@ enum TodayContinueSourceComposer {
             case .inProgressWriting:
                 return inProgressWritingCandidates(from: writingNotes)
             }
+        }
+    }
+
+    private static func currentFocusCandidates(
+        from items: [FocusItem],
+        staleByKey: [String: CalibrationRules.StaleItemAlert],
+        actionableTrainingSessionIDs: Set<UUID>,
+        activeHomeTaskIDs: Set<UUID>,
+        inProgressWritingNoteIDs: Set<UUID>,
+        protocolTitles: Set<String>,
+        protocolRecordIDs: Set<UUID>
+    ) -> [Candidate] {
+        items.compactMap { item in
+            guard ContinueCandidateRules.isCurrentFocusCandidate(item),
+                  staleByKey[itemKey(title: item.title, domain: item.domain)] == nil else {
+                return nil
+            }
+
+            guard !isRepresentedByActiveSource(
+                item,
+                actionableTrainingSessionIDs: actionableTrainingSessionIDs,
+                activeHomeTaskIDs: activeHomeTaskIDs,
+                inProgressWritingNoteIDs: inProgressWritingNoteIDs
+            ) else {
+                return nil
+            }
+
+            guard !isHomeProtocolFocusArtifact(
+                item,
+                protocolTitles: protocolTitles,
+                protocolRecordIDs: protocolRecordIDs
+            ) else {
+                return nil
+            }
+
+            return Candidate(
+                step: .currentFocus,
+                title: item.title,
+                domain: item.domain,
+                source: .focusItem(item.id),
+                linkedRecordID: item.linkedRecordID,
+                staleDayCount: nil,
+                predictionKey: predictionKey(for: item)
+            )
         }
     }
 
@@ -125,6 +189,8 @@ enum TodayContinueSourceComposer {
         from items: [FocusItem],
         staleByKey: [String: CalibrationRules.StaleItemAlert],
         actionableTrainingSessionIDs: Set<UUID>,
+        activeHomeTaskIDs: Set<UUID>,
+        inProgressWritingNoteIDs: Set<UUID>,
         protocolTitles: Set<String>,
         protocolRecordIDs: Set<UUID>
     ) -> [Candidate] {
@@ -132,6 +198,15 @@ enum TodayContinueSourceComposer {
             guard isLinkedTrainingFocusStillActionable(
                 item,
                 actionableTrainingSessionIDs: actionableTrainingSessionIDs
+            ) else {
+                return nil
+            }
+
+            guard !isRepresentedByActiveSource(
+                item,
+                actionableTrainingSessionIDs: actionableTrainingSessionIDs,
+                activeHomeTaskIDs: activeHomeTaskIDs,
+                inProgressWritingNoteIDs: inProgressWritingNoteIDs
             ) else {
                 return nil
             }
@@ -233,6 +308,22 @@ enum TodayContinueSourceComposer {
         )
     }
 
+    private static func activeHomeTaskIDIndex(from tasks: [HomeTask]) -> Set<UUID> {
+        Set(
+            tasks
+                .filter(ContinueCandidateRules.isActiveHomeTaskCandidate)
+                .map(\.id)
+        )
+    }
+
+    private static func inProgressWritingNoteIDIndex(from notes: [WritingNote]) -> Set<UUID> {
+        Set(
+            notes
+                .filter(ContinueCandidateRules.isInProgressWritingCandidate)
+                .map(\.id)
+        )
+    }
+
     private static func homeProtocolTitleIndex(
         protocols: [HouseholdProtocol],
         runs: [ProtocolRun]
@@ -256,6 +347,25 @@ enum TodayContinueSourceComposer {
             return true
         }
         return actionableTrainingSessionIDs.contains(linkedRecordID)
+    }
+
+    private static func isRepresentedByActiveSource(
+        _ item: FocusItem,
+        actionableTrainingSessionIDs: Set<UUID>,
+        activeHomeTaskIDs: Set<UUID>,
+        inProgressWritingNoteIDs: Set<UUID>
+    ) -> Bool {
+        guard let linkedRecordID = item.linkedRecordID else { return false }
+        switch item.domain {
+        case .training:
+            return actionableTrainingSessionIDs.contains(linkedRecordID)
+        case .home:
+            return activeHomeTaskIDs.contains(linkedRecordID)
+        case .writing:
+            return inProgressWritingNoteIDs.contains(linkedRecordID)
+        case .career:
+            return false
+        }
     }
 
     private static func isHomeProtocolFocusArtifact(

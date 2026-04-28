@@ -323,6 +323,39 @@
       ],
       "max_files_changed": 10,
       "notes": "Weekly digest completion should reflect Focus commitments that can be marked done directly in Today or by unambiguous linked source completion."
+    },
+    {
+      "slice_id": "today-continue-owns-focus-surface",
+      "title": "Move Today Focus behavior into Continue",
+      "status": "done",
+      "priority": 110,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "docs/product/domains/patterns.md",
+        "Tools/architecture-lint.sh",
+        "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory/Core/Domain/ContinueCandidateRules.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+        "owlory_xcode/OwloryCoreTests/ContinuePipelineTraceTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-focus-completion-contract-actions"
+      ],
+      "max_files_changed": 14,
+      "notes": "Focus must not render as a standalone Today section. Continue is the only Today surface for current, carried, and source-backed Focus work."
     }
   ]
 }

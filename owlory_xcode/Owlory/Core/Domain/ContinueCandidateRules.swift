@@ -31,6 +31,12 @@ enum ContinueCandidateRules {
             !isRetiredScaffoldFocusItem(item)
     }
 
+    static func isCurrentFocusCandidate(_ item: FocusItem) -> Bool {
+        item.status == .planned &&
+            hasDisplayableTitle(item.title) &&
+            !isRetiredScaffoldFocusItem(item)
+    }
+
     static func isActiveHomeTaskCandidate(_ task: HomeTask) -> Bool {
         !task.isCompleted &&
             !task.isSkipped &&

@@ -13,6 +13,7 @@ final class ContinuePipelineTraceTests: XCTestCase {
         XCTAssertEqual(
             trace.sourceCounts.map { "\($0.step.rawValue):\($0.count)" },
             [
+                "currentFocus:0",
                 "dueTodayTraining:3",
                 "carriedForwardFocus:1",
                 "activeHomeProtocolRun:0",
@@ -47,7 +48,7 @@ final class ContinuePipelineTraceTests: XCTestCase {
 
         XCTAssertEqual(
             trace.telemetryMessage,
-            "continue.pipeline sourceCounts=dueTodayTraining:3,carriedForwardFocus:1,activeHomeProtocolRun:0,activeHomeTask:1,inProgressWriting:1 candidates=6 admitted=5 rejected=1 emptyTitleRejected=0 totalCapRejected=0 domainCapRejected=1 urgencyScored=1 rankingChanged=true emitted=5"
+            "continue.pipeline sourceCounts=currentFocus:0,dueTodayTraining:3,carriedForwardFocus:1,activeHomeProtocolRun:0,activeHomeTask:1,inProgressWriting:1 candidates=6 admitted=5 rejected=1 emptyTitleRejected=0 totalCapRejected=0 domainCapRejected=1 urgencyScored=1 rankingChanged=true emitted=5"
         )
     }
 

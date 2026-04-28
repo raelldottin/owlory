@@ -1,0 +1,35 @@
+{
+  "slice_id": "today-continue-owns-focus-surface",
+  "status": "done",
+  "summary": "Removed the standalone Today Focus dashboard section and moved current Focus behavior into Continue. Continue now derives current Focus rows, avoids duplicate source-backed Focus rows, and exposes Focus status actions from Focus-backed Continue rows.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-28/121301-today-continue-owns-focus-surface.md",
+    "Tools/architecture-lint.sh",
+    "automation/handoffs/20260428T121301Z-today-continue-owns-focus-surface.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/patterns.md",
+    "docs/product/domains/today.md",
+    "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+    "owlory_xcode/Owlory/Core/Domain/ContinueCandidateRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryCoreTests/ContinuePipelineTraceTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "No manual simulator visual pass was performed to confirm the Continue row affordances are discoverable enough.",
+    "Previous Days can still show historical Focus sections because those are review records, not the active Today dashboard."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop for review after correcting the Today surface contract and adding a lint guard against the standalone Focus section returning.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-28T12:13:01Z"
+}

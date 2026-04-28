@@ -143,8 +143,19 @@ check_feature_runtime_coupling() {
   done
 }
 
+check_today_focus_surface_contract() {
+  today_view="$ROOT/owlory_xcode/Owlory/Features/Today/TodayView.swift"
+  [ -f "$today_view" ] || return 0
+  if grep -nE '(focusPlanSection|focusPlanRow|Mark Focus items done here)' "$today_view" >/tmp/owlory-architecture-lint-match.$$ 2>/dev/null; then
+    match="$(head -1 /tmp/owlory-architecture-lint-match.$$)"
+    fail "Today must not reintroduce a standalone Focus dashboard section at ${today_view#$ROOT/}:$match. Focus work and Focus status actions belong in Continue."
+  fi
+  rm -f /tmp/owlory-architecture-lint-match.$$
+}
+
 check_domain_imports
 check_feature_runtime_coupling
+check_today_focus_surface_contract
 
 FAILURES="$(wc -l < "$ERRORS" | tr -d ' ')"
 if [ "$FAILURES" -ne 0 ]; then
