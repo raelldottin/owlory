@@ -69,6 +69,8 @@ struct OwloryApp: App {
                 directory: "Write", fileName: "notes"),
             trainingRepository: FileItemListRepository<TrainingSession>(
                 directory: "Train", fileName: "sessions"),
+            homeRunRepository: FileItemListRepository<ProtocolRun>(
+                directory: "Home", fileName: "runs"),
             clock: SystemClock()
         ))
 

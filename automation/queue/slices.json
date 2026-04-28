@@ -264,6 +264,36 @@
       ],
       "max_files_changed": 10,
       "notes": "Today should show count-first weekly digest copy, avoid 0% for empty planning, and say Last Week only when the digest matches the immediately previous calendar week."
+    },
+    {
+      "slice_id": "patterns-weekly-digest-count-protocol-step-completions",
+      "title": "Count completed Home protocol steps in weekly digest",
+      "status": "done",
+      "priority": 90,
+      "domain": "patterns",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/patterns.md",
+        "docs/product/domains/home.md",
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/OwloryApp.swift",
+        "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=patterns",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "today-weekly-digest-truthful-summary-copy"
+      ],
+      "max_files_changed": 11,
+      "notes": "Completed steps inside active Home protocol runs should count as completed weekly digest work without changing Home's ownership of protocol lifecycle."
     }
   ]
 }

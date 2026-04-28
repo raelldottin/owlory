@@ -2,6 +2,7 @@
 
 ## 2026-04-28
 
+- [patterns-weekly-digest-count-protocol-step-completions](sessions/2026-04-28/074311-patterns-weekly-digest-count-protocol-step-completions.md)
 - [today-weekly-digest-truthful-summary-copy](sessions/2026-04-28/030607-today-weekly-digest-truthful-summary-copy.md)
 
 ## 2026-04-26

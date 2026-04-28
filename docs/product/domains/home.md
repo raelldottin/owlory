@@ -36,6 +36,7 @@
 - A Home protocol template without an active run is not active work. Today should not show stale carried Focus rows for that template as if they were protocol work.
 - When Today routes into an active protocol run, Home should present the active run directly rather than dropping the user at the reusable protocol template surface.
 - Progress counts completed and skipped steps as resolved. The next action should use the next pending step number, not the completed count.
+- Weekly digest may count timestamped completed protocol steps as completed Home work, but it must not change protocol run status or treat skipped/pending steps as completed tasks.
 - The primary protocol action should continue an existing active run. The explicit secondary action may still start a new run while that UI remains available.
 
 ## Future Windows And Projects

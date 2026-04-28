@@ -39,9 +39,17 @@ enum WeeklyDigestRules {
         weekStarting: Date,
         weekEnding: Date,
         generatedAt: Date,
+        protocolRuns: [ProtocolRun] = [],
         calendar: Calendar = .current
     ) -> WeeklyDigest? {
-        guard !entries.isEmpty else { return nil }
+        let completedProtocolStepCount = completedProtocolStepsInWindow(
+            protocolRuns: protocolRuns,
+            weekStarting: weekStarting,
+            weekEnding: weekEnding,
+            calendar: calendar
+        )
+
+        guard !entries.isEmpty || completedProtocolStepCount > 0 else { return nil }
 
         let daysWithEntries = entries.count
 
@@ -60,6 +68,9 @@ enum WeeklyDigestRules {
                 }
             }
         }
+
+        totalPlanned += completedProtocolStepCount
+        totalDone += completedProtocolStepCount
 
         let completionRate = totalPlanned > 0 ? Double(totalDone) / Double(totalPlanned) : 0
 
@@ -83,6 +94,9 @@ enum WeeklyDigestRules {
             for item in entry.focusThree {
                 domainActivity[item.domain, default: 0] += 1
             }
+        }
+        if completedProtocolStepCount > 0 {
+            domainActivity[.home, default: 0] += completedProtocolStepCount
         }
 
         // Stalled items (carried items across last 3+ days of window)
@@ -127,6 +141,45 @@ enum WeeklyDigestRules {
     }
 
     // MARK: - Helpers
+
+    private static func completedProtocolStepsInWindow(
+        protocolRuns: [ProtocolRun],
+        weekStarting: Date,
+        weekEnding: Date,
+        calendar: Calendar
+    ) -> Int {
+        protocolRuns.reduce(0) { count, run in
+            count + run.steps.filter { step in
+                guard step.status == .completed,
+                    let completedAt = step.completedAt
+                else {
+                    return false
+                }
+
+                return isInDigestWindow(
+                    completedAt,
+                    weekStarting: weekStarting,
+                    weekEnding: weekEnding,
+                    calendar: calendar
+                )
+            }.count
+        }
+    }
+
+    private static func isInDigestWindow(
+        _ date: Date,
+        weekStarting: Date,
+        weekEnding: Date,
+        calendar: Calendar
+    ) -> Bool {
+        let start = calendar.startOfDay(for: weekStarting)
+        let endDay = calendar.startOfDay(for: weekEnding)
+        guard let exclusiveEnd = calendar.date(byAdding: .day, value: 1, to: endDay) else {
+            return false
+        }
+
+        return date >= start && date < exclusiveEnd
+    }
 
     static func weekRangeLabel(
         for digest: WeeklyDigest,

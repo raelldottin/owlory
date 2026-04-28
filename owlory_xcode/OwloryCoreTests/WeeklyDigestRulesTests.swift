@@ -66,6 +66,108 @@ final class WeeklyDigestRulesTests: XCTestCase {
         XCTAssertEqual(digest!.completionRate, 0.5)
     }
 
+    func testCompletedProtocolStepsCountAsCompletedHomeWork() {
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(secondsFromGMT: 0)!
+
+        let monday = makeDate("2026-04-06T00:00:00Z")
+        let sunday = makeDate("2026-04-12T00:00:00Z")
+        let entry = makeEntry(
+            date: makeDate("2026-04-07T09:00:00Z"),
+            items: [
+                FocusItem(title: "Draft", domain: .writing, status: .done),
+                FocusItem(title: "Edit", domain: .writing, status: .planned),
+                FocusItem(title: "Publish", domain: .writing, status: .planned)
+            ]
+        )
+        let protocolRun = ProtocolRun(
+            protocolID: UUID(),
+            protocolTitle: "Kitchen Reset",
+            createdAt: makeDate("2026-04-06T08:00:00Z"),
+            steps: [
+                ProtocolStepInstance(
+                    stepNumber: 1,
+                    title: "Clear sink",
+                    status: .completed,
+                    completedAt: makeDate("2026-04-08T12:00:00Z")
+                ),
+                ProtocolStepInstance(
+                    stepNumber: 2,
+                    title: "Wipe counters",
+                    status: .completed,
+                    completedAt: makeDate("2026-04-12T23:00:00Z")
+                ),
+                ProtocolStepInstance(
+                    stepNumber: 3,
+                    title: "Mop floor",
+                    status: .skipped,
+                    completedAt: makeDate("2026-04-09T12:00:00Z")
+                ),
+                ProtocolStepInstance(
+                    stepNumber: 4,
+                    title: "Take out trash",
+                    status: .pending
+                ),
+                ProtocolStepInstance(
+                    stepNumber: 5,
+                    title: "Old prep",
+                    status: .completed,
+                    completedAt: makeDate("2026-04-05T12:00:00Z")
+                )
+            ]
+        )
+
+        let digest = WeeklyDigestRules.generate(
+            entries: [entry],
+            weekStarting: monday,
+            weekEnding: sunday,
+            generatedAt: makeDate("2026-04-13T12:00:00Z"),
+            protocolRuns: [protocolRun],
+            calendar: utcCalendar
+        )!
+
+        XCTAssertEqual(digest.totalPlanned, 5)
+        XCTAssertEqual(digest.totalDone, 3)
+        XCTAssertEqual(digest.completionRate, 0.6)
+        XCTAssertEqual(digest.domainActivity[.writing], 3)
+        XCTAssertEqual(digest.domainActivity[.home], 2)
+    }
+
+    func testProtocolStepCompletionsCanProduceDigestWithoutTodayEntries() {
+        var utcCalendar = Calendar(identifier: .gregorian)
+        utcCalendar.timeZone = TimeZone(secondsFromGMT: 0)!
+
+        let run = ProtocolRun(
+            protocolID: UUID(),
+            protocolTitle: "Evening Routine",
+            createdAt: makeDate("2026-04-06T08:00:00Z"),
+            steps: [
+                ProtocolStepInstance(
+                    stepNumber: 1,
+                    title: "Reset kitchen",
+                    status: .completed,
+                    completedAt: makeDate("2026-04-10T20:00:00Z")
+                )
+            ]
+        )
+
+        let digest = WeeklyDigestRules.generate(
+            entries: [],
+            weekStarting: makeDate("2026-04-06T00:00:00Z"),
+            weekEnding: makeDate("2026-04-12T00:00:00Z"),
+            generatedAt: makeDate("2026-04-13T12:00:00Z"),
+            protocolRuns: [run],
+            calendar: utcCalendar
+        )
+
+        XCTAssertNotNil(digest)
+        XCTAssertEqual(digest?.daysWithEntries, 0)
+        XCTAssertEqual(digest?.totalPlanned, 1)
+        XCTAssertEqual(digest?.totalDone, 1)
+        XCTAssertEqual(digest?.completionRate, 1.0)
+        XCTAssertEqual(digest?.domainActivity[.home], 1)
+    }
+
     func testFullWeekCompletionRate() {
         let monday = makeDate("2026-04-06T09:00:00Z")
         let sunday = makeDate("2026-04-12T09:00:00Z")

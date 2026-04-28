@@ -21,6 +21,7 @@ final class PatternStore: OwloryObservableObject {
     private let digestRepository: any ItemListRepository<WeeklyDigest>
     private let writingRepository: (any ItemListRepository<WritingNote>)?
     private let trainingRepository: (any ItemListRepository<TrainingSession>)?
+    private let homeRunRepository: (any ItemListRepository<ProtocolRun>)?
     private let clock: Clock
     private let calendar: Calendar
     var weeklyDigestCalendar: Calendar { calendar }
@@ -31,6 +32,7 @@ final class PatternStore: OwloryObservableObject {
         digestRepository: any ItemListRepository<WeeklyDigest>,
         writingRepository: (any ItemListRepository<WritingNote>)? = nil,
         trainingRepository: (any ItemListRepository<TrainingSession>)? = nil,
+        homeRunRepository: (any ItemListRepository<ProtocolRun>)? = nil,
         clock: Clock,
         calendar: Calendar = .current
     ) {
@@ -39,6 +41,7 @@ final class PatternStore: OwloryObservableObject {
         self.digestRepository = digestRepository
         self.writingRepository = writingRepository
         self.trainingRepository = trainingRepository
+        self.homeRunRepository = homeRunRepository
         self.clock = clock
         self.calendar = calendar
     }
@@ -91,26 +94,21 @@ final class PatternStore: OwloryObservableObject {
             do {
                 let existingDigests = try digestRepository.loadAll()
 
-                if WeeklyDigestCadenceRules.hasGeneratedDigest(
-                    for: targetWindow,
-                    existingDigests: existingDigests,
-                    calendar: calendar
+                if let existingIndex = matchingDigestIndex(
+                    in: existingDigests,
+                    weekStarting: targetWindow.weekStarting
                 ) {
-                    latestDigest = existingDigests.last
+                    latestDigest = try refreshStoredDigestIfNeeded(
+                        existingDigests[existingIndex],
+                        in: existingDigests
+                    )
                     return
                 }
 
-                let entries = try entryRepository.loadEntries(
-                    from: targetWindow.weekStarting,
-                    through: targetWindow.weekEnding
-                )
-
-                if let digest = WeeklyDigestRules.generate(
-                    entries: entries,
+                if let digest = try makeDigest(
                     weekStarting: targetWindow.weekStarting,
                     weekEnding: targetWindow.weekEnding,
-                    generatedAt: clock.now,
-                    calendar: calendar
+                    generatedAt: clock.now
                 ) {
                     var all = existingDigests
                     all.append(digest)
@@ -135,10 +133,67 @@ final class PatternStore: OwloryObservableObject {
         PerformanceTelemetry.measure("PatternStore.loadLatestDigest", category: .patterns) {
             do {
                 let digests = try digestRepository.loadAll()
-                latestDigest = digests.last
+                guard let latest = digests.last else {
+                    latestDigest = nil
+                    return
+                }
+
+                latestDigest = try refreshStoredDigestIfNeeded(latest, in: digests)
             } catch {
                 // Non-critical — digest display is optional
             }
+        }
+    }
+
+    private func makeDigest(
+        weekStarting: Date,
+        weekEnding: Date,
+        generatedAt: Date
+    ) throws -> WeeklyDigest? {
+        let entries = try entryRepository.loadEntries(from: weekStarting, through: weekEnding)
+        let protocolRuns = try homeRunRepository?.loadAll() ?? []
+
+        return WeeklyDigestRules.generate(
+            entries: entries,
+            weekStarting: weekStarting,
+            weekEnding: weekEnding,
+            generatedAt: generatedAt,
+            protocolRuns: protocolRuns,
+            calendar: calendar
+        )
+    }
+
+    private func refreshStoredDigestIfNeeded(
+        _ digest: WeeklyDigest,
+        in digests: [WeeklyDigest]
+    ) throws -> WeeklyDigest {
+        guard let index = matchingDigestIndex(
+            in: digests,
+            weekStarting: digest.weekStarting
+        ),
+            let refreshed = try makeDigest(
+                weekStarting: digest.weekStarting,
+                weekEnding: digest.weekEnding,
+                generatedAt: digest.generatedAt
+            ),
+            refreshed != digest
+        else {
+            return digest
+        }
+
+        var updated = digests
+        updated[index] = refreshed
+        try digestRepository.saveAll(updated)
+        return refreshed
+    }
+
+    private func matchingDigestIndex(
+        in digests: [WeeklyDigest],
+        weekStarting: Date
+    ) -> Int? {
+        let targetStart = calendar.startOfDay(for: weekStarting)
+        return digests.firstIndex {
+            calendar.startOfDay(for: $0.weekStarting) == targetStart
         }
     }
 }
