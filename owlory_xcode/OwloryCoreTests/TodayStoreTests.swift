@@ -905,6 +905,70 @@ final class TodayStoreTests: XCTestCase {
             return XCTFail("Expected active state")
         }
         XCTAssertEqual(entry.focusThree[0].status, .done)
+
+        let loaded = try? repository.loadEntry(for: today)
+        XCTAssertEqual(loaded?.focusThree.first?.status, .done)
+    }
+
+    func testMarkLinkedFocusItemsDoneCompletesPlannedSourceBackedItems() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        let trainingID = UUID()
+        let homeID = UUID()
+        let unrelatedID = UUID()
+        let saved = DailyEntry(
+            date: today,
+            focusThree: [
+                FocusItem(title: "Morning run", domain: .training, status: .planned, linkedRecordID: trainingID),
+                FocusItem(title: "Laundry", domain: .home, status: .planned, linkedRecordID: homeID),
+                FocusItem(title: "Draft", domain: .writing, status: .planned, linkedRecordID: unrelatedID),
+                FocusItem(title: "Standalone", domain: .career, status: .planned)
+            ]
+        )
+        try? repository.saveEntry(saved)
+
+        let store = await MainActor.run {
+            TodayStore(clock: FixedClock(now: today), repository: repository, calendar: makeCalendar())
+        }
+
+        await MainActor.run {
+            store.markLinkedFocusItemsDone(for: [
+                TodayFocusCompletionSource(domain: .training, linkedRecordID: trainingID),
+                TodayFocusCompletionSource(domain: .home, linkedRecordID: homeID)
+            ])
+        }
+
+        let loaded = try? repository.loadEntry(for: today)
+        XCTAssertEqual(loaded?.focusThree.map(\.status) ?? [], [.done, .done, .planned, .planned])
+    }
+
+    func testMarkLinkedFocusItemsDoneDoesNotOverrideDeferredOrDroppedItems() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        let deferredID = UUID()
+        let droppedID = UUID()
+        let saved = DailyEntry(
+            date: today,
+            focusThree: [
+                FocusItem(title: "Deferred source", domain: .home, status: .deferred, linkedRecordID: deferredID),
+                FocusItem(title: "Dropped source", domain: .training, status: .dropped, linkedRecordID: droppedID)
+            ]
+        )
+        try? repository.saveEntry(saved)
+
+        let store = await MainActor.run {
+            TodayStore(clock: FixedClock(now: today), repository: repository, calendar: makeCalendar())
+        }
+
+        await MainActor.run {
+            store.markLinkedFocusItemsDone(for: [
+                TodayFocusCompletionSource(domain: .home, linkedRecordID: deferredID),
+                TodayFocusCompletionSource(domain: .training, linkedRecordID: droppedID)
+            ])
+        }
+
+        let loaded = try? repository.loadEntry(for: today)
+        XCTAssertEqual(loaded?.focusThree.map(\.status) ?? [], [.deferred, .dropped])
     }
 
     func testCarriedContinueItemSourceCanDeferOriginalFocusItem() async {

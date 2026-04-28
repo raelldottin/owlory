@@ -37,6 +37,8 @@
 - Continue rows must be actionable and routable to Train, Write, Career, or Home. If a future candidate cannot map to a real destination or Today-owned action, keep it out of Continue until that contract exists.
 - Continue rows must carry source provenance at derivation time. Current source-backed rows come from planned training sessions, carried focus items, active Home protocol runs, active Home tasks, and active Writing notes.
 - Retired scaffold prompts belong behind centralized candidate rules. Suppress unlinked retired scaffolds such as "Log one writing intention" and "Capture one career win" without suppressing linked or source-backed user records with the same title.
+- Focus Three is a current-day commitment surface, not just planning metadata. The Today dashboard must expose visible status actions for current Focus items, including a direct Done action.
+- Source-backed Focus items should be marked done when their linked source has unambiguous completion semantics. Current automatic sources are completed or modified Train sessions, completed Home tasks, and published Write notes. Do not infer completion from ambiguous states such as archived notes, skipped work, pending protocol steps, or reusable protocol templates.
 
 ## Artifact Lifecycle
 
@@ -73,7 +75,7 @@
 - Continue runtime diagnostics belong in `ContinuePipelineTrace` and are emitted from `TodayContinuationRules`; keep telemetry out of domain policies.
 - "Close the day" reflection nudges are evening prompts. Home completion may change the prompt title and body after the evening window starts, but it must not ask the user to close the day just because Home tasks finished earlier.
 - Today may present Pattern-owned domain-balance nudges, but it must preserve their Focus framing. Do not relabel them as broad domain inactivity or "quiet lately" messages.
-- Weekly digest summaries must be count-first and scope-honest. If a digest has Focus items or completed Home protocol steps, show `done of total`; if it has zero planned Focus items and no completed protocol steps, say `No planned Focus items` instead of `0% done`. Only label a digest `Last Week` when its window is the immediately previous calendar week.
+- Weekly digest summaries must be count-first and scope-honest. If a digest has Focus items or completed Home protocol steps, show `done of total`; if it has zero planned Focus items and no completed protocol steps, say `No planned Focus items` instead of `0% done`. Only label a digest `Last Week` when its window is the immediately previous calendar week. The `done` count depends on Focus items being marked done directly in Today or through source-backed completion propagation before digest generation.
 - Keep `TodayView` focused on presentation and user actions.
 - Today presentation must adapt to Dynamic Type without capping accessibility sizes. When the header or check-in summary no longer fits honestly in its standard one-line layout, prefer shorter date formatting, shorter accessibility-only labels, stacked supporting text, and compact-height summary layouts over compressed or misleading truncation.
 - In compact-height accessibility layouts, do not stack a large Today hero title above the readiness message just because portrait does. Reuse the actual readiness summary as the primary header message when that preserves meaning and keeps the next actionable surface visible.

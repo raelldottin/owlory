@@ -174,12 +174,25 @@ struct RootTabView: View {
     private var reminderRefreshKey: String {
         let entryPart: String
         if let entry = currentTodayEntry {
+            let focusPart = entry.focusThree
+                .sorted { $0.id.uuidString < $1.id.uuidString }
+                .map {
+                    [
+                        $0.id.uuidString,
+                        $0.status.rawValue,
+                        $0.domain.rawValue,
+                        dateToken($0.createdFromDate),
+                        $0.linkedRecordID?.uuidString ?? "nil",
+                    ].joined(separator: "|")
+                }
+                .joined(separator: "||")
             entryPart = [
                 dateToken(entry.date),
                 "\(entry.energy)",
                 "\(entry.mood)",
                 "\(entry.sleepQuality)",
                 entry.eveningReflection,
+                focusPart,
             ].joined(separator: "|")
         } else {
             entryPart = "missing"
@@ -225,6 +238,16 @@ struct RootTabView: View {
             }
             .joined(separator: "||")
 
+        let writePart = writeStore.notes
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+            .map {
+                [
+                    $0.id.uuidString,
+                    $0.stage.title,
+                ].joined(separator: "|")
+            }
+            .joined(separator: "||")
+
         let predictionPart = completionHistory.predictions.keys.sorted().compactMap { key in
             guard let prediction = completionHistory.predictions[key] else { return nil }
             return [
@@ -236,7 +259,7 @@ struct RootTabView: View {
         }
         .joined(separator: "||")
 
-        return [entryPart, homeTaskPart, homeRunPart, trainPart, predictionPart].joined(separator: "###")
+        return [entryPart, homeTaskPart, homeRunPart, trainPart, writePart, predictionPart].joined(separator: "###")
     }
 
     /// Build the set of item keys that are already completed today, then
@@ -299,6 +322,30 @@ struct RootTabView: View {
         todayStore.garbageCollectHomeProtocolFocusArtifacts(
             protocolRecordIDs: Set(homeStore.protocols.map(\.id) + homeStore.runs.map(\.id))
         )
+        todayStore.markLinkedFocusItemsDone(for: completedFocusSources)
+    }
+
+    private var completedFocusSources: [TodayFocusCompletionSource] {
+        var sources: [TodayFocusCompletionSource] = []
+
+        sources.append(contentsOf: trainStore.sessions.compactMap { session in
+            guard session.status == .completed || session.status == .modified else {
+                return nil
+            }
+            return TodayFocusCompletionSource(domain: .training, linkedRecordID: session.id)
+        })
+
+        sources.append(contentsOf: homeStore.tasks.compactMap { task in
+            guard task.isCompleted else { return nil }
+            return TodayFocusCompletionSource(domain: .home, linkedRecordID: task.id)
+        })
+
+        sources.append(contentsOf: writeStore.notes.compactMap { note in
+            guard note.stage == .published else { return nil }
+            return TodayFocusCompletionSource(domain: .writing, linkedRecordID: note.id)
+        })
+
+        return sources
     }
 
     private func writeWidgetSnapshot(_ specs: [ReminderScheduler.NotificationSpec]) {

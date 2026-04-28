@@ -6,6 +6,15 @@ typealias OwloryObservableObject = ObservableObject
 protocol OwloryObservableObject: AnyObject {}
 #endif
 
+struct TodayFocusCompletionSource: Equatable {
+    let domain: LifeDomain
+    let linkedRecordID: UUID
+
+    func matches(_ item: FocusItem) -> Bool {
+        item.domain == domain && item.linkedRecordID == linkedRecordID
+    }
+}
+
 @MainActor
 final class TodayStore: OwloryObservableObject {
 #if canImport(Combine)
@@ -393,6 +402,28 @@ final class TodayStore: OwloryObservableObject {
             persistCurrentEntry()
         default:
             break
+        }
+    }
+
+    func markLinkedFocusItemsDone(for completedSources: [TodayFocusCompletionSource]) {
+        guard !completedSources.isEmpty,
+              let entry = currentEntry,
+              entry.focusThree.contains(where: { item in
+                  item.status == .planned && completedSources.contains { $0.matches(item) }
+              }) else {
+            return
+        }
+
+        mutateEntry { entry in
+            for index in entry.focusThree.indices {
+                let item = entry.focusThree[index]
+                guard item.status == .planned,
+                      completedSources.contains(where: { $0.matches(item) }) else {
+                    continue
+                }
+
+                entry.focusThree[index].status = .done
+            }
         }
     }
 

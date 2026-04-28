@@ -294,6 +294,35 @@
       ],
       "max_files_changed": 11,
       "notes": "Completed steps inside active Home protocol runs should count as completed weekly digest work without changing Home's ownership of protocol lifecycle."
+    },
+    {
+      "slice_id": "today-focus-completion-contract-actions",
+      "title": "Expose and propagate Today Focus completion",
+      "status": "done",
+      "priority": 100,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "docs/product/domains/patterns.md",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-28/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "patterns-weekly-digest-count-protocol-step-completions"
+      ],
+      "max_files_changed": 10,
+      "notes": "Weekly digest completion should reflect Focus commitments that can be marked done directly in Today or by unambiguous linked source completion."
     }
   ]
 }
