@@ -33,6 +33,20 @@ enum DailyEntryState: Equatable {
     case historical(DailyEntry)
 }
 
+struct FocusItemOrigin: Equatable, Codable {
+    enum Kind: String, Codable {
+        case trainingSession
+        case writingNote
+        case careerRecord
+        case homeTask
+        case homeProtocolRun
+    }
+
+    var kind: Kind
+    var id: UUID
+    var createdAt: Date
+}
+
 struct FocusItem: Identifiable, Equatable, Codable {
     let id: UUID
     var title: String
@@ -40,6 +54,7 @@ struct FocusItem: Identifiable, Equatable, Codable {
     var status: FocusItemStatus
     var createdFromDate: Date?
     var linkedRecordID: UUID?
+    var origin: FocusItemOrigin?
 
     init(
         id: UUID = UUID(),
@@ -47,7 +62,8 @@ struct FocusItem: Identifiable, Equatable, Codable {
         domain: LifeDomain,
         status: FocusItemStatus = .planned,
         createdFromDate: Date? = nil,
-        linkedRecordID: UUID? = nil
+        linkedRecordID: UUID? = nil,
+        origin: FocusItemOrigin? = nil
     ) {
         self.id = id
         self.title = title
@@ -55,6 +71,7 @@ struct FocusItem: Identifiable, Equatable, Codable {
         self.status = status
         self.createdFromDate = createdFromDate
         self.linkedRecordID = linkedRecordID
+        self.origin = origin
     }
 }
 
@@ -143,7 +160,8 @@ struct DailyEntry: Identifiable, Equatable, Codable {
                     domain: domain,
                     status: item.status ?? .planned,
                     createdFromDate: item.createdFromDate,
-                    linkedRecordID: item.linkedRecordID
+                    linkedRecordID: item.linkedRecordID,
+                    origin: item.origin
                 )
             )
         }
@@ -179,6 +197,7 @@ struct DailyEntry: Identifiable, Equatable, Codable {
         let status: FocusItemStatus?
         let createdFromDate: Date?
         let linkedRecordID: UUID?
+        let origin: FocusItemOrigin?
     }
 }
 

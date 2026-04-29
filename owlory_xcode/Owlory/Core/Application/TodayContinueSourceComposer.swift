@@ -50,6 +50,7 @@ enum TodayContinueSourceComposer {
         let domain: LifeDomain
         let source: TodayContinuationRules.ContinueSource
         let linkedRecordID: UUID?
+        let origin: FocusItemOrigin?
         let staleDayCount: Int?
         let predictionKey: String?
 
@@ -160,6 +161,7 @@ enum TodayContinueSourceComposer {
                 domain: item.domain,
                 source: .focusItem(item.id),
                 linkedRecordID: item.linkedRecordID,
+                origin: item.origin,
                 staleDayCount: nil,
                 predictionKey: predictionKey(for: item)
             )
@@ -177,6 +179,7 @@ enum TodayContinueSourceComposer {
                 domain: .training,
                 source: .trainingSession(session.id),
                 linkedRecordID: nil,
+                origin: nil,
                 staleDayCount: nil,
                 predictionKey: CompletionTimePredictor.key(
                     forTrainingSession: session.plannedActivity
@@ -233,6 +236,7 @@ enum TodayContinueSourceComposer {
                 domain: item.domain,
                 source: .carriedFocusItem(item.id),
                 linkedRecordID: item.linkedRecordID,
+                origin: item.origin,
                 staleDayCount: stale?.consecutiveDays,
                 predictionKey: predictionKey(for: item)
             )
@@ -250,6 +254,7 @@ enum TodayContinueSourceComposer {
                 domain: .home,
                 source: .homeProtocolRun(run.id),
                 linkedRecordID: nil,
+                origin: nil,
                 staleDayCount: nil,
                 predictionKey: CompletionTimePredictor.key(forProtocolRun: run.protocolTitle)
             )
@@ -265,6 +270,7 @@ enum TodayContinueSourceComposer {
                 domain: .home,
                 source: .homeTask(task.id),
                 linkedRecordID: nil,
+                origin: nil,
                 staleDayCount: nil,
                 predictionKey: CompletionTimePredictor.key(forHomeTask: task.title)
             )
@@ -282,6 +288,7 @@ enum TodayContinueSourceComposer {
                 domain: .writing,
                 source: .writingNote(note.id),
                 linkedRecordID: nil,
+                origin: nil,
                 staleDayCount: nil,
                 predictionKey: nil
             )

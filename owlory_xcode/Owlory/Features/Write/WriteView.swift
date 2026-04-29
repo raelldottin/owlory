@@ -3,6 +3,7 @@ import SwiftUI
 
 struct WriteView: View {
     @ObservedObject var store: WriteStore
+    @ObservedObject var todayStore: TodayStore
     @ObservedObject var patternStore: PatternStore
     var highlightedNoteID: UUID?
     var highlightedNoteSelectionID: UUID?
@@ -305,7 +306,12 @@ struct WriteView: View {
     // MARK: - Note Detail Sheet
 
     private func noteDetailSheet(_ note: WritingNote) -> some View {
-        NoteDetailView(note: note, store: store, onDismiss: { selectedNote = nil })
+        NoteDetailView(
+            note: note,
+            store: store,
+            todayStore: todayStore,
+            onDismiss: { selectedNote = nil }
+        )
     }
 
     private func resetCapture() {
@@ -347,6 +353,7 @@ struct WriteView: View {
 private struct NoteDetailView: View {
     let note: WritingNote
     @ObservedObject var store: WriteStore
+    @ObservedObject var todayStore: TodayStore
     let onDismiss: () -> Void
     @State private var title: String
     @State private var bodyText: String
@@ -361,9 +368,10 @@ private struct NoteDetailView: View {
     @State private var sourceQuote: String
     @State private var hasSourceMetadata: Bool
 
-    init(note: WritingNote, store: WriteStore, onDismiss: @escaping () -> Void) {
+    init(note: WritingNote, store: WriteStore, todayStore: TodayStore, onDismiss: @escaping () -> Void) {
         self.note = note
         self.store = store
+        self.todayStore = todayStore
         self.onDismiss = onDismiss
         let sourceMetadata = note.sourceMetadata
         self._title = State(initialValue: note.title)
@@ -447,11 +455,18 @@ private struct NoteDetailView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { onDismiss() }
                 }
-                if canTurnIntoSourceNote {
+                if canOpenNoteOptions {
                     ToolbarItem(placement: .primaryAction) {
                         Menu {
-                            Button(sourceNoteActionTitle) {
-                                prepareSourceNoteSheet()
+                            if canAddToToday {
+                                Button("Add to Today") {
+                                    saveAndAddToToday()
+                                }
+                            }
+                            if canTurnIntoSourceNote {
+                                Button(sourceNoteActionTitle) {
+                                    prepareSourceNoteSheet()
+                                }
                             }
                         } label: {
                             Image(systemName: "ellipsis.circle")
@@ -474,6 +489,14 @@ private struct NoteDetailView: View {
 
     private var canTurnIntoSourceNote: Bool {
         stage == .source || WritingStageRules.canTransition(from: stage, to: .source)
+    }
+
+    private var canAddToToday: Bool {
+        todayStore.canPromoteWritingNoteToToday(editedNote)
+    }
+
+    private var canOpenNoteOptions: Bool {
+        canAddToToday || canTurnIntoSourceNote
     }
 
     private var sourceNoteActionTitle: String {
@@ -539,6 +562,27 @@ private struct NoteDetailView: View {
             sourceURL = Self.firstURL(in: "\(title)\n\(bodyText)")
         }
         showingSourceNoteSheet = true
+    }
+
+    private var editedNote: WritingNote {
+        WritingNote(
+            id: note.id,
+            title: title,
+            body: bodyText,
+            stage: stage,
+            createdDate: note.createdDate,
+            audioFileName: note.audioFileName,
+            audioTranscription: note.audioTranscription,
+            sourceMetadata: note.sourceMetadata
+        )
+    }
+
+    private func saveAndAddToToday() {
+        let promotedNote = editedNote
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        if todayStore.promoteWritingNoteToToday(promotedNote) {
+            onDismiss()
+        }
     }
 
     private func saveSourceNote() {

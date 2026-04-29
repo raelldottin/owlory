@@ -19,8 +19,8 @@ Use [Product Overview](../product/overview.md) for the status-marker vocabulary.
 | Train stale planned-session rollover | `Implemented` | Train tests and `make fast` cover auto-skip before recurring spawn. | Future affect/check-in relationship design remains `Contract only`. |
 | Build provenance | `Implemented` | `BuildInfo`, Xcode stamp scripts, `make build-provenance`, and `BuildInfoTests`. | No known gap for local build identity. |
 | GitHub / Xcode release mirroring | `Partially implemented`, `Needs automation enforcement` | Xcode build metadata and Git identity are stamped and validated locally. | The repo does not yet mechanically prove a release commit/tag has been pushed to GitHub before archive. |
-| Write Lab capture inbox | `Partially implemented` | Fast Write capture and source-note conversion exist; the product contract allows todo-like thoughts to enter Write Lab. | UI copy and processing prompts still need implementation and user-legibility proof. |
-| Write Lab promotion model | `Contract only` except source-note conversion | `Turn into Source Note` exists and preserves note content; origin preservation is now defined as a domain contract. | Task creation, Add to Today, permanent-note conversion, protocol-item promotion, persisted origin metadata, and route-back tests remain future work. |
+| Write Lab capture inbox | `Partially implemented` | Fast Write capture, source-note conversion, and Add to Today exist; the product contract allows todo-like thoughts to enter Write Lab. | UI copy and processing prompts still need implementation and user-legibility proof. |
+| Write Lab promotion model | `Partially implemented` | `Turn into Source Note` preserves note content; Add to Today creates Today-owned Focus work with typed Write-note origin metadata and route-back tests. | Task creation, permanent-note conversion, protocol-item promotion, and non-Today origin-link flows remain future work. |
 | UI / screenshot regression coverage | `Needs UI proof` | Manual UI review guidance exists. | Broad snapshot or screenshot regression infrastructure is not present. |
 
 ## Open Slices

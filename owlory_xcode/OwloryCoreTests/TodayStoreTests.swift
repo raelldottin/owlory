@@ -370,6 +370,90 @@ final class TodayStoreTests: XCTestCase {
         XCTAssertEqual(entry.focusThree[0].domain, .training)
     }
 
+    func testPromoteWritingNoteToTodayCreatesLinkedFocusItemAndPreservesRouteTarget() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        try? repository.saveEntry(DailyEntry(date: today, focusThree: []))
+        let note = WritingNote(
+            id: UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!,
+            title: "Email John about AWS billing",
+            body: "Send estimate before noon.",
+            stage: .capture
+        )
+
+        let store = await MainActor.run {
+            TodayStore(clock: FixedClock(now: today), repository: repository, calendar: makeCalendar())
+        }
+
+        let promoted = await MainActor.run { store.promoteWritingNoteToToday(note) }
+
+        XCTAssertTrue(promoted)
+        let state = await MainActor.run { store.entryState }
+        guard case .active(let entry) = state else {
+            return XCTFail("Expected active state")
+        }
+
+        guard let focus = entry.focusThree.first else {
+            return XCTFail("Expected promoted focus item")
+        }
+        XCTAssertEqual(focus.title, "Email John about AWS billing")
+        XCTAssertEqual(focus.domain, .writing)
+        XCTAssertEqual(focus.linkedRecordID, note.id)
+        XCTAssertEqual(focus.origin?.kind, .writingNote)
+        XCTAssertEqual(focus.origin?.id, note.id)
+        XCTAssertEqual(focus.origin?.createdAt, today)
+
+        let continueItem = TodayContinuationRules.derive(
+            todayEntry: entry,
+            calibration: CalibrationRules.Calibration(
+                enhancedNudge: nil,
+                completionContext: nil,
+                staleItems: [],
+                domainNudge: nil,
+                suggestedFocusLoad: 3,
+                writingNudge: nil,
+                trainingSummary: nil
+            ),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: [note]
+        ).first
+
+        XCTAssertEqual(continueItem?.highlightTarget, .writingNote(note.id))
+        let loaded = try? repository.loadEntry(for: today)
+        XCTAssertEqual(loaded?.focusThree.first?.origin, focus.origin)
+    }
+
+    func testPromoteWritingNoteToTodayRejectsDuplicatePromotion() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        let note = WritingNote(title: "Email John", body: "")
+        try? repository.saveEntry(
+            DailyEntry(
+                date: today,
+                focusThree: [
+                    FocusItem(title: "Email John", domain: .writing, linkedRecordID: note.id)
+                ]
+            )
+        )
+
+        let store = await MainActor.run {
+            TodayStore(clock: FixedClock(now: today), repository: repository, calendar: makeCalendar())
+        }
+
+        let canPromote = await MainActor.run { store.canPromoteWritingNoteToToday(note) }
+        let promoted = await MainActor.run { store.promoteWritingNoteToToday(note) }
+
+        XCTAssertFalse(canPromote)
+        XCTAssertFalse(promoted)
+        let state = await MainActor.run { store.entryState }
+        guard case .active(let entry) = state else {
+            return XCTFail("Expected active state")
+        }
+        XCTAssertEqual(entry.focusThree.count, 1)
+    }
+
     func testSourceBackedContinueItemCanBeAddedToFocusWithSourceLink() async {
         let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
         let today = makeDate("2026-04-08T10:00:00Z")

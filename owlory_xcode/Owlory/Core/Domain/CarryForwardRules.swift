@@ -12,7 +12,8 @@ enum CarryForwardRules {
                     domain: item.domain,
                     status: .planned,
                     createdFromDate: entry.date,
-                    linkedRecordID: item.linkedRecordID
+                    linkedRecordID: item.linkedRecordID,
+                    origin: item.origin
                 )
             }
         }

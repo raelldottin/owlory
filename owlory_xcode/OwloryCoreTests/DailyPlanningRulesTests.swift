@@ -64,6 +64,49 @@ final class DailyPlanningRulesTests: XCTestCase {
         XCTAssertEqual(updated, fullEntry)
     }
 
+    func testPromotingWritingNoteCreatesLinkedFocusItemWithOrigin() {
+        let noteID = UUID(uuidString: "CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC")!
+        let note = WritingNote(
+            id: noteID,
+            title: "  Email John about AWS billing  ",
+            body: "Need to send the estimate.",
+            stage: .capture
+        )
+        let entry = DailyEntry(date: planDate)
+
+        let updated = DailyPlanningRules.promotingWritingNoteToFocus(
+            note,
+            in: entry,
+            promotedAt: planDate
+        )
+
+        XCTAssertEqual(updated.focusThree.count, 1)
+        XCTAssertEqual(updated.focusThree.first?.title, "Email John about AWS billing")
+        XCTAssertEqual(updated.focusThree.first?.domain, .writing)
+        XCTAssertEqual(updated.focusThree.first?.linkedRecordID, noteID)
+        XCTAssertEqual(updated.focusThree.first?.origin?.kind, .writingNote)
+        XCTAssertEqual(updated.focusThree.first?.origin?.id, noteID)
+        XCTAssertEqual(updated.focusThree.first?.origin?.createdAt, planDate)
+    }
+
+    func testPromotingWritingNoteRejectsDuplicateOrigin() {
+        let noteID = UUID(uuidString: "DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD")!
+        let note = WritingNote(id: noteID, title: "Email John", body: "")
+        let existing = FocusItem(
+            title: "Email John",
+            domain: .writing,
+            linkedRecordID: noteID,
+            origin: FocusItemOrigin(kind: .writingNote, id: noteID, createdAt: carriedDate)
+        )
+        let entry = DailyEntry(date: planDate, focusThree: [existing])
+
+        XCTAssertFalse(DailyPlanningRules.canPromoteWritingNoteToFocus(note, in: entry))
+        XCTAssertEqual(
+            DailyPlanningRules.promotingWritingNoteToFocus(note, in: entry, promotedAt: planDate),
+            entry
+        )
+    }
+
     func testRemovingFocusItemOnlyRemovesMatchingItem() {
         let keep = makeItem("Keep", domain: .home)
         let remove = makeItem("Remove", domain: .writing)

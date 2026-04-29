@@ -8,11 +8,13 @@ final class TodayContinueItemAssemblerTests: XCTestCase {
 
     func testAssemblesVisibleContinueItemMetadata() {
         let linkedRecordID = stableID("11111111-1111-1111-1111-111111111111")
+        let origin = FocusItemOrigin(kind: .careerRecord, id: linkedRecordID, createdAt: now)
         let candidate = candidate(
             title: "Performance review story",
             domain: .career,
             source: .carriedFocusItem(stableID("22222222-2222-2222-2222-222222222222")),
             linkedRecordID: linkedRecordID,
+            origin: origin,
             staleDayCount: 4,
             step: .carriedForwardFocus
         )
@@ -28,6 +30,7 @@ final class TodayContinueItemAssemblerTests: XCTestCase {
         XCTAssertEqual(items.first?.reason, "Carried forward")
         XCTAssertEqual(items.first?.source, candidate.source)
         XCTAssertEqual(items.first?.linkedRecordID, linkedRecordID)
+        XCTAssertEqual(items.first?.origin, origin)
         XCTAssertEqual(items.first?.staleDayCount, 4)
         XCTAssertEqual(items.first?.priority, .carriedForward)
         XCTAssertEqual(items.first?.originalIndex, 1)
@@ -167,6 +170,7 @@ final class TodayContinueItemAssemblerTests: XCTestCase {
         domain: LifeDomain,
         source: TodayContinuationRules.ContinueSource,
         linkedRecordID: UUID? = nil,
+        origin: FocusItemOrigin? = nil,
         staleDayCount: Int? = nil,
         predictionKey: String? = nil,
         step: TodayContinueSourceComposer.Step
@@ -177,6 +181,7 @@ final class TodayContinueItemAssemblerTests: XCTestCase {
             domain: domain,
             source: source,
             linkedRecordID: linkedRecordID,
+            origin: origin,
             staleDayCount: staleDayCount,
             predictionKey: predictionKey
         )

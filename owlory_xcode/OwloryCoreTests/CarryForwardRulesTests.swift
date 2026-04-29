@@ -35,16 +35,19 @@ final class CarryForwardRulesTests: XCTestCase {
         XCTAssertTrue(carried.allSatisfy { $0.createdFromDate == entryDate })
     }
 
-    func testCarryForwardPreservesLinkedRecordIDs() {
+    func testCarryForwardPreservesLinkedRecordIDsAndOrigin() {
         let linkedID = UUID()
+        let originDate = makeDate("2026-04-07T08:30:00Z")
+        let origin = FocusItemOrigin(kind: .writingNote, id: linkedID, createdAt: originDate)
         let entry = DailyEntry(
             date: makeDate("2026-04-07T09:00:00Z"),
             focusThree: [
                 FocusItem(
-                    title: "Laundry",
-                    domain: .home,
+                    title: "Essay note",
+                    domain: .writing,
                     status: .planned,
-                    linkedRecordID: linkedID
+                    linkedRecordID: linkedID,
+                    origin: origin
                 )
             ]
         )
@@ -56,6 +59,7 @@ final class CarryForwardRulesTests: XCTestCase {
 
         XCTAssertEqual(carried.count, 1)
         XCTAssertEqual(carried.first?.linkedRecordID, linkedID)
+        XCTAssertEqual(carried.first?.origin, origin)
     }
 
     private func makeDate(_ value: String) -> Date {

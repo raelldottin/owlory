@@ -106,6 +106,7 @@ enum TodayContinueItemAssembler {
             reason: candidate.reason,
             source: candidate.source,
             linkedRecordID: candidate.linkedRecordID,
+            origin: candidate.origin,
             staleDayCount: candidate.staleDayCount,
             urgencyScore: urgencyScore,
             priority: candidate.priority,

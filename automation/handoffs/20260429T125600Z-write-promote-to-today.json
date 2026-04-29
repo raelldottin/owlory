@@ -1,0 +1,46 @@
+{
+  "slice_id": "write-promote-to-today",
+  "status": "done",
+  "summary": "Implemented Write to Today promotion by creating Today-owned writing Focus items from WritingNote records, preserving the original note and adding typed origin metadata for route-back through Continue.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/020000-write-promote-to-today.md",
+    "automation/handoffs/20260429T125600Z-write-promote-to-today.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/CarryForwardRules.swift",
+    "owlory_xcode/Owlory/Core/Domain/DailyPlanningRules.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/OwloryCoreTests/CarryForwardRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/DailyPlanningRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueItemAssemblerTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promote-to-today",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Add to Today is implemented; task, permanent-note, and protocol promotion remain explicitly future work.",
+    "The new Add to Today affordance is covered by build/domain tests, but not by screenshot/UI regression proof."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop after the first destination-specific Write promotion implementation so task/protocol promotion remains a separate deliberate slice.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T12:56:00Z"
+}

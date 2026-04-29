@@ -111,12 +111,36 @@ final class TodayStore: OwloryObservableObject {
         }
     }
 
-    func addFocusItem(title: String, domain: LifeDomain, linkedRecordID: UUID? = nil) {
+    func addFocusItem(
+        title: String,
+        domain: LifeDomain,
+        linkedRecordID: UUID? = nil,
+        origin: FocusItemOrigin? = nil
+    ) {
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        let item = FocusItem(title: title, domain: domain, linkedRecordID: linkedRecordID)
+        let item = FocusItem(title: title, domain: domain, linkedRecordID: linkedRecordID, origin: origin)
         mutateEntry { entry in
             entry = DailyPlanningRules.addingFocusItem(item, to: entry)
         }
+    }
+
+    func canPromoteWritingNoteToToday(_ note: WritingNote) -> Bool {
+        guard let entry = currentEntry else { return false }
+        return DailyPlanningRules.canPromoteWritingNoteToFocus(note, in: entry)
+    }
+
+    @discardableResult
+    func promoteWritingNoteToToday(_ note: WritingNote) -> Bool {
+        guard canPromoteWritingNoteToToday(note) else { return false }
+
+        mutateEntry { entry in
+            entry = DailyPlanningRules.promotingWritingNoteToFocus(
+                note,
+                in: entry,
+                promotedAt: clock.now
+            )
+        }
+        return true
     }
 
     func canAddContinueItemToFocus(_ item: TodayContinuationRules.ContinueItem) -> Bool {
@@ -161,7 +185,8 @@ final class TodayStore: OwloryObservableObject {
         addFocusItem(
             title: item.title,
             domain: item.domain,
-            linkedRecordID: item.focusLinkedRecordID
+            linkedRecordID: item.focusLinkedRecordID,
+            origin: item.focusOrigin(createdAt: clock.now)
         )
     }
 
@@ -355,7 +380,11 @@ final class TodayStore: OwloryObservableObject {
 
     func acceptFocusSuggestion(id: UUID) {
         guard let suggestion = focusSuggestionDrafts.first(where: { $0.id == id }) else { return }
-        addFocusItem(title: suggestion.title, domain: suggestion.domain, linkedRecordID: suggestion.linkedRecordID)
+        addFocusItem(
+            title: suggestion.title,
+            domain: suggestion.domain,
+            linkedRecordID: suggestion.linkedRecordID
+        )
         focusSuggestionDrafts.removeAll { $0.id == id }
         dismissedFocusSuggestionKeys.remove(suggestion.key)
     }

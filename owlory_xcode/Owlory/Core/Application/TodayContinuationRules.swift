@@ -42,12 +42,39 @@ enum TodayContinuationRules {
         let reason: String
         let source: ContinueSource
         let linkedRecordID: UUID?
+        let origin: FocusItemOrigin?
         let staleDayCount: Int?
         /// Urgency score from CompletionTimePredictor (0 = not urgent, 1+ = overdue).
         /// Nil when no statistical prediction exists for this item.
         let urgencyScore: Double?
         let priority: ContinuePriority
         let originalIndex: Int
+
+        init(
+            id: String,
+            title: String,
+            domain: LifeDomain,
+            reason: String,
+            source: ContinueSource,
+            linkedRecordID: UUID?,
+            origin: FocusItemOrigin? = nil,
+            staleDayCount: Int?,
+            urgencyScore: Double?,
+            priority: ContinuePriority,
+            originalIndex: Int
+        ) {
+            self.id = id
+            self.title = title
+            self.domain = domain
+            self.reason = reason
+            self.source = source
+            self.linkedRecordID = linkedRecordID
+            self.origin = origin
+            self.staleDayCount = staleDayCount
+            self.urgencyScore = urgencyScore
+            self.priority = priority
+            self.originalIndex = originalIndex
+        }
 
         var supportsAddToFocus: Bool {
             switch source {
@@ -86,6 +113,9 @@ enum TodayContinuationRules {
             case .writingNote(let id):
                 return .writingNote(id)
             case .focusItem, .carriedFocusItem:
+                if let originTarget = Self.highlightTarget(for: origin) {
+                    return originTarget
+                }
                 guard let linkedRecordID else { return nil }
                 switch domain {
                 case .training:
@@ -97,6 +127,46 @@ enum TodayContinuationRules {
                 case .home:
                     return .homeTask(linkedRecordID)
                 }
+            }
+        }
+
+        func focusOrigin(createdAt: Date) -> FocusItemOrigin? {
+            guard let linkedID = focusLinkedRecordID,
+                  let kind = focusOriginKind else {
+                return nil
+            }
+
+            return FocusItemOrigin(kind: kind, id: linkedID, createdAt: createdAt)
+        }
+
+        private var focusOriginKind: FocusItemOrigin.Kind? {
+            switch source {
+            case .trainingSession:
+                return .trainingSession
+            case .homeProtocolRun:
+                return .homeProtocolRun
+            case .homeTask:
+                return .homeTask
+            case .writingNote:
+                return .writingNote
+            case .focusItem, .carriedFocusItem:
+                return origin?.kind
+            }
+        }
+
+        private static func highlightTarget(for origin: FocusItemOrigin?) -> HighlightTarget? {
+            guard let origin else { return nil }
+            switch origin.kind {
+            case .trainingSession:
+                return .trainingSession(origin.id)
+            case .writingNote:
+                return .writingNote(origin.id)
+            case .careerRecord:
+                return .careerRecord(origin.id)
+            case .homeTask:
+                return .homeTask(origin.id)
+            case .homeProtocolRun:
+                return .homeProtocolRun(origin.id)
             }
         }
     }

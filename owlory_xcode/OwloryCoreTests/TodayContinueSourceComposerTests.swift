@@ -165,6 +165,30 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertNil(candidates.first?.staleDayCount)
     }
 
+    func testFocusOriginIsPreservedForCurrentFocusCandidates() {
+        let noteID = UUID()
+        let originDate = today.addingTimeInterval(60)
+        let origin = FocusItemOrigin(kind: .writingNote, id: noteID, createdAt: originDate)
+        let focus = FocusItem(
+            title: "Essay source",
+            domain: .writing,
+            status: .planned,
+            linkedRecordID: noteID,
+            origin: origin
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today, focusThree: [focus]),
+            calibration: calibration(),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            writingNotes: []
+        )
+
+        XCTAssertEqual(candidates.first?.origin, origin)
+    }
+
     func testSourceBackedFocusItemUsesExistingContinueSourceInsteadOfDuplicateFocusRow() {
         let note = WritingNote(title: "Essay source", body: "", stage: .source)
         let focus = FocusItem(

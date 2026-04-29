@@ -470,6 +470,52 @@
       ],
       "max_files_changed": 7,
       "notes": "Define the source/origin behavior for future Write Lab promotions before adding UI or destination-specific promotion flows."
+    },
+    {
+      "slice_id": "write-promote-to-today",
+      "title": "Promote Write notes into Today-owned work",
+      "status": "done",
+      "priority": 160,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Core/Domain/DailyPlanningRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/CarryForwardRules.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/DailyPlanningRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/CarryForwardRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinueItemAssemblerTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-29/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promote-to-today",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "write-promotion-origin-contract"
+      ],
+      "max_files_changed": 24,
+      "notes": "Implement only Write to Today promotion: create Today-owned work from a WritingNote, preserve the note, link origin metadata for route-back, and define duplicate behavior."
     }
   ]
 }

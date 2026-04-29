@@ -28,6 +28,43 @@ enum DailyPlanningRules {
         return updated
     }
 
+    static func canPromoteWritingNoteToFocus(
+        _ note: WritingNote,
+        in entry: DailyEntry
+    ) -> Bool {
+        let title = note.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty,
+              entry.focusThree.count < focusItemLimit else {
+            return false
+        }
+
+        return !entry.focusThree.contains { item in
+            isFocusItemLinkedToWritingNote(item, noteID: note.id)
+        }
+    }
+
+    static func promotingWritingNoteToFocus(
+        _ note: WritingNote,
+        in entry: DailyEntry,
+        promotedAt: Date
+    ) -> DailyEntry {
+        guard canPromoteWritingNoteToFocus(note, in: entry) else {
+            return entry
+        }
+
+        let item = FocusItem(
+            title: note.title.trimmingCharacters(in: .whitespacesAndNewlines),
+            domain: .writing,
+            linkedRecordID: note.id,
+            origin: FocusItemOrigin(
+                kind: .writingNote,
+                id: note.id,
+                createdAt: promotedAt
+            )
+        )
+        return addingFocusItem(item, to: entry)
+    }
+
     static func removingFocusItem(
         id: UUID,
         from entry: DailyEntry
@@ -57,5 +94,13 @@ enum DailyPlanningRules {
     ) -> Bool {
         !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
             entry.focusThree.count < focusItemLimit
+    }
+
+    private static func isFocusItemLinkedToWritingNote(_ item: FocusItem, noteID: UUID) -> Bool {
+        if item.origin?.kind == .writingNote && item.origin?.id == noteID {
+            return true
+        }
+
+        return item.domain == .writing && item.linkedRecordID == noteID
     }
 }
