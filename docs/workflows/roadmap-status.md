@@ -20,7 +20,7 @@ Use [Product Overview](../product/overview.md) for the status-marker vocabulary.
 | Build provenance | `Implemented` | `BuildInfo`, Xcode stamp scripts, `make build-provenance`, and `BuildInfoTests`. | No known gap for local build identity. |
 | GitHub / Xcode release mirroring | `Partially implemented`, `Needs automation enforcement` | Xcode build metadata and Git identity are stamped and validated locally. | The repo does not yet mechanically prove a release commit/tag has been pushed to GitHub before archive. |
 | Write Lab capture inbox | `Partially implemented` | Fast Write capture and source-note conversion exist; the product contract allows todo-like thoughts to enter Write Lab. | UI copy and processing prompts still need implementation and user-legibility proof. |
-| Write Lab promotion model | `Contract only` except source-note conversion | `Turn into Source Note` exists and preserves note content. | Task creation, Add to Today, permanent-note conversion, protocol-item promotion, and origin-link policy remain future work. |
+| Write Lab promotion model | `Contract only` except source-note conversion | `Turn into Source Note` exists and preserves note content; origin preservation is now defined as a domain contract. | Task creation, Add to Today, permanent-note conversion, protocol-item promotion, persisted origin metadata, and route-back tests remain future work. |
 | UI / screenshot regression coverage | `Needs UI proof` | Manual UI review guidance exists. | Broad snapshot or screenshot regression infrastructure is not present. |
 
 ## Open Slices

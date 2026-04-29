@@ -447,7 +447,7 @@
     {
       "slice_id": "write-promotion-origin-contract",
       "title": "Define Write promotion origin contract",
-      "status": "queued",
+      "status": "done",
       "priority": 150,
       "domain": "write",
       "allowed_paths": [

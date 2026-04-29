@@ -45,6 +45,22 @@ Missing/deferred: Destination-specific promotion flows, duplicate handling, and 
 - Lightweight follow-up prompts are appropriate after capture when Owlory has a good signal, such as actionable phrasing, a URL, or repeated carry-forward.
 - Pattern-driven prompts should stay suggestive rather than mandatory, for example: turn into task, mark as source note, schedule, archive, or keep as note.
 
+## Promotion Origin Contract
+
+Implementation status: `Contract only` for future cross-domain promotions; source-note conversion remains the only implemented promotion-like flow.
+Proof level: Doc-only for origin preservation; source-note conversion has domain coverage.
+Missing/deferred: Persisted origin metadata, destination-specific creation rules, duplicate handling, and route-back tests.
+
+- Promotion should create a new destination-owned object while preserving the original `WritingNote` as the source unless the user explicitly deletes or archives the note.
+- Source-note and permanent-note classification may update the same `WritingNote` because those states are still Write-owned. Cross-domain promotion must not silently consume the note.
+- A promoted object must store enough origin metadata to route back to the captured note: origin kind, Write note ID, destination kind, destination ID, and creation timestamp. If a destination currently has only a generic `linkedRecordID`, the routing layer must pair that ID with source kind before claiming deep-link correctness.
+- The promoted object should keep the user-facing title/body it needs to remain useful even if the original note is later archived or deleted; the origin link should degrade gracefully rather than making the destination record unreadable.
+- Promotion is not automatic two-way sync. Later edits to the note or destination object should not rewrite the other side unless a future contract explicitly adds sync behavior.
+- Repeating the same promotion to the same destination should be idempotent or ask for an explicit duplicate. Do not silently create duplicate Today, task, or protocol records from the same note.
+- Promoting to Today should create Today-owned work linked back to the Write note. It should not introduce a fake daily Write cadence.
+- Promoting to a task should create the destination's task-like object and preserve the Write note as source context, not leave the obligation owned by Write.
+- Promoting to a protocol should create a protocol draft/input item only. It must not start an active Home protocol run, and it must not appear in Today Continue unless a Home-owned active run or Today-owned item later exists.
+
 ## Long-Term Success Criteria
 
 - A new user can open Write and save a thought in seconds.

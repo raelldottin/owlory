@@ -2,6 +2,7 @@
 
 ## 2026-04-29
 
+- [write-promotion-origin-contract](sessions/2026-04-29/015700-write-promotion-origin-contract.md)
 - [contract-implementation-completeness-audit](sessions/2026-04-29/015027-contract-implementation-completeness-audit.md)
 - [release-identity-github-xcode-mirroring](sessions/2026-04-29/014654-release-identity-github-xcode-mirroring.md)
 - [readme-beta-testflight-link](sessions/2026-04-29/013303-readme-beta-testflight-link.md)

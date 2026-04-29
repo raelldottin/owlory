@@ -1,0 +1,28 @@
+{
+  "slice_id": "write-promotion-origin-contract",
+  "status": "done",
+  "summary": "Defined the Write promotion origin contract: future cross-domain promotions must create destination-owned objects while preserving the original WritingNote as source context and retaining enough metadata to route back.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/015700-write-promotion-origin-contract.md",
+    "automation/handoffs/20260429T115700Z-write-promotion-origin-contract.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promotion-origin-contract",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "This slice intentionally defines the origin contract only; persisted origin metadata and destination-specific promotion flows remain future implementation work."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop before implementation slices; the next queued work should be added deliberately when choosing Add to Today or another destination flow.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T11:57:00Z"
+}
