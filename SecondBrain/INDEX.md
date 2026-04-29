@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-04-29
+
+- [readme-beta-testflight-link](sessions/2026-04-29/013303-readme-beta-testflight-link.md)
+
 ## 2026-04-28
 
 - [write-lab-capture-inbox-promotion](sessions/2026-04-28/164726-write-lab-capture-inbox-promotion.md)

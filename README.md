@@ -4,6 +4,10 @@ Owlory is a private, Apple-native, local-first life command center for continuit
 
 This repository is organized as an agent-first execution environment. Product rules, ownership, validation commands, release/rollback steps, and handoff expectations should live in versioned docs or executable tooling instead of chat memory.
 
+## Beta Test
+
+Join the TestFlight beta: [Owlory Beta Test Link](https://testflight.apple.com/join/RWDqdzVA)
+
 ## Start Here
 
 1. Read [AGENTS.md](AGENTS.md) for the short operating contract.
