@@ -17,6 +17,8 @@ Use the Build Info sheet when reproducing a TestFlight issue. The rollback line 
 
 Build identity should read coherently from both directions: the Xcode version/build shown in the app should map back to committed GitHub source, and a GitHub release commit or tag should map forward to the same stamped bundle metadata.
 
+Build identity is not data-store identity. The Build Info sheet can prove which source commit and Xcode build produced the running app, but it does not prove that another installed app copy is reading the same local JSON container. When TestFlight and an Xcode-installed build show different data, compare the Build Info `Bundle`, build configuration, device/simulator, and install channel before treating it as a data-loss issue.
+
 Use `make build-provenance` to print the local Xcode version/build and Git rollback identity. To compare a local checkout against a TestFlight build, copy the build number and Git commit from the Build Info sheet and run:
 
 ```bash
@@ -24,6 +26,20 @@ Use `make build-provenance` to print the local Xcode version/build and Git rollb
 ```
 
 Keep build-provenance checks in workflow tooling. Runtime `BuildInfo` should keep reading stamped bundle metadata and should not shell out or inspect the repository.
+
+## Local Data Store Identity
+
+Owlory's main app stores local domain data as JSON under the installed app container's Application Support directory, rooted at `Application Support/Owlory/...`. Legacy reads may still look under the older `Application Support/Trajectory/...` root inside the same app container, but that fallback does not bridge TestFlight, debug, simulator, or device containers.
+
+Use this rule when diagnosing mismatched app data:
+
+- Same Git commit and build number means source/build identity matches.
+- Same bundle/app identity on the same physical installed app is required before local data sharing is even possible.
+- Simulator and physical device stores are separate.
+- Different bundle identifiers or historical app IDs have separate containers.
+- The widget app group can mirror narrow widget state, but the main domain JSON store is not automatically shared through that group.
+
+Treat cross-channel data movement as a future explicit feature, not an expected side effect of GitHub/Xcode mirroring. Prefer intentional export/import or backup restore over making debug and TestFlight builds share one live store.
 
 ## Performance Telemetry
 

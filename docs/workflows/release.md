@@ -24,6 +24,17 @@ Missing/deferred: Automatic proof that a release commit/tag has been pushed to G
 
 Use `make build-provenance` before release or rollback work to print the current version, build number, Git commit, dirty-state warning, and rollback checkout command.
 
+## Data Channel Boundary
+
+Release identity is separate from local data identity.
+
+- GitHub/Xcode mirroring proves that the app binary came from the expected committed source and Xcode version/build metadata.
+- It does not prove that two installed app copies share the same local `Application Support/Owlory/...` JSON store.
+- TestFlight, Xcode-dev, simulator, and device installs may read different local containers even when their source commits are related.
+- Moving user data between channels requires an explicit import/export, backup restore, migration, app-group storage change, or sync feature.
+
+Keep TestFlight and debug data separate by default. Do not point a debug build at real TestFlight user data as a convenience during release work.
+
 ## Normal Release
 
 1. Run `./Tools/bump-version.sh <major|minor|patch>`.
@@ -51,6 +62,7 @@ Use `make build-provenance` before release or rollback work to print the current
 
 4. If the command fails on commit mismatch, check out the rollback line shown by the TestFlight build and rerun the comparison.
 5. If the command fails on build mismatch, the local Xcode project is not the build-number state that produced that TestFlight artifact.
+6. If the symptom is "different data in TestFlight and Xcode," compare bundle/app identity, device versus simulator, and install channel. Build provenance can explain which binary is running, but not move or merge local user data between app containers.
 
 ## TestFlight Rollback
 

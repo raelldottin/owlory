@@ -1,0 +1,30 @@
+{
+  "slice_id": "document-local-data-channel-boundaries",
+  "status": "done",
+  "summary": "Documented that Owlory local user data is scoped to the installed app identity and local Application Support container, while GitHub/Xcode mirroring and Build Info prove source/build identity rather than data-store identity.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/194250-document-local-data-channel-boundaries.md",
+    "automation/handoffs/20260429T234318Z-document-local-data-channel-boundaries.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/app-runtime.md",
+    "docs/runtime/observability.md",
+    "docs/workflows/release.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id document-local-data-channel-boundaries",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "git diff --check",
+    "make automation-check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "This is a docs-only contract. No export/import, migration, app-group storage move, or sync behavior was implemented.",
+    "The main app data store still intentionally remains local to the installed app container."
+  ],
+  "recommended_next_slice": "local-data-export-import-backup",
+  "recommended_next_reason": "Only consider this if intentional data movement between TestFlight, Xcode-dev, simulator, or device installs becomes a product requirement.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T23:44:05Z"
+}

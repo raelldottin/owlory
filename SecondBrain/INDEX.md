@@ -2,6 +2,7 @@
 
 ## 2026-04-29
 
+- [document-local-data-channel-boundaries](sessions/2026-04-29/194250-document-local-data-channel-boundaries.md)
 - [home-task-write-origin-route-back](sessions/2026-04-29/183451-home-task-write-origin-route-back.md)
 - [write-promote-to-task](sessions/2026-04-29/132300-write-promote-to-task.md)
 - [write-promote-to-today](sessions/2026-04-29/020000-write-promote-to-today.md)
