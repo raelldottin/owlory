@@ -29,6 +29,16 @@
 - Runtime telemetry events.
 - The release-identity contract that ties shipped Xcode build metadata back to committed GitHub history.
 
+## Build Provenance And Runtime Mirroring Contract
+
+Implementation status: `Implemented` for local build provenance; `Partially implemented` and `Needs automation enforcement` for GitHub/Xcode release mirroring.
+Proof level: `BuildInfo`, Xcode stamp scripts, `BuildInfoTests`, and `make build-provenance` prove local build identity.
+Missing/deferred: A pushed-commit release-readiness gate and dedicated widget/reminder parity proof remain future work.
+
+- A local build should report the Git commit, branch, tag/describe output, dirty status, build date, configuration, and build-number source that produced it.
+- A release archive should be traceable to committed GitHub history, not a local-only Xcode state.
+- Widget mirroring should stay a narrow runtime projection from the app's reminder plan, not a second source of product rules.
+
 ## Change Safely
 
 - Keep dependency construction explicit.

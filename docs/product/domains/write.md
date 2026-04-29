@@ -21,6 +21,10 @@
 
 ## Capture Inbox Contract
 
+Implementation status: `Partially implemented`.
+Proof level: Write storage, stage rules, and source-note conversion have domain coverage; capture-inbox legibility does not yet have UI proof.
+Missing/deferred: Multi-target promotion, explanatory UI copy, and user-legibility testing around inbox versus final destination.
+
 - Write Lab is not a todo list as a product identity.
 - Write Lab is allowed to receive todo-like thoughts because users often need the fastest possible place to capture unfinished intent.
 - The app should respond to that behavior with a helpful processing path, not with extra friction at capture time.
@@ -28,6 +32,10 @@
 - Classification, promotion, and cleanup belong after capture, not before it.
 
 ## Promotion Model
+
+Implementation status: `Contract only` except source-note conversion.
+Proof level: Source-note conversion is implemented; task, Today priority, permanent-note, protocol-item, and origin-link promotions are not implementation claims yet.
+Missing/deferred: Destination-specific promotion flows, duplicate handling, and source/origin preservation policy.
 
 - Every Write Lab entry should be eligible for lightweight later promotion into the rest of Owlory.
 - The canonical promotion targets are task, Today priority, source note, permanent note, protocol item, archive, and keep as note/draft.

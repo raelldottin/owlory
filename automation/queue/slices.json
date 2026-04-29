@@ -409,6 +409,67 @@
       ],
       "max_files_changed": 10,
       "notes": "Weekly digest rule changes may make older persisted rows stale. Refresh only the latest stale digest from source data, preserve older history, and make digest calculation version metadata explicit."
+    },
+    {
+      "slice_id": "contract-status-markers",
+      "title": "Add implementation-status markers to product contracts",
+      "status": "done",
+      "priority": 140,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/overview.md",
+        "docs/product/domains/today.md",
+        "docs/product/domains/write.md",
+        "docs/product/domains/train.md",
+        "docs/product/domains/patterns.md",
+        "docs/product/domains/app-runtime.md",
+        "docs/product/domains/home.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-29/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id contract-status-markers",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "patterns-weekly-digest-versioned-stale-refresh"
+      ],
+      "max_files_changed": 14,
+      "notes": "Mark maintained product contracts with explicit implementation status, proof level, and missing/deferred work so product language is not mistaken for shipped behavior."
+    },
+    {
+      "slice_id": "write-promotion-origin-contract",
+      "title": "Define Write promotion origin contract",
+      "status": "queued",
+      "priority": 150,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "docs/workflows/roadmap-status.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-29/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promotion-origin-contract",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "contract-status-markers"
+      ],
+      "max_files_changed": 7,
+      "notes": "Define the source/origin behavior for future Write Lab promotions before adding UI or destination-specific promotion flows."
     }
   ]
 }

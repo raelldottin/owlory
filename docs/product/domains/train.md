@@ -26,6 +26,16 @@
 - `TrainStore`.
 - `TrainingSession` and `TrainingStatus`.
 
+## Training Rollover Contract
+
+Implementation status: `Implemented` for stale planned-session auto-skip and recurring planned-session rollover.
+Proof level: Train domain tests and the common `make fast` slice cover recurrence rules and rollover orchestration.
+Missing/deferred: Future affect/check-in relationship design remains `Contract only` until a Train-owned rule and validation path are defined.
+
+- A planned session that survives into the next calendar day auto-skips on the next load/foreground rollover pass.
+- Recurring sessions may spawn the next planned instance for the new day after stale sessions are resolved.
+- Today may present Train work as actionable only from planned sessions for the current day.
+
 ## Change Safely
 
 - Keep recurrence math and dedupe policy in `RecurrenceRules`.

@@ -1,0 +1,35 @@
+{
+  "slice_id": "contract-status-markers",
+  "status": "done",
+  "summary": "Added explicit implementation-status blocks to maintained product and workflow contracts so documented product intent is separated from shipped behavior, proof level, and deferred work.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/015027-contract-implementation-completeness-audit.md",
+    "automation/handoffs/20260429T113700Z-contract-status-markers.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/app-runtime.md",
+    "docs/product/domains/home.md",
+    "docs/product/domains/patterns.md",
+    "docs/product/domains/today.md",
+    "docs/product/domains/train.md",
+    "docs/product/domains/write.md",
+    "docs/product/overview.md",
+    "docs/workflows/release.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id contract-status-markers",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "The markers classify current proof honestly, but they do not implement the deferred Write promotion, release-readiness, UI-proof, or discoverability slices."
+  ],
+  "recommended_next_slice": "write-promotion-origin-contract",
+  "recommended_next_reason": "The next adjacent slice should define Write promotion origin behavior before destination-specific promotion flows are implemented.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T11:37:00Z"
+}

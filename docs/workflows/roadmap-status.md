@@ -8,6 +8,21 @@ Use this when choosing the next slice or checking whether legacy roadmap state h
 - Stabilized areas should not be revisited without a concrete bug: Continue pipeline, recurring rollover, reminder scheduling, weekly digest cadence/content/calendar labels, stale-item gaps, domain nudges, readiness-to-outcome, protocol lifecycle, daily planning, focus suggestions, voice transcription routing, build provenance, and current docs/handoff harnesses.
 - For completed-slice evidence, search `SecondBrain/INDEX.md` and the owning domain doc instead of relying on historical roadmap files.
 
+## Contract Implementation Status
+
+Use [Product Overview](../product/overview.md) for the status-marker vocabulary. These labels prevent future agents from reading a contract as shipped behavior without checking implementation evidence.
+
+| Contract area | Status | Proof level | Remaining gap |
+| --- | --- | --- | --- |
+| Today / Continue ownership | `Implemented` plus `Needs UI proof` | Domain/core regression tests cover source-aware Continue composition and Focus-backed Done, Defer, and Drop. | Swipe/accessibility-only action discoverability still needs user-visible evaluation or UI proof. |
+| Weekly digest rule-versioning | `Implemented` | Patterns tests cover `digestRuleVersion`, latest stale digest refresh, cadence, and scope-honest counts. | Historical backfill is `Deferred` unless legacy rows need rewriting. |
+| Train stale planned-session rollover | `Implemented` | Train tests and `make fast` cover auto-skip before recurring spawn. | Future affect/check-in relationship design remains `Contract only`. |
+| Build provenance | `Implemented` | `BuildInfo`, Xcode stamp scripts, `make build-provenance`, and `BuildInfoTests`. | No known gap for local build identity. |
+| GitHub / Xcode release mirroring | `Partially implemented`, `Needs automation enforcement` | Xcode build metadata and Git identity are stamped and validated locally. | The repo does not yet mechanically prove a release commit/tag has been pushed to GitHub before archive. |
+| Write Lab capture inbox | `Partially implemented` | Fast Write capture and source-note conversion exist; the product contract allows todo-like thoughts to enter Write Lab. | UI copy and processing prompts still need implementation and user-legibility proof. |
+| Write Lab promotion model | `Contract only` except source-note conversion | `Turn into Source Note` exists and preserves note content. | Task creation, Add to Today, permanent-note conversion, protocol-item promotion, and origin-link policy remain future work. |
+| UI / screenshot regression coverage | `Needs UI proof` | Manual UI review guidance exists. | Broad snapshot or screenshot regression infrastructure is not present. |
+
 ## Open Slices
 
 Today Continue later work:

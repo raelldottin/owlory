@@ -22,6 +22,20 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
 
+## Contract Status And Proof Levels
+
+Use the status markers in [Product Overview](../product/overview.md) when a product or workflow contract could be mistaken for shipped behavior.
+
+Recommended status block:
+
+```text
+Implementation status: Partially implemented
+Proof level: domain tests only
+Missing/deferred: UI proof for large Dynamic Type Continue rows
+```
+
+Proof level should name the strongest evidence currently available, such as `doc-only`, `domain-tested`, `UI-tested`, `manually verified`, or `automation-enforced`. Do not call a contract `Implemented` unless its proof level points to live code paths and a repeatable validation command.
+
 ## ML, Speech, And Generated Output
 
 Use [ML QA](ml-qa.md) together with [ML Model Posture](../runtime/ml-model-posture.md) and [ML Privacy And Drafts](../runtime/ml-privacy.md) for any feature that drafts text, classifies content, transcribes speech, or suggests changes from user data.

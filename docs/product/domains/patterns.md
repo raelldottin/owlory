@@ -27,6 +27,16 @@
 - `CalibrationRules.Calibration`.
 - `WeeklyDigest`.
 
+## Weekly Digest Contract
+
+Implementation status: `Implemented` for rule-versioned digest persistence, latest stale digest refresh, cadence, and scope-honest completion totals.
+Proof level: Patterns domain tests and the common `make fast` slice cover digest rules, cadence, and versioned stale refresh behavior.
+Missing/deferred: Historical digest migration/backfill is `Deferred` unless legacy rows truly need rewriting.
+
+- `WeeklyDigest.digestRuleVersion` records the calculation contract used for a persisted digest row.
+- The latest digest may be refreshed from source data when stale.
+- Older digest history must not be silently bulk-rewritten during normal loading.
+
 ## Change Safely
 
 - Keep computations pure and deterministic.

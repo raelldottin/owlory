@@ -8,6 +8,21 @@ Use this doc for cross-domain product posture and experience principles. Domain-
 - It unifies daily planning, training logging, writing progression, career evidence, and home maintenance in one coherent system instead of scattering those workflows across separate apps.
 - It is not a social app, collaboration surface, or generic catch-all to-do list. Explicit state, low-friction execution, and thoughtful reflection matter more than breadth.
 
+## Contract Status Markers
+
+A product contract is not automatically an implementation claim. When a domain doc records a durable rule, mark its current delivery state when that status is not obvious from code and tests.
+
+Use these markers:
+
+- `Implemented` - behavior has live code paths and targeted validation.
+- `Partially implemented` - part of the behavior exists, but important flows or destinations remain future work.
+- `Contract only` - the doc records product intent or a design commitment, but the app should not claim the behavior is shipped.
+- `Needs UI proof` - code may exist, but user-visible motion, layout, discoverability, or accessibility still needs screenshot, device, or usability evidence.
+- `Needs automation enforcement` - the contract depends on process discipline today and should not be described as mechanically enforced yet.
+- `Deferred` - the contract is intentionally not being implemented in the current slice; record the reason or trigger for revisiting it.
+
+Current contract status lives in [Roadmap Status](../workflows/roadmap-status.md). Domain docs may also place a status block directly under major contract headings.
+
 ## Core Surfaces
 
 - `Today` is the daily command center.

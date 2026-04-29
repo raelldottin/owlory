@@ -28,6 +28,10 @@
 
 ## Continue And Carry-Forward Contract
 
+Implementation status: `Implemented` for current Continue ownership and Focus-backed Done / Defer / Drop behavior; `Needs UI proof` for action discoverability.
+Proof level: Domain and core regression tests cover source-aware Continue composition and Focus-backed action routing.
+Missing/deferred: Large Dynamic Type screenshot proof, visible fallback review for hidden actions, future Skip-for-today, stable deep links, generated-item provenance, and prune/migrate behavior.
+
 - `DailyEntry.carryForward` is persisted historical fact for Previous Days. Do not migrate or rename it unless the persisted schema intentionally changes.
 - Continue is a derived Today projection, not stored carry-forward data. Rendering Continue, refreshing Focus Suggestions, or routing Continue rows must not mutate `carryForward`.
 - Continue can derive rows from current Focus items, planned training due today, stale carried Focus items, active Home protocol runs, active Home tasks, and in-progress Writing notes.

@@ -28,6 +28,10 @@
 
 ## Protocol Run Contract
 
+Implementation status: `Implemented` for the current active-run lifecycle, template preservation, run persistence, duplicate prevention, and Today projection rules.
+Proof level: Home protocol lifecycle and Today projection rules have focused domain coverage.
+Missing/deferred: Future run windows and Home projects remain `Contract only` until modeled and validated.
+
 - Protocols are reusable templates. A run must not mutate the template that created it.
 - Protocol runs are execution snapshots. They remain active until every step is completed or skipped, or until the user explicitly abandons the run.
 - Active runs may span reloads and calendar days. Do not auto-complete, auto-abandon, or recreate a run only because the day changed.

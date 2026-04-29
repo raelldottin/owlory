@@ -10,6 +10,10 @@
 
 ## Version Control Contract
 
+Implementation status: `Partially implemented` and `Needs automation enforcement`.
+Proof level: Local Xcode/Git build provenance is implemented and checked by `make build-provenance`.
+Missing/deferred: Automatic proof that a release commit/tag has been pushed to GitHub before archive remains future enforcement.
+
 - Owlory release identity is shared across GitHub and Xcode, not split between them.
 - GitHub is the durable source of committed history: commits, tags, changelog context, and the exact revision that a shipped build came from.
 - Xcode is the durable source of app-facing version metadata: `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`, and the archived bundle metadata stamped into the app.
