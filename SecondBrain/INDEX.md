@@ -2,6 +2,7 @@
 
 ## 2026-04-29
 
+- [home-task-write-origin-route-back](sessions/2026-04-29/183451-home-task-write-origin-route-back.md)
 - [write-promote-to-task](sessions/2026-04-29/132300-write-promote-to-task.md)
 - [write-promote-to-today](sessions/2026-04-29/020000-write-promote-to-today.md)
 - [write-promotion-origin-contract](sessions/2026-04-29/015700-write-promotion-origin-contract.md)

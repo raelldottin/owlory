@@ -1,0 +1,36 @@
+{
+  "slice_id": "home-task-write-origin-route-back",
+  "status": "done",
+  "summary": "Implemented visible Home task route-back for tasks promoted from Write notes by classifying source-note availability, showing View source note for available origins, handling missing sources gracefully, and routing through the existing Write note highlight/detail path.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/183451-home-task-write-origin-route-back.md",
+    "automation/handoffs/20260429T223550Z-home-task-write-origin-route-back.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-task-write-origin-route-back",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=write",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Route-back is implemented through app wiring and domain-tested source availability classification, but there is no screenshot/UI regression proof for the Home task detail affordance.",
+    "Write to protocol remains explicitly future work and was not touched."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop before protocol promotion; protocol promotion should be its own slice because it touches Home protocol lifecycle and Today Continue projection.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T22:40:04Z"
+}

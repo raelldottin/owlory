@@ -107,6 +107,66 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertTrue(store.tasks.isEmpty)
     }
 
+    func testTaskSourceRoutingReturnsAvailableWritingNoteRoute() {
+        let noteID = UUID()
+        let task = HomeTask(
+            title: "Email John",
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: noteID,
+                createdAt: makeDate("2026-04-29T13:30:00Z")
+            )
+        )
+        let note = WritingNote(id: noteID, title: "Email John", body: "Draft context")
+
+        let route = HomeTaskSourceRouting.writeNoteRoute(
+            for: task,
+            writingNotes: [note]
+        )
+
+        XCTAssertEqual(route, .availableWritingNote(noteID))
+    }
+
+    func testTaskSourceRoutingReturnsMissingWritingNoteRoute() {
+        let noteID = UUID()
+        let task = HomeTask(
+            title: "Email John",
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: noteID,
+                createdAt: makeDate("2026-04-29T13:30:00Z")
+            )
+        )
+
+        let route = HomeTaskSourceRouting.writeNoteRoute(
+            for: task,
+            writingNotes: []
+        )
+
+        XCTAssertEqual(route, .missingWritingNote(noteID))
+    }
+
+    func testTaskSourceRoutingHidesNonWriteOrigins() {
+        let taskWithoutOrigin = HomeTask(title: "Clean gutters")
+        let taskWithHomeOrigin = HomeTask(
+            title: "Clean gutters",
+            origin: OwloryItemOrigin(
+                kind: .homeTask,
+                id: UUID(),
+                createdAt: makeDate("2026-04-29T13:30:00Z")
+            )
+        )
+
+        XCTAssertEqual(
+            HomeTaskSourceRouting.writeNoteRoute(for: taskWithoutOrigin, writingNotes: []),
+            .none
+        )
+        XCTAssertEqual(
+            HomeTaskSourceRouting.writeNoteRoute(for: taskWithHomeOrigin, writingNotes: []),
+            .none
+        )
+    }
+
     func testToggleCompleteSetsCompletedAndDate() {
         let now = makeDate("2026-04-08T09:00:00Z")
         let store = makeStore(now: now)

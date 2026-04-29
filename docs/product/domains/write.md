@@ -48,8 +48,8 @@ Missing/deferred: Protocol/permanent-note flows, richer duplicate choices beyond
 ## Promotion Origin Contract
 
 Implementation status: `Partially implemented` for Write to Today and Write to task; `Contract only` for permanent-note and protocol promotion.
-Proof level: Today promotion persists typed Write-note origin metadata and has route-back tests; task promotion persists typed Write-note origin metadata on the Home-owned task; source-note conversion has domain coverage.
-Missing/deferred: Protocol/permanent-note origin metadata, destination-specific creation rules, and richer non-Today route-back UI beyond stored task origin metadata.
+Proof level: Today promotion persists typed Write-note origin metadata and has route-back tests; task promotion persists typed Write-note origin metadata on the Home-owned task and exposes a visible Home-to-Write source route when the note still exists; source-note conversion has domain coverage.
+Missing/deferred: Protocol/permanent-note origin metadata, destination-specific creation rules, and screenshot/UI proof for route-back affordances.
 
 - Promotion should create a new destination-owned object while preserving the original `WritingNote` as the source unless the user explicitly deletes or archives the note.
 - Source-note and permanent-note classification may update the same `WritingNote` because those states are still Write-owned. Cross-domain promotion must not silently consume the note.
@@ -58,7 +58,7 @@ Missing/deferred: Protocol/permanent-note origin metadata, destination-specific 
 - Promotion is not automatic two-way sync. Later edits to the note or destination object should not rewrite the other side unless a future contract explicitly adds sync behavior.
 - Repeating the same promotion to the same destination should be idempotent or ask for an explicit duplicate. Do not silently create duplicate Today, task, or protocol records from the same note.
 - Promoting to Today creates Today-owned Focus work linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note, and it must not introduce a fake daily Write cadence.
-- Promoting to a task creates a Home-owned task linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note, and it must not leave the obligation owned by Write.
+- Promoting to a task creates a Home-owned task linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note, and it must not leave the obligation owned by Write. When the source note still exists, Home task detail should provide a visible route back to the note.
 - Promoting to a protocol should create a protocol draft/input item only. It must not start an active Home protocol run, and it must not appear in Today Continue unless a Home-owned active run or Today-owned item later exists.
 
 ## Long-Term Success Criteria

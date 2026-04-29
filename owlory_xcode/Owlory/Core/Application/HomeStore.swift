@@ -21,6 +21,30 @@ enum HomeContinueRouting {
     }
 }
 
+enum HomeTaskSourceRoute: Equatable {
+    case none
+    case availableWritingNote(UUID)
+    case missingWritingNote(UUID)
+}
+
+enum HomeTaskSourceRouting {
+    static func writeNoteRoute(
+        for task: HomeTask,
+        writingNotes: [WritingNote]
+    ) -> HomeTaskSourceRoute {
+        guard task.origin?.kind == .writingNote,
+              let noteID = task.origin?.id else {
+            return .none
+        }
+
+        if writingNotes.contains(where: { $0.id == noteID }) {
+            return .availableWritingNote(noteID)
+        }
+
+        return .missingWritingNote(noteID)
+    }
+}
+
 @MainActor
 final class HomeStore: OwloryObservableObject {
     #if canImport(Combine)

@@ -2,9 +2,11 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var store: HomeStore
+    @ObservedObject var writeStore: WriteStore
     var highlightedTaskID: UUID?
     var highlightedRunID: UUID?
     var highlightedRunSelectionID: UUID?
+    let onSourceNoteSelected: (UUID) -> Void
     @State private var showingAddTask = false
     @State private var showingAddProtocol = false
     @State private var editingTask: HomeTask?
@@ -51,7 +53,19 @@ struct HomeView: View {
                 AddProtocolSheet(store: store, onDismiss: { showingAddProtocol = false })
             }
             .sheet(item: $editingTask) { task in
-                EditTaskSheet(task: task, store: store, onDismiss: { editingTask = nil })
+                EditTaskSheet(
+                    task: task,
+                    store: store,
+                    sourceNoteRoute: HomeTaskSourceRouting.writeNoteRoute(
+                        for: task,
+                        writingNotes: writeStore.notes
+                    ),
+                    onViewSourceNote: { noteID in
+                        editingTask = nil
+                        onSourceNoteSelected(noteID)
+                    },
+                    onDismiss: { editingTask = nil }
+                )
             }
             .sheet(item: $editingProtocol) { proto in
                 EditProtocolSheet(proto: proto, store: store, onDismiss: { editingProtocol = nil })
@@ -574,15 +588,25 @@ private struct AddTaskSheet: View {
 private struct EditTaskSheet: View {
     let task: HomeTask
     @ObservedObject var store: HomeStore
+    let sourceNoteRoute: HomeTaskSourceRoute
+    let onViewSourceNote: (UUID) -> Void
     let onDismiss: () -> Void
     @State private var title: String
     @State private var notes: String
     @State private var isRecurring: Bool
     @State private var recurrenceDays: Int
 
-    init(task: HomeTask, store: HomeStore, onDismiss: @escaping () -> Void) {
+    init(
+        task: HomeTask,
+        store: HomeStore,
+        sourceNoteRoute: HomeTaskSourceRoute,
+        onViewSourceNote: @escaping (UUID) -> Void,
+        onDismiss: @escaping () -> Void
+    ) {
         self.task = task
         self.store = store
+        self.sourceNoteRoute = sourceNoteRoute
+        self.onViewSourceNote = onViewSourceNote
         self.onDismiss = onDismiss
         self._title = State(initialValue: task.title)
         self._notes = State(initialValue: task.notes)
@@ -600,6 +624,7 @@ private struct EditTaskSheet: View {
                 if isRecurring {
                     Stepper("Every \(recurrenceDays) days", value: $recurrenceDays, in: 1...365)
                 }
+                sourceNoteSection
             }
             .navigationTitle("Edit Task")
             .navigationBarTitleDisplayMode(.inline)
@@ -623,6 +648,27 @@ private struct EditTaskSheet: View {
             }
         }
         .presentationDetents([.medium])
+    }
+
+    @ViewBuilder
+    private var sourceNoteSection: some View {
+        switch sourceNoteRoute {
+        case .none:
+            EmptyView()
+        case .availableWritingNote(let noteID):
+            Section("Source") {
+                Button {
+                    onViewSourceNote(noteID)
+                } label: {
+                    Label("View source note", systemImage: "doc.text")
+                }
+            }
+        case .missingWritingNote:
+            Section("Source") {
+                Label("Source note unavailable", systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 }
 
