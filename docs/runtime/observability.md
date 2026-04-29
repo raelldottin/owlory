@@ -15,6 +15,8 @@ Owlory currently exposes runtime behavior through several lightweight paths.
 
 Use the Build Info sheet when reproducing a TestFlight issue. The rollback line gives the exact `git checkout` reference.
 
+Build identity should read coherently from both directions: the Xcode version/build shown in the app should map back to committed GitHub source, and a GitHub release commit or tag should map forward to the same stamped bundle metadata.
+
 Use `make build-provenance` to print the local Xcode version/build and Git rollback identity. To compare a local checkout against a TestFlight build, copy the build number and Git commit from the Build Info sheet and run:
 
 ```bash

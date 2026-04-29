@@ -8,6 +8,16 @@
 - Xcode `Stamp Build Info` phases run `./Tools/generate-build-info.sh` during app and widget builds so the bundle records Git commit, branch, tag/describe output, dirty status, build date, configuration, and build-number source.
 - `BuildInfo` reads the stamped bundle metadata at runtime. The Build Info sheet is the user-facing support breadcrumb for TestFlight diagnostics.
 
+## Version Control Contract
+
+- Owlory release identity is shared across GitHub and Xcode, not split between them.
+- GitHub is the durable source of committed history: commits, tags, changelog context, and the exact revision that a shipped build came from.
+- Xcode is the durable source of app-facing version metadata: `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`, and the archived bundle metadata stamped into the app.
+- Those records should intentionally mirror each other. A professional release should let a reviewer start from either side and recover the other without guesswork:
+  - from a shipped app or TestFlight build, find the exact committed GitHub source
+  - from a GitHub release commit or tag, confirm the matching Xcode version/build identity
+- Do not ship archives from unpublished commits, dirty trees, or local-only Xcode version edits that are not represented in GitHub history.
+
 Use `make build-provenance` before release or rollback work to print the current version, build number, Git commit, dirty-state warning, and rollback checkout command.
 
 ## Normal Release
@@ -17,9 +27,11 @@ Use `make build-provenance` before release or rollback work to print the current
 3. Run `make build-provenance` to confirm the Xcode version/build and current Git identity.
 4. Run `make fast` or `make verify`.
 5. Commit the version and changelog changes.
-6. Run `make release-check` from a clean tree before archiving.
-7. Tag `vX.Y.Z`.
-8. Archive the committed state in Xcode.
+6. Push the release candidate commit to GitHub so the archive will point at published source history.
+7. Run `make release-check` from a clean tree before archiving.
+8. Tag `vX.Y.Z`.
+9. Push the tag.
+10. Archive the committed state in Xcode.
 
 `make release-check` requires a clean tree and runs the runtime validation slice. It is intentionally stricter than `make build-provenance`.
 
@@ -41,9 +53,10 @@ Use `make build-provenance` before release or rollback work to print the current
 1. Check out the known-good commit.
 2. Run `./Tools/set-build-number.sh --auto`.
 3. Commit the build-number change on top of the rollback source.
-4. Run `make build-provenance` and confirm the rollback checkout line points at the intended source commit.
-5. Run at least `make architecture` and the affected domain tests.
-6. Run `make release-check` from a clean tree before archiving.
-7. Archive that exact commit in Xcode.
+4. Push the rollback candidate commit so the rollback archive will point at published GitHub history.
+5. Run `make build-provenance` and confirm the rollback checkout line points at the intended source commit.
+6. Run at least `make architecture` and the affected domain tests.
+7. Run `make release-check` from a clean tree before archiving.
+8. Archive that exact commit in Xcode.
 
 The TestFlight build number comes from Xcode `CURRENT_PROJECT_VERSION`; Git metadata identifies the source revision.

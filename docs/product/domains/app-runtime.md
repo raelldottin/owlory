@@ -27,12 +27,15 @@
 - Build diagnostics.
 - Build provenance and rollback verification workflow.
 - Runtime telemetry events.
+- The release-identity contract that ties shipped Xcode build metadata back to committed GitHub history.
 
 ## Change Safely
 
 - Keep dependency construction explicit.
 - Do not hide new global state in app entry.
 - Preserve build-info stamping and release traceability.
+- Treat GitHub and Xcode as two views of one release identity, not independent version records. A professional release should always let someone move from a shipped app build to the exact committed GitHub source and from a GitHub release commit back to the matching Xcode version/build metadata.
+- Keep `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`, stamped `BuildInfo`, Git commit/tag identity, and pushed GitHub history intentionally aligned. Do not rely on local-only Xcode edits, unpublished commits, or dirty archives as release truth.
 - Keep app/widget shared state explicit and minimal. The widget should mirror the live reminder plan through a narrow shared snapshot, not by becoming a second source of truth for product rules or persistence.
 - Widget presentation should foreground the represented reminder or prompt. Do not spend live widget space repeating Owlory branding when the reminder content itself is the point.
 - Widget taps and notification responses should carry a narrow deep-link URL that routes the user to the associated app item when the current stores can still resolve it. If the associated item no longer exists, fall back to the owning domain surface instead of inventing replacement state.

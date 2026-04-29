@@ -2,6 +2,7 @@
 
 ## 2026-04-29
 
+- [release-identity-github-xcode-mirroring](sessions/2026-04-29/014654-release-identity-github-xcode-mirroring.md)
 - [readme-beta-testflight-link](sessions/2026-04-29/013303-readme-beta-testflight-link.md)
 
 ## 2026-04-28
