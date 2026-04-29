@@ -60,6 +60,7 @@ struct RootTabView: View {
                 WriteView(
                     store: writeStore,
                     todayStore: todayStore,
+                    homeStore: homeStore,
                     patternStore: patternStore,
                     highlightedNoteID: highlightedWritingNoteID,
                     highlightedNoteSelectionID: highlightedWritingNoteSelectionID

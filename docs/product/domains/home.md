@@ -26,6 +26,19 @@
 - `HomeStore`.
 - `HomeTask`, `HouseholdProtocol`, `ProtocolRun`.
 
+## Task Promotion Contract
+
+Implementation status: `Implemented` for Write-note to Home-task promotion.
+Proof level: Home domain tests cover task creation, typed origin metadata, duplicate prevention, and legacy decode compatibility.
+Missing/deferred: User-visible route-back UI from Home task detail to the source Write note is not implemented.
+
+- A Write note promoted to a task becomes a Home-owned `HomeTask`.
+- The original `WritingNote` remains Write-owned source context; Home must not delete, archive, or mutate it during task creation.
+- Promoted tasks store typed source metadata pointing back to the Write note.
+- Repeating task promotion for the same Write note is idempotent by rejection; do not silently create duplicate tasks with the same Write-note origin.
+- The task keeps its own title and notes so it remains readable even if the source note is later archived or deleted.
+- Home owns completion, skipping, recurrence, editing, and deletion after promotion.
+
 ## Protocol Run Contract
 
 Implementation status: `Implemented` for the current active-run lifecycle, template preservation, run persistence, duplicate prevention, and Today projection rules.

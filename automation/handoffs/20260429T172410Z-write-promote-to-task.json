@@ -1,0 +1,38 @@
+{
+  "slice_id": "write-promote-to-task",
+  "status": "done",
+  "summary": "Implemented Write to task promotion by creating Home-owned HomeTask records from WritingNote records, preserving the original note and adding typed Write-note origin metadata with duplicate promotion rejection.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-29/132300-write-promote-to-task.md",
+    "automation/handoffs/20260429T172410Z-write-promote-to-task.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promote-to-task",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "risks": [
+    "Task promotion is implemented; permanent-note and protocol promotion remain explicitly future work.",
+    "Home tasks persist typed Write-note origin metadata, but Home task detail does not yet expose a user-visible route-back affordance to the source Write note.",
+    "The new Turn into Task affordance is covered by build/domain tests, but not by screenshot/UI regression proof."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop after one destination-specific Write promotion path so protocol promotion remains a separate deliberate slice.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-29T17:31:32Z"
+}

@@ -4,6 +4,7 @@ import SwiftUI
 struct WriteView: View {
     @ObservedObject var store: WriteStore
     @ObservedObject var todayStore: TodayStore
+    @ObservedObject var homeStore: HomeStore
     @ObservedObject var patternStore: PatternStore
     var highlightedNoteID: UUID?
     var highlightedNoteSelectionID: UUID?
@@ -310,6 +311,7 @@ struct WriteView: View {
             note: note,
             store: store,
             todayStore: todayStore,
+            homeStore: homeStore,
             onDismiss: { selectedNote = nil }
         )
     }
@@ -354,6 +356,7 @@ private struct NoteDetailView: View {
     let note: WritingNote
     @ObservedObject var store: WriteStore
     @ObservedObject var todayStore: TodayStore
+    @ObservedObject var homeStore: HomeStore
     let onDismiss: () -> Void
     @State private var title: String
     @State private var bodyText: String
@@ -368,10 +371,17 @@ private struct NoteDetailView: View {
     @State private var sourceQuote: String
     @State private var hasSourceMetadata: Bool
 
-    init(note: WritingNote, store: WriteStore, todayStore: TodayStore, onDismiss: @escaping () -> Void) {
+    init(
+        note: WritingNote,
+        store: WriteStore,
+        todayStore: TodayStore,
+        homeStore: HomeStore,
+        onDismiss: @escaping () -> Void
+    ) {
         self.note = note
         self.store = store
         self.todayStore = todayStore
+        self.homeStore = homeStore
         self.onDismiss = onDismiss
         let sourceMetadata = note.sourceMetadata
         self._title = State(initialValue: note.title)
@@ -463,6 +473,11 @@ private struct NoteDetailView: View {
                                     saveAndAddToToday()
                                 }
                             }
+                            if canTurnIntoTask {
+                                Button("Turn into Task") {
+                                    saveAndTurnIntoTask()
+                                }
+                            }
                             if canTurnIntoSourceNote {
                                 Button(sourceNoteActionTitle) {
                                     prepareSourceNoteSheet()
@@ -495,8 +510,12 @@ private struct NoteDetailView: View {
         todayStore.canPromoteWritingNoteToToday(editedNote)
     }
 
+    private var canTurnIntoTask: Bool {
+        homeStore.canPromoteWritingNoteToTask(editedNote)
+    }
+
     private var canOpenNoteOptions: Bool {
-        canAddToToday || canTurnIntoSourceNote
+        canAddToToday || canTurnIntoTask || canTurnIntoSourceNote
     }
 
     private var sourceNoteActionTitle: String {
@@ -581,6 +600,14 @@ private struct NoteDetailView: View {
         let promotedNote = editedNote
         store.updateNote(id: note.id, title: title, body: bodyText)
         if todayStore.promoteWritingNoteToToday(promotedNote) {
+            onDismiss()
+        }
+    }
+
+    private func saveAndTurnIntoTask() {
+        let promotedNote = editedNote
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        if homeStore.promoteWritingNoteToTask(promotedNote) != nil {
             onDismiss()
         }
     }

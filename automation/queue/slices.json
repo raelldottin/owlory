@@ -516,6 +516,43 @@
       ],
       "max_files_changed": 24,
       "notes": "Implement only Write to Today promotion: create Today-owned work from a WritingNote, preserve the note, link origin metadata for route-back, and define duplicate behavior."
+    },
+    {
+      "slice_id": "write-promote-to-task",
+      "title": "Promote Write notes into destination-owned tasks",
+      "status": "done",
+      "priority": 170,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "docs/product/domains/home.md",
+        "docs/workflows/roadmap-status.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-29/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promote-to-task",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "write-promote-to-today"
+      ],
+      "max_files_changed": 14,
+      "notes": "Implement only Write to Home task promotion: create a destination-owned HomeTask from a WritingNote, preserve the note, link typed origin metadata, and define duplicate behavior."
     }
   ]
 }

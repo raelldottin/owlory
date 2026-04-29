@@ -66,15 +66,44 @@ final class HomeStore: OwloryObservableObject {
     // MARK: - Tasks
 
     @discardableResult
-    func addTask(title: String, isRecurring: Bool = false, recurrenceIntervalDays: Int? = nil, notes: String = "", audioFileName: String? = nil, audioTranscription: String? = nil) -> UUID {
+    func addTask(
+        title: String,
+        isRecurring: Bool = false,
+        recurrenceIntervalDays: Int? = nil,
+        notes: String = "",
+        audioFileName: String? = nil,
+        audioTranscription: String? = nil,
+        origin: OwloryItemOrigin? = nil
+    ) -> UUID {
         let task = HomeTask(
             title: title,
             isRecurring: isRecurring,
             recurrenceIntervalDays: recurrenceIntervalDays,
             notes: notes,
             audioFileName: audioFileName,
-            audioTranscription: audioTranscription
+            audioTranscription: audioTranscription,
+            origin: origin
         )
+        tasks.append(task)
+        persistTasks()
+        return task.id
+    }
+
+    func canPromoteWritingNoteToTask(_ note: WritingNote) -> Bool {
+        HomeTaskPromotionRules.canPromoteWritingNoteToTask(note, in: tasks)
+    }
+
+    @discardableResult
+    func promoteWritingNoteToTask(_ note: WritingNote) -> UUID? {
+        guard let task = HomeTaskPromotionRules.taskPromotingWritingNote(
+            note,
+            id: UUID(),
+            promotedAt: clock.now,
+            in: tasks
+        ) else {
+            return nil
+        }
+
         tasks.append(task)
         persistTasks()
         return task.id

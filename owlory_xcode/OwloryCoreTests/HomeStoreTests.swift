@@ -56,6 +56,55 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertFalse(task.isCompleted)
         XCTAssertFalse(task.isSkipped)
         XCTAssertNil(task.lastSkipped)
+        XCTAssertNil(task.origin)
+    }
+
+    func testPromoteWritingNoteToTaskCreatesTaskWithOrigin() {
+        let now = makeDate("2026-04-29T13:30:00Z")
+        let store = makeStore(now: now)
+        let noteID = UUID()
+        let note = WritingNote(
+            id: noteID,
+            title: "  Email John about AWS billing  ",
+            body: "Ask for the updated estimate before Friday.",
+            createdDate: makeDate("2026-04-29T12:00:00Z")
+        )
+
+        let taskID = store.promoteWritingNoteToTask(note)
+
+        XCTAssertEqual(store.tasks.count, 1)
+        XCTAssertEqual(store.tasks.first?.id, taskID)
+        XCTAssertEqual(store.tasks.first?.title, "Email John about AWS billing")
+        XCTAssertEqual(store.tasks.first?.notes, "Ask for the updated estimate before Friday.")
+        XCTAssertFalse(store.tasks.first?.isCompleted ?? true)
+        XCTAssertFalse(store.tasks.first?.isSkipped ?? true)
+        XCTAssertEqual(store.tasks.first?.origin?.kind, .writingNote)
+        XCTAssertEqual(store.tasks.first?.origin?.id, noteID)
+        XCTAssertEqual(store.tasks.first?.origin?.createdAt, now)
+        XCTAssertEqual(note.id, noteID)
+        XCTAssertEqual(note.title, "  Email John about AWS billing  ")
+    }
+
+    func testPromoteWritingNoteToTaskRejectsDuplicateOrigin() {
+        let store = makeStore()
+        let note = WritingNote(
+            title: "Email John about AWS billing",
+            body: "Ask for the updated estimate."
+        )
+
+        XCTAssertNotNil(store.promoteWritingNoteToTask(note))
+        XCTAssertFalse(store.canPromoteWritingNoteToTask(note))
+        XCTAssertNil(store.promoteWritingNoteToTask(note))
+        XCTAssertEqual(store.tasks.count, 1)
+    }
+
+    func testPromoteWritingNoteToTaskRejectsBlankTitle() {
+        let store = makeStore()
+        let note = WritingNote(title: "   ", body: "Untitled actionable thought")
+
+        XCTAssertFalse(store.canPromoteWritingNoteToTask(note))
+        XCTAssertNil(store.promoteWritingNoteToTask(note))
+        XCTAssertTrue(store.tasks.isEmpty)
     }
 
     func testToggleCompleteSetsCompletedAndDate() {

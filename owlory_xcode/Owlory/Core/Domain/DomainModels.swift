@@ -33,7 +33,7 @@ enum DailyEntryState: Equatable {
     case historical(DailyEntry)
 }
 
-struct FocusItemOrigin: Equatable, Codable {
+struct OwloryItemOrigin: Equatable, Codable {
     enum Kind: String, Codable {
         case trainingSession
         case writingNote
@@ -46,6 +46,8 @@ struct FocusItemOrigin: Equatable, Codable {
     var id: UUID
     var createdAt: Date
 }
+
+typealias FocusItemOrigin = OwloryItemOrigin
 
 struct FocusItem: Identifiable, Equatable, Codable {
     let id: UUID
@@ -456,6 +458,7 @@ struct HomeTask: Identifiable, Equatable, Codable {
     var notes: String
     var audioFileName: String?
     var audioTranscription: String?
+    var origin: OwloryItemOrigin?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -469,6 +472,7 @@ struct HomeTask: Identifiable, Equatable, Codable {
         case notes
         case audioFileName
         case audioTranscription
+        case origin
     }
 
     init(
@@ -482,7 +486,8 @@ struct HomeTask: Identifiable, Equatable, Codable {
         lastSkipped: Date? = nil,
         notes: String = "",
         audioFileName: String? = nil,
-        audioTranscription: String? = nil
+        audioTranscription: String? = nil,
+        origin: OwloryItemOrigin? = nil
     ) {
         self.id = id
         self.title = title
@@ -495,6 +500,7 @@ struct HomeTask: Identifiable, Equatable, Codable {
         self.notes = notes
         self.audioFileName = audioFileName
         self.audioTranscription = audioTranscription
+        self.origin = origin
     }
 
     init(from decoder: Decoder) throws {
@@ -510,6 +516,45 @@ struct HomeTask: Identifiable, Equatable, Codable {
         notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? ""
         audioFileName = try container.decodeIfPresent(String.self, forKey: .audioFileName)
         audioTranscription = try container.decodeIfPresent(String.self, forKey: .audioTranscription)
+        origin = try container.decodeIfPresent(OwloryItemOrigin.self, forKey: .origin)
+    }
+}
+
+enum HomeTaskPromotionRules {
+    static func canPromoteWritingNoteToTask(
+        _ note: WritingNote,
+        in tasks: [HomeTask]
+    ) -> Bool {
+        let title = note.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return false }
+
+        return !tasks.contains { task in
+            isTaskLinkedToWritingNote(task, noteID: note.id)
+        }
+    }
+
+    static func taskPromotingWritingNote(
+        _ note: WritingNote,
+        id: UUID,
+        promotedAt: Date,
+        in tasks: [HomeTask]
+    ) -> HomeTask? {
+        guard canPromoteWritingNoteToTask(note, in: tasks) else { return nil }
+
+        return HomeTask(
+            id: id,
+            title: note.title.trimmingCharacters(in: .whitespacesAndNewlines),
+            notes: note.body.trimmingCharacters(in: .whitespacesAndNewlines),
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: note.id,
+                createdAt: promotedAt
+            )
+        )
+    }
+
+    private static func isTaskLinkedToWritingNote(_ task: HomeTask, noteID: UUID) -> Bool {
+        task.origin?.kind == .writingNote && task.origin?.id == noteID
     }
 }
 
