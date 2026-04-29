@@ -2,6 +2,7 @@
 
 ## 2026-04-28
 
+- [write-lab-capture-inbox-promotion](sessions/2026-04-28/164726-write-lab-capture-inbox-promotion.md)
 - [patterns-weekly-digest-versioned-stale-refresh](sessions/2026-04-28/123713-patterns-weekly-digest-versioned-stale-refresh.md)
 - [today-continue-focus-badge-dynamic-type-legibility](sessions/2026-04-28/122104-today-continue-focus-badge-dynamic-type-legibility.md)
 - [today-continue-owns-focus-surface](sessions/2026-04-28/121301-today-continue-owns-focus-surface.md)

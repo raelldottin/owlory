@@ -12,7 +12,7 @@ Use this doc for cross-domain product posture and experience principles. Domain-
 
 - `Today` is the daily command center.
 - `Train` tracks one training practice per day with readiness and reflection.
-- `Write` is the low-friction thinking inbox and incubation layer for unfinished thought.
+- `Write` is the low-friction thinking inbox and capture inbox for unfinished thought, including thoughts that may later become tasks, notes, or protocols.
 - `Career` stores wins, impact, stories, and supporting metrics.
 - `Home` manages recurring tasks, protocols, and protocol runs.
 - `Patterns`, `Reminders`, `Voice Transcription`, and `App Runtime` support those primary surfaces and are documented separately in the maintained product/runtime docs.
@@ -29,6 +29,7 @@ Use this doc for cross-domain product posture and experience principles. Domain-
 - Capture first, classify later, if ever.
 - Write should feel like catching a thought, not managing a note; any stage progression must stay lightweight and visible.
 - Write should reduce the chance of losing thought, not ask the user to perform correctness.
+- Write is allowed to receive todo-like thoughts because fast capture matters more than initial correctness; cleanup belongs in later promotion, not in capture gating.
 - One training session per day remains the product posture unless the Train domain contract changes.
 - Small-screen-safe, iPhone-first layouts stay the default.
 
