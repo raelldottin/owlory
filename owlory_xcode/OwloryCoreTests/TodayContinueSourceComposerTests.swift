@@ -264,6 +264,35 @@ final class TodayContinueSourceComposerTests: XCTestCase {
         XCTAssertTrue(candidates.isEmpty)
     }
 
+    func testWritePromotedProtocolTemplateDoesNotSurfaceWithoutActiveRun() {
+        let noteID = UUID()
+        let protocolID = UUID()
+        let promotedProtocol = HouseholdProtocol(
+            id: protocolID,
+            title: "Weekly Reset",
+            steps: ["Clear kitchen"],
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: noteID,
+                createdAt: today
+            )
+        )
+
+        let candidates = TodayContinueSourceComposer.compose(
+            todayEntry: DailyEntry(date: today),
+            calibration: calibration(),
+            todaySessions: [],
+            homeTasks: [],
+            homeRuns: [],
+            homeProtocols: [promotedProtocol],
+            writingNotes: [
+                WritingNote(id: noteID, title: "Weekly Reset", body: "Clear kitchen", stage: .archived)
+            ]
+        )
+
+        XCTAssertTrue(candidates.isEmpty)
+    }
+
     func testActiveHomeProtocolRunReplacesCarriedProtocolArtifact() {
         let run = ProtocolRun(
             protocolID: UUID(),

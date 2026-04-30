@@ -736,6 +736,47 @@
       ],
       "max_files_changed": 14,
       "notes": "Extend handoff evidence with contract status changes, residual risks, repo cleanliness, and git mirror status so review can understand proof without rereading the whole diff."
+    },
+    {
+      "slice_id": "write-promote-to-protocol",
+      "title": "Promote Write notes into protocol drafts",
+      "status": "done",
+      "priority": 240,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "docs/product/domains/home.md",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-30/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promote-to-protocol",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "home-task-write-origin-route-back"
+      ],
+      "max_files_changed": 14,
+      "notes": "Implement only Write to Home protocol draft/input promotion: preserve the WritingNote, store typed origin metadata, prevent duplicates, do not create active runs, and do not leak protocol drafts/templates into Today Continue."
     }
   ]
 }

@@ -68,7 +68,19 @@ struct HomeView: View {
                 )
             }
             .sheet(item: $editingProtocol) { proto in
-                EditProtocolSheet(proto: proto, store: store, onDismiss: { editingProtocol = nil })
+                EditProtocolSheet(
+                    proto: proto,
+                    store: store,
+                    sourceNoteRoute: HomeProtocolSourceRouting.writeNoteRoute(
+                        for: proto,
+                        writingNotes: writeStore.notes
+                    ),
+                    onViewSourceNote: { noteID in
+                        editingProtocol = nil
+                        onSourceNoteSelected(noteID)
+                    },
+                    onDismiss: { editingProtocol = nil }
+                )
             }
             .sheet(isPresented: Binding(
                 get: { activeRunID != nil },
@@ -677,13 +689,23 @@ private struct EditTaskSheet: View {
 private struct EditProtocolSheet: View {
     let proto: HouseholdProtocol
     @ObservedObject var store: HomeStore
+    let sourceNoteRoute: HomeProtocolSourceRoute
+    let onViewSourceNote: (UUID) -> Void
     let onDismiss: () -> Void
     @State private var title: String
     @State private var stepsText: String
 
-    init(proto: HouseholdProtocol, store: HomeStore, onDismiss: @escaping () -> Void) {
+    init(
+        proto: HouseholdProtocol,
+        store: HomeStore,
+        sourceNoteRoute: HomeProtocolSourceRoute,
+        onViewSourceNote: @escaping (UUID) -> Void,
+        onDismiss: @escaping () -> Void
+    ) {
         self.proto = proto
         self.store = store
+        self.sourceNoteRoute = sourceNoteRoute
+        self.onViewSourceNote = onViewSourceNote
         self.onDismiss = onDismiss
         self._title = State(initialValue: proto.title)
         self._stepsText = State(initialValue: proto.steps.joined(separator: "\n"))
@@ -697,6 +719,7 @@ private struct EditProtocolSheet: View {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
+                sourceNoteSection
             }
             .navigationTitle("Edit Protocol")
             .navigationBarTitleDisplayMode(.inline)
@@ -718,6 +741,27 @@ private struct EditProtocolSheet: View {
             }
         }
         .presentationDetents([.medium])
+    }
+
+    @ViewBuilder
+    private var sourceNoteSection: some View {
+        switch sourceNoteRoute {
+        case .none:
+            EmptyView()
+        case .availableWritingNote(let noteID):
+            Section("Source") {
+                Button {
+                    onViewSourceNote(noteID)
+                } label: {
+                    Label("View source note", systemImage: "doc.text")
+                }
+            }
+        case .missingWritingNote:
+            Section("Source") {
+                Label("Source note unavailable", systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 }
 

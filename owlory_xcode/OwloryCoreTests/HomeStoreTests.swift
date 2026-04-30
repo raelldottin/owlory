@@ -260,6 +260,89 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(store.protocols[0].steps.count, 3)
     }
 
+    func testPromoteWritingNoteToProtocolCreatesDraftWithoutRun() {
+        let now = makeDate("2026-04-30T09:30:00Z")
+        let store = makeStore(now: now)
+        let noteID = UUID()
+        let note = WritingNote(
+            id: noteID,
+            title: "  Weekly reset protocol  ",
+            body: "Clear kitchen\nReview calendar\nSet training kit",
+            createdDate: makeDate("2026-04-30T08:00:00Z")
+        )
+
+        let protocolID = store.promoteWritingNoteToProtocol(note)
+
+        XCTAssertEqual(store.protocols.count, 1)
+        XCTAssertEqual(store.protocols.first?.id, protocolID)
+        XCTAssertEqual(store.protocols.first?.title, "Weekly reset protocol")
+        XCTAssertEqual(store.protocols.first?.steps, [
+            "Clear kitchen",
+            "Review calendar",
+            "Set training kit",
+        ])
+        XCTAssertEqual(store.protocols.first?.origin?.kind, .writingNote)
+        XCTAssertEqual(store.protocols.first?.origin?.id, noteID)
+        XCTAssertEqual(store.protocols.first?.origin?.createdAt, now)
+        XCTAssertTrue(store.runs.isEmpty)
+        XCTAssertEqual(note.id, noteID)
+        XCTAssertEqual(note.title, "  Weekly reset protocol  ")
+    }
+
+    func testPromoteWritingNoteToProtocolRejectsDuplicateOrigin() {
+        let store = makeStore()
+        let note = WritingNote(
+            title: "Weekly reset protocol",
+            body: "Clear kitchen"
+        )
+
+        XCTAssertNotNil(store.promoteWritingNoteToProtocol(note))
+        XCTAssertFalse(store.canPromoteWritingNoteToProtocol(note))
+        XCTAssertNil(store.promoteWritingNoteToProtocol(note))
+        XCTAssertEqual(store.protocols.count, 1)
+        XCTAssertTrue(store.runs.isEmpty)
+    }
+
+    func testPromoteWritingNoteToProtocolRejectsBlankTitle() {
+        let store = makeStore()
+        let note = WritingNote(title: "   ", body: "Clear kitchen")
+
+        XCTAssertFalse(store.canPromoteWritingNoteToProtocol(note))
+        XCTAssertNil(store.promoteWritingNoteToProtocol(note))
+        XCTAssertTrue(store.protocols.isEmpty)
+        XCTAssertTrue(store.runs.isEmpty)
+    }
+
+    func testProtocolSourceRoutingReturnsWritingNoteRoutes() {
+        let noteID = UUID()
+        let proto = HouseholdProtocol(
+            title: "Weekly reset",
+            steps: ["Clear kitchen"],
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: noteID,
+                createdAt: makeDate("2026-04-30T09:30:00Z")
+            )
+        )
+        let note = WritingNote(id: noteID, title: "Weekly reset", body: "Clear kitchen")
+
+        XCTAssertEqual(
+            HomeProtocolSourceRouting.writeNoteRoute(for: proto, writingNotes: [note]),
+            .availableWritingNote(noteID)
+        )
+        XCTAssertEqual(
+            HomeProtocolSourceRouting.writeNoteRoute(for: proto, writingNotes: []),
+            .missingWritingNote(noteID)
+        )
+        XCTAssertEqual(
+            HomeProtocolSourceRouting.writeNoteRoute(
+                for: HouseholdProtocol(title: "Manual protocol"),
+                writingNotes: [note]
+            ),
+            .none
+        )
+    }
+
     func testUpdateProtocolChangesContent() {
         let store = makeStore()
         store.addProtocol(title: "Original", steps: ["Step 1"])

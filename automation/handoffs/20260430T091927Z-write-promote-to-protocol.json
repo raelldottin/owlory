@@ -1,0 +1,71 @@
+{
+  "slice_id": "write-promote-to-protocol",
+  "status": "done",
+  "summary": "Implemented Write-note to Home-protocol draft promotion with typed Write-note origin metadata, duplicate prevention, no active-run creation, Home protocol route-back affordances, and Today Continue guard coverage so promoted protocol templates do not surface unless a run is explicitly active.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/050930-write-promote-to-protocol.md",
+    "automation/handoffs/20260430T091927Z-write-promote-to-protocol.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/product/domains/today.md",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promote-to-protocol",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Write to protocol promotion",
+      "before": "Contract only",
+      "after": "Implemented with domain-tested proof",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today"
+      ]
+    },
+    {
+      "contract": "Write promotion origin contract",
+      "before": "Partially implemented for Today and Home tasks",
+      "after": "Partially implemented for Today, Home tasks, and Home protocol drafts/templates",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No running-app smoke, flow verification, screenshot proof, real-device proof, or TestFlight proof was performed for the new Write Add to Protocol and Home protocol source-note affordances.",
+    "Permanent-note promotion remains contract-only and was not implemented in this slice.",
+    "Promotion affordance discoverability across all Write destinations still needs a separate visible promotion/status affordance slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T09:19:27Z"
+}

@@ -479,6 +479,11 @@ private struct NoteDetailView: View {
                                     saveAndTurnIntoTask()
                                 }
                             }
+                            if canAddToProtocol {
+                                Button("Add to Protocol") {
+                                    saveAndAddToProtocol()
+                                }
+                            }
                             if canTurnIntoSourceNote {
                                 Button(sourceNoteActionTitle) {
                                     prepareSourceNoteSheet()
@@ -531,7 +536,7 @@ private struct NoteDetailView: View {
     }
 
     private var hasPromotionOptions: Bool {
-        canAddToToday || canTurnIntoTask || canTurnIntoSourceNote
+        canAddToToday || canTurnIntoTask || canAddToProtocol || canTurnIntoSourceNote
     }
 
     private var canTurnIntoSourceNote: Bool {
@@ -552,6 +557,10 @@ private struct NoteDetailView: View {
 
     private var canTurnIntoTask: Bool {
         homeStore.canPromoteWritingNoteToTask(editedNote)
+    }
+
+    private var canAddToProtocol: Bool {
+        homeStore.canPromoteWritingNoteToProtocol(editedNote)
     }
 
     private var canOpenNoteOptions: Bool {
@@ -648,6 +657,14 @@ private struct NoteDetailView: View {
         let promotedNote = editedNote
         store.updateNote(id: note.id, title: title, body: bodyText)
         if homeStore.promoteWritingNoteToTask(promotedNote) != nil {
+            onDismiss()
+        }
+    }
+
+    private func saveAndAddToProtocol() {
+        let promotedNote = editedNote
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        if homeStore.promoteWritingNoteToProtocol(promotedNote) != nil {
             onDismiss()
         }
     }

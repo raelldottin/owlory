@@ -42,6 +42,24 @@ Missing/deferred: Screenshot/UI regression proof is not present.
 - If the source note is missing or deleted, Home task detail should degrade gracefully by showing that the source note is unavailable rather than offering a broken route.
 - Tasks without Write-note origin metadata must not show a source-note route.
 
+## Protocol Promotion Contract
+
+Implementation status: `Implemented` for Write-note to Home-protocol draft/template promotion and source-note route-back.
+Proof level: Home domain tests cover protocol creation, typed origin metadata, duplicate prevention, blank-title rejection, no active-run creation, and source-note routing state. Today domain tests cover that promoted protocol templates do not surface in Continue without an active run.
+Missing/deferred: Screenshot/UI regression proof is not present.
+
+- A Write note promoted to a protocol becomes a Home-owned `HouseholdProtocol` draft/template.
+- The original `WritingNote` remains Write-owned source context; Home must not delete, archive, or mutate it during protocol creation.
+- Promoted protocols store typed source metadata pointing back to the Write note.
+- Repeating protocol promotion for the same Write note is idempotent by rejection; do not silently create duplicate protocols with the same Write-note origin.
+- The protocol keeps its own title and steps so it remains readable even if the source note is later archived or deleted.
+- Home owns protocol editing, deletion, and any future run lifecycle after promotion.
+- Promoting a Write note to a protocol must not create an active `ProtocolRun`.
+- A promoted protocol template without an active run must not appear in Today Continue.
+- Home protocol detail shows `View source note` for promoted protocols whose source `WritingNote` still exists.
+- If the source note is missing or deleted, Home protocol detail should degrade gracefully by showing that the source note is unavailable rather than offering a broken route.
+- Protocols without Write-note origin metadata must not show a source-note route.
+
 ## Protocol Run Contract
 
 Implementation status: `Implemented` for the current active-run lifecycle, template preservation, run persistence, duplicate prevention, and Today projection rules.

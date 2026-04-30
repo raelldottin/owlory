@@ -562,11 +562,62 @@ struct HouseholdProtocol: Identifiable, Equatable, Codable {
     let id: UUID
     var title: String
     var steps: [String]
+    var origin: OwloryItemOrigin?
 
-    init(id: UUID = UUID(), title: String, steps: [String] = []) {
+    init(
+        id: UUID = UUID(),
+        title: String,
+        steps: [String] = [],
+        origin: OwloryItemOrigin? = nil
+    ) {
         self.id = id
         self.title = title
         self.steps = steps
+        self.origin = origin
+    }
+}
+
+enum HomeProtocolPromotionRules {
+    static func canPromoteWritingNoteToProtocol(
+        _ note: WritingNote,
+        in protocols: [HouseholdProtocol]
+    ) -> Bool {
+        let title = note.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return false }
+
+        return !protocols.contains { proto in
+            isProtocolLinkedToWritingNote(proto, noteID: note.id)
+        }
+    }
+
+    static func protocolPromotingWritingNote(
+        _ note: WritingNote,
+        id: UUID,
+        promotedAt: Date,
+        in protocols: [HouseholdProtocol]
+    ) -> HouseholdProtocol? {
+        guard canPromoteWritingNoteToProtocol(note, in: protocols) else { return nil }
+
+        return HouseholdProtocol(
+            id: id,
+            title: note.title.trimmingCharacters(in: .whitespacesAndNewlines),
+            steps: protocolSteps(from: note.body),
+            origin: OwloryItemOrigin(
+                kind: .writingNote,
+                id: note.id,
+                createdAt: promotedAt
+            )
+        )
+    }
+
+    private static func isProtocolLinkedToWritingNote(_ proto: HouseholdProtocol, noteID: UUID) -> Bool {
+        proto.origin?.kind == .writingNote && proto.origin?.id == noteID
+    }
+
+    private static func protocolSteps(from body: String) -> [String] {
+        body.components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
     }
 }
 

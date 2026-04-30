@@ -45,6 +45,30 @@ enum HomeTaskSourceRouting {
     }
 }
 
+enum HomeProtocolSourceRoute: Equatable {
+    case none
+    case availableWritingNote(UUID)
+    case missingWritingNote(UUID)
+}
+
+enum HomeProtocolSourceRouting {
+    static func writeNoteRoute(
+        for proto: HouseholdProtocol,
+        writingNotes: [WritingNote]
+    ) -> HomeProtocolSourceRoute {
+        guard proto.origin?.kind == .writingNote,
+              let noteID = proto.origin?.id else {
+            return .none
+        }
+
+        if writingNotes.contains(where: { $0.id == noteID }) {
+            return .availableWritingNote(noteID)
+        }
+
+        return .missingWritingNote(noteID)
+    }
+}
+
 @MainActor
 final class HomeStore: OwloryObservableObject {
     #if canImport(Combine)
@@ -191,10 +215,36 @@ final class HomeStore: OwloryObservableObject {
 
     // MARK: - Protocols
 
-    func addProtocol(title: String, steps: [String]) {
-        let proto = HouseholdProtocol(title: title, steps: steps)
+    @discardableResult
+    func addProtocol(
+        title: String,
+        steps: [String],
+        origin: OwloryItemOrigin? = nil
+    ) -> UUID {
+        let proto = HouseholdProtocol(title: title, steps: steps, origin: origin)
         protocols.append(proto)
         persistProtocols()
+        return proto.id
+    }
+
+    func canPromoteWritingNoteToProtocol(_ note: WritingNote) -> Bool {
+        HomeProtocolPromotionRules.canPromoteWritingNoteToProtocol(note, in: protocols)
+    }
+
+    @discardableResult
+    func promoteWritingNoteToProtocol(_ note: WritingNote) -> UUID? {
+        guard let proto = HomeProtocolPromotionRules.protocolPromotingWritingNote(
+            note,
+            id: UUID(),
+            promotedAt: clock.now,
+            in: protocols
+        ) else {
+            return nil
+        }
+
+        protocols.append(proto)
+        persistProtocols()
+        return proto.id
     }
 
     func updateProtocol(id: UUID, title: String, steps: [String]) {
