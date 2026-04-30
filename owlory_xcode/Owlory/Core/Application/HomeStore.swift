@@ -223,9 +223,15 @@ final class HomeStore: OwloryObservableObject {
     func addProtocol(
         title: String,
         steps: [String],
-        origin: OwloryItemOrigin? = nil
+        origin: OwloryItemOrigin? = nil,
+        schedule: HouseholdProtocolSchedule? = nil
     ) -> UUID {
-        let proto = HouseholdProtocol(title: title, steps: steps, origin: origin)
+        let proto = HouseholdProtocol(
+            title: title,
+            steps: steps,
+            origin: origin,
+            schedule: schedule
+        )
         protocols.append(proto)
         persistProtocols()
         return proto.id
@@ -255,10 +261,16 @@ final class HomeStore: OwloryObservableObject {
         return proto.id
     }
 
-    func updateProtocol(id: UUID, title: String, steps: [String]) {
+    func updateProtocol(
+        id: UUID,
+        title: String,
+        steps: [String],
+        schedule: HouseholdProtocolSchedule?
+    ) {
         guard let index = protocols.firstIndex(where: { $0.id == id }) else { return }
         protocols[index].title = title
         protocols[index].steps = steps
+        protocols[index].schedule = schedule
         persistProtocols()
     }
 

@@ -59,6 +59,23 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertNil(task.origin)
     }
 
+    func testHouseholdProtocolDecodesLegacyProtocolWithoutSchedule() throws {
+        let json = """
+        {
+            "id": "00000000-0000-0000-0000-000000000002",
+            "title": "Legacy protocol",
+            "steps": ["Step one"],
+            "origin": null
+        }
+        """.data(using: .utf8)!
+
+        let proto = try JSONDecoder().decode(HouseholdProtocol.self, from: json)
+
+        XCTAssertEqual(proto.title, "Legacy protocol")
+        XCTAssertEqual(proto.steps, ["Step one"])
+        XCTAssertNil(proto.schedule)
+    }
+
     func testPromoteWritingNoteToTaskCreatesTaskWithOrigin() {
         let now = makeDate("2026-04-29T13:30:00Z")
         let store = makeStore(now: now)
@@ -273,6 +290,26 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(store.protocols.count, 1)
         XCTAssertEqual(store.protocols[0].title, "Fix leaky faucet")
         XCTAssertEqual(store.protocols[0].steps.count, 3)
+        XCTAssertNil(store.protocols[0].schedule)
+    }
+
+    func testAddProtocolStoresScheduleWindow() {
+        let store = makeStore()
+        let schedule = HouseholdProtocolSchedule(
+            preset: .weekend,
+            startDate: makeDate("2026-05-02T00:00:00Z"),
+            endDate: makeDate("2026-05-03T00:00:00Z")
+        )
+
+        store.addProtocol(
+            title: "Weekend reset",
+            steps: ["Clear kitchen"],
+            schedule: schedule
+        )
+
+        XCTAssertEqual(store.protocols.count, 1)
+        XCTAssertEqual(store.protocols[0].schedule, schedule)
+        XCTAssertTrue(store.runs.isEmpty)
     }
 
     func testPromoteWritingNoteToProtocolCreatesDraftWithoutRun() {
@@ -302,6 +339,7 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertTrue(store.runs.isEmpty)
         XCTAssertEqual(note.id, noteID)
         XCTAssertEqual(note.title, "  Weekly reset protocol  ")
+        XCTAssertNil(store.protocols.first?.schedule)
     }
 
     func testPromoteWritingNoteToProtocolRejectsDuplicateOrigin() {
@@ -373,14 +411,25 @@ final class HomeStoreTests: XCTestCase {
         )
     }
 
-    func testUpdateProtocolChangesContent() {
+    func testUpdateProtocolChangesContentAndSchedule() {
         let store = makeStore()
         store.addProtocol(title: "Original", steps: ["Step 1"])
         let id = store.protocols[0].id
+        let schedule = HouseholdProtocolSchedule(
+            preset: .custom,
+            startDate: makeDate("2026-05-04T00:00:00Z"),
+            endDate: makeDate("2026-05-06T00:00:00Z")
+        )
 
-        store.updateProtocol(id: id, title: "Updated", steps: ["New Step 1", "New Step 2"])
+        store.updateProtocol(
+            id: id,
+            title: "Updated",
+            steps: ["New Step 1", "New Step 2"],
+            schedule: schedule
+        )
         XCTAssertEqual(store.protocols[0].title, "Updated")
         XCTAssertEqual(store.protocols[0].steps.count, 2)
+        XCTAssertEqual(store.protocols[0].schedule, schedule)
     }
 
     func testDeleteProtocolRemovesIt() {

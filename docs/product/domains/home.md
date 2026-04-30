@@ -16,6 +16,7 @@
 ## Depends On
 
 - `ProtocolLifecycleRules` for protocol start/resume, step resolution, terminal state, and run construction policy.
+- `ProtocolScheduleRules` for protocol template schedule-window anchoring, normalization, and label state.
 - `RecurrenceRules` for recurring task reset.
 - `RecurringRolloverPlanner` for load-time recurring task orchestration and trace metadata.
 - `CompletionHistoryStore` for completed recurring task and protocol run history.
@@ -24,7 +25,7 @@
 ## Exposes
 
 - `HomeStore`.
-- `HomeTask`, `HouseholdProtocol`, `ProtocolRun`.
+- `HomeTask`, `HouseholdProtocol`, `HouseholdProtocolSchedule`, `ProtocolRun`.
 
 ## Task Promotion Contract
 
@@ -66,7 +67,7 @@ Missing/deferred: Screenshot/UI regression proof is not present.
 
 Implementation status: `Implemented` for the current active-run lifecycle, template preservation, run persistence, duplicate prevention, and Today projection rules.
 Proof level: Home protocol lifecycle and Today projection rules have focused domain coverage.
-Missing/deferred: Future run windows and Home projects remain `Contract only` until modeled and validated.
+Missing/deferred: Home projects remain `Contract only`; protocol schedule windows currently affect Home template labels only.
 
 - Protocols are reusable templates. A run must not mutate the template that created it.
 - Protocol runs are execution snapshots. They remain active until every step is completed or skipped, or until the user explicitly abandons the run.
@@ -79,11 +80,21 @@ Missing/deferred: Future run windows and Home projects remain `Contract only` un
 - Weekly digest may count timestamped completed protocol steps as completed Home work, but it must not change protocol run status or treat skipped/pending steps as completed tasks.
 - The primary protocol action should continue an existing active run. The explicit secondary action may still start a new run while that UI remains available.
 
-## Future Windows And Projects
+## Protocol Schedule Windows
 
-- Optional protocol run windows are not currently modeled. If added, start with Today, Weekend, This Week, and Custom.
-- Windows should affect labels, stale treatment, or overdue treatment only. A window ending must not auto-abandon or auto-complete a run.
-- Any window policy belongs in named rules with deterministic `Date` and `Calendar` inputs and Home validation coverage.
+Implementation status: `Partially implemented` for template-owned schedule windows with Today, Weekend, This Week, and Custom ranges.
+Proof level: Home domain tests cover deterministic window anchoring, summary state, add/update persistence, and legacy protocol decode compatibility.
+Missing/deferred: schedule windows do not yet drive Today projection, stale treatment, or overdue prioritization beyond Home template labels.
+
+- Protocol schedule windows are template metadata stored on `HouseholdProtocol`.
+- Windows persist explicit start/end days plus the preset that created them.
+- Window policy belongs in `ProtocolScheduleRules` with deterministic `Date` and `Calendar` inputs.
+- Windows may affect labels, stale treatment, or overdue treatment only. A window ending must not auto-abandon or auto-complete a run.
+- Starting, resuming, completing, or abandoning a run must not silently clear or rewrite the protocol template's schedule window.
+- Editing a protocol may change the template window without mutating existing runs created from that template.
+
+## Future Projects
+
 - Work intended to last weeks or months should become a Home project or recurring task instead of stretching one protocol run indefinitely.
 - Future Home projects may contain tasks and protocol runs, but should be introduced as their own product model rather than hidden inside protocol lifecycle rules.
 
@@ -114,3 +125,4 @@ Protocol lifecycle acceptance checks:
 - A run completes only when every step is completed or skipped.
 - Abandoning a run remains an explicit user action.
 - Active Runs communicates the run age and next pending step.
+- Protocol templates may show a persisted schedule window label without that label creating or mutating an active run.

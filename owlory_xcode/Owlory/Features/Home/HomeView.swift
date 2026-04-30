@@ -219,7 +219,7 @@ struct HomeView: View {
                             protocolRunActions(for: proto)
                         }
                     } label: {
-                        Label(proto.title, systemImage: "list.clipboard")
+                        protocolLabel(for: proto)
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
@@ -240,6 +240,26 @@ struct HomeView: View {
             }
         } header: {
             Text("Protocols")
+        }
+    }
+
+    @ViewBuilder
+    private func protocolLabel(for proto: HouseholdProtocol) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "list.clipboard")
+                .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(proto.title)
+                if let summary = ProtocolScheduleRules.summary(
+                    for: proto.schedule,
+                    now: Date(),
+                    calendar: .current
+                ) {
+                    Text(summary.text)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
     }
 
@@ -694,6 +714,7 @@ private struct EditProtocolSheet: View {
     let onDismiss: () -> Void
     @State private var title: String
     @State private var stepsText: String
+    @State private var scheduleDraft: ProtocolScheduleRules.Draft
 
     init(
         proto: HouseholdProtocol,
@@ -709,6 +730,12 @@ private struct EditProtocolSheet: View {
         self.onDismiss = onDismiss
         self._title = State(initialValue: proto.title)
         self._stepsText = State(initialValue: proto.steps.joined(separator: "\n"))
+        self._scheduleDraft = State(
+            initialValue: ProtocolScheduleRules.Draft(
+                schedule: proto.schedule,
+                referenceDate: Date()
+            )
+        )
     }
 
     var body: some View {
@@ -719,6 +746,7 @@ private struct EditProtocolSheet: View {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
+                ProtocolScheduleSection(draft: $scheduleDraft)
                 sourceNoteSection
             }
             .navigationTitle("Edit Protocol")
@@ -733,14 +761,22 @@ private struct EditProtocolSheet: View {
                             .components(separatedBy: .newlines)
                             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                             .filter { !$0.isEmpty }
-                        store.updateProtocol(id: proto.id, title: title, steps: steps)
+                        store.updateProtocol(
+                            id: proto.id,
+                            title: title,
+                            steps: steps,
+                            schedule: ProtocolScheduleRules.schedule(
+                                from: scheduleDraft,
+                                calendar: .current
+                            )
+                        )
                         onDismiss()
                     }
                     .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.medium, .large])
     }
 
     @ViewBuilder
@@ -772,6 +808,7 @@ private struct AddProtocolSheet: View {
     let onDismiss: () -> Void
     @State private var title = ""
     @State private var stepsText = ""
+    @State private var scheduleDraft = ProtocolScheduleRules.Draft(referenceDate: Date())
 
     var body: some View {
         NavigationStack {
@@ -781,6 +818,7 @@ private struct AddProtocolSheet: View {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
+                ProtocolScheduleSection(draft: $scheduleDraft)
             }
             .navigationTitle("Add Protocol")
             .navigationBarTitleDisplayMode(.inline)
@@ -794,14 +832,72 @@ private struct AddProtocolSheet: View {
                             .components(separatedBy: .newlines)
                             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                             .filter { !$0.isEmpty }
-                        store.addProtocol(title: title, steps: steps)
+                        store.addProtocol(
+                            title: title,
+                            steps: steps,
+                            schedule: ProtocolScheduleRules.schedule(
+                                from: scheduleDraft,
+                                calendar: .current
+                            )
+                        )
                         onDismiss()
                     }
                     .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.medium, .large])
+    }
+}
+
+private struct ProtocolScheduleSection: View {
+    @Binding var draft: ProtocolScheduleRules.Draft
+
+    var body: some View {
+        Section("Schedule") {
+            Picker("Window", selection: presetBinding) {
+                Text("Anytime").tag(ProtocolSchedulePreset?.none)
+                Text("Today").tag(Optional(ProtocolSchedulePreset.today))
+                Text("Weekend").tag(Optional(ProtocolSchedulePreset.weekend))
+                Text("This Week").tag(Optional(ProtocolSchedulePreset.thisWeek))
+                Text("Custom").tag(Optional(ProtocolSchedulePreset.custom))
+            }
+
+            if draft.preset == .custom {
+                DatePicker("Start", selection: $draft.startDate, displayedComponents: .date)
+                DatePicker("End", selection: $draft.endDate, displayedComponents: .date)
+            }
+
+            Text(scheduleHelpText)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var presetBinding: Binding<ProtocolSchedulePreset?> {
+        Binding(
+            get: { draft.preset },
+            set: { newPreset in
+                draft = ProtocolScheduleRules.draft(
+                    byApplying: newPreset,
+                    to: draft,
+                    referenceDate: Date(),
+                    calendar: .current
+                )
+            }
+        )
+    }
+
+    private var scheduleHelpText: String {
+        guard let summary = ProtocolScheduleRules.summary(
+            for: ProtocolScheduleRules.schedule(from: draft, calendar: .current),
+            now: Date(),
+            calendar: .current
+        ) else {
+            return "Anytime. Scheduling only labels the protocol template and never ends an active run automatically."
+        }
+
+        return "\(summary.text). Scheduling only labels the protocol template and never ends an active run automatically."
     }
 }
 

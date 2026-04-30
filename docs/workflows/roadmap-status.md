@@ -34,9 +34,9 @@ Today Continue later work:
 
 Home protocol roadmap:
 
-- Optional run-window and future Home-project guidance lives in `docs/product/domains/home.md`.
-- Implement windows such as Today, Weekend, This Week, or Custom only as labels, stale treatment, or overdue treatment.
-- Do not auto-abandon or auto-complete protocol runs when a future window ends unless an explicit product rule lands with tests.
+- Maintained schedule-window ownership lives in `docs/product/domains/home.md` and `ProtocolScheduleRules`.
+- Current protocol schedule windows are template-owned labels only; they must not auto-abandon or auto-complete runs when a window ends.
+- Overdue/stale treatment beyond Home template labels and the future Home-project model remain open.
 
 ML, speech, and generated-output readiness:
 
@@ -69,7 +69,7 @@ For implementation work, prefer this order unless a user request or concrete bug
 2. Continue Skip for today.
 3. ML eval fixtures and manual device checklist.
 4. Continue persisted provenance and later prune/migrate pass.
-5. Home protocol optional run windows from the maintained Home domain contract.
+5. Home protocol overdue/stale treatment and future Home-project modeling.
 
 ## Update Rule
 

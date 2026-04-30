@@ -173,7 +173,7 @@ Notes:
 - `train`: TrainStore, recurrence rules, and recurring rollover planner.
 - `write`: WriteStore and writing stage rules.
 - `career`: CareerStore.
-- `home`: HomeStore, protocol lifecycle rules, recurrence rules, and recurring rollover planner.
+- `home`: HomeStore, protocol lifecycle rules, protocol schedule rules, recurrence rules, and recurring rollover planner.
 - `patterns`: PatternEngine, PatternNudgeRules, readiness-to-outcome rules, Calibration, WeeklyDigest content rules, and WeeklyDigest cadence rules.
 - `reminders`: CompletionTimePredictor and reminder scheduling rules/trace.
 - `runtime`: BuildInfo and PerformanceTelemetry.

@@ -80,6 +80,7 @@ run_domain() {
       run_xcode_tests \
         -only-testing:OwloryCoreTests/HomeStoreTests \
         -only-testing:OwloryCoreTests/ProtocolLifecycleRulesTests \
+        -only-testing:OwloryCoreTests/ProtocolScheduleRulesTests \
         -only-testing:OwloryCoreTests/RecurrenceRulesTests \
         -only-testing:OwloryCoreTests/RecurringRolloverPlannerTests
       ;;

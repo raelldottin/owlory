@@ -565,22 +565,50 @@ enum HomeTaskPromotionRules {
     }
 }
 
+enum ProtocolSchedulePreset: String, Codable, CaseIterable, Hashable, Identifiable {
+    case today
+    case weekend
+    case thisWeek
+    case custom
+
+    var id: Self { self }
+}
+
+struct HouseholdProtocolSchedule: Equatable, Codable, Hashable {
+    var preset: ProtocolSchedulePreset
+    var startDate: Date
+    var endDate: Date
+
+    init(
+        preset: ProtocolSchedulePreset,
+        startDate: Date,
+        endDate: Date
+    ) {
+        self.preset = preset
+        self.startDate = startDate
+        self.endDate = endDate
+    }
+}
+
 struct HouseholdProtocol: Identifiable, Equatable, Codable {
     let id: UUID
     var title: String
     var steps: [String]
     var origin: OwloryItemOrigin?
+    var schedule: HouseholdProtocolSchedule?
 
     init(
         id: UUID = UUID(),
         title: String,
         steps: [String] = [],
-        origin: OwloryItemOrigin? = nil
+        origin: OwloryItemOrigin? = nil,
+        schedule: HouseholdProtocolSchedule? = nil
     ) {
         self.id = id
         self.title = title
         self.steps = steps
         self.origin = origin
+        self.schedule = schedule
     }
 }
 

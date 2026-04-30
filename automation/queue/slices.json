@@ -824,14 +824,17 @@
     {
       "slice_id": "home-protocol-schedule-windows",
       "title": "Add schedule windows to Home protocol templates",
-      "status": "queued",
+      "status": "done",
       "priority": 255,
       "domain": "home",
       "allowed_paths": [
         "automation/queue/slices.json",
         "automation/handoffs/",
+        "docs/product/domain-index.md",
         "docs/product/domains/home.md",
         "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "Tools/validate.sh",
         "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
         "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
         "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
@@ -847,12 +850,13 @@
         "python3 automation/supervisor/run_next.py --dry-run",
         "make architecture",
         "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today",
         "git diff --check"
       ],
       "depends_on": [
         "write-promotion-status-affordances"
       ],
-      "max_files_changed": 12,
+      "max_files_changed": 16,
       "notes": "Add Home-owned protocol schedule windows as template metadata with explicit Today, Weekend, This Week, or Custom labels. Windows may guide labels or overdue treatment only; they must not auto-complete, auto-abandon, or duplicate protocol runs."
     },
     {

@@ -1,0 +1,70 @@
+{
+  "slice_id": "home-protocol-schedule-windows",
+  "status": "done",
+  "summary": "Added schedule-window metadata for Home protocol templates, anchored Today/Weekend/This Week/Custom ranges in named domain rules, surfaced schedule labels in Home protocol forms and rows, and documented the label-only contract without changing protocol run lifecycle.",
+  "files_touched": [
+    "automation/handoffs/20260430T133015Z-home-protocol-schedule-windows.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/ProtocolScheduleRulesTests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/092700-home-protocol-schedule-windows.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-protocol-schedule-windows",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "xcodebuild test -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -destination \"platform=iOS Simulator,name=iPhone 16,OS=26.3.1\" -derivedDataPath /tmp/owlory-protocol-schedule-tests -only-testing:OwloryCoreTests/ProtocolScheduleRulesTests",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol schedule windows",
+      "before": "Contract only guidance for future windows in the Home domain doc",
+      "after": "Implemented as Home-owned template metadata with deterministic Today, Weekend, This Week, and Custom window rules plus Home UI persistence",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "xcodebuild test -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -destination \"platform=iOS Simulator,name=iPhone 16,OS=26.3.1\" -derivedDataPath /tmp/owlory-protocol-schedule-tests -only-testing:OwloryCoreTests/ProtocolScheduleRulesTests"
+      ]
+    },
+    {
+      "contract": "Protocol lifecycle boundary for scheduled templates",
+      "before": "No schedule metadata existed, so template/run separation was documented but untested against window fields",
+      "after": "Schedule windows remain template labels only and do not auto-start, auto-complete, auto-abandon, or rewrite protocol runs",
+      "proof": [
+        "docs/product/domains/home.md",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No running-app smoke, screenshot proof, or device proof was performed for the new Home protocol schedule UI.",
+    "Schedule windows currently change Home template labels only; they do not yet drive Today projection, stale treatment, or overdue prioritization beyond the template caption."
+  ],
+  "recommended_next_slice": "write-note-promotion-flow-verification",
+  "recommended_next_reason": "Once this slice is committed and mirrored, the clean running-app smoke harness is ready to support a Write flow proof pass without layering new behavior onto a dirty worktree.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T13:30:15Z"
+}
