@@ -76,7 +76,8 @@
     "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
     "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
     "owlory_xcode/Owlory/Features/Home/HomeView.swift",
-    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/ProtocolScheduleRulesTests.swift"
   ],
   "timestamp": "2026-04-30T13:18:34Z"
 }

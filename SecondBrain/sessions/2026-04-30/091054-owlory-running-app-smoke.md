@@ -37,4 +37,4 @@ Add a running-app smoke proof runner that can build, install, launch, and screen
 - Blocked and failed results use JSON fields that avoid claiming `running-app-smoke` when the app contract is unavailable or the screenshot path fails.
 - Real smoke result: `status=passed`, `proof_level=running-app-smoke`, simulator `iPhone 16`, bundle ID `com.raelldottin.owlory`, screenshot `/tmp/owlory-running-app-smoke/artifacts/20260430T131805Z/owlory-running-app-smoke.png`.
 - Preserved the queued proof-infrastructure follow-ups captured in `091605-proof-infrastructure-queue.md`.
-- Out-of-scope Home protocol scheduling edits were present and left unstaged: `HomeStore.swift`, `DomainModels.swift`, `ProtocolScheduleRules.swift`, `HomeView.swift`, and `HomeStoreTests.swift`.
+- Out-of-scope Home protocol scheduling edits were present and left unstaged: `HomeStore.swift`, `DomainModels.swift`, `ProtocolScheduleRules.swift`, `HomeView.swift`, `HomeStoreTests.swift`, and `ProtocolScheduleRulesTests.swift`.
