@@ -676,7 +676,9 @@ def latest_handoff_for_slice(
         try:
             payload = load_handoff(candidate, schema_path)
         except (ValueError, json.JSONDecodeError):
-            continue
+            payload = load_legacy_handoff_for_context(candidate)
+            if payload is None:
+                continue
         if payload["slice_id"] != slice_id:
             continue
 
@@ -686,6 +688,33 @@ def latest_handoff_for_slice(
             latest_match = payload
 
     return latest_match
+
+
+def load_legacy_handoff_for_context(handoff_path: Path) -> Optional[dict[str, Any]]:
+    try:
+        payload = load_json(handoff_path)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+    if not isinstance(payload, dict):
+        return None
+
+    required_legacy_keys = {
+        "slice_id",
+        "status",
+        "summary",
+        "files_touched",
+        "validations_passed",
+        "validations_failed",
+        "risks",
+        "recommended_next_slice",
+        "recommended_next_reason",
+        "timestamp"
+    }
+    if not required_legacy_keys.issubset(payload):
+        return None
+
+    return payload
 
 
 def make_handoff_filename(slice_id: str, timestamp_token: str) -> str:

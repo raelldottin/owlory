@@ -2,6 +2,7 @@
 
 ## 2026-04-30
 
+- [harness-proof-level-ladder](sessions/2026-04-30/045152-harness-proof-level-ladder.md)
 - [write-note-detail-management-actions](sessions/2026-04-30/044502-write-note-detail-management-actions.md)
 - [train-completed-sessions-history](sessions/2026-04-30/044037-train-completed-sessions-history.md)
 

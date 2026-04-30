@@ -88,6 +88,8 @@ Required fields:
 - `files_touched`
 - `validations_passed`
 - `validations_failed`
+- `proof_level`
+- `missing_proof_levels`
 - `risks`
 - `recommended_next_slice`
 - `recommended_next_reason`
@@ -122,9 +124,27 @@ The quality bar is:
 - `summary` names the actual landed behavior or rule change
 - `files_touched` lists only repo-relative paths actually edited
 - `validations_passed` and `validations_failed` use exact command strings
+- `proof_level` names the highest proof actually reached
+- `missing_proof_levels` lists relevant higher proof that still has not been run
+- `risks` preserves residual risk; use "No known residual risk." only when that is true
 - `recommended_next_slice` is either an existing queued slice ID or `""`
 - `recommended_next_reason` explains why that queued slice is the adjacent follow-up
 - `dirty_paths_outside_scope` truthfully lists out-of-scope dirt when it exists
+
+## Proof Level Ladder
+
+Handoffs must use this exact proof vocabulary. The value in `proof_level` is the highest rung actually reached by the slice; it is not a product-completeness claim by itself.
+
+- `doc-only`: documentation, policy, or contract text changed without executable proof.
+- `domain-tested`: deterministic domain/unit tests or automation harness tests passed.
+- `build-tested`: the relevant app, package, target, or project compiled successfully.
+- `running-app-smoke`: the app built, installed, launched, and produced a basic artifact such as a screenshot or log.
+- `flow-verified`: a concrete user flow was exercised end to end.
+- `screenshot-verified`: screenshot or snapshot artifacts prove the relevant UI state.
+- `device-verified`: behavior was verified on physical device.
+- `testflight-verified`: behavior was verified from a TestFlight build.
+
+Use `missing_proof_levels` for proof that still matters for the slice but has not been run. For example, a UI behavior covered only by domain tests might report `proof_level: "domain-tested"` with `missing_proof_levels: ["running-app-smoke", "flow-verified", "screenshot-verified"]`.
 
 ## Supervisor Validation Replay
 

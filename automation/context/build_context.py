@@ -234,6 +234,7 @@ def build_acceptance_checks(slice_record: dict[str, Any]) -> list[str]:
         f"Keep changed files at or below max_files_changed={slice_record['max_files_changed']}",
         "Preserve ownership boundaries for domain, application, and adapter code",
         f"Run required validations exactly: {', '.join(slice_record['required_validations'])}",
+        "Name the highest proof level reached and any relevant missing proof levels",
         "Write one honest JSON handoff before exiting"
     ]
 
@@ -248,6 +249,10 @@ def build_handoff_template(slice_record: dict[str, Any]) -> dict[str, Any]:
         ],
         "validations_passed": slice_record["required_validations"],
         "validations_failed": [],
+        "proof_level": "<highest proof level reached>",
+        "missing_proof_levels": [
+            "<proof levels still missing, if relevant>"
+        ],
         "risks": [
             "<remaining risk or follow-up check>"
         ],
@@ -269,6 +274,8 @@ def compact_handoff(handoff: Optional[dict[str, Any]]) -> Optional[dict[str, Any
         "files_touched": sorted(set(handoff["files_touched"])),
         "validations_passed": handoff["validations_passed"],
         "validations_failed": handoff["validations_failed"],
+        "proof_level": handoff.get("proof_level", "legacy-unknown"),
+        "missing_proof_levels": handoff.get("missing_proof_levels", []),
         "risks": handoff["risks"],
         "recommended_next_slice": handoff["recommended_next_slice"],
         "recommended_next_reason": handoff["recommended_next_reason"],
@@ -292,6 +299,13 @@ def render_previous_handoff_summary(handoff: Optional[dict[str, Any]]) -> str:
     if handoff["validations_passed"]:
         parts.append(
             "Validations passed: " + ", ".join(f"`{command}`" for command in handoff["validations_passed"])
+        )
+    if handoff["proof_level"]:
+        parts.append(f"Proof level: `{handoff['proof_level']}`")
+    if handoff["missing_proof_levels"]:
+        parts.append(
+            "Missing proof levels: " +
+            ", ".join(f"`{level}`" for level in handoff["missing_proof_levels"])
         )
     if handoff["risks"]:
         parts.append(

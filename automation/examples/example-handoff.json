@@ -12,6 +12,14 @@
     "git diff --check"
   ],
   "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
   "risks": [
     "No manual simulator pass for the new interaction"
   ],

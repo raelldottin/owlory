@@ -38,6 +38,58 @@ class AutomationHarnessTests(unittest.TestCase):
         validation = policy.validate_document(handoff, handoff_schema)
         self.assertTrue(validation.is_valid, validation.errors)
 
+    def test_handoff_schema_accepts_valid_proof_level(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff["proof_level"] = "running-app-smoke"
+        handoff["missing_proof_levels"] = [
+            "flow-verified",
+            "screenshot-verified"
+        ]
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertTrue(validation.is_valid, validation.errors)
+
+    def test_handoff_schema_rejects_missing_proof_level(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff.pop("proof_level")
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("missing required property 'proof_level'" in error for error in validation.errors),
+            validation.errors
+        )
+
+    def test_handoff_schema_rejects_invalid_proof_level(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff["proof_level"] = "verified-in-simulator"
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("$.proof_level" in error and "verified-in-simulator" in error for error in validation.errors),
+            validation.errors
+        )
+
+    def test_handoff_schema_rejects_invalid_missing_proof_level(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff["missing_proof_levels"] = ["manual-vibes"]
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("$.missing_proof_levels[0]" in error and "manual-vibes" in error for error in validation.errors),
+            validation.errors
+        )
+
     def test_live_queue_configures_repo_owned_agent_command(self) -> None:
         queue_data = policy.load_queue(
             self.repo_root / "automation/queue/slices.json",
@@ -545,7 +597,11 @@ class AutomationHarnessTests(unittest.TestCase):
         self.assertIn("docs/product/domains/today.md", document_paths)
         self.assertNotIn("docs/product/domains/train.md", document_paths)
         self.assertEqual("today-nonfocus-add-to-focus", bundle["previous_handoff"]["slice_id"])
+        self.assertEqual("domain-tested", bundle["previous_handoff"]["proof_level"])
+        self.assertIn("running-app-smoke", bundle["previous_handoff"]["missing_proof_levels"])
         self.assertIn("Added explicit Add to Focus action", bundle["previous_handoff_summary"])
+        self.assertIn("Proof level: `domain-tested`", bundle["previous_handoff_summary"])
+        self.assertIn("Residual risks: No manual simulator pass", bundle["previous_handoff_summary"])
         self.assertEqual(
             [
                 "supervisor_replayable",
@@ -558,6 +614,27 @@ class AutomationHarnessTests(unittest.TestCase):
             "today-continue-copy-proofread",
             bundle["queue"]["adjacent_queued_slices"][0]["slice_id"]
         )
+
+    def test_build_context_preserves_legacy_previous_handoff_as_read_only_context(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            handoff_dir = Path(temp_dir)
+            legacy_handoff = policy.load_json(self.example_handoff_path)
+            legacy_handoff.pop("proof_level")
+            legacy_handoff.pop("missing_proof_levels")
+            legacy_path = handoff_dir / "20260421T153000Z-today-nonfocus-add-to-focus.json"
+            legacy_path.write_text(json.dumps(legacy_handoff), encoding="utf-8")
+
+            bundle = build_context_bundle(
+                repo_root=self.repo_root,
+                queue_path=self.example_queue_path,
+                handoff_dir=handoff_dir,
+                slice_id="today-continue-ui-regression-coverage",
+                max_doc_chars=1200
+            )
+
+        self.assertEqual("today-nonfocus-add-to-focus", bundle["previous_handoff"]["slice_id"])
+        self.assertEqual("legacy-unknown", bundle["previous_handoff"]["proof_level"])
+        self.assertIn("Proof level: `legacy-unknown`", bundle["previous_handoff_summary"])
 
     def test_render_prompt_includes_slice_fields_previous_handoff_and_template(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -593,6 +670,8 @@ class AutomationHarnessTests(unittest.TestCase):
         self.assertIn("today-continue-copy-proofread", prompt_text)
         self.assertIn("/tmp/handoff.json", prompt_text)
         self.assertIn("<describe what changed", prompt_text)
+        self.assertIn('"proof_level"', prompt_text)
+        self.assertIn('"missing_proof_levels"', prompt_text)
 
     def test_decision_report_includes_supervisor_validation_replays(self) -> None:
         decision = policy.CompletionDecision(

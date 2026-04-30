@@ -34,7 +34,7 @@ Proof level: domain tests only
 Missing/deferred: UI proof for large Dynamic Type Continue rows
 ```
 
-Proof level should name the strongest evidence currently available, such as `doc-only`, `domain-tested`, `UI-tested`, `manually verified`, or `automation-enforced`. Do not call a contract `Implemented` unless its proof level points to live code paths and a repeatable validation command.
+Proof level should name the strongest evidence currently available using the automation ladder: `doc-only`, `domain-tested`, `build-tested`, `running-app-smoke`, `flow-verified`, `screenshot-verified`, `device-verified`, or `testflight-verified`. Do not call a contract `Implemented` unless its proof level points to live code paths and a repeatable validation command.
 
 ## ML, Speech, And Generated Output
 

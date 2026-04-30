@@ -9,6 +9,8 @@
     "files_touched",
     "validations_passed",
     "validations_failed",
+    "proof_level",
+    "missing_proof_levels",
     "risks",
     "recommended_next_slice",
     "recommended_next_reason",
@@ -51,6 +53,35 @@
       "items": {
         "type": "string",
         "minLength": 1
+      }
+    },
+    "proof_level": {
+      "type": "string",
+      "enum": [
+        "doc-only",
+        "domain-tested",
+        "build-tested",
+        "running-app-smoke",
+        "flow-verified",
+        "screenshot-verified",
+        "device-verified",
+        "testflight-verified"
+      ]
+    },
+    "missing_proof_levels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "doc-only",
+          "domain-tested",
+          "build-tested",
+          "running-app-smoke",
+          "flow-verified",
+          "screenshot-verified",
+          "device-verified",
+          "testflight-verified"
+        ]
       }
     },
     "risks": {

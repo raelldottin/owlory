@@ -1,0 +1,38 @@
+{
+  "slice_id": "harness-proof-level-ladder",
+  "status": "done",
+  "summary": "Added a strict proof-level ladder to automation handoffs, prompts, context templates, and docs so agents must name the highest proof reached and any missing proof instead of making vague verification claims.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/045152-harness-proof-level-ladder.md",
+    "automation/README.md",
+    "automation/context/build_context.py",
+    "automation/examples/example-handoff.json",
+    "automation/handoffs/20260430T085740Z-harness-proof-level-ladder.json",
+    "automation/prompts/base.md",
+    "automation/prompts/review.md",
+    "automation/queue/slices.json",
+    "automation/schemas/handoff.schema.json",
+    "automation/supervisor/policy.py",
+    "automation/tests/test_harness.py",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id harness-proof-level-ladder",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m py_compile automation/supervisor/policy.py automation/supervisor/run_next.py automation/context/build_context.py automation/tests/test_harness.py",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "risks": [
+    "This slice intentionally does not add the broader handoff evidence fields such as contract_status_changes, repo_clean_status, or git_mirror_status; that belongs in the separate owlory-handoff-evidence-writer slice.",
+    "Historical handoffs created before this schema change are preserved as read-only context with legacy-unknown proof until explicitly backfilled."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T08:57:40Z"
+}
