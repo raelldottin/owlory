@@ -34,8 +34,8 @@ Missing/deferred: Permanent-note promotion, explanatory UI copy, running-app pro
 ## Promotion Model
 
 Implementation status: `Partially implemented` for source-note conversion, Add to Today, task promotion, and protocol promotion; permanent-note promotion remains `Contract only`.
-Proof level: Source-note conversion, Add to Today, task promotion, protocol promotion, and promotion-state lookup have focused domain coverage; permanent-note promotion is not an implementation claim yet.
-Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempotent Today/task/protocol promotion, running-app proof, and screenshot/UI proof for promotion affordances.
+Proof level: Source-note conversion, Add to Today, task promotion, protocol promotion, and promotion-state lookup have focused domain coverage; the Write-to-Home-task promotion/status/source-note return path is screenshot-verified in `automation/proofs/write-promotion-screenshot-proof/`; permanent-note promotion is not an implementation claim yet.
+Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempotent Today/task/protocol promotion, and screenshot/UI proof for Today status-only or protocol status-only promotion destinations.
 
 - Every Write Lab entry should be eligible for lightweight later promotion into the rest of Owlory.
 - The canonical promotion targets are task, Today priority, source note, permanent note, protocol item, archive, and keep as note/draft.
@@ -49,8 +49,8 @@ Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempoten
 ## Promotion Origin Contract
 
 Implementation status: `Partially implemented` for Write to Today, Write to task, and Write to protocol; `Contract only` for permanent-note promotion.
-Proof level: Today promotion persists typed Write-note origin metadata and has route-back tests; task promotion persists typed Write-note origin metadata on the Home-owned task and exposes a visible Home-to-Write source route when the note still exists; protocol promotion persists typed Write-note origin metadata on the Home-owned protocol draft/template and has Home/Today domain coverage; source-note conversion has domain coverage.
-Missing/deferred: Permanent-note origin metadata, richer destination-specific duplicate choices, and running-app/screenshot proof for route-back affordances.
+Proof level: Today promotion persists typed Write-note origin metadata and has route-back tests; task promotion persists typed Write-note origin metadata on the Home-owned task and exposes a visible Home-to-Write source route when the note still exists, with screenshot proof in `automation/proofs/write-promotion-screenshot-proof/`; protocol promotion persists typed Write-note origin metadata on the Home-owned protocol draft/template and has Home/Today domain coverage; source-note conversion has domain coverage.
+Missing/deferred: Permanent-note origin metadata, richer destination-specific duplicate choices, and running-app/screenshot proof for Today status-only or protocol status-only route-back affordances.
 
 - Promotion should create a new destination-owned object while preserving the original `WritingNote` as the source unless the user explicitly deletes or archives the note.
 - Source-note and permanent-note classification may update the same `WritingNote` because those states are still Write-owned. Cross-domain promotion must not silently consume the note.

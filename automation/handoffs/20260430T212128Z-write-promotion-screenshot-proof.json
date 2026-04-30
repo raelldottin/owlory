@@ -1,0 +1,58 @@
+{
+  "slice_id": "write-promotion-screenshot-proof",
+  "status": "done",
+  "summary": "Preserved durable screenshot evidence for the already flow-verified Write note to Home task promotion path, documenting what each screenshot proves without changing product behavior or expanding the claim to Today/protocol destinations.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/172128-write-promotion-screenshot-proof.md",
+    "automation/handoffs/20260430T212128Z-write-promotion-screenshot-proof.json",
+    "automation/proofs/write-promotion-screenshot-proof/01-write-note-before-promotion.png",
+    "automation/proofs/write-promotion-screenshot-proof/02-write-task-created-show.png",
+    "automation/proofs/write-promotion-screenshot-proof/03-home-task-view-source-note.png",
+    "automation/proofs/write-promotion-screenshot-proof/04-returned-source-write-note.png",
+    "automation/proofs/write-promotion-screenshot-proof/README.md",
+    "automation/queue/slices.json",
+    "docs/product/domains/write.md"
+  ],
+  "validations_passed": [
+    "git status --short",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "python3 automation/context/build_context.py --slice-id write-promotion-screenshot-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "git diff --cached --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Write note to Home task promotion screenshot evidence",
+      "before": "Flow-verified with screenshots captured under /tmp, but no repo-managed screenshot evidence for later review",
+      "after": "Screenshot-verified for the Write-to-Home-task promotion/status/source-note return path, with four preserved screenshots and proof README under automation/proofs/write-promotion-screenshot-proof/",
+      "proof": [
+        "automation/proofs/write-promotion-screenshot-proof/README.md",
+        "automation/proofs/write-promotion-screenshot-proof/01-write-note-before-promotion.png",
+        "automation/proofs/write-promotion-screenshot-proof/02-write-task-created-show.png",
+        "automation/proofs/write-promotion-screenshot-proof/03-home-task-view-source-note.png",
+        "automation/proofs/write-promotion-screenshot-proof/04-returned-source-write-note.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The screenshot proof covers only the Write-to-Home-task promotion path; Today status-only and protocol status-only promotion destinations remain unclaimed.",
+    "The screenshots are preserved review artifacts, not an automated screenshot-regression test.",
+    "No real-device or TestFlight proof exists for this path."
+  ],
+  "recommended_next_slice": "legacy-handoff-proof-field-backfill",
+  "recommended_next_reason": "This adjacent queued cleanup can now classify older handoff artifacts against the proof ladder without blocking the current Write proof chain.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T21:21:28Z"
+}

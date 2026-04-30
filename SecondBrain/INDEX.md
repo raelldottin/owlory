@@ -2,6 +2,7 @@
 
 ## 2026-04-30
 
+- [write-promotion-screenshot-proof](sessions/2026-04-30/172128-write-promotion-screenshot-proof.md)
 - [write-note-promotion-flow-verification](sessions/2026-04-30/170933-write-note-promotion-flow-verification.md)
 - [home-protocol-schedule-windows](sessions/2026-04-30/092700-home-protocol-schedule-windows.md)
 - [owlory-running-app-smoke-build-blocker](sessions/2026-04-30/092153-owlory-running-app-smoke-build-blocker.md)

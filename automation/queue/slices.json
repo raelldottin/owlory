@@ -922,7 +922,7 @@
     {
       "slice_id": "write-promotion-screenshot-proof",
       "title": "Capture screenshot proof for Write promotion flows",
-      "status": "queued",
+      "status": "done",
       "priority": 253,
       "domain": "write",
       "allowed_paths": [
