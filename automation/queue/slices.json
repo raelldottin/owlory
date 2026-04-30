@@ -777,6 +777,49 @@
       ],
       "max_files_changed": 14,
       "notes": "Implement only Write to Home protocol draft/input promotion: preserve the WritingNote, store typed origin metadata, prevent duplicates, do not create active runs, and do not leak protocol drafts/templates into Today Continue."
+    },
+    {
+      "slice_id": "write-promotion-status-affordances",
+      "title": "Make Write promotion state legible",
+      "status": "done",
+      "priority": 250,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "docs/product/domains/home.md",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-30/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promotion-status-affordances",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "write-promote-to-protocol"
+      ],
+      "max_files_changed": 16,
+      "notes": "Make Write note detail show promotion state for Today, Home task, and Home protocol destinations. Keep capture optional, avoid inbox-pressure copy, hide or disable duplicate actions clearly, and only add route-to-destination affordances where existing architecture supports them."
     }
   ]
 }

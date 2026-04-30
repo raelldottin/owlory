@@ -8,6 +8,7 @@ struct WriteView: View {
     @ObservedObject var patternStore: PatternStore
     var highlightedNoteID: UUID?
     var highlightedNoteSelectionID: UUID?
+    var onHomeTaskSelected: (UUID) -> Void = { _ in }
     @State private var showingCapture = false
     @State private var captureTitle = ""
     @State private var captureBody = ""
@@ -312,6 +313,7 @@ struct WriteView: View {
             store: store,
             todayStore: todayStore,
             homeStore: homeStore,
+            onHomeTaskSelected: onHomeTaskSelected,
             onDismiss: { selectedNote = nil }
         )
     }
@@ -357,6 +359,7 @@ private struct NoteDetailView: View {
     @ObservedObject var store: WriteStore
     @ObservedObject var todayStore: TodayStore
     @ObservedObject var homeStore: HomeStore
+    let onHomeTaskSelected: (UUID) -> Void
     let onDismiss: () -> Void
     @State private var title: String
     @State private var bodyText: String
@@ -377,12 +380,14 @@ private struct NoteDetailView: View {
         store: WriteStore,
         todayStore: TodayStore,
         homeStore: HomeStore,
+        onHomeTaskSelected: @escaping (UUID) -> Void,
         onDismiss: @escaping () -> Void
     ) {
         self.note = note
         self.store = store
         self.todayStore = todayStore
         self.homeStore = homeStore
+        self.onHomeTaskSelected = onHomeTaskSelected
         self.onDismiss = onDismiss
         let sourceMetadata = note.sourceMetadata
         self._title = State(initialValue: note.title)
@@ -406,6 +411,7 @@ private struct NoteDetailView: View {
                     TextField("Body", text: $bodyText, axis: .vertical)
                         .lineLimit(5...12)
                 }
+                promotionSection
                 if let audioFile = note.audioFileName {
                     Section("Voice Recording") {
                         HStack {
@@ -539,6 +545,96 @@ private struct NoteDetailView: View {
         canAddToToday || canTurnIntoTask || canAddToProtocol || canTurnIntoSourceNote
     }
 
+    private var promotionSection: some View {
+        Section {
+            todayPromotionRow
+            taskPromotionRow
+            protocolPromotionRow
+        } header: {
+            Text("Move")
+        } footer: {
+            Text("Keep this note here. Move it only when useful.")
+        }
+    }
+
+    private var todayPromotionRow: some View {
+        promotionRow(
+            title: "Today",
+            systemImage: "sun.max",
+            status: promotedTodayFocusItem == nil ? unpromotedStatus(canPromote: canAddToToday) : "In Today",
+            actionTitle: promotedTodayFocusItem == nil && canAddToToday ? "Add" : nil,
+            action: promotedTodayFocusItem == nil && canAddToToday ? saveAndAddToToday : nil
+        )
+    }
+
+    private var taskPromotionRow: some View {
+        promotionRow(
+            title: "Task",
+            systemImage: "checkmark.circle",
+            status: promotedHomeTask == nil ? unpromotedStatus(canPromote: canTurnIntoTask) : "Created",
+            actionTitle: taskPromotionActionTitle,
+            action: taskPromotionAction
+        )
+    }
+
+    private var protocolPromotionRow: some View {
+        promotionRow(
+            title: "Protocol",
+            systemImage: "list.bullet.rectangle",
+            status: promotedHomeProtocol == nil ? unpromotedStatus(canPromote: canAddToProtocol) : "Draft created",
+            actionTitle: promotedHomeProtocol == nil && canAddToProtocol ? "Add" : nil,
+            action: promotedHomeProtocol == nil && canAddToProtocol ? saveAndAddToProtocol : nil
+        )
+    }
+
+    private var taskPromotionActionTitle: String? {
+        if promotedHomeTask != nil {
+            return "Show"
+        }
+
+        return canTurnIntoTask ? "Create" : nil
+    }
+
+    private var taskPromotionAction: (() -> Void)? {
+        if let task = promotedHomeTask {
+            return { saveAndShowHomeTask(task.id) }
+        }
+
+        return canTurnIntoTask ? saveAndTurnIntoTask : nil
+    }
+
+    private func promotionRow(
+        title: String,
+        systemImage: String,
+        status: String,
+        actionTitle: String?,
+        action: (() -> Void)?
+    ) -> some View {
+        HStack(spacing: 12) {
+            Label(title, systemImage: systemImage)
+            Spacer()
+            Text(status)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            if let actionTitle, let action {
+                Button(actionTitle, action: action)
+                    .buttonStyle(.borderless)
+            }
+        }
+    }
+
+    private func unpromotedStatus(canPromote: Bool) -> String {
+        if canPromote {
+            return "Ready"
+        }
+
+        if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Add a title first"
+        }
+
+        return "Unavailable"
+    }
+
     private var canTurnIntoSourceNote: Bool {
         stage == .source || WritingStageRules.canTransition(from: stage, to: .source)
     }
@@ -555,12 +651,24 @@ private struct NoteDetailView: View {
         todayStore.canPromoteWritingNoteToToday(editedNote)
     }
 
+    private var promotedTodayFocusItem: FocusItem? {
+        todayStore.focusItemPromotedFromWritingNote(editedNote)
+    }
+
     private var canTurnIntoTask: Bool {
         homeStore.canPromoteWritingNoteToTask(editedNote)
     }
 
+    private var promotedHomeTask: HomeTask? {
+        homeStore.taskPromotedFromWritingNote(editedNote)
+    }
+
     private var canAddToProtocol: Bool {
         homeStore.canPromoteWritingNoteToProtocol(editedNote)
+    }
+
+    private var promotedHomeProtocol: HouseholdProtocol? {
+        homeStore.protocolPromotedFromWritingNote(editedNote)
     }
 
     private var canOpenNoteOptions: Bool {
@@ -659,6 +767,12 @@ private struct NoteDetailView: View {
         if homeStore.promoteWritingNoteToTask(promotedNote) != nil {
             onDismiss()
         }
+    }
+
+    private func saveAndShowHomeTask(_ taskID: UUID) {
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        onDismiss()
+        onHomeTaskSelected(taskID)
     }
 
     private func saveAndAddToProtocol() {

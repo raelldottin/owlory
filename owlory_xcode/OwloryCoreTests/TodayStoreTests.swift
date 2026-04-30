@@ -454,6 +454,46 @@ final class TodayStoreTests: XCTestCase {
         XCTAssertEqual(entry.focusThree.count, 1)
     }
 
+    func testFocusItemPromotedFromWritingNoteReturnsExistingDestination() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        let note = WritingNote(
+            id: UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!,
+            title: "Email John",
+            body: ""
+        )
+        let focusID = UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
+        try? repository.saveEntry(
+            DailyEntry(
+                date: today,
+                focusThree: [
+                    FocusItem(
+                        id: focusID,
+                        title: "Email John",
+                        domain: .writing,
+                        linkedRecordID: note.id,
+                        origin: FocusItemOrigin(
+                            kind: .writingNote,
+                            id: note.id,
+                            createdAt: today
+                        )
+                    )
+                ]
+            )
+        )
+
+        let store = await MainActor.run {
+            TodayStore(clock: FixedClock(now: today), repository: repository, calendar: makeCalendar())
+        }
+        let promotedFocus = await MainActor.run {
+            store.focusItemPromotedFromWritingNote(note)
+        }
+
+        XCTAssertEqual(promotedFocus?.id, focusID)
+        XCTAssertEqual(promotedFocus?.origin?.kind, .writingNote)
+        XCTAssertEqual(promotedFocus?.origin?.id, note.id)
+    }
+
     func testSourceBackedContinueItemCanBeAddedToFocusWithSourceLink() async {
         let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
         let today = makeDate("2026-04-08T10:00:00Z")

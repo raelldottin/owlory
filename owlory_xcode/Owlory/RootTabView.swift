@@ -63,7 +63,12 @@ struct RootTabView: View {
                     homeStore: homeStore,
                     patternStore: patternStore,
                     highlightedNoteID: highlightedWritingNoteID,
-                    highlightedNoteSelectionID: highlightedWritingNoteSelectionID
+                    highlightedNoteSelectionID: highlightedWritingNoteSelectionID,
+                    onHomeTaskSelected: { taskID in
+                        continueSelectionID = UUID()
+                        continueHighlightTarget = .homeTask(taskID)
+                        selectedTab = .home
+                    }
                 )
             }
             .tabItem {

@@ -141,6 +141,10 @@ final class HomeStore: OwloryObservableObject {
         HomeTaskPromotionRules.canPromoteWritingNoteToTask(note, in: tasks)
     }
 
+    func taskPromotedFromWritingNote(_ note: WritingNote) -> HomeTask? {
+        HomeTaskPromotionRules.taskPromotedFromWritingNote(note, in: tasks)
+    }
+
     @discardableResult
     func promoteWritingNoteToTask(_ note: WritingNote) -> UUID? {
         guard let task = HomeTaskPromotionRules.taskPromotingWritingNote(
@@ -229,6 +233,10 @@ final class HomeStore: OwloryObservableObject {
 
     func canPromoteWritingNoteToProtocol(_ note: WritingNote) -> Bool {
         HomeProtocolPromotionRules.canPromoteWritingNoteToProtocol(note, in: protocols)
+    }
+
+    func protocolPromotedFromWritingNote(_ note: WritingNote) -> HouseholdProtocol? {
+        HomeProtocolPromotionRules.protocolPromotedFromWritingNote(note, in: protocols)
     }
 
     @discardableResult

@@ -521,6 +521,15 @@ struct HomeTask: Identifiable, Equatable, Codable {
 }
 
 enum HomeTaskPromotionRules {
+    static func taskPromotedFromWritingNote(
+        _ note: WritingNote,
+        in tasks: [HomeTask]
+    ) -> HomeTask? {
+        tasks.first { task in
+            isTaskLinkedToWritingNote(task, noteID: note.id)
+        }
+    }
+
     static func canPromoteWritingNoteToTask(
         _ note: WritingNote,
         in tasks: [HomeTask]
@@ -528,9 +537,7 @@ enum HomeTaskPromotionRules {
         let title = note.title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !title.isEmpty else { return false }
 
-        return !tasks.contains { task in
-            isTaskLinkedToWritingNote(task, noteID: note.id)
-        }
+        return taskPromotedFromWritingNote(note, in: tasks) == nil
     }
 
     static func taskPromotingWritingNote(
@@ -578,6 +585,15 @@ struct HouseholdProtocol: Identifiable, Equatable, Codable {
 }
 
 enum HomeProtocolPromotionRules {
+    static func protocolPromotedFromWritingNote(
+        _ note: WritingNote,
+        in protocols: [HouseholdProtocol]
+    ) -> HouseholdProtocol? {
+        protocols.first { proto in
+            isProtocolLinkedToWritingNote(proto, noteID: note.id)
+        }
+    }
+
     static func canPromoteWritingNoteToProtocol(
         _ note: WritingNote,
         in protocols: [HouseholdProtocol]
@@ -585,9 +601,7 @@ enum HomeProtocolPromotionRules {
         let title = note.title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !title.isEmpty else { return false }
 
-        return !protocols.contains { proto in
-            isProtocolLinkedToWritingNote(proto, noteID: note.id)
-        }
+        return protocolPromotedFromWritingNote(note, in: protocols) == nil
     }
 
     static func protocolPromotingWritingNote(

@@ -129,6 +129,17 @@ final class TodayStore: OwloryObservableObject {
         return DailyPlanningRules.canPromoteWritingNoteToFocus(note, in: entry)
     }
 
+    func focusItemPromotedFromWritingNote(_ note: WritingNote) -> FocusItem? {
+        guard let entry = currentEntry else { return nil }
+        return entry.focusThree.first { item in
+            if item.origin?.kind == .writingNote && item.origin?.id == note.id {
+                return true
+            }
+
+            return item.domain == .writing && item.linkedRecordID == note.id
+        }
+    }
+
     @discardableResult
     func promoteWritingNoteToToday(_ note: WritingNote) -> Bool {
         guard canPromoteWritingNoteToToday(note) else { return false }

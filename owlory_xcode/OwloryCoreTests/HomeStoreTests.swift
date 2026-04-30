@@ -98,6 +98,21 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(store.tasks.count, 1)
     }
 
+    func testTaskPromotedFromWritingNoteReturnsExistingDestination() {
+        let store = makeStore()
+        let note = WritingNote(
+            title: "Email John about AWS billing",
+            body: "Ask for the updated estimate."
+        )
+
+        let taskID = store.promoteWritingNoteToTask(note)
+        let promotedTask = store.taskPromotedFromWritingNote(note)
+
+        XCTAssertEqual(promotedTask?.id, taskID)
+        XCTAssertEqual(promotedTask?.origin?.kind, .writingNote)
+        XCTAssertEqual(promotedTask?.origin?.id, note.id)
+    }
+
     func testPromoteWritingNoteToTaskRejectsBlankTitle() {
         let store = makeStore()
         let note = WritingNote(title: "   ", body: "Untitled actionable thought")
@@ -301,6 +316,21 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertNil(store.promoteWritingNoteToProtocol(note))
         XCTAssertEqual(store.protocols.count, 1)
         XCTAssertTrue(store.runs.isEmpty)
+    }
+
+    func testProtocolPromotedFromWritingNoteReturnsExistingDestination() {
+        let store = makeStore()
+        let note = WritingNote(
+            title: "Weekly reset protocol",
+            body: "Clear kitchen"
+        )
+
+        let protocolID = store.promoteWritingNoteToProtocol(note)
+        let promotedProtocol = store.protocolPromotedFromWritingNote(note)
+
+        XCTAssertEqual(promotedProtocol?.id, protocolID)
+        XCTAssertEqual(promotedProtocol?.origin?.kind, .writingNote)
+        XCTAssertEqual(promotedProtocol?.origin?.id, note.id)
     }
 
     func testPromoteWritingNoteToProtocolRejectsBlankTitle() {

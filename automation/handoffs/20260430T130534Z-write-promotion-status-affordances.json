@@ -1,0 +1,73 @@
+{
+  "slice_id": "write-promotion-status-affordances",
+  "status": "done",
+  "summary": "Made Write note detail show promotion status for Today Focus, Home tasks, and Home protocol drafts/templates, with duplicate states visible, Home task route-to-destination support, focused status lookup tests, and docs updated to reflect the domain-tested UI contract.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/085602-write-promotion-status-affordances.md",
+    "automation/handoffs/20260430T130534Z-write-promotion-status-affordances.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/product/domains/today.md",
+    "docs/product/domains/write.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promotion-status-affordances",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Write promotion status affordances",
+      "before": "Future UI affordance after destination promotion paths existed",
+      "after": "Implemented with domain-tested status-source proof for Today, Home task, and Home protocol destinations",
+      "proof": [
+        "make test-domain DOMAIN=write",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today"
+      ]
+    },
+    {
+      "contract": "Write route-to-destination behavior",
+      "before": "Destination route-back to Write existed where implemented; Write detail did not expose destination state or routing",
+      "after": "Write detail can route to promoted Home tasks through the existing Home task highlight path; Today Focus and protocol-template destinations are status-only until explicit destination highlighting exists",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No running-app smoke, flow verification, screenshot proof, real-device proof, or TestFlight proof was performed for the new Write Move section.",
+    "Today Focus and Home protocol-template destination routes remain status-only because those destinations do not yet have explicit highlight routes comparable to Home tasks.",
+    "Permanent-note promotion remains contract-only and was not implemented in this slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "The next useful proof infrastructure slice remains owlory-running-app-smoke, but it is not yet queued as a ready slice in this handoff.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T13:05:34Z"
+}

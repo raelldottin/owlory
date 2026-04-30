@@ -39,6 +39,7 @@ Missing/deferred: Screenshot/UI regression proof is not present.
 - The task keeps its own title and notes so it remains readable even if the source note is later archived or deleted.
 - Home owns completion, skipping, recurrence, editing, and deletion after promotion.
 - Home task detail shows `View source note` for promoted tasks whose source `WritingNote` still exists.
+- Write note detail may show that a Home task already exists for the note and may route to the task through the existing Home task highlight path.
 - If the source note is missing or deleted, Home task detail should degrade gracefully by showing that the source note is unavailable rather than offering a broken route.
 - Tasks without Write-note origin metadata must not show a source-note route.
 
@@ -57,6 +58,7 @@ Missing/deferred: Screenshot/UI regression proof is not present.
 - Promoting a Write note to a protocol must not create an active `ProtocolRun`.
 - A promoted protocol template without an active run must not appear in Today Continue.
 - Home protocol detail shows `View source note` for promoted protocols whose source `WritingNote` still exists.
+- Write note detail may show that a Home protocol draft/template already exists for the note, but protocol-template route-to-destination remains status-only until Home has explicit template highlighting.
 - If the source note is missing or deleted, Home protocol detail should degrade gracefully by showing that the source note is unavailable rather than offering a broken route.
 - Protocols without Write-note origin metadata must not show a source-note route.
 

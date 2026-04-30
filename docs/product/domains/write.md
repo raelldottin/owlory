@@ -22,8 +22,8 @@
 ## Capture Inbox Contract
 
 Implementation status: `Partially implemented`.
-Proof level: Write storage, stage rules, source-note conversion, Add to Today promotion, task promotion, and protocol promotion have domain coverage; capture-inbox legibility does not yet have UI proof.
-Missing/deferred: Permanent-note promotion, explanatory UI copy, and user-legibility testing around inbox versus final destination.
+Proof level: Write storage, stage rules, source-note conversion, Add to Today promotion, task promotion, protocol promotion, and visible promotion status sources have domain coverage; capture-inbox legibility does not yet have UI-flow or screenshot proof.
+Missing/deferred: Permanent-note promotion, explanatory UI copy, running-app proof, and user-legibility testing around inbox versus final destination.
 
 - Write Lab is not a todo list as a product identity.
 - Write Lab is allowed to receive todo-like thoughts because users often need the fastest possible place to capture unfinished intent.
@@ -34,12 +34,13 @@ Missing/deferred: Permanent-note promotion, explanatory UI copy, and user-legibi
 ## Promotion Model
 
 Implementation status: `Partially implemented` for source-note conversion, Add to Today, task promotion, and protocol promotion; permanent-note promotion remains `Contract only`.
-Proof level: Source-note conversion, Add to Today, task promotion, and protocol promotion have focused domain coverage; permanent-note promotion is not an implementation claim yet.
-Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempotent Today/task/protocol promotion, and screenshot/UI proof for promotion affordances.
+Proof level: Source-note conversion, Add to Today, task promotion, protocol promotion, and promotion-state lookup have focused domain coverage; permanent-note promotion is not an implementation claim yet.
+Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempotent Today/task/protocol promotion, running-app proof, and screenshot/UI proof for promotion affordances.
 
 - Every Write Lab entry should be eligible for lightweight later promotion into the rest of Owlory.
 - The canonical promotion targets are task, Today priority, source note, permanent note, protocol item, archive, and keep as note/draft.
 - Promotion should be fast on mobile, ideally one or two taps from the captured entry.
+- Note detail should make promotion state legible after capture. Today, task, and protocol destinations should show whether the note can still be promoted or has already been moved into that destination.
 - When a note is promoted, preserve the original writing context or keep an origin link instead of silently discarding the capture.
 - Do not require the user to decide upfront whether a captured item is a task, note, source, protocol input, or reflection.
 - Lightweight follow-up prompts are appropriate after capture when Owlory has a good signal, such as actionable phrasing, a URL, or repeated carry-forward.
@@ -49,7 +50,7 @@ Missing/deferred: Permanent-note flow, richer duplicate choices beyond idempoten
 
 Implementation status: `Partially implemented` for Write to Today, Write to task, and Write to protocol; `Contract only` for permanent-note promotion.
 Proof level: Today promotion persists typed Write-note origin metadata and has route-back tests; task promotion persists typed Write-note origin metadata on the Home-owned task and exposes a visible Home-to-Write source route when the note still exists; protocol promotion persists typed Write-note origin metadata on the Home-owned protocol draft/template and has Home/Today domain coverage; source-note conversion has domain coverage.
-Missing/deferred: Permanent-note origin metadata, richer destination-specific duplicate choices, and screenshot/UI proof for route-back affordances.
+Missing/deferred: Permanent-note origin metadata, richer destination-specific duplicate choices, and running-app/screenshot proof for route-back affordances.
 
 - Promotion should create a new destination-owned object while preserving the original `WritingNote` as the source unless the user explicitly deletes or archives the note.
 - Source-note and permanent-note classification may update the same `WritingNote` because those states are still Write-owned. Cross-domain promotion must not silently consume the note.
@@ -60,6 +61,7 @@ Missing/deferred: Permanent-note origin metadata, richer destination-specific du
 - Promoting to Today creates Today-owned Focus work linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note, and it must not introduce a fake daily Write cadence.
 - Promoting to a task creates a Home-owned task linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note, and it must not leave the obligation owned by Write. When the source note still exists, Home task detail should provide a visible route back to the note.
 - Promoting to a protocol creates a Home-owned protocol draft/template linked back to the Write note with typed origin metadata. It does not delete, archive, or consume the original note. It must not start an active Home protocol run, and it must not appear in Today Continue unless a Home-owned active run or Today-owned item later exists. When the source note still exists, Home protocol detail should provide a visible route back to the note.
+- Write note detail may route to promoted destination objects only where the app has a concrete route. Home task routes are supported through the existing Home task highlight path; Today Focus and protocol-template routes remain status-only until explicit destination highlighting exists.
 
 ## Long-Term Success Criteria
 
@@ -121,6 +123,7 @@ Missing/deferred: Permanent-note origin metadata, richer destination-specific du
 - Future capture refinements should prefer forgiving defaults over correctness rituals.
 - Do not open capture with a chooser that asks the user to classify the item before saving.
 - If Write Lab gains promotion actions, keep them as lightweight after-capture actions rather than as mandatory entry steps.
+- Visible promotion status should reduce uncertainty, not create inbox pressure. Copy should say what already happened or what is available, not imply that every note must become something else.
 - Do not destroy source content or context during promotion.
 - Promotion into the rest of Owlory should remain optional; not every note should become structured work.
 - If repeated notes drive resurfacing or pattern interpretation, keep that policy in `Patterns` and keep the promoted object owned by the destination domain.

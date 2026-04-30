@@ -2,6 +2,7 @@
 
 ## 2026-04-30
 
+- [write-promotion-status-affordances](sessions/2026-04-30/085602-write-promotion-status-affordances.md)
 - [write-promote-to-protocol](sessions/2026-04-30/050930-write-promote-to-protocol.md)
 - [owlory-handoff-evidence-writer](sessions/2026-04-30/050252-owlory-handoff-evidence-writer.md)
 - [harness-proof-level-ladder](sessions/2026-04-30/045152-harness-proof-level-ladder.md)
