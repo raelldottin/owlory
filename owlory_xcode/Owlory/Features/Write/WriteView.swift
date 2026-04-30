@@ -370,6 +370,7 @@ private struct NoteDetailView: View {
     @State private var sourceCitation: String
     @State private var sourceQuote: String
     @State private var hasSourceMetadata: Bool
+    @State private var showingDeleteConfirmation = false
 
     init(
         note: WritingNote,
@@ -483,6 +484,21 @@ private struct NoteDetailView: View {
                                     prepareSourceNoteSheet()
                                 }
                             }
+                            if hasPromotionOptions {
+                                Divider()
+                            }
+                            if canArchiveNote {
+                                Button {
+                                    saveAndArchiveNote()
+                                } label: {
+                                    Label("Archive Note", systemImage: "archivebox")
+                                }
+                            }
+                            Button(role: .destructive) {
+                                showingDeleteConfirmation = true
+                            } label: {
+                                Label("Delete Note", systemImage: "trash")
+                            }
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
@@ -499,11 +515,35 @@ private struct NoteDetailView: View {
             .sheet(isPresented: $showingSourceNoteSheet) {
                 sourceNoteSheet
             }
+            .confirmationDialog(
+                "Delete this note?",
+                isPresented: $showingDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete Note", role: .destructive) {
+                    deleteNote()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This removes the note from Write. Archived notes can be kept without appearing in active stages.")
+            }
         }
+    }
+
+    private var hasPromotionOptions: Bool {
+        canAddToToday || canTurnIntoTask || canTurnIntoSourceNote
     }
 
     private var canTurnIntoSourceNote: Bool {
         stage == .source || WritingStageRules.canTransition(from: stage, to: .source)
+    }
+
+    private var canArchiveNote: Bool {
+        WritingStageRules.canTransition(from: stage, to: .archived)
+    }
+
+    private var canDeleteNote: Bool {
+        true
     }
 
     private var canAddToToday: Bool {
@@ -515,7 +555,7 @@ private struct NoteDetailView: View {
     }
 
     private var canOpenNoteOptions: Bool {
-        canAddToToday || canTurnIntoTask || canTurnIntoSourceNote
+        hasPromotionOptions || canArchiveNote || canDeleteNote
     }
 
     private var sourceNoteActionTitle: String {
@@ -610,6 +650,17 @@ private struct NoteDetailView: View {
         if homeStore.promoteWritingNoteToTask(promotedNote) != nil {
             onDismiss()
         }
+    }
+
+    private func saveAndArchiveNote() {
+        store.updateNote(id: note.id, title: title, body: bodyText)
+        store.transitionStage(id: note.id, to: .archived)
+        onDismiss()
+    }
+
+    private func deleteNote() {
+        store.deleteNote(id: note.id)
+        onDismiss()
     }
 
     private func saveSourceNote() {

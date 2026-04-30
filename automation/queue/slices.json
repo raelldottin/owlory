@@ -640,6 +640,32 @@
       "depends_on": [],
       "max_files_changed": 8,
       "notes": "Fix Train screen projection so sessions completed, modified, or skipped today move out of the active Today section and appear in History immediately, without changing Today-domain summary semantics."
+    },
+    {
+      "slice_id": "write-note-detail-management-actions",
+      "title": "Expose archive and delete from Write note detail",
+      "status": "done",
+      "priority": 210,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/write.md",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/OwloryCoreTests/WriteStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-30/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-note-detail-management-actions",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 7,
+      "notes": "Add explicit note-management actions in the Write note detail sheet. Deletion must be confirmed; archive should be available when the stage transition supports it."
     }
   ]
 }

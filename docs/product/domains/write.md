@@ -116,6 +116,7 @@ Missing/deferred: Protocol/permanent-note origin metadata, destination-specific 
 - Voice-assisted capture should populate the editable body while the user is speaking, but it remains draft text until the user saves the note.
 - Stage changes must stay explicit and tested, but they must not become a gate that makes capture feel heavy.
 - Staged note rows should have one primary action: open the note. Secondary actions such as stage advancement belong in note detail or row actions, not nested inline buttons.
+- Note detail should expose explicit cleanup actions. Archive should be available when the note's stage supports it, and destructive delete should require confirmation before removing the note.
 - Source metadata should stay forgiving: source title, creator, URL, source type, date, citation, and quote fields are optional aids, not required proof before saving.
 - Future capture refinements should prefer forgiving defaults over correctness rituals.
 - Do not open capture with a chooser that asks the user to classify the item before saving.
