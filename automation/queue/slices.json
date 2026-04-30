@@ -613,6 +613,33 @@
       "depends_on": [],
       "max_files_changed": 8,
       "notes": "Docs-only contract: clarify that local Owlory user data is scoped to the installed app identity, and source/build mirroring does not imply TestFlight/dev data sharing."
+    },
+    {
+      "slice_id": "train-completed-sessions-history",
+      "title": "Move resolved Train sessions into History",
+      "status": "done",
+      "priority": 200,
+      "domain": "train",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/train.md",
+        "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "owlory_xcode/OwloryCoreTests/TrainStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-30/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id train-completed-sessions-history",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=train",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 8,
+      "notes": "Fix Train screen projection so sessions completed, modified, or skipped today move out of the active Today section and appear in History immediately, without changing Today-domain summary semantics."
     }
   ]
 }

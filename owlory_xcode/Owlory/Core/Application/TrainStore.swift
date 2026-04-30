@@ -107,8 +107,12 @@ final class TrainStore: OwloryObservableObject {
         return sessions.filter { calendar.startOfDay(for: $0.date) == today }
     }
 
+    var activeTodaySessions: [TrainingSession] {
+        todaySessions.filter { $0.status == .planned }
+    }
+
     var todaySession: TrainingSession? {
-        todaySessions.first
+        activeTodaySessions.first
     }
 
     var pastSessions: [TrainingSession] {
@@ -116,6 +120,17 @@ final class TrainStore: OwloryObservableObject {
         let today = calendar.startOfDay(for: clock.now)
         return sessions
             .filter { calendar.startOfDay(for: $0.date) < today }
+            .sorted { $0.date > $1.date }
+    }
+
+    var historySessions: [TrainingSession] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: clock.now)
+        return sessions
+            .filter { session in
+                let sessionDay = calendar.startOfDay(for: session.date)
+                return sessionDay < today || session.status != .planned
+            }
             .sorted { $0.date > $1.date }
     }
 

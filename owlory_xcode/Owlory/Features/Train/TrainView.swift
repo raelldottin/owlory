@@ -79,7 +79,7 @@ struct TrainView: View {
 
     private var todaySection: some View {
         Section("Today") {
-            let todaySessions = store.todaySessions
+            let todaySessions = store.activeTodaySessions
             if todaySessions.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("No sessions planned for today.")
@@ -120,10 +120,10 @@ struct TrainView: View {
 
     @ViewBuilder
     private var historySection: some View {
-        let past = store.pastSessions
-        if !past.isEmpty {
+        let history = store.historySessions
+        if !history.isEmpty {
             Section("History") {
-                ForEach(past) { session in
+                ForEach(history) { session in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(session.plannedActivity)

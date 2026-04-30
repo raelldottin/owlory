@@ -156,12 +156,106 @@ final class TrainStoreTests: XCTestCase {
         XCTAssertEqual(store.todaySessions.count, 2)
     }
 
+    func testActiveTodaySessionsOnlyIncludesPlannedSessionsForToday() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        let store = makeStore(now: now)
+
+        let plannedID = store.addSession(plannedActivity: "Morning Run")
+        let completedID = store.addSession(plannedActivity: "Strength")
+
+        store.updateSession(
+            id: completedID,
+            actualActivity: "Upper body focus",
+            status: .completed,
+            reflection: "Done"
+        )
+
+        XCTAssertEqual(store.todaySessions.map(\.id), [plannedID, completedID])
+        XCTAssertEqual(store.activeTodaySessions.map(\.id), [plannedID])
+        XCTAssertEqual(store.todaySession?.id, plannedID)
+    }
+
+    func testHistorySessionsIncludesResolvedTodaySessions() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        let store = makeStore(now: now)
+
+        let plannedID = store.addSession(plannedActivity: "Morning Run")
+        let completedID = store.addSession(plannedActivity: "Strength")
+        let modifiedID = store.addSession(plannedActivity: "Mobility")
+        let skippedID = store.addSession(plannedActivity: "Intervals")
+
+        store.updateSession(
+            id: completedID,
+            actualActivity: "Upper body focus",
+            status: .completed,
+            reflection: "Done"
+        )
+        store.updateSession(
+            id: modifiedID,
+            actualActivity: "Short mobility",
+            status: .modified,
+            reflection: "Adapted"
+        )
+        store.updateSession(
+            id: skippedID,
+            actualActivity: "",
+            status: .skipped,
+            reflection: "No time"
+        )
+
+        let historyIDs = store.historySessions.map(\.id)
+        XCTAssertFalse(historyIDs.contains(plannedID))
+        XCTAssertTrue(historyIDs.contains(completedID))
+        XCTAssertTrue(historyIDs.contains(modifiedID))
+        XCTAssertTrue(historyIDs.contains(skippedID))
+    }
+
     func testPastSessionsExcludesToday() {
         let now = makeDate("2026-04-08T09:00:00Z")
         let store = makeStore(now: now)
 
         store.addSession(plannedActivity: "Today's Session")
         XCTAssertTrue(store.pastSessions.isEmpty, "Today's session should not appear in past")
+    }
+
+    func testHistorySessionsIncludesPastSessions() {
+        let day1 = makeDate("2026-04-07T09:00:00Z")
+        let day2 = makeDate("2026-04-08T09:00:00Z")
+        let repo = InMemoryItemListRepository<TrainingSession>()
+
+        let store1 = TrainStore(repository: repo, clock: FixedClock(now: day1))
+        let pastID = store1.addSession(plannedActivity: "Past Run")
+        store1.updateSession(
+            id: pastID,
+            actualActivity: "Ran 5K",
+            status: .completed,
+            reflection: "Good"
+        )
+
+        let store2 = TrainStore(repository: repo, clock: FixedClock(now: day2))
+        let todayID = store2.addSession(plannedActivity: "Today Ride")
+
+        XCTAssertEqual(store2.activeTodaySessions.map(\.id), [todayID])
+        XCTAssertEqual(store2.historySessions.map(\.id), [pastID])
+    }
+
+    func testCompletedTodaySessionMovesFromActiveTodayToHistory() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        let store = makeStore(now: now)
+
+        let id = store.addSession(plannedActivity: "Strength")
+        XCTAssertEqual(store.activeTodaySessions.map(\.id), [id])
+        XCTAssertTrue(store.historySessions.isEmpty)
+
+        store.updateSession(
+            id: id,
+            actualActivity: "Upper body focus",
+            status: .completed,
+            reflection: "Done"
+        )
+
+        XCTAssertTrue(store.activeTodaySessions.isEmpty)
+        XCTAssertEqual(store.historySessions.map(\.id), [id])
     }
 
     // MARK: - Recurring Sessions
