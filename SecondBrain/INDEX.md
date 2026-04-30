@@ -2,6 +2,7 @@
 
 ## 2026-04-30
 
+- [owlory-running-app-smoke-build-blocker](sessions/2026-04-30/092153-owlory-running-app-smoke-build-blocker.md)
 - [proof-infrastructure-queue](sessions/2026-04-30/091605-proof-infrastructure-queue.md)
 - [write-promotion-status-affordances](sessions/2026-04-30/085602-write-promotion-status-affordances.md)
 - [owlory-running-app-smoke](sessions/2026-04-30/091054-owlory-running-app-smoke.md)

@@ -1,0 +1,65 @@
+{
+  "slice_id": "owlory-running-app-smoke",
+  "status": "failed",
+  "summary": "Current checkout did not reach running-app-smoke proof. The Xcode project, Owlory scheme, runnable app target, bundle identifier, and iPhone 16 simulator destination resolved, but xcodebuild build failed before an app artifact could be installed, launched, or screenshotted.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/092153-owlory-running-app-smoke-build-blocker.md",
+    "automation/handoffs/20260430T132153Z-owlory-running-app-smoke.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-running-app-smoke",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-rerun.json",
+    "python3 automation/supervisor/run_next.py --dry-run"
+  ],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Running app smoke proof",
+      "before": "The checkout had a smoke runner and an earlier handoff that claimed running-app-smoke for a prior state.",
+      "after": "The current checkout is not allowed to claim running-app-smoke because build fails before install, launch, or screenshot.",
+      "proof": [
+        "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-rerun.json"
+      ]
+    },
+    {
+      "contract": "Xcode runnable app contract",
+      "before": "Unknown for the current dirty checkout.",
+      "after": "Project, scheme, runnable app target, bundle identifier, and simulator destination resolve; the blocker is build-stage source consistency.",
+      "proof": [
+        "xcodebuild -list -json -project owlory_xcode/Owlory.xcodeproj",
+        "xcodebuild -showBuildSettings -json -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16,OS=26.3.1'"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The smoke runner has not produced a current screenshot artifact for this checkout.",
+    "Home protocol scheduling work is partially present outside this proof slice and currently blocks app build.",
+    "The repository has staged automation proof files and unstaged Home product files, so repo cleanliness was not achieved in this run."
+  ],
+  "recommended_next_slice": "home-protocol-schedule-windows",
+  "recommended_next_reason": "The build blocker is directly in the already queued Home protocol scheduling slice; finish or clear that slice before rerunning running-app-smoke or Write flow proof.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+  ],
+  "timestamp": "2026-04-30T13:21:53Z"
+}

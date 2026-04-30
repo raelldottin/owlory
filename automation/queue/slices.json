@@ -858,7 +858,7 @@
     {
       "slice_id": "owlory-running-app-smoke",
       "title": "Add running app smoke proof runner",
-      "status": "done",
+      "status": "failed",
       "priority": 251,
       "domain": "automation",
       "allowed_paths": [
@@ -882,7 +882,7 @@
         "write-promotion-status-affordances"
       ],
       "max_files_changed": 10,
-      "notes": "Add automation support for proving a runnable app can build, install, launch, and produce a screenshot on simulator. The runner must first check the Xcode project/scheme/app target contract and report a precise blocked result instead of claiming app proof when unavailable."
+      "notes": "Add automation support for proving a runnable app can build, install, launch, and produce a screenshot on simulator. The runner must first check the Xcode project/scheme/app target contract and report a precise blocked result instead of claiming app proof when unavailable. Current rerun failed at xcodebuild build because the Home protocol scheduling slice is partially present and must be completed or cleared before running-app-smoke can be claimed."
     },
     {
       "slice_id": "write-note-promotion-flow-verification",
