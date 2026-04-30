@@ -2,7 +2,9 @@
 
 ## 2026-04-30
 
+- [proof-infrastructure-queue](sessions/2026-04-30/091605-proof-infrastructure-queue.md)
 - [write-promotion-status-affordances](sessions/2026-04-30/085602-write-promotion-status-affordances.md)
+- [owlory-running-app-smoke](sessions/2026-04-30/091054-owlory-running-app-smoke.md)
 - [write-promote-to-protocol](sessions/2026-04-30/050930-write-promote-to-protocol.md)
 - [owlory-handoff-evidence-writer](sessions/2026-04-30/050252-owlory-handoff-evidence-writer.md)
 - [harness-proof-level-ladder](sessions/2026-04-30/045152-harness-proof-level-ladder.md)

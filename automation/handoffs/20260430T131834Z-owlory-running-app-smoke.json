@@ -1,0 +1,82 @@
+{
+  "slice_id": "owlory-running-app-smoke",
+  "status": "done",
+  "summary": "Added a running-app smoke runner that checks the runnable Xcode app contract before build, then builds, installs, launches, and captures a non-empty simulator screenshot artifact with structured JSON proof or precise blocked/failed results. Preserved the follow-up proof queue for Write flow verification, screenshot proof, and optional legacy handoff backfill.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/091054-owlory-running-app-smoke.md",
+    "SecondBrain/sessions/2026-04-30/091605-proof-infrastructure-queue.md",
+    "automation/README.md",
+    "automation/handoffs/20260430T131834Z-owlory-running-app-smoke.json",
+    "automation/queue/slices.json",
+    "automation/smoke/running_app_smoke.py",
+    "automation/tests/test_running_app_smoke.py",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-running-app-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m py_compile automation/smoke/running_app_smoke.py automation/tests/test_running_app_smoke.py",
+    "python3 -m unittest automation.tests.test_running_app_smoke",
+    "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-result.json",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Running app smoke proof",
+      "before": "Contract only; agents could report simulator verification without a standardized build/install/launch/screenshot artifact",
+      "after": "Implemented with a runner that emits running-app-smoke only after build, install, launch, and non-empty screenshot succeed",
+      "proof": [
+        "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-result.json",
+        "make automation-check"
+      ]
+    },
+    {
+      "contract": "Blocked app-proof reporting",
+      "before": "No structured blocked result for missing runnable app project, scheme, target, bundle ID, simulator, or screenshot artifact",
+      "after": "Blocked and failed smoke results identify the exact blocked_contract or failed_stage and keep proof_level below running-app-smoke",
+      "proof": [
+        "python3 -m unittest automation.tests.test_running_app_smoke",
+        "make automation-check"
+      ]
+    },
+    {
+      "contract": "Proof infrastructure queue",
+      "before": "Running-app smoke was the only immediate proof slice under discussion",
+      "after": "Follow-up queued slices now classify Write flow verification, Write screenshot proof, optional legacy handoff backfill, and a separate Home protocol scheduling slice",
+      "proof": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The smoke screenshot is an artifact of launch health, not a reviewed UI-flow or screenshot-baseline proof for a specific product screen.",
+    "The real smoke was run before committing this slice, so its JSON records the pre-commit checkout as dirty; rerun after commit for release-grade clean provenance.",
+    "No physical-device or TestFlight smoke was performed.",
+    "Out-of-scope Home protocol schedule edits were present and left unstaged instead of being reverted."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "The next useful product proof slice remains write-note-promotion-flow-verification, but it is not queued in this slice.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+  ],
+  "timestamp": "2026-04-30T13:18:34Z"
+}

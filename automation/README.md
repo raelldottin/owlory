@@ -162,6 +162,22 @@ Handoffs must use this exact proof vocabulary. The value in `proof_level` is the
 
 Use `missing_proof_levels` for proof that still matters for the slice but has not been run. For example, a UI behavior covered only by domain tests might report `proof_level: "domain-tested"` with `missing_proof_levels: ["running-app-smoke", "flow-verified", "screenshot-verified"]`.
 
+## Running App Smoke
+
+Use `python3 automation/smoke/running_app_smoke.py` when a slice needs proof that the current checkout can produce a runnable simulator app.
+
+The runner first checks the Xcode project contract:
+
+- the project path exists
+- the requested scheme is listed
+- the selected scheme exposes an application target
+- the target has a bundle identifier and app bundle path
+- the requested simulator destination can be resolved
+
+Only after those checks pass does it build, boot the simulator if needed, install the app, launch it, and capture a screenshot under `/tmp/owlory-running-app-smoke/`.
+
+Successful output reports `status: "passed"` and `proof_level: "running-app-smoke"`. Blocked output reports `status: "blocked"`, `blocked_before: "running-app-smoke"`, and the precise `blocked_contract`. A failed install, launch, or screenshot must not claim running-app proof.
+
 ## Supervisor Validation Replay
 
 The harness no longer relies only on the run's validation claims.

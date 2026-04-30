@@ -21,6 +21,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make release-check` - require clean build provenance, then run the runtime validation slice before release/archive.
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
+- `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed.
 
 ## Contract Status And Proof Levels
 
@@ -76,6 +77,16 @@ Minimum validation shape for `automation/` changes:
 - `python3 automation/supervisor/run_next.py --dry-run` from a clean or scope-matching worktree when queue selection, stop policy, or prompt packaging changes
 
 Keep example JSON payloads in sync with the tracked schemas.
+
+## Running App Smoke
+
+Use the running-app smoke runner before claiming that a UI-affecting slice has been proven in a launched simulator app:
+
+```bash
+python3 automation/smoke/running_app_smoke.py
+```
+
+The runner emits JSON. A successful run reaches `proof_level: "running-app-smoke"` and records the simulator, bundle ID, scheme, commit/build metadata, and screenshot path. If the checkout cannot satisfy the runnable-app contract, the runner exits non-zero with `status: "blocked"` and a precise `blocked_contract` instead of claiming app behavior was verified.
 
 The supervisor currently replays only a tiny exact-match allowlist of required validations:
 
@@ -141,6 +152,7 @@ Notes:
 - `./Tools/verify-build-provenance.sh`
 - `./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>`
 - `python3 automation/context/build_context.py --slice-id <slice_id>`
+- `python3 automation/smoke/running_app_smoke.py`
 - `python3 automation/supervisor/run_next.py --dry-run`
 - `python3 automation/supervisor/run_next.py --agent-cmd 'your-agent-runner --cwd {repo_root} --prompt-file {prompt_file}'`
 - `./Tools/validate.sh architecture`
