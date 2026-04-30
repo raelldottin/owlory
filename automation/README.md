@@ -90,9 +90,12 @@ Required fields:
 - `validations_failed`
 - `proof_level`
 - `missing_proof_levels`
-- `risks`
+- `contract_status_changes`
+- `residual_risks`
 - `recommended_next_slice`
 - `recommended_next_reason`
+- `repo_clean_status`
+- `git_mirror_status`
 - `dirty_paths_outside_scope`
 - `timestamp`
 
@@ -126,10 +129,23 @@ The quality bar is:
 - `validations_passed` and `validations_failed` use exact command strings
 - `proof_level` names the highest proof actually reached
 - `missing_proof_levels` lists relevant higher proof that still has not been run
-- `risks` preserves residual risk; use "No known residual risk." only when that is true
+- `contract_status_changes` names any product, workflow, or architecture contract status changed by the slice
+- `residual_risks` preserves residual risk; use "No known residual risk." only when that is true
 - `recommended_next_slice` is either an existing queued slice ID or `""`
 - `recommended_next_reason` explains why that queued slice is the adjacent follow-up
+- `repo_clean_status` records whether the repository was `clean`, `dirty`, or `unknown` at handoff time
+- `git_mirror_status` records whether the branch was `mirrored`, `not-mirrored`, `not-relevant`, or `not-checked`
 - `dirty_paths_outside_scope` truthfully lists out-of-scope dirt when it exists
+
+## Handoff Evidence Fields
+
+Reviewers should be able to understand what changed, what proof exists, and what remains risky without rereading the whole diff.
+
+Use `contract_status_changes` for durable contract movement, not for every small file edit. A useful entry names the contract, its previous status, its new status, and the proof backing that status claim.
+
+Use `residual_risks` for gaps that still matter after validation. Do not leave this empty; use `No known residual risk.` only when there is genuinely nothing useful to call out.
+
+Use `repo_clean_status` and `git_mirror_status` to separate local handoff truth from GitHub/Xcode/release mirroring. `mirrored` should mean the current local branch is even with its upstream; otherwise use `not-mirrored`, `not-relevant`, or `not-checked`.
 
 ## Proof Level Ladder
 

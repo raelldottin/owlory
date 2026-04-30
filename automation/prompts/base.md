@@ -46,7 +46,7 @@ Use exactly one of these `proof_level` values to name the highest proof reached:
 7. `device-verified` - the behavior was verified on physical device.
 8. `testflight-verified` - the behavior was verified from a TestFlight build.
 
-List relevant higher proof that still has not been run in `missing_proof_levels`. Use `risks` for residual risk, including "no known residual risk" when that is honestly true.
+List relevant higher proof that still has not been run in `missing_proof_levels`. Use `residual_risks` for residual risk, including "No known residual risk." when that is honestly true.
 
 ## Handoff Requirements
 
@@ -56,9 +56,12 @@ List relevant higher proof that still has not been run in `missing_proof_levels`
 - Keep `validations_passed` and `validations_failed` honest and verbatim.
 - Set `proof_level` to the highest proof actually reached, using the proof ladder exactly.
 - Set `missing_proof_levels` to any relevant proof levels still missing for the slice.
-- Keep `risks` as the residual-risk list; do not hide unproven behavior behind the word "verified".
+- Set `contract_status_changes` to the contracts whose status changed, including before, after, and proof.
+- Keep `residual_risks` as the residual-risk list; do not hide unproven behavior behind the word "verified".
 - Use `recommended_next_slice` only for an already-queued slice ID or `""`.
 - Use `recommended_next_reason` to explain why that queued slice is the adjacent follow-up.
+- Set `repo_clean_status` to `clean`, `dirty`, or `unknown` based on the final repo state.
+- Set `git_mirror_status` to `mirrored`, `not-mirrored`, `not-relevant`, or `not-checked`.
 - Include any out-of-scope dirt you observed in `dirty_paths_outside_scope`.
 - Use UTC ISO-8601 in `timestamp`.
 

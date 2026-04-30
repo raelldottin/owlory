@@ -11,9 +11,12 @@
     "validations_failed",
     "proof_level",
     "missing_proof_levels",
-    "risks",
+    "contract_status_changes",
+    "residual_risks",
     "recommended_next_slice",
     "recommended_next_reason",
+    "repo_clean_status",
+    "git_mirror_status",
     "dirty_paths_outside_scope",
     "timestamp"
   ],
@@ -84,8 +87,43 @@
         ]
       }
     },
-    "risks": {
+    "contract_status_changes": {
       "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contract",
+          "before",
+          "after",
+          "proof"
+        ],
+        "properties": {
+          "contract": {
+            "type": "string",
+            "minLength": 1
+          },
+          "before": {
+            "type": "string",
+            "minLength": 1
+          },
+          "after": {
+            "type": "string",
+            "minLength": 1
+          },
+          "proof": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "residual_risks": {
+      "type": "array",
+      "minItems": 1,
       "items": {
         "type": "string",
         "minLength": 1
@@ -96,6 +134,23 @@
     },
     "recommended_next_reason": {
       "type": "string"
+    },
+    "repo_clean_status": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "unknown"
+      ]
+    },
+    "git_mirror_status": {
+      "type": "string",
+      "enum": [
+        "mirrored",
+        "not-mirrored",
+        "not-relevant",
+        "not-checked"
+      ]
     },
     "dirty_paths_outside_scope": {
       "type": "array",

@@ -706,12 +706,13 @@ def load_legacy_handoff_for_context(handoff_path: Path) -> Optional[dict[str, An
         "files_touched",
         "validations_passed",
         "validations_failed",
-        "risks",
         "recommended_next_slice",
         "recommended_next_reason",
         "timestamp"
     }
     if not required_legacy_keys.issubset(payload):
+        return None
+    if "residual_risks" not in payload and "risks" not in payload:
         return None
 
     return payload

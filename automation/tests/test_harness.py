@@ -90,6 +90,58 @@ class AutomationHarnessTests(unittest.TestCase):
             validation.errors
         )
 
+    def test_handoff_schema_rejects_missing_residual_risks(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff.pop("residual_risks")
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("missing required property 'residual_risks'" in error for error in validation.errors),
+            validation.errors
+        )
+
+    def test_handoff_schema_rejects_empty_residual_risks(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff["residual_risks"] = []
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("$.residual_risks" in error and "expected at least 1 items" in error for error in validation.errors),
+            validation.errors
+        )
+
+    def test_handoff_schema_rejects_missing_contract_status_changes(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff.pop("contract_status_changes")
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("missing required property 'contract_status_changes'" in error for error in validation.errors),
+            validation.errors
+        )
+
+    def test_handoff_schema_rejects_invalid_repo_clean_status(self) -> None:
+        handoff = policy.load_json(self.example_handoff_path)
+        handoff["repo_clean_status"] = "probably-clean"
+        handoff_schema = policy.load_schema(self.handoff_schema_path)
+
+        validation = policy.validate_document(handoff, handoff_schema)
+
+        self.assertFalse(validation.is_valid)
+        self.assertTrue(
+            any("$.repo_clean_status" in error and "probably-clean" in error for error in validation.errors),
+            validation.errors
+        )
+
     def test_live_queue_configures_repo_owned_agent_command(self) -> None:
         queue_data = policy.load_queue(
             self.repo_root / "automation/queue/slices.json",
@@ -599,9 +651,18 @@ class AutomationHarnessTests(unittest.TestCase):
         self.assertEqual("today-nonfocus-add-to-focus", bundle["previous_handoff"]["slice_id"])
         self.assertEqual("domain-tested", bundle["previous_handoff"]["proof_level"])
         self.assertIn("running-app-smoke", bundle["previous_handoff"]["missing_proof_levels"])
+        self.assertIn(
+            "Today Continue Add to Focus interaction",
+            bundle["previous_handoff"]["contract_status_changes"][0]["contract"]
+        )
+        self.assertEqual("clean", bundle["previous_handoff"]["repo_clean_status"])
+        self.assertEqual("not-checked", bundle["previous_handoff"]["git_mirror_status"])
         self.assertIn("Added explicit Add to Focus action", bundle["previous_handoff_summary"])
         self.assertIn("Proof level: `domain-tested`", bundle["previous_handoff_summary"])
+        self.assertIn("Contract status changes: Today Continue Add to Focus interaction", bundle["previous_handoff_summary"])
         self.assertIn("Residual risks: No manual simulator pass", bundle["previous_handoff_summary"])
+        self.assertIn("Repo clean status: `clean`", bundle["previous_handoff_summary"])
+        self.assertIn("Git mirror status: `not-checked`", bundle["previous_handoff_summary"])
         self.assertEqual(
             [
                 "supervisor_replayable",
@@ -621,6 +682,10 @@ class AutomationHarnessTests(unittest.TestCase):
             legacy_handoff = policy.load_json(self.example_handoff_path)
             legacy_handoff.pop("proof_level")
             legacy_handoff.pop("missing_proof_levels")
+            legacy_handoff["risks"] = legacy_handoff.pop("residual_risks")
+            legacy_handoff.pop("contract_status_changes")
+            legacy_handoff.pop("repo_clean_status")
+            legacy_handoff.pop("git_mirror_status")
             legacy_path = handoff_dir / "20260421T153000Z-today-nonfocus-add-to-focus.json"
             legacy_path.write_text(json.dumps(legacy_handoff), encoding="utf-8")
 
@@ -634,6 +699,9 @@ class AutomationHarnessTests(unittest.TestCase):
 
         self.assertEqual("today-nonfocus-add-to-focus", bundle["previous_handoff"]["slice_id"])
         self.assertEqual("legacy-unknown", bundle["previous_handoff"]["proof_level"])
+        self.assertEqual(["No manual simulator pass for the new interaction"], bundle["previous_handoff"]["residual_risks"])
+        self.assertEqual("legacy-unknown", bundle["previous_handoff"]["repo_clean_status"])
+        self.assertEqual("legacy-unknown", bundle["previous_handoff"]["git_mirror_status"])
         self.assertIn("Proof level: `legacy-unknown`", bundle["previous_handoff_summary"])
 
     def test_render_prompt_includes_slice_fields_previous_handoff_and_template(self) -> None:
@@ -672,6 +740,10 @@ class AutomationHarnessTests(unittest.TestCase):
         self.assertIn("<describe what changed", prompt_text)
         self.assertIn('"proof_level"', prompt_text)
         self.assertIn('"missing_proof_levels"', prompt_text)
+        self.assertIn('"contract_status_changes"', prompt_text)
+        self.assertIn('"residual_risks"', prompt_text)
+        self.assertIn('"repo_clean_status"', prompt_text)
+        self.assertIn('"git_mirror_status"', prompt_text)
 
     def test_decision_report_includes_supervisor_validation_replays(self) -> None:
         decision = policy.CompletionDecision(

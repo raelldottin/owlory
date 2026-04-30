@@ -20,11 +20,23 @@
     "device-verified",
     "testflight-verified"
   ],
-  "risks": [
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue Add to Focus interaction",
+      "before": "Partially implemented",
+      "after": "Partially implemented with direct action proof",
+      "proof": [
+        "make test-domain DOMAIN=today"
+      ]
+    }
+  ],
+  "residual_risks": [
     "No manual simulator pass for the new interaction"
   ],
   "recommended_next_slice": "today-continue-ui-regression-coverage",
   "recommended_next_reason": "Adjacent follow-up for the same surface after interaction change.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "not-checked",
   "dirty_paths_outside_scope": [],
   "timestamp": "2026-04-21T15:30:00Z"
 }

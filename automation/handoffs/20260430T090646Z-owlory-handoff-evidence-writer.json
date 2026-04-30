@@ -1,0 +1,51 @@
+{
+  "slice_id": "owlory-handoff-evidence-writer",
+  "status": "done",
+  "summary": "Required richer handoff evidence by adding contract status changes, residual risks, repo cleanliness, and git mirror status to the handoff schema, generated template, prompts, docs, and automation tests.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/050252-owlory-handoff-evidence-writer.md",
+    "automation/README.md",
+    "automation/context/build_context.py",
+    "automation/examples/example-handoff.json",
+    "automation/handoffs/20260430T090646Z-owlory-handoff-evidence-writer.json",
+    "automation/prompts/base.md",
+    "automation/prompts/review.md",
+    "automation/queue/slices.json",
+    "automation/schemas/handoff.schema.json",
+    "automation/supervisor/policy.py",
+    "automation/tests/test_harness.py",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-handoff-evidence-writer",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m py_compile automation/supervisor/policy.py automation/supervisor/run_next.py automation/context/build_context.py automation/tests/test_harness.py",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Automation handoff evidence model",
+      "before": "Proof level required; broader evidence lived in legacy risks and prose",
+      "after": "Proof level, missing proof, contract status changes, residual risks, repo cleanliness, and git mirror status are required for new handoffs",
+      "proof": [
+        "make automation-check",
+        "python3 -m py_compile automation/supervisor/policy.py automation/supervisor/run_next.py automation/context/build_context.py automation/tests/test_harness.py"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Historical handoffs remain legacy-readable rather than backfilled; they may report legacy-unknown for the new repo and mirror evidence fields.",
+    "This slice does not implement running-app smoke; that remains the next major proof jump."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T09:06:46Z"
+}

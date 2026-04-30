@@ -253,11 +253,23 @@ def build_handoff_template(slice_record: dict[str, Any]) -> dict[str, Any]:
         "missing_proof_levels": [
             "<proof levels still missing, if relevant>"
         ],
-        "risks": [
-            "<remaining risk or follow-up check>"
+        "contract_status_changes": [
+            {
+                "contract": "<contract or product/workflow rule>",
+                "before": "<status before this slice>",
+                "after": "<status after this slice>",
+                "proof": [
+                    "<validation or artifact supporting the change>"
+                ]
+            }
+        ],
+        "residual_risks": [
+            "<remaining risk or 'No known residual risk.'>"
         ],
         "recommended_next_slice": "",
         "recommended_next_reason": "",
+        "repo_clean_status": "<clean|dirty|unknown>",
+        "git_mirror_status": "<mirrored|not-mirrored|not-relevant|not-checked>",
         "dirty_paths_outside_scope": [],
         "timestamp": "<UTC ISO-8601 timestamp>"
     }
@@ -276,9 +288,12 @@ def compact_handoff(handoff: Optional[dict[str, Any]]) -> Optional[dict[str, Any
         "validations_failed": handoff["validations_failed"],
         "proof_level": handoff.get("proof_level", "legacy-unknown"),
         "missing_proof_levels": handoff.get("missing_proof_levels", []),
-        "risks": handoff["risks"],
+        "contract_status_changes": handoff.get("contract_status_changes", []),
+        "residual_risks": handoff.get("residual_risks", handoff.get("risks", [])),
         "recommended_next_slice": handoff["recommended_next_slice"],
         "recommended_next_reason": handoff["recommended_next_reason"],
+        "repo_clean_status": handoff.get("repo_clean_status", "legacy-unknown"),
+        "git_mirror_status": handoff.get("git_mirror_status", "legacy-unknown"),
         "timestamp": handoff["timestamp"]
     }
 
@@ -307,10 +322,19 @@ def render_previous_handoff_summary(handoff: Optional[dict[str, Any]]) -> str:
             "Missing proof levels: " +
             ", ".join(f"`{level}`" for level in handoff["missing_proof_levels"])
         )
-    if handoff["risks"]:
+    if handoff["contract_status_changes"]:
         parts.append(
-            "Residual risks: " + "; ".join(handoff["risks"])
+            "Contract status changes: " +
+            "; ".join(render_contract_status_change(change) for change in handoff["contract_status_changes"])
         )
+    if handoff["residual_risks"]:
+        parts.append(
+            "Residual risks: " + "; ".join(handoff["residual_risks"])
+        )
+    if handoff["repo_clean_status"]:
+        parts.append(f"Repo clean status: `{handoff['repo_clean_status']}`")
+    if handoff["git_mirror_status"]:
+        parts.append(f"Git mirror status: `{handoff['git_mirror_status']}`")
     if handoff["recommended_next_slice"]:
         parts.append(
             "Recommended next slice: "
@@ -318,6 +342,15 @@ def render_previous_handoff_summary(handoff: Optional[dict[str, Any]]) -> str:
         )
 
     return "\n".join(f"- {part}" for part in parts)
+
+
+def render_contract_status_change(change: dict[str, Any]) -> str:
+    contract = change.get("contract", "unknown contract")
+    before = change.get("before", "unknown")
+    after = change.get("after", "unknown")
+    proof = change.get("proof", [])
+    proof_text = ", ".join(f"`{item}`" for item in proof) if proof else "`no proof listed`"
+    return f"{contract}: {before} -> {after} ({proof_text})"
 
 
 def find_previous_handoff(

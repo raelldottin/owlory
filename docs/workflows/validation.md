@@ -36,6 +36,8 @@ Missing/deferred: UI proof for large Dynamic Type Continue rows
 
 Proof level should name the strongest evidence currently available using the automation ladder: `doc-only`, `domain-tested`, `build-tested`, `running-app-smoke`, `flow-verified`, `screenshot-verified`, `device-verified`, or `testflight-verified`. Do not call a contract `Implemented` unless its proof level points to live code paths and a repeatable validation command.
 
+Automation handoffs must also preserve review evidence: `contract_status_changes`, `residual_risks`, `repo_clean_status`, and `git_mirror_status`. Treat those fields as the reviewable claim surface for what changed, what remains unproven, and whether the local repo state was clean or mirrored at handoff time.
+
 ## ML, Speech, And Generated Output
 
 Use [ML QA](ml-qa.md) together with [ML Model Posture](../runtime/ml-model-posture.md) and [ML Privacy And Drafts](../runtime/ml-privacy.md) for any feature that drafts text, classifies content, transcribes speech, or suggests changes from user data.

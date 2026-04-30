@@ -700,6 +700,42 @@
       "depends_on": [],
       "max_files_changed": 14,
       "notes": "Add explicit proof-level vocabulary to the handoff model, prompts, docs, and focused automation tests before building running-app verification."
+    },
+    {
+      "slice_id": "owlory-handoff-evidence-writer",
+      "title": "Require richer handoff evidence",
+      "status": "done",
+      "priority": 230,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/README.md",
+        "automation/context/build_context.py",
+        "automation/examples/example-handoff.json",
+        "automation/handoffs/",
+        "automation/prompts/base.md",
+        "automation/prompts/review.md",
+        "automation/prompts/slice.md",
+        "automation/queue/slices.json",
+        "automation/schemas/handoff.schema.json",
+        "automation/supervisor/policy.py",
+        "automation/supervisor/run_next.py",
+        "automation/tests/test_harness.py",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-04-30/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-handoff-evidence-writer",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m py_compile automation/supervisor/policy.py automation/supervisor/run_next.py automation/context/build_context.py automation/tests/test_harness.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "harness-proof-level-ladder"
+      ],
+      "max_files_changed": 14,
+      "notes": "Extend handoff evidence with contract status changes, residual risks, repo cleanliness, and git mirror status so review can understand proof without rereading the whole diff."
     }
   ]
 }
