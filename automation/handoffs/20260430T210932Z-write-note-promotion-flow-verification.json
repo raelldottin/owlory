@@ -1,0 +1,65 @@
+{
+  "slice_id": "write-note-promotion-flow-verification",
+  "status": "done",
+  "summary": "Reached flow-verified proof for the Write note to Home task promotion path on clean mirrored main by exercising the running app end to end: promote from Write, confirm Task Created/Show status in Write, follow Show into Home, open the promoted task, use View source note, and return to the original Write note.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-04-30/170933-write-note-promotion-flow-verification.md",
+    "automation/handoffs/20260430T210932Z-write-note-promotion-flow-verification.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "git status --short",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "python3 automation/context/build_context.py --slice-id write-note-promotion-flow-verification",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-before-write-flow.json",
+    "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-after-write-flow.json",
+    "make architecture",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "flow-verified",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Write note to Home task promotion flow proof",
+      "before": "Implemented and domain-tested with running-app-smoke available, but no end-to-end flow proof on clean mirrored main",
+      "after": "Flow-verified in the running simulator app from Write promotion through Home source-note route-back",
+      "proof": [
+        "python3 automation/smoke/running_app_smoke.py --output /tmp/owlory-running-app-smoke-before-write-flow.json",
+        "/tmp/write-flow-after-promotion-status.png",
+        "/tmp/write-flow-home-task-source.png",
+        "/tmp/write-flow-returned-source-note.png"
+      ]
+    },
+    {
+      "contract": "Write Show route to Home task",
+      "before": "Domain-tested highlight route from Write into Home task destination",
+      "after": "Flow-verified: Write shows Task Created/Show, Show opens Home with the promoted task highlighted, and the routed task leads back to the original Write note through View source note",
+      "proof": [
+        "/tmp/write-flow-after-promotion-status.png",
+        "/tmp/write-flow-home-task-source.png",
+        "/tmp/write-flow-returned-source-note.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The flow proof ran only on iPhone 16 simulator; no real-device or TestFlight confirmation exists yet.",
+    "The slice captured screenshots during the flow, but it did not add durable screenshot-regression automation or a screenshot-verified contract gate.",
+    "Today and Home protocol promotion paths were not exercised in this proof slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop after the requested flow proof slice; any higher-proof or adjacent UI automation follow-up should be queued deliberately.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-04-30T21:09:32Z"
+}

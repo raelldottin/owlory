@@ -862,7 +862,7 @@
     {
       "slice_id": "owlory-running-app-smoke",
       "title": "Add running app smoke proof runner",
-      "status": "failed",
+      "status": "done",
       "priority": 251,
       "domain": "automation",
       "allowed_paths": [
@@ -886,12 +886,12 @@
         "write-promotion-status-affordances"
       ],
       "max_files_changed": 10,
-      "notes": "Add automation support for proving a runnable app can build, install, launch, and produce a screenshot on simulator. The runner must first check the Xcode project/scheme/app target contract and report a precise blocked result instead of claiming app proof when unavailable. Current rerun failed at xcodebuild build because the Home protocol scheduling slice is partially present and must be completed or cleared before running-app-smoke can be claimed."
+      "notes": "Add automation support for proving a runnable app can build, install, launch, and produce a screenshot on simulator. The runner must first check the Xcode project/scheme/app target contract and report a precise blocked result instead of claiming app proof when unavailable. The successful smoke proof is recorded in automation/handoffs/20260430T131834Z-owlory-running-app-smoke.json and was re-confirmed before and after Write flow verification on clean mirrored main."
     },
     {
       "slice_id": "write-note-promotion-flow-verification",
       "title": "Verify Write promotion flows in the running app",
-      "status": "queued",
+      "status": "done",
       "priority": 252,
       "domain": "write",
       "allowed_paths": [
