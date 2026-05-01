@@ -21,12 +21,35 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent pre-classified slice remains; stop for review after the Today Focus completion contract is restored.",
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-28T07:52:38Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for today-focus-completion-contract-actions",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
     "No manual simulator visual pass was performed for the new Today Focus section.",
     "Existing persisted weekly digest artifacts older than the latest digest are still not bulk-regenerated."
   ],
-  "recommended_next_slice": "",
-  "recommended_next_reason": "No adjacent pre-classified slice remains; stop for review after the Today Focus completion contract is restored.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-28T07:52:38Z"
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

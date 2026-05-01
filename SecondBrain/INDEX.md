@@ -2,6 +2,7 @@
 
 ## 2026-04-30
 
+- [legacy-handoff-proof-field-backfill](sessions/2026-04-30/205431-legacy-handoff-proof-field-backfill.md)
 - [write-promotion-screenshot-proof](sessions/2026-04-30/172128-write-promotion-screenshot-proof.md)
 - [write-note-promotion-flow-verification](sessions/2026-04-30/170933-write-note-promotion-flow-verification.md)
 - [home-protocol-schedule-windows](sessions/2026-04-30/092700-home-protocol-schedule-windows.md)

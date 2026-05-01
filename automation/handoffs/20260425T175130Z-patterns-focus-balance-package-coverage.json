@@ -13,11 +13,29 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
-    "SwiftPM package test coverage is intentionally focused on PatternNudgeRulesTests; broader OwloryCoreTests coverage remains Xcode-owned."
-  ],
   "recommended_next_slice": "today-focus-balance-nudge-presentation-audit",
   "recommended_next_reason": "The next queued slice is the adjacent Today presentation audit for the same Focus-balance nudge behavior.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-25T17:51:30Z"
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-25T17:51:30Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for patterns-focus-balance-package-coverage",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swift test --package-path owlory_xcode --filter PatternNudgeRulesTests",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "SwiftPM package test coverage is intentionally focused on PatternNudgeRulesTests; broader OwloryCoreTests coverage remains Xcode-owned."
+  ],
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }
