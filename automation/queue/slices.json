@@ -1037,7 +1037,7 @@
     {
       "slice_id": "today-continue-write-task-projection-triage",
       "title": "Triage Today Continue projection for Write-origin Home tasks",
-      "status": "queued",
+      "status": "done",
       "priority": 150,
       "domain": "today",
       "allowed_paths": [

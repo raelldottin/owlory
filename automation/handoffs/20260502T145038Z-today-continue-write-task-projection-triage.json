@@ -1,0 +1,54 @@
+{
+  "slice_id": "today-continue-write-task-projection-triage",
+  "status": "done",
+  "summary": "Classification-first triage of why a Standalone Task created via Turn into Task did not appear in Today's Continue during the write-promotion-device-verification device pass. Read Today, Home, and Write contracts plus TodayContinueSourceComposer, ContinueCandidateRules, and TodayContinueItemAssembler. Conclusion: the observed behavior is intentional under the existing contract; active Home tasks are Continue-eligible by the same rule applied to any Home task, but active Home protocol runs are ranked first within the per-domain Home cap (2 slots), and the device run had two active protocol runs already filling those slots. No app behavior change required. Clarified the precedence and cap interaction in docs/product/domains/today.md and added a Today-admission corollary to docs/product/domains/write.md so the rule is explicit for future readers.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/145038-today-continue-write-task-projection-triage.md",
+    "automation/handoffs/20260502T145038Z-today-continue-write-task-projection-triage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/product/domains/write.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id today-continue-write-task-projection-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=write",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No follow-up implementation slice queued. The triage concluded the existing rule is intentional and correctly implemented. Any future change to the all-active-tasks Continue admission policy (for example tightening to require Focus, schedule, or due state before admission) is a broader product decision affecting every Home task, not a Write-promotion-specific gap, and should be classified deliberately if pursued.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T14:50:38Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue admission for active Home tasks (including Write-promoted tasks)",
+      "before": "Today.md listed `active Home tasks` as a Continue source and home.md noted that protocol runs surface before standalone Home tasks, but the per-domain admission cap and the resulting eviction of standalone tasks when both Home slots are taken by active runs were implicit. write.md described task promotion ownership transfer to Home but did not state that Today admission of the promoted task follows the same rules as any other Home task without a separate Today-eligibility bypass.",
+      "after": "today.md now states explicitly that active Home tasks (including Write-promoted ones) are Continue-eligible by the same `isActiveHomeTaskCandidate` rule, that protocol runs precede standalone tasks within the per-domain Home cap, and that Add to Focus is the Today-owned path to force a specific task into Continue regardless of cap pressure. write.md adds a corollary stating that promoted tasks compete for Home Continue slots like any other Home task and that promotion does not grant a Today-eligibility bypass. No code or admission policy changed.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Domain/ContinueCandidateRules.swift:40 (`isActiveHomeTaskCandidate` checks only !isCompleted, !isSkipped, hasDisplayableTitle)",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift:61 (sourceOrder admits activeHomeProtocolRun before activeHomeTask)",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift:43 (per-domain cap of 2 applied in source-order walk via `ContinueCandidateRules.admissionRejection`)",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=write"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The current rule treats every non-completed, non-skipped Home task as Continue-eligible. That is broader than a strict Focus/schedule/due-state gate, which would never silently surface a standalone task in Today. If the long-term product intent is the tighter rule, that is a separate Continue-admission contract change affecting every Home task, not a Write-promotion gap. Out of scope for this triage; classify deliberately if pursued.",
+    "Cap-rejected candidates are dropped silently from Continue. The runtime trace counts them in `ContinuePipelineTrace.AdmissionSummary`, but there is no user-visible affordance explaining why a Home task did not appear. That is consistent with current Continue behavior and outside this triage's scope, but worth noting if a future slice adds a discoverability surface.",
+    "Doc edits clarify the existing rule rather than changing behavior. If a future slice tightens admission, both bullets in today.md and write.md will need to be updated alongside the code; otherwise docs and code will drift."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}
