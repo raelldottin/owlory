@@ -1124,6 +1124,32 @@
       "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing — Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
     },
     {
+      "slice_id": "train-row-status-pill-uniformity",
+      "title": "Apply StatusBadge consistently across Train row surfaces",
+      "status": "queued",
+      "priority": 141,
+      "domain": "train",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/train.md",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id train-row-status-pill-uniformity",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=train",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 6,
+      "notes": "Small UI consistency slice. Inspect every Train row variant in TrainView (active SessionCardView at TrainView.swift:256, History rows at TrainView.swift:137, plus any planned/today rows or recurring sections that currently lack a per-item status pill). Apply the existing private StatusBadge component (TrainView.swift:442) so each Train item displays its own pill colored by TrainingStatus (planned, completed, modified, skipped). Reuse StatusBadge as-is unless visibility under Dynamic Type forces a small layout adjustment; in that case, prefer wrapping/stacking the pill rather than truncating the activity title. Do not redesign Train layout broadly, do not change TrainingStatus semantics, do not alter ordering, recurrence, or session lifecycle behavior. proof_level should land at domain-tested unless screenshot proof is explicitly captured. If StatusBadge needs to be made non-private to be reused across rows in the same file, that is acceptable; do not move it to a shared design-system module in this slice."
+    },
+    {
       "slice_id": "home-protocol-schedule-notifications",
       "title": "Schedule local notifications from declared Home protocol windows",
       "status": "queued",
