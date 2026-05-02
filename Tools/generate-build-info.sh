@@ -30,10 +30,13 @@ fi
 
 # Locate the git root. The Xcode project lives in owlory_xcode/, the git repo
 # lives one level up. Using `git rev-parse --show-toplevel` makes this robust
-# against future directory reshuffling.
+# against future directory reshuffling. We then ask git to resolve the
+# repository's gitdir; this works for normal checkouts AND worktrees (where
+# `.git` is a file pointer, not a directory) AND submodules. A plain `[ -d ]`
+# test would reject worktrees and stamp no-git fallback values.
 GIT_ROOT="$(cd "$SRCROOT" 2>/dev/null && git rev-parse --show-toplevel 2>/dev/null || true)"
 
-if [ -n "$GIT_ROOT" ] && [ -d "$GIT_ROOT/.git" ]; then
+if [ -n "$GIT_ROOT" ] && git -C "$GIT_ROOT" rev-parse --git-dir > /dev/null 2>&1; then
   GIT_COMMIT="$(git -C "$GIT_ROOT" rev-parse --short=12 HEAD 2>/dev/null || echo unknown)"
   GIT_COMMIT_FULL="$(git -C "$GIT_ROOT" rev-parse HEAD 2>/dev/null || echo unknown)"
   GIT_BRANCH="$(git -C "$GIT_ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null || echo detached)"

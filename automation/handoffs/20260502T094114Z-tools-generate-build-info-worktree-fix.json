@@ -1,0 +1,51 @@
+{
+  "slice_id": "tools-generate-build-info-worktree-fix",
+  "status": "done",
+  "summary": "Replaced the directory-only `[ -d \"$GIT_ROOT/.git\" ]` test in Tools/generate-build-info.sh with `git -C \"$GIT_ROOT\" rev-parse --git-dir > /dev/null 2>&1`, so the build-info stamp script recognizes git worktrees (where .git is a file pointer) as real repositories and stamps the actual commit, branch, and tag instead of falling through to the no-git fallback. Verified directly that the worktree case, the normal-checkout case, and the truly-non-git fallback case all behave correctly.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/094114-tools-generate-build-info-worktree-fix.md",
+    "Tools/generate-build-info.sh",
+    "automation/handoffs/20260502T094114Z-tools-generate-build-info-worktree-fix.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id tools-generate-build-info-worktree-fix",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check",
+    "Direct stamp verification (worktree): SRCROOT=<worktree>/owlory_xcode bash Tools/generate-build-info.sh produced GitCommit=54df0d5cd2dd-dirty, GitBranch=claude/frosty-greider-e0a33c, GitTag=54df0d5-dirty (was no-git/no-git/no-git before the fix).",
+    "Direct stamp verification (normal checkout): SRCROOT=<main>/owlory_xcode bash Tools/generate-build-info.sh produced GitCommit=ba44c58834e5-dirty, GitBranch=main, GitStatus=dirty (still works).",
+    "Direct stamp verification (non-git fallback): SRCROOT=/tmp/not-a-repo bash Tools/generate-build-info.sh produced GitCommit=no-git, GitBranch=no-git, GitStatus=unknown (fallback preserved for truly non-git contexts)."
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "write-promotion-device-verification",
+  "recommended_next_reason": "With the worktree stamping fix landed, a fresh device build from the post-fix commit can carry traceable provenance and the previously blocked write-promotion-device-verification slice can be retried. The old device install with no-git provenance must be overwritten by a fresh post-fix build before any on-device flow is exercised for proof.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T09:41:14Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "device-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Build-info stamp script git resolution",
+      "before": "Tools/generate-build-info.sh:36 used `[ -d \"$GIT_ROOT/.git\" ]`, which fails in any git worktree because .git is a file pointer (`gitdir: /path/to/main/.git/worktrees/<name>`) rather than a directory. The script then fell through to the no-git fallback (lines 47-54) and stamped GitCommit/GitCommitFull/GitBranch/GitTag as no-git, breaking BuildInfo.isReleaseable and source traceability for any worktree build.",
+      "after": "The git-detection now uses `git -C \"$GIT_ROOT\" rev-parse --git-dir > /dev/null 2>&1`, which succeeds for normal checkouts, worktrees, and submodules alike. A normal-checkout build still stamps the real commit/branch; a worktree build now stamps the real commit/branch instead of no-git; and a truly non-git SRCROOT still hits the documented no-git fallback. The comment block at lines 31-35 was updated to explain why the directory-only test was insufficient.",
+      "proof": [
+        "make build-provenance",
+        "Direct stamp script invocation against this worktree, the main checkout, and a non-git /tmp directory; output captured in validations_passed."
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The fix only changes git detection. It does not add a regression test for the stamping behavior across repo shapes, so a future refactor of generate-build-info.sh could reintroduce a worktree-incompatible check without CI catching it. Adding such a test would be a separate slice in the repo-tooling domain.",
+    "BuildInfo.isReleaseable still requires a clean working tree in addition to a known commit; this fix does not change release gating, only the stamping inputs that release gating reads.",
+    "The previously installed Owlory build on the connected iPhone still carries no-git provenance and must be overwritten by a fresh post-fix install before any device-verified flow is exercised."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

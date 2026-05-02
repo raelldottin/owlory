@@ -1036,7 +1036,7 @@
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
       "title": "Make build-info stamp script recognize git worktrees",
-      "status": "queued",
+      "status": "done",
       "priority": 252,
       "domain": "repo-tooling",
       "allowed_paths": [

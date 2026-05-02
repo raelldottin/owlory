@@ -2,6 +2,7 @@
 
 ## 2026-05-02
 
+- [tools-generate-build-info-worktree-fix](sessions/2026-05-02/094114-tools-generate-build-info-worktree-fix.md)
 - [write-promotion-device-verification (blocked)](sessions/2026-05-02/043325-write-promotion-device-verification.md)
 - [legacy-handoff-proof-field-backfill-batch-2](sessions/2026-05-02/001733-legacy-handoff-proof-field-backfill-batch-2.md)
 
