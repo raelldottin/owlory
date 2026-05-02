@@ -1092,6 +1092,35 @@
       "notes": "Add a recovery affordance so a completed or skipped protocol step can be returned to pending without corrupting the run lifecycle. Concretely: (a) add a pure rule in ProtocolLifecycleRules (e.g. unresolveStep or setStepStatus to pending) that reverts a completed or skipped step's status to pending and clears its completedAt/resolvedAt metadata; (b) reverting a step that is already pending is a no-op; (c) if reverting the step makes the run no longer have all-resolved steps, reopen the run by clearing run.completedAt and (if applicable) run.status back to .active; (d) reverting one step must not disturb other resolved steps. HomeStore exposes a wrapper (e.g. revertStep(runID:stepID:)) that calls the rule and persists. HomeView exposes a clear UI action on completed/skipped steps such as a swipe-action or context-menu item labeled 'Mark Pending'. Update docs/product/domains/home.md Protocol Run Contract to state that step resolution is reversible and that reverting the final resolved step reopens the run by clearing completedAt; preserve the existing rules that resolving an already-resolved step is a no-op, that runs do not auto-complete or auto-abandon, and that abandoning remains an explicit user action. Add focused ProtocolLifecycleRulesTests for the revert state transitions (pending->pending no-op, completed->pending, skipped->pending, last-step-revert reopens run, mid-run revert leaves run active) and HomeStoreTests for the persisted wrapper. Out of scope: bulk revert across multiple steps, undo of an explicit run abandon, audit/history log of revert events, UI animation polish. proof_level should land at domain-tested unless screenshot/UI proof is explicitly captured."
     },
     {
+      "slice_id": "home-protocol-archive",
+      "title": "Archive protocol templates without deleting them",
+      "status": "queued",
+      "priority": 143,
+      "domain": "home",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/home.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id home-protocol-archive",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Add archived state to HouseholdProtocol so users can hide protocol templates without deleting them. Concretely: (a) add `isArchived: Bool` (default false) to HouseholdProtocol with a defaulted Codable init/decoder so legacy data without the field decodes as not archived; (b) HomeStore exposes archiveProtocol(id:) and unarchiveProtocol(id:) wrappers that toggle the flag and persist; (c) HomeView's active protocol list filters out archived templates by default and exposes Archive in the protocol detail/edit menu; (d) provide a path to view and restore archived protocols (an 'Archived' section that appears only when at least one archived template exists is fine; a global toggle to show archived templates is also acceptable). Lifecycle rules (record in docs/product/domains/home.md): archiving a protocol does NOT delete the template, its steps, or its schedule metadata; existing runs and run history remain intact; archived templates may NOT start NEW runs; ANY pre-existing active run continues until normal terminal state (completed or abandoned); when home-protocol-schedule-notifications lands, archived templates must not produce notification candidates. Add HomeStoreTests for the archive/unarchive cycle, legacy decode (protocols without isArchived field decode as not archived), the new-run block when archived (canStartRun or equivalent rejection), and that an existing active run on a now-archived protocol continues to terminate normally. Out of scope: bulk archive, time-based auto-archive, archive state on runs themselves, archive state on tasks (HomeTask already has its own management actions), per-protocol archive reason or note, archive of Write or Career records. proof_level should land at domain-tested unless screenshot/UI proof is explicitly captured."
+    },
+    {
       "slice_id": "reorderable-list-coverage-triage",
       "title": "Triage which Owlory lists should support user reorder",
       "status": "queued",
