@@ -1037,7 +1037,7 @@
     {
       "slice_id": "home-protocol-schedule-stale-treatment",
       "title": "Add stale/overdue treatment for scheduled Home protocol templates",
-      "status": "queued",
+      "status": "done",
       "priority": 160,
       "domain": "home",
       "allowed_paths": [

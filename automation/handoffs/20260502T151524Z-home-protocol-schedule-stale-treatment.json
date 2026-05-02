@@ -1,0 +1,64 @@
+{
+  "slice_id": "home-protocol-schedule-stale-treatment",
+  "status": "done",
+  "summary": "Added run-aware stale/overdue classification for Home protocol templates. ProtocolScheduleRules now exposes ScheduleStatus (upcoming, active, satisfied, overdue) and a run-aware summary; HomeStore exposes scheduleStatus(for:) and scheduleSummary(for:) helpers that filter runs by protocolID and read the store's clock; HomeView uses the new summary and tints the label warning-orange only when status=overdue. A passed window now classifies as satisfied when at least one run for the same protocol was started on or after the window's start day, and as overdue only when no such run exists. No run lifecycle is changed: schedules never auto-start, auto-complete, or auto-abandon. Today Continue admission is unchanged; today.md and TodayContinueSourceComposer were not touched.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/151524-home-protocol-schedule-stale-treatment.md",
+    "automation/handoffs/20260502T151524Z-home-protocol-schedule-stale-treatment.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/ProtocolScheduleRulesTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-protocol-schedule-stale-treatment",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check",
+    "ProtocolScheduleRulesTests added 8 new cases covering upcoming/active/overdue classification, run-during-window satisfies, run-after-window-start satisfies, old-run-only stays overdue, and run-aware summary text branches.",
+    "HomeStoreTests added 5 new cases covering nil-for-unscheduled, overdue when no run exists, satisfied when run started during window, filtering by protocolID, and overdue when only old runs exist."
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Schedule windows now produce Home-owned stale/overdue meaning. The deferred follow-ups remain explicitly out of scope for this slice and should be classified deliberately if pursued: Today projection for scheduled templates, every-N-days/weekly cadence, scheduled-by-default for Write to Protocol promotion, richer Home schedule editing UX.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T15:15:24Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol schedule windows: stale and overdue treatment",
+      "before": "ProtocolScheduleRules.summary classified passed windows as `.overdue` purely from the schedule's date range and `now`, regardless of whether a run had been started during or after the window. That meant a protocol template the user had actually engaged with would still be labeled `Today window passed` after the window date passed. The Schedule Windows section of home.md noted that schedule windows did not yet drive stale or overdue prioritization beyond labels.",
+      "after": "ProtocolScheduleRules now exposes `ScheduleStatus` (upcoming, active, satisfied, overdue) and a run-aware `summary(for:runs:now:calendar:) -> ScheduleSummary?`. A passed window classifies as `satisfied` when any provided run's `createdAt` day is on or after the window's start day, and as `overdue` only when no such run exists. HomeStore filters runs by `protocolID` so callers do not have to. HomeView's protocol-row label uses `store.scheduleSummary(for:)` and tints the caption orange only for `.overdue`. The existing date-only API (`windowState(for:now:calendar:)`, `summary(for:now:calendar:) -> Summary?`) is unchanged, so existing tests and edit-screen previews still pass. home.md documents the new classification and explicitly states this is Home schedule state, not Today admission.",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today",
+        "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift (ScheduleStatus, scheduleStatus, run-aware summary, runStarted helper)",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift (scheduleStatus(for:), scheduleSummary(for:))",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift:247 (protocolLabel uses store.scheduleSummary)",
+        "owlory_xcode/OwloryCoreTests/ProtocolScheduleRulesTests.swift (8 new test cases)",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift (5 new test cases)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Classification is day-resolution. A run started a few hours before midnight on the day before the window opens would be classified by `startOfDay` as outside the window. That matches how the existing window itself is anchored (start/end stored at startOfDay), so the rule is internally consistent, but callers crossing time zones should pass an explicit calendar to keep behavior deterministic.",
+    "Run-aware summary text reuses the upcoming/active label when a schedule is `.satisfied`. The user may see `Scheduled for today` on a protocol whose window is in the past because a run was started during it; that is intentional (no nag) but could be tightened later to a distinct positive label like `Today window completed` once a UX pattern is chosen.",
+    "There is no UI proof yet for the new orange `.overdue` tint at large Dynamic Type or under reduced-motion/accessibility settings. Add screenshot or running-app proof in a follow-up if Home protocol overdue treatment becomes a release-gate feature.",
+    "The new HomeStore helpers default to `Calendar.current` and read `clock.now` internally. Callers in tests can inject their own `Calendar` and seed the store via `FixedClock`, but production callers in HomeView will follow the device's calendar; that is the same pattern as the existing date-only summary call, but worth flagging if multi-calendar behavior is later required."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

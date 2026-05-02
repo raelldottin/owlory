@@ -45,6 +45,23 @@ enum ProtocolScheduleRules {
         let state: WindowState
     }
 
+    /// Run-aware classification of a schedule. `.overdue` requires that the
+    /// window has passed and no run was started on or after the window's start
+    /// day; if a run was started during or after the window, the schedule is
+    /// `.satisfied` instead. This is Home schedule state only — it does not
+    /// drive Today Continue admission or any run lifecycle.
+    enum ScheduleStatus: Equatable {
+        case upcoming
+        case active
+        case satisfied
+        case overdue
+    }
+
+    struct ScheduleSummary: Equatable {
+        let text: String
+        let status: ScheduleStatus
+    }
+
     static func draft(
         byApplying preset: ProtocolSchedulePreset?,
         to draft: Draft,
@@ -154,6 +171,77 @@ enum ProtocolScheduleRules {
             )
             let text = state == .overdue ? "Window passed - \(rangeLabel)" : "Scheduled for \(rangeLabel)"
             return Summary(text: text, state: state)
+        }
+    }
+
+    /// Run-aware schedule classification. `runs` should already be filtered to
+    /// runs of the protocol that owns this schedule; the rule does not look at
+    /// `protocolID` here. A run satisfies a passed window if its `createdAt`
+    /// day is on or after the window's start day (windows are day-resolution).
+    /// Schedules never auto-start, auto-complete, or auto-abandon a run; this
+    /// function only classifies.
+    static func scheduleStatus(
+        for schedule: HouseholdProtocolSchedule,
+        runs: [ProtocolRun],
+        now: Date,
+        calendar: Calendar
+    ) -> ScheduleStatus {
+        let state = windowState(for: schedule, now: now, calendar: calendar)
+        switch state {
+        case .upcoming:
+            return .upcoming
+        case .active:
+            return .active
+        case .overdue:
+            return runStarted(
+                onOrAfter: schedule.startDate,
+                in: runs,
+                calendar: calendar
+            ) ? .satisfied : .overdue
+        }
+    }
+
+    /// Run-aware label for HomeView. `.satisfied` reuses the active-window
+    /// text so the surface does not nag about a passed window when the user
+    /// already engaged; only `.overdue` carries the "window passed" warning.
+    static func summary(
+        for schedule: HouseholdProtocolSchedule?,
+        runs: [ProtocolRun],
+        now: Date,
+        calendar: Calendar
+    ) -> ScheduleSummary? {
+        guard let schedule else {
+            return nil
+        }
+
+        let status = scheduleStatus(for: schedule, runs: runs, now: now, calendar: calendar)
+        let text: String
+        switch schedule.preset {
+        case .today:
+            text = status == .overdue ? "Today window passed" : "Scheduled for today"
+        case .weekend:
+            text = status == .overdue ? "Weekend window passed" : "Scheduled for this weekend"
+        case .thisWeek:
+            text = status == .overdue ? "This week window passed" : "Scheduled for this week"
+        case .custom:
+            let rangeLabel = formattedRangeLabel(
+                start: schedule.startDate,
+                end: schedule.endDate,
+                calendar: calendar
+            )
+            text = status == .overdue ? "Window passed - \(rangeLabel)" : "Scheduled for \(rangeLabel)"
+        }
+        return ScheduleSummary(text: text, status: status)
+    }
+
+    private static func runStarted(
+        onOrAfter date: Date,
+        in runs: [ProtocolRun],
+        calendar: Calendar
+    ) -> Bool {
+        let threshold = calendar.startOfDay(for: date)
+        return runs.contains { run in
+            calendar.startOfDay(for: run.createdAt) >= threshold
         }
     }
 

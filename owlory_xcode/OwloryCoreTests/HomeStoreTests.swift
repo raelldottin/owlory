@@ -892,4 +892,209 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(store.protocols[0].steps, ["Clear sink", "Wipe counters"])
         XCTAssertEqual(store.protocols[0].title, "Kitchen Reset")
     }
+
+    // MARK: - Schedule Status
+
+    private var scheduleCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        calendar.firstWeekday = 1
+        return calendar
+    }
+
+    private func scheduledProtocol(
+        in store: HomeStore,
+        title: String,
+        schedule: HouseholdProtocolSchedule
+    ) -> HouseholdProtocol {
+        store.addProtocol(title: title, steps: ["Step one"], schedule: schedule)
+        return store.protocols.first { $0.title == title }!
+    }
+
+    func testScheduleStatusReturnsNilForUnscheduledTemplate() {
+        let now = makeDate("2026-05-02T12:00:00Z")
+        let store = makeStore(now: now)
+        store.addProtocol(title: "No schedule", steps: ["Step one"])
+        let template = store.protocols[0]
+
+        XCTAssertNil(store.scheduleStatus(for: template, calendar: scheduleCalendar))
+    }
+
+    func testScheduleStatusReturnsOverdueWhenWindowPassedAndNoRunStarted() {
+        let now = makeDate("2026-05-03T12:00:00Z")
+        let store = makeStore(now: now)
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+        let template = scheduledProtocol(in: store, title: "Morning routine", schedule: schedule)
+
+        XCTAssertEqual(
+            store.scheduleStatus(for: template, calendar: scheduleCalendar),
+            .overdue
+        )
+    }
+
+    func testScheduleStatusReturnsSatisfiedWhenRunStartedDuringWindow() {
+        let runDay = makeDate("2026-05-01T08:00:00Z")
+        let assertDay = makeDate("2026-05-03T12:00:00Z")
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+        let taskRepo = InMemoryItemListRepository<HomeTask>()
+        let protoRepo = InMemoryItemListRepository<HouseholdProtocol>()
+        let runRepo = InMemoryItemListRepository<ProtocolRun>()
+
+        // Day 1: create the protocol with the schedule and start a run during
+        // the window. A new store on a later day should see the run.
+        let day1Store = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: runDay)
+        )
+        day1Store.addProtocol(title: "Morning routine", steps: ["Step one"], schedule: schedule)
+        _ = day1Store.startRun(protocolID: day1Store.protocols[0].id)
+
+        let assertStore = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: assertDay)
+        )
+        let template = assertStore.protocols.first { $0.title == "Morning routine" }!
+
+        XCTAssertEqual(
+            assertStore.scheduleStatus(for: template, calendar: scheduleCalendar),
+            .satisfied
+        )
+    }
+
+    func testScheduleStatusFiltersRunsByProtocolID() {
+        let runDay = makeDate("2026-05-01T08:00:00Z")
+        let assertDay = makeDate("2026-05-03T12:00:00Z")
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+        let taskRepo = InMemoryItemListRepository<HomeTask>()
+        let protoRepo = InMemoryItemListRepository<HouseholdProtocol>()
+        let runRepo = InMemoryItemListRepository<ProtocolRun>()
+
+        // Day 1: create both protocols, start a run for the OTHER protocol
+        // during the target's window.
+        let day1Store = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: runDay)
+        )
+        day1Store.addProtocol(title: "Target", steps: ["Step one"], schedule: schedule)
+        day1Store.addProtocol(title: "Other", steps: ["Step one"])
+        let other = day1Store.protocols.first { $0.title == "Other" }!
+        _ = day1Store.startRun(protocolID: other.id)
+
+        let assertStore = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: assertDay)
+        )
+        let target = assertStore.protocols.first { $0.title == "Target" }!
+
+        XCTAssertEqual(
+            assertStore.scheduleStatus(for: target, calendar: scheduleCalendar),
+            .overdue
+        )
+    }
+
+    func testScheduleStatusOverdueIgnoresRunsStartedBeforeWindow() {
+        let oldRunDay = makeDate("2026-04-25T08:00:00Z")
+        let assertDay = makeDate("2026-05-03T12:00:00Z")
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+        let taskRepo = InMemoryItemListRepository<HomeTask>()
+        let protoRepo = InMemoryItemListRepository<HouseholdProtocol>()
+        let runRepo = InMemoryItemListRepository<ProtocolRun>()
+
+        // Old run from before the window should not satisfy the schedule.
+        let day1Store = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: oldRunDay)
+        )
+        day1Store.addProtocol(title: "Morning routine", steps: ["Step one"], schedule: schedule)
+        _ = day1Store.startRun(protocolID: day1Store.protocols[0].id)
+
+        let assertStore = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: assertDay)
+        )
+        let template = assertStore.protocols.first { $0.title == "Morning routine" }!
+
+        XCTAssertEqual(
+            assertStore.scheduleStatus(for: template, calendar: scheduleCalendar),
+            .overdue
+        )
+    }
+
+    func testScheduleSummarySuppressesPassedTextWhenSatisfied() {
+        let now = makeDate("2026-05-03T12:00:00Z")
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: makeDate("2026-05-01T08:00:00Z")
+            )
+        ]
+
+        let summary = ProtocolScheduleRules.summary(
+            for: schedule,
+            runs: runs,
+            now: now,
+            calendar: scheduleCalendar
+        )
+
+        XCTAssertEqual(
+            summary,
+            ProtocolScheduleRules.ScheduleSummary(text: "Scheduled for today", status: .satisfied)
+        )
+    }
+
+    func testScheduleSummaryReportsPassedTextWhenOverdue() {
+        let now = makeDate("2026-05-03T12:00:00Z")
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: makeDate("2026-05-01T00:00:00Z"),
+            endDate: makeDate("2026-05-01T00:00:00Z")
+        )
+
+        let summary = ProtocolScheduleRules.summary(
+            for: schedule,
+            runs: [],
+            now: now,
+            calendar: scheduleCalendar
+        )
+
+        XCTAssertEqual(
+            summary,
+            ProtocolScheduleRules.ScheduleSummary(text: "Today window passed", status: .overdue)
+        )
+    }
 }

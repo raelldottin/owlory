@@ -82,9 +82,9 @@ Missing/deferred: Home projects remain `Contract only`; protocol schedule window
 
 ## Protocol Schedule Windows
 
-Implementation status: `Partially implemented` for template-owned schedule windows with Today, Weekend, This Week, and Custom ranges.
-Proof level: Home domain tests cover deterministic window anchoring, summary state, add/update persistence, and legacy protocol decode compatibility.
-Missing/deferred: schedule windows do not yet drive Today projection, stale treatment, or overdue prioritization beyond Home template labels.
+Implementation status: `Partially implemented` for template-owned schedule windows with Today, Weekend, This Week, and Custom ranges, plus run-aware stale/overdue treatment in Home.
+Proof level: Home domain tests cover deterministic window anchoring, summary state, add/update persistence, legacy protocol decode compatibility, and run-aware schedule classification (`upcoming`, `active`, `satisfied`, `overdue`).
+Missing/deferred: schedule windows still do not drive Today projection or admission. Today Continue admission for protocol templates remains unchanged: a template without an active run is not admitted regardless of schedule status.
 
 - Protocol schedule windows are template metadata stored on `HouseholdProtocol`.
 - Windows persist explicit start/end days plus the preset that created them.
@@ -92,6 +92,9 @@ Missing/deferred: schedule windows do not yet drive Today projection, stale trea
 - Windows may affect labels, stale treatment, or overdue treatment only. A window ending must not auto-abandon or auto-complete a run.
 - Starting, resuming, completing, or abandoning a run must not silently clear or rewrite the protocol template's schedule window.
 - Editing a protocol may change the template window without mutating existing runs created from that template.
+- Schedule classification is run-aware. `ProtocolScheduleRules.scheduleStatus(for:runs:now:calendar:)` returns one of `upcoming`, `active`, `satisfied`, or `overdue`. A passed window classifies as `satisfied` when at least one run for the same protocol was started on or after the window's start day, and as `overdue` only when no such run exists. Old runs from before the window do not satisfy a later schedule.
+- HomeView protocol rows surface this classification through `HomeStore.scheduleSummary(for:)` so an `overdue` window shows the existing "window passed" text in a warning treatment, while a `satisfied` schedule reuses the upcoming/active label without nagging the user.
+- Schedule classification is Home schedule state only. It must not change Today Continue admission, must not auto-start, auto-complete, auto-abandon, or auto-admit a run, and must not be used as input to `TodayContinueSourceComposer`. A `satisfied` or `overdue` classification is informational about the template; the user may still start a fresh run, edit the schedule, or remove the schedule entirely.
 
 ## Future Projects
 

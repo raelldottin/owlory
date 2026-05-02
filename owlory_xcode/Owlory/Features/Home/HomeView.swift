@@ -250,14 +250,10 @@ struct HomeView: View {
                 .foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 2) {
                 Text(proto.title)
-                if let summary = ProtocolScheduleRules.summary(
-                    for: proto.schedule,
-                    now: Date(),
-                    calendar: .current
-                ) {
+                if let summary = store.scheduleSummary(for: proto) {
                     Text(summary.text)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(summary.status == .overdue ? .orange : .secondary)
                 }
             }
         }

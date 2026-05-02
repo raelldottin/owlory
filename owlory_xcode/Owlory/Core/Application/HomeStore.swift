@@ -449,4 +449,39 @@ final class HomeStore: OwloryObservableObject {
         }
     }
 
+    // MARK: - Schedule Status
+
+    /// Run-aware schedule classification for a Home protocol template.
+    /// Filters runs by `protocolID` so callers do not have to. This is Home
+    /// schedule state only; it does not change Today Continue admission or
+    /// any run lifecycle.
+    func scheduleStatus(
+        for template: HouseholdProtocol,
+        calendar: Calendar = .current
+    ) -> ProtocolScheduleRules.ScheduleStatus? {
+        guard let schedule = template.schedule else { return nil }
+        let templateRuns = runs.filter { $0.protocolID == template.id }
+        return ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: templateRuns,
+            now: clock.now,
+            calendar: calendar
+        )
+    }
+
+    /// Run-aware schedule label for HomeView protocol rows.
+    func scheduleSummary(
+        for template: HouseholdProtocol,
+        calendar: Calendar = .current
+    ) -> ProtocolScheduleRules.ScheduleSummary? {
+        guard let schedule = template.schedule else { return nil }
+        let templateRuns = runs.filter { $0.protocolID == template.id }
+        return ProtocolScheduleRules.summary(
+            for: schedule,
+            runs: templateRuns,
+            now: clock.now,
+            calendar: calendar
+        )
+    }
+
 }

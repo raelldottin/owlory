@@ -135,6 +135,180 @@ final class ProtocolScheduleRulesTests: XCTestCase {
         )
     }
 
+    // MARK: - Run-aware schedule status
+
+    func testScheduleStatusReturnsUpcomingForFutureWindow() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-05T00:00:00Z"),
+            endDate: date("2026-05-05T00:00:00Z")
+        )
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: [],
+            now: date("2026-05-01T12:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .upcoming)
+    }
+
+    func testScheduleStatusReturnsActiveWhenInsideWindow() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .thisWeek,
+            startDate: date("2026-05-04T00:00:00Z"),
+            endDate: date("2026-05-09T00:00:00Z")
+        )
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: [],
+            now: date("2026-05-06T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .active)
+    }
+
+    func testScheduleStatusReturnsOverdueWhenWindowPassedAndRunsEmpty() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: [],
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .overdue)
+    }
+
+    func testScheduleStatusReturnsSatisfiedWhenRunStartedDuringWindow() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: date("2026-05-01T08:00:00Z")
+            )
+        ]
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .satisfied)
+    }
+
+    func testScheduleStatusReturnsSatisfiedWhenRunStartedAfterWindowStart() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        // Run started after the window's end day but still after window start.
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: date("2026-05-02T08:00:00Z")
+            )
+        ]
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .satisfied)
+    }
+
+    func testScheduleStatusReturnsOverdueWhenOnlyOldRunsExist() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        // Run from before the schedule's window must not count as satisfying.
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: date("2026-04-25T08:00:00Z")
+            )
+        ]
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .overdue)
+    }
+
+    func testRunAwareSummaryReusesScheduledTextWhenSatisfied() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: date("2026-05-01T08:00:00Z")
+            )
+        ]
+
+        let summary = ProtocolScheduleRules.summary(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(
+            summary,
+            ProtocolScheduleRules.ScheduleSummary(text: "Scheduled for today", status: .satisfied)
+        )
+    }
+
+    func testRunAwareSummaryReportsPassedTextWhenOverdue() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+
+        let summary = ProtocolScheduleRules.summary(
+            for: schedule,
+            runs: [],
+            now: date("2026-05-03T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(
+            summary,
+            ProtocolScheduleRules.ScheduleSummary(text: "Today window passed", status: .overdue)
+        )
+    }
+
     private func date(_ value: String) -> Date {
         formatter.date(from: value)!
     }
