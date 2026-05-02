@@ -21,12 +21,37 @@
     "make automation-check"
   ],
   "validations_failed": [],
-  "risks": [
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-30T08:43:17Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for train-completed-sessions-history",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id train-completed-sessions-history",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=train",
+        "git diff --check",
+        "make automation-check"
+      ]
+    }
+  ],
+  "residual_risks": [
     "The behavior is domain-tested but not covered by screenshot/UI regression proof.",
     "Today-domain summaries still intentionally use todaySessions, so completed training sessions can remain counted in Today while moving to History in Train."
   ],
-  "recommended_next_slice": "",
-  "recommended_next_reason": "",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-30T08:43:17Z"
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

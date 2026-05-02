@@ -13,11 +13,34 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
-    "This slice documented and verified the existing presentation path; it did not add a UI snapshot test for the Today header."
-  ],
   "recommended_next_slice": "",
   "recommended_next_reason": "No further pre-classified adjacent slice remains in the supervisor queue.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-25T17:55:14Z"
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-25T17:55:14Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for today-focus-balance-nudge-presentation-audit",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "swiftc -typecheck owlory_xcode/Owlory/Core/Domain/DomainModels.swift owlory_xcode/Owlory/Core/Domain/PatternTypes.swift owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice documented and verified the existing presentation path; it did not add a UI snapshot test for the Today header."
+  ],
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

@@ -25,11 +25,35 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
-    "The markers classify current proof honestly, but they do not implement the deferred Write promotion, release-readiness, UI-proof, or discoverability slices."
-  ],
   "recommended_next_slice": "write-promotion-origin-contract",
   "recommended_next_reason": "The next adjacent slice should define Write promotion origin behavior before destination-specific promotion flows are implemented.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-29T11:37:00Z"
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-29T11:37:00Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for contract-status-markers",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id contract-status-markers",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The markers classify current proof honestly, but they do not implement the deferred Write promotion, release-readiness, UI-proof, or discoverability slices."
+  ],
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

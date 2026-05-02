@@ -18,11 +18,36 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
-    "This slice intentionally defines the origin contract only; persisted origin metadata and destination-specific promotion flows remain future implementation work."
-  ],
   "recommended_next_slice": "",
   "recommended_next_reason": "Stop before implementation slices; the next queued work should be added deliberately when choosing Add to Today or another destination flow.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-29T11:57:00Z"
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-29T11:57:00Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for write-promotion-origin-contract",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id write-promotion-origin-contract",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=write",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice intentionally defines the origin contract only; persisted origin metadata and destination-specific promotion flows remain future implementation work."
+  ],
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

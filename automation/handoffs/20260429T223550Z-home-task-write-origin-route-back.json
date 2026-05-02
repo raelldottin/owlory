@@ -25,12 +25,38 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "risks": [
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Stop before protocol promotion; protocol promotion should be its own slice because it touches Home protocol lifecycle and Today Continue projection.",
+  "dirty_paths_outside_scope": [
+    "legacy-unknown"
+  ],
+  "timestamp": "2026-04-29T22:40:04Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for home-task-write-origin-route-back",
+      "before": "Legacy handoff predated explicit proof, residual risk, repo cleanliness, and mirror status fields.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; product history and proof claims were not upgraded beyond the evidence.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id home-task-write-origin-route-back",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=write",
+        "make automation-check",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
     "Route-back is implemented through app wiring and domain-tested source availability classification, but there is no screenshot/UI regression proof for the Home task detail affordance.",
     "Write to protocol remains explicitly future work and was not touched."
   ],
-  "recommended_next_slice": "",
-  "recommended_next_reason": "Stop before protocol promotion; protocol promotion should be its own slice because it touches Home protocol lifecycle and Today Continue projection.",
-  "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-29T22:40:04Z"
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

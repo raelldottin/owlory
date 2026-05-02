@@ -25,14 +25,30 @@
     "git diff --check"
   ],
   "validations_failed": [],
-  "proof_level": "domain-tested",
-  "missing_proof_levels": [],
-  "risks": [
-    "This slice intentionally does not add the broader handoff evidence fields such as contract_status_changes, repo_clean_status, or git_mirror_status; that belongs in the separate owlory-handoff-evidence-writer slice.",
-    "Historical handoffs created before this schema change are preserved as read-only context with legacy-unknown proof until explicitly backfilled."
-  ],
   "recommended_next_slice": "",
   "recommended_next_reason": "",
   "dirty_paths_outside_scope": [],
-  "timestamp": "2026-04-30T08:57:40Z"
+  "timestamp": "2026-04-30T08:57:40Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff schema backfill for harness-proof-level-ladder",
+      "before": "Legacy handoff already carried proof_level and missing_proof_levels but predated the broader evidence fields (contract_status_changes, residual_risks, repo_clean_status, git_mirror_status) added by the later owlory-handoff-evidence-writer slice.",
+      "after": "Backfilled only from the existing handoff summary, validation trail, and recorded risks; the original proof_level, missing_proof_levels, and dirty_paths_outside_scope set by this slice's author were preserved verbatim.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id harness-proof-level-ladder",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m py_compile automation/supervisor/policy.py automation/supervisor/run_next.py automation/context/build_context.py automation/tests/test_harness.py",
+        "make automation-check",
+        "git diff --check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice intentionally does not add the broader handoff evidence fields such as contract_status_changes, repo_clean_status, or git_mirror_status; that belongs in the separate owlory-handoff-evidence-writer slice.",
+    "Historical handoffs created before this schema change are preserved as read-only context with legacy-unknown proof until explicitly backfilled."
+  ],
+  "repo_clean_status": "unknown",
+  "git_mirror_status": "not-checked"
 }

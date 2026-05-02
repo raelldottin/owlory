@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-02
+
+- [legacy-handoff-proof-field-backfill-batch-2](sessions/2026-05-02/001733-legacy-handoff-proof-field-backfill-batch-2.md)
+
 ## 2026-04-30
 
 - [legacy-handoff-proof-field-backfill](sessions/2026-04-30/205431-legacy-handoff-proof-field-backfill.md)

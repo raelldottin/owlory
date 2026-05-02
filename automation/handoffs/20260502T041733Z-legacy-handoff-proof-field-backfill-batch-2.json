@@ -1,0 +1,60 @@
+{
+  "slice_id": "legacy-handoff-proof-field-backfill-batch-2",
+  "status": "done",
+  "summary": "Finished conservative proof-era metadata classification for the fifteen legacy handoff records that batch-1 deferred. Backfilled proof_level, missing_proof_levels, contract_status_changes, residual_risks, repo_clean_status, git_mirror_status, and dirty_paths_outside_scope only from the original handoff and session evidence; preserved legacy-unknown semantics for repo cleanliness and mirror state where the older trail did not record them.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/001733-legacy-handoff-proof-field-backfill-batch-2.md",
+    "automation/handoffs/20260423T052834Z-patterns-suppress-write-domain-balance-nudge.json",
+    "automation/handoffs/20260423T054151Z-patterns-focus-balance-nudge-copy.json",
+    "automation/handoffs/20260425T175514Z-today-focus-balance-nudge-presentation-audit.json",
+    "automation/handoffs/20260428T121301Z-today-continue-owns-focus-surface.json",
+    "automation/handoffs/20260428T122104Z-today-continue-focus-badge-dynamic-type-legibility.json",
+    "automation/handoffs/20260428T123713Z-patterns-weekly-digest-versioned-stale-refresh.json",
+    "automation/handoffs/20260429T113700Z-contract-status-markers.json",
+    "automation/handoffs/20260429T115700Z-write-promotion-origin-contract.json",
+    "automation/handoffs/20260429T125600Z-write-promote-to-today.json",
+    "automation/handoffs/20260429T172410Z-write-promote-to-task.json",
+    "automation/handoffs/20260429T223550Z-home-task-write-origin-route-back.json",
+    "automation/handoffs/20260429T234318Z-document-local-data-channel-boundaries.json",
+    "automation/handoffs/20260430T084103Z-train-completed-sessions-history.json",
+    "automation/handoffs/20260430T084540Z-write-note-detail-management-actions.json",
+    "automation/handoffs/20260430T085740Z-harness-proof-level-ladder.json",
+    "automation/handoffs/20260502T041733Z-legacy-handoff-proof-field-backfill-batch-2.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id legacy-handoff-proof-field-backfill-batch-2",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No further legacy handoffs remain unclassified; proof-era evidence fields are now uniform across all automation handoff records.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T04:17:33Z",
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Legacy handoff proof-field backfill (batch 2)",
+      "before": "Fifteen legacy handoffs still lacked proof-era evidence fields after batch-1: fourteen predated proof_level entirely, and one (harness-proof-level-ladder) carried proof_level and missing_proof_levels but predated the broader evidence fields added in the later owlory-handoff-evidence-writer slice.",
+      "after": "All fifteen records now carry the full proof-era field set. Classifications were drawn only from each slice's own summary, validations_passed list, and recorded risks; proof claims were not upgraded based on later unrelated work. The harness-proof-level-ladder author's existing proof_level, missing_proof_levels, and dirty_paths_outside_scope were preserved verbatim.",
+      "proof": [
+        "python3 automation/context/build_context.py --slice-id legacy-handoff-proof-field-backfill-batch-2",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Backfilled repo_clean_status is uniformly unknown and git_mirror_status uniformly not-checked because older handoffs did not assert final workspace or upstream state; that uncertainty is honest but cannot be retroactively recovered.",
+    "doc-only and build-tested classifications for slices that ran regression-guard tests against unchanged code may look conservative compared with the validations_passed list; the proof_level reflects the slice's deliverable, not the codebase-wide test run.",
+    "harness-proof-level-ladder retains its original residual_risks text noting the broader evidence fields were not added in that slice; that historical risk language is now technically resolved by this batch but was preserved verbatim per the evidence-not-confidence rule."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}
