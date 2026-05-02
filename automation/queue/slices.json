@@ -1001,6 +1001,36 @@
       ],
       "max_files_changed": 20,
       "notes": "Conservative second pass over the remaining legacy handoff records that batch-1 deferred. Backfill proof-era fields only from the original handoff and session evidence; preserve legacy-unknown semantics where repo cleanliness and mirror state were not recorded; do not upgrade proof claims based on later unrelated work."
+    },
+    {
+      "slice_id": "write-promotion-device-verification",
+      "title": "Verify Write to Home task source-note return flow on a real device",
+      "status": "queued",
+      "priority": 250,
+      "domain": "write",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/write.md",
+        "docs/product/domains/home.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id write-promotion-device-verification",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-running-app-smoke",
+        "write-promotion-screenshot-proof"
+      ],
+      "max_files_changed": 10,
+      "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. Depends on owlory-running-app-smoke because the current checkout cannot produce an installable build artifact until that blocker is cleared."
     }
   ]
 }
