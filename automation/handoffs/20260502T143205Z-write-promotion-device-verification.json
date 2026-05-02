@@ -1,0 +1,66 @@
+{
+  "slice_id": "write-promotion-device-verification",
+  "status": "done",
+  "summary": "Reran write-promotion-device-verification after the worktree-aware build-info stamping fix landed. Built Owlory from a clean worktree at commit c35a1d666e76, installed it on Raell Dottin's physical iPhone (00008130-000A090910C1401C, iOS 26.3.1), confirmed the in-app Build Info screen reported Commit c35a1d666e76 / Branch claude/frosty-greider-e0a33c / Built 2026-05-02T14:02:48Z / Configuration Debug, and exercised Write -> Turn into Task -> Home task detail -> View source note end-to-end. Six device screenshots captured the flow and were committed under automation/proofs/write-promotion-device-verification/.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/143205-write-promotion-device-verification.md",
+    "automation/handoffs/20260502T143205Z-write-promotion-device-verification.json",
+    "automation/proofs/write-promotion-device-verification/01-build-info.png",
+    "automation/proofs/write-promotion-device-verification/02-write-note-created.png",
+    "automation/proofs/write-promotion-device-verification/03-turn-into-task-result.png",
+    "automation/proofs/write-promotion-device-verification/04-home-task-detail.png",
+    "automation/proofs/write-promotion-device-verification/05-view-source-note.png",
+    "automation/proofs/write-promotion-device-verification/06-returned-write-note.png",
+    "automation/proofs/write-promotion-device-verification/README.md",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promotion-device-verification",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS,id=00008130-000A090910C1401C' -derivedDataPath /tmp/owlory-device-verification/DerivedData -allowProvisioningUpdates (clean tree at c35a1d666e76)",
+    "xcrun devicectl device install app --device 00008130-000A090910C1401C /tmp/owlory-device-verification/DerivedData/Build/Products/Debug-iphoneos/Owlory.app (final install replaced an interim Xcode-from-main install with installationURL 41F48822-D7A9-4FC2-AC87-79D3C056A059)",
+    "Installed Info.plist showed GitCommit=c35a1d666e76, GitCommitFull=c35a1d666e76b051806704da8a99b462535572dd, GitBranch=claude/frosty-greider-e0a33c, GitTag=c35a1d6, GitStatus=clean, BuildDate=2026-05-02T14:02:48Z, BuildConfiguration=Debug, CFBundleIdentifier=com.raelldottin.owlory.",
+    "On-device Build Info screen matched the installed bundle exactly (screenshot 01).",
+    "On-device Write tab created the note `device verification probe` (screenshot 02).",
+    "Turn into Task produced a Standalone Task `device verification probe` in Home (screenshot 03).",
+    "Home task detail (Edit Task sheet) exposed the View source note link (screenshot 04).",
+    "Tapping View source note returned to the original Write note in source-note stage (screenshots 05 and 06)."
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "today-continue-write-task-projection-triage",
+  "recommended_next_reason": "Device pass surfaced that Standalone Tasks promoted from Write notes do not appear in Today's Continue projection. That is outside this slice's route-back contract, but it is a real product question that should be triaged: is it intentional (Today only shows Focus and protocol/today-scoped tasks), or a missing carry-forward path? Triage the contract before queueing any change.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T14:32:05Z",
+  "proof_level": "device-verified",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Device-verified proof for Write to Home task source-note return flow",
+      "before": "First attempt was blocked because Tools/generate-build-info.sh did not recognize the worktree checkout and stamped GitCommit=no-git, leaving the installed bundle untraceable. The route-back flow had only screenshot-verified proof from the simulator.",
+      "after": "After tools-generate-build-info-worktree-fix landed, a clean rebuild from the worktree at c35a1d666e76 produced a properly stamped bundle. Installed it on the physical iPhone, verified the in-app Build Info screen matched the bundle exactly, and completed the Write -> Turn into Task -> Home task detail -> View source note flow end-to-end. proof_level raised from screenshot-verified to device-verified for this contract; testflight-verified remains missing because TestFlight was not used in this run.",
+      "proof": [
+        "automation/proofs/write-promotion-device-verification/01-build-info.png",
+        "automation/proofs/write-promotion-device-verification/02-write-note-created.png",
+        "automation/proofs/write-promotion-device-verification/03-turn-into-task-result.png",
+        "automation/proofs/write-promotion-device-verification/04-home-task-detail.png",
+        "automation/proofs/write-promotion-device-verification/05-view-source-note.png",
+        "automation/proofs/write-promotion-device-verification/06-returned-write-note.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Standalone Tasks promoted from Write notes do not appear in Today's Continue projection on this device pass. The route-back contract this slice covers worked end-to-end, but Today inclusion of Write-origin Standalone Tasks is a separate contract gap that this device run surfaced. Recorded for triage as today-continue-write-task-projection-triage; do not assume it is a regression until the intended contract is checked.",
+    "During the manual run an operator slip advanced the source note's Move/Stage controls one extra time (visible in screenshots 05 and 06 showing Stage=Source Note with Advance to Permanent Note still available). The slip did not break the route-back proof but is noted so the screenshots are not misread as a contract claim about Stage transitions.",
+    "Device branch identity: the installed bundle is stamped Branch=claude/frosty-greider-e0a33c (the worktree branch), while the same commit is also published as origin/main. The proof artifact is therefore tied to commit c35a1d666e76 either way, but readers should treat the branch label as worktree provenance rather than as a release-channel statement.",
+    "Mid-run, an Xcode UI Run from the unrelated main checkout (which had not been pulled past ba44c58) replaced the c35a1d666e76 install with a stale ba44c58 install. The replacement was caught by the in-app Build Info gate before any flow proof was claimed, then overwritten by reinstalling the worktree-built bundle. Future device proof runs should keep Xcode closed (or at least not run) on the main checkout while a worktree-built bundle is the proof artifact.",
+    "The device flow was driven manually; there is no XCUITest or scripted automation behind it, so the proof is a point-in-time capture rather than a repeatable run. Reproducing requires reinstalling the same commit's bundle and walking the captured steps."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

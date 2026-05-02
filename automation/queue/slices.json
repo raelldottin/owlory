@@ -1005,11 +1005,12 @@
     {
       "slice_id": "write-promotion-device-verification",
       "title": "Verify Write to Home task source-note return flow on a real device",
-      "status": "blocked",
+      "status": "done",
       "priority": 250,
       "domain": "write",
       "allowed_paths": [
         "automation/handoffs/",
+        "automation/proofs/",
         "automation/queue/slices.json",
         "docs/product/domains/write.md",
         "docs/product/domains/home.md",
@@ -1030,8 +1031,8 @@
         "write-promotion-screenshot-proof",
         "tools-generate-build-info-worktree-fix"
       ],
-      "max_files_changed": 10,
-      "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. First attempt blocked because Tools/generate-build-info.sh did not recognize the worktree checkout and stamped GitCommit=no-git, breaking source traceability; tools-generate-build-info-worktree-fix added as a precursor."
+      "max_files_changed": 12,
+      "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts under automation/proofs/<slice-id>/. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. First attempt blocked because Tools/generate-build-info.sh did not recognize the worktree checkout and stamped GitCommit=no-git, breaking source traceability; tools-generate-build-info-worktree-fix added as a precursor and that fix landed before this retry."
     },
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
