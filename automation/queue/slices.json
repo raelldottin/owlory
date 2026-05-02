@@ -1035,6 +1035,72 @@
       "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts under automation/proofs/<slice-id>/. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. First attempt blocked because Tools/generate-build-info.sh did not recognize the worktree checkout and stamped GitCommit=no-git, breaking source traceability; tools-generate-build-info-worktree-fix added as a precursor and that fix landed before this retry."
     },
     {
+      "slice_id": "home-protocol-schedule-ui-proof",
+      "title": "Capture screenshot proof for Home protocol schedule labels",
+      "status": "queued",
+      "priority": 158,
+      "domain": "home",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/home.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id home-protocol-schedule-ui-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "home-protocol-schedule-stale-treatment"
+      ],
+      "max_files_changed": 12,
+      "notes": "Proof-only slice: do not change app behavior. Build the worktree commit on simulator (or device), drive the Home tab to create protocols whose schedule status reaches each ScheduleStatus value (upcoming, active, satisfied, overdue), and capture durable screenshots under automation/proofs/home-protocol-schedule-ui-proof/. proof_level should land at screenshot-verified when the captures cover the full set; lower (running-app-smoke) is honest if only the launched-app state is provable. Do not mark device-verified unless an on-device pass is repeated; device-verified for the schedule labels can be a separate slice. Allowed paths exclude app source and test files; this slice writes proof artifacts and a small home.md proof-level update only."
+    },
+    {
+      "slice_id": "home-protocol-schedule-notifications",
+      "title": "Schedule local notifications from declared Home protocol windows",
+      "status": "queued",
+      "priority": 140,
+      "domain": "reminders",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/home.md",
+        "docs/product/domains/reminders.md",
+        "docs/runtime/observability.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+        "owlory_xcode/Owlory/Core/Application/ReminderScheduleTrace.swift",
+        "owlory_xcode/Owlory/Core/Domain/ReminderSchedulingRules.swift",
+        "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleNotificationRules.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/ReminderSchedulingRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/ProtocolScheduleNotificationRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id home-protocol-schedule-notifications",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=reminders",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "home-protocol-schedule-stale-treatment"
+      ],
+      "max_files_changed": 15,
+      "notes": "Declared-first only. Do NOT infer cadence from ProtocolRun history; that is a separate future slice. Add a pure planning layer in Core/Domain (e.g., ProtocolScheduleNotificationRules) that converts existing ProtocolScheduleRules.ScheduleStatus signals into plain ProtocolScheduleNotificationPlan values { protocolID, title, kind: windowOpening | overdue, fireDate, identifier }. The plan output must NOT contain UserNotifications types and Core/Domain must not import UserNotifications, UIKit, or SwiftUI notification APIs. Reminders/runtime owns delivery: extend ReminderSchedulingRules to merge protocol-schedule plans alongside the existing reminder plans, and let ReminderScheduler convert plans into UNNotificationRequest as it already does for the existing reminder plans. Notification kinds: window-opening when a schedule transitions upcoming -> active, and overdue after a defined grace period when status becomes .overdue. Starting a run for a protocol cancels stale notifications for that protocol's window; satisfied schedules do not notify. Deterministic identifier scheme per protocol/window/type so cancellation can find the request. Update home.md to state Home provides the schedule signal but does not own notification delivery; update reminders.md to claim notification delivery ownership for protocol schedule reminders; update docs/runtime/observability.md if reminder trace gains a new kind. Explicitly out of scope: derived cadence from run history, every-N-days/weekly schedule types, Today Continue projection for scheduled templates, remote push notifications, notification preference UI beyond authorization, TestFlight/device proof. proof_level should land at domain-tested unless notifications are actually exercised in the running app; do not claim higher (running-app-smoke, flow-verified, screenshot-verified, device-verified, testflight-verified all stay in missing_proof_levels until separately proven)."
+    },
+    {
       "slice_id": "home-protocol-schedule-stale-treatment",
       "title": "Add stale/overdue treatment for scheduled Home protocol templates",
       "status": "done",
