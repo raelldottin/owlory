@@ -1062,6 +1062,37 @@
       "notes": "Proof-only slice: do not change app behavior. Build the worktree commit on simulator (or device), drive the Home tab to create protocols whose schedule status reaches each ScheduleStatus value (upcoming, active, satisfied, overdue), and capture durable screenshots under automation/proofs/home-protocol-schedule-ui-proof/. proof_level should land at screenshot-verified when the captures cover the full set; lower (running-app-smoke) is honest if only the launched-app state is provable. Do not mark device-verified unless an on-device pass is repeated; device-verified for the schedule labels can be a separate slice. Allowed paths exclude app source and test files; this slice writes proof artifacts and a small home.md proof-level update only."
     },
     {
+      "slice_id": "reorderable-list-coverage-triage",
+      "title": "Triage which Owlory lists should support user reorder",
+      "status": "queued",
+      "priority": 143,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/product/domains/home.md",
+        "docs/product/domains/write.md",
+        "docs/product/domains/train.md",
+        "docs/product/domains/patterns.md",
+        "docs/product/domains/career.md",
+        "docs/product/domains/reminders.md",
+        "docs/workflows/roadmap-status.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id reorderable-list-coverage-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Triage-only: do NOT implement drag-to-reorder anywhere. Inventory every visible list/list-like surface in Owlory across Today, Home, Write, Train, Patterns, Career, and reminder/digest views. Classify each list as one of: (a) user-ordered free list (likely candidates: Home Standalone Tasks, Home Protocols list, Protocol Steps within a template, Write notes within a stage); (b) derived/ranked (deterministic rule output, e.g. Today Continue via ContinueRankingRules + per-domain cap, Focus Three admission, Focus Suggestion fallback); (c) chronological (date/time-driven, e.g. Train sessions, ProtocolRun history, Write notes by createdDate); (d) rule-derived (digest/summary windows, e.g. weekly digest contents, Patterns nudges); (e) hybrid / needs design decision (lists where user expectation and current contract conflict). For each user-ordered candidate, specify the persistence model required (e.g. explicit `order: Int` field on the model, or array index in storage) and whether existing data has that field already. Identify lists that must NOT become manually reorderable because reorder would break ranking/chronology/derived contracts (Today Continue, weekly digest, Train timeline, Recent Runs, Pattern nudges). Decide which user-ordered lists should support drag-to-reorder in follow-up implementation slices; queue each implementation slice separately with explicit allowed paths, persistence work, and tests. Do not change list rendering, persistence schema, or domain rules in this triage slice. proof_level should land at doc-only. Out of scope: any drag-to-reorder UI, any new persistence field, any change to ranking or chronology rules."
+    },
+    {
       "slice_id": "today-last-week-insights-actionability-triage",
       "title": "Triage Today Last Week Insights actionability options",
       "status": "queued",
