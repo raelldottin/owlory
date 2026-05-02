@@ -2,6 +2,7 @@
 
 ## 2026-05-02
 
+- [home-protocol-schedule-ui-proof](sessions/2026-05-02/233505-home-protocol-schedule-ui-proof.md)
 - [home-protocol-schedule-stale-treatment](sessions/2026-05-02/151524-home-protocol-schedule-stale-treatment.md)
 - [today-continue-write-task-projection-triage](sessions/2026-05-02/145038-today-continue-write-task-projection-triage.md)
 - [write-promotion-device-verification](sessions/2026-05-02/143205-write-promotion-device-verification.md)

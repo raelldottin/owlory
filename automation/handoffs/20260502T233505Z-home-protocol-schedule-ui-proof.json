@@ -1,0 +1,54 @@
+{
+  "slice_id": "home-protocol-schedule-ui-proof",
+  "status": "done",
+  "summary": "Captured simulator-side screenshot proof for the run-aware Home protocol schedule labels shipped in home-protocol-schedule-stale-treatment. Built commit d443b2a for iPhone 16 simulator, seeded four HouseholdProtocol records and one ProtocolRun directly into the simulator's app data container (Library/Application Support/Owlory/Home/protocols.json and runs.json), launched the app, and captured the Home tab showing all four ScheduleStatus values rendering correctly. The Overdue and Satisfied rows share an identical schedule shape and only differ in run history; both states render as expected, proving the run-aware classification is active in the running app rather than only in domain tests.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/233505-home-protocol-schedule-ui-proof.md",
+    "automation/handoffs/20260502T233505Z-home-protocol-schedule-ui-proof.json",
+    "automation/proofs/home-protocol-schedule-ui-proof/01-home-schedule-states.png",
+    "automation/proofs/home-protocol-schedule-ui-proof/README.md",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-protocol-schedule-ui-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,id=93831D66-8855-467D-8991-81886B30A57F' -derivedDataPath /tmp/owlory-schedule-ui-proof/DerivedData (clean tree at d443b2ae49a72db6d78d4f54aa2c79dd91489bfb)",
+    "xcrun simctl install 93831D66-8855-467D-8991-81886B30A57F /tmp/owlory-schedule-ui-proof/DerivedData/Build/Products/Debug-iphonesimulator/Owlory.app",
+    "xcrun simctl launch 93831D66-8855-467D-8991-81886B30A57F com.raelldottin.owlory (PID 47698 after re-seed)",
+    "xcrun simctl io 93831D66-8855-467D-8991-81886B30A57F screenshot (Home tab capture confirms four ScheduleStatus rows render correctly)"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "today-last-week-insights-actionability-triage",
+  "recommended_next_reason": "The next queued slice in priority order is the Insights actionability triage; the Home protocol schedule lane is now closed at screenshot-verified for the simulator path. Device-verified for these labels is a separate slice if desired.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T23:35:05Z",
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol schedule labels in the running app",
+      "before": "home-protocol-schedule-stale-treatment shipped run-aware ScheduleStatus classification with focused domain tests in ProtocolScheduleRulesTests and HomeStoreTests, but no running-app or screenshot evidence proved the labels actually rendered with the new logic in the live HomeView. Documentation listed `running-app/screenshot proof` and similar UI evidence as missing.",
+      "after": "Simulator-side capture of the Home tab on commit d443b2a shows the four ScheduleStatus values (`upcoming`, `active`, `satisfied`, `overdue`) rendering through HomeStore.scheduleSummary into HomeView.protocolLabel, including the `.overdue` orange tint and the `.satisfied` warning suppression. The Overdue and Satisfied rows use the same schedule shape and only differ in run history, so the screenshot proves the run-aware code path is live, not just date-only window classification. proof_level for the schedule label rendering is now screenshot-verified for simulator; device-verified and testflight-verified remain in missing_proof_levels until separately proven.",
+      "proof": [
+        "automation/proofs/home-protocol-schedule-ui-proof/01-home-schedule-states.png",
+        "automation/proofs/home-protocol-schedule-ui-proof/README.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The `Satisfied sample` row reads `Scheduled for today` even though its window was actually 2026-04-30. That is the documented `do not nag` behavior of the run-aware summary (the .satisfied label intentionally reuses the upcoming/active text). It is not a bug in classification, but it is a UX quirk a user could find misleading; replacing it with a positive completion label like `Today window completed` would be a small follow-up slice with its own copy review.",
+    "Proof captured under default Dynamic Type only after manually setting content_size from accessibility-extra-extra-extra-large back to large. Larger Dynamic Type, accessibility content sizes, dark mode, and right-to-left layouts were not exercised. If schedule labels become a release-gate surface, add coverage for those.",
+    "The simulator's local timezone resolves UTC midnight schedule dates to the previous calendar day; the first seed pass produced incorrect labels until dates were rewritten with noon UTC. Real schedules created through the app's UI use ProtocolScheduleRules.draft which calls calendar.startOfDay, so production-created data does not have this off-by-one. The lesson is for future seed scripts: anchor seed dates to noon UTC or compute from the simulator's calendar.",
+    "Capturing required two human taps from the operator (tap Home tab, then again after a re-seed). simctl supports screenshots but not taps; idb, cliclick, and accessibility-grant osascript were unavailable in this environment. A future schedule-UI proof slice that needs more states or device coverage should plan for either a tap automation tool or an XCUITest harness rather than ad-hoc manual driving.",
+    "Seed data lives in the simulator's app data container only and is not checked into the repo. The README documents the JSON shape so the proof is reproducible on a fresh simulator, but reproducing requires re-running the seed against a fresh install. A small seed script under automation/proofs/ or automation/smoke/ would be cleaner; that lives outside this slice's scope."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

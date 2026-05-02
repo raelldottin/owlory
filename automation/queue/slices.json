@@ -1037,7 +1037,7 @@
     {
       "slice_id": "home-protocol-schedule-ui-proof",
       "title": "Capture screenshot proof for Home protocol schedule labels",
-      "status": "queued",
+      "status": "done",
       "priority": 158,
       "domain": "home",
       "allowed_paths": [
