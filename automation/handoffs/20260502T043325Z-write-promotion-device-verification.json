@@ -1,0 +1,55 @@
+{
+  "slice_id": "write-promotion-device-verification",
+  "status": "blocked",
+  "summary": "Built and installed Owlory on the connected physical iPhone, but Tools/generate-build-info.sh stamped GitCommit=no-git into the bundle because the script's `[ -d \"$GIT_ROOT/.git\" ]` check rejects git worktrees (where .git is a file pointer, not a directory). The on-device Build Info screen would therefore show no-git/no-git, breaking the source-traceability that device-verified proof requires. Did not exercise the Write -> Turn into Task -> View source note flow on device, because completing the flow without traceable build provenance would not have reached device-verified proof; lower proof levels were already achieved by the screenshot-verified slice.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/043325-write-promotion-device-verification.md",
+    "automation/handoffs/20260502T043325Z-write-promotion-device-verification.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id write-promotion-device-verification",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS,id=00008130-000A090910C1401C' -derivedDataPath /tmp/owlory-device-verification/DerivedData -allowProvisioningUpdates",
+    "xcrun devicectl device install app --device 00008130-000A090910C1401C /tmp/owlory-device-verification/DerivedData/Build/Products/Debug-iphoneos/Owlory.app",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "Tools/generate-build-info.sh stamping for the worktree checkout: stamped GitCommit=no-git, GitCommitFull=no-git, GitBranch=no-git, GitTag=no-git instead of the actual commit a849fb9 / branch main / worktree claude/frosty-greider-e0a33c."
+  ],
+  "recommended_next_slice": "tools-generate-build-info-worktree-fix",
+  "recommended_next_reason": "Fix the worktree-incompatible git detection in Tools/generate-build-info.sh so on-device builds carry traceable provenance. Without that, device-verified proof cannot be claimed honestly from a worktree checkout. After that lands, retry write-promotion-device-verification.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-02T04:33:25Z",
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Device-verified proof for Write to Home task source-note return flow",
+      "before": "Slice was queued with depends_on=[owlory-running-app-smoke, write-promotion-screenshot-proof]; both dependencies were already done.",
+      "after": "Slice is blocked because the build-info stamp script does not recognize git worktrees and produces no-git provenance; the installed app cannot be tied to commit a849fb9 via the in-app Build Info screen, so device-verified proof is unreachable from this checkout.",
+      "proof": [
+        "/usr/libexec/PlistBuddy -c 'Print GitCommit' /tmp/owlory-device-verification/DerivedData/Build/Products/Debug-iphoneos/Owlory.app/Info.plist",
+        "ls -la .git (.git is a file containing 'gitdir: ...' rather than a directory in this worktree)",
+        "Tools/generate-build-info.sh:36 (`if [ -n \"$GIT_ROOT\" ] && [ -d \"$GIT_ROOT/.git\" ]; then`) — the [ -d ] test fails on worktrees and the script falls through to the no-git fallback at line 47-54."
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Tools/generate-build-info.sh uses `[ -d \"$GIT_ROOT/.git\" ]`, which fails in any git worktree because .git is a file pointer instead of a directory. Any worktree-built install carries no-git provenance and cannot reach device-verified or testflight-verified proof. The fix is small (use `[ -e \"$GIT_ROOT/.git\" ]` or `git -C \"$GIT_ROOT\" rev-parse --git-dir` for the existence check) but lives outside this slice's allowed_paths.",
+    "The Owlory app is currently installed on the connected device with no-git provenance. It can still be launched and exercised, but the in-app Build Info screen will display no-git/no-git rather than the real commit. Treat any flow run from this install as untraceable until reinstalled from a stamping-fixed build.",
+    "BuildInfo.isReleaseable is false for this build (gitCommit is empty/unknown after the no-git fallback), which is correct safety behavior but means the build itself is not a releasable artifact even if the flow worked.",
+    "Did not exercise the Write -> Turn into Task -> View source note flow on device this run; running it without traceable provenance would not have raised proof_level beyond what write-promotion-screenshot-proof already established."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

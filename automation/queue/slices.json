@@ -1005,7 +1005,7 @@
     {
       "slice_id": "write-promotion-device-verification",
       "title": "Verify Write to Home task source-note return flow on a real device",
-      "status": "queued",
+      "status": "blocked",
       "priority": 250,
       "domain": "write",
       "allowed_paths": [
@@ -1027,10 +1027,35 @@
       ],
       "depends_on": [
         "owlory-running-app-smoke",
-        "write-promotion-screenshot-proof"
+        "write-promotion-screenshot-proof",
+        "tools-generate-build-info-worktree-fix"
       ],
       "max_files_changed": 10,
-      "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. Depends on owlory-running-app-smoke because the current checkout cannot produce an installable build artifact until that blocker is cleared."
+      "notes": "Proof-only slice: do not change app behavior. Build and install on a physical iPhone, capture Build Info (bundle id, build number, commit, configuration) as proof, exercise Write -> Turn into Task -> View source note end-to-end, and capture device screenshots or recorded artifacts. Mark proof_level=device-verified only if the on-device flow completes; leave testflight-verified in missing_proof_levels unless TestFlight is actually used. If no device is available or the running-app-smoke build blocker is unresolved, write status=blocked with the honest reason rather than upgrading proof. First attempt blocked because Tools/generate-build-info.sh did not recognize the worktree checkout and stamped GitCommit=no-git, breaking source traceability; tools-generate-build-info-worktree-fix added as a precursor."
+    },
+    {
+      "slice_id": "tools-generate-build-info-worktree-fix",
+      "title": "Make build-info stamp script recognize git worktrees",
+      "status": "queued",
+      "priority": 252,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "Tools/generate-build-info.sh",
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id tools-generate-build-info-worktree-fix",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 5,
+      "notes": "Tools/generate-build-info.sh:36 currently uses `[ -d \"$GIT_ROOT/.git\" ]`, which fails in any git worktree because .git is a file pointer (`gitdir: /path/to/main/.git/worktrees/<name>`) rather than a directory. The script then falls through to the no-git fallback (lines 47-54) and stamps GitCommit/GitBranch/GitTag/GitCommitFull as no-git, which makes BuildInfo.isReleaseable=false and breaks any device or TestFlight provenance attempt from a worktree. Replace the existence test with one that handles both shapes (e.g., `[ -e \"$GIT_ROOT/.git\" ]` or `git -C \"$GIT_ROOT\" rev-parse --git-dir > /dev/null 2>&1`). Verify by building from a worktree checkout and confirming Info.plist GitCommit, GitCommitFull, GitBranch, and GitTag match `git rev-parse` output rather than no-git. Do not change app behavior, only the stamp script's git-detection."
     }
   ]
 }
