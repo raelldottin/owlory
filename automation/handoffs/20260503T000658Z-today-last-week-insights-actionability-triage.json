@@ -1,0 +1,51 @@
+{
+  "slice_id": "today-last-week-insights-actionability-triage",
+  "status": "done",
+  "summary": "Classification-first triage of whether the Today Last Week digest should remain informational or gain user-actionable affordances. Read the maintained Today and Patterns weekly digest contracts, the prior today-weekly-digest-truthful-summary-copy and patterns-weekly-digest-versioned-stale-refresh slices, and inspected the live digest rendering in TodayView.lastWeekSection plus the rule code in WeeklyDigestRules. Classified three actionability options: per-item/domain routing (Option 1), digest-level next-week CTAs (Option 2), and pattern-driven prompts in the digest body (Option 3). Decision: Option 1 is contract-aligned and may deep-link existing day-level stats (Best Day, Hardest Day) to the same calendar day in Previous Days, because that surface already renders day data and the digest does not invent new derived insight. Options 2 and 3 are rejected as out of scope for the digest contract. Updated docs/product/domains/today.md to make this rule explicit so future readers do not re-litigate it. No app behavior changed.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-02/000658-today-last-week-insights-actionability-triage.md",
+    "automation/handoffs/20260503T000658Z-today-last-week-insights-actionability-triage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id today-last-week-insights-actionability-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=patterns",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No follow-up implementation slice queued automatically. A narrowly-scoped today-last-week-digest-day-routing slice (Best Day / Hardest Day rows deep-link to that day in Previous Days) is plausible if the product owner wants to ship the contract-aligned bit of Option 1; that should be queued as a deliberate decision rather than auto-added behind this triage.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-03T00:06:58Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Last Week digest actionability",
+      "before": "today.md described digest summaries as count-first and scope-honest, but did not address whether per-stat affordances may route into other Today-owned surfaces, whether the digest may host next-week-planning CTAs, or whether Patterns nudges may surface inside the digest body. The live digest UI (TodayView.lastWeekSection) showed stats plus one navigation affordance (`View all digests`) without an explicit rule constraining which additional affordances are contract-aligned.",
+      "after": "today.md now states explicitly that the digest is informational; per-stat affordances may deep-link to existing Today-owned surfaces that already render the same underlying data (Best Day and Hardest Day rows may route to that specific calendar day in Previous Days); the digest must NOT host next-week-planning CTAs because carry-forward (CarryForwardRules/DailyPlanningRules) and Focus Suggestions already own that path; and the digest must NOT surface pattern-driven prompts in the body because Patterns owns nudge content via PatternNudgeRules/CalibrationRules. `View all digests` remains the digest's primary navigation affordance. No code or UI changed in this slice.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:711 (lastWeekSection currently renders DisclosureGroup with stats + View all digests link only)",
+        "docs/product/domains/today.md (Continue And Carry-Forward Contract section now carries the actionability rule)",
+        "docs/product/domains/patterns.md (Weekly Digest Contract confirms Patterns owns nudge content; rule alignment)",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=patterns"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Per-stat routing for Days active and Completed (X/Y) is not addressed by this rule because there is no Today-owned surface that already renders only-last-week's Focus items in isolation. Days active is already adjacent to a Browse previous days link, so duplicating it inside the digest is unnecessary; Completed (X/Y) would require either a new last-week-Focus list view or an inline disclosure of last week's Focus items. Either is a deliberate product decision, not a missing rule.",
+    "The Best Day / Hardest Day deep-link is described as plausible by the rule but not implemented. If the product owner pursues a today-last-week-digest-day-routing slice, that slice must add only navigation; it must not modify WeeklyDigestRules, the digest persistence schema, or the digest body content. The rule deliberately scopes the day-route to existing Previous Days behavior so no new derived insight is introduced.",
+    "Option 2 (digest-level next-week CTAs) and Option 3 (pattern-driven prompts in the digest body) are rejected here for scope-honesty and ownership reasons. If a future product direction wants those, it should be queued as its own slice that explicitly amends this contract; the rejection here is contract-aligned, not absolute."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

@@ -1154,7 +1154,7 @@
     {
       "slice_id": "today-last-week-insights-actionability-triage",
       "title": "Triage Today Last Week Insights actionability options",
-      "status": "queued",
+      "status": "done",
       "priority": 145,
       "domain": "today",
       "allowed_paths": [

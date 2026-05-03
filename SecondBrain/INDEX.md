@@ -2,6 +2,7 @@
 
 ## 2026-05-02
 
+- [today-last-week-insights-actionability-triage](sessions/2026-05-02/000658-today-last-week-insights-actionability-triage.md)
 - [home-protocol-schedule-ui-proof](sessions/2026-05-02/233505-home-protocol-schedule-ui-proof.md)
 - [home-protocol-schedule-stale-treatment](sessions/2026-05-02/151524-home-protocol-schedule-stale-treatment.md)
 - [today-continue-write-task-projection-triage](sessions/2026-05-02/145038-today-continue-write-task-projection-triage.md)
