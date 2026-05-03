@@ -1123,7 +1123,7 @@
     {
       "slice_id": "reorderable-list-coverage-triage",
       "title": "Triage which Owlory lists should support user reorder",
-      "status": "queued",
+      "status": "done",
       "priority": 142,
       "domain": "today",
       "allowed_paths": [
