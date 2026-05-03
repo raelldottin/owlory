@@ -96,7 +96,8 @@ run_domain() {
     reminders)
       run_xcode_tests \
         -only-testing:OwloryCoreTests/CompletionTimePredictorTests \
-        -only-testing:OwloryCoreTests/ReminderSchedulingRulesTests
+        -only-testing:OwloryCoreTests/ReminderSchedulingRulesTests \
+        -only-testing:OwloryCoreTests/ProtocolScheduleNotificationRulesTests
       ;;
     runtime)
       run_xcode_tests \
@@ -155,6 +156,7 @@ case "$MODE" in
       -only-testing:OwloryCoreTests/RecurrenceRulesTests \
       -only-testing:OwloryCoreTests/RecurringRolloverPlannerTests \
       -only-testing:OwloryCoreTests/ReminderSchedulingRulesTests \
+      -only-testing:OwloryCoreTests/ProtocolScheduleNotificationRulesTests \
       -only-testing:OwloryCoreTests/BuildInfoTests
     ;;
   full)

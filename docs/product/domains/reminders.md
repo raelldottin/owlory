@@ -8,6 +8,7 @@
 - Reminder eligibility, threshold timing, and completed-today suppression.
 - Local notification scheduling and cancellation.
 - Scheduling app-runtime reminder output for Today-owned prompts such as check-in and evening reflection once Today exposes those prompts.
+- Protocol schedule notification delivery. `ProtocolScheduleNotificationRules` (Core/Domain) produces plans; `ReminderScheduler` converts them into `UNNotificationRequest` alongside existing prediction and prompt notifications.
 
 ## Does Not Own
 
@@ -21,7 +22,8 @@
 - `ReminderSchedulingRules` for pure reminder timing and suppression policy.
 - `CompletionHistoryStore` for records and predictions.
 - `ReminderScheduler` for UserNotifications integration.
-- `ReminderScheduleTrace` for scheduler diagnostics.
+- `ReminderScheduleTrace` for scheduler diagnostics (includes `protocolScheduleCount`).
+- `ProtocolScheduleNotificationRules` for protocol schedule notification planning.
 
 ## Exposes
 
@@ -35,8 +37,10 @@
 - Keep reminder eligibility and deadline policy in `ReminderSchedulingRules`.
 - Keep `UserNotifications` calls inside `ReminderScheduler`.
 - Preserve completed-today suppression so reminders do not nag completed work.
-- Preserve dedupe by clearing existing Owlory reminder requests before adding the current plan.
+- Preserve dedupe by clearing existing Owlory reminder and protocol-schedule requests before adding the current plan.
 - Scheduling currently happens when app wiring calls `ReminderScheduler.reschedule`, including launch and foreground entry.
+- Protocol schedule notifications use identifiers prefixed with `owlory.protocol-schedule.` with a deterministic scheme per protocol/kind, separate from the `owlory.reminder.` prefix used by prediction and prompt notifications.
+- Starting a run for a protocol cancels stale notifications for that protocol's window through the next reschedule cycle; satisfied schedules do not produce notifications.
 - Reminder copy for Today prompts should come from Today-owned prompt rules; reminder code may schedule and mirror those prompts but should not invent alternate product wording or timing.
 - Reminder notification specs should include app-runtime deep-link metadata for the represented prompt or completion key so notification taps and mirrored widget entries can return to the associated Owlory item.
 

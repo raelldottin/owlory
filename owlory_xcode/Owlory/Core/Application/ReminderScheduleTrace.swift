@@ -7,6 +7,7 @@ struct ReminderScheduleTrace: Equatable {
     let deadlinePassedSuppressedCount: Int
     let canceledPendingCount: Int
     let failedCount: Int
+    var protocolScheduleCount: Int = 0
 
     var suppressedCount: Int {
         completedSuppressedCount + deadlinePassedSuppressedCount
@@ -22,6 +23,7 @@ struct ReminderScheduleTrace: Equatable {
             "deadlinePassed=\(deadlinePassedSuppressedCount)",
             "canceledPending=\(canceledPendingCount)",
             "failed=\(failedCount)",
+            "protocolSchedule=\(protocolScheduleCount)",
         ].joined(separator: " ")
     }
 }

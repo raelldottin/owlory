@@ -73,7 +73,7 @@ Verify rollover diagnostics with `OwloryCoreTests/RecurringRolloverPlannerTests`
 
 `ReminderScheduler` applies `ReminderSchedulingRules` before touching `UserNotifications`, then emits one `reminder.schedule` notice through `PerformanceTelemetry`.
 
-`ReminderScheduleTrace` records prediction candidate count, successfully scheduled count, completed-today suppression count, deadline-passed suppression count, canceled pending request count, and scheduling failure count. Keep this trace in `Core/Application`; `ReminderSchedulingRules` owns deterministic eligibility and deadline policy.
+`ReminderScheduleTrace` records prediction candidate count, successfully scheduled count, completed-today suppression count, deadline-passed suppression count, canceled pending request count, scheduling failure count, and protocol schedule notification count. The protocol schedule count tracks how many `window-opening` and `overdue` notifications were included from `ProtocolScheduleNotificationRules` plans. Keep this trace in `Core/Application`; `ReminderSchedulingRules` owns deterministic eligibility and deadline policy.
 
 Verify reminder diagnostics with `OwloryCoreTests/ReminderSchedulingRulesTests` or `make test-domain DOMAIN=reminders`.
 
@@ -86,7 +86,7 @@ Verify digest cadence with `OwloryCoreTests/WeeklyDigestCadenceRulesTests` or `m
 ## Local Runtime Coupling
 
 - Audio and speech live in `Core/Infrastructure`; voice-to-text field routing lives in `Core/Domain/VoiceTranscriptionRoutingRules.swift`.
-- Local notifications live behind `ReminderScheduler`.
+- Local notifications live behind `ReminderScheduler`. Protocol schedule notifications (`window-opening`, `overdue`) use the `owlory.protocol-schedule.*` identifier prefix and are planned by `ProtocolScheduleNotificationRules` in `Core/Domain`.
 - Widgets live in `owlory_xcode/OwloryWidgets/`. Future Live Activities should stay in runtime/widget code and remain reserved for active user-initiated sessions.
 
 Keep framework-specific failures observable through `lastError`, telemetry, or explicit diagnostics. Do not swallow runtime failures silently when users can observe the broken state.

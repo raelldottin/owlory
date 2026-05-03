@@ -261,6 +261,19 @@ struct RootTabView: View {
             }
             .joined(separator: "||")
 
+        let homeProtocolSchedulePart = homeStore.protocols
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+            .compactMap { proto -> String? in
+                guard let schedule = proto.schedule else { return nil }
+                return [
+                    proto.id.uuidString,
+                    schedule.preset.rawValue,
+                    dateToken(schedule.startDate),
+                    dateToken(schedule.endDate),
+                ].joined(separator: "|")
+            }
+            .joined(separator: "||")
+
         let predictionPart = completionHistory.predictions.keys.sorted().compactMap { key in
             guard let prediction = completionHistory.predictions[key] else { return nil }
             return [
@@ -272,7 +285,7 @@ struct RootTabView: View {
         }
         .joined(separator: "||")
 
-        return [entryPart, homeTaskPart, homeRunPart, trainPart, writePart, predictionPart].joined(separator: "###")
+        return [entryPart, homeTaskPart, homeRunPart, homeProtocolSchedulePart, trainPart, writePart, predictionPart].joined(separator: "###")
     }
 
     /// Build the set of item keys that are already completed today, then
@@ -313,10 +326,18 @@ struct RootTabView: View {
             )
         } ?? []
 
+        let protocolSchedulePlans = ProtocolScheduleNotificationRules.plans(
+            for: homeStore.protocols,
+            runs: homeStore.runs,
+            now: now,
+            calendar: calendar
+        )
+
         let plannedNotifications = reminderScheduler.plannedNotifications(
             predictions: completionHistory.predictions,
             completedKeys: completedKeys,
             promptNotifications: promptNotifications,
+            protocolSchedulePlans: protocolSchedulePlans,
             now: now,
             calendar: calendar
         )
@@ -325,6 +346,7 @@ struct RootTabView: View {
             predictions: completionHistory.predictions,
             completedKeys: completedKeys,
             promptNotifications: promptNotifications,
+            protocolSchedulePlans: protocolSchedulePlans,
             now: now
         )
 

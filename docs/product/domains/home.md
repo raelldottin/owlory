@@ -9,7 +9,7 @@
 
 ## Does Not Own
 
-- Notification delivery.
+- Notification delivery. Home provides protocol schedule signals to `ProtocolScheduleNotificationRules`; the reminders domain owns converting those signals into local notifications through `ReminderScheduler`.
 - Training session rollover.
 - Today Continue ranking, except through exposed active tasks and runs.
 
@@ -95,6 +95,7 @@ Missing/deferred: schedule windows still do not drive Today projection or admiss
 - Schedule classification is run-aware. `ProtocolScheduleRules.scheduleStatus(for:runs:now:calendar:)` returns one of `upcoming`, `active`, `satisfied`, or `overdue`. A passed window classifies as `satisfied` when at least one run for the same protocol was started on or after the window's start day, and as `overdue` only when no such run exists. Old runs from before the window do not satisfy a later schedule.
 - HomeView protocol rows surface this classification through `HomeStore.scheduleSummary(for:)` so an `overdue` window shows the existing "window passed" text in a warning treatment, while a `satisfied` schedule reuses the upcoming/active label without nagging the user.
 - Schedule classification is Home schedule state only. It must not change Today Continue admission, must not auto-start, auto-complete, auto-abandon, or auto-admit a run, and must not be used as input to `TodayContinueSourceComposer`. A `satisfied` or `overdue` classification is informational about the template; the user may still start a fresh run, edit the schedule, or remove the schedule entirely.
+- `ProtocolScheduleNotificationRules` converts schedule classification into notification plans (`windowOpening`, `overdue`). Home exposes protocols and runs so app wiring can produce those plans; Home does not import `UserNotifications` or own notification delivery. Starting a run during an active window suppresses pending overdue notifications through the next reschedule cycle.
 
 ## Future Projects
 

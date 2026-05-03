@@ -79,4 +79,11 @@ enum ReminderSchedulingRules {
         prediction.expectedCompletionDate(on: day, calendar: calendar)
             .addingTimeInterval(prediction.madSeconds)
     }
+
+    static func filteredProtocolSchedulePlans(
+        _ plans: [ProtocolScheduleNotificationRules.Plan],
+        now: Date
+    ) -> [ProtocolScheduleNotificationRules.Plan] {
+        plans.filter { $0.fireDate > now }
+    }
 }

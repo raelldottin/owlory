@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-03
+
+- [home-protocol-schedule-notifications](sessions/2026-05-03/010000-home-protocol-schedule-notifications.md)
+
 ## 2026-05-02
 
 - [today-last-week-insights-actionability-triage](sessions/2026-05-02/000658-today-last-week-insights-actionability-triage.md)
