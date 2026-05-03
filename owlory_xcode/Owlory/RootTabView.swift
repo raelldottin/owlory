@@ -327,7 +327,7 @@ struct RootTabView: View {
         } ?? []
 
         let protocolSchedulePlans = ProtocolScheduleNotificationRules.plans(
-            for: homeStore.protocols,
+            for: homeStore.activeProtocols,
             runs: homeStore.runs,
             now: now,
             calendar: calendar

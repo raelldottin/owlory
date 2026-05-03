@@ -596,19 +596,41 @@ struct HouseholdProtocol: Identifiable, Equatable, Codable {
     var steps: [String]
     var origin: OwloryItemOrigin?
     var schedule: HouseholdProtocolSchedule?
+    var isArchived: Bool
 
     init(
         id: UUID = UUID(),
         title: String,
         steps: [String] = [],
         origin: OwloryItemOrigin? = nil,
-        schedule: HouseholdProtocolSchedule? = nil
+        schedule: HouseholdProtocolSchedule? = nil,
+        isArchived: Bool = false
     ) {
         self.id = id
         self.title = title
         self.steps = steps
         self.origin = origin
         self.schedule = schedule
+        self.isArchived = isArchived
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case steps
+        case origin
+        case schedule
+        case isArchived
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        title = try container.decode(String.self, forKey: .title)
+        steps = try container.decodeIfPresent([String].self, forKey: .steps) ?? []
+        origin = try container.decodeIfPresent(OwloryItemOrigin.self, forKey: .origin)
+        schedule = try container.decodeIfPresent(HouseholdProtocolSchedule.self, forKey: .schedule)
+        isArchived = try container.decodeIfPresent(Bool.self, forKey: .isArchived) ?? false
     }
 }
 

@@ -1,0 +1,63 @@
+{
+  "slice_id": "home-protocol-archive",
+  "status": "done",
+  "summary": "Added protocol template archive/restore state so Home can hide templates without deleting their steps, schedule metadata, active runs, or run history.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-03/082040-home-protocol-archive.md",
+    "automation/handoffs/20260503T122040Z-home-protocol-archive.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-protocol-archive",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol template archive lifecycle",
+      "before": "HouseholdProtocol templates had no archive state, so hiding a reusable protocol required either leaving it visible or deleting it.",
+      "after": "HouseholdProtocol stores `isArchived` with legacy decode defaulting to false. HomeStore can archive/unarchive templates, active protocol lists hide archived templates, archived templates reject new runs, and pre-existing active runs can still resume and terminate normally.",
+      "proof": [
+        "make test-domain DOMAIN=home"
+      ]
+    },
+    {
+      "contract": "Archived protocol schedule notification exclusion",
+      "before": "Runtime schedule notification planning consumed all Home protocol templates.",
+      "after": "Runtime schedule notification planning consumes `HomeStore.activeProtocols`, so archived templates are not handed to `ProtocolScheduleNotificationRules` as notification candidates.",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make architecture"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No running-app, flow, or screenshot proof was captured for the new Archive/Restore UI affordances.",
+    "The notification exclusion is covered by HomeStore active/archived filtering and RootTab wiring inspection, but there is no dedicated end-to-end notification scheduling test for archived protocols in this slice."
+  ],
+  "recommended_next_slice": "home-protocol-step-revert",
+  "recommended_next_reason": "The adjacent queued Home lifecycle slice can build on the same protocol-run surface by adding a safe way to revert completed or skipped protocol steps to pending.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-03T12:20:40Z"
+}
