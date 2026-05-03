@@ -82,6 +82,7 @@
 		A075 /* OwloryDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A174 /* OwloryDeepLink.swift */; };
 		A076 /* OwloryDeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175 /* OwloryDeepLinkRouter.swift */; };
 		A077 /* ProtocolScheduleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176 /* ProtocolScheduleRules.swift */; };
+		A078 /* ProtocolScheduleNotificationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177 /* ProtocolScheduleNotificationRules.swift */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
 		B002 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104 /* Clock.swift */; };
 		B003 /* TodayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A105 /* TodayStore.swift */; };
@@ -174,6 +175,8 @@
 		B090 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156 /* ReminderScheduler.swift */; };
 		B091 /* ProtocolScheduleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176 /* ProtocolScheduleRules.swift */; };
 		B092 /* ProtocolScheduleRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B138 /* ProtocolScheduleRulesTests.swift */; };
+		B093 /* ProtocolScheduleNotificationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177 /* ProtocolScheduleNotificationRules.swift */; };
+		B094 /* ProtocolScheduleNotificationRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139 /* ProtocolScheduleNotificationRulesTests.swift */; };
 		W002 /* OwloryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = W102 /* OwloryWidgetBundle.swift */; };
 		W004 /* OwloryWidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = W100 /* OwloryWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		W005 /* OwloryTodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W105 /* OwloryTodayWidget.swift */; };
@@ -287,6 +290,7 @@
 		A174 /* OwloryDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryDeepLink.swift; sourceTree = "<group>"; };
 		A175 /* OwloryDeepLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryDeepLinkRouter.swift; sourceTree = "<group>"; };
 		A176 /* ProtocolScheduleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleRules.swift; sourceTree = "<group>"; };
+		A177 /* ProtocolScheduleNotificationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleNotificationRules.swift; sourceTree = "<group>"; };
 		B100 /* OwloryCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OwloryCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B101 /* CarryForwardRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarryForwardRulesTests.swift; sourceTree = "<group>"; };
 		B102 /* TodayStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStoreTests.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 		B136 /* FocusSuggestionRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSuggestionRulesTests.swift; sourceTree = "<group>"; };
 		B137 /* VoiceTranscriptionRoutingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceTranscriptionRoutingRulesTests.swift; sourceTree = "<group>"; };
 		B138 /* ProtocolScheduleRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleRulesTests.swift; sourceTree = "<group>"; };
+		B139 /* ProtocolScheduleNotificationRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleNotificationRulesTests.swift; sourceTree = "<group>"; };
 		W100 /* OwloryWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OwloryWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		W102 /* OwloryWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryWidgetBundle.swift; sourceTree = "<group>"; };
 		W104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -452,6 +457,7 @@
 				A173 /* VoiceTranscriptionRoutingRules.swift */,
 				A170 /* ProtocolLifecycleRules.swift */,
 				A176 /* ProtocolScheduleRules.swift */,
+				A177 /* ProtocolScheduleNotificationRules.swift */,
 				A158 /* RecurrenceRules.swift */,
 				A165 /* ReminderSchedulingRules.swift */,
 				A160 /* ContinueCandidateRules.swift */,
@@ -581,6 +587,7 @@
 				B136 /* FocusSuggestionRulesTests.swift */,
 				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
 				B138 /* ProtocolScheduleRulesTests.swift */,
+				B139 /* ProtocolScheduleNotificationRulesTests.swift */,
 				B134 /* ProtocolLifecycleRulesTests.swift */,
 				B102 /* TodayStoreTests.swift */,
 				B103 /* WritingStageRulesTests.swift */,
@@ -861,6 +868,7 @@
 				A075 /* OwloryDeepLink.swift in Sources */,
 				A076 /* OwloryDeepLinkRouter.swift in Sources */,
 				A077 /* ProtocolScheduleRules.swift in Sources */,
+				A078 /* ProtocolScheduleNotificationRules.swift in Sources */,
 				A066 /* ReminderSchedulingRules.swift in Sources */,
 				A055 /* CompletionHistoryStore.swift in Sources */,
 				A056 /* ReminderScheduler.swift in Sources */,
@@ -953,12 +961,14 @@
 				B055 /* CompletionTimePredictor.swift in Sources */,
 				B089 /* OwloryDeepLink.swift in Sources */,
 				B091 /* ProtocolScheduleRules.swift in Sources */,
+				B093 /* ProtocolScheduleNotificationRules.swift in Sources */,
 				B072 /* ReminderSchedulingRules.swift in Sources */,
 				B056 /* CompletionHistoryStore.swift in Sources */,
 				B057 /* CompletionTimePredictorTests.swift in Sources */,
 				B074 /* ReminderSchedulingRulesTests.swift in Sources */,
 				B090 /* ReminderScheduler.swift in Sources */,
 				B092 /* ProtocolScheduleRulesTests.swift in Sources */,
+				B094 /* ProtocolScheduleNotificationRulesTests.swift in Sources */,
 				B058 /* RecurrenceRules.swift in Sources */,
 				B059 /* RecurrenceRulesTests.swift in Sources */,
 				B060 /* ContinueRankingRules.swift in Sources */,

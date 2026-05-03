@@ -24,6 +24,7 @@ final class ReminderScheduler {
         let candidateCount: Int
         let completedSuppressedCount: Int
         let deadlinePassedSuppressedCount: Int
+        var protocolScheduleCount: Int = 0
     }
 
     private let center = UNUserNotificationCenter.current()
@@ -62,6 +63,7 @@ final class ReminderScheduler {
         predictions: [String: CompletionTimePredictor.Prediction],
         completedKeys: Set<String>,
         promptNotifications: [TodayStore.PromptNotification] = [],
+        protocolSchedulePlans: [ProtocolScheduleNotificationRules.Plan] = [],
         now: Date = Date()
     ) {
         Task {
@@ -71,7 +73,10 @@ final class ReminderScheduler {
             // Remove all Owlory-scheduled reminders, then re-add current ones.
             let pendingRequests = await center.pendingNotificationRequests()
             let owloryIDs = pendingRequests
-                .filter { $0.identifier.hasPrefix("owlory.reminder.") }
+                .filter {
+                    $0.identifier.hasPrefix("owlory.reminder.")
+                    || $0.identifier.hasPrefix("owlory.protocol-schedule.")
+                }
                 .map(\.identifier)
             center.removePendingNotificationRequests(withIdentifiers: owloryIDs)
 
@@ -80,6 +85,7 @@ final class ReminderScheduler {
                 predictions: predictions,
                 completedKeys: completedKeys,
                 promptNotifications: promptNotifications,
+                protocolSchedulePlans: protocolSchedulePlans,
                 now: now,
                 calendar: calendar
             )
@@ -129,7 +135,8 @@ final class ReminderScheduler {
                 completedSuppressedCount: plan.completedSuppressedCount,
                 deadlinePassedSuppressedCount: plan.deadlinePassedSuppressedCount,
                 canceledPendingCount: owloryIDs.count,
-                failedCount: failedCount
+                failedCount: failedCount,
+                protocolScheduleCount: plan.protocolScheduleCount
             )
             PerformanceTelemetry.notice(trace.telemetryMessage, category: .reminders)
         }
@@ -146,6 +153,7 @@ final class ReminderScheduler {
         predictions: [String: CompletionTimePredictor.Prediction],
         completedKeys: Set<String>,
         promptNotifications: [TodayStore.PromptNotification] = [],
+        protocolSchedulePlans: [ProtocolScheduleNotificationRules.Plan] = [],
         now: Date = Date(),
         calendar: Calendar = .current
     ) -> PlannedNotifications {
@@ -154,6 +162,11 @@ final class ReminderScheduler {
             completedKeys: completedKeys,
             now: now,
             calendar: calendar
+        )
+
+        let filteredSchedulePlans = ReminderSchedulingRules.filteredProtocolSchedulePlans(
+            protocolSchedulePlans,
+            now: now
         )
 
         var specs = overduePlan.scheduledReminders.map { reminder in
@@ -184,6 +197,19 @@ final class ReminderScheduler {
                 }
         )
 
+        specs.append(
+            contentsOf: filteredSchedulePlans.map { plan in
+                NotificationSpec(
+                    identifier: plan.identifier,
+                    kind: plan.kind.rawValue,
+                    title: protocolScheduleTitle(for: plan.kind),
+                    body: protocolScheduleBody(for: plan),
+                    deadline: plan.fireDate,
+                    deepLinkURL: nil
+                )
+            }
+        )
+
         specs.sort {
             if $0.deadline == $1.deadline {
                 return $0.identifier < $1.identifier
@@ -193,21 +219,33 @@ final class ReminderScheduler {
 
         return PlannedNotifications(
             specs: specs,
-            candidateCount: predictions.count + promptNotifications.count,
+            candidateCount: predictions.count + promptNotifications.count
+                + protocolSchedulePlans.count,
             completedSuppressedCount: overduePlan.completedTodaySuppressionCount,
-            deadlinePassedSuppressedCount: overduePlan.deadlinePassedSuppressionCount
+            deadlinePassedSuppressedCount: overduePlan.deadlinePassedSuppressionCount,
+            protocolScheduleCount: filteredSchedulePlans.count
         )
     }
 
-    /// Cancel all Owlory reminders.
+    /// Cancel all Owlory reminders and protocol schedule notifications.
     func cancelAll() {
         Task {
             let pending = await center.pendingNotificationRequests()
             let ids = pending
-                .filter { $0.identifier.hasPrefix("owlory.reminder.") }
+                .filter {
+                    $0.identifier.hasPrefix("owlory.reminder.")
+                    || $0.identifier.hasPrefix("owlory.protocol-schedule.")
+                }
                 .map(\.identifier)
             center.removePendingNotificationRequests(withIdentifiers: ids)
         }
+    }
+
+    func cancelProtocolScheduleNotifications(forProtocolID protocolID: UUID) {
+        let ids = ProtocolScheduleNotificationRules.Kind.allCases.map {
+            ProtocolScheduleNotificationRules.identifier(protocolID: protocolID, kind: $0)
+        }
+        center.removePendingNotificationRequests(withIdentifiers: ids)
     }
 
     // MARK: - Private
@@ -238,6 +276,28 @@ final class ReminderScheduler {
             return "\(capitalizedTitle) — protocol run is overdue."
         default:
             return "\(capitalizedTitle) — still pending."
+        }
+    }
+
+    private func protocolScheduleTitle(
+        for kind: ProtocolScheduleNotificationRules.Kind
+    ) -> String {
+        switch kind {
+        case .windowOpening:
+            return "Protocol Window Opens"
+        case .overdue:
+            return "Protocol Window Passed"
+        }
+    }
+
+    private func protocolScheduleBody(
+        for plan: ProtocolScheduleNotificationRules.Plan
+    ) -> String {
+        switch plan.kind {
+        case .windowOpening:
+            return "\(plan.title) — scheduled window starts today."
+        case .overdue:
+            return "\(plan.title) — schedule window ended without a run."
         }
     }
 

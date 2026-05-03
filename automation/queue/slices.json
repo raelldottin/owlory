@@ -1211,7 +1211,7 @@
     {
       "slice_id": "home-protocol-schedule-notifications",
       "title": "Schedule local notifications from declared Home protocol windows",
-      "status": "queued",
+      "status": "done",
       "priority": 140,
       "domain": "reminders",
       "allowed_paths": [

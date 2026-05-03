@@ -97,7 +97,7 @@ final class ReminderSchedulingRulesTests: XCTestCase {
 
         XCTAssertEqual(
             trace.telemetryMessage,
-            "reminder.schedule candidates=4 scheduled=1 suppressed=2 completed=1 deadlinePassed=1 canceledPending=2 failed=1"
+            "reminder.schedule candidates=4 scheduled=1 suppressed=2 completed=1 deadlinePassed=1 canceledPending=2 failed=1 protocolSchedule=0"
         )
     }
 
