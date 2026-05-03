@@ -17,3 +17,9 @@ xcuserdata/
 
 # Local SwiftPM build output
 .build/
+
+# Claude Code local state
+.claude/
+
+# Local backup archives
+*.tar.gz
