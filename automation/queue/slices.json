@@ -1094,7 +1094,7 @@
     {
       "slice_id": "home-protocol-archive",
       "title": "Archive protocol templates without deleting them",
-      "status": "queued",
+      "status": "done",
       "priority": 143,
       "domain": "home",
       "allowed_paths": [
@@ -1103,6 +1103,7 @@
         "docs/product/domains/home.md",
         "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
         "owlory_xcode/Owlory/Core/Domain/DomainModels.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
         "owlory_xcode/Owlory/Features/Home/HomeView.swift",
         "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
         "SecondBrain/INDEX.md",

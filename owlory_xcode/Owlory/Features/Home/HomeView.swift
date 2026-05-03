@@ -23,6 +23,7 @@ struct HomeView: View {
                 skippedTasksSection
                 completedTasksSection
                 protocolsSection
+                archivedProtocolsSection
                 completedRunsSection
             }
             .scrollDismissesKeyboard(.interactively)
@@ -189,11 +190,11 @@ struct HomeView: View {
 
     private var protocolsSection: some View {
         Section {
-            if store.protocols.isEmpty {
+            if store.activeProtocols.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("No household protocols yet.")
+                    Text(store.protocols.isEmpty ? "No household protocols yet." : "No active household protocols.")
                         .foregroundStyle(.secondary)
-                    Text("Protocols are reusable instruction sets for recurring problems.")
+                    Text(store.protocols.isEmpty ? "Protocols are reusable instruction sets for recurring problems." : "Archived protocols stay available below.")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
                     Button {
@@ -203,7 +204,7 @@ struct HomeView: View {
                     }
                 }
             } else {
-                ForEach(store.protocols) { proto in
+                ForEach(store.activeProtocols) { proto in
                     DisclosureGroup {
                         ForEach(Array(proto.steps.enumerated()), id: \.offset) { index, step in
                             HStack(alignment: .top, spacing: 8) {
@@ -222,6 +223,12 @@ struct HomeView: View {
                         protocolLabel(for: proto)
                     }
                     .swipeActions(edge: .trailing) {
+                        Button {
+                            store.archiveProtocol(id: proto.id)
+                        } label: {
+                            Label("Archive", systemImage: "archivebox")
+                        }
+                        .tint(OwloryColor.textTertiary)
                         Button(role: .destructive) {
                             store.deleteProtocol(id: proto.id)
                         } label: {
@@ -240,6 +247,45 @@ struct HomeView: View {
             }
         } header: {
             Text("Protocols")
+        }
+    }
+
+    @ViewBuilder
+    private var archivedProtocolsSection: some View {
+        let archived = store.archivedProtocols
+        if !archived.isEmpty {
+            Section {
+                ForEach(archived) { proto in
+                    HStack(alignment: .top, spacing: 8) {
+                        Image(systemName: "archivebox")
+                            .foregroundStyle(.secondary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(proto.title)
+                                .foregroundStyle(.secondary)
+                            Text("Archived")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
+                        Spacer()
+                        Button {
+                            store.unarchiveProtocol(id: proto.id)
+                        } label: {
+                            Text("Restore")
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button {
+                            store.unarchiveProtocol(id: proto.id)
+                        } label: {
+                            Label("Restore", systemImage: "arrow.uturn.backward")
+                        }
+                        .tint(OwloryColor.brandPrimary)
+                    }
+                }
+            } header: {
+                Text("Archived Protocols")
+            }
         }
     }
 
@@ -744,6 +790,7 @@ private struct EditProtocolSheet: View {
                 }
                 ProtocolScheduleSection(draft: $scheduleDraft)
                 sourceNoteSection
+                archiveSection
             }
             .navigationTitle("Edit Protocol")
             .navigationBarTitleDisplayMode(.inline)
@@ -792,6 +839,26 @@ private struct EditProtocolSheet: View {
             Section("Source") {
                 Label("Source note unavailable", systemImage: "exclamationmark.triangle")
                     .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var archiveSection: some View {
+        Section {
+            if proto.isArchived {
+                Button {
+                    store.unarchiveProtocol(id: proto.id)
+                    onDismiss()
+                } label: {
+                    Label("Restore Protocol", systemImage: "arrow.uturn.backward")
+                }
+            } else {
+                Button {
+                    store.archiveProtocol(id: proto.id)
+                    onDismiss()
+                } label: {
+                    Label("Archive Protocol", systemImage: "archivebox")
+                }
             }
         }
     }

@@ -6,6 +6,7 @@
 - Recurring home task reset.
 - Household protocols.
 - Protocol runs and step lifecycle.
+- Protocol template archive/restore state.
 
 ## Does Not Own
 
@@ -70,6 +71,9 @@ Proof level: Home protocol lifecycle and Today projection rules have focused dom
 Missing/deferred: Home projects remain `Contract only`; protocol schedule windows currently affect Home template labels only.
 
 - Protocols are reusable templates. A run must not mutate the template that created it.
+- Archived protocol templates remain stored with their steps, origin, and schedule metadata. Archiving hides the template from the active protocol list; it does not delete the template or mutate run history.
+- Archived protocol templates may not start new runs. If a run was already active before the template was archived, the primary resume path may continue that run until it reaches the normal completed or abandoned terminal state.
+- Archived protocol templates do not produce protocol schedule notification candidates. App runtime wiring should use `HomeStore.activeProtocols` when handing templates to `ProtocolScheduleNotificationRules`.
 - Protocol runs are execution snapshots. They remain active until every step is completed or skipped, or until the user explicitly abandons the run.
 - Active runs may span reloads and calendar days. Do not auto-complete, auto-abandon, or recreate a run only because the day changed.
 - Active protocol runs are first-class Home work. Today and Home summaries should surface them before standalone Home tasks when a run is in progress.
@@ -113,6 +117,7 @@ Missing/deferred: schedule windows still do not drive Today projection or admiss
 - Keep protocol lifecycle policy in `ProtocolLifecycleRules`; `HomeStore` should orchestrate repositories, clocks, generated IDs, and completion-history logging.
 - Do not duplicate active protocol runs through the primary `continueOrStartRun` path; it must resume the existing active run.
 - Preserve the explicit secondary "Start New Run" path while it remains visible in Home UI.
+- Preserve archive semantics: archive/unarchive must toggle template visibility only, and archived templates must not start new runs or feed schedule notification planning.
 - Terminal protocol runs must not be re-completed, re-abandoned, or logged to completion history more than once.
 - Preserve protocol templates when runs mutate step state.
 

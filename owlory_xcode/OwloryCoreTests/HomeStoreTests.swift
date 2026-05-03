@@ -74,6 +74,7 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(proto.title, "Legacy protocol")
         XCTAssertEqual(proto.steps, ["Step one"])
         XCTAssertNil(proto.schedule)
+        XCTAssertFalse(proto.isArchived)
     }
 
     func testPromoteWritingNoteToTaskCreatesTaskWithOrigin() {
@@ -310,6 +311,84 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(store.protocols.count, 1)
         XCTAssertEqual(store.protocols[0].schedule, schedule)
         XCTAssertTrue(store.runs.isEmpty)
+    }
+
+    func testArchiveAndUnarchiveProtocolPersistsTemplateWithoutDeletingMetadata() throws {
+        let taskRepo = InMemoryItemListRepository<HomeTask>()
+        let protoRepo = InMemoryItemListRepository<HouseholdProtocol>()
+        let runRepo = InMemoryItemListRepository<ProtocolRun>()
+        let schedule = HouseholdProtocolSchedule(
+            preset: .weekend,
+            startDate: makeDate("2026-05-02T00:00:00Z"),
+            endDate: makeDate("2026-05-03T00:00:00Z")
+        )
+        let store = HomeStore(
+            taskRepository: taskRepo,
+            protocolRepository: protoRepo,
+            runRepository: runRepo,
+            clock: FixedClock(now: makeDate("2026-05-01T12:00:00Z"))
+        )
+        let protocolID = store.addProtocol(
+            title: "Weekend reset",
+            steps: ["Clear kitchen", "Review calendar"],
+            schedule: schedule
+        )
+
+        store.archiveProtocol(id: protocolID)
+
+        XCTAssertTrue(store.protocols[0].isArchived)
+        XCTAssertTrue(store.activeProtocols.isEmpty)
+        XCTAssertEqual(store.archivedProtocols.map(\.id), [protocolID])
+        let archived = try XCTUnwrap(try protoRepo.loadAll().first)
+        XCTAssertTrue(archived.isArchived)
+        XCTAssertEqual(archived.steps, ["Clear kitchen", "Review calendar"])
+        XCTAssertEqual(archived.schedule, schedule)
+
+        store.unarchiveProtocol(id: protocolID)
+
+        XCTAssertFalse(store.protocols[0].isArchived)
+        XCTAssertEqual(store.activeProtocols.map(\.id), [protocolID])
+        XCTAssertTrue(store.archivedProtocols.isEmpty)
+        XCTAssertFalse(try XCTUnwrap(try protoRepo.loadAll().first).isArchived)
+    }
+
+    func testArchivedProtocolRejectsNewRunsButCanResumeExistingActiveRun() {
+        let store = makeStore()
+        let protocolID = store.addProtocol(title: "Kitchen reset", steps: ["Clear sink"])
+        let activeRunID = store.startRun(protocolID: protocolID)
+
+        store.archiveProtocol(id: protocolID)
+
+        XCTAssertEqual(store.continueOrStartRun(protocolID: protocolID), activeRunID)
+        XCTAssertNil(store.startRun(protocolID: protocolID))
+        XCTAssertEqual(store.runs.count, 1)
+        XCTAssertEqual(store.activeRuns.map(\.id), [activeRunID])
+    }
+
+    func testArchivedProtocolWithoutActiveRunCannotStartNewRun() {
+        let store = makeStore()
+        let protocolID = store.addProtocol(title: "Kitchen reset", steps: ["Clear sink"])
+
+        store.archiveProtocol(id: protocolID)
+
+        XCTAssertNil(store.continueOrStartRun(protocolID: protocolID))
+        XCTAssertNil(store.startRun(protocolID: protocolID))
+        XCTAssertTrue(store.runs.isEmpty)
+    }
+
+    func testActiveRunForArchivedProtocolTerminatesNormally() {
+        let store = makeStore()
+        let protocolID = store.addProtocol(title: "Kitchen reset", steps: ["Clear sink"])
+        let runID = store.startRun(protocolID: protocolID)!
+        let stepID = store.runs[0].steps[0].id
+
+        store.archiveProtocol(id: protocolID)
+        store.completeStep(runID: runID, stepID: stepID)
+
+        XCTAssertEqual(store.runs[0].status, .completed)
+        XCTAssertNotNil(store.runs[0].completedAt)
+        XCTAssertTrue(store.activeRuns.isEmpty)
+        XCTAssertEqual(store.completedRuns.map(\.id), [runID])
     }
 
     func testPromoteWritingNoteToProtocolCreatesDraftWithoutRun() {

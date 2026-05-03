@@ -274,9 +274,32 @@ final class HomeStore: OwloryObservableObject {
         persistProtocols()
     }
 
+    func archiveProtocol(id: UUID) {
+        setProtocolArchived(id: id, isArchived: true)
+    }
+
+    func unarchiveProtocol(id: UUID) {
+        setProtocolArchived(id: id, isArchived: false)
+    }
+
+    private func setProtocolArchived(id: UUID, isArchived: Bool) {
+        guard let index = protocols.firstIndex(where: { $0.id == id }) else { return }
+        guard protocols[index].isArchived != isArchived else { return }
+        protocols[index].isArchived = isArchived
+        persistProtocols()
+    }
+
     func deleteProtocol(id: UUID) {
         protocols.removeAll { $0.id == id }
         persistProtocols()
+    }
+
+    var activeProtocols: [HouseholdProtocol] {
+        protocols.filter { !$0.isArchived }
+    }
+
+    var archivedProtocols: [HouseholdProtocol] {
+        protocols.filter(\.isArchived)
     }
 
     // MARK: - Protocol Runs
@@ -306,9 +329,16 @@ final class HomeStore: OwloryObservableObject {
         mode: ProtocolLifecycleRules.StartMode
     ) -> UUID? {
         let proto = protocols.first { $0.id == protocolID }
+        let activeRun = activeRun(forProtocolID: protocolID)
+        if proto?.isArchived == true {
+            if mode == .resumeExistingIfActive, let activeRun {
+                return activeRun.id
+            }
+            return nil
+        }
         let decision = ProtocolLifecycleRules.startDecision(
             template: proto,
-            activeRun: activeRun(forProtocolID: protocolID),
+            activeRun: activeRun,
             mode: mode
         )
 
