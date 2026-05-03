@@ -848,6 +848,46 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertEqual(records.first?.itemKey, CompletionTimePredictor.key(forProtocolRun: "Kitchen Reset"))
     }
 
+    func testRevertCompletedStepReturnsToPending() {
+        let store = makeStore()
+        store.addProtocol(title: "Test", steps: ["Step 1", "Step 2"])
+        let runID = store.startRun(protocolID: store.protocols[0].id)!
+        let stepID = store.runs[0].steps[0].id
+
+        store.completeStep(runID: runID, stepID: stepID)
+        XCTAssertEqual(store.runs[0].steps[0].status, .completed)
+
+        store.revertStep(runID: runID, stepID: stepID)
+        XCTAssertEqual(store.runs[0].steps[0].status, .pending)
+        XCTAssertNil(store.runs[0].steps[0].completedAt)
+        XCTAssertEqual(store.runs[0].status, .active)
+    }
+
+    func testRevertLastResolvedStepReopensCompletedRun() {
+        let store = makeStore()
+        store.addProtocol(title: "Test", steps: ["Step 1"])
+        let runID = store.startRun(protocolID: store.protocols[0].id)!
+        let stepID = store.runs[0].steps[0].id
+
+        store.completeStep(runID: runID, stepID: stepID)
+        XCTAssertEqual(store.runs[0].status, .completed)
+
+        store.revertStep(runID: runID, stepID: stepID)
+        XCTAssertEqual(store.runs[0].status, .active)
+        XCTAssertNil(store.runs[0].completedAt)
+        XCTAssertEqual(store.runs[0].steps[0].status, .pending)
+    }
+
+    func testRevertPendingStepIsNoOp() {
+        let store = makeStore()
+        store.addProtocol(title: "Test", steps: ["Step 1"])
+        let runID = store.startRun(protocolID: store.protocols[0].id)!
+        let stepID = store.runs[0].steps[0].id
+
+        store.revertStep(runID: runID, stepID: stepID)
+        XCTAssertEqual(store.runs[0].steps[0].status, .pending)
+    }
+
     func testAbandonRunSetsStatusAndDate() {
         let store = makeStore()
         store.addProtocol(title: "Test", steps: ["Step 1"])

@@ -1030,6 +1030,15 @@ private struct ProtocolRunSheet: View {
                                 .accessibilityLabel("Skip \(step.title)")
                             }
                         }
+                        .swipeActions(edge: .trailing) {
+                            if step.status != .pending {
+                                Button {
+                                    store.revertStep(runID: run.id, stepID: step.id)
+                                } label: {
+                                    Label("Mark Pending", systemImage: "arrow.uturn.backward.circle")
+                                }
+                            }
+                        }
                     }
                 } header: {
                     Text("Steps")

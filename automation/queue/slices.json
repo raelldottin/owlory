@@ -1064,7 +1064,7 @@
     {
       "slice_id": "home-protocol-step-revert",
       "title": "Allow reverting completed or skipped protocol steps to pending",
-      "status": "queued",
+      "status": "done",
       "priority": 144,
       "domain": "home",
       "allowed_paths": [

@@ -400,6 +400,17 @@ final class HomeStore: OwloryObservableObject {
         persistRuns()
     }
 
+    func revertStep(runID: UUID, stepID: UUID) {
+        guard let runIndex = runs.firstIndex(where: { $0.id == runID }) else { return }
+        let result = ProtocolLifecycleRules.unresolveStep(
+            in: runs[runIndex],
+            stepID: stepID
+        )
+        guard result.run != runs[runIndex] else { return }
+        runs[runIndex] = result.run
+        persistRuns()
+    }
+
     func addStepNote(runID: UUID, stepID: UUID, note: String) {
         guard let runIndex = runs.firstIndex(where: { $0.id == runID }) else { return }
         guard let stepIndex = runs[runIndex].steps.firstIndex(where: { $0.id == stepID }) else { return }
