@@ -14,6 +14,8 @@ struct HomeView: View {
 
     @State private var activeRunID: UUID?
     @State private var lastPresentedHighlightedRunSelectionID: UUID?
+    @State private var isCompletedTasksExpanded = false
+    @State private var isRecentRunsExpanded = false
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -152,15 +154,17 @@ struct HomeView: View {
     private var completedTasksSection: some View {
         let completed = store.completedTasks
         if !completed.isEmpty {
-            Section("Completed") {
-                ForEach(completed) { task in
-                    TaskRow(
-                        task: task,
-                        store: store,
-                        isHighlighted: task.id == highlightedTaskID,
-                        onSelect: { editingTask = task }
-                    )
-                    .id(task.id)
+            Section {
+                DisclosureGroup("Completed", isExpanded: $isCompletedTasksExpanded) {
+                    ForEach(completed) { task in
+                        TaskRow(
+                            task: task,
+                            store: store,
+                            isHighlighted: task.id == highlightedTaskID,
+                            onSelect: { editingTask = task }
+                        )
+                        .id(task.id)
+                    }
                 }
             }
         }
@@ -351,30 +355,30 @@ struct HomeView: View {
         let finished = store.terminalRuns
         if !finished.isEmpty {
             Section {
-                ForEach(finished.prefix(5)) { run in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(run.protocolTitle)
-                                .font(.subheadline)
-                            HStack(spacing: 4) {
-                                Image(systemName: run.status == .completed ? "checkmark.circle.fill" : "xmark.circle")
-                                    .font(.caption2)
-                                    .foregroundStyle(run.status == .completed ? OwloryColor.success : OwloryColor.textTertiary)
-                                Text("\(run.completedStepCount)/\(run.totalStepCount) completed")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                DisclosureGroup("Recent Runs", isExpanded: $isRecentRunsExpanded) {
+                    ForEach(finished.prefix(5)) { run in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(run.protocolTitle)
+                                    .font(.subheadline)
+                                HStack(spacing: 4) {
+                                    Image(systemName: run.status == .completed ? "checkmark.circle.fill" : "xmark.circle")
+                                        .font(.caption2)
+                                        .foregroundStyle(run.status == .completed ? OwloryColor.success : OwloryColor.textTertiary)
+                                    Text("\(run.completedStepCount)/\(run.totalStepCount) completed")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
-                        }
-                        Spacer()
-                        if let date = run.completedAt {
-                            Text(shortDate(date))
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
+                            Spacer()
+                            if let date = run.completedAt {
+                                Text(shortDate(date))
+                                    .font(.caption)
+                                    .foregroundStyle(.tertiary)
+                            }
                         }
                     }
                 }
-            } header: {
-                Text("Recent Runs")
             }
         }
     }
