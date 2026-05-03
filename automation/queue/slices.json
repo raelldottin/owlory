@@ -1185,7 +1185,7 @@
     {
       "slice_id": "train-row-status-pill-uniformity",
       "title": "Apply StatusBadge consistently across Train row surfaces",
-      "status": "queued",
+      "status": "done",
       "priority": 141,
       "domain": "train",
       "allowed_paths": [

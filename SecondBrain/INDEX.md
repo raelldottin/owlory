@@ -3,6 +3,7 @@
 ## 2026-05-03
 
 - [home-protocol-schedule-notifications](sessions/2026-05-03/010000-home-protocol-schedule-notifications.md)
+- [train-row-status-pill-uniformity](sessions/2026-05-03/020000-train-row-status-pill-uniformity.md)
 
 ## 2026-05-02
 
