@@ -27,6 +27,11 @@ enum ProtocolLifecycleRules {
         let didCompleteRun: Bool
     }
 
+    struct StepUnresolutionResult: Equatable {
+        let run: ProtocolRun
+        let didReopenRun: Bool
+    }
+
     static func startDecision(
         template: HouseholdProtocol?,
         activeRun: ProtocolRun?,
@@ -109,6 +114,33 @@ enum ProtocolLifecycleRules {
         }
 
         return StepResolutionResult(run: updated, didCompleteRun: false)
+    }
+
+    static func unresolveStep(
+        in run: ProtocolRun,
+        stepID: UUID
+    ) -> StepUnresolutionResult {
+        guard run.status != .abandoned else {
+            return StepUnresolutionResult(run: run, didReopenRun: false)
+        }
+        guard let stepIndex = run.steps.firstIndex(where: { $0.id == stepID }) else {
+            return StepUnresolutionResult(run: run, didReopenRun: false)
+        }
+        guard run.steps[stepIndex].status != .pending else {
+            return StepUnresolutionResult(run: run, didReopenRun: false)
+        }
+
+        var updated = run
+        updated.steps[stepIndex].status = .pending
+        updated.steps[stepIndex].completedAt = nil
+
+        let didReopenRun = run.status == .completed
+        if didReopenRun {
+            updated.status = .active
+            updated.completedAt = nil
+        }
+
+        return StepUnresolutionResult(run: updated, didReopenRun: didReopenRun)
     }
 
     static func abandon(_ run: ProtocolRun, at abandonedAt: Date) -> ProtocolRun {

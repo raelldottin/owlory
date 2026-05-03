@@ -188,6 +188,135 @@ final class ProtocolLifecycleRulesTests: XCTestCase {
         XCTAssertEqual(activeResult.run, activeRun)
     }
 
+    // MARK: - Unresolve Step
+
+    func testUnresolvePendingStepIsNoOp() {
+        let run = makeRun(
+            steps: [
+                ProtocolStepInstance(id: step1ID, stepNumber: 1, title: "One"),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertFalse(result.didReopenRun)
+        XCTAssertEqual(result.run, run)
+    }
+
+    func testUnresolveCompletedStepRevertsToPending() {
+        let run = makeRun(
+            steps: [
+                ProtocolStepInstance(
+                    id: step1ID, stepNumber: 1, title: "One",
+                    status: .completed, completedAt: completedAt
+                ),
+                ProtocolStepInstance(id: step2ID, stepNumber: 2, title: "Two"),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertFalse(result.didReopenRun)
+        XCTAssertEqual(result.run.status, .active)
+        XCTAssertEqual(result.run.steps[0].status, .pending)
+        XCTAssertNil(result.run.steps[0].completedAt)
+        XCTAssertEqual(result.run.steps[1].status, .pending)
+    }
+
+    func testUnresolveSkippedStepRevertsToPending() {
+        let run = makeRun(
+            steps: [
+                ProtocolStepInstance(id: step1ID, stepNumber: 1, title: "One", status: .skipped),
+                ProtocolStepInstance(id: step2ID, stepNumber: 2, title: "Two"),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertFalse(result.didReopenRun)
+        XCTAssertEqual(result.run.steps[0].status, .pending)
+        XCTAssertNil(result.run.steps[0].completedAt)
+    }
+
+    func testUnresolveLastResolvedStepReopensCompletedRun() {
+        let run = makeRun(
+            status: .completed,
+            completedAt: completedAt,
+            steps: [
+                ProtocolStepInstance(
+                    id: step1ID, stepNumber: 1, title: "One",
+                    status: .completed, completedAt: completedAt
+                ),
+                ProtocolStepInstance(id: step2ID, stepNumber: 2, title: "Two", status: .skipped),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step2ID)
+
+        XCTAssertTrue(result.didReopenRun)
+        XCTAssertEqual(result.run.status, .active)
+        XCTAssertNil(result.run.completedAt)
+        XCTAssertEqual(result.run.steps[0].status, .completed)
+        XCTAssertEqual(result.run.steps[1].status, .pending)
+    }
+
+    func testUnresolveMidRunStepLeavesRunActive() {
+        let run = makeRun(
+            steps: [
+                ProtocolStepInstance(
+                    id: step1ID, stepNumber: 1, title: "One",
+                    status: .completed, completedAt: completedAt
+                ),
+                ProtocolStepInstance(id: step2ID, stepNumber: 2, title: "Two"),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertFalse(result.didReopenRun)
+        XCTAssertEqual(result.run.status, .active)
+        XCTAssertEqual(result.run.steps[0].status, .pending)
+        XCTAssertEqual(result.run.steps[1].status, .pending)
+    }
+
+    func testUnresolveStepInAbandonedRunIsNoOp() {
+        let run = makeRun(
+            status: .abandoned,
+            completedAt: completedAt,
+            steps: [
+                ProtocolStepInstance(
+                    id: step1ID, stepNumber: 1, title: "One",
+                    status: .completed, completedAt: completedAt
+                ),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertFalse(result.didReopenRun)
+        XCTAssertEqual(result.run, run)
+    }
+
+    func testUnresolveDoesNotDisturbOtherResolvedSteps() {
+        let run = makeRun(
+            status: .completed,
+            completedAt: completedAt,
+            steps: [
+                ProtocolStepInstance(
+                    id: step1ID, stepNumber: 1, title: "One",
+                    status: .completed, completedAt: completedAt
+                ),
+                ProtocolStepInstance(id: step2ID, stepNumber: 2, title: "Two", status: .skipped),
+            ]
+        )
+
+        let result = ProtocolLifecycleRules.unresolveStep(in: run, stepID: step1ID)
+
+        XCTAssertEqual(result.run.steps[1].status, .skipped)
+    }
+
+    // MARK: - Abandon
+
     func testAbandonOnlyMutatesActiveRuns() {
         let activeRun = makeRun()
         let abandoned = ProtocolLifecycleRules.abandon(activeRun, at: completedAt)

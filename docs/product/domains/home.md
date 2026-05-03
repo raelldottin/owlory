@@ -80,6 +80,8 @@ Missing/deferred: Home projects remain `Contract only`; protocol schedule window
 - Today may project an active protocol run in Continue, but that projection must not replace or duplicate the Home-owned run lifecycle by turning the run into persisted Today carry-forward state.
 - A Home protocol template without an active run is not active work. Today should not show stale carried Focus rows for that template as if they were protocol work.
 - When Today routes into an active protocol run, Home should present the active run directly rather than dropping the user at the reusable protocol template surface.
+- Step resolution is reversible. A completed or skipped step can be returned to pending, clearing its completedAt metadata. Reverting a step that is already pending is a no-op. Reverting a resolved step in an abandoned run is a no-op.
+- Reverting the last resolved step in a completed run reopens the run by clearing completedAt and returning status to active. Reverting a step in an active run leaves the run active. Reverting one step must not disturb other resolved steps.
 - Progress counts completed and skipped steps as resolved. The next action should use the next pending step number, not the completed count.
 - Weekly digest may count timestamped completed protocol steps as completed Home work, but it must not change protocol run status or treat skipped/pending steps as completed tasks.
 - The primary protocol action should continue an existing active run. The explicit secondary action may still start a new run while that UI remains available.

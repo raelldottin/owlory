@@ -2,6 +2,7 @@
 
 ## 2026-05-03
 
+- [home-protocol-step-revert](sessions/2026-05-03/090000-home-protocol-step-revert.md)
 - [home-protocol-archive](sessions/2026-05-03/082040-home-protocol-archive.md)
 - [home-protocol-schedule-notifications](sessions/2026-05-03/010000-home-protocol-schedule-notifications.md)
 - [train-row-status-pill-uniformity](sessions/2026-05-03/020000-train-row-status-pill-uniformity.md)
