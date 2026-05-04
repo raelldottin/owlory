@@ -16,6 +16,7 @@ struct HomeView: View {
     @State private var lastPresentedHighlightedRunSelectionID: UUID?
     @State private var isCompletedTasksExpanded = false
     @State private var isRecentRunsExpanded = false
+    @State private var isArchivedProtocolsExpanded = false
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -259,36 +260,36 @@ struct HomeView: View {
         let archived = store.archivedProtocols
         if !archived.isEmpty {
             Section {
-                ForEach(archived) { proto in
-                    HStack(alignment: .top, spacing: 8) {
-                        Image(systemName: "archivebox")
-                            .foregroundStyle(.secondary)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(proto.title)
+                DisclosureGroup("Archived Protocols", isExpanded: $isArchivedProtocolsExpanded) {
+                    ForEach(archived) { proto in
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: "archivebox")
                                 .foregroundStyle(.secondary)
-                            Text("Archived")
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(proto.title)
+                                    .foregroundStyle(.secondary)
+                                Text("Archived")
+                                    .font(.caption)
+                                    .foregroundStyle(.tertiary)
+                            }
+                            Spacer()
+                            Button {
+                                store.unarchiveProtocol(id: proto.id)
+                            } label: {
+                                Text("Restore")
+                            }
+                            .buttonStyle(.borderless)
                         }
-                        Spacer()
-                        Button {
-                            store.unarchiveProtocol(id: proto.id)
-                        } label: {
-                            Text("Restore")
+                        .swipeActions(edge: .trailing) {
+                            Button {
+                                store.unarchiveProtocol(id: proto.id)
+                            } label: {
+                                Label("Restore", systemImage: "arrow.uturn.backward")
+                            }
+                            .tint(OwloryColor.brandPrimary)
                         }
-                        .buttonStyle(.borderless)
-                    }
-                    .swipeActions(edge: .trailing) {
-                        Button {
-                            store.unarchiveProtocol(id: proto.id)
-                        } label: {
-                            Label("Restore", systemImage: "arrow.uturn.backward")
-                        }
-                        .tint(OwloryColor.brandPrimary)
                     }
                 }
-            } header: {
-                Text("Archived Protocols")
             }
         }
     }
