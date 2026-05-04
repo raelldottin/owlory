@@ -18,6 +18,7 @@ struct WriteView: View {
     @State private var captureRecordID = UUID()
     @State private var selectedNote: WritingNote?
     @State private var lastPresentedHighlightedNoteSelectionID: UUID?
+    @State private var isArchivedNotesExpanded = false
 
     private var calibration: CalibrationRules.Calibration? {
         guard let snapshot = patternStore.weeklySnapshot else { return nil }
@@ -198,24 +199,39 @@ struct WriteView: View {
     private var archiveSection: some View {
         let archived = store.notesByStage[.archived] ?? []
         if !archived.isEmpty {
-            Section("Archived") {
-                ForEach(archived) { note in
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(note.title)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        Text(note.body)
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
-                            .lineLimit(1)
-                    }
-                    .continueHighlight(note.id == highlightedNoteID)
-                    .id(note.id)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            store.deleteNote(id: note.id)
+            Section {
+                DisclosureGroup("Archived Notes", isExpanded: $isArchivedNotesExpanded) {
+                    ForEach(archived) { note in
+                        Button {
+                            selectedNote = note
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(note.title)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                Text(note.body)
+                                    .font(.caption)
+                                    .foregroundStyle(.tertiary)
+                                    .lineLimit(1)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .continueHighlight(note.id == highlightedNoteID)
+                        .id(note.id)
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                store.transitionStage(id: note.id, to: .capture)
+                            } label: {
+                                Label("Restore", systemImage: "arrow.uturn.backward")
+                            }
+                            .tint(OwloryColor.brandPrimary)
+                        }
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                store.deleteNote(id: note.id)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
                     }
                 }
