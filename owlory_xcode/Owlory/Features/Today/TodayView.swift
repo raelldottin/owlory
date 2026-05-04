@@ -806,7 +806,7 @@ struct TodayView: View {
                     )
                 } label: {
                     HStack {
-                        Label("Browse previous days", systemImage: "clock.arrow.circlepath")
+                        Label("Browse Previous Days", systemImage: "clock.arrow.circlepath")
                             .font(.subheadline)
                         Spacer()
                         Text("\(store.recentEntries.count)")
@@ -817,7 +817,7 @@ struct TodayView: View {
             } header: {
                 Text("History")
             } footer: {
-                Text("Review recent check-ins, priorities, and reflections without changing today.")
+                Text("Review what you planned, what carried forward, and what still connects to current work.")
             }
         }
     }
