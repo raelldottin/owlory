@@ -319,6 +319,8 @@ enum TrainingStatus: String, CaseIterable, Codable {
     case completed
     case modified
     case skipped
+
+    static let editableCases: [TrainingStatus] = [.planned, .completed, .skipped]
 }
 
 struct TrainingSession: Identifiable, Equatable, Codable {

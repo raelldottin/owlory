@@ -290,7 +290,7 @@ private struct SessionCardView: View {
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     Picker("Status", selection: $status) {
-                        ForEach(TrainingStatus.allCases, id: \.rawValue) { s in
+                        ForEach(TrainingStatus.editableCases, id: \.rawValue) { s in
                             Text(s.rawValue.capitalized).tag(s)
                         }
                     }
