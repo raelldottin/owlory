@@ -48,6 +48,7 @@ Missing/deferred: Large Dynamic Type screenshot proof, visible fallback review f
 - Retired scaffold prompts belong behind centralized candidate rules. Suppress unlinked retired scaffolds such as "Log one writing intention" and "Capture one career win" without suppressing linked or source-backed user records with the same title.
 - Focus Three is a current-day commitment surface, not just planning metadata. The Today dashboard must expose Focus status actions through Continue, including a direct Done action for Focus-backed Continue rows.
 - Source-backed Focus items should be marked done when their linked source has unambiguous completion semantics. Current automatic sources are completed or modified Train sessions, completed Home tasks, and published Write notes. Do not infer completion from ambiguous states such as archived notes, skipped work, pending protocol steps, or reusable protocol templates.
+- Continue removes completed work when its owning Focus item is marked done, when the source-derived item is no longer eligible, or when linked-source synchronization marks the Focus artifact done. Manually created Focus items without source identity are not auto-completed by matching title alone.
 
 ## Artifact Lifecycle
 
