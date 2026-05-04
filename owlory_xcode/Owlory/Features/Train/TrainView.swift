@@ -275,21 +275,36 @@ private struct SessionCardView: View {
 
                 Divider()
 
-                TextField("What did you actually do?", text: $actualActivity, axis: .vertical)
-                    .font(.subheadline)
-
-                Picker("Status", selection: $status) {
-                    ForEach(TrainingStatus.allCases, id: \.rawValue) { s in
-                        Text(s.rawValue.capitalized).tag(s)
-                    }
+                // What did you actually do?
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("What did you actually do?")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    TextField("Describe the session", text: $actualActivity, axis: .vertical)
+                        .font(.subheadline)
                 }
-                .pickerStyle(.segmented)
 
-                TextField("Reflection", text: $reflection, axis: .vertical)
-                    .font(.subheadline)
-                    .lineLimit(2...4)
+                // Status
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Status")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    Picker("Status", selection: $status) {
+                        ForEach(TrainingStatus.allCases, id: \.rawValue) { s in
+                            Text(s.rawValue.capitalized).tag(s)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
 
-                Section {
+                // Reflection
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Reflection")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    TextField("How did it go?", text: $reflection, axis: .vertical)
+                        .font(.subheadline)
+                        .lineLimit(2...4)
                     VoiceCaptureButton(recordID: reflectionCaptureID) { text, fileName in
                         reflectionAudioFileName = fileName
                         reflectionAudioTranscription = text
@@ -347,27 +362,42 @@ private struct SessionCardView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                if !session.actualActivity.isEmpty {
-                    Text(session.actualActivity)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-            }
 
-            if !session.reflection.isEmpty && session.status != .planned {
-                HStack(alignment: .top) {
-                    Text(session.reflection)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .italic()
-                    if let audioFile = session.reflectionAudioFileName {
-                        AudioPlaybackButton(fileName: audioFile)
+                // What did you actually do?
+                if !session.actualActivity.isEmpty {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("What did you actually do?")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.tertiary)
+                        Text(session.actualActivity)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                     }
                 }
-                if let transcription = session.reflectionAudioTranscription, !transcription.isEmpty {
-                    Text(transcription)
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
+
+                // Status (shown via StatusBadge in header)
+
+                // Reflection
+                if !session.reflection.isEmpty {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Reflection")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.tertiary)
+                        HStack(alignment: .top) {
+                            Text(session.reflection)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .italic()
+                            if let audioFile = session.reflectionAudioFileName {
+                                AudioPlaybackButton(fileName: audioFile)
+                            }
+                        }
+                        if let transcription = session.reflectionAudioTranscription, !transcription.isEmpty {
+                            Text(transcription)
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
+                    }
                 }
             }
         }
