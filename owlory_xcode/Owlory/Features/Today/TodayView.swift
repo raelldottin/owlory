@@ -800,7 +800,10 @@ struct TodayView: View {
         if !store.recentEntries.isEmpty {
             Section {
                 NavigationLink {
-                    PreviousDaysView(entries: store.recentEntries)
+                    PreviousDaysView(
+                        entries: store.recentEntries,
+                        statusResolver: makeLiveStatusResolver()
+                    )
                 } label: {
                     HStack {
                         Label("Browse previous days", systemImage: "clock.arrow.circlepath")
@@ -815,6 +818,48 @@ struct TodayView: View {
                 Text("History")
             } footer: {
                 Text("Review recent check-ins, priorities, and reflections without changing today.")
+            }
+        }
+    }
+
+    private func makeLiveStatusResolver() -> (OwloryItemOrigin) -> PreviousDayLiveStatus? {
+        let sessions = trainStore.sessions
+        let tasks = homeStore.tasks
+        let runs = homeStore.runs
+        let protocols = homeStore.protocols
+        let notes = writeStore.notes
+
+        return { origin in
+            switch origin.kind {
+            case .trainingSession:
+                guard let session = sessions.first(where: { $0.id == origin.id }) else { return nil }
+                switch session.status {
+                case .planned: return .active
+                case .completed: return .completed
+                case .modified: return .completed
+                case .skipped: return .skipped
+                }
+            case .homeTask:
+                guard let task = tasks.first(where: { $0.id == origin.id }) else { return nil }
+                if task.isCompleted { return .completed }
+                if task.isSkipped { return .skipped }
+                return .active
+            case .homeProtocolRun:
+                guard let run = runs.first(where: { $0.id == origin.id }) else { return nil }
+                switch run.status {
+                case .active:
+                    let proto = protocols.first { $0.id == run.protocolID }
+                    if proto?.isArchived == true { return .archived }
+                    return .active
+                case .completed: return .completed
+                case .abandoned: return .abandoned
+                }
+            case .writingNote:
+                guard let note = notes.first(where: { $0.id == origin.id }) else { return nil }
+                if note.stage == .archived { return .archived }
+                return .active
+            case .careerRecord:
+                return nil
             }
         }
     }
@@ -1108,12 +1153,13 @@ struct TodayView: View {
 
 private struct PreviousDaysView: View {
     let entries: [DailyEntry]
+    let statusResolver: (OwloryItemOrigin) -> PreviousDayLiveStatus?
 
     var body: some View {
         List {
             ForEach(entries) { entry in
                 NavigationLink {
-                    PreviousDayDetailView(entry: entry)
+                    PreviousDayDetailView(entry: entry, statusResolver: statusResolver)
                 } label: {
                     PreviousDayRow(entry: entry)
                 }
@@ -1163,8 +1209,35 @@ private struct PreviousDayRow: View {
     }
 }
 
+enum PreviousDayLiveStatus {
+    case active
+    case completed
+    case skipped
+    case archived
+    case abandoned
+
+    var label: String {
+        switch self {
+        case .active: return "Still active"
+        case .completed: return "Completed"
+        case .skipped: return "Skipped"
+        case .archived: return "Archived"
+        case .abandoned: return "Abandoned"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .active: return OwloryColor.brandPrimary
+        case .completed: return OwloryColor.success
+        case .skipped, .archived, .abandoned: return OwloryColor.textTertiary
+        }
+    }
+}
+
 private struct PreviousDayDetailView: View {
     let entry: DailyEntry
+    let statusResolver: (OwloryItemOrigin) -> PreviousDayLiveStatus?
 
     var body: some View {
         List {
@@ -1202,6 +1275,10 @@ private struct PreviousDayDetailView: View {
                         HStack(spacing: 8) {
                             Text(item.domain.title)
                             Text(item.status.rawValue.capitalized)
+                            if let status = resolveStatus(for: item) {
+                                Text(status.label)
+                                    .foregroundStyle(status.color)
+                            }
                         }
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -1237,8 +1314,16 @@ private struct PreviousDayDetailView: View {
             Section("Carry Forward") {
                 ForEach(entry.carryForward) { item in
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(item.title)
-                            .font(.subheadline)
+                        HStack {
+                            Text(item.title)
+                                .font(.subheadline)
+                            if let status = resolveStatus(for: item) {
+                                Spacer()
+                                Text(status.label)
+                                    .font(.caption)
+                                    .foregroundStyle(status.color)
+                            }
+                        }
                         Text(item.domain.title)
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -1256,6 +1341,11 @@ private struct PreviousDayDetailView: View {
                     .font(.subheadline)
             }
         }
+    }
+
+    private func resolveStatus(for item: FocusItem) -> PreviousDayLiveStatus? {
+        guard let origin = item.origin else { return nil }
+        return statusResolver(origin)
     }
 
     private var dateLabel: String {
