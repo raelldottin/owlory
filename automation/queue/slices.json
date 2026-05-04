@@ -1338,6 +1338,34 @@
       "depends_on": [],
       "max_files_changed": 5,
       "notes": "Tools/generate-build-info.sh:36 currently uses `[ -d \"$GIT_ROOT/.git\" ]`, which fails in any git worktree because .git is a file pointer (`gitdir: /path/to/main/.git/worktrees/<name>`) rather than a directory. The script then falls through to the no-git fallback (lines 47-54) and stamps GitCommit/GitBranch/GitTag/GitCommitFull as no-git, which makes BuildInfo.isReleaseable=false and breaks any device or TestFlight provenance attempt from a worktree. Replace the existence test with one that handles both shapes (e.g., `[ -e \"$GIT_ROOT/.git\" ]` or `git -C \"$GIT_ROOT\" rev-parse --git-dir > /dev/null 2>&1`). Verify by building from a worktree checkout and confirming Info.plist GitCommit, GitCommitFull, GitBranch, and GitTag match `git rev-parse` output rather than no-git. Do not change app behavior, only the stamp script's git-detection."
+    },
+    {
+      "slice_id": "previous-days-live-status-labels",
+      "title": "Show live-status labels on Previous Days focus and carry-forward rows",
+      "status": "done",
+      "priority": 146,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id previous-days-live-status-labels",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 8,
+      "notes": "Previous Days stays read-only. Add a small live-status enum (active, completed, skipped, archived, abandoned) and a resolver closure injected into PreviousDayDetailView that maps FocusItem.origin to current app state via TrainStore, WriteStore, and HomeStore. Show inline labels on focus and carry-forward rows when origin resolves; degrade silently when origin is nil or source is deleted. Support trainingSession, writingNote, homeTask, homeProtocolRun origin kinds. Do not resolve careerRecord. No DailyEntry mutation, no persistence changes, no routing to source records. Domain intentions, evening reflections, and energy/mood/sleep remain unchanged. proof_level should land at domain-tested."
     }
   ]
 }
