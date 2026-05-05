@@ -42,7 +42,7 @@ struct TrainView: View {
             .sheet(isPresented: $showingAddSession) {
                 addSessionSheet
             }
-            .alert("Couldn't Update Train", isPresented: Binding(
+            .alert("Couldn't Update Session", isPresented: Binding(
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }
             )) {
@@ -218,10 +218,14 @@ struct TrainView: View {
         showingAddSession = false
     }
 
-    private func sessionDateString(_ date: Date) -> String {
+    private static let sessionDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        return formatter.string(from: date)
+        return formatter
+    }()
+
+    private func sessionDateString(_ date: Date) -> String {
+        Self.sessionDateFormatter.string(from: date)
     }
 }
 
@@ -251,7 +255,7 @@ private struct SessionCardView: View {
                         Image(systemName: "arrow.trianglehead.2.counterclockwise")
                             .font(.caption2)
                         if let days = session.recurrenceIntervalDays {
-                            Text("Every \(days)d")
+                            Text("Every \(days) \(days == 1 ? "day" : "days")")
                                 .font(.caption2)
                         }
                     }
@@ -275,8 +279,8 @@ private struct SessionCardView: View {
                     TextField("Readiness notes (optional)", text: $readinessNote, axis: .vertical)
                         .font(.caption)
                         .lineLimit(1...3)
-                        .onChange(of: readinessNote) { _ in
-                            store.updateReadinessNote(id: session.id, readinessNote: readinessNote)
+                        .onChange(of: readinessNote) { _, newValue in
+                            store.updateReadinessNote(id: session.id, readinessNote: newValue)
                         }
                 }
 
@@ -361,7 +365,7 @@ private struct SessionCardView: View {
                 }
                 if !session.readinessNote.isEmpty {
                     HStack(alignment: .top, spacing: 4) {
-                        Image(systemName: "heart.text.square")
+                        Image(systemName: "note.text")
                             .foregroundStyle(.secondary)
                             .font(.caption)
                         Text(session.readinessNote)
@@ -441,8 +445,21 @@ struct TrainingReadinessScaleRow: View {
                             .animation(.easeInOut(duration: 0.15), value: value)
                     }
                     .buttonStyle(.plain)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, minHeight: 44)
                     .accessibilityLabel("\(label) \(level) of 5\(level == value ? ", selected" : "")")
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(label), \(value) of 5")
+            .accessibilityValue("\(value)")
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment:
+                    if value < 5 { onChange(value + 1) }
+                case .decrement:
+                    if value > 1 { onChange(value - 1) }
+                @unknown default:
+                    break
                 }
             }
             HStack(spacing: 0) {
@@ -450,17 +467,18 @@ struct TrainingReadinessScaleRow: View {
                     .frame(width: 90)
                 Text(anchors.0)
                     .frame(maxWidth: .infinity)
-                Text("")
+                Spacer()
                     .frame(maxWidth: .infinity)
                 Text(anchors.1)
                     .frame(maxWidth: .infinity)
-                Text("")
+                Spacer()
                     .frame(maxWidth: .infinity)
                 Text(anchors.2)
                     .frame(maxWidth: .infinity)
             }
             .font(.caption2)
             .foregroundStyle(.tertiary)
+            .accessibilityHidden(true)
         }
     }
 }
@@ -487,7 +505,7 @@ private struct StatusBadge: View {
             .background(color.opacity(0.15))
             .foregroundStyle(color)
             .clipShape(Capsule())
-            .accessibilityLabel("Status: \(status.rawValue)")
+            .accessibilityLabel("Status: \(status.rawValue.capitalized)")
     }
 
     private var color: Color {
