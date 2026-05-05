@@ -10,6 +10,7 @@ struct TrainView: View {
     @State private var readinessNote = ""
     @State private var isRecurring = false
     @State private var recurrenceDays = 1
+    @State private var isReadinessExpanded = true
 
     private var calibration: CalibrationRules.Calibration? {
         guard let snapshot = patternStore.weeklySnapshot else { return nil }
@@ -161,16 +162,18 @@ struct TrainView: View {
                 Section("Plan") {
                     TextField("What's the session?", text: $plannedActivity)
                 }
-                Section("Readiness") {
-                    TrainingReadinessScaleRow(
-                        label: "Training",
-                        value: readinessLevel,
-                        anchors: ("Low", "Okay", "High")
-                    ) { value in
-                        readinessLevel = value
+                Section {
+                    DisclosureGroup("Training", isExpanded: $isReadinessExpanded) {
+                        TrainingReadinessScaleRow(
+                            label: "Readiness",
+                            value: readinessLevel,
+                            anchors: ("Low", "Okay", "High")
+                        ) { value in
+                            readinessLevel = value
+                        }
+                        TextField("Notes (optional)", text: $readinessNote, axis: .vertical)
+                            .lineLimit(2...4)
                     }
-                    TextField("Notes (optional)", text: $readinessNote, axis: .vertical)
-                        .lineLimit(2...4)
                 }
                 Section {
                     Toggle("Repeat this session", isOn: $isRecurring)
@@ -211,6 +214,7 @@ struct TrainView: View {
         readinessNote = ""
         isRecurring = false
         recurrenceDays = 1
+        isReadinessExpanded = true
         showingAddSession = false
     }
 
@@ -235,6 +239,7 @@ private struct SessionCardView: View {
     @State private var reflectionAudioFileName: String?
     @State private var reflectionAudioTranscription: String?
     @State private var reflectionCaptureID = UUID()
+    @State private var isReadinessExpanded = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -257,21 +262,23 @@ private struct SessionCardView: View {
             }
 
             if session.status == .planned {
-                TrainingReadinessScaleRow(
-                    label: "Training",
-                    value: readinessLevel,
-                    anchors: ("Low", "Okay", "High")
-                ) { value in
-                    readinessLevel = value
-                    store.updateReadinessLevel(id: session.id, readinessLevel: value)
-                }
-
-                TextField("Readiness notes (optional)", text: $readinessNote, axis: .vertical)
-                    .font(.caption)
-                    .lineLimit(1...3)
-                    .onChange(of: readinessNote) { _ in
-                        store.updateReadinessNote(id: session.id, readinessNote: readinessNote)
+                DisclosureGroup("Training", isExpanded: $isReadinessExpanded) {
+                    TrainingReadinessScaleRow(
+                        label: "Readiness",
+                        value: readinessLevel,
+                        anchors: ("Low", "Okay", "High")
+                    ) { value in
+                        readinessLevel = value
+                        store.updateReadinessLevel(id: session.id, readinessLevel: value)
                     }
+
+                    TextField("Readiness notes (optional)", text: $readinessNote, axis: .vertical)
+                        .font(.caption)
+                        .lineLimit(1...3)
+                        .onChange(of: readinessNote) { _ in
+                            store.updateReadinessNote(id: session.id, readinessNote: readinessNote)
+                        }
+                }
 
                 Divider()
 
