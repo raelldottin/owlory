@@ -163,7 +163,7 @@ struct TrainView: View {
                     TextField("What's the session?", text: $plannedActivity)
                 }
                 Section {
-                    DisclosureGroup("Training", isExpanded: $isReadinessExpanded) {
+                    DisclosureGroup(isExpanded: $isReadinessExpanded) {
                         TrainingReadinessScaleRow(
                             label: "Readiness",
                             value: readinessLevel,
@@ -173,6 +173,15 @@ struct TrainView: View {
                         }
                         TextField("Notes (optional)", text: $readinessNote, axis: .vertical)
                             .lineLimit(2...4)
+                    } label: {
+                        HStack(spacing: 12) {
+                            Label("Training", systemImage: "heart.text.square")
+                                .font(.subheadline.weight(.medium))
+                            Spacer()
+                            Text(trainingReadinessSummary(for: readinessLevel))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
                 Section {
@@ -266,7 +275,7 @@ private struct SessionCardView: View {
             }
 
             if session.status == .planned {
-                DisclosureGroup("Training", isExpanded: $isReadinessExpanded) {
+                DisclosureGroup(isExpanded: $isReadinessExpanded) {
                     TrainingReadinessScaleRow(
                         label: "Readiness",
                         value: readinessLevel,
@@ -282,6 +291,15 @@ private struct SessionCardView: View {
                         .onChange(of: readinessNote) { _, newValue in
                             store.updateReadinessNote(id: session.id, readinessNote: newValue)
                         }
+                } label: {
+                    HStack(spacing: 12) {
+                        Label("Training", systemImage: "heart.text.square")
+                            .font(.subheadline.weight(.medium))
+                        Spacer()
+                        Text(trainingReadinessSummary(for: readinessLevel))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
 
                 Divider()
@@ -300,12 +318,27 @@ private struct SessionCardView: View {
                     Text("Status")
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
-                    Picker("Status", selection: $status) {
+                    HStack(spacing: 8) {
                         ForEach(TrainingStatus.editableCases, id: \.rawValue) { s in
-                            Text(s.rawValue.capitalized).tag(s)
+                            Button {
+                                status = s
+                            } label: {
+                                Text(s.rawValue.capitalized)
+                                    .font(.subheadline.weight(.medium))
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 6)
+                                    .background(status == s ? statusPillColor(s).opacity(0.15) : Color.clear)
+                                    .foregroundStyle(status == s ? statusPillColor(s) : .secondary)
+                                    .clipShape(Capsule())
+                                    .overlay(
+                                        Capsule()
+                                            .strokeBorder(status == s ? statusPillColor(s).opacity(0.3) : OwloryColor.borderSubtle, lineWidth: 1)
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("\(s.rawValue.capitalized)\(status == s ? ", selected" : "")")
                         }
                     }
-                    .pickerStyle(.segmented)
                 }
 
                 // Reflection
@@ -480,6 +513,24 @@ struct TrainingReadinessScaleRow: View {
             .foregroundStyle(.tertiary)
             .accessibilityHidden(true)
         }
+    }
+}
+
+func trainingReadinessSummary(for value: Int) -> String {
+    switch value {
+    case 1...2: return "Readiness low"
+    case 3: return "Readiness okay"
+    case 4...5: return "Readiness high"
+    default: return "Tap to check in"
+    }
+}
+
+private func statusPillColor(_ status: TrainingStatus) -> Color {
+    switch status {
+    case .planned: return OwloryColor.brandPrimary
+    case .completed: return OwloryColor.success
+    case .modified: return OwloryColor.warning
+    case .skipped: return OwloryColor.error
     }
 }
 
