@@ -118,6 +118,8 @@ python3 automation/smoke/running_app_smoke.py --locale zh-Hans --output /tmp/owl
 
 Locale smoke proves the built app bundle contains the requested locale resources and that the simulator app launches with `-AppleLanguages`/`-AppleLocale` arguments. It does not prove translation quality, layout correctness, screenshot-preserved proof, real-device behavior, or TestFlight behavior.
 
+Repo-managed screenshot proof for the representative locale launch surfaces lives in `automation/proofs/app-localization-locale-screenshot-proof/`. Use that artifact only for launch-surface screenshot evidence; it does not expand the claim to translation quality or full layout review.
+
 The supervisor currently replays only a tiny exact-match allowlist of required validations:
 
 - `make architecture`

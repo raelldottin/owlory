@@ -1,0 +1,76 @@
+{
+  "slice_id": "app-localization-locale-screenshot-proof",
+  "status": "done",
+  "summary": "Preserved repo-managed simulator screenshots for the representative localization launch set en, es, fr, ar, and zh-Hans, with a README and manifest containing SHA-256 hashes and explicit proof boundaries.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/185838-app-localization-locale-screenshot-proof.md",
+    "automation/handoffs/20260506T225431Z-app-localization-locale-screenshot-proof.json",
+    "automation/proofs/app-localization-locale-screenshot-proof/01-locale-en-launch.png",
+    "automation/proofs/app-localization-locale-screenshot-proof/02-locale-es-launch.png",
+    "automation/proofs/app-localization-locale-screenshot-proof/03-locale-fr-launch.png",
+    "automation/proofs/app-localization-locale-screenshot-proof/04-locale-ar-launch.png",
+    "automation/proofs/app-localization-locale-screenshot-proof/05-locale-zh-Hans-launch.png",
+    "automation/proofs/app-localization-locale-screenshot-proof/README.md",
+    "automation/proofs/app-localization-locale-screenshot-proof/manifest.json",
+    "automation/queue/slices.json",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-locale-screenshot-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "python3 manifest hash/byte verification for automation/proofs/app-localization-locale-screenshot-proof/manifest.json",
+    "sips pixelWidth/pixelHeight check for each proof PNG",
+    "git diff --check",
+    "git diff --cached --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Representative locale screenshot evidence",
+      "before": "The localization lane had running-app-smoke proof for en, es, fr, ar, and zh-Hans, but screenshots lived only in /tmp and were not reviewable repo-managed evidence.",
+      "after": "The same representative locale set now has preserved launch-surface screenshots under automation/proofs/app-localization-locale-screenshot-proof/ with hashes and proof notes.",
+      "proof": [
+        "automation/proofs/app-localization-locale-screenshot-proof/README.md",
+        "automation/proofs/app-localization-locale-screenshot-proof/manifest.json",
+        "automation/proofs/app-localization-locale-screenshot-proof/01-locale-en-launch.png",
+        "automation/proofs/app-localization-locale-screenshot-proof/02-locale-es-launch.png",
+        "automation/proofs/app-localization-locale-screenshot-proof/03-locale-fr-launch.png",
+        "automation/proofs/app-localization-locale-screenshot-proof/04-locale-ar-launch.png",
+        "automation/proofs/app-localization-locale-screenshot-proof/05-locale-zh-Hans-launch.png"
+      ]
+    },
+    {
+      "contract": "Screenshot proof honesty",
+      "before": "The prior smoke runner screenshots were temporary and the first captures could catch the white launch transition.",
+      "after": "The preserved artifacts were recaptured after relaunching each locale and waiting for the Today surface to settle; the README states the proof covers launch surfaces only and excludes translation quality, full layout review, device behavior, and TestFlight behavior.",
+      "proof": [
+        "automation/proofs/app-localization-locale-screenshot-proof/README.md",
+        "automation/proofs/app-localization-locale-screenshot-proof/manifest.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This proof covers representative simulator launch surfaces only; it is not an automated screenshot-regression test.",
+    "Non-English values still include English placeholders, so translation quality remains unproven.",
+    "The Arabic screenshot gives RTL launch-surface evidence but does not prove complete RTL layout correctness.",
+    "The Simplified Chinese screenshot gives CJK launch-surface evidence but does not prove typography or translation quality.",
+    "Device behavior and TestFlight behavior remain unproven.",
+    "Source smoke JSON files report repo.dirty=yes because the resource-loading smoke ran before the automation/doc handoff commit; this screenshot proof commit ends clean and mirrored."
+  ],
+  "recommended_next_slice": "app-localization-translation-quality-plan",
+  "recommended_next_reason": "The localization lane now has build-tested packaging, running-app locale smoke, and simulator screenshot proof for representative launch surfaces. The largest remaining localization risk is translation quality and review workflow rather than more source extraction.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T22:58:38Z"
+}
