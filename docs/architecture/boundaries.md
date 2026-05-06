@@ -35,6 +35,15 @@ The arrows point from caller to dependency. Outer layers may call inward. Inner 
 - `Features` must not write files directly, schedule notifications directly, or compute cross-domain product rules that belong in `Core/Domain`.
 - Shared code must not become a dumping ground for feature-specific behavior.
 
+## Localization Boundary
+
+- `Core/Domain` returns semantic values such as enums, IDs, counts, dates, windows, and statuses. It must not own localized display copy.
+- `Core/Application` may coordinate runtime-owned messages such as notification titles and bodies when it also owns the scheduling side effect.
+- `Features` and UI-adjacent presentation helpers own screen-facing localized formatting, including counts, dates, display labels, and accessibility copy.
+- Shared formatting helpers are allowed only when they are UI-adjacent, boring, and free of product-rule decisions.
+
+For dynamic localization work, use [Localization Dynamic Formatting](../workflows/localization-dynamic-formatting.md) before moving or extracting copy.
+
 ## Known Exception
 
 No framework-import exception is currently allowed in `Core/Domain`.

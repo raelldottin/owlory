@@ -73,11 +73,14 @@ Owlory uses Apple-native `Localizable.strings` files under `owlory_xcode/Owlory/
 
 Use [Localization String Inventory](localization-string-inventory.md) before translation or broad string extraction work. It classifies which source strings are already covered by SwiftUI literal localization, which can be safely keyed, and which need a separate formatting or code-routing slice.
 
+Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before changing interpolated copy, counts, dates, display-name adapters, or notification text. Dynamic localization must preserve the boundary that domain returns semantic values, application coordinates runtime-owned messages, and SwiftUI/presentation code owns visible formatting.
+
 Minimum validation shape:
 
 - `make localization-check`
 - `make architecture` before handoff, because architecture lint also runs localization parity
 - an unsigned simulator build when Xcode project resource wiring changes
+- the affected domain command when a dynamic formatting implementation changes Today, digest, Home, reminder, or display-name code
 
 When adding copy, add the English key first, mirror it to every locale, and then translate values. Do not add user-visible placeholder warnings to the app UI.
 

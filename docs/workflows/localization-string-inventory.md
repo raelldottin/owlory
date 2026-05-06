@@ -9,6 +9,7 @@ Use this inventory before starting translation work. It separates source-string 
 - String extraction completeness: `Partially implemented`.
 - English source of truth: `owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings`.
 - Validation: `make localization-check` and `./Tools/validate.sh localization`.
+- Dynamic formatting contract: [Localization Dynamic Formatting](localization-dynamic-formatting.md).
 
 Non-English locales intentionally keep English placeholder values until a translation-quality slice replaces them.
 
@@ -41,6 +42,8 @@ The extraction changed only `Localizable.strings` keys and docs; it did not modi
 - Domain/application `String` values such as readiness summaries, protocol schedule summaries, weekly digest insights, writing-stage titles, and source-type titles need a separate code-routing slice before keys alone can affect runtime output.
 - Notification titles and bodies should be localized in the reminder/runtime layer together with notification-specific tests.
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.
+
+Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before extracting any deferred dynamic bucket. It defines which layer owns counts, dates, notification copy, and model display labels so future implementation slices do not leak UI copy into domain rules.
 
 ## Verification
 
