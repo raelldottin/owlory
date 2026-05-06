@@ -2,6 +2,7 @@
 
 ## 2026-05-06
 
+- [app-localization-string-extraction-audit](sessions/2026-05-06/021725-app-localization-string-extraction-audit.md)
 - [app-localization-foundation](sessions/2026-05-06/015052-app-localization-foundation.md)
 
 ## 2026-05-03
