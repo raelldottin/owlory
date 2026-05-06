@@ -1673,6 +1673,36 @@
       ],
       "max_files_changed": 12,
       "notes": "Proof slice for representative locale launch stability only. Extend or use the running-app smoke runner to launch the simulator app with en, es, fr, ar, and zh-Hans locale arguments, verify each locale's packaged resources are present in the built app bundle, capture temporary screenshots, and report running-app-smoke proof without claiming translation quality, layout correctness, screenshot-verified proof, device proof, or TestFlight proof."
+    },
+    {
+      "slice_id": "app-localization-locale-screenshot-proof",
+      "title": "Preserve localization locale screenshot proof",
+      "status": "done",
+      "priority": 142,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/app-localization-locale-screenshot-proof/",
+        "automation/queue/slices.json",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-locale-screenshot-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check",
+        "git diff --cached --check"
+      ],
+      "depends_on": [
+        "app-localization-running-locale-smoke"
+      ],
+      "max_files_changed": 12,
+      "notes": "Proof-preservation slice only. Promote the en, es, fr, ar, and zh-Hans launch screenshots captured by app-localization-running-locale-smoke into repo-managed proof artifacts with a README/manifest and SHA-256 hashes. Claim screenshot-verified only for representative locale launch surfaces. Do not claim translation quality, full layout correctness, device proof, TestFlight proof, or change product code unless a screenshot reveals a concrete launch blocker."
     }
   ]
 }

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "slice_id": "app-localization-locale-screenshot-proof",
+  "proof_level": "screenshot-verified",
+  "scope": "Representative locale launch surfaces only.",
+  "source_slice": "app-localization-running-locale-smoke",
+  "source_handoff": "automation/handoffs/20260506T204606Z-app-localization-running-locale-smoke.json",
+  "source_app_commit": "775d876f861b",
+  "preserved_at": "2026-05-06T22:58:38Z",
+  "simulator": {
+    "name": "iPhone 16",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-3",
+    "screenshot_size": {
+      "width": 1179,
+      "height": 2556
+    }
+  },
+  "claims": [
+    "The built simulator app launched and produced a non-empty launch-surface screenshot for en, es, fr, ar, and zh-Hans.",
+    "The screenshots are preserved as repo-managed evidence with SHA-256 hashes.",
+    "The proof is limited to representative locale launch surfaces."
+  ],
+  "non_claims": [
+    "Translation quality.",
+    "Full layout correctness.",
+    "Complete RTL layout review.",
+    "Full CJK typography review.",
+    "Device behavior.",
+    "TestFlight behavior."
+  ],
+  "source_caveats": [
+    "The source smoke JSON files report repo.dirty=yes because the smoke run happened before the automation/doc handoff commit.",
+    "The dirty paths during source capture were automation and documentation files, not app source or localization resources.",
+    "The first smoke-run screenshots caught the white launch transition. The preserved screenshots were recaptured from the same installed simulator app after relaunching each locale and waiting for the Today surface to settle."
+  ],
+  "artifacts": [
+    {
+      "locale": "en",
+      "file": "01-locale-en-launch.png",
+      "sha256": "70d7dcf890c2762b36718c4c086979d7c6046c1489dca0c21fee2a84a41559d2",
+      "bytes": 334905,
+      "source_smoke_json": "/tmp/owlory-locale-smoke-en.json",
+      "source_smoke_timestamp": "20260506T204827Z",
+      "proves": "English baseline locale launch surface rendered after app launch."
+    },
+    {
+      "locale": "es",
+      "file": "02-locale-es-launch.png",
+      "sha256": "f84140bcede119da1f8c3776d2f47dfe8685fddcf8d13b026f16909690137fcc",
+      "bytes": 335258,
+      "source_smoke_json": "/tmp/owlory-locale-smoke-es.json",
+      "source_smoke_timestamp": "20260506T204942Z",
+      "proves": "Spanish locale launch surface rendered after app launch."
+    },
+    {
+      "locale": "fr",
+      "file": "03-locale-fr-launch.png",
+      "sha256": "ae4f254508264483ba7c6f47fa63e6a6a9158fbfb4c571be6ddc2cfcaec32612",
+      "bytes": 332841,
+      "source_smoke_json": "/tmp/owlory-locale-smoke-fr.json",
+      "source_smoke_timestamp": "20260506T204954Z",
+      "proves": "French locale launch surface rendered after app launch."
+    },
+    {
+      "locale": "ar",
+      "file": "04-locale-ar-launch.png",
+      "sha256": "4437481c2d389be6f5fe7c52b11513195cb91907e218e78f9f174341745c48ce",
+      "bytes": 319528,
+      "source_smoke_json": "/tmp/owlory-locale-smoke-ar.json",
+      "source_smoke_timestamp": "20260506T205012Z",
+      "proves": "Arabic locale launch surface rendered after app launch with right-to-left locale launch arguments."
+    },
+    {
+      "locale": "zh-Hans",
+      "file": "05-locale-zh-Hans-launch.png",
+      "sha256": "b2680b3ead55e4a45cda06a2c8512df1a281d2da2a240839faa8386963877b8d",
+      "bytes": 334160,
+      "source_smoke_json": "/tmp/owlory-locale-smoke-zh-Hans.json",
+      "source_smoke_timestamp": "20260506T205027Z",
+      "proves": "Simplified Chinese locale launch surface rendered after app launch."
+    }
+  ]
+}
