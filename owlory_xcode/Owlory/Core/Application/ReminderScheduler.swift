@@ -170,11 +170,12 @@ final class ReminderScheduler {
         )
 
         var specs = overduePlan.scheduledReminders.map { reminder in
-            NotificationSpec(
+            let copy = ReminderNotificationCopy.predictionCopy(for: reminder.key)
+            return NotificationSpec(
                 identifier: notificationIdentifier(for: reminder.key),
                 kind: "prediction",
-                title: "Reminder",
-                body: readableTitle(from: reminder.key),
+                title: copy.title,
+                body: copy.body,
                 deadline: reminder.deadline,
                 deepLinkURL: OwloryDeepLink.url(for: .completionKey(reminder.key))
             )
@@ -184,11 +185,12 @@ final class ReminderScheduler {
             contentsOf: promptNotifications
                 .filter { $0.deadline > now }
                 .map { prompt in
-                    NotificationSpec(
+                    let copy = ReminderNotificationCopy.promptCopy(for: prompt.kind)
+                    return NotificationSpec(
                         identifier: notificationIdentifier(for: prompt.id),
                         kind: prompt.kind.rawValue,
-                        title: prompt.title,
-                        body: prompt.body,
+                        title: copy.title,
+                        body: copy.body,
                         deadline: prompt.deadline,
                         deepLinkURL: OwloryDeepLink.url(
                             for: .todayPrompt(kind: prompt.kind.rawValue)
@@ -199,11 +201,12 @@ final class ReminderScheduler {
 
         specs.append(
             contentsOf: filteredSchedulePlans.map { plan in
-                NotificationSpec(
+                let copy = ReminderNotificationCopy.protocolScheduleCopy(for: plan)
+                return NotificationSpec(
                     identifier: plan.identifier,
                     kind: plan.kind.rawValue,
-                    title: protocolScheduleTitle(for: plan.kind),
-                    body: protocolScheduleBody(for: plan),
+                    title: copy.title,
+                    body: copy.body,
                     deadline: plan.fireDate,
                     deepLinkURL: nil
                 )
@@ -254,11 +257,71 @@ final class ReminderScheduler {
         "owlory.reminder.\(key)"
     }
 
-    /// Extract a human-readable title from the prediction key.
-    /// Keys are formatted as "home|water plants" or "train|morning run".
-    private func readableTitle(from key: String) -> String {
+    private func registerCategories() async {
+        let category = UNNotificationCategory(
+            identifier: notificationCategoryID,
+            actions: [],
+            intentIdentifiers: []
+        )
+        center.setNotificationCategories([category])
+    }
+}
+
+enum ReminderNotificationCopy {
+    struct Copy: Equatable {
+        let title: String
+        let body: String
+    }
+
+    static func predictionCopy(for key: String) -> Copy {
+        Copy(
+            title: localized("notification.prediction.title"),
+            body: predictionBody(for: key)
+        )
+    }
+
+    static func promptCopy(for kind: TodayStore.PromptNotification.Kind) -> Copy {
+        switch kind {
+        case .checkIn:
+            return Copy(
+                title: localized("notification.prompt.checkIn.title"),
+                body: localized("notification.prompt.checkIn.body")
+            )
+        case .eveningReflection:
+            return Copy(
+                title: localized("notification.prompt.eveningReflection.title"),
+                body: localized("notification.prompt.eveningReflection.body")
+            )
+        case .homeWrappedReflection:
+            return Copy(
+                title: localized("notification.prompt.homeWrappedReflection.title"),
+                body: localized("notification.prompt.homeWrappedReflection.body")
+            )
+        }
+    }
+
+    static func protocolScheduleCopy(for plan: ProtocolScheduleNotificationRules.Plan) -> Copy {
+        switch plan.kind {
+        case .windowOpening:
+            return Copy(
+                title: localized("notification.protocol.windowOpening.title"),
+                body: formatted("notification.protocol.windowOpening.body", plan.title)
+            )
+        case .overdue:
+            return Copy(
+                title: localized("notification.protocol.overdue.title"),
+                body: formatted("notification.protocol.overdue.body", plan.title)
+            )
+        }
+    }
+
+    /// Extract display copy from a prediction key. Keys are formatted as
+    /// "home|water plants" or "train|morning run".
+    private static func predictionBody(for key: String) -> String {
         let parts = key.split(separator: "|", maxSplits: 1)
-        guard parts.count == 2 else { return "You have an overdue item." }
+        guard parts.count == 2 else {
+            return localized("notification.prediction.body.malformed")
+        }
 
         let domain = parts[0]
         let title = String(parts[1])
@@ -269,44 +332,24 @@ final class ReminderScheduler {
 
         switch domain {
         case "home":
-            return "\(capitalizedTitle) — usually done by now."
+            return formatted("notification.prediction.body.home", capitalizedTitle)
         case "train":
-            return "\(capitalizedTitle) — your usual training window passed."
+            return formatted("notification.prediction.body.train", capitalizedTitle)
         case "protocol":
-            return "\(capitalizedTitle) — protocol run is overdue."
+            return formatted("notification.prediction.body.protocol", capitalizedTitle)
         default:
-            return "\(capitalizedTitle) — still pending."
+            return formatted("notification.prediction.body.default", capitalizedTitle)
         }
     }
 
-    private func protocolScheduleTitle(
-        for kind: ProtocolScheduleNotificationRules.Kind
-    ) -> String {
-        switch kind {
-        case .windowOpening:
-            return "Protocol Window Opens"
-        case .overdue:
-            return "Protocol Window Passed"
-        }
+    private static func localized(_ key: String) -> String {
+        NSLocalizedString(key, comment: "")
     }
 
-    private func protocolScheduleBody(
-        for plan: ProtocolScheduleNotificationRules.Plan
-    ) -> String {
-        switch plan.kind {
-        case .windowOpening:
-            return "\(plan.title) — scheduled window starts today."
-        case .overdue:
-            return "\(plan.title) — schedule window ended without a run."
-        }
-    }
-
-    private func registerCategories() async {
-        let category = UNNotificationCategory(
-            identifier: notificationCategoryID,
-            actions: [],
-            intentIdentifiers: []
+    private static func formatted(_ key: String, _ argument: String) -> String {
+        String.localizedStringWithFormat(
+            localized(key),
+            argument
         )
-        center.setNotificationCategories([category])
     }
 }

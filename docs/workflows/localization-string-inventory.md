@@ -7,7 +7,7 @@ Use this inventory before starting translation work. It separates source-string 
 - Localization foundation: `Implemented`.
 - Translation completeness: `Deferred`.
 - String extraction completeness: `Partially implemented`.
-- Dynamic/plural formatting completeness: `Partially implemented` for Today dashboard summaries, weekly digest presentation count/date labels, and Home protocol schedule projection.
+- Dynamic/plural formatting completeness: `Partially implemented` for Today dashboard summaries, weekly digest presentation count/date labels, Home protocol schedule projection, and delivered notification copy.
 - English source of truth: `owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings`.
 - Validation: `make localization-check` and `./Tools/validate.sh localization`.
 - Dynamic formatting contract: [Localization Dynamic Formatting](localization-dynamic-formatting.md).
@@ -43,12 +43,13 @@ The extraction changed only `Localizable.strings` keys and docs; it did not modi
 - Today readiness scale accessibility labels use the same `Localizable.stringsdict` resource path so spoken dynamic labels can be translated later with the plural resource set.
 - Weekly digest presentation counts and labels in Today, digest rows, and digest detail use a Today presentation formatter backed by `Localizable.strings` and `Localizable.stringsdict`. Week-range labels now format dates with the digest calendar/time-zone in presentation code; digest cadence, stale counting, insight text, and rule-version behavior remain domain-owned and unchanged.
 - Home protocol schedule row labels and schedule-picker help text use Home presentation formatting backed by `Localizable.strings`. `ProtocolScheduleRules` now returns semantic preset/date/status summaries instead of English display strings.
+- Delivered local notification titles and bodies use `ReminderNotificationCopy` in the reminder application layer. Prediction reminders, Today prompt notifications as scheduled, and protocol schedule notifications are backed by `Localizable.strings`; reminder timing, suppression, dedupe, deep links, and protocol schedule rules remain unchanged.
 
 ## Deferred Buckets
 
 - Dynamic/pluralized copy such as `Every <n> day(s)`, previous-day record counts, non-Today-dashboard readiness/accessibility interpolation, and digest insight/highlight summaries still needs `.stringsdict`, explicit localized formatting, or a separate presentation-adapter slice.
-- Domain/application `String` values such as readiness summaries, weekly digest insights, writing-stage titles, source-type titles, and notification copy need a separate code-routing slice before keys alone can affect runtime output.
-- Notification titles and bodies should be localized in the reminder/runtime layer together with notification-specific tests.
+- Domain/application `String` values such as readiness summaries, weekly digest insights, writing-stage titles, and source-type titles need a separate code-routing slice before keys alone can affect runtime output.
+- Notification preference UI, delivered-notification locale smoke, and real device notification proof remain separate validation slices.
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.
 
 Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before extracting any deferred dynamic bucket. It defines which layer owns counts, dates, notification copy, and model display labels so future implementation slices do not leak UI copy into domain rules.
