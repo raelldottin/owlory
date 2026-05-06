@@ -1,0 +1,90 @@
+{
+  "slice_id": "app-localization-foundation",
+  "status": "done",
+  "summary": "Added Apple-native Localizable.strings resources for 19 approved locales, wired them through the Owlory app target with a PBXVariantGroup, and added localization parity validation to the repo harness and architecture checks.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/015052-app-localization-foundation.md",
+    "Tools/architecture-lint.sh",
+    "Tools/localization-parity.sh",
+    "Tools/validate.sh",
+    "automation/handoffs/20260506T055104Z-app-localization-foundation.json",
+    "automation/queue/slices.json",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-foundation",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "plutil -lint owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-build CODE_SIGNING_ALLOWED=NO",
+    "find /tmp/owlory-localization-build/Build/Products/Debug-iphonesimulator/Owlory.app -maxdepth 2 -path '*/Localizable.strings' -print",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "App localization resource packaging",
+      "before": "Owlory had no first-class localization resource set: no *.lproj folders, no Localizable.strings files, no PBXVariantGroup, and Xcode knownRegions contained only en and Base.",
+      "after": "Owlory has Localizable.strings resources for all 19 approved locales under Owlory/Resources, Xcode knownRegions names every locale canonically, and the app Resources phase packages the Localizable.strings PBXVariantGroup rather than raw lproj folders.",
+      "proof": [
+        "make localization-check",
+        "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-build CODE_SIGNING_ALLOWED=NO",
+        "find /tmp/owlory-localization-build/Build/Products/Debug-iphonesimulator/Owlory.app -maxdepth 2 -path '*/Localizable.strings' -print"
+      ]
+    },
+    {
+      "contract": "Localization drift prevention",
+      "before": "There was no repo-level check proving that locale folders used canonical Apple names, matched English keys, or stayed packaged as Xcode localized resources.",
+      "after": "Tools/localization-parity.sh verifies the approved locale set, key parity against en.lproj, unexpected lproj folders, PBXVariantGroup packaging, raw-folder resource copy regressions, and knownRegions coverage; make architecture invokes it.",
+      "proof": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "All non-English locales intentionally retain English placeholder values in this foundation slice; real translation review remains future work.",
+    "The source key set covers common visible navigation, tab, empty-state, button, section, and action copy but does not exhaustively replace every hardcoded or interpolated user-facing string.",
+    "The unsigned simulator build passed with one pre-existing TodayView onChange deprecation warning unrelated to localization."
+  ],
+  "recommended_next_slice": "app-localization-copy-extraction-pass",
+  "recommended_next_reason": "The foundation resources and parity guardrail are now in place. A separate narrow slice can audit remaining hardcoded visible copy and dynamic interpolation keys without mixing resource packaging with broad UI edits.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T05:53:11Z"
+}

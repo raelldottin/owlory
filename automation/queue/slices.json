@@ -1181,7 +1181,7 @@
       ],
       "depends_on": [],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing — Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
+      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing \u2014 Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
     },
     {
       "slice_id": "train-row-status-pill-uniformity",
@@ -1313,7 +1313,7 @@
         "write-promotion-device-verification"
       ],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level — do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
+      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level \u2014 do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
     },
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
@@ -1366,6 +1366,38 @@
       "depends_on": [],
       "max_files_changed": 8,
       "notes": "Previous Days stays read-only. Add a small live-status enum (active, completed, skipped, archived, abandoned) and a resolver closure injected into PreviousDayDetailView that maps FocusItem.origin to current app state via TrainStore, WriteStore, and HomeStore. Show inline labels on focus and carry-forward rows when origin resolves; degrade silently when origin is nil or source is deleted. Support trainingSession, writingNote, homeTask, homeProtocolRun origin kinds. Do not resolve careerRecord. No DailyEntry mutation, no persistence changes, no routing to source records. Domain intentions, evening reflections, and energy/mood/sleep remain unchanged. proof_level should land at domain-tested."
+    },
+    {
+      "slice_id": "app-localization-foundation",
+      "title": "Add first-class app localization resources",
+      "status": "done",
+      "priority": 147,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/validation.md",
+        "Tools/architecture-lint.sh",
+        "Tools/localization-parity.sh",
+        "Tools/validate.sh",
+        "Makefile",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/Owlory/Resources/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-foundation",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-build CODE_SIGNING_ALLOWED=NO",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 40,
+      "notes": "Add Apple-native Localizable.strings resources for en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, and vi. Use a PBXVariantGroup in the app target resources; do not copy raw lproj folders. Keep English as source and use English placeholders for non-English values in this foundation slice. Add a parity check so every locale matches English keys and wire it into architecture validation."
     }
   ]
 }

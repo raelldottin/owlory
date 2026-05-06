@@ -49,6 +49,7 @@ require_file "docs/workflows/performance-observability.md"
 require_file "docs/workflows/review.md"
 require_file "docs/workflows/roadmap-status.md"
 require_file "docs/workflows/validation.md"
+require_file "Tools/localization-parity.sh"
 
 for domain_doc in \
   docs/product/domains/today.md \
@@ -98,6 +99,10 @@ fi
 
 if [ -f "$ROOT/Makefile" ] && ! grep -Eq '^verify-app-icons:' "$ROOT/Makefile"; then
   fail "Makefile is missing a 'verify-app-icons' target. Add one that runs Tools/verify-app-icons.sh before app-icon archive or folder cleanup."
+fi
+
+if [ -f "$ROOT/Makefile" ] && ! grep -Eq '^localization-check:' "$ROOT/Makefile"; then
+  fail "Makefile is missing a 'localization-check' target. Add one that runs Tools/localization-parity.sh so localization key drift is caught before build handoff."
 fi
 
 for ignored_metadata in .DS_Store '._*' .AppleDouble .LSOverride Thumbs.db ehthumbs.db Desktop.ini; do
@@ -156,6 +161,8 @@ check_today_focus_surface_contract() {
 check_domain_imports
 check_feature_runtime_coupling
 check_today_focus_surface_contract
+
+"$ROOT/Tools/localization-parity.sh" >/dev/null || fail "localization parity failed. Run 'make localization-check' for locale/key packaging remediation."
 
 FAILURES="$(wc -l < "$ERRORS" | tr -d ' ')"
 if [ "$FAILURES" -ne 0 ]; then

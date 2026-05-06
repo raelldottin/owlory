@@ -13,6 +13,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make drift-report` - classify root clutter and legacy docs before cleanup.
 - `make clean-system-metadata` - remove only obvious OS metadata files listed in the drift-control policy.
 - `make verify-app-icons` - prove the shipped app-icon catalog and classify generated icon archives/folders.
+- `make localization-check` - verify approved locale folders, matching `Localizable.strings` keys, and Xcode variant-group packaging.
 - `make review-preflight` - infer touched areas, docs, validation, and review risks for current changes.
 - `make automation-check` - run the Python tests for the automation supervisor and context builder.
 - `make build-provenance` - print and validate current Xcode version/build plus Git rollback identity.
@@ -65,6 +66,18 @@ Minimum validation shape:
 - Xcode Organizer or MetricKit evidence only for release/distributed-build trends, not immediate in-session feedback
 
 Do not claim battery or power improvements from simulator-only checks.
+
+## Localization
+
+Owlory uses Apple-native `Localizable.strings` files under `owlory_xcode/Owlory/Resources/<locale>.lproj`. English (`en.lproj`) is the source key set. Non-English locales may temporarily keep English values as placeholders, but every locale must carry the same keys and the Xcode project must package `Localizable.strings` through a `PBXVariantGroup`, not raw `.lproj` folder copies.
+
+Minimum validation shape:
+
+- `make localization-check`
+- `make architecture` before handoff, because architecture lint also runs localization parity
+- an unsigned simulator build when Xcode project resource wiring changes
+
+When adding copy, add the English key first, mirror it to every locale, and then translate values. Do not add user-visible placeholder warnings to the app UI.
 
 ## Automation Harness
 
@@ -148,6 +161,7 @@ Notes:
 - `./Tools/clean-system-metadata.sh --dry-run`
 - `./Tools/drift-report.sh`
 - `./Tools/verify-app-icons.sh`
+- `./Tools/localization-parity.sh`
 - `./Tools/review-preflight.sh`
 - `./Tools/verify-build-provenance.sh`
 - `./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>`
@@ -160,6 +174,7 @@ Notes:
 - `./Tools/validate.sh build-provenance`
 - `./Tools/validate.sh drift-report`
 - `./Tools/validate.sh handoff`
+- `./Tools/validate.sh localization`
 - `./Tools/validate.sh review-preflight`
 - `./Tools/validate.sh system-metadata`
 - `./Tools/validate.sh fast`
