@@ -1,0 +1,84 @@
+{
+  "slice_id": "app-localization-translation-review-export",
+  "status": "done",
+  "summary": "Added a deterministic localization review export workflow and generated reviewer-friendly CSV/JSON packets from current Localizable.strings and Localizable.stringsdict resources without replacing translations or changing app resources.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/192438-app-localization-translation-review-export.md",
+    "Tools/localization-review-export.py",
+    "automation/handoffs/20260506T232438Z-app-localization-translation-review-export.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/validation.md",
+    "localization/review/README.md",
+    "localization/review/translation-review-export.csv",
+    "localization/review/translation-review-export.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-translation-review-export",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 Tools/localization-review-export.py --output-dir localization/review",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Translation review packet",
+      "before": "The repo defined translation-quality status labels and review expectations, but future reviewers had no repo-native CSV/JSON packet generated from the current resources.",
+      "after": "Tools/localization-review-export.py exports current English source values, plural entries, locale values, and status labels into localization/review/translation-review-export.csv and .json.",
+      "proof": [
+        "Tools/localization-review-export.py",
+        "localization/review/translation-review-export.csv",
+        "localization/review/translation-review-export.json",
+        "python3 Tools/localization-review-export.py --output-dir localization/review"
+      ]
+    },
+    {
+      "contract": "Placeholder visibility",
+      "before": "The placeholder baseline was documented, but reviewers could not filter current locale values by placeholder/draft/source status in a maintained export.",
+      "after": "The export marks English rows as english-source and marks 5760 current non-English review rows as english-placeholder, including plural review entries.",
+      "proof": [
+        "localization/review/translation-review-export.csv",
+        "localization/review/translation-review-export.json"
+      ]
+    },
+    {
+      "contract": "Active discovery path",
+      "before": "The translation-quality workflow existed, but the generated packet was not linked from the docs map or validation workflow.",
+      "after": "docs/README.md, docs/workflows/localization-translation-quality.md, and docs/workflows/validation.md point future agents to the export command and generated review packet.",
+      "proof": [
+        "docs/README.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No non-English translations were replaced in this slice.",
+    "No native or fluent reviewer has accepted any non-English locale values.",
+    "Non-English locales remain English placeholders.",
+    "The export is a snapshot; regenerate it before consuming reviewer changes in a later replacement slice.",
+    "Runtime locale smoke, screenshot proof, device proof, and TestFlight proof were not changed by this export-only slice."
+  ],
+  "recommended_next_slice": "app-localization-first-locale-review-intake",
+  "recommended_next_reason": "After a native/fluent reviewer returns accepted values for one locale or small language family, ingest that reviewed packet in a narrow replacement slice while preserving parity, status labels, and localization validation.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T23:24:38Z"
+}
