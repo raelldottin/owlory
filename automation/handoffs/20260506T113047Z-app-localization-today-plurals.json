@@ -1,0 +1,89 @@
+{
+  "slice_id": "app-localization-today-plurals",
+  "status": "done",
+  "summary": "Localized Today dashboard count summaries and readiness-scale accessibility interpolation through Localizable.stringsdict while keeping domain rules and translations unchanged.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/073047-app-localization-today-plurals.md",
+    "Tools/localization-parity.sh",
+    "automation/handoffs/20260506T113047Z-app-localization-today-plurals.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.stringsdict"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-today-plurals",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "make test-domain DOMAIN=today",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-today-plurals-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today dashboard plural formatting",
+      "before": "Today dashboard card summaries built count strings inline with English suffixes and manual singular/plural handling.",
+      "after": "Train, Write, Career, and Home dashboard summaries now use `Localizable.stringsdict` keys owned by Today presentation code.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "make localization-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-today-plurals-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    {
+      "contract": "Plural resource parity",
+      "before": "The localization parity check validated `Localizable.strings` only.",
+      "after": "The parity check now validates `Localizable.stringsdict` syntax, key parity across 19 locales, and Xcode variant-group packaging when plural resources exist.",
+      "proof": [
+        "Tools/localization-parity.sh",
+        "make localization-check",
+        "./Tools/validate.sh localization"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English `.stringsdict` values remain English placeholders and require translation-quality review.",
+    "Digest counts, notification copy, protocol schedule/status projection, quick-add recurrence text, and model display-name adapters remain deferred dynamic localization work.",
+    "The unsigned simulator build passed with the pre-existing TodayView onChange deprecation warning unrelated to this slice."
+  ],
+  "recommended_next_slice": "app-localization-digest-formatting",
+  "recommended_next_reason": "Digest counts and date labels are the next dynamic formatting batch, with existing calendar-consistency rules already documented.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T11:30:47Z"
+}

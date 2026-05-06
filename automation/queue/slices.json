@@ -1457,6 +1457,41 @@
       "depends_on": [],
       "max_files_changed": 10,
       "notes": "Doc-only contract/design slice. Inventory dynamic/interpolated localization surfaces, define ownership by layer, decide when to use stringsdict/pluralization, notification localization, and model display-name adapters. Central boundary: Domain returns meaning; Application coordinates runtime-owned messages; SwiftUI presents localized display text. Do not translate placeholders or rewrite broad source strings."
+    },
+    {
+      "slice_id": "app-localization-today-plurals",
+      "title": "Localize Today dashboard plural counts",
+      "status": "done",
+      "priority": 148,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "Tools/localization-parity.sh",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-today-plurals",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-today-plurals-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-dynamic-formatting-plan"
+      ],
+      "max_files_changed": 30,
+      "notes": "Implementation slice for Today dashboard counts and accessibility interpolation only. Identify Today count strings that need plural-aware formatting, add Localizable.stringsdict or the chosen Apple-native plural mechanism consistently across all approved locales, keep pure domain rules unchanged, keep non-English values as English placeholders, preserve localization parity, and do not touch digest copy, notifications, protocol schedule text, or translation quality."
     }
   ]
 }

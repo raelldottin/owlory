@@ -84,6 +84,7 @@
 		A077 /* ProtocolScheduleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176 /* ProtocolScheduleRules.swift */; };
 		A078 /* ProtocolScheduleNotificationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177 /* ProtocolScheduleNotificationRules.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
+		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
 		B002 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A104 /* Clock.swift */; };
 		B003 /* TodayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A105 /* TodayStore.swift */; };
@@ -311,6 +312,25 @@
 		L117 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L118 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L119 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		L201 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L202 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L203 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L204 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L205 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L206 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L207 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ja; path = ja.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L208 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L209 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nb; path = nb.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L210 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pt; path = pt.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L211 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		L212 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L213 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L214 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = sv; path = sv.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L215 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		L216 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		L217 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L218 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		L219 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = vi; path = vi.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		B100 /* OwloryCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OwloryCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B101 /* CarryForwardRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarryForwardRulesTests.swift; sourceTree = "<group>"; };
 		B102 /* TodayStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStoreTests.swift; sourceTree = "<group>"; };
@@ -464,6 +484,7 @@
 			children = (
 				A122 /* Assets.xcassets */,
 				L100 /* Localizable.strings */,
+				L200 /* Localizable.stringsdict */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -780,6 +801,7 @@
 			files = (
 				A022 /* Assets.xcassets in Resources */,
 				L001 /* Localizable.strings in Resources */,
+				L002 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,6 +1076,32 @@
 				L119 /* vi */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		L200 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				L201 /* en */,
+				L202 /* ar */,
+				L203 /* nl */,
+				L204 /* fr */,
+				L205 /* de */,
+				L206 /* it */,
+				L207 /* ja */,
+				L208 /* ko */,
+				L209 /* nb */,
+				L210 /* pt */,
+				L211 /* pt-BR */,
+				L212 /* ru */,
+				L213 /* es */,
+				L214 /* sv */,
+				L215 /* zh-Hans */,
+				L216 /* zh-Hant */,
+				L217 /* tr */,
+				L218 /* uk */,
+				L219 /* vi */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
