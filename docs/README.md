@@ -11,6 +11,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Product Overview](product/overview.md) captures cross-domain product posture, core surfaces, and experience principles.
 - [Domain Index](product/domain-index.md) maps product areas to owning code, tests, and validation.
 - [Validation Workflows](workflows/validation.md) lists invokable checks and when to use them.
+- [Localization String Inventory](workflows/localization-string-inventory.md) classifies source-string extraction status before translation work.
 - [Agent Handoff](workflows/agent-handoff.md) explains the continuity command and expected handoff behavior.
 - [Automation Harness](../automation/README.md) explains the queue-driven supervisor for fresh-run slice chaining.
 - [ML Model Posture](runtime/ml-model-posture.md) defines Foundation Models, MLX/custom-model, context-window, and adapter-boundary rules.

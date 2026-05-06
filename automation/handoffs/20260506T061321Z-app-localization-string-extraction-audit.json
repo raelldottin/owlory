@@ -1,0 +1,84 @@
+{
+  "slice_id": "app-localization-string-extraction-audit",
+  "status": "done",
+  "summary": "Classified remaining localization string extraction work and added a safe first audit batch of direct SwiftUI/accessibility source keys without editing product copy or Swift source.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/021725-app-localization-string-extraction-audit.md",
+    "automation/handoffs/20260506T061321Z-app-localization-string-extraction-audit.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/workflows/localization-string-inventory.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-string-extraction-audit",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-extraction-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Localization source-string extraction inventory",
+      "before": "The repo had localization resources and parity checks, but no maintained inventory explaining which remaining Swift strings were already covered, safe to key, debug/system-only, or deferred for formatting/code-routing work.",
+      "after": "docs/workflows/localization-string-inventory.md now classifies the remaining string surface, names the safe extraction rule, records the extracted groups, and calls out dynamic/plural/domain/helper strings as deferred rather than pretending they are localized by resource keys alone.",
+      "proof": [
+        "docs/workflows/localization-string-inventory.md",
+        "make localization-check"
+      ]
+    },
+    {
+      "contract": "Safe direct-literal key extraction",
+      "before": "The English source key set covered the foundation batch only and missed several direct SwiftUI/accessibility literals from Today, Home, Write, Train, Career, Build Info, and digest surfaces.",
+      "after": "Added 58 direct SwiftUI/accessibility source keys to every locale file while keeping all non-English values as English placeholders and leaving product copy unchanged.",
+      "proof": [
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-extraction-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Dynamic/interpolated strings, plural forms, notification text, and domain/application String helpers still need a separate code-routing or formatting slice before they can be considered localized at runtime.",
+    "Non-English locale values remain English placeholders and require translation-quality review in a later slice.",
+    "The unsigned simulator build passed with the pre-existing TodayView onChange deprecation warning unrelated to localization."
+  ],
+  "recommended_next_slice": "app-localization-dynamic-formatting-plan",
+  "recommended_next_reason": "The next high-leverage localization slice should target dynamic/plural/interpolated strings and decide where String(localized:), LocalizedStringKey, or .stringsdict belongs without starting translation work.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T06:17:25Z"
+}

@@ -1398,6 +1398,35 @@
       "depends_on": [],
       "max_files_changed": 40,
       "notes": "Add Apple-native Localizable.strings resources for en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, and vi. Use a PBXVariantGroup in the app target resources; do not copy raw lproj folders. Keep English as source and use English placeholders for non-English values in this foundation slice. Add a parity check so every locale matches English keys and wire it into architecture validation."
+    },
+    {
+      "slice_id": "app-localization-string-extraction-audit",
+      "title": "Audit visible localization string extraction",
+      "status": "done",
+      "priority": 148,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/README.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "owlory_xcode/Owlory/Resources/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-string-extraction-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 26,
+      "notes": "Inventory remaining visible Swift/SwiftUI strings after the localization foundation. Classify literals as already localized by SwiftUI literal behavior, should extract now, accessibility/user-facing but needs careful wording, debug/dev-only, system/generated, or deferred. Add only obvious safe English source keys to every Localizable.strings file; keep all non-English values as English placeholders. Do not translate, rewrite product copy, or touch app source in this slice."
     }
   ]
 }
