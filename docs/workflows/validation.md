@@ -75,6 +75,8 @@ Use [Localization String Inventory](localization-string-inventory.md) before tra
 
 Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before changing interpolated copy, counts, dates, display-name adapters, or notification text. Dynamic localization must preserve the boundary that domain returns semantic values, application coordinates runtime-owned messages, and SwiftUI/presentation code owns visible formatting.
 
+Use [Localization Translation Quality](localization-translation-quality.md) before replacing English placeholders in non-English locale files. Parity checks, running-app smoke, and screenshot proof do not prove translation quality by themselves.
+
 Minimum validation shape:
 
 - `make localization-check`
