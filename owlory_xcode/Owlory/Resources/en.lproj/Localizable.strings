@@ -219,3 +219,20 @@
 "home.protocol.schedule.today.passed" = "Today window passed";
 "home.protocol.schedule.weekend" = "Scheduled for this weekend";
 "home.protocol.schedule.weekend.passed" = "Weekend window passed";
+
+"notification.prediction.body.default" = "%@ — still pending.";
+"notification.prediction.body.home" = "%@ — usually done by now.";
+"notification.prediction.body.malformed" = "You have an overdue item.";
+"notification.prediction.body.protocol" = "%@ — protocol run is overdue.";
+"notification.prediction.body.train" = "%@ — your usual training window passed.";
+"notification.prediction.title" = "Reminder";
+"notification.prompt.checkIn.body" = "Take a quick read on energy, mood, and sleep.";
+"notification.prompt.checkIn.title" = "Check-in";
+"notification.prompt.eveningReflection.body" = "Close the day with one quick reflection.";
+"notification.prompt.eveningReflection.title" = "Evening reflection";
+"notification.prompt.homeWrappedReflection.body" = "All home tasks are done. Close the day with one quick reflection.";
+"notification.prompt.homeWrappedReflection.title" = "Home wrapped";
+"notification.protocol.overdue.body" = "%@ — schedule window ended without a run.";
+"notification.protocol.overdue.title" = "Protocol Window Passed";
+"notification.protocol.windowOpening.body" = "%@ — scheduled window starts today.";
+"notification.protocol.windowOpening.title" = "Protocol Window Opens";

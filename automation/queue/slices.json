@@ -1565,6 +1565,43 @@
       ],
       "max_files_changed": 40,
       "notes": "Implementation slice for Home protocol schedule/status display text only. Keep ProtocolScheduleRules semantic with dates, windows, presets, and statuses, move schedule/window labels into Home presentation formatting, add localization keys across all 19 locales, preserve schedule behavior and Today projection behavior, and leave notification copy, translation quality, and domain-rule rewrites out of scope."
+    },
+    {
+      "slice_id": "app-localization-notification-copy",
+      "title": "Localize notification titles and bodies",
+      "status": "done",
+      "priority": 145,
+      "domain": "reminders",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/reminders.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/OwloryCoreTests/ReminderSchedulingRulesTests.swift"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-notification-copy",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=reminders",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-notification-localization-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-protocol-schedule-projection"
+      ],
+      "max_files_changed": 32,
+      "notes": "Implementation slice for notification titles/bodies only. Localize delivered notification copy in the reminders/runtime application path that owns scheduling, including prediction reminders, Today prompt notifications as scheduled, and protocol schedule notifications. Preserve reminder timing, suppression, dedupe, Home schedule rules, Today projection behavior, and translation placeholders. Do not move UserNotifications or copy into Core/Domain."
     }
   ]
 }

@@ -115,6 +115,69 @@ final class ReminderSchedulingRulesTests: XCTestCase {
         XCTAssertEqual(OwloryDeepLink.parse(url), .todayPrompt(kind: "check-in"))
     }
 
+    func testNotificationCopyUsesLocalizedPredictionMessages() {
+        XCTAssertEqual(
+            ReminderNotificationCopy.predictionCopy(for: "home|water plants"),
+            ReminderNotificationCopy.Copy(
+                title: "Reminder",
+                body: "Water plants — usually done by now."
+            )
+        )
+        XCTAssertEqual(
+            ReminderNotificationCopy.predictionCopy(for: "train|morning run").body,
+            "Morning run — your usual training window passed."
+        )
+        XCTAssertEqual(
+            ReminderNotificationCopy.predictionCopy(for: "protocol|kitchen reset").body,
+            "Kitchen reset — protocol run is overdue."
+        )
+        XCTAssertEqual(
+            ReminderNotificationCopy.predictionCopy(for: "write|draft note").body,
+            "Draft note — still pending."
+        )
+        XCTAssertEqual(
+            ReminderNotificationCopy.predictionCopy(for: "malformed").body,
+            "You have an overdue item."
+        )
+    }
+
+    func testNotificationCopyUsesLocalizedPromptAndProtocolMessages() {
+        XCTAssertEqual(
+            ReminderNotificationCopy.promptCopy(for: .checkIn),
+            ReminderNotificationCopy.Copy(
+                title: "Check-in",
+                body: "Take a quick read on energy, mood, and sleep."
+            )
+        )
+        XCTAssertEqual(
+            ReminderNotificationCopy.promptCopy(for: .homeWrappedReflection),
+            ReminderNotificationCopy.Copy(
+                title: "Home wrapped",
+                body: "All home tasks are done. Close the day with one quick reflection."
+            )
+        )
+
+        let protocolID = UUID()
+        let opening = ProtocolScheduleNotificationRules.Plan(
+            protocolID: protocolID,
+            title: "Kitchen reset",
+            kind: .windowOpening,
+            fireDate: dateAt(hour: 8, minute: 0),
+            identifier: ProtocolScheduleNotificationRules.identifier(
+                protocolID: protocolID,
+                kind: .windowOpening
+            )
+        )
+
+        XCTAssertEqual(
+            ReminderNotificationCopy.protocolScheduleCopy(for: opening),
+            ReminderNotificationCopy.Copy(
+                title: "Protocol Window Opens",
+                body: "Kitchen reset — scheduled window starts today."
+            )
+        )
+    }
+
     @MainActor
     func testPlannedNotificationsCarryDeepLinksForPredictionAndPrompt() throws {
         let key = "train|morning run"
@@ -143,6 +206,51 @@ final class ReminderSchedulingRulesTests: XCTestCase {
                 .completionKey(key),
             ]
         )
+    }
+
+    @MainActor
+    func testPlannedNotificationsUseRuntimeNotificationCopy() throws {
+        let key = "home|water plants"
+        let prediction = makePrediction(key: key, medianHour: 10)
+        let now = dateAt(hour: 8, minute: 0)
+        let prompt = TodayStore.PromptNotification(
+            id: "today.check-in",
+            kind: .checkIn,
+            title: "Unlocalized prompt title should not leak",
+            body: "Unlocalized prompt body should not leak",
+            deadline: dateAt(hour: 9, minute: 0)
+        )
+        let protocolID = UUID()
+        let protocolPlan = ProtocolScheduleNotificationRules.Plan(
+            protocolID: protocolID,
+            title: "Kitchen reset",
+            kind: .overdue,
+            fireDate: dateAt(hour: 11, minute: 0),
+            identifier: ProtocolScheduleNotificationRules.identifier(
+                protocolID: protocolID,
+                kind: .overdue
+            )
+        )
+
+        let plan = ReminderScheduler().plannedNotifications(
+            predictions: [key: prediction],
+            completedKeys: [],
+            promptNotifications: [prompt],
+            protocolSchedulePlans: [protocolPlan],
+            now: now,
+            calendar: calendar
+        )
+
+        XCTAssertEqual(plan.specs.map(\.title), [
+            "Check-in",
+            "Reminder",
+            "Protocol Window Passed",
+        ])
+        XCTAssertEqual(plan.specs.map(\.body), [
+            "Take a quick read on energy, mood, and sleep.",
+            "Water plants — usually done by now.",
+            "Kitchen reset — schedule window ended without a run.",
+        ])
     }
 
     private func makePrediction(

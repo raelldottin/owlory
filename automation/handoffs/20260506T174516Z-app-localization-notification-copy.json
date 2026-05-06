@@ -1,0 +1,99 @@
+{
+  "slice_id": "app-localization-notification-copy",
+  "status": "done",
+  "summary": "Localized delivered local notification titles and bodies in the reminder application layer through ReminderNotificationCopy while preserving reminder timing, suppression, dedupe, Home schedule rules, Today projection behavior, and UserNotifications boundaries.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/134516-app-localization-notification-copy.md",
+    "automation/handoffs/20260506T174516Z-app-localization-notification-copy.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/reminders.md",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/OwloryCoreTests/ReminderSchedulingRulesTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-notification-copy",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make test-domain DOMAIN=reminders",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-notification-localization-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Notification title/body ownership",
+      "before": "ReminderScheduler built delivered prediction and protocol notification copy inline in English, and passed Today prompt title/body strings through from prompt payloads.",
+      "after": "ReminderScheduler routes delivered prediction, Today prompt, and protocol schedule notification copy through ReminderNotificationCopy in Core/Application backed by Localizable.strings.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+        "owlory_xcode/OwloryCoreTests/ReminderSchedulingRulesTests.swift",
+        "make test-domain DOMAIN=reminders"
+      ]
+    },
+    {
+      "contract": "Notification scheduling behavior",
+      "before": "Reminder timing, suppression, dedupe, deep links, protocol plan generation, and Home schedule rules were already covered by reminder/home tests.",
+      "after": "Those scheduling behaviors remain unchanged; this slice only changes delivered title/body projection and keeps UserNotifications side effects inside ReminderScheduler.",
+      "proof": [
+        "make test-domain DOMAIN=reminders",
+        "make test-domain DOMAIN=home"
+      ]
+    },
+    {
+      "contract": "Notification localization resource parity",
+      "before": "Localization resources contained 213 static keys and 11 plural keys, with notification copy deferred.",
+      "after": "All 19 locales contain 229 static keys and 11 plural keys, including prediction, Today prompt, and protocol schedule notification copy keys.",
+      "proof": [
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English notification values remain English placeholders and require translation-quality review.",
+    "No running-app locale smoke, delivered-notification simulator proof, device notification proof, or TestFlight proof was captured.",
+    "The unsigned simulator build passed with the pre-existing TodayView onChange deprecation warning unrelated to this slice.",
+    "Notification preference UI, broader display-name adapters, and translation quality remain deferred."
+  ],
+  "recommended_next_slice": "app-localization-display-name-adapters",
+  "recommended_next_reason": "Display-name adapters are the next documented dynamic localization batch after Today, digest, protocol schedule projection, and notification copy.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T17:45:16Z"
+}
