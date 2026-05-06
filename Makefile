@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons automation-check
+.PHONY: architecture fast verify test-domain build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -23,6 +23,9 @@ clean-system-metadata:
 
 verify-app-icons:
 	./Tools/verify-app-icons.sh
+
+localization-check:
+	./Tools/localization-parity.sh
 
 review-preflight:
 	./Tools/review-preflight.sh

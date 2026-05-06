@@ -19,6 +19,7 @@ usage:
   ./Tools/validate.sh review-preflight
   ./Tools/validate.sh system-metadata
   ./Tools/validate.sh app-icons
+  ./Tools/validate.sh localization
   ./Tools/validate.sh fast
   ./Tools/validate.sh full
   ./Tools/validate.sh domain <today|train|write|career|home|patterns|reminders|runtime|voice>
@@ -124,6 +125,9 @@ case "$MODE" in
     ;;
   app-icons)
     "$ROOT/Tools/verify-app-icons.sh" >/dev/null
+    ;;
+  localization)
+    "$ROOT/Tools/localization-parity.sh"
     ;;
   build-provenance)
     "$ROOT/Tools/verify-build-provenance.sh"
