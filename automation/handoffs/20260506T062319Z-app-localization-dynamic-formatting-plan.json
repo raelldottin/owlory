@@ -1,0 +1,65 @@
+{
+  "slice_id": "app-localization-dynamic-formatting-plan",
+  "status": "done",
+  "summary": "Defined the dynamic localization formatting ownership contract without changing app source, localization resources, or translations.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/022319-app-localization-dynamic-formatting-plan.md",
+    "automation/handoffs/20260506T062319Z-app-localization-dynamic-formatting-plan.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/architecture/boundaries.md",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-dynamic-formatting-plan",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Dynamic localization ownership",
+      "before": "The localization inventory deferred dynamic strings but did not define where counts, dates, notification copy, protocol statuses, or display-name adapters should live.",
+      "after": "docs/workflows/localization-dynamic-formatting.md now defines the boundary that domain returns meaning, application coordinates runtime-owned messages, and SwiftUI/presentation code owns localized display formatting.",
+      "proof": [
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/architecture/boundaries.md"
+      ]
+    },
+    {
+      "contract": "Dynamic localization implementation queue",
+      "before": "Future dynamic localization work could start with broad source changes and risk mixing UI copy into domain rules.",
+      "after": "The workflow doc classifies implementation batches for Today plurals, digest formatting, protocol schedule/status projection, notification copy, and model display-name adapters, with owners, APIs, validation paths, risks, and out-of-scope items.",
+      "proof": [
+        "docs/workflows/localization-dynamic-formatting.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Dynamic/interpolated localization remains unimplemented; this slice intentionally only establishes the boundary and implementation plan.",
+    "Non-English locale values remain English placeholders and still require translation-quality review.",
+    "Running-app locale smoke, screenshot proof, device verification, and TestFlight verification remain deferred."
+  ],
+  "recommended_next_slice": "app-localization-today-plurals",
+  "recommended_next_reason": "Today dashboard counts and accessibility interpolation are high-visibility dynamic strings with a clear owner and narrow validation path.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T06:23:19Z"
+}

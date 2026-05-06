@@ -2,6 +2,7 @@
 
 ## 2026-05-06
 
+- [app-localization-dynamic-formatting-plan](sessions/2026-05-06/022319-app-localization-dynamic-formatting-plan.md)
 - [app-localization-string-extraction-audit](sessions/2026-05-06/021725-app-localization-string-extraction-audit.md)
 - [app-localization-foundation](sessions/2026-05-06/015052-app-localization-foundation.md)
 
