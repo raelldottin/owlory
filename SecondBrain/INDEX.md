@@ -2,6 +2,7 @@
 
 ## 2026-05-06
 
+- [app-localization-translation-review-export](sessions/2026-05-06/192438-app-localization-translation-review-export.md)
 - [app-localization-translation-quality-plan](sessions/2026-05-06/190846-app-localization-translation-quality-plan.md)
 - [app-localization-locale-screenshot-proof](sessions/2026-05-06/185838-app-localization-locale-screenshot-proof.md)
 - [app-localization-running-locale-smoke](sessions/2026-05-06/165126-app-localization-running-locale-smoke.md)

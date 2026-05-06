@@ -25,7 +25,7 @@ Use these labels in handoffs and review notes:
 ## Review Workflow
 
 1. Pick one locale or one small language family per slice. Do not bulk-replace all locales in one pass.
-2. Start from English source keys in `owlory_xcode/Owlory/Resources/en.lproj/`.
+2. Start from the review packet in `localization/review/`, regenerated from current resources when needed.
 3. Translate only existing keys unless the slice is explicitly a source-string extraction slice.
 4. Preserve placeholders for keys outside the slice. Do not delete or invent locale-only keys.
 5. For `.stringsdict`, review grammar for `one` and `other` forms even when the locale does not use English plural categories naturally.
@@ -33,6 +33,22 @@ Use these labels in handoffs and review notes:
 7. Run validation before claiming the locale is accepted.
 
 Machine or AI translation may produce `draft-translation`, but it cannot produce `native-reviewed` without a human reviewer record.
+
+## Review Export Packet
+
+Regenerate the reviewer packet before translation replacement work:
+
+```bash
+python3 Tools/localization-review-export.py --output-dir localization/review
+```
+
+The export reads `Localizable.strings` and `Localizable.stringsdict` from all approved locales, keeps English as the source row, labels non-English values that still match English as `english-placeholder`, and writes:
+
+- `localization/review/translation-review-export.csv`
+- `localization/review/translation-review-export.json`
+- `localization/review/README.md`
+
+The packet is reviewer input only. It does not claim translation completeness, native review, launch stability, layout correctness, device behavior, or TestFlight behavior.
 
 ## Acceptance Criteria
 
@@ -91,6 +107,17 @@ Planning-only slices use:
 ```bash
 python3 automation/context/build_context.py --slice-id app-localization-translation-quality-plan
 python3 automation/supervisor/run_next.py --dry-run
+make architecture
+make localization-check
+./Tools/validate.sh localization
+make automation-check
+git diff --check
+```
+
+Translation review export slices use:
+
+```bash
+python3 Tools/localization-review-export.py --output-dir localization/review
 make architecture
 make localization-check
 ./Tools/validate.sh localization

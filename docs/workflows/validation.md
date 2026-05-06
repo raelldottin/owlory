@@ -77,6 +77,14 @@ Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before
 
 Use [Localization Translation Quality](localization-translation-quality.md) before replacing English placeholders in non-English locale files. Parity checks, running-app smoke, and screenshot proof do not prove translation quality by themselves.
 
+Use the generated review packet in `localization/review/` when handing source values to translators or reviewers:
+
+```bash
+python3 Tools/localization-review-export.py --output-dir localization/review
+```
+
+The export includes English source values, plural entries, current locale values, and status labels. It is review input only; it does not replace translation review.
+
 Minimum validation shape:
 
 - `make localization-check`
@@ -183,6 +191,7 @@ Notes:
 - `./Tools/drift-report.sh`
 - `./Tools/verify-app-icons.sh`
 - `./Tools/localization-parity.sh`
+- `python3 Tools/localization-review-export.py --output-dir localization/review`
 - `./Tools/review-preflight.sh`
 - `./Tools/verify-build-provenance.sh`
 - `./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>`
