@@ -1,0 +1,108 @@
+{
+  "slice_id": "app-localization-display-name-adapters",
+  "status": "done",
+  "summary": "Localized the first low-risk presentation-owned display-name adapter batch for LifeDomain, Focus/previous-day statuses, TrainingStatus, WritingStage, WritingSourceType, and CareerRecordType while keeping domain enum raw values and persistence unchanged.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/161203-app-localization-display-name-adapters.md",
+    "automation/handoffs/20260506T195935Z-app-localization-display-name-adapters.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "owlory_xcode/Owlory/Features/Career/CareerView.swift",
+    "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-display-name-adapters",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=train",
+    "make test-domain DOMAIN=write",
+    "make test-domain DOMAIN=career",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-display-name-localization-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Display-name adapter ownership",
+      "before": "Several feature surfaces displayed enum-backed labels through domain title helpers or rawValue.capitalized.",
+      "after": "The first low-risk display labels now resolve through feature-local presentation adapters backed by Localizable.strings while domain enums, raw values, and persistence stay semantic.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "owlory_xcode/Owlory/Features/Career/CareerView.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-display-name-localization-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    {
+      "contract": "Localization resource parity",
+      "before": "Localization resources contained 229 static keys and 11 plural keys, with display-name adapters deferred.",
+      "after": "All 19 locales contain 282 static keys and 11 plural keys, including display adapter keys for the first low-risk batch.",
+      "proof": [
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings"
+      ]
+    },
+    {
+      "contract": "Domain semantic boundary",
+      "before": "Domain enum title helpers still exist and some feature surfaces used them directly.",
+      "after": "This slice did not change Core/Domain enum raw values, Codable shape, or persistence; changed surfaces now use feature-local localized adapters.",
+      "proof": [
+        "make architecture",
+        "git diff -- owlory_xcode/Owlory/Core/Domain/DomainModels.swift"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English display adapter values remain English placeholders and require translation-quality review.",
+    "Core/Domain still contains legacy English title helpers for compatibility; this slice routed only the first low-risk presentation surfaces away from them.",
+    "Remaining localization buckets include readiness summaries, weekly digest insight/highlight summaries, recurrence interval labels, broader model-backed accessibility interpolation, and running-app locale smoke.",
+    "No running-app locale smoke, screenshot proof, device proof, or TestFlight proof was captured.",
+    "The unsigned simulator build passed with the pre-existing TodayView onChange deprecation warning and build-info run script notes unrelated to this slice.",
+    "git diff --check initially caught extra blank lines at EOF in locale files; the files were trimmed mechanically and the check passed."
+  ],
+  "recommended_next_slice": "app-localization-running-locale-smoke",
+  "recommended_next_reason": "The localization implementation lane now has foundation, extraction, dynamic contract, Today plurals, digest formatting, protocol schedule projection, notification copy, and a first display-name adapter batch; the next proof gap is running-app locale smoke rather than more source extraction.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T20:12:03Z"
+}

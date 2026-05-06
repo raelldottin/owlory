@@ -323,12 +323,30 @@ struct TodayView: View {
 
     private func continueAccessibilityHint(for item: TodayContinuationRules.ContinueItem) -> String {
         if focusItem(for: item) != nil {
-            return "Opens \(item.domain.title). Swipe for Focus status actions."
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.continue.accessibility.focusStatusActions",
+                    comment: "Continue row accessibility hint for Focus-backed rows."
+                ),
+                item.domain.localizedDisplayName
+            )
         }
         if store.canAddContinueItemToFocus(item) {
-            return "Opens \(item.domain.title). Swipe to add this work to Focus Three."
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.continue.accessibility.addToFocus",
+                    comment: "Continue row accessibility hint for rows that can be added to Focus."
+                ),
+                item.domain.localizedDisplayName
+            )
         }
-        return "Opens \(item.domain.title)"
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.continue.accessibility.openDomain",
+                comment: "Continue row accessibility hint for opening a domain."
+            ),
+            item.domain.localizedDisplayName
+        )
     }
 
     private func continueRow(for item: TodayContinuationRules.ContinueItem) -> some View {
@@ -341,7 +359,7 @@ struct TodayView: View {
                 Text(item.title)
                     .font(.subheadline)
                 HStack(spacing: 6) {
-                    Text(item.domain.title)
+                    Text(item.domain.localizedDisplayName)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     if !item.reason.isEmpty {
@@ -416,7 +434,7 @@ struct TodayView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(draft.title)
                                     .font(.subheadline)
-                                Text(draft.domain.title)
+                                Text(draft.domain.localizedDisplayName)
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -1297,13 +1315,18 @@ enum PreviousDayLiveStatus {
     case archived
     case abandoned
 
-    var label: String {
+    var localizedDisplayName: String {
         switch self {
-        case .active: return "Still active"
-        case .completed: return "Completed"
-        case .skipped: return "Skipped"
-        case .archived: return "Archived"
-        case .abandoned: return "Abandoned"
+        case .active:
+            return String(localized: "display.previousDayLiveStatus.active")
+        case .completed:
+            return String(localized: "display.previousDayLiveStatus.completed")
+        case .skipped:
+            return String(localized: "display.previousDayLiveStatus.skipped")
+        case .archived:
+            return String(localized: "display.previousDayLiveStatus.archived")
+        case .abandoned:
+            return String(localized: "display.previousDayLiveStatus.abandoned")
         }
     }
 
@@ -1312,6 +1335,49 @@ enum PreviousDayLiveStatus {
         case .active: return OwloryColor.brandPrimary
         case .completed: return OwloryColor.success
         case .skipped, .archived, .abandoned: return OwloryColor.textTertiary
+        }
+    }
+}
+
+private extension LifeDomain {
+    var localizedDisplayName: String {
+        switch self {
+        case .training:
+            return String(localized: "display.lifeDomain.training")
+        case .writing:
+            return String(localized: "display.lifeDomain.writing")
+        case .career:
+            return String(localized: "display.lifeDomain.career")
+        case .home:
+            return String(localized: "display.lifeDomain.home")
+        }
+    }
+}
+
+private extension FocusItemStatus {
+    var localizedDisplayName: String {
+        switch self {
+        case .planned:
+            return String(localized: "display.focusItemStatus.planned")
+        case .done:
+            return String(localized: "display.focusItemStatus.done")
+        case .deferred:
+            return String(localized: "display.focusItemStatus.deferred")
+        case .dropped:
+            return String(localized: "display.focusItemStatus.dropped")
+        }
+    }
+}
+
+private extension CareerRecordType {
+    var localizedDisplayName: String {
+        switch self {
+        case .win:
+            return String(localized: "display.careerRecordType.win")
+        case .impact:
+            return String(localized: "display.careerRecordType.impact")
+        case .story:
+            return String(localized: "display.careerRecordType.story")
         }
     }
 }
@@ -1354,10 +1420,10 @@ private struct PreviousDayDetailView: View {
                         Text(item.title)
                             .font(.subheadline.weight(.medium))
                         HStack(spacing: 8) {
-                            Text(item.domain.title)
-                            Text(item.status.rawValue.capitalized)
+                            Text(item.domain.localizedDisplayName)
+                            Text(item.status.localizedDisplayName)
                             if let status = resolveStatus(for: item) {
-                                Text(status.label)
+                                Text(status.localizedDisplayName)
                                     .foregroundStyle(status.color)
                             }
                         }
@@ -1378,7 +1444,7 @@ private struct PreviousDayDetailView: View {
             Section("Domain Intentions") {
                 ForEach(intentions, id: \.key) { domain, text in
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(domain.title)
+                        Text(domain.localizedDisplayName)
                             .font(.caption.weight(.medium))
                             .foregroundStyle(.secondary)
                         Text(text)
@@ -1400,12 +1466,12 @@ private struct PreviousDayDetailView: View {
                                 .font(.subheadline)
                             if let status = resolveStatus(for: item) {
                                 Spacer()
-                                Text(status.label)
+                                Text(status.localizedDisplayName)
                                     .font(.caption)
                                     .foregroundStyle(status.color)
                             }
                         }
-                        Text(item.domain.title)
+                        Text(item.domain.localizedDisplayName)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -1559,7 +1625,7 @@ private struct QuickCareerSheet: View {
             Form {
                 Picker("Type", selection: $recordType) {
                     ForEach(CareerRecordType.allCases) { type in
-                        Text(type.title).tag(type)
+                        Text(type.localizedDisplayName).tag(type)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -1588,7 +1654,15 @@ private struct QuickCareerSheet: View {
                     }
                 }
             }
-            .navigationTitle("Record \(recordType.title)")
+            .navigationTitle(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "today.quickCareer.recordTitle",
+                        comment: "Navigation title for recording a career item from Today."
+                    ),
+                    recordType.localizedDisplayName
+                )
+            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

@@ -44,7 +44,7 @@ Recommended implementation order:
 2. `app-localization-digest-formatting` - implemented for weekly digest presentation counts, ratios, compact streaks, relative labels, and week-range labels.
 3. `app-localization-protocol-schedule-projection` - implemented for Home protocol schedule row labels and schedule-picker help text.
 4. `app-localization-notification-copy` - implemented for delivered prediction, Today prompt, and protocol schedule notification titles/bodies.
-5. `app-localization-display-name-adapters`
+5. `app-localization-display-name-adapters` - implemented for the first low-risk presentation adapters: LifeDomain labels in Today and digest presentation, Focus/previous-day statuses in Today history, TrainingStatus labels in Train, WritingStage/WritingSourceType labels in Write, and CareerRecordType labels in Career/Today quick capture.
 
 Keep each implementation batch narrow. Add English source keys first, mirror keys across every locale, and leave non-English values as English placeholders until a translation-quality slice replaces them.
 

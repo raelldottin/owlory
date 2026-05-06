@@ -184,7 +184,7 @@ struct WriteView: View {
             }
         } header: {
             HStack {
-                Text(stage.title)
+                Text(stage.localizedDisplayName)
                 Spacer()
                 Text("\((store.notesByStage[stage] ?? []).count)")
                     .font(.caption)
@@ -361,10 +361,16 @@ struct WriteView: View {
 
     private func writeRowAccessibilityHint(for note: WritingNote) -> String {
         if let next = WritingStageRules.nextStage(after: note.stage) {
-            return "Opens note details. Swipe for actions, including advance to \(next.title)."
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "write.row.accessibility.advanceHint",
+                    comment: "Write note row accessibility hint when a next writing stage is available."
+                ),
+                next.localizedDisplayName
+            )
         }
 
-        return "Opens note details. Swipe for actions."
+        return String(localized: "write.row.accessibility.defaultHint")
     }
 }
 
@@ -452,7 +458,7 @@ private struct NoteDetailView: View {
                 if stage == .source || hasSourceMetadata {
                     Section("Source") {
                         if hasSourceMetadata {
-                            LabeledContent("Type", value: sourceType.title)
+                            LabeledContent("Type", value: sourceType.localizedDisplayName)
                             if !sourceTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                                 LabeledContent("Source Title", value: sourceTitle)
                             }
@@ -473,9 +479,17 @@ private struct NoteDetailView: View {
                     }
                 }
                 Section("Stage") {
-                    LabeledContent("Current", value: stage.title)
+                    LabeledContent("Current", value: stage.localizedDisplayName)
                     if let next = WritingStageRules.nextStage(after: stage) {
-                        Button("Advance to \(next.title)") {
+                        Button(
+                            String.localizedStringWithFormat(
+                                NSLocalizedString(
+                                    "write.stage.advanceTo",
+                                    comment: "Button title for advancing a note to the next writing stage."
+                                ),
+                                next.localizedDisplayName
+                            )
+                        ) {
                             store.advanceStage(id: note.id)
                             onDismiss()
                         }
@@ -701,7 +715,7 @@ private struct NoteDetailView: View {
                 Section {
                     Picker("Kind", selection: $sourceType) {
                         ForEach(WritingSourceType.allCases) { type in
-                            Text(type.title).tag(type)
+                            Text(type.localizedDisplayName).tag(type)
                         }
                     }
                 } header: {
@@ -836,5 +850,49 @@ private struct NoteDetailView: View {
 
         let range = NSRange(text.startIndex..<text.endIndex, in: text)
         return detector.firstMatch(in: text, options: [], range: range)?.url?.absoluteString ?? ""
+    }
+}
+
+private extension WritingStage {
+    var localizedDisplayName: String {
+        switch self {
+        case .capture:
+            return String(localized: "display.writingStage.capture")
+        case .source:
+            return String(localized: "display.writingStage.source")
+        case .permanent:
+            return String(localized: "display.writingStage.permanent")
+        case .draftSeed:
+            return String(localized: "display.writingStage.draftSeed")
+        case .draft:
+            return String(localized: "display.writingStage.draft")
+        case .published:
+            return String(localized: "display.writingStage.published")
+        case .archived:
+            return String(localized: "display.writingStage.archived")
+        }
+    }
+}
+
+private extension WritingSourceType {
+    var localizedDisplayName: String {
+        switch self {
+        case .article:
+            return String(localized: "display.writingSourceType.article")
+        case .book:
+            return String(localized: "display.writingSourceType.book")
+        case .video:
+            return String(localized: "display.writingSourceType.video")
+        case .podcast:
+            return String(localized: "display.writingSourceType.podcast")
+        case .webpage:
+            return String(localized: "display.writingSourceType.webpage")
+        case .conversation:
+            return String(localized: "display.writingSourceType.conversation")
+        case .document:
+            return String(localized: "display.writingSourceType.document")
+        case .other:
+            return String(localized: "display.writingSourceType.other")
+        }
     }
 }
