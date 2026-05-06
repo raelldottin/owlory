@@ -17,7 +17,7 @@
 ## Depends On
 
 - `ProtocolLifecycleRules` for protocol start/resume, step resolution, terminal state, and run construction policy.
-- `ProtocolScheduleRules` for protocol template schedule-window anchoring, normalization, and label state.
+- `ProtocolScheduleRules` for protocol template schedule-window anchoring, normalization, and semantic schedule status.
 - `RecurrenceRules` for recurring task reset.
 - `RecurringRolloverPlanner` for load-time recurring task orchestration and trace metadata.
 - `CompletionHistoryStore` for completed recurring task and protocol run history.
@@ -99,7 +99,7 @@ Missing/deferred: schedule windows still do not drive Today projection or admiss
 - Starting, resuming, completing, or abandoning a run must not silently clear or rewrite the protocol template's schedule window.
 - Editing a protocol may change the template window without mutating existing runs created from that template.
 - Schedule classification is run-aware. `ProtocolScheduleRules.scheduleStatus(for:runs:now:calendar:)` returns one of `upcoming`, `active`, `satisfied`, or `overdue`. A passed window classifies as `satisfied` when at least one run for the same protocol was started on or after the window's start day, and as `overdue` only when no such run exists. Old runs from before the window do not satisfy a later schedule.
-- HomeView protocol rows surface this classification through `HomeStore.scheduleSummary(for:)` so an `overdue` window shows the existing "window passed" text in a warning treatment, while a `satisfied` schedule reuses the upcoming/active label without nagging the user.
+- HomeView protocol rows surface this classification through `HomeStore.scheduleSummary(for:)`; the returned summary is semantic schedule state only. Localized row/help text belongs to Home presentation formatting, so an `overdue` window shows the existing "window passed" copy in a warning treatment, while a `satisfied` schedule reuses the upcoming/active label without nagging the user.
 - Schedule classification is Home schedule state only. It must not change Today Continue admission, must not auto-start, auto-complete, auto-abandon, or auto-admit a run, and must not be used as input to `TodayContinueSourceComposer`. A `satisfied` or `overdue` classification is informational about the template; the user may still start a fresh run, edit the schedule, or remove the schedule entirely.
 - `ProtocolScheduleNotificationRules` converts schedule classification into notification plans (`windowOpening`, `overdue`). Home exposes protocols and runs so app wiring can produce those plans; Home does not import `UserNotifications` or own notification delivery. Starting a run during an active window suppresses pending overdue notifications through the next reschedule cycle.
 

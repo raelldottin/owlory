@@ -510,7 +510,7 @@ final class HomeStore: OwloryObservableObject {
         )
     }
 
-    /// Run-aware schedule label for HomeView protocol rows.
+    /// Run-aware semantic schedule summary for HomeView protocol rows.
     func scheduleSummary(
         for template: HouseholdProtocol,
         calendar: Calendar = .current

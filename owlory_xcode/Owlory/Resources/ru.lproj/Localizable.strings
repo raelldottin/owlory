@@ -208,3 +208,14 @@
 "weeklyDigest.relative.mostRecentWeek" = "Most Recent Week";
 "weeklyDigest.summary.doneOfPlanned" = "%d of %d done";
 "weeklyDigest.summary.empty" = "No planned Focus items";
+
+"home.protocol.schedule.custom" = "Scheduled for %@";
+"home.protocol.schedule.custom.passed" = "Window passed - %@";
+"home.protocol.schedule.help.anytime" = "Anytime. Scheduling only labels the protocol template and never ends an active run automatically.";
+"home.protocol.schedule.help.scheduled" = "%@. Scheduling only labels the protocol template and never ends an active run automatically.";
+"home.protocol.schedule.thisWeek" = "Scheduled for this week";
+"home.protocol.schedule.thisWeek.passed" = "This week window passed";
+"home.protocol.schedule.today" = "Scheduled for today";
+"home.protocol.schedule.today.passed" = "Today window passed";
+"home.protocol.schedule.weekend" = "Scheduled for this weekend";
+"home.protocol.schedule.weekend.passed" = "Weekend window passed";

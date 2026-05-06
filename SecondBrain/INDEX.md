@@ -2,6 +2,7 @@
 
 ## 2026-05-06
 
+- [app-localization-protocol-schedule-projection](sessions/2026-05-06/082147-app-localization-protocol-schedule-projection.md)
 - [app-localization-digest-formatting](sessions/2026-05-06/075852-app-localization-digest-formatting.md)
 - [app-localization-today-plurals](sessions/2026-05-06/073047-app-localization-today-plurals.md)
 - [app-localization-dynamic-formatting-plan](sessions/2026-05-06/022319-app-localization-dynamic-formatting-plan.md)
