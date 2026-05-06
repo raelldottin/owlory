@@ -69,7 +69,7 @@ Do not claim battery or power improvements from simulator-only checks.
 
 ## Localization
 
-Owlory uses Apple-native `Localizable.strings` files under `owlory_xcode/Owlory/Resources/<locale>.lproj`. English (`en.lproj`) is the source key set. Non-English locales may temporarily keep English values as placeholders, but every locale must carry the same keys and the Xcode project must package `Localizable.strings` through a `PBXVariantGroup`, not raw `.lproj` folder copies.
+Owlory uses Apple-native `Localizable.strings` files under `owlory_xcode/Owlory/Resources/<locale>.lproj`. Plural and dynamic count formats use `Localizable.stringsdict` beside the strings file when needed. English (`en.lproj`) is the source key set. Non-English locales may temporarily keep English values as placeholders, but every locale must carry the same keys and the Xcode project must package `Localizable.strings` and `Localizable.stringsdict` through `PBXVariantGroup` resources, not raw `.lproj` folder copies.
 
 Use [Localization String Inventory](localization-string-inventory.md) before translation or broad string extraction work. It classifies which source strings are already covered by SwiftUI literal localization, which can be safely keyed, and which need a separate formatting or code-routing slice.
 

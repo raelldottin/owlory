@@ -7,6 +7,7 @@ Use this inventory before starting translation work. It separates source-string 
 - Localization foundation: `Implemented`.
 - Translation completeness: `Deferred`.
 - String extraction completeness: `Partially implemented`.
+- Dynamic/plural formatting completeness: `Partially implemented` for Today dashboard summaries.
 - English source of truth: `owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings`.
 - Validation: `make localization-check` and `./Tools/validate.sh localization`.
 - Dynamic formatting contract: [Localization Dynamic Formatting](localization-dynamic-formatting.md).
@@ -36,9 +37,14 @@ This pass added 58 low-risk source keys for direct SwiftUI or accessibility lite
 
 The extraction changed only `Localizable.strings` keys and docs; it did not modify product copy or Swift source.
 
+## Dynamic Formatting Implemented
+
+- Today dashboard summary counts for Train, Write, Career, and Home use `Localizable.stringsdict` keys instead of inline singular/plural branches or English suffixes.
+- Today readiness scale accessibility labels use the same `Localizable.stringsdict` resource path so spoken dynamic labels can be translated later with the plural resource set.
+
 ## Deferred Buckets
 
-- Dynamic/pluralized copy such as `Every <n> day(s)`, digest item counts, record counts, and readiness/accessibility interpolation needs `.stringsdict` or explicit localized formatting.
+- Dynamic/pluralized copy such as `Every <n> day(s)`, digest item counts, previous-day record counts, and non-Today-dashboard readiness/accessibility interpolation still needs `.stringsdict` or explicit localized formatting.
 - Domain/application `String` values such as readiness summaries, protocol schedule summaries, weekly digest insights, writing-stage titles, and source-type titles need a separate code-routing slice before keys alone can affect runtime output.
 - Notification titles and bodies should be localized in the reminder/runtime layer together with notification-specific tests.
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.

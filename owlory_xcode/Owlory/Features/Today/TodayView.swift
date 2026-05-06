@@ -479,7 +479,7 @@ struct TodayView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("\(planned) planned · \(completed) completed")
+                    Text(todayTrainSummary(planned: planned, completed: completed))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -515,7 +515,7 @@ struct TodayView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("\(captures) captures · \(sources) sources · \(drafts) drafts")
+                    Text(todayWriteSummary(captures: captures, sources: sources, drafts: drafts))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     if captures > 0 && sources == 0 {
@@ -554,7 +554,7 @@ struct TodayView: View {
                         .font(.caption)
                         .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                 } else {
-                    Text("\(count) \(count == 1 ? "record" : "records")")
+                    Text(todayCareerRecordCount(count))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -619,17 +619,66 @@ struct TodayView: View {
         }
     }
 
+    private func todayTrainSummary(planned: Int, completed: Int) -> String {
+        String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.dashboard.train.summary",
+                comment: "Today Train card summary with planned and completed session counts."
+            ),
+            planned,
+            completed
+        )
+    }
+
+    private func todayWriteSummary(captures: Int, sources: Int, drafts: Int) -> String {
+        String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.dashboard.write.summary",
+                comment: "Today Write card summary with capture, source, and draft note counts."
+            ),
+            captures,
+            sources,
+            drafts
+        )
+    }
+
+    private func todayCareerRecordCount(_ count: Int) -> String {
+        String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.dashboard.career.records",
+                comment: "Today Career card summary with career record count."
+            ),
+            count
+        )
+    }
+
     private func homeTaskSummary(
         activeTasks: Int,
         activeRuns: Int,
         completed: Int,
         skipped: Int
     ) -> String {
-        var parts = ["\(activeRuns) runs", "\(activeTasks) tasks", "\(completed) done"]
         if skipped > 0 {
-            parts.append("\(skipped) skipped")
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.dashboard.home.summary.withSkipped",
+                    comment: "Today Home card summary with protocol run, task, done, and skipped counts."
+                ),
+                activeRuns,
+                activeTasks,
+                completed,
+                skipped
+            )
         }
-        return parts.joined(separator: " · ")
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.dashboard.home.summary",
+                comment: "Today Home card summary with protocol run, task, and done counts."
+            ),
+            activeRuns,
+            activeTasks,
+            completed
+        )
     }
 
     // MARK: - Evening Reflection
@@ -899,7 +948,13 @@ struct TodayView: View {
                     }
                     .buttonStyle(.plain)
                     .frame(maxWidth: .infinity)
-                    .accessibilityLabel("\(label) \(level) of 5\(level == value ? ", selected" : "")")
+                    .accessibilityLabel(
+                        readinessScaleAccessibilityLabel(
+                            label: label,
+                            level: level,
+                            isSelected: level == value
+                        )
+                    )
                 }
             }
             HStack(spacing: 0) {
@@ -919,6 +974,20 @@ struct TodayView: View {
             .font(.caption2)
             .foregroundStyle(.tertiary)
         }
+    }
+
+    private func readinessScaleAccessibilityLabel(label: String, level: Int, isSelected: Bool) -> String {
+        let key = isSelected
+            ? "today.readiness.scale.accessibility.selected"
+            : "today.readiness.scale.accessibility"
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                key,
+                comment: "Today readiness scale accessibility label with dimension name and level."
+            ),
+            NSLocalizedString(label, comment: "Today readiness dimension label."),
+            level
+        )
     }
 
     private func readinessColor(for value: Int) -> Color {
