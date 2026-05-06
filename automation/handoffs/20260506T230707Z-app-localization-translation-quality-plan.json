@@ -1,0 +1,78 @@
+{
+  "slice_id": "app-localization-translation-quality-plan",
+  "status": "done",
+  "summary": "Added a planning-only translation quality workflow that defines placeholder status, reviewer expectations, locale-specific review risks, acceptance criteria, and future translation replacement slice rules without changing localization resources or product code.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/190846-app-localization-translation-quality-plan.md",
+    "automation/handoffs/20260506T230707Z-app-localization-translation-quality-plan.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/workflows/localization-string-inventory.md",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-translation-quality-plan",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Translation quality ownership",
+      "before": "Localization docs stated that non-English locales were English placeholders, but did not define reviewer status labels, acceptance criteria, or how future slices may claim translation quality.",
+      "after": "docs/workflows/localization-translation-quality.md defines translation status labels, native/fluent review expectations, acceptance criteria, locale-specific risks, terminology to review deliberately, and prohibited translation-slice behavior.",
+      "proof": [
+        "docs/workflows/localization-translation-quality.md",
+        "docs/README.md",
+        "docs/workflows/validation.md"
+      ]
+    },
+    {
+      "contract": "Placeholder baseline",
+      "before": "The repo described non-English values as placeholders but did not state the exact current placeholder baseline.",
+      "after": "The plan documents that all 18 non-English locales currently match English for 282 static keys and share the same 11 plural resources, so future translation slices can distinguish placeholder replacement from key drift.",
+      "proof": [
+        "docs/workflows/localization-translation-quality.md",
+        "make localization-check",
+        "./Tools/validate.sh localization"
+      ]
+    },
+    {
+      "contract": "Future translation replacement guardrails",
+      "before": "A future agent could treat parity, running-app smoke, or screenshot proof as translation quality.",
+      "after": "The plan explicitly states that machine/AI translation is draft-only, reviewer acceptance is required for quality claims, and parity/smoke/screenshot proof do not prove translation quality alone.",
+      "proof": [
+        "docs/workflows/localization-translation-quality.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No non-English translations were replaced in this slice.",
+    "No native or fluent reviewer has accepted any non-English locale values.",
+    "Non-English locales remain English placeholders.",
+    "The plan is doc-only and does not add mechanical detection for placeholder percentage or reviewer status.",
+    "Device, TestFlight, and native-speaker review proof remain future work."
+  ],
+  "recommended_next_slice": "app-localization-translation-review-export",
+  "recommended_next_reason": "Before replacing locale files, generate a small reviewer-ready export of English keys, current placeholders, product terminology, and status labels so a human/native review can happen outside the app source without drifting from the repo contract.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T23:08:46Z"
+}

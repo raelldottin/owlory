@@ -11,6 +11,7 @@ Use this inventory before starting translation work. It separates source-string 
 - English source of truth: `owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings`.
 - Validation: `make localization-check` and `./Tools/validate.sh localization`.
 - Dynamic formatting contract: [Localization Dynamic Formatting](localization-dynamic-formatting.md).
+- Translation quality contract: [Localization Translation Quality](localization-translation-quality.md).
 
 Non-English locales intentionally keep English placeholder values until a translation-quality slice replaces them.
 
@@ -54,6 +55,8 @@ The extraction changed only `Localizable.strings` keys and docs; it did not modi
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.
 
 Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before extracting any deferred dynamic bucket. It defines which layer owns counts, dates, notification copy, and model display labels so future implementation slices do not leak UI copy into domain rules.
+
+Use [Localization Translation Quality](localization-translation-quality.md) before replacing non-English placeholder values. It defines placeholder status, reviewer expectations, locale-specific risks, and the proof required before claiming translation quality.
 
 ## Verification
 
