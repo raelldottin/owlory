@@ -13,7 +13,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make drift-report` - classify root clutter and legacy docs before cleanup.
 - `make clean-system-metadata` - remove only obvious OS metadata files listed in the drift-control policy.
 - `make verify-app-icons` - prove the shipped app-icon catalog and classify generated icon archives/folders.
-- `make localization-check` - verify approved locale folders, matching `Localizable.strings` keys, and Xcode variant-group packaging.
+- `make localization-check` - verify approved locale folders, matching `Localizable.strings` and `Localizable.stringsdict` keys, and Xcode variant-group packaging.
 - `make review-preflight` - infer touched areas, docs, validation, and review risks for current changes.
 - `make automation-check` - run the Python tests for the automation supervisor and context builder.
 - `make build-provenance` - print and validate current Xcode version/build plus Git rollback identity.

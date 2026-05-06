@@ -24,13 +24,25 @@ struct DigestDetailView: View {
 
     private var overviewSection: some View {
         Section("Overview") {
-            LabeledContent("Days active", value: "\(digest.daysWithEntries) of 7")
-            LabeledContent("Completion", value: "\(digest.totalDone) of \(digest.totalPlanned) (\(Int(digest.completionRate * 100))%)")
+            LabeledContent(
+                "Days active",
+                value: WeeklyDigestPresentationFormatting.daysActiveValue(digest.daysWithEntries)
+            )
+            LabeledContent(
+                "Completion",
+                value: WeeklyDigestPresentationFormatting.completionValue(for: digest)
+            )
             if digest.averageReadiness > 0 {
-                LabeledContent("Avg readiness", value: String(format: "%.1f / 5", digest.averageReadiness))
+                LabeledContent(
+                    "Avg readiness",
+                    value: WeeklyDigestPresentationFormatting.averageReadinessValue(digest.averageReadiness)
+                )
             }
             if digest.streakDays > 0 {
-                LabeledContent("Streak", value: "\(digest.streakDays) \(digest.streakDays == 1 ? "day" : "days")")
+                LabeledContent(
+                    "Streak",
+                    value: WeeklyDigestPresentationFormatting.streakDaysValue(digest.streakDays)
+                )
             }
             if digest.stalledItemCount > 0 {
                 LabeledContent("Stalled items", value: "\(digest.stalledItemCount)")
@@ -82,7 +94,10 @@ struct DigestDetailView: View {
         if !active.isEmpty {
             Section("Domain Activity") {
                 ForEach(active, id: \.key) { domain, count in
-                    LabeledContent(domain.title, value: "\(count) \(count == 1 ? "item" : "items")")
+                    LabeledContent(
+                        domain.title,
+                        value: WeeklyDigestPresentationFormatting.domainActivityItemCount(count)
+                    )
                 }
             }
         }
@@ -102,6 +117,6 @@ struct DigestDetailView: View {
     }
 
     private var weekLabel: String {
-        WeeklyDigestRules.weekRangeLabel(for: digest, calendar: calendar, separator: "-")
+        WeeklyDigestPresentationFormatting.weekRangeLabel(for: digest, calendar: calendar, separator: "-")
     }
 }

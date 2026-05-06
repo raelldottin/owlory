@@ -1492,6 +1492,40 @@
       ],
       "max_files_changed": 30,
       "notes": "Implementation slice for Today dashboard counts and accessibility interpolation only. Identify Today count strings that need plural-aware formatting, add Localizable.stringsdict or the chosen Apple-native plural mechanism consistently across all approved locales, keep pure domain rules unchanged, keep non-English values as English placeholders, preserve localization parity, and do not touch digest copy, notifications, protocol schedule text, or translation quality."
+    },
+    {
+      "slice_id": "app-localization-digest-formatting",
+      "title": "Localize weekly digest count and date labels",
+      "status": "done",
+      "priority": 147,
+      "domain": "today",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-digest-formatting",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-digest-formatting-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-today-plurals"
+      ],
+      "max_files_changed": 48,
+      "notes": "Implementation slice for weekly digest count/date labels only. Move digest presentation counts, ratios, compact streaks, relative labels, and week-range labels to localized presentation formatting with explicit calendar/time-zone context. Keep WeeklyDigestRules factual, preserve cadence/stale counting/rule-version behavior, leave digest insights/highlight summaries/notification copy/protocol text/translations out of scope, and keep all locale resources in parity."
     }
   ]
 }

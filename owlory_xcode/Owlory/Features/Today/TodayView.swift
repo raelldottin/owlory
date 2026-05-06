@@ -763,11 +763,23 @@ struct TodayView: View {
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            digestStat(label: "Days active", value: "\(digest.daysWithEntries)")
+                            digestStat(
+                                label: "Days active",
+                                value: WeeklyDigestPresentationFormatting.daysActiveValue(digest.daysWithEntries)
+                            )
                             Spacer()
-                            digestStat(label: "Completed", value: "\(digest.totalDone)/\(digest.totalPlanned)")
+                            digestStat(
+                                label: "Completed",
+                                value: WeeklyDigestPresentationFormatting.completionRatioValue(
+                                    done: digest.totalDone,
+                                    planned: digest.totalPlanned
+                                )
+                            )
                             Spacer()
-                            digestStat(label: "Streak", value: "\(digest.streakDays)d")
+                            digestStat(
+                                label: "Streak",
+                                value: WeeklyDigestPresentationFormatting.compactStreakDaysValue(digest.streakDays)
+                            )
                         }
 
                         if digest.averageReadiness > 0 {
@@ -776,7 +788,7 @@ struct TodayView: View {
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                 Spacer()
-                                Text(String(format: "%.1f / 5", digest.averageReadiness))
+                                Text(WeeklyDigestPresentationFormatting.averageReadinessValue(digest.averageReadiness))
                                     .font(.caption.weight(.medium))
                             }
                         }
@@ -826,7 +838,7 @@ struct TodayView: View {
                 } label: {
                     HStack {
                         Label(
-                            WeeklyDigestRules.relativeWeekLabel(
+                            WeeklyDigestPresentationFormatting.relativeWeekLabel(
                                 for: digest,
                                 now: Date(),
                                 calendar: patternStore.weeklyDigestCalendar
@@ -835,7 +847,7 @@ struct TodayView: View {
                         )
                             .font(.subheadline.weight(.medium))
                         Spacer()
-                        Text(WeeklyDigestRules.collapsedCompletionSummary(for: digest))
+                        Text(WeeklyDigestPresentationFormatting.collapsedCompletionSummary(for: digest))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

@@ -41,7 +41,7 @@ Layer ownership:
 Recommended implementation order:
 
 1. `app-localization-today-plurals` - implemented for the Today dashboard card summaries and readiness-scale accessibility interpolation.
-2. `app-localization-digest-formatting`
+2. `app-localization-digest-formatting` - implemented for weekly digest presentation counts, ratios, compact streaks, relative labels, and week-range labels.
 3. `app-localization-protocol-schedule-projection`
 4. `app-localization-notification-copy`
 5. `app-localization-display-name-adapters`

@@ -12,4 +12,41 @@
   "today.dashboard.home.summary.withSkipped" = { NSStringLocalizedFormatKey = "%#@runs@ · %#@tasks@ · %#@done@ · %#@skipped@"; runs = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d run"; other = "%d runs"; }; tasks = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d task"; other = "%d tasks"; }; done = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d done"; other = "%d done"; }; skipped = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d skipped"; other = "%d skipped"; }; };
   "today.readiness.scale.accessibility" = { NSStringLocalizedFormatKey = "%@ %#@level@"; level = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d of 5"; other = "%d of 5"; }; };
   "today.readiness.scale.accessibility.selected" = { NSStringLocalizedFormatKey = "%@ %#@level@, selected"; level = { NSStringFormatSpecTypeKey = "NSStringPluralRuleType"; NSStringFormatValueTypeKey = "d"; one = "%d of 5"; other = "%d of 5"; }; };
+  "weeklyDigest.domainActivity.items" = {
+    NSStringLocalizedFormatKey = "%#@items@";
+    items = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d item";
+      other = "%d items";
+    };
+  };
+  "weeklyDigest.row.daysActive" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d/7 days";
+      other = "%d/7 days";
+    };
+  };
+  "weeklyDigest.streak.compact" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%dd";
+      other = "%dd";
+    };
+  };
+  "weeklyDigest.streak.days" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d day";
+      other = "%d days";
+    };
+  };
+
 }
