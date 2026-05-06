@@ -54,7 +54,7 @@ struct CareerView: View {
         Section {
             Picker("Type", selection: $selectedType) {
                 ForEach(CareerRecordType.allCases) { type in
-                    Text(type.title).tag(type)
+                    Text(type.localizedDisplayName).tag(type)
                 }
             }
             .pickerStyle(.segmented)
@@ -69,12 +69,29 @@ struct CareerView: View {
             let filtered = store.records(ofType: selectedType)
             if filtered.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("No \(selectedType.title.lowercased()) records yet.")
+                    Text(
+                        String.localizedStringWithFormat(
+                            NSLocalizedString(
+                                "career.records.empty",
+                                comment: "Career empty-state copy with the selected record type."
+                            ),
+                            selectedType.localizedSentenceName
+                        )
+                    )
                         .foregroundStyle(.secondary)
                     Button {
                         showingAdd = true
                     } label: {
-                        Label("Add \(selectedType.title)", systemImage: "plus.circle")
+                        Label(
+                            String.localizedStringWithFormat(
+                                NSLocalizedString(
+                                    "career.records.addType",
+                                    comment: "Career empty-state add button for the selected record type."
+                                ),
+                                selectedType.localizedDisplayName
+                            ),
+                            systemImage: "plus.circle"
+                        )
                     }
                 }
             } else {
@@ -126,7 +143,15 @@ struct CareerView: View {
                 }
             }
         } header: {
-            Text("\(selectedType.title) Log")
+            Text(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "career.records.typeLog",
+                        comment: "Career record section header for the selected record type."
+                    ),
+                    selectedType.localizedDisplayName
+                )
+            )
         }
     }
 
@@ -196,7 +221,15 @@ private struct AddRecordSheet: View {
                     }
                 }
             }
-            .navigationTitle("Add \(recordType.title)")
+            .navigationTitle(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "career.records.addTitle",
+                        comment: "Navigation title for adding a career record of the selected type."
+                    ),
+                    recordType.localizedDisplayName
+                )
+            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -271,7 +304,15 @@ private struct EditRecordSheet: View {
                     }
                 }
             }
-            .navigationTitle("Edit \(record.type.title)")
+            .navigationTitle(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "career.records.editTitle",
+                        comment: "Navigation title for editing a career record of the selected type."
+                    ),
+                    record.type.localizedDisplayName
+                )
+            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -284,6 +325,30 @@ private struct EditRecordSheet: View {
                     }
                 }
             }
+        }
+    }
+}
+
+private extension CareerRecordType {
+    var localizedDisplayName: String {
+        switch self {
+        case .win:
+            return String(localized: "display.careerRecordType.win")
+        case .impact:
+            return String(localized: "display.careerRecordType.impact")
+        case .story:
+            return String(localized: "display.careerRecordType.story")
+        }
+    }
+
+    var localizedSentenceName: String {
+        switch self {
+        case .win:
+            return String(localized: "display.careerRecordType.win.sentence")
+        case .impact:
+            return String(localized: "display.careerRecordType.impact.sentence")
+        case .story:
+            return String(localized: "display.careerRecordType.story.sentence")
         }
     }
 }

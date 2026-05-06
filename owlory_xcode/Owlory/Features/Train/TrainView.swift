@@ -323,7 +323,7 @@ private struct SessionCardView: View {
                             Button {
                                 status = s
                             } label: {
-                                Text(s.rawValue.capitalized)
+                                Text(s.localizedDisplayName)
                                     .font(.subheadline.weight(.medium))
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 6)
@@ -336,7 +336,9 @@ private struct SessionCardView: View {
                                     )
                             }
                             .buttonStyle(.plain)
-                            .accessibilityLabel("\(s.rawValue.capitalized)\(status == s ? ", selected" : "")")
+                            .accessibilityLabel(
+                                trainingStatusAccessibilityLabel(status: s, isSelected: status == s)
+                            )
                         }
                     }
                 }
@@ -549,14 +551,22 @@ private struct StatusBadge: View {
     let status: TrainingStatus
 
     var body: some View {
-        Text(status.rawValue.capitalized)
+        Text(status.localizedDisplayName)
             .font(.caption2.weight(.medium))
             .padding(.horizontal, 8)
             .padding(.vertical, 2)
             .background(color.opacity(0.15))
             .foregroundStyle(color)
             .clipShape(Capsule())
-            .accessibilityLabel("Status: \(status.rawValue.capitalized)")
+            .accessibilityLabel(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "display.trainingStatus.accessibility.status",
+                        comment: "Accessibility label for a training session status badge."
+                    ),
+                    status.localizedDisplayName
+                )
+            )
     }
 
     private var color: Color {
@@ -565,6 +575,34 @@ private struct StatusBadge: View {
         case .completed: return OwloryColor.success
         case .modified: return OwloryColor.warning
         case .skipped: return OwloryColor.error
+        }
+    }
+}
+
+private func trainingStatusAccessibilityLabel(status: TrainingStatus, isSelected: Bool) -> String {
+    let key = isSelected
+        ? "display.trainingStatus.accessibility.selected"
+        : "display.trainingStatus.accessibility"
+    return String.localizedStringWithFormat(
+        NSLocalizedString(
+            key,
+            comment: "Accessibility label for a selectable training session status."
+        ),
+        status.localizedDisplayName
+    )
+}
+
+private extension TrainingStatus {
+    var localizedDisplayName: String {
+        switch self {
+        case .planned:
+            return String(localized: "display.trainingStatus.planned")
+        case .completed:
+            return String(localized: "display.trainingStatus.completed")
+        case .modified:
+            return String(localized: "display.trainingStatus.modified")
+        case .skipped:
+            return String(localized: "display.trainingStatus.skipped")
         }
     }
 }

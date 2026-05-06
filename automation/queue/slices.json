@@ -1602,6 +1602,40 @@
       ],
       "max_files_changed": 32,
       "notes": "Implementation slice for notification titles/bodies only. Localize delivered notification copy in the reminders/runtime application path that owns scheduling, including prediction reminders, Today prompt notifications as scheduled, and protocol schedule notifications. Preserve reminder timing, suppression, dedupe, Home schedule rules, Today projection behavior, and translation placeholders. Do not move UserNotifications or copy into Core/Domain."
+    },
+    {
+      "slice_id": "app-localization-display-name-adapters",
+      "title": "Localize display-name adapters",
+      "status": "done",
+      "priority": 144,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Features/",
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/OwloryCoreTests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-display-name-adapters",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-display-name-localization-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-notification-copy"
+      ],
+      "max_files_changed": 40,
+      "notes": "Implementation slice for display-name adapters only. Identify model/display labels derived from enum raw values or hardcoded adapters, move low-risk labels into UI-adjacent localized presentation formatting, keep Core/Domain semantic, do not change enum raw values or persistence, keep all 19 locale resources in parity, and leave translation quality, notification copy, Today projection behavior, and product-rule rewrites out of scope."
     }
   ]
 }

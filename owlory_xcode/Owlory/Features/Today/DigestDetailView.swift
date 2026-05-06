@@ -95,7 +95,7 @@ struct DigestDetailView: View {
             Section("Domain Activity") {
                 ForEach(active, id: \.key) { domain, count in
                     LabeledContent(
-                        domain.title,
+                        domain.localizedDisplayName,
                         value: WeeklyDigestPresentationFormatting.domainActivityItemCount(count)
                     )
                 }
@@ -118,5 +118,20 @@ struct DigestDetailView: View {
 
     private var weekLabel: String {
         WeeklyDigestPresentationFormatting.weekRangeLabel(for: digest, calendar: calendar, separator: "-")
+    }
+}
+
+private extension LifeDomain {
+    var localizedDisplayName: String {
+        switch self {
+        case .training:
+            return String(localized: "display.lifeDomain.training")
+        case .writing:
+            return String(localized: "display.lifeDomain.writing")
+        case .career:
+            return String(localized: "display.lifeDomain.career")
+        case .home:
+            return String(localized: "display.lifeDomain.home")
+        }
     }
 }
