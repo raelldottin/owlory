@@ -22,7 +22,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make release-check` - require clean build provenance, then run the runtime validation slice before release/archive.
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
-- `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed.
+- `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
 ## Contract Status And Proof Levels
 
@@ -105,6 +105,18 @@ python3 automation/smoke/running_app_smoke.py
 ```
 
 The runner emits JSON. A successful run reaches `proof_level: "running-app-smoke"` and records the simulator, bundle ID, scheme, commit/build metadata, and screenshot path. If the checkout cannot satisfy the runnable-app contract, the runner exits non-zero with `status: "blocked"` and a precise `blocked_contract` instead of claiming app behavior was verified.
+
+For localization runtime smoke, run the same proof path with representative locale launch arguments:
+
+```bash
+python3 automation/smoke/running_app_smoke.py --locale en --output /tmp/owlory-locale-smoke-en.json
+python3 automation/smoke/running_app_smoke.py --locale es --output /tmp/owlory-locale-smoke-es.json
+python3 automation/smoke/running_app_smoke.py --locale fr --output /tmp/owlory-locale-smoke-fr.json
+python3 automation/smoke/running_app_smoke.py --locale ar --output /tmp/owlory-locale-smoke-ar.json
+python3 automation/smoke/running_app_smoke.py --locale zh-Hans --output /tmp/owlory-locale-smoke-zh-Hans.json
+```
+
+Locale smoke proves the built app bundle contains the requested locale resources and that the simulator app launches with `-AppleLanguages`/`-AppleLocale` arguments. It does not prove translation quality, layout correctness, screenshot-preserved proof, real-device behavior, or TestFlight behavior.
 
 The supervisor currently replays only a tiny exact-match allowlist of required validations:
 

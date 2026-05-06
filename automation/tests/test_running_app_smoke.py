@@ -10,6 +10,7 @@ from automation.smoke.running_app_smoke import (
     DEFAULT_DESTINATION,
     SmokeConfig,
     find_simulator,
+    locale_launch_arguments,
     parse_destination,
     run_smoke,
     runtime_matches
@@ -23,13 +24,15 @@ class FakeRunner:
         schemes: list[str] = None,
         settings: list[dict] = None,
         devices: dict = None,
-        fail_step: str = ""
+        fail_step: str = "",
+        localized_locales: list[str] = None
     ) -> None:
         self.repo_root = repo_root
         self.schemes = schemes if schemes is not None else ["Owlory"]
         self.settings = settings if settings is not None else [self.app_settings()]
         self.devices = devices if devices is not None else self.available_devices()
         self.fail_step = fail_step
+        self.localized_locales = localized_locales or []
         self.calls: list[list[str]] = []
 
     def __call__(self, argv: list[str], cwd: Path) -> CommandResult:
@@ -47,6 +50,13 @@ class FakeRunner:
                 return CommandResult(argv=argv, returncode=65, stderr="build failed")
             app_path = self.repo_root / "Build/Products/Debug-iphonesimulator/Owlory.app"
             app_path.mkdir(parents=True, exist_ok=True)
+            for locale in self.localized_locales:
+                locale_dir = app_path / f"{locale}.lproj"
+                locale_dir.mkdir(parents=True, exist_ok=True)
+                (locale_dir / "Localizable.strings").write_text('"app.name" = "Owlory";\n')
+                (locale_dir / "Localizable.stringsdict").write_text(
+                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><plist version=\"1.0\"><dict/></plist>\n"
+                )
             return CommandResult(argv=argv, returncode=0)
         if argv == ["xcrun", "simctl", "list", "devices", "available", "-j"]:
             return CommandResult(argv=argv, returncode=0, stdout=json.dumps(self.devices))
@@ -147,6 +157,65 @@ class RunningAppSmokeTests(unittest.TestCase):
             self.assertEqual(8, result["artifacts"]["screenshot_bytes"])
             self.assertIn(["xcrun", "simctl", "install", "TEST-DEVICE", result["xcode"]["app_path"]], runner.calls)
             self.assertIn(["xcrun", "simctl", "launch", "TEST-DEVICE", "com.raelldottin.owlory"], runner.calls)
+
+    def test_locale_smoke_checks_resources_and_launches_with_locale_arguments(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            config = self.make_config(repo_root)
+            config.locale = "es"
+            config.apple_locale = "es_ES"
+            runner = FakeRunner(repo_root, localized_locales=["en", "es"])
+
+            result = run_smoke(config, runner=runner)
+
+            self.assertEqual("passed", result["status"])
+            self.assertEqual("es", result["locale"]["requested_locale"])
+            self.assertEqual(
+                ["-AppleLanguages", "(es)", "-AppleLocale", "es_ES"],
+                result["locale"]["launch_arguments"]
+            )
+            self.assertIn(
+                [
+                    "xcrun",
+                    "simctl",
+                    "launch",
+                    "TEST-DEVICE",
+                    "com.raelldottin.owlory",
+                    "-AppleLanguages",
+                    "(es)",
+                    "-AppleLocale",
+                    "es_ES"
+                ],
+                runner.calls
+            )
+            self.assertTrue(result["artifacts"]["screenshot_path"].endswith("owlory-running-app-smoke-es.png"))
+            localized_resources = result["artifacts"]["localized_resources"]
+            self.assertEqual("es", localized_resources["locale"])
+            self.assertEqual(
+                ["Localizable.strings", "Localizable.stringsdict"],
+                [record["name"] for record in localized_resources["files"]]
+            )
+
+    def test_locale_smoke_fails_before_install_when_resources_are_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            config = self.make_config(repo_root)
+            config.locale = "zh-Hans"
+            runner = FakeRunner(repo_root, localized_locales=["en"])
+
+            result = run_smoke(config, runner=runner)
+
+            self.assertEqual("failed", result["status"])
+            self.assertEqual("build-tested", result["proof_level"])
+            self.assertEqual("check-localization-resources", result["failed_stage"])
+            self.assertFalse(any(call[:3] == ["xcrun", "simctl", "install"] for call in runner.calls))
+            self.assertFalse(any(call[:3] == ["xcrun", "simctl", "launch"] for call in runner.calls))
+
+    def test_locale_launch_arguments_are_empty_without_requested_locale(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = self.make_config(Path(temp_dir))
+
+            self.assertEqual([], locale_launch_arguments(config))
 
     def test_missing_scheme_blocks_before_build(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

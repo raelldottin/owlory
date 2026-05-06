@@ -178,6 +178,14 @@ Only after those checks pass does it build, boot the simulator if needed, instal
 
 Successful output reports `status: "passed"` and `proof_level: "running-app-smoke"`. Blocked output reports `status: "blocked"`, `blocked_before: "running-app-smoke"`, and the precise `blocked_contract`. A failed install, launch, or screenshot must not claim running-app proof.
 
+Use `--locale <locale>` when proving localization resource loading in a running simulator app:
+
+```bash
+python3 automation/smoke/running_app_smoke.py --locale es --output /tmp/owlory-locale-smoke-es.json
+```
+
+Locale smoke adds launch arguments such as `-AppleLanguages (es)` and checks the built app bundle for the requested `<locale>.lproj/Localizable.strings` resources before install. If English plural resources are packaged, the same locale must package `Localizable.stringsdict`. This proof level stays `running-app-smoke`; preserving screenshots as reviewed repo artifacts is a separate screenshot-proof slice.
+
 ## Supervisor Validation Replay
 
 The harness no longer relies only on the run's validation claims.

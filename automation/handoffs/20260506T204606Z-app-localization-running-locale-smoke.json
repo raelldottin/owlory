@@ -1,0 +1,93 @@
+{
+  "slice_id": "app-localization-running-locale-smoke",
+  "status": "done",
+  "summary": "Extended the running-app smoke runner with locale launch arguments and built-app localization resource checks, then proved en, es, fr, ar, and zh-Hans launch stability on simulator with temporary screenshot artifacts.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-06/165126-app-localization-running-locale-smoke.md",
+    "automation/README.md",
+    "automation/handoffs/20260506T204606Z-app-localization-running-locale-smoke.json",
+    "automation/queue/slices.json",
+    "automation/smoke/running_app_smoke.py",
+    "automation/tests/test_running_app_smoke.py",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-running-locale-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "python3 automation/smoke/running_app_smoke.py --locale en --output /tmp/owlory-locale-smoke-en.json",
+    "python3 automation/smoke/running_app_smoke.py --locale es --output /tmp/owlory-locale-smoke-es.json",
+    "python3 automation/smoke/running_app_smoke.py --locale fr --output /tmp/owlory-locale-smoke-fr.json",
+    "python3 automation/smoke/running_app_smoke.py --locale ar --output /tmp/owlory-locale-smoke-ar.json",
+    "python3 automation/smoke/running_app_smoke.py --locale zh-Hans --output /tmp/owlory-locale-smoke-zh-Hans.json",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-locale-smoke-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Locale launch proof",
+      "before": "Localization had build-tested packaging proof, but no running-app proof that representative locales launch and load packaged resources at runtime.",
+      "after": "The smoke runner can launch Owlory with Apple locale arguments and record requested locale metadata in the JSON result.",
+      "proof": [
+        "automation/smoke/running_app_smoke.py",
+        "automation/tests/test_running_app_smoke.py",
+        "/tmp/owlory-locale-smoke-en.json",
+        "/tmp/owlory-locale-smoke-es.json",
+        "/tmp/owlory-locale-smoke-fr.json",
+        "/tmp/owlory-locale-smoke-ar.json",
+        "/tmp/owlory-locale-smoke-zh-Hans.json"
+      ]
+    },
+    {
+      "contract": "Built app localization resources",
+      "before": "Localization parity and build packaging were checked statically, but the running-app smoke runner did not verify locale resources inside the built .app before launch.",
+      "after": "When --locale is provided, the runner requires <locale>.lproj/Localizable.strings in the built app and also requires Localizable.stringsdict when English plural resources are packaged.",
+      "proof": [
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "/tmp/owlory-locale-smoke-en.json",
+        "/tmp/owlory-locale-smoke-es.json",
+        "/tmp/owlory-locale-smoke-fr.json",
+        "/tmp/owlory-locale-smoke-ar.json",
+        "/tmp/owlory-locale-smoke-zh-Hans.json"
+      ]
+    },
+    {
+      "contract": "Representative locale smoke set",
+      "before": "The localization lane had no repeatable runtime proof path for English, Latin placeholder locales, RTL launch pressure, or CJK resource loading.",
+      "after": "en, es, fr, ar, and zh-Hans each built, installed, launched, and produced a temporary simulator screenshot.",
+      "proof": [
+        "/tmp/owlory-running-app-smoke/artifacts/20260506T204827Z/owlory-running-app-smoke-en.png",
+        "/tmp/owlory-running-app-smoke/artifacts/20260506T204942Z/owlory-running-app-smoke-es.png",
+        "/tmp/owlory-running-app-smoke/artifacts/20260506T204954Z/owlory-running-app-smoke-fr.png",
+        "/tmp/owlory-running-app-smoke/artifacts/20260506T205012Z/owlory-running-app-smoke-ar.png",
+        "/tmp/owlory-running-app-smoke/artifacts/20260506T205027Z/owlory-running-app-smoke-zh-Hans.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Locale smoke proves resource loading and launch stability only; it does not prove translation quality or layout correctness.",
+    "Screenshots were captured as temporary /tmp artifacts and were not preserved as repo-managed proof, so this slice does not claim screenshot-verified proof.",
+    "No flow verification, device proof, delivered-notification device proof, TestFlight proof, or native-speaker translation review was performed.",
+    "Smoke JSON files report repo.dirty=yes because they were captured after the automation/doc slice files were edited and before this handoff commit; final repo cleanliness is checked after commit.",
+    "The unsigned simulator build passed with the pre-existing TodayView onChange deprecation warning and build-info run script notes unrelated to this slice."
+  ],
+  "recommended_next_slice": "app-localization-locale-screenshot-proof",
+  "recommended_next_reason": "If reviewable locale evidence is needed, preserve the representative locale screenshots and manifest in the repo as a separate screenshot-proof slice without broadening translation or layout claims.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-06T20:51:26Z"
+}
