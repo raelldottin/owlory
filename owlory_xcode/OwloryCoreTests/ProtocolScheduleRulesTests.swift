@@ -110,10 +110,18 @@ final class ProtocolScheduleRulesTests: XCTestCase {
             calendar: calendar
         )
 
-        XCTAssertEqual(summary, ProtocolScheduleRules.Summary(text: "Today window passed", state: .overdue))
+        XCTAssertEqual(
+            summary,
+            ProtocolScheduleRules.Summary(
+                preset: .today,
+                startDate: date("2026-05-01T00:00:00Z"),
+                endDate: date("2026-05-01T00:00:00Z"),
+                state: .overdue
+            )
+        )
     }
 
-    func testSummaryFormatsCustomRange() {
+    func testSummaryPreservesCustomRangeSemantics() {
         let schedule = HouseholdProtocolSchedule(
             preset: .custom,
             startDate: date("2026-05-01T00:00:00Z"),
@@ -129,7 +137,9 @@ final class ProtocolScheduleRulesTests: XCTestCase {
         XCTAssertEqual(
             summary,
             ProtocolScheduleRules.Summary(
-                text: "Scheduled for May 1, 2026 - May 3, 2026",
+                preset: .custom,
+                startDate: date("2026-05-01T00:00:00Z"),
+                endDate: date("2026-05-03T00:00:00Z"),
                 state: .active
             )
         )
@@ -262,7 +272,7 @@ final class ProtocolScheduleRulesTests: XCTestCase {
         XCTAssertEqual(status, .overdue)
     }
 
-    func testRunAwareSummaryReusesScheduledTextWhenSatisfied() {
+    func testRunAwareSummaryPreservesPresetAndRangeWhenSatisfied() {
         let schedule = HouseholdProtocolSchedule(
             preset: .today,
             startDate: date("2026-05-01T00:00:00Z"),
@@ -285,11 +295,16 @@ final class ProtocolScheduleRulesTests: XCTestCase {
 
         XCTAssertEqual(
             summary,
-            ProtocolScheduleRules.ScheduleSummary(text: "Scheduled for today", status: .satisfied)
+            ProtocolScheduleRules.ScheduleSummary(
+                preset: .today,
+                startDate: date("2026-05-01T00:00:00Z"),
+                endDate: date("2026-05-01T00:00:00Z"),
+                status: .satisfied
+            )
         )
     }
 
-    func testRunAwareSummaryReportsPassedTextWhenOverdue() {
+    func testRunAwareSummaryPreservesPresetAndRangeWhenOverdue() {
         let schedule = HouseholdProtocolSchedule(
             preset: .today,
             startDate: date("2026-05-01T00:00:00Z"),
@@ -305,7 +320,12 @@ final class ProtocolScheduleRulesTests: XCTestCase {
 
         XCTAssertEqual(
             summary,
-            ProtocolScheduleRules.ScheduleSummary(text: "Today window passed", status: .overdue)
+            ProtocolScheduleRules.ScheduleSummary(
+                preset: .today,
+                startDate: date("2026-05-01T00:00:00Z"),
+                endDate: date("2026-05-01T00:00:00Z"),
+                status: .overdue
+            )
         )
     }
 

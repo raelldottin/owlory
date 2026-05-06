@@ -41,7 +41,9 @@ enum ProtocolScheduleRules {
     }
 
     struct Summary: Equatable {
-        let text: String
+        let preset: ProtocolSchedulePreset
+        let startDate: Date
+        let endDate: Date
         let state: WindowState
     }
 
@@ -58,7 +60,9 @@ enum ProtocolScheduleRules {
     }
 
     struct ScheduleSummary: Equatable {
-        let text: String
+        let preset: ProtocolSchedulePreset
+        let startDate: Date
+        let endDate: Date
         let status: ScheduleStatus
     }
 
@@ -146,32 +150,18 @@ enum ProtocolScheduleRules {
         }
 
         let state = windowState(for: schedule, now: now, calendar: calendar)
+        let range = normalizedDateRange(
+            start: schedule.startDate,
+            end: schedule.endDate,
+            calendar: calendar
+        )
 
-        switch schedule.preset {
-        case .today:
-            return Summary(
-                text: state == .overdue ? "Today window passed" : "Scheduled for today",
-                state: state
-            )
-        case .weekend:
-            return Summary(
-                text: state == .overdue ? "Weekend window passed" : "Scheduled for this weekend",
-                state: state
-            )
-        case .thisWeek:
-            return Summary(
-                text: state == .overdue ? "This week window passed" : "Scheduled for this week",
-                state: state
-            )
-        case .custom:
-            let rangeLabel = formattedRangeLabel(
-                start: schedule.startDate,
-                end: schedule.endDate,
-                calendar: calendar
-            )
-            let text = state == .overdue ? "Window passed - \(rangeLabel)" : "Scheduled for \(rangeLabel)"
-            return Summary(text: text, state: state)
-        }
+        return Summary(
+            preset: schedule.preset,
+            startDate: range.start,
+            endDate: range.end,
+            state: state
+        )
     }
 
     /// Run-aware schedule classification. `runs` should already be filtered to
@@ -201,9 +191,10 @@ enum ProtocolScheduleRules {
         }
     }
 
-    /// Run-aware label for HomeView. `.satisfied` reuses the active-window
-    /// text so the surface does not nag about a passed window when the user
-    /// already engaged; only `.overdue` carries the "window passed" warning.
+    /// Run-aware semantic schedule summary for Home presentation. `.satisfied`
+    /// lets the presentation layer reuse the active-window label so the surface
+    /// does not nag about a passed window when the user already engaged; only
+    /// `.overdue` should render "window passed" copy.
     static func summary(
         for schedule: HouseholdProtocolSchedule?,
         runs: [ProtocolRun],
@@ -215,23 +206,18 @@ enum ProtocolScheduleRules {
         }
 
         let status = scheduleStatus(for: schedule, runs: runs, now: now, calendar: calendar)
-        let text: String
-        switch schedule.preset {
-        case .today:
-            text = status == .overdue ? "Today window passed" : "Scheduled for today"
-        case .weekend:
-            text = status == .overdue ? "Weekend window passed" : "Scheduled for this weekend"
-        case .thisWeek:
-            text = status == .overdue ? "This week window passed" : "Scheduled for this week"
-        case .custom:
-            let rangeLabel = formattedRangeLabel(
-                start: schedule.startDate,
-                end: schedule.endDate,
-                calendar: calendar
-            )
-            text = status == .overdue ? "Window passed - \(rangeLabel)" : "Scheduled for \(rangeLabel)"
-        }
-        return ScheduleSummary(text: text, status: status)
+        let range = normalizedDateRange(
+            start: schedule.startDate,
+            end: schedule.endDate,
+            calendar: calendar
+        )
+
+        return ScheduleSummary(
+            preset: schedule.preset,
+            startDate: range.start,
+            endDate: range.end,
+            status: status
+        )
     }
 
     private static func runStarted(
@@ -304,28 +290,4 @@ enum ProtocolScheduleRules {
         return (endDay, startDay)
     }
 
-    private static func formattedRangeLabel(
-        start: Date,
-        end: Date,
-        calendar: Calendar
-    ) -> String {
-        let range = normalizedDateRange(start: start, end: end, calendar: calendar)
-        if range.start == range.end {
-            return formattedDay(range.start, calendar: calendar)
-        }
-        return "\(formattedDay(range.start, calendar: calendar)) - \(formattedDay(range.end, calendar: calendar))"
-    }
-
-    private static func formattedDay(
-        _ date: Date,
-        calendar: Calendar
-    ) -> String {
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.timeZone = calendar.timeZone
-        formatter.locale = calendar.locale
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
-    }
 }

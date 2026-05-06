@@ -1168,7 +1168,7 @@ final class HomeStoreTests: XCTestCase {
         )
     }
 
-    func testScheduleSummarySuppressesPassedTextWhenSatisfied() {
+    func testScheduleSummaryReportsSemanticStatusWhenSatisfied() {
         let now = makeDate("2026-05-03T12:00:00Z")
         let schedule = HouseholdProtocolSchedule(
             preset: .today,
@@ -1192,11 +1192,16 @@ final class HomeStoreTests: XCTestCase {
 
         XCTAssertEqual(
             summary,
-            ProtocolScheduleRules.ScheduleSummary(text: "Scheduled for today", status: .satisfied)
+            ProtocolScheduleRules.ScheduleSummary(
+                preset: .today,
+                startDate: makeDate("2026-05-01T00:00:00Z"),
+                endDate: makeDate("2026-05-01T00:00:00Z"),
+                status: .satisfied
+            )
         )
     }
 
-    func testScheduleSummaryReportsPassedTextWhenOverdue() {
+    func testScheduleSummaryReportsSemanticStatusWhenOverdue() {
         let now = makeDate("2026-05-03T12:00:00Z")
         let schedule = HouseholdProtocolSchedule(
             preset: .today,
@@ -1213,7 +1218,12 @@ final class HomeStoreTests: XCTestCase {
 
         XCTAssertEqual(
             summary,
-            ProtocolScheduleRules.ScheduleSummary(text: "Today window passed", status: .overdue)
+            ProtocolScheduleRules.ScheduleSummary(
+                preset: .today,
+                startDate: makeDate("2026-05-01T00:00:00Z"),
+                endDate: makeDate("2026-05-01T00:00:00Z"),
+                status: .overdue
+            )
         )
     }
 }
