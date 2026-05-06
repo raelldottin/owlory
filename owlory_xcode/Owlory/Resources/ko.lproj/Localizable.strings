@@ -198,3 +198,13 @@
 "These stay draft-only until you add one." = "These stay draft-only until you add one.";
 "View all digests" = "View all digests";
 "What mattered today?" = "What mattered today?";
+
+"weeklyDigest.averageReadiness.value" = "%@ / 5";
+"weeklyDigest.completion.percent" = "%d%%";
+"weeklyDigest.completion.ratio" = "%d/%d";
+"weeklyDigest.completion.value" = "%d of %d (%d%%)";
+"weeklyDigest.daysActive.value" = "%d of %d";
+"weeklyDigest.relative.lastWeek" = "Last Week";
+"weeklyDigest.relative.mostRecentWeek" = "Most Recent Week";
+"weeklyDigest.summary.doneOfPlanned" = "%d of %d done";
+"weeklyDigest.summary.empty" = "No planned Focus items";

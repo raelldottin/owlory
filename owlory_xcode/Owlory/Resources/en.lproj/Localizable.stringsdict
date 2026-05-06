@@ -116,4 +116,41 @@
       other = "%d of 5";
     };
   };
+  "weeklyDigest.domainActivity.items" = {
+    NSStringLocalizedFormatKey = "%#@items@";
+    items = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d item";
+      other = "%d items";
+    };
+  };
+  "weeklyDigest.row.daysActive" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d/7 days";
+      other = "%d/7 days";
+    };
+  };
+  "weeklyDigest.streak.compact" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%dd";
+      other = "%dd";
+    };
+  };
+  "weeklyDigest.streak.days" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "%d day";
+      other = "%d days";
+    };
+  };
+
 }
