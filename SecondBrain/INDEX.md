@@ -2,6 +2,7 @@
 
 ## 2026-05-06
 
+- [app-localization-running-locale-smoke](sessions/2026-05-06/165126-app-localization-running-locale-smoke.md)
 - [app-localization-display-name-adapters](sessions/2026-05-06/161203-app-localization-display-name-adapters.md)
 - [app-localization-notification-copy](sessions/2026-05-06/134516-app-localization-notification-copy.md)
 - [app-localization-protocol-schedule-projection](sessions/2026-05-06/082147-app-localization-protocol-schedule-projection.md)

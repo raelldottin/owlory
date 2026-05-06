@@ -1636,6 +1636,43 @@
       ],
       "max_files_changed": 40,
       "notes": "Implementation slice for display-name adapters only. Identify model/display labels derived from enum raw values or hardcoded adapters, move low-risk labels into UI-adjacent localized presentation formatting, keep Core/Domain semantic, do not change enum raw values or persistence, keep all 19 locale resources in parity, and leave translation quality, notification copy, Today projection behavior, and product-rule rewrites out of scope."
+    },
+    {
+      "slice_id": "app-localization-running-locale-smoke",
+      "title": "Prove localization resources load in the running app",
+      "status": "done",
+      "priority": 143,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/README.md",
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "automation/smoke/",
+        "automation/tests/",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-running-locale-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "python3 automation/smoke/running_app_smoke.py --locale en --output /tmp/owlory-locale-smoke-en.json",
+        "python3 automation/smoke/running_app_smoke.py --locale es --output /tmp/owlory-locale-smoke-es.json",
+        "python3 automation/smoke/running_app_smoke.py --locale fr --output /tmp/owlory-locale-smoke-fr.json",
+        "python3 automation/smoke/running_app_smoke.py --locale ar --output /tmp/owlory-locale-smoke-ar.json",
+        "python3 automation/smoke/running_app_smoke.py --locale zh-Hans --output /tmp/owlory-locale-smoke-zh-Hans.json",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-locale-smoke-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-display-name-adapters"
+      ],
+      "max_files_changed": 12,
+      "notes": "Proof slice for representative locale launch stability only. Extend or use the running-app smoke runner to launch the simulator app with en, es, fr, ar, and zh-Hans locale arguments, verify each locale's packaged resources are present in the built app bundle, capture temporary screenshots, and report running-app-smoke proof without claiming translation quality, layout correctness, screenshot-verified proof, device proof, or TestFlight proof."
     }
   ]
 }

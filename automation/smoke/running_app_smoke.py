@@ -34,6 +34,8 @@ class SmokeConfig:
     derived_data_path: Path
     artifacts_dir: Path
     timestamp: str
+    locale: str = ""
+    apple_locale: str = ""
 
 
 CommandRunner = Callable[[list[str], Path], CommandResult]
@@ -61,6 +63,16 @@ def parse_args() -> argparse.Namespace:
         "--artifacts-dir",
         default=str(default_artifacts / "artifacts")
     )
+    parser.add_argument(
+        "--locale",
+        default="",
+        help="Optional Apple language code to pass at launch, such as en, es, ar, or zh-Hans."
+    )
+    parser.add_argument(
+        "--apple-locale",
+        default="",
+        help="Optional AppleLocale launch value. Defaults to --locale when omitted."
+    )
     parser.add_argument("--output", help="Optional path for the result JSON. Defaults to stdout.")
     return parser.parse_args()
 
@@ -80,7 +92,9 @@ def main() -> int:
         configuration=args.configuration,
         derived_data_path=Path(args.derived_data_path),
         artifacts_dir=Path(args.artifacts_dir),
-        timestamp=timestamp()
+        timestamp=timestamp(),
+        locale=args.locale,
+        apple_locale=args.apple_locale or args.locale
     )
 
     result = run_smoke(config)
@@ -149,6 +163,20 @@ def run_smoke(
             proof_level=BUILD_PROOF_LEVEL
         )
 
+    if config.locale:
+        localized_resources = check_localization_resources(Path(app_path), config.locale)
+        if localized_resources is None:
+            return fail_result(
+                result,
+                stage="check-localization-resources",
+                reason=(
+                    f"Built app bundle is missing required localization resources for "
+                    f"{config.locale}.lproj."
+                ),
+                proof_level=BUILD_PROOF_LEVEL
+            )
+        result["artifacts"]["localized_resources"] = localized_resources
+
     install_result = run_step(
         result,
         "install-app",
@@ -164,10 +192,12 @@ def run_smoke(
             proof_level=BUILD_PROOF_LEVEL
         )
 
+    launch_command = ["xcrun", "simctl", "launch", simulator["udid"], project_contract["bundle_id"]]
+    launch_command.extend(locale_launch_arguments(config))
     launch_result = run_step(
         result,
         "launch-app",
-        ["xcrun", "simctl", "launch", simulator["udid"], project_contract["bundle_id"]],
+        launch_command,
         config.repo_root,
         runner
     )
@@ -179,7 +209,7 @@ def run_smoke(
             proof_level=BUILD_PROOF_LEVEL
         )
 
-    screenshot_path = config.artifacts_dir / config.timestamp / "owlory-running-app-smoke.png"
+    screenshot_path = config.artifacts_dir / config.timestamp / screenshot_filename(config)
     screenshot_path.parent.mkdir(parents=True, exist_ok=True)
     screenshot_result = run_step(
         result,
@@ -500,6 +530,11 @@ def base_result(config: SmokeConfig) -> dict[str, Any]:
         "simulator": {
             "destination": config.destination
         },
+        "locale": {
+            "requested_locale": config.locale,
+            "apple_locale": config.apple_locale,
+            "launch_arguments": locale_launch_arguments(config)
+        },
         "artifacts": {},
         "steps": []
     }
@@ -582,6 +617,46 @@ def tail(value: str, max_chars: int = 3000) -> str:
 
 def combined_output(result: CommandResult) -> str:
     return f"{result.stdout}\n{result.stderr}"
+
+
+def locale_launch_arguments(config: SmokeConfig) -> list[str]:
+    if not config.locale:
+        return []
+    apple_locale = config.apple_locale or config.locale
+    return ["-AppleLanguages", f"({config.locale})", "-AppleLocale", apple_locale]
+
+
+def screenshot_filename(config: SmokeConfig) -> str:
+    if not config.locale:
+        return "owlory-running-app-smoke.png"
+    safe_locale = "".join(
+        character if character.isalnum() or character in {"-", "_"} else "_"
+        for character in config.locale
+    )
+    return f"owlory-running-app-smoke-{safe_locale}.png"
+
+
+def check_localization_resources(app_path: Path, locale: str) -> Optional[dict[str, Any]]:
+    locale_dir = app_path / f"{locale}.lproj"
+    required_files = [locale_dir / "Localizable.strings"]
+    if (app_path / "en.lproj" / "Localizable.stringsdict").exists():
+        required_files.append(locale_dir / "Localizable.stringsdict")
+
+    if not locale_dir.exists() or any(not resource.exists() for resource in required_files):
+        return None
+
+    return {
+        "locale": locale,
+        "resource_dir": str(locale_dir),
+        "files": [
+            {
+                "name": resource.name,
+                "path": str(resource),
+                "bytes": resource.stat().st_size
+            }
+            for resource in required_files
+        ]
+    }
 
 
 def timestamp() -> str:
