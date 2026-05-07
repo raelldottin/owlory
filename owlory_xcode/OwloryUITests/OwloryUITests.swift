@@ -51,6 +51,41 @@ final class OwloryUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[continueFixtureItemTitle].exists)
     }
 
+    func testSeededTodayContinueItemCanBeMarkedDone() throws {
+        launch(arguments: ["--owlory-ui-seed-today-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Continue seed to launch on Today's dashboard surface."
+        )
+
+        let itemIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let item = app.buttons[itemIdentifier]
+        XCTAssertTrue(
+            item.waitForExistence(timeout: 10),
+            "Expected the seeded Focus item to render before marking it done."
+        )
+
+        item.swipeRight()
+
+        let doneIdentifier = "today.continue.action.done.focusItem.\(continueFixtureItemID)"
+        let doneButton = app.buttons[doneIdentifier]
+        XCTAssertTrue(
+            doneButton.waitForExistence(timeout: 10),
+            "Expected the seeded Focus-backed Continue row to expose the Done swipe action."
+        )
+
+        doneButton.tap()
+
+        let rowRemoved = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: item,
+            handler: nil
+        )
+        wait(for: [rowRemoved], timeout: 10)
+    }
+
     func testSeededHomeTaskAppearsInTodayContinue() throws {
         launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
 

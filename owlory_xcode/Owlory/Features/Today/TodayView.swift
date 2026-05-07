@@ -294,6 +294,7 @@ struct TodayView: View {
                 Label("Done", systemImage: "checkmark.circle")
             }
             .tint(OwloryColor.success)
+            .accessibilityIdentifier(continueActionAccessibilityIdentifier("done", for: item))
         } else if store.canAddContinueItemToFocus(item) {
             Button {
                 store.addContinueItemToFocus(item)
@@ -357,6 +358,14 @@ struct TodayView: View {
     private func continueAccessibilityIdentifier(for item: TodayContinuationRules.ContinueItem) -> String {
         let sourceToken = item.source.key.replacingOccurrences(of: "|", with: ".")
         return "today.continue.item.\(sourceToken)"
+    }
+
+    private func continueActionAccessibilityIdentifier(
+        _ action: String,
+        for item: TodayContinuationRules.ContinueItem
+    ) -> String {
+        let sourceToken = item.source.key.replacingOccurrences(of: "|", with: ".")
+        return "today.continue.action.\(action).\(sourceToken)"
     }
 
     private func continueRow(for item: TodayContinuationRules.ContinueItem) -> some View {

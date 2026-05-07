@@ -1,0 +1,73 @@
+{
+  "slice_id": "owlory-ui-test-continue-row-action-smoke",
+  "status": "done",
+  "summary": "Added the first maintained Continue interaction XCUITest: the seeded Focus-backed Continue row exposes a stable Done swipe-action identifier, the UI test taps it, and the row disappears from Today Continue.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/065423-owlory-ui-test-continue-row-action-smoke.md",
+    "automation/handoffs/20260507T105128Z-owlory-ui-test-continue-row-action-smoke.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-row-action-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Continue row action UI smoke",
+      "before": "The maintained XCUITest smoke proved seeded Today Continue rows could render, but did not prove any user interaction against a Continue row.",
+      "after": "The maintained XCUITest smoke proves one Focus-backed Continue row can reveal the existing Done swipe action, tap it, and leave the visible Continue list.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Stable Continue action automation identifiers",
+      "before": "Continue rows had stable source-derived accessibility identifiers, but swipe actions did not expose source-specific automation identifiers.",
+      "after": "The existing Done swipe action has a source-derived accessibility identifier for Focus-backed Continue rows.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "UI testing hygiene docs",
+      "before": "The docs described deterministic UI smoke coverage for Today launch, seeded Focus-backed Continue rows, and seeded Home-task-backed Continue rows.",
+      "after": "The docs also describe the maintained Focus-backed Continue Done action smoke while keeping the proof claim limited to focused XCUITest smoke.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "make architecture"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This remains focused XCUITest smoke coverage, not a broad UI regression suite.",
+    "Only the Focus-backed Continue Done action is proven; Defer, Drop, Add to Focus, row routing, every Continue source, screenshots, device behavior, and TestFlight behavior remain unproven.",
+    "No repo-managed screenshots were preserved, so screenshot-verified proof is not claimed."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. If more UI harness depth is needed later, choose one narrow proof such as a Continue row routing smoke or active Home protocol run fixture, rather than broadening into a regression suite.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T10:54:23Z"
+}

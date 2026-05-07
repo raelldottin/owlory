@@ -1903,6 +1903,37 @@
       ],
       "max_files_changed": 10,
       "notes": "Small UI fixture follow-up. Add one deterministic active Home task source fixture and one XCUITest assertion proving Today Continue can render source-derived Home work. Keep product behavior unchanged, do not prove routing or screenshots, do not broaden into a UI regression suite, and do not touch Continue or Home domain policy unless a concrete harness blocker is found."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-row-action-smoke",
+      "title": "Add deterministic Continue row Done action UI smoke",
+      "status": "done",
+      "priority": 135,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-row-action-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-fixture-seeder-batch-3"
+      ],
+      "max_files_changed": 10,
+      "notes": "Small interaction smoke slice. Seed one current Focus-backed Continue row, reveal the existing leading swipe action, tap Done, and assert the row leaves Today Continue through visible UI. Do not add product behavior, screenshots, broad routing proof, or a Continue source matrix. Add only stable accessibility identifiers needed for this focused action proof."
     }
   ]
 }
