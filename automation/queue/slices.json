@@ -1934,6 +1934,38 @@
       ],
       "max_files_changed": 10,
       "notes": "Small interaction smoke slice. Seed one current Focus-backed Continue row, reveal the existing leading swipe action, tap Done, and assert the row leaves Today Continue through visible UI. Do not add product behavior, screenshots, broad routing proof, or a Continue source matrix. Add only stable accessibility identifiers needed for this focused action proof."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-home-task-routing-smoke",
+      "title": "Add deterministic Continue Home task routing UI smoke",
+      "status": "done",
+      "priority": 134,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-home-task-routing-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-row-action-smoke"
+      ],
+      "max_files_changed": 10,
+      "notes": "Small routing smoke slice. Seed one active Home-task-backed Continue row, tap it from Today Continue, and assert Home opens with the seeded task visible through a stable Home task accessibility identifier. Do not add product behavior, screenshots, broad routing matrix, device/TestFlight proof, or behavior changes."
     }
   ]
 }

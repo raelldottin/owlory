@@ -2,6 +2,7 @@
 
 ## 2026-05-07
 
+- [owlory-ui-test-continue-home-task-routing-smoke](sessions/2026-05-07/070643-owlory-ui-test-continue-home-task-routing-smoke.md)
 - [owlory-ui-test-continue-row-action-smoke](sessions/2026-05-07/065423-owlory-ui-test-continue-row-action-smoke.md)
 - [owlory-ui-test-fixture-seeder-batch-3](sessions/2026-05-07/064055-owlory-ui-test-fixture-seeder-batch-3.md)
 - [owlory-ui-test-fixture-seeder-batch-2](sessions/2026-05-07/012834-owlory-ui-test-fixture-seeder-batch-2.md)

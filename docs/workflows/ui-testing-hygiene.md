@@ -57,9 +57,9 @@ The app-side seed path is intentionally narrow:
 - `--owlory-ui-seed-fresh-day` resets app-local `Owlory` and legacy `Trajectory` application-support directories in Debug builds, letting `TodayStore` create a deterministic fresh-day dashboard.
 - `--owlory-ui-seed-today-continue-item` resets the same app-local state, writes one current-day planned Focus item, and verifies that Today Continue renders it through the normal Continue projection.
 - `--owlory-ui-seed-home-task-continue-item` resets the same app-local state, writes one active Home task, and verifies that Today Continue renders source-derived Home work without changing Home or Today product rules.
-- The tests verify the Today dashboard, seeded Continue rows, and one Focus-backed Continue Done action through stable accessibility identifiers.
+- The tests verify the Today dashboard, seeded Continue rows, one Focus-backed Continue Done action, and one Home-task-backed Continue route into Home through stable accessibility identifiers.
 
-This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface, one current Focus-backed Continue item, one active Home-task-backed Continue item, and one Focus-backed Continue row action. It does not prove every Continue source, a multi-screen flow, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
+This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface, one current Focus-backed Continue item, one active Home-task-backed Continue item, one Focus-backed Continue row action, and one Home-task-backed Continue row route into Home. It does not prove every Continue source, a broad routing matrix, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
 
 ## Screenshot Proof Artifacts
 
