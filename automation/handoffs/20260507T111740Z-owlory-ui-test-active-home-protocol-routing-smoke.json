@@ -1,0 +1,84 @@
+{
+  "slice_id": "owlory-ui-test-active-home-protocol-routing-smoke",
+  "status": "done",
+  "summary": "Added a maintained XCUITest smoke proving one seeded active Home-protocol-run-backed Continue row routes from Today into the Home active run sheet.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/071740-owlory-ui-test-active-home-protocol-routing-smoke.md",
+    "automation/handoffs/20260507T111740Z-owlory-ui-test-active-home-protocol-routing-smoke.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-active-home-protocol-routing-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Continue active Home protocol run routing UI smoke",
+      "before": "The maintained XCUITest smoke proved seeded Focus and Home-task-backed Continue rows, but did not prove tapping an active Home-protocol-run-backed row presented its run sheet.",
+      "after": "The maintained XCUITest smoke proves one seeded active Home-protocol-run-backed Continue row routes from Today into Home and presents the active run sheet.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Deterministic active protocol run UI fixture",
+      "before": "UI test seeding covered fresh day, Focus-backed Continue, and Home-task-backed Continue fixtures.",
+      "after": "A debug-only seed flag writes one protocol template and one active run so the active protocol route can be proved through visible UI.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Stable active run automation identifiers",
+      "before": "Home could present active run sheets, but the focused UI smoke did not have a stable sheet sentinel for active protocol runs.",
+      "after": "Home exposes `home.protocolRun.item.<uuid>` and `home.protocolRun.sheet.<uuid>` identifiers for deterministic active run routing smoke.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "UI testing hygiene docs",
+      "before": "The docs described deterministic UI smoke coverage for Today launch, seeded Continue rows, one Focus-backed Done action, and one Home-task-backed route.",
+      "after": "The docs also describe the maintained active Home-protocol-run-backed Continue route smoke while keeping the proof claim limited to focused XCUITest smoke.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "make architecture"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This remains focused XCUITest smoke coverage, not a broad UI regression suite.",
+    "Only one active Home-protocol-run-backed Continue route is proven; every Continue source, a broad routing matrix, screenshots, device behavior, and TestFlight behavior remain unproven.",
+    "No repo-managed screenshots were preserved, so screenshot-verified proof is not claimed."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. If more UI harness depth is needed later, choose one narrow proof such as Write-note-backed Continue routing or another explicit Continue action, rather than broadening into a regression suite.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T11:17:40Z"
+}

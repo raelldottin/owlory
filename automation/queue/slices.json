@@ -1966,6 +1966,39 @@
       ],
       "max_files_changed": 10,
       "notes": "Small routing smoke slice. Seed one active Home-task-backed Continue row, tap it from Today Continue, and assert Home opens with the seeded task visible through a stable Home task accessibility identifier. Do not add product behavior, screenshots, broad routing matrix, device/TestFlight proof, or behavior changes."
+    },
+    {
+      "slice_id": "owlory-ui-test-active-home-protocol-routing-smoke",
+      "title": "Add deterministic active Home protocol routing UI smoke",
+            "status": "done",
+      "priority": 133,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-active-home-protocol-routing-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-home-task-routing-smoke"
+      ],
+      "max_files_changed": 10,
+      "notes": "Small routing smoke slice. Seed one active Home protocol run, verify it appears in Today Continue, tap it, and assert Home presents the active run sheet. Do not add product behavior, screenshots, broad routing matrix, device/TestFlight proof, or protocol lifecycle changes."
     }
   ]
 }

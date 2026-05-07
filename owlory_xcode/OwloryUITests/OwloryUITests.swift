@@ -5,6 +5,9 @@ final class OwloryUITests: XCTestCase {
     private let continueFixtureItemTitle = "Review seeded Continue item"
     private let homeTaskContinueFixtureItemID = "4D890346-1DE3-4A1E-A55F-FBD97FD08D4E"
     private let homeTaskContinueFixtureItemTitle = "Review seeded Home task"
+    private let homeProtocolRunContinueFixtureRunID = "C9B98DD8-9AA9-4D8C-B0F7-8E82CF280A5A"
+    private let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
+    private let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
     private var app: XCUIApplication!
 
     override func setUpWithError() throws {
@@ -134,6 +137,35 @@ final class OwloryUITests: XCTestCase {
             "Expected tapping the Home-task-backed Continue row to route to Home with the seeded task visible."
         )
         XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
+    }
+
+    func testSeededHomeProtocolRunContinueRowRoutesToActiveRun() throws {
+        launch(arguments: ["--owlory-ui-seed-home-protocol-run-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Home protocol run seed to launch on Today's dashboard surface."
+        )
+
+        let continueItemIdentifier = "today.continue.item.homeProtocolRun.\(homeProtocolRunContinueFixtureRunID)"
+        let continueItem = app.buttons[continueItemIdentifier]
+        XCTAssertTrue(
+            continueItem.waitForExistence(timeout: 10),
+            "Expected the seeded active Home protocol run to render before routing from Continue."
+        )
+        XCTAssertTrue(app.staticTexts[homeProtocolRunContinueFixtureTitle].exists)
+
+        continueItem.tap()
+
+        let runSheetIdentifier = "home.protocolRun.sheet.\(homeProtocolRunContinueFixtureRunID)"
+        let runSheet = app.staticTexts[runSheetIdentifier]
+        XCTAssertTrue(
+            runSheet.waitForExistence(timeout: 10),
+            "Expected tapping the protocol-run-backed Continue row to present the active run sheet."
+        )
+        XCTAssertTrue(app.navigationBars[homeProtocolRunContinueFixtureTitle].exists)
+        XCTAssertTrue(app.staticTexts[homeProtocolRunContinueFixtureStepTitle].exists)
     }
 
     private func launch(arguments: [String]) {
