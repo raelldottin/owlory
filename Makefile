@@ -39,7 +39,7 @@ ui-smoke:
 		-configuration Debug \
 		-destination "$$DESTINATION" \
 		-derivedDataPath /tmp/owlory-ui-smoke-derived-data \
-		-only-testing:OwloryUITests/OwloryUITests/testSeededTodayLaunchSurface
+		-only-testing:OwloryUITests/OwloryUITests
 
 build-provenance:
 	./Tools/verify-build-provenance.sh

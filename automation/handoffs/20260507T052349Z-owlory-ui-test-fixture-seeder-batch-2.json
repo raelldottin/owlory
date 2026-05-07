@@ -1,0 +1,86 @@
+{
+  "slice_id": "owlory-ui-test-fixture-seeder-batch-2",
+  "status": "done",
+  "summary": "Added one richer deterministic UI fixture for Today Continue: a debug-only seed writes one current-day planned Focus item, Today exposes stable Continue accessibility identifiers, and make ui-smoke now runs both maintained Today XCUITests.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260507T052349Z-owlory-ui-test-fixture-seeder-batch-2.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/012834-owlory-ui-test-fixture-seeder-batch-2.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-fixture-seeder-batch-2",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-fixture-seeder-batch-2 and python3 automation/supervisor/run_next.py --dry-run initially failed because the new queue slice used invalid status ready; the slice was corrected to queued and both commands passed."
+  ],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Deterministic UI fixture seeding",
+      "before": "Owlory had one debug-only fresh-day seed that reset app-local data and let TodayStore create a deterministic dashboard.",
+      "after": "Owlory has a second debug-only seed, --owlory-ui-seed-today-continue-item, that resets app-local data and writes one current-day planned Focus item through the normal Today persistence shape.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Today Continue UI smoke coverage",
+      "before": "The maintained XCUITest smoke proved only the seeded Today dashboard launch surface.",
+      "after": "The maintained XCUITest smoke also proves that a seeded current Focus item appears in the Today Continue section through stable accessibility identifiers.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Continue accessibility identifiers",
+      "before": "Today Continue rows had visible labels but no stable row identifiers for UI automation.",
+      "after": "Today Continue exposes a stable header identifier and source-derived row identifiers for focused UI assertions.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Maintained UI smoke command",
+      "before": "make ui-smoke ran only OwloryUITests/OwloryUITests/testSeededTodayLaunchSurface.",
+      "after": "make ui-smoke runs the maintained OwloryUITests/OwloryUITests class, currently the launch-surface smoke and the seeded Continue smoke.",
+      "proof": [
+        "Makefile",
+        "make ui-smoke"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This remains focused XCUITest smoke coverage, not a broad UI regression suite.",
+    "The seeded Continue item is a current Focus item only; it does not prove other Continue sources such as training sessions, Home tasks, protocol runs, or Writing notes.",
+    "No repo-managed screenshots were preserved, so screenshot-verified proof is not claimed.",
+    "Device and TestFlight behavior remain unverified."
+  ],
+  "recommended_next_slice": "owlory-ui-test-fixture-seeder-batch-3",
+  "recommended_next_reason": "If more UI harness depth is needed, add one more deterministic fixture and one focused assertion, such as a seeded Write note appearing in the Write tab or a seeded Home task appearing in Home, rather than expanding into a broad suite.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T05:28:34Z"
+}

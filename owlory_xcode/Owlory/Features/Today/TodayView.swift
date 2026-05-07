@@ -270,9 +270,11 @@ struct TodayView: View {
                         continueStatusSwipeActions(for: item)
                     }
                     .accessibilityHint(continueAccessibilityHint(for: item))
+                    .accessibilityIdentifier(continueAccessibilityIdentifier(for: item))
                 }
             } header: {
                 Text("Continue")
+                    .accessibilityIdentifier("today.continue.header")
             } footer: {
                 if items.contains(where: { $0.staleDayCount != nil }) {
                     Text("Items with a day badge have been carried for a few days. Focus-backed rows can be swiped to mark done, defer, or drop.")
@@ -350,6 +352,11 @@ struct TodayView: View {
             ),
             item.domain.localizedDisplayName
         )
+    }
+
+    private func continueAccessibilityIdentifier(for item: TodayContinuationRules.ContinueItem) -> String {
+        let sourceToken = item.source.key.replacingOccurrences(of: "|", with: ".")
+        return "today.continue.item.\(sourceToken)"
     }
 
     private func continueRow(for item: TodayContinuationRules.ContinueItem) -> some View {

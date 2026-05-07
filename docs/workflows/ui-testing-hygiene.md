@@ -6,7 +6,7 @@ Use this before adding UI tests, preserving screenshot proof, or claiming runnin
 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
-- Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with one deterministic Today launch-surface smoke.
+- Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
 - Owlory does not currently have a batched UI regression suite.
 
 Do not treat the single smoke test as broad UI regression coverage.
@@ -45,19 +45,20 @@ Run the maintained smoke path with:
 make ui-smoke
 ```
 
-The command uses `/tmp/owlory-ui-smoke-derived-data` and runs only:
+The command uses `/tmp/owlory-ui-smoke-derived-data` and runs only the maintained `OwloryUITests/OwloryUITests` smoke class:
 
 ```text
-OwloryUITests/OwloryUITests/testSeededTodayLaunchSurface
+OwloryUITests/OwloryUITests
 ```
 
 The app-side seed path is intentionally narrow:
 
 - `--owlory-ui-testing` marks the launch as harness-owned and suppresses notification authorization prompts.
 - `--owlory-ui-seed-fresh-day` resets app-local `Owlory` and legacy `Trajectory` application-support directories in Debug builds, letting `TodayStore` create a deterministic fresh-day dashboard.
-- The test verifies the Today dashboard surface through stable accessibility identifiers.
+- `--owlory-ui-seed-today-continue-item` resets the same app-local state, writes one current-day planned Focus item, and verifies that Today Continue renders it through the normal Continue projection.
+- The tests verify the Today dashboard and seeded Continue row through stable accessibility identifiers.
 
-This proves that a deterministic UI seed path and XCUITest harness are operational. It does not prove a multi-screen flow, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
+This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface and one seeded Continue item. It does not prove a multi-screen flow, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
 
 ## Screenshot Proof Artifacts
 
