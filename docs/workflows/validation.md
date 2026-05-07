@@ -143,7 +143,7 @@ Run it with isolated DerivedData:
 make ui-smoke
 ```
 
-The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus seeded Today Continue rows for one current Focus item and one source-derived active Home task through stable accessibility identifiers. They also exercise the existing Focus-backed Continue Done swipe action, assert that the completed row leaves the visible Continue list, and tap one Home-task-backed Continue row to prove it routes into Home with the seeded task visible.
+The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus seeded Today Continue rows for one current Focus item, one source-derived active Home task, and one source-derived active Home protocol run through stable accessibility identifiers. They also exercise the existing Focus-backed Continue Done swipe action, assert that the completed row leaves the visible Continue list, tap one Home-task-backed Continue row to prove it routes into Home with the seeded task visible, and tap one Home-protocol-run-backed Continue row to prove it presents the active run sheet.
 
 When adding another UI test or proof runner:
 

@@ -339,6 +339,7 @@ struct HomeView: View {
                     }
                     .buttonStyle(.plain)
                     .continueHighlight(run.id == highlightedRunID)
+                    .accessibilityIdentifier("home.protocolRun.item.\(run.id.uuidString)")
                     .id(run.id)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
@@ -1095,6 +1096,7 @@ private struct ProtocolRunSheet: View {
                         Text("Progress")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
+                            .accessibilityIdentifier("home.protocolRun.sheet.\(run.id.uuidString)")
                         Spacer()
                     Text("\(currentRun.resolvedStepCount) of \(currentRun.totalStepCount)")
                         .font(.subheadline.weight(.medium))
