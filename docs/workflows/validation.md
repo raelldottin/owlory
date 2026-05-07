@@ -143,7 +143,7 @@ Run it with isolated DerivedData:
 make ui-smoke
 ```
 
-The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus one seeded Today Continue item through stable accessibility identifiers.
+The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus seeded Today Continue rows for one current Focus item and one source-derived active Home task through stable accessibility identifiers.
 
 When adding another UI test or proof runner:
 

@@ -1871,6 +1871,38 @@
       ],
       "max_files_changed": 12,
       "notes": "Small UI fixture follow-up. Add one deterministic seeded Continue item and one XCUITest assertion proving Today Continue can render that item. Keep product behavior unchanged, avoid screenshots/proof preservation, do not broaden into a UI regression suite, and do not touch domain policy unless a concrete harness blocker is found."
+    },
+    {
+      "slice_id": "owlory-ui-test-fixture-seeder-batch-3",
+      "title": "Add deterministic Home task Continue UI fixture",
+      "status": "done",
+      "priority": 136,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-fixture-seeder-batch-3",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-fixture-seeder-batch-2"
+      ],
+      "max_files_changed": 10,
+      "notes": "Small UI fixture follow-up. Add one deterministic active Home task source fixture and one XCUITest assertion proving Today Continue can render source-derived Home work. Keep product behavior unchanged, do not prove routing or screenshots, do not broaden into a UI regression suite, and do not touch Continue or Home domain policy unless a concrete harness blocker is found."
     }
   ]
 }

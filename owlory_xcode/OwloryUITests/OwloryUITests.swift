@@ -3,6 +3,8 @@ import XCTest
 final class OwloryUITests: XCTestCase {
     private let continueFixtureItemID = "9D215686-176C-4C13-936E-AB3092D62A96"
     private let continueFixtureItemTitle = "Review seeded Continue item"
+    private let homeTaskContinueFixtureItemID = "4D890346-1DE3-4A1E-A55F-FBD97FD08D4E"
+    private let homeTaskContinueFixtureItemTitle = "Review seeded Home task"
     private var app: XCUIApplication!
 
     override func setUpWithError() throws {
@@ -47,6 +49,29 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded Focus item to render as a Continue row."
         )
         XCTAssertTrue(app.staticTexts[continueFixtureItemTitle].exists)
+    }
+
+    func testSeededHomeTaskAppearsInTodayContinue() throws {
+        launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Home task seed to launch on Today's dashboard surface."
+        )
+
+        let continueHeader = app.staticTexts["today.continue.header"]
+        XCTAssertTrue(
+            continueHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Home task seed to render the Continue section."
+        )
+
+        let itemIdentifier = "today.continue.item.homeTask.\(homeTaskContinueFixtureItemID)"
+        XCTAssertTrue(
+            app.buttons[itemIdentifier].waitForExistence(timeout: 10),
+            "Expected the seeded active Home task to render as a source-derived Continue row."
+        )
+        XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
     }
 
     private func launch(arguments: [String]) {
