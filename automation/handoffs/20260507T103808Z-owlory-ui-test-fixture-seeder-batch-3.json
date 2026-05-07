@@ -1,0 +1,77 @@
+{
+  "slice_id": "owlory-ui-test-fixture-seeder-batch-3",
+  "status": "done",
+  "summary": "Added one more deterministic UI fixture for Today Continue: a debug-only seed writes one active Home task through Home persistence, and the maintained XCUITest smoke now proves Today Continue can render source-derived Home work through stable accessibility identifiers.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/064055-owlory-ui-test-fixture-seeder-batch-3.md",
+    "automation/handoffs/20260507T103808Z-owlory-ui-test-fixture-seeder-batch-3.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-fixture-seeder-batch-3",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Deterministic UI fixture seeding",
+      "before": "Owlory UI smoke had deterministic seeds for a fresh Today dashboard and one current Focus-backed Continue item.",
+      "after": "Owlory UI smoke also has --owlory-ui-seed-home-task-continue-item, which resets app-local data and writes one active Home task through the existing Home task repository.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Today Continue source-derived UI smoke coverage",
+      "before": "The maintained XCUITest smoke proved Today launch and one current Focus-backed Continue row only.",
+      "after": "The maintained XCUITest smoke also proves that an active Home task source renders in Today Continue through the existing source-derived Continue projection.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home"
+      ]
+    },
+    {
+      "contract": "UI testing hygiene docs",
+      "before": "The docs described deterministic UI smoke coverage for the Today launch surface and one seeded Focus-backed Continue item.",
+      "after": "The docs now describe the added active Home-task-backed Continue fixture and keep the proof claim limited to focused XCUITest smoke, not broad regression or screenshots.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "make architecture"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This remains focused XCUITest smoke coverage, not a broad UI regression suite.",
+    "The seeded Home task proves only one active Home task source in Today Continue; it does not prove every Continue source, multi-screen routing, screenshots, device behavior, or TestFlight behavior.",
+    "No repo-managed screenshots were preserved, so screenshot-verified proof is not claimed.",
+    "Device and TestFlight behavior remain unverified."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. If more UI harness depth is needed later, queue one focused fixture and one proof at a time, such as a seeded Write note in the Write tab or an active Home protocol run in Today Continue.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T10:40:55Z"
+}
