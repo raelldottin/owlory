@@ -1768,6 +1768,39 @@
       ],
       "max_files_changed": 12,
       "notes": "Export/review workflow slice only. Generate reviewer-friendly CSV and JSON from current Localizable.strings and Localizable.stringsdict resources, including English source values, plural resources, comments when present, and per-locale status labels. Mark current non-English values as english-placeholder unless repo evidence proves otherwise. Do not replace translations, claim native review, change app resources, add locale smoke/screenshot/device/TestFlight proof, or change product code."
+    },
+    {
+      "slice_id": "harness-pr-ui-testing-hygiene",
+      "title": "Add PR and UI testing hygiene workflows",
+      "status": "done",
+      "priority": 139,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/README.md",
+        "docs/workflows/pr-hygiene.md",
+        "docs/workflows/review.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "Tools/architecture-lint.sh",
+        "Tools/review-preflight.sh"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id harness-pr-ui-testing-hygiene",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make review-preflight",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-translation-review-export"
+      ],
+      "max_files_changed": 11,
+      "notes": "Harness/docs slice only. Promote Gymphant-derived PR hygiene and UI testing hygiene into Owlory's maintained workflows: proof-level claims, clean PR/handoff expectations, isolated DerivedData, deterministic UI data, screenshot/proof artifact boundaries, and failure classification. Do not add product code, create a fake UI test target, or claim new running-app/UI proof."
     }
   ]
 }

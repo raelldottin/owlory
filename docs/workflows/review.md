@@ -38,6 +38,12 @@ Lead with bugs and risks. For each finding, include:
 
 If there are no findings, say that clearly and name any validation or coverage that still was not run.
 
+## PR Hygiene
+
+Use [PR Hygiene](pr-hygiene.md) before approving or merging a branch. A PR should state the slice, proof level, exact validations, intended artifacts, residual risk, and clean/mirror status. Do not treat a clean diff as a complete claim unless the PR body or handoff names what behavior was proven and what remains unproven.
+
+For screenshot or UI-flow claims, also load [UI Testing Hygiene](ui-testing-hygiene.md). Check that proof artifacts are durable, not temporary `/tmp` screenshots, and that the claimed proof level does not exceed the evidence.
+
 ## Review Guardrails
 
 - Do not review against hidden chat memory; use repo docs and code.
@@ -45,5 +51,7 @@ If there are no findings, say that clearly and name any validation or coverage t
 - Do not revert unrelated dirty work.
 - Do not accept product-rule changes buried in UI or persistence code.
 - Do not accept new workflow commands unless they are documented and validated.
+- Do not approve UI proof claims unless the proof lane is explicit: running-app-smoke, flow-verified, screenshot-verified, device-verified, or testflight-verified.
+- Do not accept UI-test failures as vague flakiness; require a failure classification or a narrow follow-up slice.
 - For ML, speech, or generated-output changes, load [ML Model Posture](../runtime/ml-model-posture.md), [ML Privacy And Drafts](../runtime/ml-privacy.md), and [ML QA](ml-qa.md). Verify model-runtime boundaries, local-first behavior, draft-only output, fallback, fake-response coverage, and privacy-claim behavior.
 - For telemetry, profiling, MetricKit, signpost, or performance-sensitive changes, load [Runtime Observability](../runtime/observability.md) and [Performance Observability](performance-observability.md). Verify no user content is logged, signpost labels are stable and low-cardinality, and any performance claim has measured evidence.

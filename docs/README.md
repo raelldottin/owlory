@@ -17,6 +17,8 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Localization Review Export](../localization/review/README.md) is the generated reviewer packet for current English source values, plural entries, and placeholder status labels.
 - [Agent Handoff](workflows/agent-handoff.md) explains the continuity command and expected handoff behavior.
 - [Automation Harness](../automation/README.md) explains the queue-driven supervisor for fresh-run slice chaining.
+- [PR Hygiene](workflows/pr-hygiene.md) defines the PR claim, proof, validation, and merge-handoff expectations.
+- [UI Testing Hygiene](workflows/ui-testing-hygiene.md) defines running-app, screenshot, device, and future XCUITest proof boundaries.
 - [ML Model Posture](runtime/ml-model-posture.md) defines Foundation Models, MLX/custom-model, context-window, and adapter-boundary rules.
 - [ML Privacy And Drafts](runtime/ml-privacy.md) defines local-first, draft-only, fallback, and reviewer expectations for ML/speech/generated-output work.
 - [ML QA](workflows/ml-qa.md) defines fallback categories, eval fixture expectations, and device sanity checks for ML/speech/generated-output work.
