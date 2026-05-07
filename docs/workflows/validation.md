@@ -22,7 +22,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make release-check` - require clean build provenance, then run the runtime validation slice before release/archive.
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
-- `make ui-smoke` - run the maintained one-test XCUITest smoke path with isolated DerivedData.
+- `make ui-smoke` - run the maintained focused XCUITest smoke path with isolated DerivedData.
 - `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
 Use [PR Hygiene](pr-hygiene.md) before opening or reviewing a branch. Use [UI Testing Hygiene](ui-testing-hygiene.md) before adding UI tests, preserving screenshot proof, or claiming running-app behavior.
@@ -135,7 +135,7 @@ Repo-managed screenshot proof for the representative locale launch surfaces live
 
 ## UI Testing Hygiene
 
-Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for one deterministic launch-surface smoke. It is not a broad UI regression suite.
+Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for deterministic Today smoke coverage. It is not a broad UI regression suite.
 
 Run it with isolated DerivedData:
 
@@ -143,7 +143,7 @@ Run it with isolated DerivedData:
 make ui-smoke
 ```
 
-The smoke test launches the app with `--owlory-ui-testing --owlory-ui-seed-fresh-day`, resets app-local Owlory/Trajectory application-support data in Debug builds, skips notification authorization prompts, and verifies the Today dashboard surface through stable accessibility identifiers.
+The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus one seeded Today Continue item through stable accessibility identifiers.
 
 When adding another UI test or proof runner:
 
