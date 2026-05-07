@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-07
+
+- [harness-pr-ui-testing-hygiene](sessions/2026-05-07/005629-harness-pr-ui-testing-hygiene.md)
+
 ## 2026-05-06
 
 - [app-localization-translation-review-export](sessions/2026-05-06/192438-app-localization-translation-review-export.md)

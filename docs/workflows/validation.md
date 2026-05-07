@@ -24,6 +24,8 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
 - `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
+Use [PR Hygiene](pr-hygiene.md) before opening or reviewing a branch. Use [UI Testing Hygiene](ui-testing-hygiene.md) before adding UI tests, preserving screenshot proof, or claiming running-app behavior.
+
 ## Contract Status And Proof Levels
 
 Use the status markers in [Product Overview](../product/overview.md) when a product or workflow contract could be mistaken for shipped behavior.
@@ -130,6 +132,21 @@ Locale smoke proves the built app bundle contains the requested locale resources
 
 Repo-managed screenshot proof for the representative locale launch surfaces lives in `automation/proofs/app-localization-locale-screenshot-proof/`. Use that artifact only for launch-surface screenshot evidence; it does not expand the claim to translation quality or full layout review.
 
+## UI Testing Hygiene
+
+Owlory does not currently have a maintained XCUITest target. Until that exists, use running-app smoke, manual flow proof, and repo-managed screenshot proof honestly, and do not call those lanes UI-regression coverage.
+
+When adding a future UI test target or proof runner:
+
+- use a slice-specific DerivedData path under `/tmp`
+- seed deterministic data through launch arguments or a documented fixture path
+- isolate simulator state when persistence, first-run, locale, or onboarding behavior matters
+- add stable accessibility identifiers before writing brittle tests
+- classify failures as harness, fixture, accessibility, timing, product regression, or pre-existing expected failure
+- preserve durable screenshot proof under `automation/proofs/<slice-id>/` with proof notes and hashes
+
+See [UI Testing Hygiene](ui-testing-hygiene.md) for the full rules.
+
 The supervisor currently replays only a tiny exact-match allowlist of required validations:
 
 - `make architecture`
@@ -211,6 +228,7 @@ Notes:
 - `./Tools/validate.sh full`
 - `./Tools/validate.sh domain home`
 - `./Tools/validate.sh domain voice`
+- `python3 automation/smoke/running_app_smoke.py`
 
 ## Domain Shortcuts
 

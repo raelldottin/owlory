@@ -106,8 +106,28 @@ while IFS= read -r path; do
       add_once "$AREAS" "Harness / docs / workflow"
       add_once "$DOCS" "docs/repo-map.md"
       add_once "$DOCS" "docs/workflows/validation.md"
+      add_once "$DOCS" "docs/workflows/pr-hygiene.md"
       add_once "$COMMANDS" "make review-preflight"
       add_once "$COMMANDS" "make handoff"
+      ;;
+  esac
+
+  case "$path" in
+    docs/workflows/pr-hygiene.md|docs/workflows/review.md|Tools/review-preflight.sh)
+      add_once "$AREAS" "PR / review hygiene"
+      add_once "$DOCS" "docs/workflows/pr-hygiene.md"
+      add_once "$DOCS" "docs/workflows/review.md"
+      add_once "$RISKS" "PR or review hygiene changed: verify proof levels, exact validation commands, residual risks, and clean/mirror status stay explicit instead of relying on hidden chat context."
+      ;;
+  esac
+
+  case "$path" in
+    automation/proofs/*|automation/smoke/*|*UITests*|*XCUITest*|*UIRegression*|docs/workflows/ui-testing-hygiene.md)
+      add_once "$AREAS" "UI testing / proof hygiene"
+      add_once "$DOCS" "docs/workflows/ui-testing-hygiene.md"
+      add_once "$DOCS" "docs/workflows/validation.md"
+      add_once "$COMMANDS" "python3 automation/smoke/running_app_smoke.py"
+      add_once "$RISKS" "UI proof or test path changed: verify proof lanes are not inflated, DerivedData is isolated, data setup is deterministic, screenshots are durable when claimed, and failures are classified instead of hand-waved as flake."
       ;;
   esac
 

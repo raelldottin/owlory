@@ -1,0 +1,88 @@
+{
+  "slice_id": "harness-pr-ui-testing-hygiene",
+  "status": "done",
+  "summary": "Added Owlory PR hygiene and UI testing hygiene workflows, wired them into docs discovery, architecture lint, and review preflight so future agents preserve proof boundaries, clean PR claims, deterministic UI-test setup rules, and UI failure classification.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/005629-harness-pr-ui-testing-hygiene.md",
+    "Tools/architecture-lint.sh",
+    "Tools/review-preflight.sh",
+    "automation/handoffs/20260507T045629Z-harness-pr-ui-testing-hygiene.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/workflows/pr-hygiene.md",
+    "docs/workflows/review.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id harness-pr-ui-testing-hygiene",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make review-preflight",
+    "make handoff",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "PR hygiene",
+      "before": "Review workflow required preflight and exact findings, but did not give future agents a compact PR claim shape or merge-handoff gate.",
+      "after": "docs/workflows/pr-hygiene.md defines slice scope, proof level, validations, artifacts, residual risk, and clean/mirror expectations for PRs.",
+      "proof": [
+        "docs/workflows/pr-hygiene.md",
+        "docs/workflows/review.md",
+        "make review-preflight"
+      ]
+    },
+    {
+      "contract": "UI testing hygiene",
+      "before": "Owlory had running-app smoke and proof artifacts, but no maintained workflow explaining isolated DerivedData, deterministic seeds, screenshot proof boundaries, or UI failure classification.",
+      "after": "docs/workflows/ui-testing-hygiene.md defines current UI proof lanes, future XCUITest setup rules, screenshot artifact requirements, and failure classification.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md"
+      ]
+    },
+    {
+      "contract": "Review preflight guardrail",
+      "before": "review-preflight did not specifically flag PR/review hygiene or UI proof/testing changes.",
+      "after": "Tools/review-preflight.sh recommends PR/UI hygiene docs, running-app smoke when UI proof paths change, and risks around proof inflation, stale DerivedData, deterministic data, durable screenshots, and failure classification.",
+      "proof": [
+        "Tools/review-preflight.sh",
+        "make review-preflight"
+      ]
+    },
+    {
+      "contract": "Maintained workflow docs",
+      "before": "The new PR/UI testing hygiene behavior was not required by architecture lint.",
+      "after": "Tools/architecture-lint.sh requires docs/workflows/pr-hygiene.md and docs/workflows/ui-testing-hygiene.md so they remain part of the maintained docs tree.",
+      "proof": [
+        "Tools/architecture-lint.sh",
+        "make architecture"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice does not add an Owlory XCUITest target or a batched UI regression runner.",
+    "The running-app smoke runner was not run because this slice changes docs/tooling only and does not claim app behavior.",
+    "Future UI-test implementation still needs deterministic fixture/seeding support before repeatable UI regression proof can be claimed."
+  ],
+  "recommended_next_slice": "owlory-ui-test-seed-and-xcuitest-harness",
+  "recommended_next_reason": "If Owlory needs repeatable UI regression coverage beyond running-app smoke and preserved screenshots, the next implementation slice should add deterministic launch seeding plus a small first XCUITest target instead of ad-hoc manual proof.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T04:56:29Z"
+}
