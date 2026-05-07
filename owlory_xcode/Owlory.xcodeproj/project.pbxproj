@@ -83,6 +83,7 @@
 		A076 /* OwloryDeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A175 /* OwloryDeepLinkRouter.swift */; };
 		A077 /* ProtocolScheduleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A176 /* ProtocolScheduleRules.swift */; };
 		A078 /* ProtocolScheduleNotificationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177 /* ProtocolScheduleNotificationRules.swift */; };
+		A079 /* OwloryUITestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178 /* OwloryUITestSupport.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -179,6 +180,8 @@
 		B092 /* ProtocolScheduleRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B138 /* ProtocolScheduleRulesTests.swift */; };
 		B093 /* ProtocolScheduleNotificationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177 /* ProtocolScheduleNotificationRules.swift */; };
 		B094 /* ProtocolScheduleNotificationRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139 /* ProtocolScheduleNotificationRulesTests.swift */; };
+		U001 /* OwloryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = U101 /* OwloryUITests.swift */; };
+		U011 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B104 /* XCTest.framework */; };
 		W002 /* OwloryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = W102 /* OwloryWidgetBundle.swift */; };
 		W004 /* OwloryWidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = W100 /* OwloryWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		W005 /* OwloryTodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = W105 /* OwloryTodayWidget.swift */; };
@@ -186,6 +189,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		B500 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A401 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A400;
+			remoteInfo = Owlory;
+		};
+		U500 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A401 /* Project object */;
 			proxyType = 1;
@@ -293,6 +303,7 @@
 		A175 /* OwloryDeepLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryDeepLinkRouter.swift; sourceTree = "<group>"; };
 		A176 /* ProtocolScheduleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleRules.swift; sourceTree = "<group>"; };
 		A177 /* ProtocolScheduleNotificationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleNotificationRules.swift; sourceTree = "<group>"; };
+		A178 /* OwloryUITestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryUITestSupport.swift; sourceTree = "<group>"; };
 		L101 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L102 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L103 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -371,6 +382,8 @@
 		B137 /* VoiceTranscriptionRoutingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceTranscriptionRoutingRulesTests.swift; sourceTree = "<group>"; };
 		B138 /* ProtocolScheduleRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleRulesTests.swift; sourceTree = "<group>"; };
 		B139 /* ProtocolScheduleNotificationRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolScheduleNotificationRulesTests.swift; sourceTree = "<group>"; };
+		U100 /* OwloryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OwloryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		U101 /* OwloryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryUITests.swift; sourceTree = "<group>"; };
 		W100 /* OwloryWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OwloryWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		W102 /* OwloryWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryWidgetBundle.swift; sourceTree = "<group>"; };
 		W104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -390,6 +403,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B011 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		U200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				U011 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +437,7 @@
 			children = (
 				A301 /* Owlory */,
 				B300 /* OwloryCoreTests */,
+				U300 /* OwloryUITests */,
 				W300 /* OwloryWidgets */,
 				A302 /* Products */,
 				0FE8E5E82F86770D00B05EDC /* Recovered References */,
@@ -440,6 +462,7 @@
 			children = (
 				A100 /* Owlory.app */,
 				B100 /* OwloryCoreTests.xctest */,
+				U100 /* OwloryUITests.xctest */,
 				W100 /* OwloryWidgetsExtension.appex */,
 			);
 			name = Products;
@@ -550,6 +573,7 @@
 				A174 /* OwloryDeepLink.swift */,
 				A175 /* OwloryDeepLinkRouter.swift */,
 				A156 /* ReminderScheduler.swift */,
+				A178 /* OwloryUITestSupport.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -666,6 +690,14 @@
 			path = OwloryCoreTests;
 			sourceTree = SOURCE_ROOT;
 		};
+		U300 /* OwloryUITests */ = {
+			isa = PBXGroup;
+			children = (
+				U101 /* OwloryUITests.swift */,
+			);
+			path = OwloryUITests;
+			sourceTree = SOURCE_ROOT;
+		};
 		W300 /* OwloryWidgets */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +748,23 @@
 			productReference = B100 /* OwloryCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		U400 /* OwloryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = U700 /* Build configuration list for PBXNativeTarget "OwloryUITests" */;
+			buildPhases = (
+				U201 /* Sources */,
+				U200 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				U501 /* PBXTargetDependency */,
+			);
+			name = OwloryUITests;
+			productName = OwloryUITests;
+			productReference = U100 /* OwloryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		W400 /* OwloryWidgetsExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = W700 /* Build configuration list for PBXNativeTarget "OwloryWidgetsExtension" */;
@@ -748,6 +797,10 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					B400 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = A400;
+					};
+					U400 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = A400;
 					};
@@ -789,6 +842,7 @@
 			targets = (
 				A400 /* Owlory */,
 				B400 /* OwloryCoreTests */,
+				U400 /* OwloryUITests */,
 				W400 /* OwloryWidgetsExtension */,
 			);
 		};
@@ -931,6 +985,7 @@
 				A076 /* OwloryDeepLinkRouter.swift in Sources */,
 				A077 /* ProtocolScheduleRules.swift in Sources */,
 				A078 /* ProtocolScheduleNotificationRules.swift in Sources */,
+				A079 /* OwloryUITestSupport.swift in Sources */,
 				A066 /* ReminderSchedulingRules.swift in Sources */,
 				A055 /* CompletionHistoryStore.swift in Sources */,
 				A056 /* ReminderScheduler.swift in Sources */,
@@ -1040,6 +1095,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		U201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				U001 /* OwloryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		W201 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1111,6 +1174,11 @@
 			isa = PBXTargetDependency;
 			target = A400 /* Owlory */;
 			targetProxy = B500 /* PBXContainerItemProxy */;
+		};
+		U501 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A400 /* Owlory */;
+			targetProxy = U500 /* PBXContainerItemProxy */;
 		};
 		W501 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1274,6 +1342,46 @@
 			};
 			name = Release;
 		};
+		U600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Owlory;
+			};
+			name = Debug;
+		};
+		U601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20260417081904;
+				DEVELOPMENT_TEAM = DHJQ7QC53Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raelldottin.owlory.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Owlory;
+			};
+			name = Release;
+		};
 		W600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1350,6 +1458,15 @@
 			buildConfigurations = (
 				B600 /* Debug */,
 				B601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		U700 /* Build configuration list for PBXNativeTarget "OwloryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				U600 /* Debug */,
+				U601 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

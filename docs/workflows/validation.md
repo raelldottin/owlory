@@ -22,6 +22,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make release-check` - require clean build provenance, then run the runtime validation slice before release/archive.
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
+- `make ui-smoke` - run the maintained one-test XCUITest smoke path with isolated DerivedData.
 - `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
 Use [PR Hygiene](pr-hygiene.md) before opening or reviewing a branch. Use [UI Testing Hygiene](ui-testing-hygiene.md) before adding UI tests, preserving screenshot proof, or claiming running-app behavior.
@@ -134,9 +135,17 @@ Repo-managed screenshot proof for the representative locale launch surfaces live
 
 ## UI Testing Hygiene
 
-Owlory does not currently have a maintained XCUITest target. Until that exists, use running-app smoke, manual flow proof, and repo-managed screenshot proof honestly, and do not call those lanes UI-regression coverage.
+Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for one deterministic launch-surface smoke. It is not a broad UI regression suite.
 
-When adding a future UI test target or proof runner:
+Run it with isolated DerivedData:
+
+```bash
+make ui-smoke
+```
+
+The smoke test launches the app with `--owlory-ui-testing --owlory-ui-seed-fresh-day`, resets app-local Owlory/Trajectory application-support data in Debug builds, skips notification authorization prompts, and verifies the Today dashboard surface through stable accessibility identifiers.
+
+When adding another UI test or proof runner:
 
 - use a slice-specific DerivedData path under `/tmp`
 - seed deterministic data through launch arguments or a documented fixture path

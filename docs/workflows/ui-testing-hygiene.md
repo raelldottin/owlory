@@ -6,9 +6,10 @@ Use this before adding UI tests, preserving screenshot proof, or claiming runnin
 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
-- Owlory does not currently have a first-class XCUITest target or batched UI regression suite.
+- Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with one deterministic Today launch-surface smoke.
+- Owlory does not currently have a batched UI regression suite.
 
-Do not claim XCUITest coverage until such a target exists and is wired into validation.
+Do not treat the single smoke test as broad UI regression coverage.
 
 ## Proof Lanes
 
@@ -35,6 +36,28 @@ Future UI tests should:
 - Prefer focused batches over one giant UI suite when simulator memory, timing, or state leakage is a known risk.
 
 If a UI test requires manual taps because the environment lacks a driver, record that as residual risk and queue automation follow-up instead of calling the proof repeatable.
+
+## Maintained XCUITest Smoke
+
+Run the maintained smoke path with:
+
+```bash
+make ui-smoke
+```
+
+The command uses `/tmp/owlory-ui-smoke-derived-data` and runs only:
+
+```text
+OwloryUITests/OwloryUITests/testSeededTodayLaunchSurface
+```
+
+The app-side seed path is intentionally narrow:
+
+- `--owlory-ui-testing` marks the launch as harness-owned and suppresses notification authorization prompts.
+- `--owlory-ui-seed-fresh-day` resets app-local `Owlory` and legacy `Trajectory` application-support directories in Debug builds, letting `TodayStore` create a deterministic fresh-day dashboard.
+- The test verifies the Today dashboard surface through stable accessibility identifiers.
+
+This proves that a deterministic UI seed path and XCUITest harness are operational. It does not prove a multi-screen flow, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
 
 ## Screenshot Proof Artifacts
 
@@ -84,6 +107,7 @@ For UI-affecting source changes:
 ```bash
 make architecture
 <affected domain validation>
+make ui-smoke
 python3 automation/smoke/running_app_smoke.py
 git diff --check
 ```
@@ -95,5 +119,3 @@ make architecture
 make automation-check
 git diff --check
 ```
-
-Add an Xcode UI test command only after Owlory has a maintained UI test target and documented seed path.

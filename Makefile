@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
+.PHONY: architecture fast verify test-domain ui-smoke build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -29,6 +29,17 @@ localization-check:
 
 review-preflight:
 	./Tools/review-preflight.sh
+
+ui-smoke:
+	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 16,OS=26.3.1}"; \
+	echo "Running Owlory UI smoke on $$DESTINATION"; \
+	xcodebuild test \
+		-project owlory_xcode/Owlory.xcodeproj \
+		-scheme Owlory \
+		-configuration Debug \
+		-destination "$$DESTINATION" \
+		-derivedDataPath /tmp/owlory-ui-smoke-derived-data \
+		-only-testing:OwloryUITests/OwloryUITests/testSeededTodayLaunchSurface
 
 build-provenance:
 	./Tools/verify-build-provenance.sh
