@@ -1970,7 +1970,7 @@
     {
       "slice_id": "owlory-ui-test-active-home-protocol-routing-smoke",
       "title": "Add deterministic active Home protocol routing UI smoke",
-            "status": "done",
+      "status": "done",
       "priority": 133,
       "domain": "automation",
       "allowed_paths": [
@@ -1999,6 +1999,134 @@
       ],
       "max_files_changed": 10,
       "notes": "Small routing smoke slice. Seed one active Home protocol run, verify it appears in Today Continue, tap it, and assert Home presents the active run sheet. Do not add product behavior, screenshots, broad routing matrix, device/TestFlight proof, or protocol lifecycle changes."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-source-coverage-triage",
+      "title": "Triage Today Continue source UI smoke coverage",
+      "status": "queued",
+      "priority": 143,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-source-coverage-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-active-home-protocol-routing-smoke"
+      ],
+      "max_files_changed": 8,
+      "notes": "Doc-only triage slice. Inventory every Today Continue source, classify current proof, and identify which sources need deterministic XCUITest smoke coverage. Do not add UI tests or product behavior in this slice."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-source-smoke-batch",
+      "title": "Add deterministic Continue source UI smoke batch",
+      "status": "queued",
+      "priority": 144,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-source-smoke-batch",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-source-coverage-triage"
+      ],
+      "max_files_changed": 12,
+      "notes": "Implementation slice after source triage. Add deterministic XCUITest smoke only for missing Continue sources selected by the triage, such as Write-backed, Train-backed, or carried-forward rows. Prove source visibility only; do not add routing tests, screenshots, device/TestFlight proof, or product behavior changes."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-routing-matrix-triage",
+      "title": "Triage Today Continue routing matrix",
+      "status": "queued",
+      "priority": 145,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-matrix-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-source-smoke-batch"
+      ],
+      "max_files_changed": 8,
+      "notes": "Doc-only triage slice. Define expected route behavior for each Today Continue source before adding more routing UI tests. Do not infer routes from wishful product copy; ground the matrix in current code and docs."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-routing-smoke-batch",
+      "title": "Add deterministic Continue routing UI smoke batch",
+      "status": "queued",
+      "priority": 146,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-smoke-batch",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-routing-matrix-triage"
+      ],
+      "max_files_changed": 14,
+      "notes": "Implementation slice after routing matrix triage. Add deterministic XCUITest routing smoke for the highest-value missing Continue sources selected by the matrix, starting small rather than creating a broad routing suite. No screenshots, device/TestFlight proof, or product behavior changes unless a concrete routing bug blocks the proof."
     }
   ]
 }
