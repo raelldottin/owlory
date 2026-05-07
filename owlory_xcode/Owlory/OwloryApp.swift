@@ -15,6 +15,8 @@ struct OwloryApp: App {
     @StateObject private var patternStore: PatternStore
 
     init() {
+        OwloryUITestSupport.prepareLaunchEnvironmentIfNeeded()
+
         let router = OwloryDeepLinkRouter()
         _deepLinkRouter = StateObject(wrappedValue: router)
 
@@ -75,7 +77,9 @@ struct OwloryApp: App {
         ))
 
         reminderScheduler.setNotificationResponseDelegate(router)
-        reminderScheduler.requestAuthorization()
+        if !OwloryUITestSupport.isUITesting {
+            reminderScheduler.requestAuthorization()
+        }
 
         PerformanceTelemetry.notice(
             "Owlory app initialized — \(BuildInfo.current.summary) [\(BuildInfo.current.buildConfiguration)]",

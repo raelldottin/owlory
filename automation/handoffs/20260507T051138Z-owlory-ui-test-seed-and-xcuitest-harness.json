@@ -1,0 +1,100 @@
+{
+  "slice_id": "owlory-ui-test-seed-and-xcuitest-harness",
+  "status": "done",
+  "summary": "Added Owlory's first maintained XCUITest smoke lane: a debug-only deterministic fresh-day seed, stable Today dashboard accessibility identifiers, a wired OwloryUITests target, and repeatable make ui-smoke validation with isolated DerivedData.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-07/011347-owlory-ui-test-seed-and-xcuitest-harness.md",
+    "Tools/architecture-lint.sh",
+    "Tools/review-preflight.sh",
+    "automation/handoffs/20260507T051138Z-owlory-ui-test-seed-and-xcuitest-harness.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory.xcodeproj/xcshareddata/xcschemes/Owlory.xcscheme",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/OwloryApp.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-seed-and-xcuitest-harness",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "xcodebuild -list -project owlory_xcode/Owlory.xcodeproj",
+    "make architecture",
+    "make ui-smoke",
+    "make automation-check",
+    "make review-preflight",
+    "make test-domain DOMAIN=runtime",
+    "make build-provenance",
+    "make test-domain DOMAIN=today",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "make ui-smoke initially failed because the first test asserted the old welcome surface; inspection showed TodayStore creates a fresh-day dashboard after reset, so the seed/test/docs were corrected and make ui-smoke passed.",
+    "make test-domain DOMAIN=today initially failed with an Xcode build database lock because it was run concurrently with make test-domain DOMAIN=runtime against the shared /tmp/owlory-validate-xcode DerivedData path; it was rerun sequentially and passed."
+  ],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "XCUITest harness",
+      "before": "Owlory had running-app smoke and screenshot proof artifacts, but no maintained XCUITest target.",
+      "after": "Owlory has a first-class OwloryUITests target wired into the Xcode project and shared Owlory scheme.",
+      "proof": [
+        "xcodebuild -list -project owlory_xcode/Owlory.xcodeproj",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Deterministic UI seed path",
+      "before": "UI proof relied on ad-hoc simulator state or manual setup for app data.",
+      "after": "Debug launches with --owlory-ui-testing --owlory-ui-seed-fresh-day reset app-local Owlory and legacy Trajectory application-support data, skip notification authorization prompts, and let TodayStore create a deterministic fresh-day dashboard.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Repeatable UI smoke validation",
+      "before": "UI hygiene docs prohibited claiming XCUITest coverage until a target and documented seed path existed.",
+      "after": "make ui-smoke runs the single maintained Today dashboard launch-surface XCUITest with /tmp/owlory-ui-smoke-derived-data.",
+      "proof": [
+        "Makefile",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "UI test guardrails",
+      "before": "Architecture lint and review preflight documented UI hygiene but did not guard the existence of an orphaned UI test directory or recommend make ui-smoke.",
+      "after": "Architecture lint fails if OwloryUITests exists without project wiring or make ui-smoke, and review preflight recommends make ui-smoke for UI proof/test path changes.",
+      "proof": [
+        "Tools/architecture-lint.sh",
+        "Tools/review-preflight.sh",
+        "make architecture",
+        "make review-preflight"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The XCUITest suite intentionally contains one launch-surface smoke test only; it is not broad UI regression coverage.",
+    "No repo-managed screenshots were preserved for this slice, so screenshot-verified proof is not claimed.",
+    "The fresh-day seed only resets app-local application-support data in Debug builds; future flows that need richer records should add focused fixture seeding rather than expanding this smoke implicitly.",
+    "Device and TestFlight behavior remain unverified."
+  ],
+  "recommended_next_slice": "owlory-ui-test-fixture-seeder-batch-2",
+  "recommended_next_reason": "If Owlory needs repeatable multi-screen flow proof, the next small slice should add one richer deterministic fixture and one focused XCUITest flow rather than growing a broad UI regression suite.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-07T05:13:47Z"
+}

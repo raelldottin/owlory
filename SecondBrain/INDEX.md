@@ -2,6 +2,7 @@
 
 ## 2026-05-07
 
+- [owlory-ui-test-seed-and-xcuitest-harness](sessions/2026-05-07/011347-owlory-ui-test-seed-and-xcuitest-harness.md)
 - [harness-pr-ui-testing-hygiene](sessions/2026-05-07/005629-harness-pr-ui-testing-hygiene.md)
 
 ## 2026-05-06

@@ -84,8 +84,10 @@ struct TodayView: View {
                         .foregroundStyle(.secondary)
                     Text("Good to see you")
                         .font(.title2.weight(.semibold))
+                        .accessibilityIdentifier("today.welcome.title")
                     Text("Here's what's active across your life.")
                         .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("today.welcome.subtitle")
                     Button {
                         store.loadToday()
                     } label: {
@@ -94,6 +96,7 @@ struct TodayView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
+                    .accessibilityIdentifier("today.welcome.start")
                 }
                 .padding(.vertical, 8)
             }
@@ -1132,6 +1135,7 @@ struct TodayView: View {
                 .foregroundStyle(.secondary)
             Text(headerGreeting)
                 .font(headerGreetingFont)
+                .accessibilityIdentifier("today.dashboard.header")
             if let nudge = readinessNudge {
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "sparkle")
@@ -1185,6 +1189,7 @@ struct TodayView: View {
                 .foregroundStyle(.secondary)
             Text(readinessNudge?.message ?? headerGreeting)
                 .font(headerGreetingFont)
+                .accessibilityIdentifier("today.dashboard.header")
             if let domainNudge = calibration.domainNudge {
                 Text(domainNudge.message)
                     .font(headerSupportingFont)

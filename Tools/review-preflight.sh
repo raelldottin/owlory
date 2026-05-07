@@ -127,6 +127,7 @@ while IFS= read -r path; do
       add_once "$DOCS" "docs/workflows/ui-testing-hygiene.md"
       add_once "$DOCS" "docs/workflows/validation.md"
       add_once "$COMMANDS" "python3 automation/smoke/running_app_smoke.py"
+      add_once "$COMMANDS" "make ui-smoke"
       add_once "$RISKS" "UI proof or test path changed: verify proof lanes are not inflated, DerivedData is isolated, data setup is deterministic, screenshots are durable when claimed, and failures are classified instead of hand-waved as flake."
       ;;
   esac

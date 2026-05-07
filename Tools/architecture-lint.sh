@@ -107,6 +107,15 @@ if [ -f "$ROOT/Makefile" ] && ! grep -Eq '^localization-check:' "$ROOT/Makefile"
   fail "Makefile is missing a 'localization-check' target. Add one that runs Tools/localization-parity.sh so localization key drift is caught before build handoff."
 fi
 
+if [ -d "$ROOT/owlory_xcode/OwloryUITests" ]; then
+  if [ -f "$ROOT/Makefile" ] && ! grep -Eq '^ui-smoke:' "$ROOT/Makefile"; then
+    fail "OwloryUITests exists but Makefile is missing 'ui-smoke'. UI tests need a repeatable isolated DerivedData command; add 'make ui-smoke' and see docs/workflows/ui-testing-hygiene.md."
+  fi
+  if ! grep -q 'OwloryUITests' "$ROOT/owlory_xcode/Owlory.xcodeproj/project.pbxproj" 2>/dev/null; then
+    fail "OwloryUITests exists but is not wired into the Xcode project. Add a UI test target instead of leaving unowned test files; see docs/workflows/ui-testing-hygiene.md."
+  fi
+fi
+
 for ignored_metadata in .DS_Store '._*' .AppleDouble .LSOverride Thumbs.db ehthumbs.db Desktop.ini; do
   if [ -f "$ROOT/.gitignore" ] && ! grep -Fxq "$ignored_metadata" "$ROOT/.gitignore"; then
     fail ".gitignore does not ignore '$ignored_metadata'. System metadata obscures real source changes; add the pattern under the system metadata section and see docs/workflows/drift-control.md."
