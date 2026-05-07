@@ -527,6 +527,7 @@ private struct TaskRow: View {
             .contentShape(Rectangle())
             .accessibilityLabel("Edit \(task.title)")
             .accessibilityHint("Opens task details.")
+            .accessibilityIdentifier("home.task.item.\(task.id.uuidString)")
 
             if let audioFile = task.audioFileName {
                 AudioPlaybackButton(fileName: audioFile)

@@ -109,6 +109,33 @@ final class OwloryUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
     }
 
+    func testSeededHomeTaskContinueRowRoutesToHomeTask() throws {
+        launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Home task seed to launch on Today's dashboard surface."
+        )
+
+        let continueItemIdentifier = "today.continue.item.homeTask.\(homeTaskContinueFixtureItemID)"
+        let continueItem = app.buttons[continueItemIdentifier]
+        XCTAssertTrue(
+            continueItem.waitForExistence(timeout: 10),
+            "Expected the seeded active Home task to render before routing from Continue."
+        )
+
+        continueItem.tap()
+
+        let homeTaskIdentifier = "home.task.item.\(homeTaskContinueFixtureItemID)"
+        let homeTask = app.buttons[homeTaskIdentifier]
+        XCTAssertTrue(
+            homeTask.waitForExistence(timeout: 10),
+            "Expected tapping the Home-task-backed Continue row to route to Home with the seeded task visible."
+        )
+        XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
+    }
+
     private func launch(arguments: [String]) {
         app.launchArguments = ["--owlory-ui-testing"] + arguments
         app.launch()
