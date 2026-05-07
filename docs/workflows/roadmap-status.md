@@ -58,18 +58,21 @@ Custom compute or model feasibility:
 
 UI regression and snapshot coverage:
 
-- The repo still lacks broad UI regression or snapshot infrastructure for shipped user-visible workflows.
-- Do not claim snapshot/UI proof until that infrastructure exists; record manual/device gaps honestly.
+- The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
+- Current open proof gaps are every Continue source, a broad Continue routing matrix, screenshot proof, device proof, TestFlight proof, and full UI regression coverage.
+- The immediate UI proof queue should broaden source coverage first, then routing. Screenshot, device, TestFlight, and full-regression lanes remain deferred until the coverage model is clearer.
+- Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
 ## Suggested Order
 
 For implementation work, prefer this order unless a user request or concrete bug changes priority:
 
 1. Performance observability expansion.
-2. Continue Skip for today.
-3. ML eval fixtures and manual device checklist.
-4. Continue persisted provenance and later prune/migrate pass.
-5. Home protocol overdue/stale treatment and future Home-project modeling.
+2. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
+3. Continue Skip for today.
+4. ML eval fixtures and manual device checklist.
+5. Continue persisted provenance and later prune/migrate pass.
+6. Home protocol overdue/stale treatment and future Home-project modeling.
 
 ## Update Rule
 
