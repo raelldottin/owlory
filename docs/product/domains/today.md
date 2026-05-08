@@ -50,6 +50,21 @@ Missing/deferred: Large Dynamic Type screenshot proof, visible fallback review f
 - Source-backed Focus items should be marked done when their linked source has unambiguous completion semantics. Current automatic sources are completed or modified Train sessions, completed Home tasks, and published Write notes. Do not infer completion from ambiguous states such as archived notes, skipped work, pending protocol steps, or reusable protocol templates.
 - Continue removes completed work when its owning Focus item is marked done, when the source-derived item is no longer eligible, or when linked-source synchronization marks the Focus artifact done. Manually created Focus items without source identity are not auto-completed by matching title alone.
 
+## Continue UI Source Coverage
+
+`TodayContinueSourceComposer.sourceOrder` is the source of truth for current Continue source composition. The maintained XCUITest smoke suite proves selected high-value paths, not exhaustive UI behavior.
+
+| Composer step | Continue source | Current UI source proof | Needed proof |
+| --- | --- | --- | --- |
+| `currentFocus` | `.focusItem` | Covered by `testSeededTodayContinueItemAppears`; Done action also covered. | None for source visibility. |
+| `dueTodayTraining` | `.trainingSession` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic due-today Training source smoke. |
+| `carriedForwardFocus` | `.carriedFocusItem` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic carried-forward Focus source smoke. |
+| `activeHomeProtocolRun` | `.homeProtocolRun` | Covered by `testSeededHomeProtocolRunContinueRowRoutesToActiveRun`. | None for source visibility. |
+| `activeHomeTask` | `.homeTask` | Covered by `testSeededHomeTaskAppearsInTodayContinue`; routing also covered. | None for source visibility. |
+| `inProgressWriting` | `.writingNote` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic in-progress Writing source smoke. |
+
+Career records and reminders are not standalone Continue sources in the current composer. They may appear only through Today-owned Focus/carried Focus records or future source work; do not add UI smoke for them until a concrete source contract exists.
+
 ## Artifact Lifecycle
 
 - Stop surfacing invalid artifacts at the projection boundary before migrating data. For Continue, the boundary is the source-composition/admission path that feeds `TodayContinuationRules`.

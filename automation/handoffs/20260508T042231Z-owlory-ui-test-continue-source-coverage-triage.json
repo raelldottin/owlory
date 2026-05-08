@@ -1,0 +1,62 @@
+{
+  "slice_id": "owlory-ui-test-continue-source-coverage-triage",
+  "status": "done",
+  "summary": "Classified current Today Continue source UI smoke coverage and identified due-today Training, carried-forward Focus, and in-progress Writing as the missing source-visibility smoke cases.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-08/002231-owlory-ui-test-continue-source-coverage-triage.md",
+    "automation/handoffs/20260508T042231Z-owlory-ui-test-continue-source-coverage-triage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-testing-hygiene.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-source-coverage-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Continue source coverage inventory",
+      "before": "The UI proof roadmap named source coverage as the next class, but did not enumerate which real composer sources were covered or missing.",
+      "after": "The Today domain doc now maps each `TodayContinueSourceComposer` step to current XCUITest source proof and the exact missing source-visibility cases.",
+      "proof": [
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+      ]
+    },
+    {
+      "contract": "Next source-smoke implementation scope",
+      "before": "The queued source-smoke batch used example missing sources rather than a completed classification.",
+      "after": "The queued source-smoke batch is narrowed to due-today Training, carried-forward Focus, and in-progress Writing source visibility.",
+      "proof": [
+        "automation/queue/slices.json",
+        "docs/workflows/ui-testing-hygiene.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This is classification-only and does not add new UI smoke tests.",
+    "Due-today Training, carried-forward Focus, and in-progress Writing source visibility remain unproven through XCUITest until the next implementation slice.",
+    "Routing matrix, screenshots, device proof, TestFlight proof, and full UI regression coverage remain unproven."
+  ],
+  "recommended_next_slice": "owlory-ui-test-continue-source-smoke-batch",
+  "recommended_next_reason": "The source coverage triage identified exactly three missing source-visibility smoke cases; the next slice should add deterministic XCUITests for those cases only, without routing or screenshot scope.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-08T04:22:31Z"
+}

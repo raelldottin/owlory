@@ -2003,7 +2003,7 @@
     {
       "slice_id": "owlory-ui-test-continue-source-coverage-triage",
       "title": "Triage Today Continue source UI smoke coverage",
-      "status": "queued",
+      "status": "done",
       "priority": 143,
       "domain": "automation",
       "allowed_paths": [
@@ -2027,7 +2027,7 @@
         "owlory-ui-test-active-home-protocol-routing-smoke"
       ],
       "max_files_changed": 8,
-      "notes": "Doc-only triage slice. Inventory every Today Continue source, classify current proof, and identify which sources need deterministic XCUITest smoke coverage. Do not add UI tests or product behavior in this slice."
+      "notes": "Done. The Today source coverage table classifies the six real composer steps and identifies three missing source-visibility smoke cases: due-today Training, carried-forward Focus, and in-progress Writing. No UI tests or product behavior were added."
     },
     {
       "slice_id": "owlory-ui-test-continue-source-smoke-batch",
@@ -2038,6 +2038,7 @@
       "allowed_paths": [
         "automation/handoffs/",
         "automation/queue/slices.json",
+        "docs/product/domains/today.md",
         "docs/workflows/roadmap-status.md",
         "docs/workflows/ui-testing-hygiene.md",
         "docs/workflows/validation.md",
@@ -2060,7 +2061,7 @@
         "owlory-ui-test-continue-source-coverage-triage"
       ],
       "max_files_changed": 12,
-      "notes": "Implementation slice after source triage. Add deterministic XCUITest smoke only for missing Continue sources selected by the triage, such as Write-backed, Train-backed, or carried-forward rows. Prove source visibility only; do not add routing tests, screenshots, device/TestFlight proof, or product behavior changes."
+      "notes": "Implementation slice after source triage. Add deterministic XCUITest smoke for the three missing source-visibility cases selected by triage: due-today Training, carried-forward Focus, and in-progress Writing. Prove source visibility only; do not add routing tests, screenshots, device/TestFlight proof, or product behavior changes."
     },
     {
       "slice_id": "owlory-ui-test-continue-routing-matrix-triage",
@@ -2100,6 +2101,7 @@
       "allowed_paths": [
         "automation/handoffs/",
         "automation/queue/slices.json",
+        "docs/product/domains/today.md",
         "docs/workflows/roadmap-status.md",
         "docs/workflows/ui-testing-hygiene.md",
         "docs/workflows/validation.md",
