@@ -72,8 +72,8 @@ Immediate queued slices:
 
 | Slice | Purpose | Proof target |
 | --- | --- | --- |
-| `owlory-ui-test-continue-source-coverage-triage` | Inventory every Today Continue source and classify current vs needed XCUITest source coverage. | `doc-only` |
-| `owlory-ui-test-continue-source-smoke-batch` | Add deterministic smoke for missing Continue sources selected by triage, proving visibility only. | `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-test-continue-source-coverage-triage` | Inventory every Today Continue source and classify current vs needed XCUITest source coverage. | `doc-only`; complete in [Today Domain](../product/domains/today.md#continue-ui-source-coverage). |
+| `owlory-ui-test-continue-source-smoke-batch` | Add deterministic source-visibility smoke for due-today Training, carried-forward Focus, and in-progress Writing. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-test-continue-routing-matrix-triage` | Define expected routes for each Continue source before adding more route tests. | `doc-only` |
 | `owlory-ui-test-continue-routing-smoke-batch` | Add deterministic route smoke for the highest-value missing sources selected by the matrix. | `running-app-smoke`, XCUITest-backed |
 

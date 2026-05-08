@@ -59,8 +59,8 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are every Continue source, a broad Continue routing matrix, screenshot proof, device proof, TestFlight proof, and full UI regression coverage.
-- The immediate UI proof queue should broaden source coverage first, then routing. Screenshot, device, TestFlight, and full-regression lanes remain deferred until the coverage model is clearer.
+- Current open proof gaps are due-today Training, carried-forward Focus, and in-progress Writing source visibility; a broad Continue routing matrix; screenshot proof; device proof; TestFlight proof; and full UI regression coverage.
+- The immediate UI proof queue should add the three missing source-visibility smoke cases first, then classify and broaden routing. Screenshot, device, TestFlight, and full-regression lanes remain deferred until the coverage model is clearer.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
 ## Suggested Order

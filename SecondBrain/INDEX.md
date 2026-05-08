@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-08
+
+- [owlory-ui-test-continue-source-coverage-triage](sessions/2026-05-08/002231-owlory-ui-test-continue-source-coverage-triage.md)
+
 ## 2026-05-07
 
 - [owlory-ui-proof-roadmap-queue](sessions/2026-05-07/173252-owlory-ui-proof-roadmap-queue.md)
