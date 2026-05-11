@@ -2200,7 +2200,7 @@
     {
       "slice_id": "owlory-ui-test-device-proof",
       "title": "Verify selected Continue smoke paths on a physical device",
-      "status": "queued",
+      "status": "done",
       "priority": 158,
       "domain": "automation",
       "allowed_paths": [
