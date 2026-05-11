@@ -1,0 +1,58 @@
+{
+  "slice_id": "owlory-release-provenance-stamp-audit",
+  "status": "done",
+  "summary": "Pinned the root cause of the TestFlight Build Info gate failure recorded by owlory-ui-test-testflight-proof. Walked git history (pickaxe --all and --reflog) and confirmed the TestFlight build number 20260417081911 has never been committed to pbxproj on any branch or in reflog. Read the stamp script (Tools/generate-build-info.sh) and BuildInfo / BuildInfoView code and confirmed both behaved correctly given their inputs. Tightened the previous slice's clean-vs-dirty inference: BuildInfoView does not display GitStatus directly, but BuildInfo.isReleaseable (the gate behind the Not releaseable warning banner) checks gitCommit / gitCommitFull for -dirty suffix; the captured Build Info screen showed no -dirty suffix and no warning banner, so GitStatus was clean at archive time. Identified three mechanism candidates (xcodebuild command-line override, committed-then-rewritten pbxproj, git index manipulation) all sharing one fix surface: the release workflow's clean-tree gate is necessary but insufficient. Queued exactly one fix slice (owlory-release-provenance-stamp-gate-fix) targeting Tools/verify-build-provenance.sh + make release-check + docs/workflows/release.md, with a focused test simulating the failure mode. Stamp script and BuildInfo.swift left untouched. Surfaced one secondary finding (BuildInfoView never displays GitStatus); recorded but not queued.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/204422-owlory-release-provenance-stamp-audit.md",
+    "automation/handoffs/20260511T204422Z-owlory-release-provenance-stamp-audit.json",
+    "automation/proofs/owlory-release-provenance-stamp-audit/README.md",
+    "automation/proofs/owlory-release-provenance-stamp-audit/manifest.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-release-provenance-stamp-audit",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check",
+    "git log --all --pickaxe-regex -S '20260417081911' returned only the gate-failure record commit (7eb7fbb).",
+    "git log --reflog --pickaxe-regex -S '20260417081911' returned the same single match.",
+    "Walked every pbxproj-touching commit 2026-05-01 to 2026-05-08; all show CURRENT_PROJECT_VERSION = 20260417081904.",
+    "Build number 20260417081911 decodes to UTC 2026-04-17 08:19:11 matching set-build-number.sh --auto generation pattern.",
+    "BuildInfo.isReleaseable + BuildInfoView gating proves GitStatus was clean at archive time from the captured Build Info screenshot."
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-release-provenance-stamp-gate-fix",
+  "recommended_next_reason": "The audit's diagnosis converges on a single fix surface: Tools/verify-build-provenance.sh + make release-check must assert that pbxproj's current CURRENT_PROJECT_VERSION equals the committed value at HEAD, not merely that the working tree is clean. The fix slice is queued with the right allowed_paths (verifier, Makefile, release.md, automation/tests/) and explicit acceptance criteria (focused test simulating the failure mode, doc update to release.md numbered steps).",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T20:44:22Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight Build Info gate diagnosis",
+      "before": "The previous slice (owlory-ui-test-testflight-proof) recorded a gate-failure finding: the TestFlight build's stamped commit a2229f97ae250c2bd48971cf5fa409fd21e37912 had committed CURRENT_PROJECT_VERSION 20260417081904, but the binary shipped 20260417081911. GitStatus was inferred (likely clean, based on absence of -dirty suffix on visible Git fields) but not confirmed. The fix surface was undetermined; four candidate root causes (A/B/C/D) plus possible variations were in play. The follow-up audit slice was queued with first action: confirm GitStatus directly.",
+      "after": "GitStatus determination is now tighter (not from device scrolling, but from BuildInfoView code review): isReleaseable returns false when gitCommit has -dirty; the warning banner displays when isReleaseable is false; the captured Build Info screen has neither -dirty suffix nor warning banner, so isReleaseable was true, so gitCommit was clean, so GitStatus was clean at archive time. Pickaxe with --all and --reflog confirms 20260417081911 was never committed to pbxproj on any branch or in reflog. The stamp script and BuildInfo.swift behaved correctly; the release workflow's clean-tree gate is necessary but insufficient. Three mechanism candidates remain (α: xcodebuild override, β: committed-then-rewritten, γ: git index manipulation), all sharing one fix surface. Exactly one follow-up slice queued: owlory-release-provenance-stamp-gate-fix. A secondary UI gap finding (BuildInfoView does not render GitStatus directly) is recorded but not queued.",
+      "proof": [
+        "automation/proofs/owlory-release-provenance-stamp-audit/manifest.json (structured diagnosis)",
+        "automation/proofs/owlory-release-provenance-stamp-audit/README.md (audit narrative with evidence walk)",
+        "git log --all --pickaxe-regex -S '20260417081911' (zero matches outside the gate-failure record)",
+        "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift (no GitStatus rendering; isReleaseable banner gate confirmed)",
+        "Tools/generate-build-info.sh line 59 (script reads CFBundleVersion; never writes it back) and lines 44-49 (dirty suffix logic)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "GitStatus was determined from code review of BuildInfoView + BuildInfo.isReleaseable + the captured Build Info screen, not by scrolling Build Info on the device to read the field literally. BuildInfoView does not render GitStatus, so direct field readout is not currently possible from the UI alone. If a future audit ever needs the literal GitStatus value, either BuildInfoView must be extended to show it or the operator must extract Info.plist directly from the installed bundle (which requires a developer-signed install path).",
+    "Three mechanism candidates (xcodebuild override, committed-then-rewritten, git index manipulation) remain plausible because reflog GC may have erased the smoking-gun commit and bash history is not preserved across operator machines. The fix slice does not require disambiguating between them; the strengthened gate catches all three. If pursuing forensic certainty later, the App Store Connect-side archive metadata may carry the xcodebuild command line that produced the build.",
+    "The audit's gate fix targets only the build-number subset of provenance. Other pbxproj-only-on-disk-not-in-commit drifts (MARKETING_VERSION, signing identity, capability flags) could theoretically produce similar gate failures with different observable signatures. The fix slice's verifier extension should be implemented in a generalizable way so future drift classes can plug into the same assertion path.",
+    "Retroactive replacement of the failing TestFlight build is out of scope. The build currently on the operator's iPhone remains a known-unverifiable artifact; no proof can be claimed against it. The device-verified proof from owlory-ui-device-proof remains the highest current claim for Continue surfaces because it was built locally from a clean tree with traceable provenance.",
+    "BuildInfoView's UI gap (no GitStatus rendering) is recorded as a secondary finding but not queued. Closing the gap would make user-facing dirty signals less reliant on -dirty suffix inference; not closing it leaves a small failure mode where the suffix logic could be bypassed by future stamp-script changes without the UI noticing."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

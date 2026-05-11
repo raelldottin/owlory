@@ -1,0 +1,62 @@
+{
+  "slice": "owlory-release-provenance-stamp-audit",
+  "source_commit": "7eb7fbbd3163a21eb3cb6225dc0dad82a69bca24",
+  "captured_at": "2026-05-11T20:45:20.837395Z",
+  "finding_summary": "Release workflow's clean-tree gate is necessary but insufficient. The TestFlight install's CFBundleVersion (20260417081911) was never present in any committed pbxproj on any branch or in reflog. GitStatus at archive time was clean (inferred from absence of -dirty suffixes on visible Git fields AND absence of the Not releaseable warning banner gated on BuildInfo.isReleaseable). The stamp script and BuildInfo.swift both behaved correctly given their inputs; the divergence is upstream of both.",
+  "git_status_determination": {
+    "method": "Inferred from BuildInfoView and stamp-script behavior, not directly observed.",
+    "evidence": [
+      "Tools/generate-build-info.sh lines 44-49 append -dirty to GitCommit/GitCommitFull when git status --porcelain returns non-empty.",
+      "BuildInfo.isReleaseable returns false when gitCommit or gitCommitFull has -dirty suffix (BuildInfo.swift).",
+      "BuildInfoView renders the Not releaseable warning banner when isReleaseable is false (BuildInfoView.swift:40-47).",
+      "owlory-ui-testflight-proof/01-build-info.png shows Commit, Full commit, and Tag fields without -dirty suffix.",
+      "owlory-ui-testflight-proof/01-build-info.png shows no Not releaseable warning banner.",
+      "Therefore isReleaseable was true, therefore gitCommit had no -dirty suffix, therefore git status was clean at archive time."
+    ],
+    "result": "clean"
+  },
+  "build_number_provenance": {
+    "observed_in_binary": "20260417081911",
+    "decoded_timestamp": "2026-04-17T08:19:11Z (matches set-build-number.sh --auto generation pattern yyyyMMddHHmmss)",
+    "testflight_built_date": "2026-05-05T23:48:12Z (19 days after the bump timestamp)",
+    "committed_source_at_stamped_commit": "20260417081904 (a2229f97ae250c2bd48971cf5fa409fd21e37912)",
+    "occurrences_in_committed_history": "Zero (pickaxe --all and --reflog return only the gate-failure record commit 7eb7fbb).",
+    "result": "Build number never committed to pbxproj on any branch or in reflog."
+  },
+  "mechanisms_considered": [
+    {
+      "label": "\u03b1 \u2014 xcodebuild command-line override",
+      "description": "Archive issued with `xcodebuild archive ... CURRENT_PROJECT_VERSION=20260417081911`, overriding pbxproj at build time without modifying the file on disk. Stamp script's git check reports clean (file unchanged); processed Info.plist gets the override; binary ships with the override.",
+      "consistent_with_observations": true
+    },
+    {
+      "label": "\u03b2 \u2014 pbxproj commit later rewritten away",
+      "description": "Someone committed the 20260417081911 bump, archived from that committed state (stamp reports clean), then `git reset --hard` / force-push / branch reshape removed the commit from reachable history. Reflog GC erased the last trace.",
+      "consistent_with_observations": true
+    },
+    {
+      "label": "\u03b3 \u2014 git index manipulation (skip-worktree / assume-unchanged)",
+      "description": "Someone marked pbxproj skip-worktree, bumped the file on disk, archived (`git status --porcelain` returns empty because skip-worktree hides changes), then unset the flag. The bumped pbxproj was reverted to committed value either before or after archive.",
+      "consistent_with_observations": true
+    }
+  ],
+  "fix_surface": {
+    "primary": "Tools/verify-build-provenance.sh and make release-check.",
+    "rationale": "All three mechanisms share one property: the current pbxproj at HEAD did not contain the build number that ended up in the binary. The release workflow's existing clean-tree gate cannot detect this. A stronger assertion is needed: pbxproj's CURRENT_PROJECT_VERSION must equal `git show HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj`'s value.",
+    "out_of_scope": [
+      "Tools/generate-build-info.sh (stamped correctly given inputs).",
+      "owlory_xcode/Owlory/Core/Application/BuildInfo.swift (read correctly).",
+      "owlory_xcode/Owlory.xcodeproj build phase ordering (correct order).",
+      "App Store Connect-side investigation of earlier TestFlight builds.",
+      "Retroactive replacement of the TestFlight build currently installed on the operator's iPhone."
+    ]
+  },
+  "secondary_findings": [
+    {
+      "label": "BuildInfoView does not display GitStatus",
+      "evidence": "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift renders Version, Build, Commit, Full commit, Branch, Tag, Checkout, Built, Configuration, Bundle, Build source \u2014 but never GitStatus. User-facing dirty signal is only the Not releaseable warning banner, which uses -dirty suffix inference rather than reading GitStatus directly.",
+      "queued_followup": "Not queued. UI gap noted; separate product question if surfaced."
+    }
+  ],
+  "follow_up_slice": "owlory-release-provenance-stamp-gate-fix"
+}

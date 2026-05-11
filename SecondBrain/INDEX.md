@@ -2,6 +2,7 @@
 
 ## 2026-05-11
 
+- [owlory-release-provenance-stamp-audit](sessions/2026-05-11/204422-owlory-release-provenance-stamp-audit.md)
 - [owlory-ui-test-testflight-proof (blocked at gate)](sessions/2026-05-11/203215-owlory-ui-test-testflight-proof.md)
 - [owlory-ui-test-device-proof](sessions/2026-05-11/201558-owlory-ui-test-device-proof.md)
 - [owlory-ui-test-screenshot-proof-pack](sessions/2026-05-11/142834-owlory-ui-test-screenshot-proof-pack.md)
