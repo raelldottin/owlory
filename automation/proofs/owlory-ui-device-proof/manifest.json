@@ -1,0 +1,81 @@
+{
+  "slice": "owlory-ui-test-device-proof",
+  "source_commit": "c49e5adb01c48ca3eae5ab96aedd09ae06a29c30",
+  "captured_at": "2026-05-11T20:16:53.868606Z",
+  "device": {
+    "name": "Raell Dottin's iPhone",
+    "udid": "00008130-000A090910C1401C",
+    "os": "iOS 26.4.2"
+  },
+  "build_info": {
+    "marketing_version": "0.2.0",
+    "build_number": "20260417081904",
+    "git_commit_short": "c49e5adb01c4",
+    "git_commit_full": "c49e5adb01c48ca3eae5ab96aedd09ae06a29c30",
+    "git_branch": "claude/trusting-jepsen-0acf20",
+    "git_tag": "c49e5ad",
+    "git_status": "clean",
+    "build_date": "2026-05-11T16:31:58Z",
+    "configuration": "Debug",
+    "bundle_identifier": "com.raelldottin.owlory"
+  },
+  "screenshots": [
+    {
+      "name": "01-build-info",
+      "file": "01-build-info.png",
+      "description": "Build Info screen showing the installed bundle's stamped Git provenance.",
+      "sha256": "e095bf528d01c3e484d0b907897fb55b992bbfbb918ea58caf8b3f2f851cec9d",
+      "size_bytes": 289202
+    },
+    {
+      "name": "02-today-launch",
+      "file": "02-today-launch.png",
+      "description": "Today dashboard with Continue section populated by real user data.",
+      "sha256": "4483665cf729894b24fdde590a659525e26de68a0d00b3f4a1ceae73fcd09e29",
+      "size_bytes": 338175
+    },
+    {
+      "name": "03-writing-routing",
+      "file": "03-writing-routing.png",
+      "description": "Write note detail sheet auto-presented after tapping a .writingNote Continue row.",
+      "sha256": "43cfc2e6d77b2e7635b9c023eb9c63bc1f53c1d9ed3c292807b3d1a8d8cff0af",
+      "size_bytes": 323704
+    },
+    {
+      "name": "04-training-routing",
+      "file": "04-training-routing.png",
+      "description": "Train tab with the seeded due-today session card visible after tapping a .trainingSession Continue row.",
+      "sha256": "6f9b707d0baf395971f400ff7a58afbc570c2543645154ac6ac3ce0fe215a33c",
+      "size_bytes": 336717
+    },
+    {
+      "name": "05-home-protocol-routing",
+      "file": "05-home-protocol-routing.png",
+      "description": "Home active run sheet auto-presented after tapping a .homeProtocolRun Continue row.",
+      "sha256": "01ed577573af66fa9bbf83883b3f3aa08c2120439e278a882a4d1a4ed97dea60",
+      "size_bytes": 164750
+    }
+  ],
+  "not_attempted_yet": [
+    {
+      "surface": ".focusItem source visibility",
+      "reason": "Device's current Focus Three is empty; no .focusItem row appears in Continue."
+    },
+    {
+      "surface": ".homeTask source visibility and routing",
+      "reason": "Two active .homeProtocolRun rows fill the per-.home-domain cap of 2; .homeTask is admission-rejected before reaching Continue."
+    },
+    {
+      "surface": ".carriedFocusItem source visibility",
+      "reason": "Requires a stale Focus streak of 3+ consecutive carried calendar days; not naturally present in the device's history today."
+    },
+    {
+      "surface": "Done / Defer / Drop swipe actions",
+      "reason": "All three require a Focus-backed Continue row (.focusItem or .carriedFocusItem); none present on device this pass."
+    },
+    {
+      "surface": "Add-to-Focus action",
+      "reason": "Out of scope; routing-coverage triage already classified this as no-current-seed-exposes-it."
+    }
+  ]
+}
