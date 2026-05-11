@@ -1,0 +1,52 @@
+{
+  "slice_id": "owlory-ui-test-continue-routing-matrix-triage",
+  "status": "done",
+  "summary": "Classification-only triage of Today Continue routing. Inspected ContinueItem.highlightTarget plus the tap handler in RootTabView and each destination view's highlight consumption (TrainView.highlightedSessionID, WriteView.highlightedNoteID + presentHighlightedNoteIfNeeded, HomeView.highlightedTaskID/highlightedRunID + presentHighlightedRunSheetIfNeeded, CareerView.highlightedRecordID). Produced a routing matrix in today.md covering all six composer-backed Continue sources, identifying the two highest-value missing routes (Write note detail via auto-present, Train session via scroll-to-highlight) for the routing-smoke-batch implementation slice. Updated the smoke-batch's notes to embed the matrix decision so the implementation slice has narrow scope. No XCUITest code, no product behavior, no admission rule change.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/084545-owlory-ui-test-continue-routing-matrix-triage.md",
+    "automation/handoffs/20260511T084545Z-owlory-ui-test-continue-routing-matrix-triage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-matrix-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-ui-test-continue-routing-smoke-batch",
+  "recommended_next_reason": "The matrix in today.md narrows the implementation slice to the two highest-value missing routes: inProgressWriting / .writingNote -> Write tab + auto-presented note detail; dueTodayTraining / .trainingSession -> Train tab + scroll-to-highlight. Focus, carriedFocus, homeTask, and homeProtocolRun routing are all either covered or deferred per the matrix. The smoke-batch's notes have been updated to embed this selection.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T08:45:45Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "running-app-smoke"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue UI routing coverage",
+      "before": "today.md described tap routing rules in narrative form under Continue Actions (rows route to the row's domain; active home protocol-run rows open the active run sheet; in-progress writing rows open the note detail sheet; non-carried source-backed rows may expose Add to Focus; etc.). There was no parallel table to the Continue UI Source Coverage matrix that mapped each composer source to (a) its highlight target, (b) its destination behavior in the live app, and (c) its current XCUITest route proof and needed proof. The owlory-ui-test-continue-routing-smoke-batch slice's notes were generic, deferring source selection to a future triage.",
+      "after": "today.md now has a Continue UI Routing Coverage section with a six-row matrix: each composer source enumerates tap behavior, highlight target, destination behavior (including which destination views auto-present a detail sheet vs scroll only), current UI route proof, and needed proof. The matrix grounds proof decisions in the live ContinueItem.highlightTarget computation, the RootTabView tap handler, and each destination view's highlight consumption. The routing-smoke-batch slice notes are updated to embed the matrix decision: target only inProgressWriting and dueTodayTraining; defer focus/carriedFocus routing tests; recognize that homeTask and homeProtocolRun routes are already covered.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift:105 (ContinueItem.highlightTarget)",
+        "owlory_xcode/Owlory/RootTabView.swift:35 (onContinueItemSelected sets continueHighlightTarget and selectedTab)",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:347 (presentHighlightedNoteIfNeeded auto-presents the note detail sheet)",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift:454 (presentHighlightedRunSheetIfNeeded auto-presents the active run sheet)",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift:54 (scrollToContinueHighlight, no auto-detail)",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift:531 (existing home.task.item identifier pattern that the implementation slice can mirror)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The matrix records that WriteView and TrainView currently lack stable destination accessibility identifiers (e.g. `write.note.detail.<UUID>` for the note-detail sheet, `train.session.item.<UUID>` for the train row or detail). The routing-smoke-batch implementation slice will need to add those identifiers in its scope; HomeView already follows the pattern (`home.task.item.<UUID>`, `home.protocolRun.item.<UUID>`, `home.protocolRun.sheet.<UUID>`) so the convention is established. This is a small surface change but it is a code edit, not a docs-only edit, so it lives in the implementation slice, not here.",
+    "Focus and carriedFocus routing destinations are computed from typed FocusItemOrigin or from linkedRecordID-by-domain. The matrix defers a dedicated focus-routing smoke because (a) focus rows are primarily action-oriented (Done/Defer/Drop), (b) routing varies by origin/linkage, and (c) seeding a focus row with a typed origin to assert a specific route adds non-trivial fixture complexity. If a product question later requires this proof, classify it as its own slice rather than expanding the routing-smoke-batch.",
+    "The matrix treats CareerView routing as out of scope because there is no first-class career Continue source in TodayContinueSourceComposer; CareerView highlight only triggers when a Focus row carries a typed `.careerRecord` origin. If career becomes a standalone Continue source in the future, the source-coverage triage and routing matrix both need to extend; do not retro-fit career UI tests against the current behavior.",
+    "Action affordances (Done/Defer/Drop, Add to Focus, Skip-for-today) are deliberately not in the routing matrix. The existing Continue Actions section in today.md remains authoritative for them. If a future slice adds UI tests for Add to Focus or Skip-for-today, classify those as action smoke, not routing smoke, to avoid collapsing two coverage concepts into one suite.",
+    "Routing tests do not imply destination-state correctness. A test that asserts the Write detail sheet opens does not assert that the note's body, stage, or other detail-view content is correct; that is a destination-detail coverage question. If detail-state correctness becomes a proof goal, classify it as its own slice with its own assertion shape."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

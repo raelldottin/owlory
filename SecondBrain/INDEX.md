@@ -2,6 +2,7 @@
 
 ## 2026-05-11
 
+- [owlory-ui-test-continue-routing-matrix-triage](sessions/2026-05-11/084545-owlory-ui-test-continue-routing-matrix-triage.md)
 - [owlory-ui-test-continue-source-smoke-batch](sessions/2026-05-11/083444-owlory-ui-test-continue-source-smoke-batch.md)
 
 ## 2026-05-08
