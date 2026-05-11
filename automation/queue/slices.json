@@ -2230,7 +2230,7 @@
     {
       "slice_id": "owlory-ui-test-testflight-proof",
       "title": "Verify selected Continue flows from a TestFlight build",
-      "status": "queued",
+      "status": "blocked",
       "priority": 157,
       "domain": "automation",
       "allowed_paths": [
@@ -2321,6 +2321,42 @@
       ],
       "max_files_changed": 15,
       "notes": "Promote Today Continue from smoke coverage to the first regression batch as defined by the regression suite plan. Scope: all six Continue sources (visibility), the routing/action paths covered or classified by the deferred-coverage slice, and selected Continue Actions (Done plus whichever Defer/Drop or Add-to-Focus paths the deferred-coverage slice classified as covered). Build the regression batch as a separate XCUITest target or class (e.g., OwloryUIRegressionTests/TodayContinueRegression) so it does not run on every `make ui-smoke` invocation; add `make ui-regression` to invoke it. Batched simulator execution is allowed when isolation is needed. Each test must reset state via existing seed paths or new deterministic seeds; do not rely on prior test residue. Classify any failure per docs/workflows/ui-testing-hygiene.md Failure Classification table. proof_level should land at running-app-smoke for the first batch; screenshot/device/TestFlight proof for regression scope is a separate slice."
+    },
+    {
+      "slice_id": "owlory-release-provenance-stamp-audit",
+      "title": "Audit Release/TestFlight build-info provenance stamping",
+      "status": "queued",
+      "priority": 156,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/owlory-release-provenance-stamp-audit/",
+        "automation/queue/slices.json",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/Owlory/Core/Application/BuildInfo.swift",
+        "owlory_xcode/OwloryCoreTests/BuildInfoTests.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "Tools/generate-build-info.sh",
+        "Tools/verify-build-provenance.sh"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-release-provenance-stamp-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-testflight-proof"
+      ],
+      "max_files_changed": 10,
+      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified \u2014 that re-attempt is a separate slice that depends_on this audit landing."
     }
   ]
 }
