@@ -2129,6 +2129,198 @@
       ],
       "max_files_changed": 14,
       "notes": "Implementation slice after the routing matrix triage. Per the matrix in docs/product/domains/today.md Continue UI Routing Coverage section, add deterministic XCUITest routing smoke for the two highest-value missing source routes: (1) inProgressWriting / .writingNote -> Write tab + auto-presented note detail sheet via WriteView.presentHighlightedNoteIfNeeded; (2) dueTodayTraining / .trainingSession -> Train tab + scroll-to-highlight via TrainView.highlightedSessionID. Do not add focus / carriedFocus / homeTask / homeProtocolRun routing tests; the first three are deferred per the matrix and the last is already covered. Reuse the existing seedInProgressWritingContinueItem and seedDueTodayTrainingContinueItem fixtures from the source smoke batch; no new seed argument is required. Each test should tap the seeded Continue row and assert the destination accessibility identifier (write.note.detail.<UUID> for the note-detail sheet route; the Train detail/highlight identifier should be added if not already present in TrainView). No screenshots, device/TestFlight proof, or product behavior changes unless a concrete routing bug blocks the proof. Keep make ui-smoke stable; the maintained suite should grow from nine tests to eleven."
+    },
+    {
+      "slice_id": "owlory-ui-test-continue-routing-deferred-coverage",
+      "title": "Close remaining Continue routing/action gaps",
+      "status": "queued",
+      "priority": 160,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-deferred-coverage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-routing-smoke-batch"
+      ],
+      "max_files_changed": 10,
+      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action \u2014 decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem \u2014 confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
+    },
+    {
+      "slice_id": "owlory-ui-test-screenshot-proof-pack",
+      "title": "Preserve repo-managed screenshot proof for the maintained UI smoke suite",
+      "status": "queued",
+      "priority": 159,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/owlory-ui-smoke-proof/",
+        "automation/queue/slices.json",
+        "automation/smoke/",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "owlory_xcode/OwloryUITests/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-screenshot-proof-pack",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-continue-routing-deferred-coverage"
+      ],
+      "max_files_changed": 20,
+      "notes": "Convert the existing maintained XCUITest smoke coverage into repo-managed screenshot evidence under automation/proofs/owlory-ui-smoke-proof/. Capture screenshots from a clean commit for each maintained smoke path: Today launch surface, .focusItem source visibility, .focusItem Done action result, .homeTask source visibility + Home routing, .homeProtocolRun source visibility + active-run-sheet routing, .trainingSession source visibility + Train routing, .writingNote source visibility + Write detail-sheet routing, .carriedFocusItem source visibility, plus any routing/action artifacts added by the deferred-coverage slice. Mechanism: extend the XCUITest harness with optional XCTAttachment screenshot capture controlled by a launch flag (e.g. --owlory-ui-screenshot-capture) so attachments can be exported via xcresulttool, OR add a standalone capture script under automation/smoke/ that drives the simulator and writes PNGs directly. Each screenshot needs a stable name (01-..., 02-...), a README explaining what it proves and what it does not prove, and a manifest.json with sha256 hashes for integrity. No device or TestFlight claim. proof_level should land at screenshot-verified for the captured surfaces; do not claim broader UI regression coverage."
+    },
+    {
+      "slice_id": "owlory-ui-test-device-proof",
+      "title": "Verify selected Continue smoke paths on a physical device",
+      "status": "queued",
+      "priority": 158,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/owlory-ui-device-proof/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-device-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-screenshot-proof-pack"
+      ],
+      "max_files_changed": 15,
+      "notes": "Run the maintained Continue smoke paths on a physical iPhone from a traceable build. Build Info must show the real commit/branch/build date/configuration; install must come from a clean working tree at a committed SHA (worktree-aware stamping is already shipped via Tools/generate-build-info.sh). Exercise selected Continue paths manually on device: Today launch, at least one source-visibility row per source kind, the Done action on a Focus row, and the Write detail-sheet auto-present route. Capture device screenshots or short screen recordings as durable artifacts under automation/proofs/owlory-ui-device-proof/ with a README, manifest, and the device's Build Info screenshot as the first artifact. proof_level should land at device-verified for the exercised paths only; testflight-verified remains in missing_proof_levels. Out of scope: extending automated XCUITest to device target, broad regression on device, anything that requires a TestFlight build."
+    },
+    {
+      "slice_id": "owlory-ui-test-testflight-proof",
+      "title": "Verify selected Continue flows from a TestFlight build",
+      "status": "queued",
+      "priority": 157,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/proofs/owlory-ui-testflight-proof/",
+        "automation/queue/slices.json",
+        "docs/product/domains/today.md",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-device-proof"
+      ],
+      "max_files_changed": 15,
+      "notes": "Verify selected Continue flows from a TestFlight build. Constraint: the existing debug-only --owlory-ui-seed-* paths in OwloryUITestSupport are gated by #if DEBUG and are not present in a TestFlight (Release) build, so they cannot be assumed. This slice must first pick one path: (a) verify using real user data captured in a documented dataset; (b) add an explicitly TestFlight-safe fixture/demo-mode toggle compiled into Release builds and document its scope and access path (must be intentional, narrow, and not user-data-destructive); or (c) limit TestFlight proof to launch + Build Info verification only and explicitly classify Continue rendering as device-verified-only. Record the chosen approach in docs/workflows/release.md or ui-testing-hygiene.md before capturing artifacts. Preserve TestFlight build metadata, Build Info screenshot, and selected flow artifacts under automation/proofs/owlory-ui-testflight-proof/ with a README and manifest. proof_level should land at testflight-verified only for the verified paths; everything else stays at device-verified or below. Out of scope: device-only flows, app-wide regression on TestFlight, any change to release process beyond what the chosen approach requires."
+    },
+    {
+      "slice_id": "owlory-ui-regression-suite-plan",
+      "title": "Define what full Owlory UI regression coverage means",
+      "status": "queued",
+      "priority": 156,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "docs/product/domains/today.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-suite-plan",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 8,
+      "notes": "Doc-only planning slice. Produce docs/workflows/ui-regression-plan.md that defines five lanes with explicit boundaries: smoke suite (fast, maintained, deterministic, runs locally), regression suite (broader, batched, isolated simulator state, may take longer), screenshot proof (visual evidence, distinct from XCUITest), device proof (release confidence, physical-device behavior), TestFlight proof (release-channel verification). For each lane: trigger, target, scope, what it does prove, what it does not prove, gating commands, and artifact location. Do not implement any new tests, do not extend the smoke suite, do not change product behavior. Update ui-testing-hygiene.md to cross-reference the plan. proof_level: doc-only."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-1-today-continue",
+      "title": "First UI regression batch: Today Continue",
+      "status": "queued",
+      "priority": 155,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "docs/product/domains/today.md",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/OwloryUITests/",
+        "Makefile",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-1-today-continue",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make ui-smoke",
+        "make ui-regression",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-suite-plan"
+      ],
+      "max_files_changed": 15,
+      "notes": "Promote Today Continue from smoke coverage to the first regression batch as defined by the regression suite plan. Scope: all six Continue sources (visibility), the routing/action paths covered or classified by the deferred-coverage slice, and selected Continue Actions (Done plus whichever Defer/Drop or Add-to-Focus paths the deferred-coverage slice classified as covered). Build the regression batch as a separate XCUITest target or class (e.g., OwloryUIRegressionTests/TodayContinueRegression) so it does not run on every `make ui-smoke` invocation; add `make ui-regression` to invoke it. Batched simulator execution is allowed when isolation is needed. Each test must reset state via existing seed paths or new deterministic seeds; do not rely on prior test residue. Classify any failure per docs/workflows/ui-testing-hygiene.md Failure Classification table. proof_level should land at running-app-smoke for the first batch; screenshot/device/TestFlight proof for regression scope is a separate slice."
     }
   ]
 }
