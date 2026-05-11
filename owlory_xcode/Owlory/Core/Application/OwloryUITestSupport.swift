@@ -6,6 +6,9 @@ enum OwloryUITestSupport {
     static let todayContinueSeedArgument = "--owlory-ui-seed-today-continue-item"
     static let homeTaskContinueSeedArgument = "--owlory-ui-seed-home-task-continue-item"
     static let homeProtocolRunContinueSeedArgument = "--owlory-ui-seed-home-protocol-run-continue-item"
+    static let dueTodayTrainingContinueSeedArgument = "--owlory-ui-seed-due-today-training-continue-item"
+    static let carriedForwardFocusContinueSeedArgument = "--owlory-ui-seed-carried-forward-focus-continue-item"
+    static let inProgressWritingContinueSeedArgument = "--owlory-ui-seed-in-progress-writing-continue-item"
 
     static let continueFixtureItemID = UUID(uuidString: "9D215686-176C-4C13-936E-AB3092D62A96")!
     static let continueFixtureItemTitle = "Review seeded Continue item"
@@ -16,6 +19,12 @@ enum OwloryUITestSupport {
     static let homeProtocolRunContinueFixtureStepID = UUID(uuidString: "079B060C-76D4-466A-82FB-22D69F65E8DE")!
     static let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
     static let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
+    static let dueTodayTrainingContinueFixtureSessionID = UUID(uuidString: "B7E14C81-6D2A-4F3E-9C0B-5A8D2E1F4C9D")!
+    static let dueTodayTrainingContinueFixtureTitle = "Review seeded Training session"
+    static let carriedForwardFocusContinueFixtureItemID = UUID(uuidString: "A5B7C9D1-3E5F-4A9B-8D6F-0E2C4A6B8D0F")!
+    static let carriedForwardFocusContinueFixtureTitle = "Review seeded carried Focus"
+    static let inProgressWritingContinueFixtureNoteID = UUID(uuidString: "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B")!
+    static let inProgressWritingContinueFixtureTitle = "Review seeded Writing note"
 
     static var isUITesting: Bool {
         ProcessInfo.processInfo.arguments.contains(enabledArgument)
@@ -33,10 +42,16 @@ enum OwloryUITestSupport {
         let shouldSeedContinueItem = arguments.contains(todayContinueSeedArgument)
         let shouldSeedHomeTaskContinueItem = arguments.contains(homeTaskContinueSeedArgument)
         let shouldSeedHomeProtocolRunContinueItem = arguments.contains(homeProtocolRunContinueSeedArgument)
+        let shouldSeedDueTodayTrainingContinueItem = arguments.contains(dueTodayTrainingContinueSeedArgument)
+        let shouldSeedCarriedForwardFocusContinueItem = arguments.contains(carriedForwardFocusContinueSeedArgument)
+        let shouldSeedInProgressWritingContinueItem = arguments.contains(inProgressWritingContinueSeedArgument)
         guard shouldSeedFreshDay ||
                 shouldSeedContinueItem ||
                 shouldSeedHomeTaskContinueItem ||
-                shouldSeedHomeProtocolRunContinueItem else { return }
+                shouldSeedHomeProtocolRunContinueItem ||
+                shouldSeedDueTodayTrainingContinueItem ||
+                shouldSeedCarriedForwardFocusContinueItem ||
+                shouldSeedInProgressWritingContinueItem else { return }
 
         #if DEBUG
         resetAppSupport(fileManager: fileManager)
@@ -48,6 +63,15 @@ enum OwloryUITestSupport {
         }
         if shouldSeedHomeProtocolRunContinueItem {
             seedHomeProtocolRunContinueItem()
+        }
+        if shouldSeedDueTodayTrainingContinueItem {
+            seedDueTodayTrainingContinueItem()
+        }
+        if shouldSeedCarriedForwardFocusContinueItem {
+            seedCarriedForwardFocusContinueItem()
+        }
+        if shouldSeedInProgressWritingContinueItem {
+            seedInProgressWritingContinueItem()
         }
         #endif
     }
@@ -129,6 +153,75 @@ enum OwloryUITestSupport {
             directory: "Home",
             fileName: "runs"
         ).saveAll([run])
+    }
+
+    private static func seedDueTodayTrainingContinueItem(
+        calendar: Calendar = .current,
+        now: Date = Date()
+    ) {
+        let session = TrainingSession(
+            id: dueTodayTrainingContinueFixtureSessionID,
+            date: calendar.startOfDay(for: now),
+            plannedActivity: dueTodayTrainingContinueFixtureTitle,
+            status: .planned
+        )
+        try? FileItemListRepository<TrainingSession>(
+            directory: "Train",
+            fileName: "sessions"
+        ).saveAll([session])
+    }
+
+    private static func seedCarriedForwardFocusContinueItem(
+        calendar: Calendar = .current,
+        now: Date = Date()
+    ) {
+        // Build 4 consecutive daily entries (3 prior + today) all containing a
+        // FocusItem with the same title/domain and `createdFromDate` set. This
+        // is what `PatternEngine.computeCarryForward` reads to produce a
+        // stalled-item streak >= 3, which becomes a calibration staleItem and
+        // re-routes today's focus item from the currentFocus composer step
+        // into the carriedFocusItem step.
+        let today = calendar.startOfDay(for: now)
+        let origin = calendar.date(byAdding: .day, value: -3, to: today) ?? today
+        let entryRepository = FileTodayEntryRepository(calendar: calendar)
+        for daysBack in stride(from: 3, through: 0, by: -1) {
+            guard let day = calendar.date(byAdding: .day, value: -daysBack, to: today) else { continue }
+            // Today's item carries the fixture ID so the XCUITest can assert
+            // the deterministic accessibility identifier. Prior days only
+            // contribute to the streak via matching title+domain.
+            let itemID: UUID = (daysBack == 0)
+                ? carriedForwardFocusContinueFixtureItemID
+                : UUID()
+            let focusItem = FocusItem(
+                id: itemID,
+                title: carriedForwardFocusContinueFixtureTitle,
+                domain: .home,
+                status: .planned,
+                createdFromDate: origin
+            )
+            let entry = DailyEntry(
+                date: day,
+                focusThree: [focusItem],
+                energy: 4,
+                mood: 4,
+                sleepQuality: 4
+            )
+            try? entryRepository.saveEntry(entry)
+        }
+    }
+
+    private static func seedInProgressWritingContinueItem(now: Date = Date()) {
+        let note = WritingNote(
+            id: inProgressWritingContinueFixtureNoteID,
+            title: inProgressWritingContinueFixtureTitle,
+            body: "Seeded by Owlory UI smoke.",
+            stage: .capture,
+            createdDate: now
+        )
+        try? FileItemListRepository<WritingNote>(
+            directory: "Write",
+            fileName: "notes"
+        ).saveAll([note])
     }
     #endif
 }

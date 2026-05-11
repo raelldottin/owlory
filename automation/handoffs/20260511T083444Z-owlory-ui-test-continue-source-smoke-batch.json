@@ -1,0 +1,57 @@
+{
+  "slice_id": "owlory-ui-test-continue-source-smoke-batch",
+  "status": "done",
+  "summary": "Added deterministic XCUITest smoke for the three Continue source kinds the source-coverage triage flagged as missing (trainingSession, carriedFocusItem, writingNote). The maintained smoke suite now covers source visibility for all six composer-backed Continue sources. No routing, action, screenshot, device, or TestFlight proof was added; no product behavior changed. Three new launch arguments, three new seed functions, and three new tests; the seeds use the production FileItemListRepository / FileTodayEntryRepository paths so the composer, admission, and ranking pipelines run exactly as in the live app.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/083444-owlory-ui-test-continue-source-smoke-batch.md",
+    "automation/handoffs/20260511T083444Z-owlory-ui-test-continue-source-smoke-batch.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-source-smoke-batch",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-ui-test-continue-routing-matrix-triage",
+  "recommended_next_reason": "Source visibility is now complete (6/6 composer sources). The next queued slice in the UI proof roadmap classifies expected routes for each source before adding route tests; screenshot, device, and TestFlight lanes remain deliberately downstream.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T08:34:44Z",
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue UI source coverage",
+      "before": "The maintained XCUITest smoke covered source visibility for three of the six composer-backed Continue sources: currentFocus / .focusItem (plus a Done action), activeHomeProtocolRun / .homeProtocolRun (plus active-run routing), and activeHomeTask / .homeTask (plus routing into Home). The source-coverage triage flagged dueTodayTraining, carriedForwardFocus, and inProgressWriting as missing source-visibility proof. The Continue UI Source Coverage table in today.md listed those three rows with `Needed proof` populated.",
+      "after": "The maintained XCUITest smoke now covers source visibility for all six composer-backed Continue sources. Three new launch arguments (--owlory-ui-seed-due-today-training-continue-item, --owlory-ui-seed-carried-forward-focus-continue-item, --owlory-ui-seed-in-progress-writing-continue-item) drive deterministic seed paths that exercise the production FileItemListRepository / FileTodayEntryRepository surfaces; PatternEngine.computeCarryForward is exercised live for the carried-forward Focus case via four consecutive seeded daily entries. Three new tests assert each row's deterministic accessibility identifier (today.continue.item.trainingSession.<UUID>, today.continue.item.carriedFocusItem.<UUID>, today.continue.item.writingNote.<UUID>) and the seeded title. The today.md UI source coverage table now reads `None for source visibility.` in the Needed proof column for all six sources, and docs/workflows/ui-testing-hygiene.md documents the new seed arguments.",
+      "proof": [
+        "make ui-smoke",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift (seedDueTodayTrainingContinueItem, seedCarriedForwardFocusContinueItem, seedInProgressWritingContinueItem)",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift (testSeededDueTodayTrainingAppearsInTodayContinue, testSeededCarriedForwardFocusAppearsInTodayContinue, testSeededInProgressWritingAppearsInTodayContinue)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The carried-forward Focus seed depends on PatternEngine.computeCarryForward producing a stalled streak >= 3 from four consecutive seeded entries. If a future refactor changes the streak definition (e.g. requires non-equal createdFromDate or strict carryForward array membership rather than focusThree presence), this test would silently start asserting against currentFocus instead of carriedFocusItem. The test's deterministic source-kind identifier guards against this drift loudly.",
+    "These are source-visibility tests only. They do not exercise routing, Done/Defer/Drop actions, screenshots, or device flows. Source visibility passing does not imply correct destination routing for the three new sources; the routing matrix triage owns that classification.",
+    "The trainingSession seed dates the session at today's startOfDay. If a future Today rule narrows due-today admission (e.g. requires a specific time window beyond planned status and same calendar day), the seed must follow suit. The narrow scope here is intentional; the slice does not introduce a TrainingSession admission contract.",
+    "The writingNote seed uses stage .capture; isInProgressWritingCandidate admits any stage that is not .published or .archived. If the contract later tightens (e.g. requires non-empty body), the seed already provides a body so it should still pass, but the assertion only proves source visibility, not stage-specific behavior.",
+    "The seed paths reset app-local Owlory and legacy Trajectory application-support directories before writing; if a Continue source is later persisted in a new directory not covered by resetAppSupport, the seed isolation could leak. Audit resetAppSupport against any new persistence root before claiming UI smoke for sources that touch it."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

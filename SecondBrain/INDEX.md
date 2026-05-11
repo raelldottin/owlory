@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-11
+
+- [owlory-ui-test-continue-source-smoke-batch](sessions/2026-05-11/083444-owlory-ui-test-continue-source-smoke-batch.md)
+
 ## 2026-05-08
 
 - [owlory-ui-test-continue-source-coverage-triage](sessions/2026-05-08/002231-owlory-ui-test-continue-source-coverage-triage.md)
