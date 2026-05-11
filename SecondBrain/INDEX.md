@@ -2,6 +2,7 @@
 
 ## 2026-05-11
 
+- [owlory-ui-test-screenshot-proof-pack](sessions/2026-05-11/142834-owlory-ui-test-screenshot-proof-pack.md)
 - [owlory-ui-test-continue-routing-deferred-coverage](sessions/2026-05-11/103137-owlory-ui-test-continue-routing-deferred-coverage.md)
 - [owlory-ui-test-continue-routing-smoke-batch](sessions/2026-05-11/092313-owlory-ui-test-continue-routing-smoke-batch.md)
 - [owlory-ui-test-continue-routing-matrix-triage](sessions/2026-05-11/084545-owlory-ui-test-continue-routing-matrix-triage.md)

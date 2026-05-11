@@ -35,6 +35,7 @@ final class OwloryUITests: XCTestCase {
         )
 
         XCTAssertTrue(app.tabBars.buttons["Today"].exists)
+        captureScreenshot(named: "01-today-launch")
     }
 
     func testSeededTodayContinueItemAppears() throws {
@@ -58,6 +59,7 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded Focus item to render as a Continue row."
         )
         XCTAssertTrue(app.staticTexts[continueFixtureItemTitle].exists)
+        captureScreenshot(named: "02-focus-continue-item")
     }
 
     func testSeededTodayContinueItemCanBeMarkedDone() throws {
@@ -84,6 +86,7 @@ final class OwloryUITests: XCTestCase {
             doneButton.waitForExistence(timeout: 10),
             "Expected the seeded Focus-backed Continue row to expose the Done swipe action."
         )
+        captureScreenshot(named: "08-done-action-revealed")
 
         doneButton.tap()
 
@@ -119,6 +122,7 @@ final class OwloryUITests: XCTestCase {
             deferButton.waitForExistence(timeout: 10),
             "Expected the seeded Focus-backed Continue row to expose the Defer swipe action via the trailing edge."
         )
+        captureScreenshot(named: "12-defer-action-revealed")
 
         deferButton.tap()
 
@@ -154,6 +158,7 @@ final class OwloryUITests: XCTestCase {
             dropButton.waitForExistence(timeout: 10),
             "Expected the seeded Focus-backed Continue row to expose the Drop swipe action via the trailing edge."
         )
+        captureScreenshot(named: "13-drop-action-revealed")
 
         dropButton.tap()
 
@@ -186,6 +191,7 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded active Home task to render as a source-derived Continue row."
         )
         XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
+        captureScreenshot(named: "03-home-task-continue-item")
     }
 
     func testSeededHomeTaskContinueRowRoutesToHomeTask() throws {
@@ -213,6 +219,7 @@ final class OwloryUITests: XCTestCase {
             "Expected tapping the Home-task-backed Continue row to route to Home with the seeded task visible."
         )
         XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
+        captureScreenshot(named: "09-home-task-routing")
     }
 
     func testSeededHomeProtocolRunContinueRowRoutesToActiveRun() throws {
@@ -242,6 +249,7 @@ final class OwloryUITests: XCTestCase {
         )
         XCTAssertTrue(app.navigationBars[homeProtocolRunContinueFixtureTitle].exists)
         XCTAssertTrue(app.staticTexts[homeProtocolRunContinueFixtureStepTitle].exists)
+        captureScreenshot(named: "04-home-protocol-routing")
     }
 
     func testSeededDueTodayTrainingAppearsInTodayContinue() throws {
@@ -265,6 +273,7 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded planned Training session to render as a due-today Continue row."
         )
         XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+        captureScreenshot(named: "05-training-continue-item")
     }
 
     func testSeededCarriedForwardFocusAppearsInTodayContinue() throws {
@@ -288,6 +297,7 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded carried-forward Focus item to render as a Continue row via the carriedFocusItem source."
         )
         XCTAssertTrue(app.staticTexts[carriedForwardFocusContinueFixtureTitle].exists)
+        captureScreenshot(named: "07-carried-forward-continue-item")
     }
 
     func testSeededInProgressWritingAppearsInTodayContinue() throws {
@@ -311,6 +321,7 @@ final class OwloryUITests: XCTestCase {
             "Expected the seeded in-progress Writing note to render as a Continue row via the writingNote source."
         )
         XCTAssertTrue(app.staticTexts[inProgressWritingContinueFixtureTitle].exists)
+        captureScreenshot(named: "06-writing-continue-item")
     }
 
     func testSeededInProgressWritingContinueRowRoutesToWriteNoteDetail() throws {
@@ -340,6 +351,7 @@ final class OwloryUITests: XCTestCase {
             noteDetail.waitForExistence(timeout: 10),
             "Expected tapping the writing-note-backed Continue row to auto-present the Write note detail sheet."
         )
+        captureScreenshot(named: "10-writing-routing")
     }
 
     func testSeededDueTodayTrainingContinueRowRoutesToTrain() throws {
@@ -367,10 +379,25 @@ final class OwloryUITests: XCTestCase {
             "Expected tapping the training-session-backed Continue row to route to Train with the seeded session visible."
         )
         XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+        captureScreenshot(named: "11-training-routing")
     }
 
     private func launch(arguments: [String]) {
         app.launchArguments = ["--owlory-ui-testing"] + arguments
         app.launch()
+    }
+
+    /// Attach a PNG screenshot of the current simulator surface to the test
+    /// result with a stable, deterministic name. The `name` parameter is the
+    /// proof-pack filename stem (e.g. `01-today-launch`) so the extraction
+    /// script can map it directly to `automation/proofs/owlory-ui-smoke-proof/`.
+    /// `keepAlways` preserves the attachment even on passing tests, which is
+    /// the screenshot-proof goal — XCUITest's default is to drop attachments
+    /// on success.
+    private func captureScreenshot(named name: String) {
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 }

@@ -1,0 +1,86 @@
+{
+  "slice": "owlory-ui-test-screenshot-proof-pack",
+  "source_commit": "6d492e5266cb50cf9b6caf2f1b3568a286a20cd4",
+  "captured_at": "2026-05-11T14:28:05.471180Z",
+  "xcresult": "Test-Owlory-2026.05.11_10-24-03--0400.xcresult",
+  "screenshots": [
+    {
+      "name": "01-today-launch",
+      "file": "01-today-launch.png",
+      "sha256": "52d6131349286cfa1a6d4b91bd521f1a2f2e54692190da5d25b5d359e4097e98",
+      "size_bytes": 284357
+    },
+    {
+      "name": "02-focus-continue-item",
+      "file": "02-focus-continue-item.png",
+      "sha256": "9d7083e217d42c420aa8279c1e7c71a76844118ce945776f983e90b1b93fca9c",
+      "size_bytes": 286749
+    },
+    {
+      "name": "03-home-task-continue-item",
+      "file": "03-home-task-continue-item.png",
+      "sha256": "179cc71311f070cc2b4d56679f30b5a3ac4948ce9f192e0e35074f780dd92f14",
+      "size_bytes": 273043
+    },
+    {
+      "name": "04-home-protocol-routing",
+      "file": "04-home-protocol-routing.png",
+      "sha256": "e6bec21559c4e561be9217b5c1a08ffd85bff6f0964400ef44a075542eb9b62f",
+      "size_bytes": 125083
+    },
+    {
+      "name": "05-training-continue-item",
+      "file": "05-training-continue-item.png",
+      "sha256": "22f8bb641078998fc1e681ae32069fdeac17a688aeaa5d36d528b3cfa9da3b11",
+      "size_bytes": 293433
+    },
+    {
+      "name": "06-writing-continue-item",
+      "file": "06-writing-continue-item.png",
+      "sha256": "122ce15b06b0bae113cb767e61e298d1ab7dafacb6ee289603bf50da1afe6e96",
+      "size_bytes": 297689
+    },
+    {
+      "name": "07-carried-forward-continue-item",
+      "file": "07-carried-forward-continue-item.png",
+      "sha256": "464e034a37a2ebe489a937d1bac006811b0908b94c7a16c17ff793f96f021830",
+      "size_bytes": 300257
+    },
+    {
+      "name": "08-done-action-revealed",
+      "file": "08-done-action-revealed.png",
+      "sha256": "4c5b703ab871746d65e9af768f31914a9e5d4c6557bc87d8f1fe912e9a2f9281",
+      "size_bytes": 299702
+    },
+    {
+      "name": "09-home-task-routing",
+      "file": "09-home-task-routing.png",
+      "sha256": "0e3730dd211b00ca63ae7cd8af6d4f1b39903cd86541ab823ab985e69f63b3fb",
+      "size_bytes": 181156
+    },
+    {
+      "name": "10-writing-routing",
+      "file": "10-writing-routing.png",
+      "sha256": "3b80c227e330e71d3fb33399dc2a2583e4590d877854187dbca312cdf0e207eb",
+      "size_bytes": 195281
+    },
+    {
+      "name": "11-training-routing",
+      "file": "11-training-routing.png",
+      "sha256": "6e7c48385e859952ac134bd257f43b04d78802dabf60457c9f5d0be4650dec6f",
+      "size_bytes": 226858
+    },
+    {
+      "name": "12-defer-action-revealed",
+      "file": "12-defer-action-revealed.png",
+      "sha256": "25b643b7c68ad7b9ad93fb19b65fff55ec4f5c68cd15fbf556fbbc1c8c46070c",
+      "size_bytes": 299076
+    },
+    {
+      "name": "13-drop-action-revealed",
+      "file": "13-drop-action-revealed.png",
+      "sha256": "66c7044a140b958ae86ae581d181355f3619f8327d319bbe1e96f2bc7a98dc97",
+      "size_bytes": 294989
+    }
+  ]
+}
