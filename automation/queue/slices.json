@@ -2066,7 +2066,7 @@
     {
       "slice_id": "owlory-ui-test-continue-routing-matrix-triage",
       "title": "Triage Today Continue routing matrix",
-      "status": "queued",
+      "status": "done",
       "priority": 145,
       "domain": "automation",
       "allowed_paths": [
@@ -2128,7 +2128,7 @@
         "owlory-ui-test-continue-routing-matrix-triage"
       ],
       "max_files_changed": 14,
-      "notes": "Implementation slice after routing matrix triage. Add deterministic XCUITest routing smoke for the highest-value missing Continue sources selected by the matrix, starting small rather than creating a broad routing suite. No screenshots, device/TestFlight proof, or product behavior changes unless a concrete routing bug blocks the proof."
+      "notes": "Implementation slice after the routing matrix triage. Per the matrix in docs/product/domains/today.md Continue UI Routing Coverage section, add deterministic XCUITest routing smoke for the two highest-value missing source routes: (1) inProgressWriting / .writingNote -> Write tab + auto-presented note detail sheet via WriteView.presentHighlightedNoteIfNeeded; (2) dueTodayTraining / .trainingSession -> Train tab + scroll-to-highlight via TrainView.highlightedSessionID. Do not add focus / carriedFocus / homeTask / homeProtocolRun routing tests; the first three are deferred per the matrix and the last is already covered. Reuse the existing seedInProgressWritingContinueItem and seedDueTodayTrainingContinueItem fixtures from the source smoke batch; no new seed argument is required. Each test should tap the seeded Continue row and assert the destination accessibility identifier (write.note.detail.<UUID> for the note-detail sheet route; the Train detail/highlight identifier should be added if not already present in TrainView). No screenshots, device/TestFlight proof, or product behavior changes unless a concrete routing bug blocks the proof. Keep make ui-smoke stable; the maintained suite should grow from nine tests to eleven."
     }
   ]
 }
