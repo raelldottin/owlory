@@ -1,0 +1,57 @@
+{
+  "slice_id": "owlory-ui-test-continue-routing-deferred-coverage",
+  "status": "done",
+  "summary": "Closed the routing/action gaps the routing matrix triage deferred. Added accessibility identifiers and two XCUITests for .focusItem Defer and Drop swipe actions, and explicitly classified .carriedFocusItem routing/actions as N/A by contract because they flow through the same tap handler and swipe-action helpers as .focusItem. Every row of the Continue UI Routing Coverage matrix now reads `covered` or `N/A by contract` with a one-line reason. No new launch arguments, no new seed fixtures, no product behavior change.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/103137-owlory-ui-test-continue-routing-deferred-coverage.md",
+    "automation/handoffs/20260511T103137Z-owlory-ui-test-continue-routing-deferred-coverage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-deferred-coverage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-ui-test-screenshot-proof-pack",
+  "recommended_next_reason": "All routing/action gaps in the Continue UI Routing Coverage matrix now read `covered` or `N/A by contract`. The next slice in the UI proof completion roadmap is the screenshot-proof-pack, which converts the maintained smoke suite into repo-managed PNG evidence.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T10:31:37Z",
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Continue Focus-backed swipe-action XCUITest coverage and carriedFocus contract",
+      "before": "The Defer and Drop swipe actions in TodayView.continueStatusSwipeActions had no accessibilityIdentifier, so XCUITest could not assert them. The routing matrix in today.md showed `.focusItem` as having only the Done action covered, with focus-to-linked-source tap routing marked Deferred. `.carriedFocusItem` was marked Deferred with the rationale `classify a dedicated smoke after focus-routing is added or after a carry-forward-specific destination contract emerges.` Neither path had an explicit Covered/N/A decision recorded.",
+      "after": "TodayView's Defer and Drop buttons now carry `today.continue.action.defer.<sourceKind>.<UUID>` and `today.continue.action.drop.<sourceKind>.<UUID>` identifiers via the existing continueActionAccessibilityIdentifier helper. Two new XCUITests (testSeededTodayContinueItemCanBeDeferred, testSeededTodayContinueItemCanBeDropped) swipe left on the seeded Focus row and assert the action buttons appear and dismiss the row. The matrix's `.focusItem` row lists three action tests and explicitly marks tap-to-linked-source as N/A by contract (already exercised transitively by the four source-kind routing tests). The matrix's `.carriedFocusItem` row reads N/A by contract because tap routing flows through the same onContinueItemSelected/highlightTarget path and swipe actions flow through the same focusItem(for:) lookup as .focusItem; a dedicated test would duplicate the same code without proving a separate contract. The matrix also gained a short paragraph documenting the swipe-action identifier convention and explaining why Add-to-Focus has no UI smoke (no current seed exposes a row where it is allowed).",
+      "proof": [
+        "make ui-smoke",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift (continueStatusSwipeActions now sets identifiers on Defer/Drop buttons)",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift (testSeededTodayContinueItemCanBeDeferred, testSeededTodayContinueItemCanBeDropped)",
+        "docs/product/domains/today.md Continue UI Routing Coverage section (every row now reads `covered` or `N/A by contract` with one-line reason)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The Defer and Drop tests use `item.swipeLeft()` to reveal trailing-edge actions; if SwiftUI's swipe gesture inversion changes between iOS versions, the trailing actions may need a different swipe direction. The Done test already uses swipeRight() for the leading edge; the convention is documented in the test comments.",
+    "Add-to-Focus is not covered by UI smoke in this slice. The focus seed creates a row that already has a FocusItem, so canAddContinueItemToFocus returns false and the leading action shows Done, not Add to Focus. A future slice can add an Add-to-Focus test by seeding a homeTask Continue row (which has no Focus backing) and asserting the leading-edge button switches from Done to Add to Focus. Out of scope here; the existing Continue Actions section in today.md is authoritative for the rule.",
+    "Tap-to-linked-source for Focus rows is classified N/A by contract because the underlying onContinueItemSelected handler is already exercised by the four source-kind routing tests. If a future product change makes the focus-row tap behavior diverge from the source-kind tap (e.g. a focus row routes to a different destination than its linked source would), the classification must be re-evaluated.",
+    "The carriedFocusItem N/A classification depends on the helper functions focusItem(for:) and the onContinueItemSelected handler treating both source kinds identically. If a future change introduces source-kind-specific branching in those helpers (e.g. carriedFocus gets a different highlightTarget computation), a dedicated carriedFocus XCUITest would become necessary.",
+    "Both new tests assert the row disappears after the action. That works today because isCurrentFocusCandidate admits only .planned items; deferred/dropped items fall out of currentFocusCandidates. If a future Continue admission rule starts surfacing deferred or dropped focus rows (for example, a `Skip for today` design that hides without mutating status), the row-removal assertion would have to be replaced with a status-change assertion."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}
