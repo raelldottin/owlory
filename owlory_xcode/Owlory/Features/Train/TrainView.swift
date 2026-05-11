@@ -99,6 +99,7 @@ struct TrainView: View {
                         isHighlighted: session.id == highlightedSessionID
                     )
                     .id(session.id)
+                    .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
                 }
                 .onDelete { offsets in
                     let ids = offsets.map { todaySessions[$0].id }
