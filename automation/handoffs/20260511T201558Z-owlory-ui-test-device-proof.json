@@ -1,0 +1,64 @@
+{
+  "slice_id": "owlory-ui-test-device-proof",
+  "status": "done",
+  "summary": "Verified selected Continue smoke paths on Raell Dottin's iPhone (00008130-000A090910C1401C, iOS 26.4.2) from a clean-tree build at commit c49e5adb01c48ca3eae5ab96aedd09ae06a29c30 on branch claude/trusting-jepsen-0acf20. Captured five device screenshots: Build Info gate, Today launch, and three Continue tap-routing paths (writing -> note detail sheet, training -> session card, home protocol -> active run sheet). Three source kinds (.homeProtocolRun, .trainingSession, .writingNote) and three routing paths reach device-verified for the captured configuration. Three other source kinds (.focusItem, .homeTask, .carriedFocusItem) and three swipe actions (Done, Defer, Drop) plus Add-to-Focus and homeTask routing remain not-attempted-yet because the device's natural data did not expose them; recorded honestly in the proof pack manifest rather than synthesized.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/201558-owlory-ui-test-device-proof.md",
+    "automation/handoffs/20260511T201558Z-owlory-ui-test-device-proof.json",
+    "automation/proofs/owlory-ui-device-proof/01-build-info.png",
+    "automation/proofs/owlory-ui-device-proof/02-today-launch.png",
+    "automation/proofs/owlory-ui-device-proof/03-writing-routing.png",
+    "automation/proofs/owlory-ui-device-proof/04-training-routing.png",
+    "automation/proofs/owlory-ui-device-proof/05-home-protocol-routing.png",
+    "automation/proofs/owlory-ui-device-proof/README.md",
+    "automation/proofs/owlory-ui-device-proof/manifest.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-device-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS,id=00008130-000A090910C1401C' -derivedDataPath /tmp/owlory-device-proof/DerivedData -allowProvisioningUpdates (clean tree at c49e5adb01c4)",
+    "xcrun devicectl device install app --device 00008130-000A090910C1401C /tmp/owlory-device-proof/DerivedData/Build/Products/Debug-iphoneos/Owlory.app (installed at /private/var/containers/Bundle/Application/92F8F245-7840-4283-9D93-604CEAC260FC/Owlory.app/)",
+    "On-device Build Info verified: Commit c49e5adb01c4, Branch claude/trusting-jepsen-0acf20, Tag c49e5ad, Built 2026-05-11T16:31:58Z, Configuration Debug, Bundle com.raelldottin.owlory, GitStatus clean.",
+    "On-device Today launch verified: dashboard renders with Day-in-progress hero, Check-in, populated Continue section, and downstream sections (screenshot 02).",
+    "On-device tap routing verified for three Continue source kinds: .writingNote -> Write note detail sheet (screenshot 03), .trainingSession -> Train session card (screenshot 04), .homeProtocolRun -> active run sheet (screenshot 05)."
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof",
+  "recommended_next_reason": "Device-verified proof is now anchored for the captured surfaces. The next slice in the UI proof completion roadmap is testflight-proof, which must first pick one of three approaches (real data, TestFlight-safe fixture mode, or launch+Build-Info-only) because debug-only seed flags do not run in Release builds. Today launch + Build Info gate are the minimum honest TestFlight claim today.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T20:15:58Z",
+  "proof_level": "device-verified",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Continue smoke surfaces, physical-device verification",
+      "before": "Maintained XCUITest smoke covered all 6 Continue source kinds (visibility) plus 4 routing paths plus 3 Focus actions on the iPhone 16 simulator (`make ui-smoke`, 13 tests), and the simulator screenshot pack at `automation/proofs/owlory-ui-smoke-proof/` preserved 13 PNG artifacts with manifest hashes for that surface. No artifact existed for the same surfaces on a physical device. The slice's recommended_next_slice from the prior proof pack pointed at this slice; device-verified remained in missing_proof_levels for every Continue source and route.",
+      "after": "The maintained smoke surfaces have a device-verified mirror at `automation/proofs/owlory-ui-device-proof/` covering Build Info gate, Today launch, and three Continue tap-routing paths (.writingNote -> Write note detail sheet, .trainingSession -> Train session card, .homeProtocolRun -> active run sheet) on Raell Dottin's iPhone (00008130-000A090910C1401C, iOS 26.4.2) at commit c49e5adb01c48ca3eae5ab96aedd09ae06a29c30 on branch claude/trusting-jepsen-0acf20. Build Info gate visually matches the stamped Info.plist; clean-tree stamping (worktree-aware) is confirmed end-to-end. The proof pack records device-verified for those three source kinds plus three routing paths and not-attempted-yet for `.focusItem`, `.homeTask`, `.carriedFocusItem`, Done/Defer/Drop swipe actions, `.homeTask` routing, and Add-to-Focus, with one-line reasons each (Focus Three empty, .home domain cap filled by protocol runs, no 3+ day Focus streak, no Focus-backed row on device, etc.).",
+      "proof": [
+        "automation/proofs/owlory-ui-device-proof/manifest.json (source_commit, build_info, screenshots[], not_attempted_yet[])",
+        "automation/proofs/owlory-ui-device-proof/README.md (per-file mapping + Not-attempted-yet table + recapture procedure)",
+        "automation/proofs/owlory-ui-device-proof/01-build-info.png (visual confirmation of stamped provenance)",
+        "automation/proofs/owlory-ui-device-proof/02-today-launch.png (Today dashboard populated with real user data)",
+        "automation/proofs/owlory-ui-device-proof/03-writing-routing.png (.writingNote -> Write detail sheet on device)",
+        "automation/proofs/owlory-ui-device-proof/04-training-routing.png (.trainingSession -> Train session card on device)",
+        "automation/proofs/owlory-ui-device-proof/05-home-protocol-routing.png (.homeProtocolRun -> active run sheet on device)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "device-verified is claimed only for the three source kinds and three routing paths the device's live data could exercise honestly. Adding the deferred surfaces (.focusItem visibility, Done/Defer/Drop, .homeTask routing, .carriedFocusItem) requires the device to be in a different data state — either by user-driven setup before the next pass or by an intentional, narrow, TestFlight-safe fixture mode if the testflight-proof slice opens that door. Do not synthesize device data via undocumented private debug paths.",
+    "Build Info gate matched on first try this pass. If a future device pass shows -dirty, no-git, or a commit mismatch, the proof pack drifted; the recapture procedure in the README must be re-run from a clean tree. The handoff for that re-run should explicitly call out the drift cause (operator left worktree dirty, debug-only seed flag confusion, etc.).",
+    "The capture loop is manual: operator screenshots on device, AirDrops or saves to a /tmp staging directory, then the agent copies into the proof directory and regenerates the manifest. A future tooling slice could automate parts (xcrun simctl io equivalents do not exist for physical devices; Apple's `automation` framework or QuickTime Player screen recording are options) but each adds operational complexity. For now the manual loop is the documented recapture procedure.",
+    "Routing captures prove only the destination's first frame (the auto-presented sheet or the highlighted row immediately after tab switch). They do not exercise destination-internal interactions (note edit, run step completion, training reflection input). If a future product change moves the auto-present trigger or the highlight target type, these tests would silently still pass on the first frame even if the deeper destination behavior regressed; the simulator XCUITest suite is the durable guard for the assertion-level contract.",
+    "The .homeTask not-attempted-yet rationale depends on the current Continue admission policy (5 total / 2 per .home). If `home-protocol-schedule-stale-treatment` or any future schedule-driven projection slice changes which protocol runs are admitted, the device's Continue could expose a .homeTask row in a future pass; the README's not-attempted-yet table must be reviewed against admission rule changes."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}
