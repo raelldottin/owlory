@@ -1,0 +1,58 @@
+{
+  "slice_id": "owlory-ui-test-testflight-proof",
+  "status": "blocked",
+  "summary": "Halted at the mandatory Build Info gate. The installed TestFlight build of com.raelldottin.owlory reports Configuration Release with a real commit/branch/tag stamp, but its build number 20260417081911 does not match committed source: the stamped commit a2229f97ae250c2bd48971cf5fa409fd21e37912's project.pbxproj has CURRENT_PROJECT_VERSION 20260417081904. No commit on main between 2026-05-01 and 2026-05-08 has 20260417081911. The TestFlight build's stamped commit + build pair therefore cannot be reproduced from committed source. No Continue route, action, screenshot, or UI behavior proof was claimed from this install. proof_level stays at doc-only for this slice; testflight-verified remains in missing_proof_levels; device-verified from the prior slice is unchanged. A follow-up audit slice (owlory-release-provenance-stamp-audit) was queued with explicit first actions.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/203215-owlory-ui-test-testflight-proof.md",
+    "automation/handoffs/20260511T203215Z-owlory-ui-test-testflight-proof.json",
+    "automation/proofs/owlory-ui-testflight-proof/01-build-info.png",
+    "automation/proofs/owlory-ui-testflight-proof/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/manifest.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "TestFlight install verified as Configuration=Release (not Debug) and bundle identifier matches.",
+    "Stamped commit a2229f97ae250c2bd48971cf5fa409fd21e37912 confirmed to exist on origin/main.",
+    "Source check via git show against the stamped commit returned CURRENT_PROJECT_VERSION=20260417081904, which does not match the TestFlight build number 20260417081911 — gate failure recorded honestly."
+  ],
+  "validations_failed": [
+    "Tools/verify-build-provenance.sh equivalence between the TestFlight build number and the stamped commit's committed CURRENT_PROJECT_VERSION (20260417081911 expected at commit a2229f97ae25; observed 20260417081904 in committed source). Recorded as the structural gate failure, not as a transient flake."
+  ],
+  "recommended_next_slice": "owlory-release-provenance-stamp-audit",
+  "recommended_next_reason": "TestFlight proof cannot be re-attempted until the provenance gate is trustworthy. The audit's first action is to confirm GitStatus directly on the same TestFlight install (not captured in this pass), then identify whether the build-number drift originated in the stamp script, the archive workflow, or post-archive build-number mutation. Only after the audit lands and a corrected release produces a TestFlight build whose Build Info matches committed source should owlory-ui-test-testflight-proof be re-attempted.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T20:32:15Z",
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight Continue smoke proof",
+      "before": "Pre-slice expectations were: build-info-launch proof first, real-data Continue route proof only where the TestFlight install's natural data supported it, and explicit rejection of any TestFlight-safe fixture-mode design in this pass. No TestFlight proof artifacts existed in the repo; testflight-verified was missing for every Continue surface.",
+      "after": "The slice halted at the Build Info gate before any Continue surface was captured. One artifact preserved: 01-build-info.png labeled as gate-failure evidence (Configuration=Release, but build number 20260417081911 not present in any committed pbxproj state on main). A structured manifest.json records the drift, the inferred GitStatus=clean diagnosis (based on the absence of -dirty suffix on visible Git fields; not confirmed directly), the alternative diagnoses the audit must rule out, and the link to the follow-up slice. testflight-verified stays in missing_proof_levels. device-verified from owlory-ui-test-device-proof remains the strongest evidence for Continue surfaces. The slice's contract value is the gate detection itself: it caught exactly the release-drift class it exists for.",
+      "proof": [
+        "automation/proofs/owlory-ui-testflight-proof/01-build-info.png (gate-failure artifact)",
+        "automation/proofs/owlory-ui-testflight-proof/manifest.json (gate_status=failed; drift between stamped build and committed source recorded)",
+        "automation/proofs/owlory-ui-testflight-proof/README.md (full failure narrative + alternative diagnoses)",
+        "git show a2229f97ae250c2bd48971cf5fa409fd21e37912:owlory_xcode/Owlory.xcodeproj/project.pbxproj | grep CURRENT_PROJECT_VERSION = 20260417081904",
+        "Walk of pbxproj commits 2026-05-01 to 2026-05-08 shows no source state had CURRENT_PROJECT_VERSION = 20260417081911."
+      ]
+    }
+  ],
+  "residual_risks": [
+    "GitStatus was inferred (likely clean, based on absence of -dirty suffixes on visible Git fields) rather than read directly from the Build Info screen. The captured screenshot is cropped at Build source: Xcode CURRENT_PROJECT_VERSION. The follow-up audit slice's first action must be to scroll the on-device Build Info sheet and confirm GitStatus literally; the inference here is a starting hypothesis, not a confirmed observation.",
+    "The drift could have originated in three distinct places (stamp script bug, archive-workflow bug, post-archive build-number mutation). Each implies a different fix surface. Do not pre-commit to one fix until the audit's investigation lands; the queued slice's allowed_paths cover all three surfaces deliberately.",
+    "TestFlight installation history was not audited beyond the one currently installed build. There may be earlier or later TestFlight builds on App Store Connect with the same drift pattern or a different one. The audit may want to check the App Store Connect TestFlight build list to determine whether this is a one-off or a systemic stamping problem before deciding what to fix.",
+    "No assertion is made about whether the TestFlight build itself is functional. The install launches and renders Build Info (visible in the screenshot), but every other surface is unverified against this install. Device-verified proof from the prior slice (owlory-ui-test-device-proof) does not extend to this build because that install was a Debug build with a different commit and a different bundle UDID.",
+    "Re-attempting owlory-ui-test-testflight-proof requires a NEW TestFlight build whose Build Info matches committed source. The audit must produce that build (or document a path to it) before this slice can be reopened. Until then, testflight-verified is not claimable for any Owlory surface."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

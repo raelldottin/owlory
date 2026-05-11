@@ -1,0 +1,55 @@
+{
+  "slice": "owlory-ui-test-testflight-proof",
+  "source_commit": "f82056ff32d15789ab9d1c8ebd3f2e1a2a3693f5",
+  "captured_at": "2026-05-11T20:32:55.314773Z",
+  "device": {
+    "name": "Raell Dottin's iPhone",
+    "udid": "00008130-000A090910C1401C",
+    "os": "iOS 26.4.2"
+  },
+  "gate_status": "failed",
+  "gate_finding": {
+    "summary": "TestFlight Build Info gate failed: stamped commit's committed source does not have the stamped build number.",
+    "testflight_build_info": {
+      "marketing_version": "0.2.0",
+      "build_number": "20260417081911",
+      "git_commit_short": "a2229f97ae25",
+      "git_commit_full": "a2229f97ae250c2bd48971cf5fa409fd21e37912",
+      "git_branch": "main",
+      "git_tag": "a2229f9",
+      "build_date": "2026-05-05T23:48:12Z",
+      "configuration": "Release",
+      "bundle_identifier": "com.raelldottin.owlory"
+    },
+    "committed_source_at_stamped_commit": {
+      "commit": "a2229f97ae250c2bd48971cf5fa409fd21e37912",
+      "current_project_version": "20260417081904"
+    },
+    "drift": {
+      "expected_build_at_commit": "20260417081904",
+      "observed_build_in_testflight": "20260417081911"
+    },
+    "evidence": [
+      "git show a2229f97ae250c2bd48971cf5fa409fd21e37912:owlory_xcode/Owlory.xcodeproj/project.pbxproj | grep CURRENT_PROJECT_VERSION returned 20260417081904.",
+      "Walk of all pbxproj-touching commits between 2026-05-01 and 2026-05-08 shows every such commit's CURRENT_PROJECT_VERSION is 20260417081904; no commit on main has 20260417081911.",
+      "Visible Build Info fields (Commit, Full commit, Tag) all lack a -dirty suffix, suggesting GitStatus reports clean even though the build number does not match committed source. The screenshot is cropped just above the GitStatus row; direct confirmation of GitStatus is deferred to the follow-up audit slice."
+    ],
+    "inferred_likely_diagnosis": "GitStatus = clean (stamp script did not catch the discrepancy)",
+    "alternative_diagnoses_to_rule_out": [
+      "Archive-time build-number mutation after the stamp script ran but before binary signing.",
+      "Post-archive build-number rewrite in App Store Connect or by a release automation step.",
+      "Stamp script reading a mutated pbxproj that was never committed and never marked dirty."
+    ]
+  },
+  "continue_proof_claimed_from_this_install": [],
+  "screenshots": [
+    {
+      "name": "01-build-info",
+      "file": "01-build-info.png",
+      "description": "Build Info screen captured from the TestFlight install; preserved as evidence of the gate failure, not as evidence of TestFlight behavior.",
+      "sha256": "072d05bbc6b2e305e4561fa5b3e571d473610502c1f7ef1216ec17fcfed4c529",
+      "size_bytes": 274054
+    }
+  ],
+  "follow_up_slice": "owlory-release-provenance-stamp-audit"
+}
