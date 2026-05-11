@@ -568,6 +568,7 @@ private struct NoteDetailView: View {
             } message: {
                 Text("This removes the note from Write. Archived notes can be kept without appearing in active stages.")
             }
+            .accessibilityIdentifier("write.note.detail.\(note.id.uuidString)")
         }
     }
 

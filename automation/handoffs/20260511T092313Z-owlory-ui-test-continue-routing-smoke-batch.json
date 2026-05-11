@@ -1,0 +1,60 @@
+{
+  "slice_id": "owlory-ui-test-continue-routing-smoke-batch",
+  "status": "done",
+  "summary": "Added the two highest-value Continue routing smoke tests selected by the routing matrix triage: in-progress Writing -> Write note detail (auto-presented sheet), and due-today Training -> Train session row (tab switch + scroll-to-highlight). Two new XCUITests and two new destination accessibility identifiers (write.note.detail.<UUID>, train.session.item.<UUID>) matching the established HomeView convention. Reused the existing seed fixtures from the source smoke batch; no new launch arguments. No focus / carriedFocus routing, no screenshots, no device/TestFlight proof, no product behavior change.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/092313-owlory-ui-test-continue-routing-smoke-batch.md",
+    "automation/handoffs/20260511T092313Z-owlory-ui-test-continue-routing-smoke-batch.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-continue-routing-smoke-batch",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Source visibility (6/6) and routing (4/6, with focus and carriedFocus deferred per the matrix) are now both at the planned coverage. The next UI proof roadmap lanes are screenshot, device, TestFlight, and full regression-suite-plan; none are auto-queued because each has an explicit gate (source/routing maturity, device availability, TestFlight build identity, regression scope design). Classify them deliberately when ready.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T09:23:13Z",
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue UI routing coverage",
+      "before": "The routing matrix in today.md marked inProgressWriting / .writingNote and dueTodayTraining / .trainingSession as needing dedicated route smoke. WriteView and TrainView did not have stable destination accessibility identifiers, which the matrix called out as the implementation slice's responsibility to add. Existing routing coverage was limited to .homeTask (testSeededHomeTaskContinueRowRoutesToHomeTask) and .homeProtocolRun (testSeededHomeProtocolRunContinueRowRoutesToActiveRun); .focusItem had only an action test (Done swipe) and no tap-routing test.",
+      "after": "WriteView's NoteDetailView and TrainView's SessionCardView now expose stable accessibility identifiers (write.note.detail.<UUID>, train.session.item.<UUID>) following the same convention HomeView already uses. Two new XCUITests exercise the full tap-to-destination paths: testSeededInProgressWritingContinueRowRoutesToWriteNoteDetail (proving WriteView.presentHighlightedNoteIfNeeded actually auto-presents the sheet when the Continue tap sets highlightedNoteSelectionID), and testSeededDueTodayTrainingContinueRowRoutesToTrain (proving the tab switch plus TrainView.scrollToContinueHighlight reach the seeded row). The routing matrix in today.md now reads `None for routing` in the Needed proof column for these two sources. Focus and carriedFocus routing remain deferred per the matrix and were not added in this slice.",
+      "proof": [
+        "make ui-smoke",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift (write.note.detail.<UUID> identifier added)",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift (train.session.item.<UUID> identifier added)",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift (testSeededInProgressWritingContinueRowRoutesToWriteNoteDetail, testSeededDueTodayTrainingContinueRowRoutesToTrain)",
+        "docs/product/domains/today.md (Continue UI Routing Coverage matrix updated)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "WriteView.NoteDetailView is a sheet; the accessibility identifier is attached to the Form. XCUITest's `app.otherElements[...]` lookup is used because the sheet's accessibility container isn't a button or static text. If a future SwiftUI version changes how Form-level identifiers propagate up to the sheet, the assertion may need to switch to a child query (e.g. `app.descendants(matching: .any)[identifier]`). The current path works in the running smoke suite.",
+    "The Train route test asserts on `train.session.item.<UUID>` rendered inside the Today section's SessionCardView. If TrainView's planned-session row layout is refactored (e.g. extracts the row to a named struct elsewhere, or splits planned from due-today), the identifier may need to move with it. The Today section ForEach binding is the stable carrier today.",
+    "The Write route test relies on `presentHighlightedNoteIfNeeded` running on `.onChange(of: highlightedNoteSelectionID)`. The seed sets up the note before launch, and the Today tap sets `highlightedNoteSelectionID` to a new UUID via `continueSelectionID = UUID()` in RootTabView. If that signaling path changes (e.g. the selection ID stops being a UUID stamped on each tap), the auto-present may stop firing and the test will fail at the destination assertion. The test will fail loudly rather than silently if that happens.",
+    "These tests do not assert destination-state correctness. The Write detail sheet appearing does not prove its body, stage, or promotion controls are correct; that is destination-detail coverage, not routing coverage. The Train row being visible does not prove its readiness or planned-activity controls render correctly. If detail-state correctness becomes a proof goal, classify it as its own slice.",
+    "Focus and carriedFocus routing remain unproven. The matrix defers them; this slice does not change that. A user-typed origin or linkedRecordID on a Focus item routes to whichever destination the highlight target enum maps to, but no UI test exercises that path."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}

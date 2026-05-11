@@ -243,6 +243,62 @@ final class OwloryUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[inProgressWritingContinueFixtureTitle].exists)
     }
 
+    func testSeededInProgressWritingContinueRowRoutesToWriteNoteDetail() throws {
+        launch(arguments: ["--owlory-ui-seed-in-progress-writing-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic in-progress Writing seed to launch on Today's dashboard surface."
+        )
+
+        let continueItemIdentifier = "today.continue.item.writingNote.\(inProgressWritingContinueFixtureNoteID)"
+        let continueItem = app.buttons[continueItemIdentifier]
+        XCTAssertTrue(
+            continueItem.waitForExistence(timeout: 10),
+            "Expected the seeded in-progress Writing note to render before routing from Continue."
+        )
+
+        continueItem.tap()
+
+        let noteDetailIdentifier = "write.note.detail.\(inProgressWritingContinueFixtureNoteID)"
+        let noteDetail = app
+            .descendants(matching: .any)
+            .matching(identifier: noteDetailIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            noteDetail.waitForExistence(timeout: 10),
+            "Expected tapping the writing-note-backed Continue row to auto-present the Write note detail sheet."
+        )
+    }
+
+    func testSeededDueTodayTrainingContinueRowRoutesToTrain() throws {
+        launch(arguments: ["--owlory-ui-seed-due-today-training-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic due-today Training seed to launch on Today's dashboard surface."
+        )
+
+        let continueItemIdentifier = "today.continue.item.trainingSession.\(dueTodayTrainingContinueFixtureSessionID)"
+        let continueItem = app.buttons[continueItemIdentifier]
+        XCTAssertTrue(
+            continueItem.waitForExistence(timeout: 10),
+            "Expected the seeded due-today Training session to render before routing from Continue."
+        )
+
+        continueItem.tap()
+
+        let trainSessionIdentifier = "train.session.item.\(dueTodayTrainingContinueFixtureSessionID)"
+        let trainSession = app.otherElements[trainSessionIdentifier]
+        XCTAssertTrue(
+            trainSession.waitForExistence(timeout: 10),
+            "Expected tapping the training-session-backed Continue row to route to Train with the seeded session visible."
+        )
+        XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+    }
+
     private func launch(arguments: [String]) {
         app.launchArguments = ["--owlory-ui-testing"] + arguments
         app.launch()

@@ -2095,7 +2095,7 @@
     {
       "slice_id": "owlory-ui-test-continue-routing-smoke-batch",
       "title": "Add deterministic Continue routing UI smoke batch",
-      "status": "queued",
+      "status": "done",
       "priority": 146,
       "domain": "automation",
       "allowed_paths": [
