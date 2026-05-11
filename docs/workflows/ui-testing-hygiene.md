@@ -108,6 +108,45 @@ Each proof directory needs:
 
 Do not preserve white launch-transition screenshots or stale screenshots just because a file exists. Recapture after the surface settles, or keep the proof level lower.
 
+## Maintained Smoke Screenshot Pack
+
+The maintained XCUITest smoke captures one named screenshot per test via `captureScreenshot(named:)` in `OwloryUITests` (`XCTAttachment(screenshot:)` with `lifetime = .keepAlways`). Naming follows the proof-pack convention `NN-kebab-case` so the extraction script can map attachments to files deterministically.
+
+Refresh the screenshot pack after every change that affects a maintained smoke flow:
+
+```bash
+make ui-smoke-proof
+```
+
+That target runs `make ui-smoke` and then `python3 automation/smoke/extract_ui_smoke_screenshots.py`, which walks the newest `.xcresult` bundle under `/tmp/owlory-ui-smoke-derived-data/Logs/Test/`, exports each proof-pack-named attachment via `xcrun xcresulttool export object --legacy`, and writes the PNGs plus a `manifest.json` (with sha256 hashes, source commit, capture timestamp) to:
+
+```text
+automation/proofs/owlory-ui-smoke-proof/
+```
+
+The screenshots in that directory are the durable artifact; the xcresult bundle is transient. Do not check the xcresult bundle in. Do not edit the PNGs by hand — recapture if a change is needed and let the manifest hashes shift.
+
+## Simulator Preflight Recovery
+
+`make ui-smoke` and `make ui-smoke-proof` occasionally fail with:
+
+```text
+Simulator device failed to launch com.raelldottin.owlory.uitests.xctrunner.
+... Application failed preflight checks
+... Busy ("SBMainWorkspace")
+```
+
+This is environmental, not a product or test-logic regression. It happens when a prior test run left a stale xctrunner or app process in the simulator's launch services. The deterministic recovery is:
+
+```bash
+xcrun simctl shutdown all
+xcrun simctl erase 93831D66-8855-467D-8991-81886B30A57F   # or the iPhone 16 UDID from `xcrun simctl list devices available`
+rm -rf /tmp/owlory-ui-smoke-derived-data
+make ui-smoke
+```
+
+After the recovery passes once, the suite tends to stay green on subsequent runs without re-erasing. Classify this as `test harness or stale DerivedData` per the Failure Classification list above; do not chase it as a product regression unless the failure persists after a clean simulator + clean DerivedData.
+
 ## Failure Classification
 
 When a UI test or proof run fails, classify the failure before broad fixes:

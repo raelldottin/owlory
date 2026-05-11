@@ -1,0 +1,73 @@
+{
+  "slice_id": "owlory-ui-test-screenshot-proof-pack",
+  "status": "done",
+  "summary": "Turned the maintained 13-test XCUITest smoke suite into a repo-managed screenshot proof pack under automation/proofs/owlory-ui-smoke-proof/. Added captureScreenshot(named:) helper plus 13 per-test calls in OwloryUITests, an extraction script that uses xcrun xcresulttool to pull attachments out of the xcresult bundle, a make ui-smoke-proof target chaining ui-smoke and extraction, manifest.json with sha256 hashes, a README per-file mapping, and a new Simulator Preflight Recovery section in ui-testing-hygiene.md documenting the SBMainWorkspace Busy recovery procedure. No XCUITest assertions changed; no device/TestFlight claim; xcresult bundle stays transient under /tmp.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-11/142834-owlory-ui-test-screenshot-proof-pack.md",
+    "automation/handoffs/20260511T142834Z-owlory-ui-test-screenshot-proof-pack.json",
+    "automation/proofs/owlory-ui-smoke-proof/01-today-launch.png",
+    "automation/proofs/owlory-ui-smoke-proof/02-focus-continue-item.png",
+    "automation/proofs/owlory-ui-smoke-proof/03-home-task-continue-item.png",
+    "automation/proofs/owlory-ui-smoke-proof/04-home-protocol-routing.png",
+    "automation/proofs/owlory-ui-smoke-proof/05-training-continue-item.png",
+    "automation/proofs/owlory-ui-smoke-proof/06-writing-continue-item.png",
+    "automation/proofs/owlory-ui-smoke-proof/07-carried-forward-continue-item.png",
+    "automation/proofs/owlory-ui-smoke-proof/08-done-action-revealed.png",
+    "automation/proofs/owlory-ui-smoke-proof/09-home-task-routing.png",
+    "automation/proofs/owlory-ui-smoke-proof/10-writing-routing.png",
+    "automation/proofs/owlory-ui-smoke-proof/11-training-routing.png",
+    "automation/proofs/owlory-ui-smoke-proof/12-defer-action-revealed.png",
+    "automation/proofs/owlory-ui-smoke-proof/13-drop-action-revealed.png",
+    "automation/proofs/owlory-ui-smoke-proof/README.md",
+    "automation/proofs/owlory-ui-smoke-proof/manifest.json",
+    "automation/queue/slices.json",
+    "automation/smoke/extract_ui_smoke_screenshots.py",
+    "docs/workflows/ui-testing-hygiene.md",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-screenshot-proof-pack",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke-proof",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "recommended_next_slice": "owlory-ui-test-device-proof",
+  "recommended_next_reason": "Screenshot proof for the maintained smoke surface is now repo-managed with manifest hashes. The next slice in the UI proof completion roadmap is owlory-ui-test-device-proof, which verifies selected Continue smoke paths on a physical iPhone with traceable Build Info.",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-11T14:28:34Z",
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Maintained UI smoke screenshot evidence",
+      "before": "The maintained XCUITest smoke suite covered source visibility (6/6 sources), routing (4/6 sources, 2 deferred-by-contract), and three Focus-backed actions (Done/Defer/Drop). Test passes printed via xcodebuild were the only evidence — no PNG artifacts were preserved, no repo-managed manifest existed, and the xcresult bundle under /tmp was the only place screenshots could have come from. The Simulator Preflight Recovery (SBMainWorkspace Busy) failure mode had been hit at least twice but was not documented in ui-testing-hygiene.md.",
+      "after": "Every maintained smoke test emits one XCTAttachment with a proof-pack-named screenshot (01-..-launch through 13-..-revealed) and lifetime=.keepAlways so the attachments survive passing tests. The new make ui-smoke-proof target chains ui-smoke with automation/smoke/extract_ui_smoke_screenshots.py, which walks the xcresult bundle's test-results activities, exports each matching attachment via xcrun xcresulttool export object --legacy --type file into automation/proofs/owlory-ui-smoke-proof/, and regenerates manifest.json with source_commit / captured_at / xcresult / per-PNG sha256+size. The proof directory has a README mapping each file to its source test and the assertion it proves, plus an explicit `does NOT prove` list (simulator-only, Debug build, no animation/gesture/accessibility-beyond-identifier, no device/TestFlight). docs/workflows/ui-testing-hygiene.md gained a Maintained Smoke Screenshot Pack section documenting the workflow and a Simulator Preflight Recovery section with the three-step deterministic mitigation (simctl shutdown all + simctl erase <UDID> + rm -rf /tmp/owlory-ui-smoke-derived-data).",
+      "proof": [
+        "make ui-smoke-proof",
+        "automation/proofs/owlory-ui-smoke-proof/manifest.json (13 entries with sha256 hashes; source_commit=6d492e5)",
+        "automation/proofs/owlory-ui-smoke-proof/README.md (per-file mapping)",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift (captureScreenshot helper + 13 per-test calls)",
+        "automation/smoke/extract_ui_smoke_screenshots.py (xcresulttool-based extraction)",
+        "Makefile (ui-smoke-proof target)",
+        "docs/workflows/ui-testing-hygiene.md (Maintained Smoke Screenshot Pack and Simulator Preflight Recovery sections)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The proof pack is iPhone 16 simulator-only (iOS 26.3.1) at the captured commit. Dynamic Type changes, dark mode, RTL, accessibility content sizes, and any other rendering axis outside this one configuration are not proven. A future device-proof or regression slice should record what axes they extend.",
+    "The xcresulttool `--legacy` flag for export is currently the only path the script uses; xcresulttool deprecation notes warn that `get object --legacy` will be removed in a future release. If `xcresulttool get test-results` gains a direct attachment export, the script should switch to it; until then, the script's reliance on the legacy export path is a future deprecation risk recorded here.",
+    "Attachment naming requires every captureScreenshot call to use a unique proof-pack stem. The extraction script refuses to write a manifest when it detects duplicates, but a contributor adding a new test with a copy/pasted name would only see the failure at extraction time, not at compile/test time. A lint or test that asserts uniqueness of proof-pack names across the suite would be a fair follow-up but is out of scope here.",
+    "The xcresult bundle under /tmp/owlory-ui-smoke-derived-data/Logs/Test/ is transient and ignored by git; the script picks the newest by default. If a developer runs ui-smoke twice in quick succession without `make clean` between, the script picks the latest and the older bundle is unused. That is the intended behavior, but be aware that re-running extraction against an older bundle requires explicit `--xcresult` to that path.",
+    "Recurring SBMainWorkspace preflight failures now have documented recovery in ui-testing-hygiene.md; this slice did not investigate the root cause inside Apple's simulator infrastructure. If the failure pattern shifts (e.g. recovery stops working after some Xcode upgrade), the documented procedure must be re-validated; do not assume the three-step recovery is permanent without re-testing."
+  ],
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored"
+}
