@@ -2325,7 +2325,7 @@
     {
       "slice_id": "owlory-release-provenance-stamp-audit",
       "title": "Audit Release/TestFlight build-info provenance stamping",
-      "status": "queued",
+      "status": "done",
       "priority": 156,
       "domain": "repo-tooling",
       "allowed_paths": [
@@ -2357,6 +2357,38 @@
       ],
       "max_files_changed": 10,
       "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified \u2014 that re-attempt is a separate slice that depends_on this audit landing."
+    },
+    {
+      "slice_id": "owlory-release-provenance-stamp-gate-fix",
+      "title": "Add committed-build-number gate to release-check + provenance verifier",
+      "status": "queued",
+      "priority": 155,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "automation/tests/",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "Makefile",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "Tools/verify-build-provenance.sh"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-release-provenance-stamp-gate-fix",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-release-provenance-stamp-audit"
+      ],
+      "max_files_changed": 8,
+      "notes": "Implement the release-workflow gate fix identified by the stamp audit. Diagnosis recorded in automation/proofs/owlory-release-provenance-stamp-audit/: the release workflow's current clean-tree gate is necessary but insufficient. An archive was uploaded to TestFlight whose CFBundleVersion (20260417081911) was never committed to any pbxproj state on any branch or in the reflog, while the stamp script reported GitStatus=clean (visible Commit/Full commit/Tag fields lacked -dirty suffixes). Required change: extend Tools/verify-build-provenance.sh to assert that the current pbxproj CURRENT_PROJECT_VERSION matches a committed pbxproj state at HEAD (i.e., `git show HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj` contains the same CURRENT_PROJECT_VERSION value). The check should fail loudly with a message instructing the operator to commit the build-number bump before re-running the verifier. When invoked with --require-clean (as `make release-check` does), the new assertion must also fire. Update docs/workflows/release.md to record the strengthened gate as a numbered step before `Archive in Xcode` (the existing step 10), and to call out the failure mode this catches (uncommitted set-build-number.sh bumps that produce TestFlight builds whose build number is not reproducible from committed source). Add a focused test under automation/tests/ that simulates the failure mode (dirty pbxproj with a bumped value vs clean HEAD) and asserts the verifier exits non-zero. Out of scope: surfacing GitStatus directly in BuildInfoView (the UI gap noted in the audit is a separate product question), extending the audit to App Store Connect API checks, fixing prior unreproducible TestFlight builds retroactively. proof_level should land at domain-tested for the new verifier test path; the workflow doc change is doc-only addressing release.md."
     }
   ]
 }
