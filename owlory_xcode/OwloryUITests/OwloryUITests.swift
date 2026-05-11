@@ -8,6 +8,12 @@ final class OwloryUITests: XCTestCase {
     private let homeProtocolRunContinueFixtureRunID = "C9B98DD8-9AA9-4D8C-B0F7-8E82CF280A5A"
     private let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
     private let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
+    private let dueTodayTrainingContinueFixtureSessionID = "B7E14C81-6D2A-4F3E-9C0B-5A8D2E1F4C9D"
+    private let dueTodayTrainingContinueFixtureTitle = "Review seeded Training session"
+    private let carriedForwardFocusContinueFixtureItemID = "A5B7C9D1-3E5F-4A9B-8D6F-0E2C4A6B8D0F"
+    private let carriedForwardFocusContinueFixtureTitle = "Review seeded carried Focus"
+    private let inProgressWritingContinueFixtureNoteID = "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B"
+    private let inProgressWritingContinueFixtureTitle = "Review seeded Writing note"
     private var app: XCUIApplication!
 
     override func setUpWithError() throws {
@@ -166,6 +172,75 @@ final class OwloryUITests: XCTestCase {
         )
         XCTAssertTrue(app.navigationBars[homeProtocolRunContinueFixtureTitle].exists)
         XCTAssertTrue(app.staticTexts[homeProtocolRunContinueFixtureStepTitle].exists)
+    }
+
+    func testSeededDueTodayTrainingAppearsInTodayContinue() throws {
+        launch(arguments: ["--owlory-ui-seed-due-today-training-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic due-today Training seed to launch on Today's dashboard surface."
+        )
+
+        let continueHeader = app.staticTexts["today.continue.header"]
+        XCTAssertTrue(
+            continueHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic due-today Training seed to render the Continue section."
+        )
+
+        let itemIdentifier = "today.continue.item.trainingSession.\(dueTodayTrainingContinueFixtureSessionID)"
+        XCTAssertTrue(
+            app.buttons[itemIdentifier].waitForExistence(timeout: 10),
+            "Expected the seeded planned Training session to render as a due-today Continue row."
+        )
+        XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+    }
+
+    func testSeededCarriedForwardFocusAppearsInTodayContinue() throws {
+        launch(arguments: ["--owlory-ui-seed-carried-forward-focus-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic carried-forward Focus seed to launch on Today's dashboard surface."
+        )
+
+        let continueHeader = app.staticTexts["today.continue.header"]
+        XCTAssertTrue(
+            continueHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic carried-forward Focus seed to render the Continue section."
+        )
+
+        let itemIdentifier = "today.continue.item.carriedFocusItem.\(carriedForwardFocusContinueFixtureItemID)"
+        XCTAssertTrue(
+            app.buttons[itemIdentifier].waitForExistence(timeout: 10),
+            "Expected the seeded carried-forward Focus item to render as a Continue row via the carriedFocusItem source."
+        )
+        XCTAssertTrue(app.staticTexts[carriedForwardFocusContinueFixtureTitle].exists)
+    }
+
+    func testSeededInProgressWritingAppearsInTodayContinue() throws {
+        launch(arguments: ["--owlory-ui-seed-in-progress-writing-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic in-progress Writing seed to launch on Today's dashboard surface."
+        )
+
+        let continueHeader = app.staticTexts["today.continue.header"]
+        XCTAssertTrue(
+            continueHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic in-progress Writing seed to render the Continue section."
+        )
+
+        let itemIdentifier = "today.continue.item.writingNote.\(inProgressWritingContinueFixtureNoteID)"
+        XCTAssertTrue(
+            app.buttons[itemIdentifier].waitForExistence(timeout: 10),
+            "Expected the seeded in-progress Writing note to render as a Continue row via the writingNote source."
+        )
+        XCTAssertTrue(app.staticTexts[inProgressWritingContinueFixtureTitle].exists)
     }
 
     private func launch(arguments: [String]) {

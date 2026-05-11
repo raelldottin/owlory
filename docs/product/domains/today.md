@@ -57,11 +57,11 @@ Missing/deferred: Large Dynamic Type screenshot proof, visible fallback review f
 | Composer step | Continue source | Current UI source proof | Needed proof |
 | --- | --- | --- | --- |
 | `currentFocus` | `.focusItem` | Covered by `testSeededTodayContinueItemAppears`; Done action also covered. | None for source visibility. |
-| `dueTodayTraining` | `.trainingSession` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic due-today Training source smoke. |
-| `carriedForwardFocus` | `.carriedFocusItem` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic carried-forward Focus source smoke. |
+| `dueTodayTraining` | `.trainingSession` | Covered by `testSeededDueTodayTrainingAppearsInTodayContinue`. | None for source visibility. |
+| `carriedForwardFocus` | `.carriedFocusItem` | Covered by `testSeededCarriedForwardFocusAppearsInTodayContinue`. | None for source visibility. |
 | `activeHomeProtocolRun` | `.homeProtocolRun` | Covered by `testSeededHomeProtocolRunContinueRowRoutesToActiveRun`. | None for source visibility. |
 | `activeHomeTask` | `.homeTask` | Covered by `testSeededHomeTaskAppearsInTodayContinue`; routing also covered. | None for source visibility. |
-| `inProgressWriting` | `.writingNote` | Missing. Domain/source composition is covered by core tests only. | Add one deterministic in-progress Writing source smoke. |
+| `inProgressWriting` | `.writingNote` | Covered by `testSeededInProgressWritingAppearsInTodayContinue`. | None for source visibility. |
 
 Career records and reminders are not standalone Continue sources in the current composer. They may appear only through Today-owned Focus/carried Focus records or future source work; do not add UI smoke for them until a concrete source contract exists.
 

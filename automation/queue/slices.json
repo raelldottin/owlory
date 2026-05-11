@@ -2032,7 +2032,7 @@
     {
       "slice_id": "owlory-ui-test-continue-source-smoke-batch",
       "title": "Add deterministic Continue source UI smoke batch",
-      "status": "queued",
+      "status": "done",
       "priority": 144,
       "domain": "automation",
       "allowed_paths": [
