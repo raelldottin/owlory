@@ -95,6 +95,76 @@ final class OwloryUITests: XCTestCase {
         wait(for: [rowRemoved], timeout: 10)
     }
 
+    func testSeededTodayContinueItemCanBeDeferred() throws {
+        launch(arguments: ["--owlory-ui-seed-today-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Continue seed to launch on Today's dashboard surface."
+        )
+
+        let itemIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let item = app.buttons[itemIdentifier]
+        XCTAssertTrue(
+            item.waitForExistence(timeout: 10),
+            "Expected the seeded Focus item to render before exposing trailing swipe actions."
+        )
+
+        item.swipeLeft()
+
+        let deferIdentifier = "today.continue.action.defer.focusItem.\(continueFixtureItemID)"
+        let deferButton = app.buttons[deferIdentifier]
+        XCTAssertTrue(
+            deferButton.waitForExistence(timeout: 10),
+            "Expected the seeded Focus-backed Continue row to expose the Defer swipe action via the trailing edge."
+        )
+
+        deferButton.tap()
+
+        let rowRemoved = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: item,
+            handler: nil
+        )
+        wait(for: [rowRemoved], timeout: 10)
+    }
+
+    func testSeededTodayContinueItemCanBeDropped() throws {
+        launch(arguments: ["--owlory-ui-seed-today-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic Continue seed to launch on Today's dashboard surface."
+        )
+
+        let itemIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let item = app.buttons[itemIdentifier]
+        XCTAssertTrue(
+            item.waitForExistence(timeout: 10),
+            "Expected the seeded Focus item to render before exposing trailing swipe actions."
+        )
+
+        item.swipeLeft()
+
+        let dropIdentifier = "today.continue.action.drop.focusItem.\(continueFixtureItemID)"
+        let dropButton = app.buttons[dropIdentifier]
+        XCTAssertTrue(
+            dropButton.waitForExistence(timeout: 10),
+            "Expected the seeded Focus-backed Continue row to expose the Drop swipe action via the trailing edge."
+        )
+
+        dropButton.tap()
+
+        let rowRemoved = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: item,
+            handler: nil
+        )
+        wait(for: [rowRemoved], timeout: 10)
+    }
+
     func testSeededHomeTaskAppearsInTodayContinue() throws {
         launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
 

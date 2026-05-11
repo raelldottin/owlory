@@ -315,6 +315,7 @@ struct TodayView: View {
                     Label("Defer", systemImage: "clock.arrow.circlepath")
                 }
                 .tint(OwloryColor.warning)
+                .accessibilityIdentifier(continueActionAccessibilityIdentifier("defer", for: item))
             }
 
             if focusItem.status != .dropped {
@@ -323,6 +324,7 @@ struct TodayView: View {
                 } label: {
                     Label("Drop", systemImage: "xmark.circle")
                 }
+                .accessibilityIdentifier(continueActionAccessibilityIdentifier("drop", for: item))
             }
         }
     }

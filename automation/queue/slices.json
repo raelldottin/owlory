@@ -2133,7 +2133,7 @@
     {
       "slice_id": "owlory-ui-test-continue-routing-deferred-coverage",
       "title": "Close remaining Continue routing/action gaps",
-      "status": "queued",
+      "status": "done",
       "priority": 160,
       "domain": "automation",
       "allowed_paths": [
