@@ -1,0 +1,59 @@
+{
+  "slice_id": "owlory-release-provenance-stamp-gate-fix",
+  "status": "done",
+  "summary": "Strengthened Tools/verify-build-provenance.sh so the release/rollback gate fails when the on-disk Xcode CURRENT_PROJECT_VERSION does not match the value committed at HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj. Under --require-clean (used by make release-check) the new assertion exits non-zero with a clear remediation message; in informational mode (no --require-clean) it prints a 'Committed build number: differs from HEAD ...' line without failing. Added focused unit tests under automation/tests/test_verify_build_provenance.py covering positive (matching), failure (uncommitted bump under --require-clean), and informational (uncommitted bump without --require-clean) paths. Updated docs/workflows/release.md to insert a numbered step before Archive in Xcode that re-runs the verifier and to document the failure mode this catches (uncommitted set-build-number.sh bumps producing TestFlight builds whose CFBundleVersion is not in committed source).",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-12/044933-owlory-release-provenance-stamp-gate-fix.md",
+    "Tools/verify-build-provenance.sh",
+    "automation/handoffs/20260512T044933Z-owlory-release-provenance-stamp-gate-fix.json",
+    "automation/queue/slices.json",
+    "automation/tests/test_verify_build_provenance.py",
+    "docs/workflows/release.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-release-provenance-stamp-gate-fix",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release build-provenance gate",
+      "before": "Tools/verify-build-provenance.sh --require-clean asserted only that the working tree was clean. It did not compare the on-disk pbxproj CURRENT_PROJECT_VERSION to the value committed at HEAD, so the gate did not catch the failure mode identified by owlory-release-provenance-stamp-audit (TestFlight CFBundleVersion 20260417081911 was never committed to any pbxproj state on any branch or in reflog while the stamp script reported GitStatus=clean).",
+      "after": "Tools/verify-build-provenance.sh now reads HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj and asserts that the on-disk CURRENT_PROJECT_VERSION matches the committed value. The new assertion fires under --require-clean (as `make release-check` invokes it) and prints both errors when both gates fail. In informational mode the comparison is surfaced as 'Committed build number: matches HEAD' or 'Committed build number: differs from HEAD (HEAD has <value>)' without exiting non-zero, preserving the existing dev-loop behavior.",
+      "proof": [
+        "Tools/verify-build-provenance.sh",
+        "automation/tests/test_verify_build_provenance.py",
+        "make automation-check"
+      ]
+    },
+    {
+      "contract": "Normal release workflow doc",
+      "before": "docs/workflows/release.md numbered Normal Release through step 10 (Archive in Xcode) and named `make release-check` as the clean-tree gate without describing pbxproj-vs-HEAD verification.",
+      "after": "docs/workflows/release.md inserts a new numbered step before Archive in Xcode that re-runs `./Tools/verify-build-provenance.sh --require-clean` and documents the failure mode the strengthened gate catches (uncommitted set-build-number.sh bumps producing TestFlight builds whose CFBundleVersion is unreproducible from committed source).",
+      "proof": [
+        "docs/workflows/release.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The new assertion catches the uncommitted-bump and git-index-manipulation candidates from the audit. It does not catch an `xcodebuild` command-line override that sets CURRENT_PROJECT_VERSION=... at archive time without touching pbxproj. Closing that gap would require gating xcodebuild invocations themselves, which is out of scope for this slice.",
+    "The verifier compares CURRENT_PROJECT_VERSION only. Other pbxproj-only-on-disk-not-in-commit drifts (MARKETING_VERSION, signing identity, capability flags) would not be caught by this specific assertion. The committed-vs-on-disk pattern can be extended to those keys in a follow-up.",
+    "Retroactive replacement of the previously failing TestFlight build is out of scope. The build installed on the operator's iPhone with CFBundleVersion 20260417081911 remains a known-unverifiable artifact.",
+    "BuildInfoView still does not surface GitStatus directly. The secondary UI gap recorded by the audit slice remains open and is not addressed here."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-12T04:49:33Z"
+}

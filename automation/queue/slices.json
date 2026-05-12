@@ -2361,7 +2361,7 @@
     {
       "slice_id": "owlory-release-provenance-stamp-gate-fix",
       "title": "Add committed-build-number gate to release-check + provenance verifier",
-      "status": "queued",
+      "status": "done",
       "priority": 155,
       "domain": "repo-tooling",
       "allowed_paths": [

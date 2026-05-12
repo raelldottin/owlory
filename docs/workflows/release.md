@@ -46,9 +46,12 @@ Keep TestFlight and debug data separate by default. Do not point a debug build a
 7. Run `make release-check` from a clean tree before archiving.
 8. Tag `vX.Y.Z`.
 9. Push the tag.
-10. Archive the committed state in Xcode.
+10. Re-run `./Tools/verify-build-provenance.sh --require-clean` immediately before archive to confirm the on-disk Xcode `CURRENT_PROJECT_VERSION` still matches the committed value at HEAD.
+11. Archive the committed state in Xcode.
 
 `make release-check` requires a clean tree and runs the runtime validation slice. It is intentionally stricter than `make build-provenance`.
+
+The clean-tree gate alone is necessary but not sufficient. `verify-build-provenance.sh --require-clean` also asserts that the on-disk `CURRENT_PROJECT_VERSION` matches the committed value at `HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj`. The verifier reports `Committed build number: matches HEAD` on success and exits non-zero with `pbxproj CURRENT_PROJECT_VERSION '...' is not committed at HEAD` when they diverge. This catches the failure mode where `./Tools/set-build-number.sh --auto` is run before archive without committing the bump, producing a TestFlight build whose `CFBundleVersion` is not reproducible from any committed pbxproj state on any branch.
 
 ## TestFlight Diagnosis
 

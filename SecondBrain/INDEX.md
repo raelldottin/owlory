@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-12
+
+- [owlory-release-provenance-stamp-gate-fix](sessions/2026-05-12/044933-owlory-release-provenance-stamp-gate-fix.md)
+
 ## 2026-05-11
 
 - [owlory-release-provenance-stamp-audit](sessions/2026-05-11/204422-owlory-release-provenance-stamp-audit.md)

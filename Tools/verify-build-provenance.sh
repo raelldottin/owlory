@@ -127,10 +127,34 @@ else
   RELEASEABLE="yes"
 fi
 
+PROJECT_FILE_REL="owlory_xcode/Owlory.xcodeproj/project.pbxproj"
+COMMITTED_PBXPROJ="$(git -C "$GIT_ROOT" show "HEAD:$PROJECT_FILE_REL" 2>/dev/null || printf '')"
+COMMITTED_BUILD_NUMBER=""
+if [ -n "$COMMITTED_PBXPROJ" ]; then
+  COMMITTED_BUILD_VALUES="$(printf '%s\n' "$COMMITTED_PBXPROJ" \
+    | grep -E "CURRENT_PROJECT_VERSION = [^;]+;" \
+    | sed -E "s/.*CURRENT_PROJECT_VERSION = ([^;]+);.*/\1/" \
+    | sort -u)"
+  COMMITTED_BUILD_VALUE_COUNT="$(printf '%s\n' "$COMMITTED_BUILD_VALUES" | count_nonempty_lines)"
+  if [ "$COMMITTED_BUILD_VALUE_COUNT" = "1" ]; then
+    COMMITTED_BUILD_NUMBER="$(printf '%s\n' "$COMMITTED_BUILD_VALUES" | first_nonempty_line)"
+    if [ "$BUILD_NUMBER" = "$COMMITTED_BUILD_NUMBER" ]; then
+      COMMITTED_BUILD_STATE="matches HEAD"
+    else
+      COMMITTED_BUILD_STATE="differs from HEAD (HEAD has $COMMITTED_BUILD_NUMBER)"
+    fi
+  else
+    COMMITTED_BUILD_STATE="unverifiable (HEAD pbxproj has $COMMITTED_BUILD_VALUE_COUNT distinct CURRENT_PROJECT_VERSION values)"
+  fi
+else
+  COMMITTED_BUILD_STATE="unverifiable (no pbxproj at HEAD for $PROJECT_FILE_REL)"
+fi
+
 echo "Build provenance"
 echo "  Version: v$MARKETING_VERSION ($BUILD_NUMBER)"
 echo "  Version source: owlory_xcode/Owlory.xcodeproj/project.pbxproj"
 echo "  Build number source: Xcode CURRENT_PROJECT_VERSION"
+echo "  Committed build number: $COMMITTED_BUILD_STATE"
 echo "  Git commit: $HEAD_SHORT"
 echo "  Git commit full: $HEAD_FULL"
 echo "  Git branch: $BRANCH"
@@ -163,8 +187,17 @@ if [ -n "$EXPECTED_COMMIT" ]; then
   fi
 fi
 
-if [ "$REQUIRE_CLEAN" = "1" ] && [ "$WORKTREE_STATE" != "clean" ]; then
-  warn "working tree has uncommitted changes"
-  echo "$STATUS_LINES" | sed 's/^/  /' >&2
-  fail "--require-clean needs a clean tree before archive or rollback shipment"
+if [ "$REQUIRE_CLEAN" = "1" ]; then
+  REQUIRE_CLEAN_FAILED=0
+  if [ "$WORKTREE_STATE" != "clean" ]; then
+    warn "working tree has uncommitted changes"
+    echo "$STATUS_LINES" | sed 's/^/  /' >&2
+    echo "error: --require-clean needs a clean tree before archive or rollback shipment" >&2
+    REQUIRE_CLEAN_FAILED=1
+  fi
+  if [ -n "$COMMITTED_BUILD_NUMBER" ] && [ "$BUILD_NUMBER" != "$COMMITTED_BUILD_NUMBER" ]; then
+    echo "error: pbxproj CURRENT_PROJECT_VERSION '$BUILD_NUMBER' is not committed at HEAD (HEAD has '$COMMITTED_BUILD_NUMBER'); commit the build-number bump before re-running the verifier" >&2
+    REQUIRE_CLEAN_FAILED=1
+  fi
+  [ "$REQUIRE_CLEAN_FAILED" = "0" ] || exit 1
 fi
