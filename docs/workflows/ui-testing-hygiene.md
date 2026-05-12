@@ -2,6 +2,8 @@
 
 Use this before adding UI tests, preserving screenshot proof, or claiming running-app behavior. It adapts the durable Gymphant UI-testing lessons to Owlory without pretending Owlory already has a full XCUITest suite.
 
+See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of the five UI coverage lanes (smoke, regression, screenshot, device, TestFlight), what each lane proves and does not prove, and which gating command claims which proof level. This page covers the durable rules that apply within those lanes.
+
 ## Current State
 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
@@ -69,7 +71,7 @@ The maintained XCUITest smoke suite proves selected high-value Today Continue pa
 
 ## UI Proof Roadmap
 
-Treat the remaining UI proof gaps as a roadmap, not one giant slice. Broaden source coverage first, then routing, then preserved screenshots, then physical-device and TestFlight proof, then design a full regression suite.
+Treat the remaining UI proof gaps as a roadmap, not one giant slice. Broaden source coverage first, then routing, then preserved screenshots, then physical-device and TestFlight proof, then design a full regression suite. The five-lane shape that this roadmap converges on is defined in [UI Regression Plan](ui-regression-plan.md).
 
 Immediate queued slices:
 

@@ -1,0 +1,52 @@
+{
+  "slice_id": "owlory-ui-regression-suite-plan",
+  "status": "done",
+  "summary": "Doc-only planning slice. Created docs/workflows/ui-regression-plan.md as the canonical definition of five UI coverage lanes (smoke, regression, screenshot, device, TestFlight). Each lane records its trigger, target, scope, what it proves, what it does not prove, gating commands, and artifact location. The plan defines a promotion order, lane boundary cautions, and a deliberate cap at five lanes. Cross-references added in ui-testing-hygiene.md (hygiene rules sit under the plan), validation.md (named alongside PR and UI hygiene), and roadmap-status.md (the UI regression / snapshot row now points at the plan). No new tests, no smoke-suite changes, no product behavior changes.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-12/045409-owlory-ui-regression-suite-plan.md",
+    "automation/handoffs/20260512T045409Z-owlory-ui-regression-suite-plan.json",
+    "automation/queue/slices.json",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-suite-plan",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "running-app-smoke"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "UI coverage lane definitions",
+      "before": "UI proof lanes existed implicitly through the proof-level vocabulary (running-app-smoke, flow-verified, screenshot-verified, device-verified, testflight-verified) and through scattered guidance in ui-testing-hygiene.md and roadmap-status.md. No single doc described the boundary between the smoke suite, a future regression suite, screenshot proof, device proof, and TestFlight proof, or stated explicitly what each lane does not prove.",
+      "after": "docs/workflows/ui-regression-plan.md is the canonical definition. Each of the five lanes carries trigger, target, scope, proves/does-not-prove, gating commands, and artifact location. Promotion order is named. Lane boundary cautions call out the common confusions (smoke screenshot vs screenshot proof, regression run vs visual proof, device proof vs TestFlight proof, TestFlight install vs verified TestFlight build). ui-testing-hygiene.md, validation.md, and roadmap-status.md cross-reference the plan.",
+      "proof": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The plan names Lane 2's gating command as `make ui-regression`, which does not exist yet. The first wiring slice is `owlory-ui-regression-batch-1-today-continue` (already queued); until that slice ships, the command is documented intent rather than working infrastructure.",
+    "The plan caps the number of lanes at five. A future need that does not fit any lane could pressure this cap; the plan explicitly directs extension of the nearest lane rather than introducing a sixth. If that policy proves wrong it must be re-decided in a new slice, not silently bypassed.",
+    "The plan does not address localization-specific UI lanes (locale screenshot proof already lives under automation/proofs/app-localization-locale-screenshot-proof/). The locale screenshot pack is treated as a slice-specific instance of Lane 3 rather than a distinct lane; if locale coverage needs a separate gate, this is the place to extend.",
+    "Screenshot, device, and TestFlight lanes have at least one slice's worth of preserved evidence today but are not exhaustively covered. The plan does not claim broad coverage in any of those lanes; it only defines what coverage would look like."
+  ],
+  "recommended_next_slice": "owlory-ui-regression-batch-1-today-continue",
+  "recommended_next_reason": "The plan now defines what Lane 2 (regression suite) means. The next queued slice promotes Today Continue from smoke coverage to the first regression batch and wires up `make ui-regression`, exercising the lane that the plan currently describes only as documented intent.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-12T04:54:09Z"
+}
