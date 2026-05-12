@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -43,6 +43,17 @@ ui-smoke:
 
 ui-smoke-proof: ui-smoke
 	python3 automation/smoke/extract_ui_smoke_screenshots.py
+
+ui-regression:
+	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 16,OS=26.3.1}"; \
+	echo "Running Owlory UI regression batch on $$DESTINATION"; \
+	xcodebuild test \
+		-project owlory_xcode/Owlory.xcodeproj \
+		-scheme Owlory \
+		-configuration Debug \
+		-destination "$$DESTINATION" \
+		-derivedDataPath /tmp/owlory-ui-regression-derived-data \
+		-only-testing:OwloryUITests/TodayContinueRegression
 
 build-provenance:
 	./Tools/verify-build-provenance.sh

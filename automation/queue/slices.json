@@ -2290,7 +2290,7 @@
     {
       "slice_id": "owlory-ui-regression-batch-1-today-continue",
       "title": "First UI regression batch: Today Continue",
-      "status": "queued",
+      "status": "done",
       "priority": 155,
       "domain": "automation",
       "allowed_paths": [

@@ -23,6 +23,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
 - `make ui-smoke` - run the maintained focused XCUITest smoke path with isolated DerivedData.
+- `make ui-regression` - run the regression batch (Lane 2) with its own isolated DerivedData; not invoked by `make ui-smoke`.
 - `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
 Use [PR Hygiene](pr-hygiene.md) before opening or reviewing a branch. Use [UI Testing Hygiene](ui-testing-hygiene.md) before adding UI tests, preserving screenshot proof, or claiming running-app behavior. Use [UI Regression Plan](ui-regression-plan.md) to choose which UI coverage lane a new claim belongs in and which gating commands to run for that lane.

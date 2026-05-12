@@ -53,6 +53,22 @@ The command uses `/tmp/owlory-ui-smoke-derived-data` and runs only the maintaine
 OwloryUITests/OwloryUITests
 ```
 
+## Regression Batch
+
+The regression lane (Lane 2 in [UI Regression Plan](ui-regression-plan.md)) runs separately so the smoke loop stays fast:
+
+```bash
+make ui-regression
+```
+
+That command uses `/tmp/owlory-ui-regression-derived-data` and targets the regression class only:
+
+```text
+OwloryUITests/TodayContinueRegression
+```
+
+The first batch lives in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but is intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a Today/Continue refactor, or on demand — not on every PR.
+
 The app-side seed path is intentionally narrow:
 
 - `--owlory-ui-testing` marks the launch as harness-owned and suppresses notification authorization prompts.
