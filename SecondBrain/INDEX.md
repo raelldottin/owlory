@@ -2,6 +2,7 @@
 
 ## 2026-05-12
 
+- [owlory-ui-regression-suite-plan](sessions/2026-05-12/045409-owlory-ui-regression-suite-plan.md)
 - [owlory-release-provenance-stamp-gate-fix](sessions/2026-05-12/044933-owlory-release-provenance-stamp-gate-fix.md)
 
 ## 2026-05-11

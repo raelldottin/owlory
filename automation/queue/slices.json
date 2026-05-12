@@ -2262,7 +2262,7 @@
     {
       "slice_id": "owlory-ui-regression-suite-plan",
       "title": "Define what full Owlory UI regression coverage means",
-      "status": "queued",
+      "status": "done",
       "priority": 156,
       "domain": "automation",
       "allowed_paths": [
