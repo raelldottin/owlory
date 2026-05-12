@@ -82,6 +82,8 @@ Action affordances are separate from routing. The Continue Actions section above
 
 Continue row swipe-action accessibility identifiers follow the `today.continue.action.<action>.<sourceKind>.<UUID>` pattern: `done` and `add-to-focus` live on the leading edge (`continuePrimarySwipeActions`); `defer` and `drop` live on the trailing edge (`continueStatusSwipeActions`) and are only emitted when the Focus item is not already in that state. Add-to-Focus admission depends on `store.canAddContinueItemToFocus(item)` per the existing Continue Actions contract; this triage does not add UI smoke for Add-to-Focus because no current seed produces a row where it is exposed (the focus seed already has a Focus item).
 
+The maintained smoke (`OwloryUITests/OwloryUITests`, run via `make ui-smoke`) covers the matrix above as a fast PR-loop gate. The first regression batch (`OwloryUITests/TodayContinueRegression`, run via `make ui-regression`) runs the same coverage in a separate class with isolated DerivedData so the smoke loop stays fast and the regression lane can grow with edge cases without bloating PR-time tests. See [UI Regression Plan](../../workflows/ui-regression-plan.md) for the lane definitions.
+
 ## Artifact Lifecycle
 
 - Stop surfacing invalid artifacts at the projection boundary before migrating data. For Continue, the boundary is the source-composition/admission path that feeds `TodayContinuationRules`.

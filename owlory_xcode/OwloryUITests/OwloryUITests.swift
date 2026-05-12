@@ -401,3 +401,304 @@ final class OwloryUITests: XCTestCase {
         add(attachment)
     }
 }
+
+/// First UI regression batch defined by `docs/workflows/ui-regression-plan.md`
+/// Lane 2. Lives in the same `OwloryUITests` target as the maintained smoke
+/// class above but is excluded from `make ui-smoke` via
+/// `-only-testing:OwloryUITests/OwloryUITests`. The Makefile target
+/// `make ui-regression` targets this class with `-only-testing:OwloryUITests/
+/// TodayContinueRegression` and its own isolated DerivedData path so the smoke
+/// loop stays fast and the regression lane can grow without bloating the smoke.
+///
+/// Initial scope per `owlory-ui-regression-batch-1-today-continue`:
+///
+/// - source visibility for all six composer-backed Continue sources
+/// - source-derived routing for Home task, active Home protocol run,
+///   in-progress Writing note, due-today Training session (focusItem and
+///   carriedFocusItem routing are `N/A by contract`; both flow through the
+///   same handler exercised by the source-derived tests)
+/// - Continue actions exposed on focus rows: Done, Defer, Drop
+final class TodayContinueRegression: XCTestCase {
+    private let continueFixtureItemID = "9D215686-176C-4C13-936E-AB3092D62A96"
+    private let continueFixtureItemTitle = "Review seeded Continue item"
+    private let homeTaskContinueFixtureItemID = "4D890346-1DE3-4A1E-A55F-FBD97FD08D4E"
+    private let homeTaskContinueFixtureItemTitle = "Review seeded Home task"
+    private let homeProtocolRunContinueFixtureRunID = "C9B98DD8-9AA9-4D8C-B0F7-8E82CF280A5A"
+    private let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
+    private let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
+    private let dueTodayTrainingContinueFixtureSessionID = "B7E14C81-6D2A-4F3E-9C0B-5A8D2E1F4C9D"
+    private let dueTodayTrainingContinueFixtureTitle = "Review seeded Training session"
+    private let carriedForwardFocusContinueFixtureItemID = "A5B7C9D1-3E5F-4A9B-8D6F-0E2C4A6B8D0F"
+    private let carriedForwardFocusContinueFixtureTitle = "Review seeded carried Focus"
+    private let inProgressWritingContinueFixtureNoteID = "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B"
+    private let inProgressWritingContinueFixtureTitle = "Review seeded Writing note"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    // MARK: - Source visibility
+
+    func testSeededFocusItemSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-today-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.focusItem.\(continueFixtureItemID)",
+            title: continueFixtureItemTitle
+        )
+    }
+
+    func testSeededHomeTaskSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.homeTask.\(homeTaskContinueFixtureItemID)",
+            title: homeTaskContinueFixtureItemTitle
+        )
+    }
+
+    func testSeededHomeProtocolRunSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-home-protocol-run-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.homeProtocolRun.\(homeProtocolRunContinueFixtureRunID)",
+            title: homeProtocolRunContinueFixtureTitle
+        )
+    }
+
+    func testSeededDueTodayTrainingSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-due-today-training-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.trainingSession.\(dueTodayTrainingContinueFixtureSessionID)",
+            title: dueTodayTrainingContinueFixtureTitle
+        )
+    }
+
+    func testSeededCarriedForwardFocusSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-carried-forward-focus-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.carriedFocusItem.\(carriedForwardFocusContinueFixtureItemID)",
+            title: carriedForwardFocusContinueFixtureTitle
+        )
+    }
+
+    func testSeededInProgressWritingSourceIsVisible() throws {
+        launch(arguments: ["--owlory-ui-seed-in-progress-writing-continue-item"])
+        assertTodayDashboardVisible()
+        assertContinueSectionHeaderVisible()
+        assertContinueRowVisible(
+            identifier: "today.continue.item.writingNote.\(inProgressWritingContinueFixtureNoteID)",
+            title: inProgressWritingContinueFixtureTitle
+        )
+    }
+
+    // MARK: - Source-derived routing
+
+    func testSeededHomeTaskRowRoutesToHome() throws {
+        launch(arguments: ["--owlory-ui-seed-home-task-continue-item"])
+        assertTodayDashboardVisible()
+
+        let rowIdentifier = "today.continue.item.homeTask.\(homeTaskContinueFixtureItemID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded Home task Continue row to render before routing."
+        )
+
+        row.tap()
+
+        let highlightIdentifier = "home.task.item.\(homeTaskContinueFixtureItemID)"
+        XCTAssertTrue(
+            app.buttons[highlightIdentifier].waitForExistence(timeout: 10),
+            "Expected the Home tab to surface the seeded task after tapping the Continue row."
+        )
+        XCTAssertTrue(app.staticTexts[homeTaskContinueFixtureItemTitle].exists)
+    }
+
+    func testSeededHomeProtocolRunRowRoutesToActiveRunSheet() throws {
+        launch(arguments: ["--owlory-ui-seed-home-protocol-run-continue-item"])
+        assertTodayDashboardVisible()
+
+        let rowIdentifier = "today.continue.item.homeProtocolRun.\(homeProtocolRunContinueFixtureRunID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded protocol run Continue row to render before routing."
+        )
+
+        row.tap()
+
+        let sheetIdentifier = "home.protocolRun.sheet.\(homeProtocolRunContinueFixtureRunID)"
+        XCTAssertTrue(
+            app.staticTexts[sheetIdentifier].waitForExistence(timeout: 10),
+            "Expected the active protocol-run sheet to present after tapping the Continue row."
+        )
+        XCTAssertTrue(app.navigationBars[homeProtocolRunContinueFixtureTitle].exists)
+        XCTAssertTrue(app.staticTexts[homeProtocolRunContinueFixtureStepTitle].exists)
+    }
+
+    func testSeededDueTodayTrainingRowRoutesToTrain() throws {
+        launch(arguments: ["--owlory-ui-seed-due-today-training-continue-item"])
+        assertTodayDashboardVisible()
+
+        let rowIdentifier = "today.continue.item.trainingSession.\(dueTodayTrainingContinueFixtureSessionID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded Training session Continue row to render before routing."
+        )
+
+        row.tap()
+
+        let highlightIdentifier = "train.session.item.\(dueTodayTrainingContinueFixtureSessionID)"
+        XCTAssertTrue(
+            app.otherElements[highlightIdentifier].waitForExistence(timeout: 10),
+            "Expected the Train tab to surface the seeded session after tapping the Continue row."
+        )
+        XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+    }
+
+    func testSeededInProgressWritingRowRoutesToWriteNoteDetail() throws {
+        launch(arguments: ["--owlory-ui-seed-in-progress-writing-continue-item"])
+        assertTodayDashboardVisible()
+
+        let rowIdentifier = "today.continue.item.writingNote.\(inProgressWritingContinueFixtureNoteID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded Writing note Continue row to render before routing."
+        )
+
+        row.tap()
+
+        let detailIdentifier = "write.note.detail.\(inProgressWritingContinueFixtureNoteID)"
+        let detail = app
+            .descendants(matching: .any)
+            .matching(identifier: detailIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            detail.waitForExistence(timeout: 10),
+            "Expected the Write note detail sheet to auto-present after tapping the Continue row."
+        )
+    }
+
+    // MARK: - Focus row actions
+
+    func testSeededFocusRowExposesDoneAction() throws {
+        let rowIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let row = launchAndLocateFocusRow(identifier: rowIdentifier)
+
+        row.swipeRight()
+
+        let doneIdentifier = "today.continue.action.done.focusItem.\(continueFixtureItemID)"
+        let doneButton = app.buttons[doneIdentifier]
+        XCTAssertTrue(
+            doneButton.waitForExistence(timeout: 10),
+            "Expected the Done leading-edge swipe action on a Focus-backed Continue row."
+        )
+
+        doneButton.tap()
+        waitForRowToDisappear(row)
+    }
+
+    func testSeededFocusRowExposesDeferAction() throws {
+        let rowIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let row = launchAndLocateFocusRow(identifier: rowIdentifier)
+
+        row.swipeLeft()
+
+        let deferIdentifier = "today.continue.action.defer.focusItem.\(continueFixtureItemID)"
+        let deferButton = app.buttons[deferIdentifier]
+        XCTAssertTrue(
+            deferButton.waitForExistence(timeout: 10),
+            "Expected the Defer trailing-edge swipe action on a Focus-backed Continue row."
+        )
+
+        deferButton.tap()
+        waitForRowToDisappear(row)
+    }
+
+    func testSeededFocusRowExposesDropAction() throws {
+        let rowIdentifier = "today.continue.item.focusItem.\(continueFixtureItemID)"
+        let row = launchAndLocateFocusRow(identifier: rowIdentifier)
+
+        row.swipeLeft()
+
+        let dropIdentifier = "today.continue.action.drop.focusItem.\(continueFixtureItemID)"
+        let dropButton = app.buttons[dropIdentifier]
+        XCTAssertTrue(
+            dropButton.waitForExistence(timeout: 10),
+            "Expected the Drop trailing-edge swipe action on a Focus-backed Continue row."
+        )
+
+        dropButton.tap()
+        waitForRowToDisappear(row)
+    }
+
+    // MARK: - Helpers
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+
+    private func launchAndLocateFocusRow(identifier: String) -> XCUIElement {
+        launch(arguments: ["--owlory-ui-seed-today-continue-item"])
+        assertTodayDashboardVisible()
+        let row = app.buttons[identifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded Focus-backed Continue row to render before exercising swipe actions."
+        )
+        return row
+    }
+
+    private func assertTodayDashboardVisible() {
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to launch on Today's dashboard surface."
+        )
+    }
+
+    private func assertContinueSectionHeaderVisible() {
+        let continueHeader = app.staticTexts["today.continue.header"]
+        XCTAssertTrue(
+            continueHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to render the Continue section header."
+        )
+    }
+
+    private func assertContinueRowVisible(identifier: String, title: String) {
+        XCTAssertTrue(
+            app.buttons[identifier].waitForExistence(timeout: 10),
+            "Expected the seeded Continue row '\(identifier)' to render."
+        )
+        XCTAssertTrue(
+            app.staticTexts[title].exists,
+            "Expected the seeded Continue row title '\(title)' to be present."
+        )
+    }
+
+    private func waitForRowToDisappear(_ row: XCUIElement) {
+        let removal = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: row,
+            handler: nil
+        )
+        wait(for: [removal], timeout: 10)
+    }
+}

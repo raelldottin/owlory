@@ -59,8 +59,8 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is queued behind `owlory-ui-regression-batch-1-today-continue`; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable.
-- The immediate UI proof queue continues to broaden source and routing smoke before adding new regression batches. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
+- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression`, with the first batch covering Today Continue source visibility, source-derived routing, and Focus row actions; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable.
+- The immediate UI proof queue continues to broaden source and routing smoke and to grow the regression batch with edge cases when new product surfaces ship. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
 ## Suggested Order

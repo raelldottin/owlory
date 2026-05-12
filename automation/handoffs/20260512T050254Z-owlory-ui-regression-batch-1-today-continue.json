@@ -1,0 +1,71 @@
+{
+  "slice_id": "owlory-ui-regression-batch-1-today-continue",
+  "status": "done",
+  "summary": "Wired Lane 2 of the UI Regression Plan. Added a new XCUITest class TodayContinueRegression alongside the existing OwloryUITests smoke class in owlory_xcode/OwloryUITests/OwloryUITests.swift, plus a new Makefile target make ui-regression that runs only that class against /tmp/owlory-ui-regression-derived-data. The smoke target is unchanged and still scopes to -only-testing:OwloryUITests/OwloryUITests, so the regression batch does not run on every `make ui-smoke`. First batch covers all six Continue source visibility paths, four source-derived routing paths (Home task, active Home protocol run, due-today Training, in-progress Writing), and three Focus row actions (Done, Defer, Drop). Initial coverage overlaps with the smoke set by design; the lane is the deliverable and future slices grow the regression class with edge cases.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-12/050254-owlory-ui-regression-batch-1-today-continue.md",
+    "automation/handoffs/20260512T050254Z-owlory-ui-regression-batch-1-today-continue.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/today.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-1-today-continue",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make ui-smoke",
+    "make ui-regression",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "UI regression lane wiring",
+      "before": "Lane 2 (regression suite) was defined in docs/workflows/ui-regression-plan.md but `make ui-regression` was documented intent only; no XCUITest class existed for the regression batch.",
+      "after": "`make ui-regression` is wired and runs OwloryUITests/TodayContinueRegression against /tmp/owlory-ui-regression-derived-data. The regression class lives in the same file as the smoke class (because the Xcode project's pbxproj is outside this slice's allowed_paths and uses traditional PBXGroup file references rather than synchronized folders); the `-only-testing` filter keeps the smoke and regression invocations independent. Smoke command unchanged.",
+      "proof": [
+        "Makefile",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "make ui-regression",
+        "make ui-smoke"
+      ]
+    },
+    {
+      "contract": "Today Continue UI coverage classification",
+      "before": "docs/product/domains/today.md and docs/workflows/roadmap-status.md described Continue smoke coverage and the regression lane as queued behind owlory-ui-regression-batch-1-today-continue.",
+      "after": "today.md records that the regression batch exists in parallel to the smoke, with the same matrix coverage. roadmap-status.md's UI regression / snapshot row now notes the wired make ui-regression target and the first batch's scope. ui-testing-hygiene.md gains a Regression Batch section pointing at the new command. The five-lane plan is amended so Lane 2's gating-commands paragraph names `make ui-regression` as wired (not documented intent).",
+      "proof": [
+        "docs/product/domains/today.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The regression class lives in the same .swift file as the smoke class because Xcode's project.pbxproj is outside this slice's allowed_paths and the project uses traditional PBXGroup file references (not synchronized folders). A future slice that owns the pbxproj can split the regression class into its own file or its own test target without changing the make target or the -only-testing filter, since both match by class name.",
+    "Initial regression coverage overlaps with the smoke set by design (six visibility tests, four routing tests, three Focus row actions). The lane is the deliverable; future slices grow the regression class with edge cases (mixed Continue lists with multiple seeded sources, Continue cap behavior, error paths). Until that growth happens, `make ui-regression` and `make ui-smoke` provide near-identical assertions and the regression batch's distinct value comes only from running on a different cadence.",
+    "Routing and visibility regression for `focusItem` and `carriedFocusItem` remain N/A by contract (covered transitively through the source-derived routing and action tests per the deferred-coverage slice classification). If a future surface decouples those code paths, this regression class must be extended explicitly rather than relying on the transitive coverage claim.",
+    "No screenshot/device/TestFlight proof is claimed by this slice. Those lanes are owned by future slices per the UI Regression Plan."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-12T05:02:54Z"
+}

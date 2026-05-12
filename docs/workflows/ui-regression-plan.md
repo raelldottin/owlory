@@ -41,8 +41,8 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` (not yet wired; the first wiring slice is `owlory-ui-regression-batch-1-today-continue`).
-- `make ui-regression DOMAIN=<domain>` is the intended per-domain narrowing shape.
+- `make ui-regression` runs the regression class with `-only-testing:OwloryUITests/TodayContinueRegression` against `/tmp/owlory-ui-regression-derived-data`. Wired by `owlory-ui-regression-batch-1-today-continue`; the first batch covers Today Continue source visibility, source-derived routing, and Focus row actions.
+- `make ui-regression DOMAIN=<domain>` is the intended per-domain narrowing shape; not yet wired (a future batch can introduce it when more than one domain has a regression class).
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
 
