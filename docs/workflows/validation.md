@@ -156,6 +156,29 @@ Locale smoke proves the built app bundle contains the requested locale resources
 
 Repo-managed screenshot proof for the representative locale launch surfaces lives in `automation/proofs/app-localization-locale-screenshot-proof/`. Use that artifact only for launch-surface screenshot evidence; it does not expand the claim to translation quality or full layout review.
 
+### Manual Per-App Language Testing
+
+Use this path for manual device or TestFlight localization review. Do not use it for automated locale smoke; automation should keep using the smoke runner's `--locale` / `--apple-locale` launch arguments, which map to `-AppleLanguages` and `-AppleLocale`.
+
+On newer iOS versions, a tester can often switch only Owlory's language:
+
+1. Open **Settings**.
+2. Tap **Apps**.
+3. Tap **Owlory**.
+4. Tap **Language** or **Preferred Language**.
+5. Select the target language, such as **German / Deutsch**.
+6. Close and reopen Owlory.
+
+The app-language option appears only when iOS sees multiple supported or preferred languages for the app. If **Language** does not appear:
+
+1. Go to **Settings > General > Language & Region**.
+2. Tap **Add Language**.
+3. Select the target language, such as **German / Deutsch**.
+4. Keep the current iPhone language as primary unless testing the full-device language path.
+5. Return to **Settings > Apps > Owlory > Language** and select the target language.
+
+Apple documents the fallback system-language path in [Change the language on your iPhone or iPad](https://support.apple.com/en-us/109358), including **Settings > General > Language & Region > Add Language**. If the per-app option still does not appear, the installed build may not expose multiple localized resources to iOS, or the locale resources may not be packaged correctly.
+
 ## UI Testing Hygiene
 
 Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for deterministic Today smoke coverage. It is not a broad UI regression suite.
