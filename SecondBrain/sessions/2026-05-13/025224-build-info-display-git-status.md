@@ -27,25 +27,35 @@ Passed:
 - `python3 automation/context/build_context.py --slice-id build-info-display-git-status`
 - `python3 automation/supervisor/run_next.py --dry-run`
 - `make architecture`
+- `xcodebuild -downloadPlatform iOS`
+- `xcrun simctl runtime match set iphoneos26.5 23F77 --sdkBuild 23F73`
+- `xcrun simctl runtime scan-and-mount`
+- `xcrun simctl create 'iPhone 16 iOS 26.5' com.apple.CoreSimulator.SimDeviceType.iPhone-16 com.apple.CoreSimulator.SimRuntime.iOS-26-5`
+- `OWLORY_XCODE_DESTINATION='id=BE8450CB-77B6-4A56-81EA-9A1F95C22042' make test-domain DOMAIN=runtime`
 - `make build-provenance`
 - `make automation-check`
 - `git diff --check`
 
-Blocked:
+Recovered:
 
-- `make test-domain DOMAIN=runtime`
-- `OWLORY_XCODE_DESTINATION='id=93831D66-8855-467D-8991-81886B30A57F' make test-domain DOMAIN=runtime`
-- `xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-build-info-display-build CODE_SIGNING_ALLOWED=NO`
-- `xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS' -derivedDataPath /tmp/owlory-build-info-display-ios-build CODE_SIGNING_ALLOWED=NO`
-
-Blocker: Xcode 26.5 reports no eligible simulator destination because the iOS 26.5 runtime is not installed. `simctl` can boot the iPhone 16 iOS 26.3.1 simulator, but `xcodebuild` still refuses both the named destination and explicit device id.
+- Initial `make test-domain DOMAIN=runtime` failed because Xcode 26.5 could not find an eligible simulator destination for the repo default `iPhone 16 / iOS 26.3.1`.
+- `xcodebuild -downloadPlatform iOS` installed the matching iOS 26.5 runtime, but CoreSimulator initially reported a duplicate disk image.
+- `xcrun simctl runtime match set iphoneos26.5 23F77 --sdkBuild 23F73` mapped Xcode's iOS 26.5 SDK build to the installed runtime build.
+- `xcrun simctl runtime scan-and-mount` registered the runtime.
+- A new compatible simulator, `iPhone 16 iOS 26.5` (`BE8450CB-77B6-4A56-81EA-9A1F95C22042`), was created and selected with `OWLORY_XCODE_DESTINATION`.
 
 ## Residual Risk
 
-- The slice cannot claim `domain-tested` or `build-tested` proof until `make test-domain DOMAIN=runtime` runs in an Xcode/runtime-compatible environment.
+- The slice now claims `domain-tested` proof. It does not claim standalone `build-tested`, running-app, screenshot, device, or TestFlight proof.
+- The repo default validation destination still names `iPhone 16 / iOS 26.3.1`; this machine now has a compatible iOS 26.5 simulator selected via `OWLORY_XCODE_DESTINATION`.
+- CoreSimulator still has an unusable duplicate iOS 26.5 disk-image record from the first install attempt. It did not block the rerun.
 - `BuildInfo.isReleaseable` was intentionally not changed; release provenance policy still follows the existing commit-suffix/missing-ref rule.
 - No TestFlight proof is claimed.
 
 ## Next
 
-Clean stop. Re-run runtime domain validation after installing the iOS 26.5 simulator runtime or switching Xcode to a matching installed runtime.
+Clean stop. If future agents need the runtime domain lane on this machine, use:
+
+```bash
+OWLORY_XCODE_DESTINATION='id=BE8450CB-77B6-4A56-81EA-9A1F95C22042' make test-domain DOMAIN=runtime
+```
