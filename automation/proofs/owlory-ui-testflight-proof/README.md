@@ -52,6 +52,18 @@ Per the slice contract, `testflight-verified` requires a TestFlight Build Info t
 
 No Continue route, action, screenshot, or behavior proof from this TestFlight install. The `device-verified` proof lane from [`owlory-ui-device-proof/`](../owlory-ui-device-proof/) remains the highest claim for the Continue surfaces; `testflight-verified` stays in `missing_proof_levels` until the provenance gate can be passed cleanly.
 
+## 2026-05-13 Retry Gate Record
+
+The retry attempt in [`20260513T142117Z-retry/`](20260513T142117Z-retry/) also stopped before Continue capture. The paired iPhone was reachable, but `xcrun devicectl device info apps` still reported installed `com.raelldottin.owlory` as version `0.2.0`, bundle version `20260417081911`.
+
+Local clean `main` at `d0513a41a3e438a76494f43e5f4094a6983ad75e` reports committed build `20260417081904`. Comparing the installed bundle version against local committed source fails:
+
+```text
+error: expected build '20260417081911' but Xcode CURRENT_PROJECT_VERSION is '20260417081904'
+```
+
+No Build Info screenshot or Continue surface was captured in this retry. The likely next action is to install the fresh clean TestFlight build on the paired iPhone, then rerun the Build Info gate.
+
 ## Follow-up
 
 `owlory-release-provenance-stamp-audit` (queued; see slices.json). The audit slice must:

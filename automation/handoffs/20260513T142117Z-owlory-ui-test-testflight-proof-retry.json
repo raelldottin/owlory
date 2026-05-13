@@ -1,0 +1,54 @@
+{
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "summary": "Retried the TestFlight proof gate after the user indicated a fresh clean TestFlight build exists, but the paired iPhone still reports the installed Owlory app as bundleVersion 20260417081911. Local clean main is d0513a41a3e438a76494f43e5f4094a6983ad75e with committed build 20260417081904, so the gate stops before Build Info screenshot or Continue capture.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/102117-owlory-ui-test-testflight-proof-retry.md",
+    "automation/handoffs/20260513T142117Z-owlory-ui-test-testflight-proof-retry.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T142117Z-retry/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T142117Z-retry/manifest.json",
+    "automation/proofs/owlory-ui-testflight-proof/README.md",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof-retry",
+    "make build-provenance",
+    "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps.json",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "./Tools/verify-build-provenance.sh --expected-build 20260417081911 --expected-commit d0513a41a3e438a76494f43e5f4094a6983ad75e"
+  ],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight Build Info gate",
+      "before": "The queue entry was blocked until a fresh clean TestFlight build existed and Build Info showed matching commit/build provenance with clean GitStatus.",
+      "after": "The retry stopped before Build Info capture because the installed app metadata on the paired iPhone still reports bundleVersion 20260417081911, while local clean main reports committed build 20260417081904.",
+      "proof": [
+        "automation/proofs/owlory-ui-testflight-proof/20260513T142117Z-retry/README.md",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T142117Z-retry/manifest.json",
+        "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory",
+        "./Tools/verify-build-provenance.sh --expected-build 20260417081911 --expected-commit d0513a41a3e438a76494f43e5f4094a6983ad75e"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "A fresh clean TestFlight build may exist in App Store Connect, but it is not the installed Owlory binary observed through devicectl on the paired iPhone.",
+    "No TestFlight Build Info screenshot was captured in this retry.",
+    "No natural-data Continue surface was exercised.",
+    "TestFlight proof retry remains blocked until the installed app's bundle version and Build Info metadata match committed source."
+  ],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof-retry",
+  "recommended_next_reason": "Retry only after the fresh clean TestFlight build is installed on the paired iPhone and its Build Info gate can be evaluated.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T14:21:17Z"
+}
