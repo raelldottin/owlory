@@ -65,7 +65,7 @@
   "recommended_next_slice": "",
   "recommended_next_reason": "",
   "repo_clean_status": "clean",
-  "git_mirror_status": "not-checked",
+  "git_mirror_status": "mirrored",
   "dirty_paths_outside_scope": [],
   "timestamp": "2026-05-12T05:02:54Z"
 }
