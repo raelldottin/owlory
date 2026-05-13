@@ -78,6 +78,12 @@ error: expected build '20260417081912' but Xcode CURRENT_PROJECT_VERSION is '202
 
 No Continue surface was captured in this retry. A future TestFlight proof attempt must start from an uploaded build whose bundle version matches committed source.
 
+## 2026-05-13 Third Retry Gate Record
+
+The third retry attempt in [`20260513T173000Z-retry/`](20260513T173000Z-retry/) preserved Build Info, TestFlight listing, and Today Continue screenshots. TestFlight listed Owlory `0.2.0 (20260513172951)`, but Build Info showed `Git status: dirty` and a source stamp of `de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty`.
+
+The stamped base commit's committed `project.pbxproj` still has `CURRENT_PROJECT_VERSION = 20260417081904`, so the installed build number was produced from uncommitted local state. The Continue screenshot in that folder is context only; no `testflight-verified` Continue proof is claimed.
+
 ## Follow-up
 
 `owlory-release-provenance-stamp-audit` (queued; see slices.json). The audit slice must:
