@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-release-clean-testflight-build-prep](sessions/2026-05-13/095701-owlory-release-clean-testflight-build-prep.md)
 - [harness-blocked-slice-unblocker-policy](sessions/2026-05-13/094648-harness-blocked-slice-unblocker-policy.md)
 - [clean-stop-completion-check](sessions/2026-05-13/082520-clean-stop-completion-check.md)
 - [xcode-default-destination-ios-26-5](sessions/2026-05-13/045127-xcode-default-destination-ios-26-5.md)

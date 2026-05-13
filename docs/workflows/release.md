@@ -53,6 +53,37 @@ Keep TestFlight and debug data separate by default. Do not point a debug build a
 
 The clean-tree gate alone is necessary but not sufficient. `verify-build-provenance.sh --require-clean` also asserts that the on-disk `CURRENT_PROJECT_VERSION` matches the committed value at `HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj`. The verifier reports `Committed build number: matches HEAD` on success and exits non-zero with `pbxproj CURRENT_PROJECT_VERSION '...' is not committed at HEAD` when they diverge. This catches the failure mode where `./Tools/set-build-number.sh --auto` is run before archive without committing the bump, producing a TestFlight build whose `CFBundleVersion` is not reproducible from any committed pbxproj state on any branch.
 
+## Clean TestFlight Build Prep
+
+When TestFlight proof is blocked by missing fresh-build provenance, run a preparation slice rather than the blocked proof slice. The current prep artifact lives at `automation/proofs/owlory-release-clean-testflight-build-prep/`.
+
+The prep path is:
+
+```bash
+git status --short --untracked-files=all
+git rev-list --left-right --count HEAD...@{u}
+make build-provenance
+make release-check
+```
+
+The required local gate output is:
+
+```text
+Committed build number: matches HEAD
+Working tree: clean
+Releaseable: yes
+```
+
+This only proves the local checkout is ready to archive. It does not prove that an archive was uploaded, that TestFlight installed the same build, or that any TestFlight UI behavior was exercised.
+
+After uploading and installing a fresh TestFlight build, open Build Info and record version, build, full commit, GitStatus, configuration, and rollback checkout. Then compare the installed binary to the local source:
+
+```bash
+./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>
+```
+
+Only unblock TestFlight proof retry after that Build Info gate passes. If GitStatus is dirty or unavailable, or if build/commit provenance does not match committed source, keep the proof slice blocked and do not capture Continue surfaces.
+
 ## TestFlight Diagnosis
 
 1. Open the Build Info sheet in the TestFlight build being diagnosed.
