@@ -24,6 +24,7 @@ final class BuildInfoTests: XCTestCase {
             gitCommitFull: "deadbeef1234567890deadbeef1234567890abcd",
             gitBranch: "main",
             gitTag: "v0.2.0",
+            gitStatus: "clean",
             buildDate: "2026-04-15T08:00:00Z",
             buildConfiguration: "Release",
             bundleIdentifier: "com.raelldottin.owlory",
@@ -35,10 +36,41 @@ final class BuildInfoTests: XCTestCase {
         XCTAssertTrue(report.contains("Commit: deadbeef1234 on main"))
         XCTAssertTrue(report.contains("Full commit: deadbeef1234567890deadbeef1234567890abcd"))
         XCTAssertTrue(report.contains("Tag: v0.2.0"))
+        XCTAssertTrue(report.contains("Git status: clean"))
         XCTAssertTrue(report.contains("Rollback: git checkout deadbeef1234567890deadbeef1234567890abcd"))
         XCTAssertTrue(report.contains("Built:  2026-04-15T08:00:00Z [Release]"))
         XCTAssertTrue(report.contains("Bundle: com.raelldottin.owlory"))
         XCTAssertTrue(report.contains("Build number source: Xcode CURRENT_PROJECT_VERSION"))
+    }
+
+    func test_initFromBundle_readsStampedGitStatus() throws {
+        let bundleURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("BuildInfoTests-\(UUID().uuidString)")
+            .appendingPathExtension("bundle")
+        try FileManager.default.createDirectory(at: bundleURL, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: bundleURL) }
+
+        let plist: [String: String] = [
+            "CFBundleIdentifier": "com.raelldottin.owlory.tests",
+            "CFBundlePackageType": "BNDL",
+            "CFBundleShortVersionString": "1.0.0",
+            "CFBundleVersion": "99",
+            "GitCommit": "abc123def456",
+            "GitCommitFull": "abc123def456abc123def456abc123def456abc1",
+            "GitBranch": "main",
+            "GitStatus": "clean"
+        ]
+        let data = try PropertyListSerialization.data(
+            fromPropertyList: plist,
+            format: .xml,
+            options: 0
+        )
+        try data.write(to: bundleURL.appendingPathComponent("Info.plist"))
+
+        let bundle = try XCTUnwrap(Bundle(url: bundleURL))
+        let info = BuildInfo(bundle: bundle)
+
+        XCTAssertEqual(info.gitStatus, "clean")
     }
 
     func test_rollbackGitReference_prefersFullCommitAndStripsDirtySuffix() {
@@ -122,5 +154,6 @@ final class BuildInfoTests: XCTestCase {
         // Custom keys are not stamped into the test bundle.
         XCTAssertEqual(info.gitCommit, "unknown")
         XCTAssertEqual(info.gitBranch, "unknown")
+        XCTAssertEqual(info.gitStatus, "unavailable")
     }
 }

@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [build-info-display-git-status](sessions/2026-05-13/025224-build-info-display-git-status.md)
 - [queue-parked-proof-and-localization-slices](sessions/2026-05-13/023215-queue-parked-proof-and-localization-slices.md)
 - [ui-simulator-validation-recovery](sessions/2026-05-13/022554-ui-simulator-validation-recovery.md)
 

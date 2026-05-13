@@ -30,6 +30,11 @@ struct BuildInfo: Equatable {
     /// output. Useful when mapping TestFlight builds back to release tags.
     let gitTag: String
 
+    /// Direct stamped git worktree status from archive/build time. This is
+    /// intentionally shown separately from commit suffixes so release diagnosis
+    /// does not have to infer clean/dirty state from presentation strings.
+    let gitStatus: String
+
     /// ISO 8601 UTC timestamp of when the stamp script ran (≈ archive time).
     let buildDate: String
 
@@ -57,6 +62,7 @@ struct BuildInfo: Equatable {
             gitCommitFull: (info["GitCommitFull"] as? String) ?? (info["GitCommit"] as? String) ?? "unknown",
             gitBranch: (info["GitBranch"] as? String) ?? "unknown",
             gitTag: (info["GitTag"] as? String) ?? "",
+            gitStatus: (info["GitStatus"] as? String) ?? "unavailable",
             buildDate: (info["BuildDate"] as? String) ?? "",
             buildConfiguration: (info["BuildConfiguration"] as? String) ?? "",
             bundleIdentifier: (info["CFBundleIdentifier"] as? String) ?? "",
@@ -71,6 +77,7 @@ struct BuildInfo: Equatable {
         gitCommitFull: String = "",
         gitBranch: String,
         gitTag: String = "",
+        gitStatus: String = "unavailable",
         buildDate: String,
         buildConfiguration: String,
         bundleIdentifier: String,
@@ -82,6 +89,8 @@ struct BuildInfo: Equatable {
         self.gitCommitFull = gitCommitFull.isEmpty ? gitCommit : gitCommitFull
         self.gitBranch = gitBranch
         self.gitTag = gitTag
+        let normalizedGitStatus = gitStatus.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.gitStatus = normalizedGitStatus.isEmpty ? "unavailable" : normalizedGitStatus
         self.buildDate = buildDate
         self.buildConfiguration = buildConfiguration
         self.bundleIdentifier = bundleIdentifier
@@ -118,6 +127,7 @@ struct BuildInfo: Equatable {
         if !gitTag.isEmpty {
             lines.append("Tag: \(gitTag)")
         }
+        lines.append("Git status: \(gitStatus)")
         if !isMissingGitReference(rollbackGitReference) {
             lines.append("Rollback: git checkout \(rollbackGitReference)")
         }
