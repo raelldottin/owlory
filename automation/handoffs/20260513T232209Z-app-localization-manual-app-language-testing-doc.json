@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "slice_id": "app-localization-manual-app-language-testing-doc",
+  "status": "done",
+  "proof_level": "doc-only",
+  "completed_at": "2026-05-13T23:22:09Z",
+  "summary": "Documented manual per-app language testing for newer iOS while preserving the boundary that automated locale smoke uses launch arguments. Added Settings > Apps > Owlory > Language instructions, fallback through Settings > General > Language & Region > Add Language, and explicit manual/TestFlight-only scope.",
+  "files_touched": [
+    "docs/workflows/validation.md",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260513T232209Z-app-localization-manual-app-language-testing-doc.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/192209-app-localization-manual-app-language-testing-doc.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-manual-app-language-testing-doc",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260513T232209Z-app-localization-manual-app-language-testing-doc.json",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check",
+    "web.open https://support.apple.com/en-us/109358"
+  ],
+  "validations_failed": [],
+  "contract_status_changes": [
+    {
+      "contract": "Localization manual testing workflow",
+      "before": "Docs described automated locale launch smoke but did not explain manual per-app language switching for TestFlight/device review.",
+      "after": "Docs distinguish manual/TestFlight per-app language testing from deterministic automated locale smoke.",
+      "proof": [
+        "docs/workflows/validation.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Manual Settings-based language switching depends on the installed iOS build and whether iOS exposes multiple supported app languages.",
+    "This slice does not prove translation quality, layout correctness, or packaged-resource behavior."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "",
+  "next_recommended_reason": "Clean stop is valid unless localization review or UI regression expansion becomes active.",
+  "source_reference": {
+    "title": "Apple Support: Change the language on your iPhone or iPad",
+    "url": "https://support.apple.com/en-us/109358",
+    "retrieved_at": "2026-05-13T23:22:09Z"
+  }
+}

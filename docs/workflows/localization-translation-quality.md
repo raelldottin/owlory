@@ -126,3 +126,21 @@ git diff --check
 ```
 
 Translation replacement slices should add the affected locale smoke command and screenshot proof when the changed keys affect high-visibility launch or navigation surfaces.
+
+## Manual Device Review
+
+For TestFlight or physical-device translation review, testers may switch only Owlory's app language instead of changing the whole phone:
+
+```text
+Settings > Apps > Owlory > Language
+```
+
+If the Owlory language picker does not appear, add the target language first:
+
+```text
+Settings > General > Language & Region > Add Language
+```
+
+Keep the current iPhone language as primary unless the slice is explicitly testing full-device language behavior. Then return to Owlory's per-app language setting, select the target language, close Owlory, and reopen it.
+
+Use this only for manual/TestFlight review. Automated localization smoke should continue using `python3 automation/smoke/running_app_smoke.py --locale <locale>` and launch arguments, not the Settings app.

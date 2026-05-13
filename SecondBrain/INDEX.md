@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [app-localization-manual-app-language-testing-doc](sessions/2026-05-13/192209-app-localization-manual-app-language-testing-doc.md)
 - [owlory-ui-testflight-proof](sessions/2026-05-13/170309-owlory-ui-testflight-proof.md)
 - [release-discipline-preflight-and-hooks](sessions/2026-05-13/164212-release-discipline-preflight-and-hooks.md)
 - [queue-release-discipline-preflight-and-hooks](sessions/2026-05-13/163413-queue-release-discipline-preflight-and-hooks.md)
