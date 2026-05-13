@@ -81,6 +81,7 @@ echo "  6. The domain/workflow doc for the current task"
 echo
 echo "Validation Shortcuts"
 echo "  make handoff"
+echo "  make clean-stop"
 echo "  make drift-report"
 echo "  make review-preflight"
 echo "  make architecture"

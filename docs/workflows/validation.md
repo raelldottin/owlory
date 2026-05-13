@@ -10,6 +10,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 
 - `make architecture` - run structural checks only.
 - `make handoff` - print current repo state, read order, dirty paths, and recent SecondBrain entries.
+- `make clean-stop` - prove the queue has no open actionable slices, Git is clean/mirrored, and parked slices have entry conditions.
 - `make drift-report` - classify root clutter and legacy docs before cleanup.
 - `make clean-system-metadata` - remove only obvious OS metadata files listed in the drift-control policy.
 - `make verify-app-icons` - prove the shipped app-icon catalog and classify generated icon archives/folders.
@@ -43,6 +44,18 @@ Missing/deferred: UI proof for large Dynamic Type Continue rows
 Proof level should name the strongest evidence currently available using the automation ladder: `doc-only`, `domain-tested`, `build-tested`, `running-app-smoke`, `flow-verified`, `screenshot-verified`, `device-verified`, or `testflight-verified`. Do not call a contract `Implemented` unless its proof level points to live code paths and a repeatable validation command.
 
 Automation handoffs must also preserve review evidence: `contract_status_changes`, `residual_risks`, `repo_clean_status`, and `git_mirror_status`. Treat those fields as the reviewable claim surface for what changed, what remains unproven, and whether the local repo state was clean or mirrored at handoff time.
+
+## Clean Stop
+
+Use `make clean-stop` when deciding whether all currently actionable work is complete. A clean repo alone is not enough; a clean queue alone is not enough.
+
+The command checks three levels:
+
+- queue state: no `queued`, `in_progress`, or future `ready` slices remain
+- Git/repo state: `git status --short --untracked-files=all` is empty and `HEAD...@{u}` is `0 0`
+- proof/parking-lot state: remaining `blocked` or `deferred` slices have explicit `entry_condition` values
+
+This is a read-only completion gate. If it fails, use its remediation text instead of guessing: finish or park open queue work, commit/push local changes, or add an entry condition to parked work before claiming a clean stop.
 
 ## ML, Speech, And Generated Output
 
@@ -214,6 +227,7 @@ Notes:
 
 - `./Tools/architecture-lint.sh`
 - `./Tools/agent-handoff.sh`
+- `python3 Tools/clean-stop-check.py`
 - `./Tools/clean-system-metadata.sh --dry-run`
 - `./Tools/drift-report.sh`
 - `./Tools/verify-app-icons.sh`
@@ -229,6 +243,7 @@ Notes:
 - `./Tools/validate.sh architecture`
 - `./Tools/validate.sh app-icons`
 - `./Tools/validate.sh build-provenance`
+- `./Tools/validate.sh clean-stop`
 - `./Tools/validate.sh drift-report`
 - `./Tools/validate.sh handoff`
 - `./Tools/validate.sh localization`

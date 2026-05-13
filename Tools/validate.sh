@@ -16,6 +16,7 @@ usage:
   ./Tools/validate.sh build-provenance
   ./Tools/validate.sh drift-report
   ./Tools/validate.sh handoff
+  ./Tools/validate.sh clean-stop
   ./Tools/validate.sh review-preflight
   ./Tools/validate.sh system-metadata
   ./Tools/validate.sh app-icons
@@ -137,6 +138,9 @@ case "$MODE" in
     ;;
   handoff)
     "$ROOT/Tools/agent-handoff.sh" >/dev/null
+    ;;
+  clean-stop)
+    python3 "$ROOT/Tools/clean-stop-check.py" >/dev/null
     ;;
   review-preflight)
     "$ROOT/Tools/review-preflight.sh" >/dev/null

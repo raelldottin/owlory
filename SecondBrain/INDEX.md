@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [clean-stop-completion-check](sessions/2026-05-13/082520-clean-stop-completion-check.md)
 - [xcode-default-destination-ios-26-5](sessions/2026-05-13/045127-xcode-default-destination-ios-26-5.md)
 - [build-info-display-git-status](sessions/2026-05-13/025224-build-info-display-git-status.md)
 - [queue-parked-proof-and-localization-slices](sessions/2026-05-13/023215-queue-parked-proof-and-localization-slices.md)

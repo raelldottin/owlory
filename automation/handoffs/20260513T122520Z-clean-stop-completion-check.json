@@ -1,0 +1,68 @@
+{
+  "slice_id": "clean-stop-completion-check",
+  "status": "done",
+  "summary": "Added a first-class read-only clean-stop verifier that checks all three required completion levels: queue state, Git/repo state, and proof/parking-lot state. The queue schema now supports explicit entry_condition values for blocked/deferred slices, queue integrity requires those conditions, and maintained workflow docs point agents to make clean-stop before claiming all actionable work is complete.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/082520-clean-stop-completion-check.md",
+    "Tools/agent-handoff.sh",
+    "Tools/clean-stop-check.py",
+    "Tools/validate.sh",
+    "automation/README.md",
+    "automation/handoffs/20260513T122520Z-clean-stop-completion-check.json",
+    "automation/queue/slices.json",
+    "automation/schemas/slice.schema.json",
+    "automation/supervisor/policy.py",
+    "automation/tests/test_harness.py",
+    "docs/README.md",
+    "docs/workflows/agent-handoff.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id clean-stop-completion-check",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make clean-stop",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Clean-stop completion standard",
+      "before": "Agents had to combine supervisor dry-run output, Git cleanliness/mirror checks, and manual queue inspection from chat guidance to know whether all actionable slices were complete.",
+      "after": "`make clean-stop` performs the read-only three-level check and fails with remediation-first messages when the repo is dirty, not mirrored, has open queue work, or has parked work without entry conditions.",
+      "proof": [
+        "Tools/clean-stop-check.py",
+        "make clean-stop",
+        "docs/workflows/validation.md",
+        "docs/workflows/agent-handoff.md"
+      ]
+    },
+    {
+      "contract": "Parked queue slice legibility",
+      "before": "Blocked slice entry conditions were encoded only in free-form notes, so a future agent or script could not mechanically distinguish parked work from forgotten work.",
+      "after": "The queue schema supports `entry_condition`, queue integrity requires it for `blocked` and `deferred` slices, and current parked slices carry explicit entry conditions.",
+      "proof": [
+        "automation/schemas/slice.schema.json",
+        "automation/supervisor/policy.py",
+        "automation/queue/slices.json",
+        "make automation-check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "`make clean-stop` proves there is no currently actionable queued/in-progress work in the repo state; it does not claim every parked roadmap item is finished or that external prerequisites such as reviewed translations or a fresh TestFlight build exist.",
+    "The clean-stop command treats Git mirror status as mandatory for this branch. Repos without an upstream will need to set one or record a separate, explicit not-relevant reason outside this command."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop. Remaining TestFlight, localization intake, and optional UI regression expansion work is blocked behind explicit entry conditions.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T12:25:20Z"
+}
