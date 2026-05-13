@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [queue-parked-proof-and-localization-slices](sessions/2026-05-13/023215-queue-parked-proof-and-localization-slices.md)
 - [ui-simulator-validation-recovery](sessions/2026-05-13/022554-ui-simulator-validation-recovery.md)
 
 ## 2026-05-12

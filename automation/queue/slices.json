@@ -2389,6 +2389,147 @@
       ],
       "max_files_changed": 8,
       "notes": "Implement the release-workflow gate fix identified by the stamp audit. Diagnosis recorded in automation/proofs/owlory-release-provenance-stamp-audit/: the release workflow's current clean-tree gate is necessary but insufficient. An archive was uploaded to TestFlight whose CFBundleVersion (20260417081911) was never committed to any pbxproj state on any branch or in the reflog, while the stamp script reported GitStatus=clean (visible Commit/Full commit/Tag fields lacked -dirty suffixes). Required change: extend Tools/verify-build-provenance.sh to assert that the current pbxproj CURRENT_PROJECT_VERSION matches a committed pbxproj state at HEAD (i.e., `git show HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj` contains the same CURRENT_PROJECT_VERSION value). The check should fail loudly with a message instructing the operator to commit the build-number bump before re-running the verifier. When invoked with --require-clean (as `make release-check` does), the new assertion must also fire. Update docs/workflows/release.md to record the strengthened gate as a numbered step before `Archive in Xcode` (the existing step 10), and to call out the failure mode this catches (uncommitted set-build-number.sh bumps that produce TestFlight builds whose build number is not reproducible from committed source). Add a focused test under automation/tests/ that simulates the failure mode (dirty pbxproj with a bumped value vs clean HEAD) and asserts the verifier exits non-zero. Out of scope: surfacing GitStatus directly in BuildInfoView (the UI gap noted in the audit is a separate product question), extending the audit to App Store Connect API checks, fixing prior unreproducible TestFlight builds retroactively. proof_level should land at domain-tested for the new verifier test path; the workflow doc change is doc-only addressing release.md."
+    },
+    {
+      "slice_id": "build-info-display-git-status",
+      "title": "Display GitStatus in Build Info",
+      "status": "queued",
+      "priority": 154,
+      "domain": "runtime",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/BuildInfo.swift",
+        "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make test-domain DOMAIN=runtime",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Immediate small runtime diagnostics improvement. Surface the stamped GitStatus field directly in Build Info so future device/TestFlight provenance gates do not have to infer clean/dirty state from commit suffixes or releaseability banners. Do not change stamping behavior, release provenance rules, or TestFlight proof claims. Build Info should show GitStatus directly as clean, dirty, or unknown/unavailable while preserving the existing Not releaseable banner. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "owlory-ui-test-testflight-proof-retry",
+      "title": "Retry TestFlight proof with clean provenance",
+      "status": "blocked",
+      "priority": 153,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/proofs/owlory-ui-testflight-proof/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/release.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "build-info-display-git-status"
+      ],
+      "max_files_changed": 10,
+      "notes": "Blocked entry condition: a new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus. Retry TestFlight proof only after that gate can be evaluated. Build Info gate comes first; reject the run if commit/build provenance does not match committed source, or if GitStatus is dirty or unavailable. Do not use debug seed flags, do not synthesize data, and capture only natural-data Continue paths exposed by the TestFlight install. If the gate fails, block the slice and do not capture Continue surfaces. proof_level target: testflight-verified for only the exercised TestFlight paths."
+    },
+    {
+      "slice_id": "owlory-ui-test-testflight-proof-capture",
+      "title": "Capture TestFlight Continue proof artifacts",
+      "status": "blocked",
+      "priority": 152,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/proofs/owlory-ui-testflight-proof/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/workflows/ui-testing-hygiene.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-test-testflight-proof-retry"
+      ],
+      "max_files_changed": 10,
+      "notes": "Blocked entry condition: TestFlight Build Info provenance gate passed for the installed build. After TestFlight provenance passes, preserve screenshots and manifest evidence for the launch surface and any natural-data Continue routes actually exercised. Claim only captured surfaces. Preserve README.md and manifest.json with hashes. Do not claim debug-seeded parity, device/debug proof from TestFlight artifacts, or all Continue sources unless the TestFlight install naturally exposes them and they are exercised. proof_level target: testflight-verified for captured surfaces only."
+    },
+    {
+      "slice_id": "app-localization-first-locale-review-intake",
+      "title": "Ingest first reviewed locale translations",
+      "status": "blocked",
+      "priority": 151,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "Tools/localization-review-export.py",
+        "Tools/localization-parity.sh",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reviewed-locale-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-translation-review-export"
+      ],
+      "max_files_changed": 20,
+      "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. Ingest one reviewed locale or small reviewed subset from the translation review packet, replacing only values with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "owlory-ui-regression-expansion-next-surface",
+      "title": "Expand Owlory UI regression coverage to the next selected surface",
+      "status": "blocked",
+      "priority": 150,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "Makefile",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make ui-regression",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-batch-1-today-continue"
+      ],
+      "max_files_changed": 15,
+      "notes": "Blocked entry condition: a concrete next UI regression surface is selected and scoped. Expand beyond Today Continue only after a concrete target surface is chosen, such as Write, Home protocols, Train, Patterns, or localization layout. Do not create a broad app-wide suite in one pass, expand without a named surface and coverage goal, or blur proof lanes. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke."
     }
   ]
 }
