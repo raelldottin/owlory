@@ -14,6 +14,7 @@ usage() {
 usage:
   ./Tools/validate.sh architecture
   ./Tools/validate.sh build-provenance
+  ./Tools/validate.sh release-preflight
   ./Tools/validate.sh drift-report
   ./Tools/validate.sh handoff
   ./Tools/validate.sh clean-stop
@@ -132,6 +133,9 @@ case "$MODE" in
     ;;
   build-provenance)
     "$ROOT/Tools/verify-build-provenance.sh"
+    ;;
+  release-preflight)
+    "$ROOT/Tools/release-preflight.sh"
     ;;
   drift-report)
     "$ROOT/Tools/drift-report.sh" >/dev/null

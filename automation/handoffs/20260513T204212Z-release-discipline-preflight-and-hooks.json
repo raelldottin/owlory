@@ -1,0 +1,65 @@
+{
+  "slice_id": "release-discipline-preflight-and-hooks",
+  "status": "done",
+  "summary": "Added `make release-preflight` as the canonical Archive-readiness gate. The gate refuses dirty worktrees, unmirrored branches, and uncommitted Xcode build-number drift before running the existing build-provenance checks. `make release-check` now runs release-preflight before runtime validation, and release/validation/PR docs explain the three separate checkpoints: pre-push protects source history, release-preflight protects Archive readiness, and Build Info verifies the installed TestFlight binary.",
+  "files_touched": [
+    "Makefile",
+    "Tools/release-preflight.sh",
+    "Tools/validate.sh",
+    "automation/handoffs/20260513T204212Z-release-discipline-preflight-and-hooks.json",
+    "automation/queue/slices.json",
+    "automation/tests/test_release_preflight.py",
+    "docs/workflows/pr-hygiene.md",
+    "docs/workflows/release.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/164212-release-discipline-preflight-and-hooks.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id release-discipline-preflight-and-hooks",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_release_preflight automation.tests.test_verify_build_provenance",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Archive-readiness release gate",
+      "before": "Release work had build-provenance and pre-push checks, but no single command that required clean, mirrored, committed build-number source immediately before Xcode Archive.",
+      "after": "`make release-preflight` is the explicit Archive gate. It checks clean tree, upstream mirror status, committed build-number provenance, and existing build-provenance output before Archive.",
+      "proof": [
+        "Tools/release-preflight.sh",
+        "Makefile",
+        "automation/tests/test_release_preflight.py"
+      ]
+    },
+    {
+      "contract": "Release workflow documentation",
+      "before": "Release docs warned that hooks cannot stop Xcode Archive, but the required pre-Archive command was a set of separate shell commands.",
+      "after": "Release, validation, and PR hygiene docs now name `make release-preflight` as the single pre-Archive command and distinguish it from pre-push and Build Info gates.",
+      "proof": [
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/pr-hygiene.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No hook or script can stop a manual Xcode Organizer Archive click; operators must run `make release-preflight` immediately before Archive.",
+    "This does not retry or claim TestFlight proof.",
+    "`make release-preflight` requires `HEAD...@{u}` to be `0 0`, so it is expected to pass only after this slice is committed and pushed."
+  ],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof-retry",
+  "recommended_next_reason": "After a new TestFlight build is archived from clean committed source using `make release-preflight`, retry the Build Info gate before capturing Continue surfaces.",
+  "repo_clean_status": "pending final commit",
+  "git_mirror_status": "pending push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T20:43:46Z"
+}
