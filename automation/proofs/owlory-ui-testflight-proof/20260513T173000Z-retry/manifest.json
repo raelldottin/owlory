@@ -1,0 +1,90 @@
+{
+  "attempt_id": "20260513T173000Z",
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "gate_status": "blocked_before_testflight_ui_proof",
+  "blocked_reason": "Build Info screenshots show the installed TestFlight app reports build 20260513172951 but was stamped from dirty commit de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty. The stamped base commit's committed project.pbxproj has CURRENT_PROJECT_VERSION 20260417081904, so the archive was produced from uncommitted local Xcode state.",
+  "local_source_when_recorded": {
+    "commit": "c6e8875ab239b30d844c93b1b3c1220deb33e30c",
+    "commit_short": "c6e8875ab239",
+    "branch": "main",
+    "version": "0.2.0",
+    "build_number": "20260513172951",
+    "mirror_status": "0 0"
+  },
+  "installed_testflight_listing": {
+    "marketing_version": "0.2.0",
+    "bundle_version": "20260513172951"
+  },
+  "installed_build_info_screenshots": {
+    "marketing_version": "0.2.0",
+    "build_number": "20260513172951",
+    "git_commit_short": "de320a7dd2c3-dirty",
+    "git_commit_full": "de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty",
+    "git_branch": "main",
+    "git_status": "dirty",
+    "git_tag": "de320a7-dirty",
+    "built": "2026-05-13T17:30:34Z",
+    "configuration": "Release",
+    "bundle_identifier": "com.raelldottin.owlory",
+    "build_source": "Xcode CURRENT_PROJECT_VERSION",
+    "releaseable": false
+  },
+  "committed_source_at_stamped_base_commit": {
+    "commit": "de320a7dd2c38878df3343ae3f945df9ffb8f815",
+    "current_project_version": "20260417081904"
+  },
+  "artifacts": [
+    {
+      "file": "01-build-info-top.png",
+      "description": "Build Info screenshot showing version/build, dirty source stamp, GitStatus dirty, not-releaseable banner, build time, and Release configuration.",
+      "sha256": "14012e480ad682c1d0996e7afafe79d463609c66e744e0b90c9e25906eb06092",
+      "size_bytes": 274033,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "02-build-info-source.png",
+      "description": "Build Info screenshot showing dirty source block, bundle identifier, and Build source Xcode CURRENT_PROJECT_VERSION.",
+      "sha256": "4ce54763c56725d846e2e1bd0b8d7a6a10e38b3d3d15b214b466a2e6cd647897",
+      "size_bytes": 283359,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "03-testflight-launch.png",
+      "description": "TestFlight listing screenshot showing Owlory 0.2.0 (20260513172951).",
+      "sha256": "e2ddecff980e83c8dcf21d0d575b8d58da4f03a9138a3a66f409ae16dc2f2647",
+      "size_bytes": 234326,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "04-continue-surface.png",
+      "description": "Today Continue surface screenshot from the same TestFlight install. Preserved as context only because the Build Info gate failed first.",
+      "sha256": "bd6123fc1ae24ef2a7a9f61f0cd234614ecdaeddcda10f08aa368df1ea3f8700",
+      "size_bytes": 339221,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    }
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "git show de320a7dd2c38878df3343ae3f945df9ffb8f815:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg \"CURRENT_PROJECT_VERSION\" | sort -u",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/*.png",
+    "sips -g pixelWidth -g pixelHeight automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/*.png"
+  ],
+  "failed_gate": {
+    "reason": "Build Info GitStatus is dirty and the installed build number is not reproducible from the stamped base commit.",
+    "installed_build": "20260513172951",
+    "stamped_commit": "de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty",
+    "stamped_base_commit_committed_build": "20260417081904"
+  },
+  "continue_surfaces_observed_not_claimed": [
+    "04-continue-surface.png"
+  ],
+  "continue_proof_claimed": [],
+  "testflight_verified": false,
+  "next_action": "Archive and upload from clean committed source after the build-number bump is committed, then rerun the Build Info provenance gate before capturing Continue surfaces."
+}

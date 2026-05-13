@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-test-testflight-proof-retry dirty archive gate](sessions/2026-05-13/162123-owlory-ui-test-testflight-proof-retry.md)
 - [release-provenance-git-hooks](sessions/2026-05-13/133531-release-provenance-git-hooks.md)
 - [owlory-ui-test-testflight-proof-retry fresh install gate](sessions/2026-05-13/123220-owlory-ui-test-testflight-proof-retry.md)
 - [owlory-ui-test-testflight-proof-retry](sessions/2026-05-13/102117-owlory-ui-test-testflight-proof-retry.md)

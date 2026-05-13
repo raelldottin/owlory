@@ -1,0 +1,71 @@
+{
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "summary": "Preserved the latest TestFlight retry screenshots. The installed app reports Owlory 0.2.0 (20260513172951), but Build Info shows the archive was stamped from de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty with GitStatus dirty. The stamped base commit's committed project.pbxproj has CURRENT_PROJECT_VERSION 20260417081904, so the archive was produced from uncommitted local build-number state. A Continue surface screenshot was preserved as context, but no testflight-verified proof is claimed because the Build Info gate failed first.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/162123-owlory-ui-test-testflight-proof-retry.md",
+    "automation/handoffs/20260513T202123Z-owlory-ui-test-testflight-proof-retry.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/manifest.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/01-build-info-top.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/02-build-info-source.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/03-testflight-launch.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/04-continue-surface.png",
+    "automation/proofs/owlory-ui-testflight-proof/README.md",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "git rev-parse HEAD",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "git show de320a7dd2c38878df3343ae3f945df9ffb8f815:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg \"CURRENT_PROJECT_VERSION\" | sort -u",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/*.png",
+    "sips -g pixelWidth -g pixelHeight automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/*.png",
+    "python3 -m json.tool automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/manifest.json",
+    "python3 -m json.tool automation/handoffs/20260513T202123Z-owlory-ui-test-testflight-proof-retry.json",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "Build Info gate: Git status is dirty, so the TestFlight proof lane stops before Continue proof."
+  ],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight Build Info gate",
+      "before": "The user installed a TestFlight build and airdropped Build Info, TestFlight listing, and Continue screenshots.",
+      "after": "The screenshots prove the installed TestFlight build is not eligible for testflight-verified proof because Build Info reports GitStatus dirty and a de320a7...-dirty source stamp.",
+      "proof": [
+        "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/README.md",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/manifest.json",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/01-build-info-top.png",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/02-build-info-source.png"
+      ]
+    },
+    {
+      "contract": "Continue TestFlight proof",
+      "before": "A Continue surface screenshot was available from TestFlight.",
+      "after": "The screenshot is preserved as context only; no Continue TestFlight proof is claimed because the provenance gate failed first.",
+      "proof": [
+        "automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/04-continue-surface.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The current TestFlight install was archived from dirty local state and cannot be used as release-channel behavior proof.",
+    "No valid TestFlight Continue surface proof was captured.",
+    "A new TestFlight archive must be produced from clean committed source after the build-number bump is committed."
+  ],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof-retry",
+  "recommended_next_reason": "Retry only after installing a TestFlight build whose Build Info shows GitStatus clean and whose build number matches the committed project.pbxproj at the stamped commit.",
+  "repo_clean_status": "pending final clean-stop validation",
+  "git_mirror_status": "pending final push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T20:21:23Z"
+}
