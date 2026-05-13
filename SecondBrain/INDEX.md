@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-testflight-proof](sessions/2026-05-13/170309-owlory-ui-testflight-proof.md)
 - [release-discipline-preflight-and-hooks](sessions/2026-05-13/164212-release-discipline-preflight-and-hooks.md)
 - [queue-release-discipline-preflight-and-hooks](sessions/2026-05-13/163413-queue-release-discipline-preflight-and-hooks.md)
 - [owlory-ui-test-testflight-proof-retry dirty archive gate](sessions/2026-05-13/162123-owlory-ui-test-testflight-proof-retry.md)

@@ -135,6 +135,8 @@ After uploading and installing a fresh TestFlight build, open Build Info and rec
 
 Only unblock TestFlight proof retry after that Build Info gate passes. If GitStatus is dirty or unavailable, or if build/commit provenance does not match committed source, keep the proof slice blocked and do not capture Continue surfaces.
 
+Latest passing TestFlight proof: `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/` shows Owlory `0.2.0 (20260513202827)` from clean commit `adb5de52bf90233e64257d5c0aa1dc37f59a6bf2`, with committed `CURRENT_PROJECT_VERSION = 20260513202827`, plus natural-data Today Continue and one Home protocol run route screenshot. Treat that as proof for the captured path only, not broad TestFlight coverage.
+
 ## TestFlight Diagnosis
 
 1. Open the Build Info sheet in the TestFlight build being diagnosed.

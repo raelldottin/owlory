@@ -1,6 +1,33 @@
-# owlory-ui-testflight-proof (gate-failure record)
+# owlory-ui-testflight-proof
 
-This directory is **not** a TestFlight proof of Continue UI behavior. It preserves a single Build Info screenshot from a TestFlight install whose stamped provenance did not match committed source. The gate-failure is the finding; no Continue surfaces were captured against this install.
+## Current Gate Verdict: PASSED
+
+The latest successful proof packet is [`20260513T205620Z-provenance-intake/`](20260513T205620Z-provenance-intake/).
+
+That TestFlight install reports:
+
+```text
+Version:       0.2.0
+Build:         20260513202827
+Full commit:   adb5de52bf90233e64257d5c0aa1dc37f59a6bf2
+Branch:        main
+Git status:    clean
+Configuration: Release
+Bundle:        com.raelldottin.owlory
+Build source:  Xcode CURRENT_PROJECT_VERSION
+```
+
+The stamped commit exists on `origin/main`, and its committed Xcode project has:
+
+```text
+CURRENT_PROJECT_VERSION = 20260513202827;
+```
+
+This reaches `testflight-verified` for the captured natural-data path only: Today Continue launch surface plus one Home protocol run route into the active run sheet. It does not prove every Continue source, the broad routing matrix, debug-seeded parity, App Store production behavior, or full UI regression coverage.
+
+## Historical Gate-Failure Record
+
+The original root-level record in this directory was **not** a TestFlight proof of Continue UI behavior. It preserved a single Build Info screenshot from a TestFlight install whose stamped provenance did not match committed source. The gate-failure was the finding; no Continue surfaces were captured against that install.
 
 ## Build Info gate verdict: FAILED
 
