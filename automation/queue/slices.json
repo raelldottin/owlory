@@ -2424,6 +2424,42 @@
       "notes": "Harness-only slice. Add a committed .githooks/pre-push hook that blocks pushes when the worktree is dirty, when verify-build-provenance --require-clean fails, or when make build-provenance fails. Document git config core.hooksPath .githooks and state clearly that the hook cannot stop Xcode Organizer archive clicks; archive still requires the release preflight immediately before TestFlight upload. The worktree entered this slice with a pre-existing Xcode build-number bump to 20260513172951; preserve it as release metadata so the new hook can pass from a clean committed state. Do not claim TestFlight proof or change app behavior."
     },
     {
+      "slice_id": "release-discipline-preflight-and-hooks",
+      "title": "Add stricter release preflight and git hook discipline",
+      "status": "queued",
+      "priority": 160,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "Makefile",
+        ".githooks/",
+        "Tools/verify-build-provenance.sh",
+        "Tools/validate.sh",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/pr-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/tests/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-discipline-preflight-and-hooks",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make release-preflight",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-provenance-git-hooks"
+      ],
+      "max_files_changed": 12,
+      "notes": "Implementation slice after repeated TestFlight provenance gate failures. Make the release process hard to misuse: bump build number -> commit build number -> push clean main -> run one release preflight command -> archive -> upload -> verify TestFlight Build Info. Add `make release-preflight` as the canonical archive-readiness gate. It should fail on dirty worktree, fail when local branch is not mirrored with upstream, fail when CURRENT_PROJECT_VERSION differs from committed HEAD, and pass only on clean mirrored source with committed build number. Preserve the existing pre-push hook, strengthening it only if needed to call the same provenance gate. Do not use pre-commit for build-number provenance checks because pre-commit would block valid build-number bump commits. Document that pre-push protects source history, release-preflight protects Archive readiness, and Build Info verifies the installed TestFlight binary. Add focused automation tests if needed. Do not change app behavior or claim TestFlight proof."
+    },
+    {
       "slice_id": "build-info-display-git-status",
       "title": "Display GitStatus in Build Info",
       "status": "done",
