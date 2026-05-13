@@ -1,0 +1,44 @@
+{
+  "slice_id": "queue-release-discipline-preflight-and-hooks",
+  "status": "done",
+  "summary": "Queued `release-discipline-preflight-and-hooks` as the next stricter release-discipline implementation slice. The queued slice is scoped to adding a canonical `make release-preflight` gate, aligning the existing committed pre-push hook if needed, documenting the three checkpoints, and adding focused automation coverage without changing app behavior or claiming TestFlight proof.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/163413-queue-release-discipline-preflight-and-hooks.md",
+    "automation/handoffs/20260513T203413Z-queue-release-discipline-preflight-and-hooks.json",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260513T203413Z-queue-release-discipline-preflight-and-hooks.json",
+    "python3 automation/context/build_context.py --slice-id release-discipline-preflight-and-hooks",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release discipline queue",
+      "before": "The repo had a committed pre-push hook and build-provenance verifier, but no queued implementation slice for a single archive-readiness `make release-preflight` command.",
+      "after": "`release-discipline-preflight-and-hooks` is queued with explicit acceptance criteria for dirty-tree, mirror, committed-build-number, and clean-pass behavior.",
+      "proof": [
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This queueing slice does not implement `make release-preflight`; the queued implementation slice remains open.",
+    "No TestFlight proof is claimed."
+  ],
+  "recommended_next_slice": "release-discipline-preflight-and-hooks",
+  "recommended_next_reason": "Implement the queued release preflight gate before attempting another TestFlight proof archive.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T20:34:13Z"
+}

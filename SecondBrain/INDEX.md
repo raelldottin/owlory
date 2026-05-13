@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [queue-release-discipline-preflight-and-hooks](sessions/2026-05-13/163413-queue-release-discipline-preflight-and-hooks.md)
 - [owlory-ui-test-testflight-proof-retry dirty archive gate](sessions/2026-05-13/162123-owlory-ui-test-testflight-proof-retry.md)
 - [release-provenance-git-hooks](sessions/2026-05-13/133531-release-provenance-git-hooks.md)
 - [owlory-ui-test-testflight-proof-retry fresh install gate](sessions/2026-05-13/123220-owlory-ui-test-testflight-proof-retry.md)
