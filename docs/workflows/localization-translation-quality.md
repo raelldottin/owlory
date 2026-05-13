@@ -144,3 +144,5 @@ Settings > General > Language & Region > Add Language
 Keep the current iPhone language as primary unless the slice is explicitly testing full-device language behavior. Then return to Owlory's per-app language setting, select the target language, close Owlory, and reopen it.
 
 Use this only for manual/TestFlight review. Automated localization smoke should continue using `python3 automation/smoke/running_app_smoke.py --locale <locale>` and launch arguments, not the Settings app.
+
+If German or another target language does not appear in Owlory's per-app language picker, do not classify the locale as translation-failed yet. First run the manual language-setting diagnostic from [Validation Workflows](validation.md#manual-per-app-language-testing): confirm the language is in the iPhone's preferred language list, verify the installed build packages the matching `.lproj` resources, and inspect whether the installed build needs explicit `CFBundleLocalizations` metadata.

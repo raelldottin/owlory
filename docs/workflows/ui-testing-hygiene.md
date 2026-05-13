@@ -56,6 +56,8 @@ Settings > General > Language & Region > Add Language
 
 This is a manual review path for language and layout inspection. Do not use Settings automation as the maintained smoke lane; automated locale checks should use the running-app smoke runner's launch arguments instead.
 
+If the desired language does not appear, classify the result as `manual language setting diagnostic needed`, not as a UI regression. Follow the diagnostic steps in [Validation Workflows](validation.md#manual-per-app-language-testing) and preserve the failure shape: no Language row, or Language row present but target language missing.
+
 ## Maintained XCUITest Smoke
 
 Run the maintained smoke path with:
