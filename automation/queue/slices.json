@@ -2772,7 +2772,7 @@
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
       "title": "Add Write capture inbox UI regression batch",
-      "status": "queued",
+      "status": "done",
       "priority": 150,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -2799,7 +2799,7 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "A concrete next UI regression surface is selected and scoped.",
-      "notes": "Scope chosen by owlory-ui-regression-next-surface-triage on 2026-05-13. Target surface: Write capture inbox. Coverage: (a) open Write from the tab bar via accessibility identifier, (b) seed and render one in-progress Writing note row plus the capture field, (c) assert visibility of one promotion affordance (Add to Today) without exercising the cross-domain side effect. Add a new XCUITest class (e.g., OwloryUITests/WriteCaptureRegression) following the TodayContinueRegression pattern so the smoke loop stays fast; wire either a DOMAIN= matrix or an additional `-only-testing` filter into `make ui-regression` rather than collapsing Write into the Today smoke class. Add one deterministic seed launch arg (e.g., --owlory-ui-seed-write-capture-inbox) under OwloryUITestSupport that resets app-local state and writes a single in-progress WritingNote. Use deterministic seed data, keep simulator state isolated, and classify failures per docs/workflows/ui-testing-hygiene.md. Out of scope: voice/live transcription (microphone-permission environmental constraint), task promotion side effects, protocol promotion side effects, screenshot proof pack, device proof, TestFlight proof. proof_level target: running-app-smoke."
+      "notes": "Completed on 2026-05-13. Added OwloryUITests/WriteCaptureRegression with two tests: (a) testSeededWriteCaptureInboxRendersInProgressNoteRowAndCaptureEntry opens the Write tab and asserts the seeded in-progress note row plus the write.capture.entry affordance render, and (b) testSeededWriteNoteDetailExposesAddToTodayPromotion opens the note detail sheet, opens the Note options menu, and asserts the Add to Today promotion is reachable without tapping it. Reused --owlory-ui-seed-in-progress-writing-continue-item rather than adding a parallel seed arg with identical data shape. Added accessibility identifiers write.note.row.<uuid>, write.capture.entry, and write.note.action.addToToday.<uuid> to WriteView. Wired DOMAIN= matrix into `make ui-regression`: bare invocation runs every regression class, DOMAIN=today narrows to TodayContinueRegression, DOMAIN=write narrows to WriteCaptureRegression. make ui-regression passed all 15 regression tests across both classes in 138s. proof_level achieved: running-app-smoke for the Write capture inbox surface."
     }
   ]
 }
