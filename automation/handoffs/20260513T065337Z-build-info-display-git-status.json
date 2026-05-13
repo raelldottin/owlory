@@ -1,0 +1,71 @@
+{
+  "slice_id": "build-info-display-git-status",
+  "status": "done",
+  "summary": "Surfaced the already-stamped GitStatus bundle field through BuildInfo, the Build Info sheet, and the diagnostic report so device/TestFlight provenance gates no longer have to infer clean/dirty state from commit suffixes or the Not releaseable banner. Added focused BuildInfoTests coverage for reading GitStatus from a stamped bundle and for the fallback value when the key is absent. Updated the release workflow wording to name Git status directly. Stamping behavior, releaseability rules, and TestFlight proof status were intentionally unchanged.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/025224-build-info-display-git-status.md",
+    "automation/handoffs/20260513T065337Z-build-info-display-git-status.json",
+    "automation/queue/slices.json",
+    "docs/workflows/release.md",
+    "owlory_xcode/Owlory/Core/Application/BuildInfo.swift",
+    "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift",
+    "owlory_xcode/OwloryCoreTests/BuildInfoTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id build-info-display-git-status",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "make test-domain DOMAIN=runtime (blocked before build/test execution: xcodebuild could not find platform=iOS Simulator,name=iPhone 16,OS=26.3.1; Xcode 26.5 reports no eligible simulator destinations because the iOS 26.5 runtime is not installed)",
+    "OWLORY_XCODE_DESTINATION='id=93831D66-8855-467D-8991-81886B30A57F' make test-domain DOMAIN=runtime (same xcodebuild destination-resolution block, even though simctl can boot the device)",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-build-info-display-build CODE_SIGNING_ALLOWED=NO (same xcodebuild destination-resolution block)",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS' -derivedDataPath /tmp/owlory-build-info-display-ios-build CODE_SIGNING_ALLOWED=NO (same xcodebuild destination-resolution block)"
+  ],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Build Info provenance display",
+      "before": "Tools/generate-build-info.sh stamped GitStatus into bundle metadata, but BuildInfo did not read it and BuildInfoView did not show it directly. TestFlight/device provenance review had to infer clean/dirty state from GitCommit suffixes or the Not releaseable banner.",
+      "after": "BuildInfo reads GitStatus with an unavailable fallback, diagnosticReport emits a stable 'Git status: ...' line, and BuildInfoView shows a dedicated Git status row in the Source section while preserving the existing Not releaseable banner and releaseability logic.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/BuildInfo.swift",
+        "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift",
+        "owlory_xcode/OwloryCoreTests/BuildInfoTests.swift"
+      ]
+    },
+    {
+      "contract": "Release workflow diagnosis wording",
+      "before": "docs/workflows/release.md described dirty status generically and did not name the explicit stamped GitStatus field in the TestFlight diagnosis steps.",
+      "after": "release.md now names GitStatus as stamped bundle metadata and tells operators to record Git status directly from Build Info during TestFlight diagnosis.",
+      "proof": [
+        "docs/workflows/release.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Local Xcode validation is blocked by environment, not by a test assertion: Xcode 26.5 is installed, but xcodebuild lists no eligible iOS simulator destination and the physical device is ineligible until iOS 26.5 support is installed. simctl can boot the iPhone 16 iOS 26.3.1 simulator, but xcodebuild still refuses the destination. Re-run make test-domain DOMAIN=runtime after installing the iOS 26.5 simulator runtime or switching Xcode to a matching installed runtime.",
+    "Because the runtime domain test and generic Xcode build could not start, this slice cannot honestly claim domain-tested or build-tested proof even though focused tests were added.",
+    "BuildInfo.isReleaseable intentionally still follows the existing commit-suffix/missing-ref rule. This slice only displays GitStatus; it does not change release provenance policy.",
+    "BuildInfoView strings remain part of the existing Build Info support surface and were not localized in this diagnostics slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop after environment-compatible validations. The blocked TestFlight and localization slices remain parked behind their entry conditions.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T06:53:37Z"
+}

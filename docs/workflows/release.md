@@ -5,7 +5,7 @@
 - App version and TestFlight build number live in `owlory_xcode/Owlory.xcodeproj/project.pbxproj` as `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION`.
 - `./Tools/bump-version.sh <major|minor|patch>` updates `MARKETING_VERSION`, stamps a new timestamp build number, and updates `CHANGELOG.md`.
 - `./Tools/set-build-number.sh --auto` updates `CURRENT_PROJECT_VERSION` for rollback builds without changing the app version.
-- Xcode `Stamp Build Info` phases run `./Tools/generate-build-info.sh` during app and widget builds so the bundle records Git commit, branch, tag/describe output, dirty status, build date, configuration, and build-number source.
+- Xcode `Stamp Build Info` phases run `./Tools/generate-build-info.sh` during app and widget builds so the bundle records Git commit, branch, tag/describe output, GitStatus, build date, configuration, and build-number source.
 - `BuildInfo` reads the stamped bundle metadata at runtime. The Build Info sheet is the user-facing support breadcrumb for TestFlight diagnostics.
 
 ## Version Control Contract
@@ -56,7 +56,7 @@ The clean-tree gate alone is necessary but not sufficient. `verify-build-provena
 ## TestFlight Diagnosis
 
 1. Open the Build Info sheet in the TestFlight build being diagnosed.
-2. Record the app version, build number, Git commit, dirty status, and rollback checkout line.
+2. Record the app version, build number, Git commit, Git status, and rollback checkout line.
 3. Compare the local checkout with the TestFlight metadata:
 
 ```bash

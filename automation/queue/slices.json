@@ -2393,7 +2393,7 @@
     {
       "slice_id": "build-info-display-git-status",
       "title": "Display GitStatus in Build Info",
-      "status": "queued",
+      "status": "done",
       "priority": 154,
       "domain": "runtime",
       "allowed_paths": [

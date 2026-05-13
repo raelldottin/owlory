@@ -31,6 +31,7 @@ struct BuildInfoView: View {
                         labeled("Full commit", info.gitCommitFull)
                     }
                     labeled("Branch", info.gitBranch)
+                    labeled("Git status", info.gitStatus)
                     if !info.gitTag.isEmpty {
                         labeled("Tag", info.gitTag)
                     }
