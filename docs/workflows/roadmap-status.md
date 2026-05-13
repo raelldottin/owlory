@@ -77,7 +77,7 @@ When a blocked slice needs progress, work on its `recommended_unblocker` instead
 
 Current unblocker chain:
 
-- `owlory-release-clean-testflight-build-prep` unblocks TestFlight proof retry preparation, but the retry remains blocked until a fresh installed TestFlight build exists.
+- `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. TestFlight proof retry remains blocked until a fresh installed TestFlight build exists and its Build Info gate passes.
 - `app-localization-review-packet-for-first-locale` should be queued only when localization review should move forward; it prepares reviewer input and does not replace translations.
 - `owlory-ui-regression-next-surface-triage` should be queued only when the next UI regression surface needs selection; it does not add tests.
 
@@ -85,7 +85,7 @@ Current unblocker chain:
 
 For implementation work, prefer this order unless a user request or concrete bug changes priority:
 
-1. `owlory-release-clean-testflight-build-prep` if the next goal is TestFlight proof readiness.
+1. Create/upload/install a fresh clean TestFlight build outside the repo, then unblock `owlory-ui-test-testflight-proof-retry` only if Build Info provenance passes.
 2. Performance observability expansion.
 3. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
 4. Continue Skip for today.

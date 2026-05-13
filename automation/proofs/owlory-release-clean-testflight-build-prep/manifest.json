@@ -1,0 +1,28 @@
+{
+  "slice_id": "owlory-release-clean-testflight-build-prep",
+  "generated_at": "2026-05-13T13:57:01Z",
+  "source_commit": "ccf167fbe47ed462bf01b790804077cd92fbe578",
+  "source_commit_short": "ccf167fbe47e",
+  "branch": "main",
+  "version": "0.2.0",
+  "build_number": "20260417081904",
+  "build_number_source": "Xcode CURRENT_PROJECT_VERSION",
+  "committed_build_number": "matches HEAD",
+  "working_tree": "clean",
+  "releaseable": true,
+  "rollback_checkout": "git checkout ccf167fbe47ed462bf01b790804077cd92fbe578",
+  "commands_passed_before_artifact": [
+    "python3 automation/context/build_context.py --slice-id owlory-release-clean-testflight-build-prep",
+    "python3 automation/supervisor/run_next.py --dry-run --include-blocked",
+    "make build-provenance",
+    "make release-check"
+  ],
+  "proof_claim": "clean local release-prep gate only",
+  "testflight_proof_claimed": false,
+  "blocked_targets_still_blocked": [
+    "owlory-ui-test-testflight-proof",
+    "owlory-ui-test-testflight-proof-retry",
+    "owlory-ui-test-testflight-proof-capture"
+  ],
+  "entry_condition_to_unblock_retry": "A new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus."
+}

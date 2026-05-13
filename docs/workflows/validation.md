@@ -281,3 +281,12 @@ Notes:
 Run the narrowest relevant check first. If a change touches shared rules, run the domain tests and `make architecture`. If it touches app wiring, widget behavior, build identity, or release behavior, run an Xcode build/test path rather than relying on Swift package tests alone.
 
 For TestFlight or rollback work, start with `make build-provenance`. Use `--expected-build` and `--expected-commit` when comparing a local checkout against Build Info metadata copied from an installed TestFlight build.
+
+For a blocked TestFlight proof retry, use the clean-build prep evidence path before any upload or capture attempt:
+
+```bash
+make build-provenance
+make release-check
+```
+
+Preserve the local prep result under `automation/proofs/owlory-release-clean-testflight-build-prep/`. This proves only local archive readiness. The TestFlight proof lane stays blocked until an installed TestFlight build passes the Build Info provenance gate.
