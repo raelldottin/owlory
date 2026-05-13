@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -61,8 +61,10 @@ ui-regression:
 build-provenance:
 	./Tools/verify-build-provenance.sh
 
-release-check:
-	./Tools/verify-build-provenance.sh --require-clean
+release-preflight:
+	./Tools/release-preflight.sh
+
+release-check: release-preflight
 	./Tools/validate.sh domain runtime
 
 test-domain:

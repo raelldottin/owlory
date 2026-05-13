@@ -25,6 +25,7 @@ Do not use a PR to combine unrelated cleanup, product changes, proof artifacts, 
 4. Confirm `git diff --check` passes.
 5. Run the narrowest relevant validation from [Validation Workflows](validation.md).
 6. If UI behavior is claimed, follow [UI Testing Hygiene](ui-testing-hygiene.md).
+7. If the PR or handoff prepares a TestFlight/archive candidate, run `make release-preflight` after the build-number bump is committed and pushed.
 
 ## PR Body Shape
 
@@ -54,6 +55,7 @@ Reviewers should reject or request clarification when:
 - The PR adds workflow commands that are not discoverable from `docs/workflows/validation.md`.
 - The PR includes screenshots without a manifest, README, or explicit proof boundary.
 - The PR turns known UI-test failures into silence instead of classifying them.
+- The PR prepares release work but does not show `make release-preflight` passing from clean mirrored source.
 
 ## Merge Gate
 

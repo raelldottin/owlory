@@ -18,9 +18,10 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 - `make review-preflight` - infer touched areas, docs, validation, and review risks for current changes.
 - `make automation-check` - run the Python tests for the automation supervisor and context builder.
 - `make build-provenance` - print and validate current Xcode version/build plus Git rollback identity.
+- `make release-preflight` - require clean/mirrored source plus committed build-number provenance before Xcode Archive.
 - `make fast` - architecture checks plus a focused core regression slice.
 - `make verify` - architecture checks plus the broader Xcode core test suite.
-- `make release-check` - require clean build provenance, then run the runtime validation slice before release/archive.
+- `make release-check` - run `make release-preflight`, then run the runtime validation slice before release/archive.
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
 - `make ui-smoke` - run the maintained focused XCUITest smoke path with isolated DerivedData.
@@ -243,6 +244,7 @@ Notes:
 - `python3 Tools/localization-review-export.py --output-dir localization/review`
 - `./Tools/review-preflight.sh`
 - `./Tools/verify-build-provenance.sh`
+- `./Tools/release-preflight.sh`
 - `.githooks/pre-push`
 - `./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>`
 - `python3 automation/context/build_context.py --slice-id <slice_id>`
@@ -283,6 +285,14 @@ Run the narrowest relevant check first. If a change touches shared rules, run th
 
 For TestFlight or rollback work, start with `make build-provenance`. Use `--expected-build` and `--expected-commit` when comparing a local checkout against Build Info metadata copied from an installed TestFlight build.
 
+Before any Xcode Archive, run:
+
+```bash
+make release-preflight
+```
+
+This is the archive-readiness gate. It requires a clean tree, `HEAD...@{u}` equal to `0 0`, a committed `CURRENT_PROJECT_VERSION`, and releaseable Build Info provenance. If it fails, do not archive.
+
 For push-time release provenance enforcement, install the committed hook once:
 
 ```bash
@@ -301,6 +311,7 @@ For a blocked TestFlight proof retry, use the clean-build prep evidence path bef
 
 ```bash
 make build-provenance
+make release-preflight
 make release-check
 ```
 

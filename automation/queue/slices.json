@@ -2426,7 +2426,7 @@
     {
       "slice_id": "release-discipline-preflight-and-hooks",
       "title": "Add stricter release preflight and git hook discipline",
-      "status": "queued",
+      "status": "done",
       "priority": 160,
       "domain": "repo-tooling",
       "allowed_paths": [
