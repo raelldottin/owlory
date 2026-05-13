@@ -1,0 +1,60 @@
+{
+  "slice_id": "queue-parked-proof-and-localization-slices",
+  "status": "done",
+  "summary": "Added explicit queue entries for the near-term Build Info GitStatus display improvement plus parked TestFlight proof retry/capture, localization reviewed-locale intake, and optional UI regression expansion work. The only queued implementation slice is build-info-display-git-status; the others are blocked with entry conditions captured in notes so future agents do not start them prematurely. Roadmap status now lists the parked work and warns not to activate blocked slices without satisfying their gates.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/023215-queue-parked-proof-and-localization-slices.md",
+    "automation/handoffs/20260513T063304Z-queue-parked-proof-and-localization-slices.json",
+    "automation/queue/slices.json",
+    "docs/workflows/roadmap-status.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "git diff --cached --check",
+    "python3 automation/supervisor/run_next.py --dry-run"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Queue captures parked proof/localization work",
+      "before": "The next TestFlight proof retry, TestFlight proof capture, first reviewed-locale intake, optional UI regression expansion, and Build Info GitStatus display improvement were present only in conversation context and could be lost or started at the wrong time.",
+      "after": "automation/queue/slices.json has one queued implementation slice (build-info-display-git-status) plus four blocked parked slices with explicit entry conditions and scope boundaries in notes.",
+      "proof": [
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md"
+      ]
+    },
+    {
+      "contract": "Roadmap warns against premature activation",
+      "before": "roadmap-status.md did not list these parked items or tell future agents which ones were blocked by missing TestFlight builds, translation review input, or a selected regression surface.",
+      "after": "roadmap-status.md includes Parked Proof And Localization Work and states not to convert blocked slices to active implementation work without satisfying their entry conditions.",
+      "proof": [
+        "docs/workflows/roadmap-status.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The current queue schema does not have first-class entry_condition or proof_level_target fields, so those gates are encoded in notes. Status=blocked prevents supervisor selection, but the condition itself is not yet machine-checked.",
+    "The new TestFlight retry/capture slices still require an external fresh clean TestFlight build before they can move forward. No TestFlight proof is claimed by this slice.",
+    "The localization intake slice remains blocked until reviewed translation values and reviewer/status metadata exist. No translation quality is claimed by this slice."
+  ],
+  "recommended_next_slice": "build-info-display-git-status",
+  "recommended_next_reason": "It is the only newly queued immediate slice and makes future device/TestFlight provenance gates easier to inspect by surfacing GitStatus directly in Build Info.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T06:33:04Z"
+}
