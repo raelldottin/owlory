@@ -70,6 +70,8 @@ OwloryUITests/TodayContinueRegression
 
 The first batch lives in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but is intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a Today/Continue refactor, or on demand — not on every PR.
 
+The next regression batch is queued as `owlory-ui-regression-expansion-next-surface`, targeting the Write capture inbox. The implementation slice should add a new XCUITest class (`OwloryUITests/WriteCaptureRegression`) and wire either `make ui-regression DOMAIN=<domain>` or an additional `-only-testing` filter rather than collapsing Write into `TodayContinueRegression`.
+
 The app-side seed path is intentionally narrow:
 
 - `--owlory-ui-testing` marks the launch as harness-owned and suppresses notification authorization prompts.
