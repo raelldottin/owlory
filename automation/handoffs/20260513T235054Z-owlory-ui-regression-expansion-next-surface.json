@@ -1,0 +1,56 @@
+{
+  "slice_id": "owlory-ui-regression-expansion-next-surface",
+  "status": "done",
+  "summary": "Added the second Lane 2 UI regression batch targeting the Write capture inbox. New OwloryUITests/WriteCaptureRegression class with two tests: one asserts the seeded in-progress note row plus the capture entry affordance render on the Write surface, the other asserts the Add to Today promotion is reachable from the note detail sheet without tapping. Reused the existing --owlory-ui-seed-in-progress-writing-continue-item seed rather than adding a parallel arg with identical data shape. Added accessibility identifiers write.note.row.<uuid>, write.capture.entry, and write.note.action.addToToday.<uuid> to WriteView. Wired the DOMAIN= matrix into make ui-regression so the regression suite can grow per surface without bloating any single class.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260513T235054Z-owlory-ui-regression-expansion-next-surface.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/235054-owlory-ui-regression-expansion-next-surface.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make ui-regression",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "UI regression coverage scope",
+      "before": "Lane 2 regression suite contained one class: OwloryUITests/TodayContinueRegression. make ui-regression ran only that class. The Write surface had Today-Continue ingress smoke only; the Write surface itself had no XCUITest coverage.",
+      "after": "Lane 2 regression suite contains two classes: OwloryUITests/TodayContinueRegression and OwloryUITests/WriteCaptureRegression. make ui-regression runs both by default; make ui-regression DOMAIN=today and DOMAIN=write narrow to a single class. WriteCaptureRegression asserts the seeded in-progress note row, the capture entry affordance, and the Add to Today promotion visibility on the note detail sheet without exercising cross-domain side effects.",
+      "proof": [
+        "Makefile",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "make ui-regression"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Voice / live transcription on the Write surface is intentionally not covered; microphone permission is environmental and would require separate device or simulator-permission setup.",
+    "Task promotion and protocol promotion side effects are not exercised; the test stops at affordance visibility for Add to Today and does not tap it.",
+    "This slice does not prove the Add-to-Today cross-domain side effect; a follow-up slice with its own Today-side seed and assertion would need to claim that.",
+    "No screenshot, device, or TestFlight proof for the Write surface; only running-app-smoke for the captured surface and path.",
+    "The xcresult bundle at /tmp/owlory-ui-regression-derived-data is transient per Lane 2 policy and is not preserved in automation/proofs/."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The supervisor queue should now report no eligible queued slice. Broaden Write regression scope only if a new concrete Write-surface gap needs proof (e.g., task or protocol promotion side effects), and only after deciding which proof lane each gap belongs in.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T23:50:54Z"
+}

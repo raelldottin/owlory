@@ -49,14 +49,20 @@ ui-smoke-proof: ui-smoke
 
 ui-regression:
 	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"; \
-	echo "Running Owlory UI regression batch on $$DESTINATION"; \
+	case "$(DOMAIN)" in \
+		"") ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression -only-testing:OwloryUITests/WriteCaptureRegression"; LABEL="all regression classes" ;; \
+		today) ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression"; LABEL="Today Continue regression" ;; \
+		write) ONLY_TESTING="-only-testing:OwloryUITests/WriteCaptureRegression"; LABEL="Write capture inbox regression" ;; \
+		*) echo "usage: make ui-regression [DOMAIN=today|write]"; exit 2 ;; \
+	esac; \
+	echo "Running Owlory UI regression batch ($$LABEL) on $$DESTINATION"; \
 	xcodebuild test \
 		-project owlory_xcode/Owlory.xcodeproj \
 		-scheme Owlory \
 		-configuration Debug \
 		-destination "$$DESTINATION" \
 		-derivedDataPath /tmp/owlory-ui-regression-derived-data \
-		-only-testing:OwloryUITests/TodayContinueRegression
+		$$ONLY_TESTING
 
 build-provenance:
 	./Tools/verify-build-provenance.sh

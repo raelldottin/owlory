@@ -41,12 +41,12 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` runs the regression class with `-only-testing:OwloryUITests/TodayContinueRegression` against `/tmp/owlory-ui-regression-derived-data`. Wired by `owlory-ui-regression-batch-1-today-continue`; the first batch covers Today Continue source visibility, source-derived routing, and Focus row actions.
-- `make ui-regression DOMAIN=<domain>` is the intended per-domain narrowing shape; not yet wired. The next regression batch is `owlory-ui-regression-expansion-next-surface`, which targets the Write capture inbox; that slice should land the `DOMAIN=` matrix (or an additional `-only-testing` filter) when it introduces the second regression class, rather than collapsing Write into the Today regression class.
+- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and the Add to Today promotion visibility on the note detail sheet.
+- `make ui-regression DOMAIN=today` narrows to `OwloryUITests/TodayContinueRegression`.
+- `make ui-regression DOMAIN=write` narrows to `OwloryUITests/WriteCaptureRegression`.
+- New regression classes should extend the `DOMAIN=` matrix rather than collapse multiple surfaces into one class.
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
-
-**Next batch.** Write capture inbox, selected by `owlory-ui-regression-next-surface-triage` on 2026-05-13. Coverage scoped to: open Write from the tab bar via accessibility identifier, render one seeded in-progress Writing note row plus the capture field, and assert one promotion affordance (Add to Today) is visible without exercising the cross-domain side effect. Voice/live transcription, task promotion side effects, protocol promotion side effects, and screenshot/device/TestFlight claims are deferred to follow-up slices.
 
 ## Lane 3: Screenshot Proof
 
