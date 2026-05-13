@@ -3,7 +3,7 @@
   "slice_id": "owlory-ui-test-testflight-proof-retry",
   "status": "blocked",
   "gate_status": "blocked_before_testflight_ui_proof",
-  "blocked_reason": "Paired iPhone has com.raelldottin.owlory bundleVersion 20260417081912 installed, while mirrored local main at c70ab71f9402ab2b97f0676260c171b868c22ae4 has committed build 20260417081904 and no committed project.pbxproj state on main contains 20260417081912.",
+  "blocked_reason": "Paired iPhone has com.raelldottin.owlory bundleVersion 20260417081912 installed. Build Info screenshots show the TestFlight app was stamped clean from d0513a41a3e438a76494f43e5f4094a6983ad75e, but that committed source has CURRENT_PROJECT_VERSION 20260417081904 and no committed project.pbxproj state on main contains 20260417081912.",
   "local_source": {
     "commit": "c70ab71f9402ab2b97f0676260c171b868c22ae4",
     "commit_short": "c70ab71f9402",
@@ -26,10 +26,43 @@
     "marketing_version": "0.2.0",
     "bundle_version": "20260417081912"
   },
+  "installed_build_info_screenshots": {
+    "marketing_version": "0.2.0",
+    "build_number": "20260417081912",
+    "git_commit_short": "d0513a41a3e4",
+    "git_commit_full": "d0513a41a3e438a76494f43e5f4094a6983ad75e",
+    "git_branch": "main",
+    "git_status": "clean",
+    "git_tag": "d0513a4",
+    "built": "2026-05-13T14:13:54Z",
+    "configuration": "Release",
+    "bundle_identifier": "com.raelldottin.owlory",
+    "build_source": "Xcode CURRENT_PROJECT_VERSION"
+  },
+  "committed_source_at_stamped_commit": {
+    "commit": "d0513a41a3e438a76494f43e5f4094a6983ad75e",
+    "current_project_version": "20260417081904"
+  },
   "artifacts": [
     {
       "file": "device-apps.json",
       "description": "Raw devicectl app metadata for the installed com.raelldottin.owlory app on the paired iPhone."
+    },
+    {
+      "file": "01-build-info-top.png",
+      "description": "Build Info screenshot showing version/build, stamped source commit, GitStatus clean, Release configuration, bundle, and partial build source block.",
+      "sha256": "3334067c015fcce3a77bdff1dc093fd7b4977d0b074829df1d7f0e09899d2864",
+      "size_bytes": 276467,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "02-build-info-source.png",
+      "description": "Build Info screenshot showing source block and Build source Xcode CURRENT_PROJECT_VERSION.",
+      "sha256": "bd85e156548006dd8d0e6651c351b8f5be521d19125eb8cff27cc994d4b647e2",
+      "size_bytes": 288280,
+      "pixel_width": 1290,
+      "pixel_height": 2796
     }
   ],
   "commands": [
@@ -38,7 +71,9 @@
     "git fetch origin main",
     "git rev-list --left-right --count HEAD...@{u}",
     "git log --all --oneline -S20260417081912 -- owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "git show d0513a41a3e438a76494f43e5f4094a6983ad75e:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg \"CURRENT_PROJECT_VERSION\" | sort -u",
     "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps-fresh.json",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/01-build-info-top.png automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/02-build-info-source.png",
     "./Tools/verify-build-provenance.sh --expected-build 20260417081912 --expected-commit c70ab71f9402ab2b97f0676260c171b868c22ae4"
   ],
   "failed_comparison": {

@@ -66,7 +66,9 @@ No Build Info screenshot or Continue surface was captured in this retry. The lik
 
 ## 2026-05-13 Second Retry Gate Record
 
-The second retry attempt in [`20260513T163220Z-retry/`](20260513T163220Z-retry/) also stopped before Continue capture. The paired iPhone had a newer installed Owlory build, bundle version `20260417081912`, but mirrored local `main` at `c70ab71f9402ab2b97f0676260c171b868c22ae4` still has committed build `20260417081904`. A Git search found no committed `project.pbxproj` state on `main` containing `20260417081912`.
+The second retry attempt in [`20260513T163220Z-retry/`](20260513T163220Z-retry/) also stopped before Continue capture. The paired iPhone had a newer installed Owlory build, bundle version `20260417081912`. Build Info screenshots now preserved in that directory show the TestFlight app was stamped from clean commit `d0513a41a3e438a76494f43e5f4094a6983ad75e`, branch `main`, configuration `Release`, bundle `com.raelldottin.owlory`, and build source `Xcode CURRENT_PROJECT_VERSION`.
+
+The stamped commit's committed `project.pbxproj` still has `CURRENT_PROJECT_VERSION = 20260417081904`, and a Git search found no committed `project.pbxproj` state on `main` containing `20260417081912`.
 
 The provenance comparison failed:
 
@@ -74,7 +76,7 @@ The provenance comparison failed:
 error: expected build '20260417081912' but Xcode CURRENT_PROJECT_VERSION is '20260417081904'
 ```
 
-No Build Info screenshot or Continue surface was captured in this retry. A future TestFlight proof attempt must start from an uploaded build whose bundle version matches committed source.
+No Continue surface was captured in this retry. A future TestFlight proof attempt must start from an uploaded build whose bundle version matches committed source.
 
 ## Follow-up
 
