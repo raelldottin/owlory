@@ -1,0 +1,56 @@
+{
+  "slice_id": "release-provenance-git-hooks",
+  "status": "done",
+  "summary": "Added a committed pre-push hook for release provenance. The hook refuses dirty pushes, runs verify-build-provenance --require-clean, then runs make build-provenance. Release docs now explain hook installation and the remaining Xcode Archive preflight requirement. The pre-existing Xcode build-number bump to 20260513172951 was committed first so the new hook can pass from a clean committed release state.",
+  "files_touched": [
+    ".githooks/pre-push",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/133531-release-provenance-git-hooks.md",
+    "automation/handoffs/20260513T173531Z-release-provenance-git-hooks.json",
+    "automation/queue/slices.json",
+    "docs/workflows/release.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj"
+  ],
+  "validations_passed": [
+    "git diff --check -- owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "./Tools/verify-build-provenance.sh",
+    "chmod +x .githooks/pre-push",
+    "git config core.hooksPath .githooks",
+    "python3 automation/context/build_context.py --slice-id release-provenance-git-hooks",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    ".githooks/pre-push",
+    "dirty-tree negative check: touch .owlory-pre-push-dirty-test; .githooks/pre-push refused push; remove file",
+    "make architecture",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "tooling-tested",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release provenance push gate",
+      "before": "Release provenance validation existed as explicit commands, but there was no committed Git hook refusal point before push.",
+      "after": "A committed .githooks/pre-push hook blocks dirty or unreproducible release metadata before push when core.hooksPath is installed.",
+      "proof": [
+        ".githooks/pre-push",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Git hooks are local and must be installed per checkout with git config core.hooksPath .githooks.",
+    "The pre-push hook cannot stop Xcode Organizer from archiving; the release preflight remains required immediately before archive.",
+    "This slice does not retry or claim TestFlight proof."
+  ],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof-retry",
+  "recommended_next_reason": "Now that the build-number bump is committed and the push-time provenance hook is installed, retry TestFlight proof only if the installed TestFlight Build Info matches the committed build and source.",
+  "repo_clean_status": "clean after validation",
+  "git_mirror_status": "pending final push"
+}
