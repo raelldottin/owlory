@@ -1,0 +1,68 @@
+{
+  "slice_id": "xcode-default-destination-ios-26-5",
+  "status": "done",
+  "summary": "Refreshed Owlory's repo-default Xcode simulator destination from the unavailable iPhone 16 / iOS 26.3.1 pair to the standard iPhone 17 / iOS 26.5 simulator now installed for Xcode 26.5. The change updates Tools/validate.sh, Makefile UI lanes, the running-app smoke runner, smoke parser tests, and validation docs while preserving OWLORY_XCODE_DESTINATION as the override path. This prevents future agents from needing hidden local knowledge or a custom simulator UDID to run the default runtime validation lane.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/045127-xcode-default-destination-ios-26-5.md",
+    "Tools/validate.sh",
+    "automation/handoffs/20260513T085127Z-xcode-default-destination-ios-26-5.json",
+    "automation/queue/slices.json",
+    "automation/smoke/running_app_smoke.py",
+    "automation/tests/test_running_app_smoke.py",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id xcode-default-destination-ios-26-5",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=runtime",
+    "make build-provenance",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Default Xcode validation destination",
+      "before": "Tools/validate.sh, Makefile UI lanes, running_app_smoke.py, and validation docs defaulted to platform=iOS Simulator,name=iPhone 16,OS=26.3.1. That runtime is no longer installed after the Xcode 26.5 simulator repair, so the default runtime validation path failed unless the agent remembered a local OWLORY_XCODE_DESTINATION override.",
+      "after": "The default destination is platform=iOS Simulator,name=iPhone 17,OS=26.5 across the validation script, UI Makefile lanes, smoke runner, tests, and validation docs. make test-domain DOMAIN=runtime now passes without an environment override on the repaired Xcode 26.5 setup.",
+      "proof": [
+        "Tools/validate.sh",
+        "Makefile",
+        "automation/smoke/running_app_smoke.py",
+        "automation/tests/test_running_app_smoke.py",
+        "make test-domain DOMAIN=runtime"
+      ]
+    },
+    {
+      "contract": "Simulator recovery instructions",
+      "before": "ui-testing-hygiene.md named an old hardcoded iPhone 16 simulator UDID from the prior iOS 26.3.1 runtime.",
+      "after": "ui-testing-hygiene.md now tells agents to erase the available simulator selected from simctl instead of relying on a stale UDID.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice updates the default simulator destination only. Historical proof artifacts that accurately name iPhone 16 / iOS 26.3.1 were intentionally not rewritten.",
+    "The first iOS 26.5 runtime installation attempt left an unusable duplicate CoreSimulator disk-image record. It does not block validation, but future environment cleanup may remove it via simctl runtime tooling if it becomes noisy.",
+    "The maintained UI smoke/regression suites were not rerun in this slice. Their defaults now point at iPhone 17 / iOS 26.5, but this slice's proof is the runtime domain lane plus automation tests."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop. Blocked TestFlight/localization/UI expansion slices remain parked behind their entry conditions.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T08:51:27Z"
+}

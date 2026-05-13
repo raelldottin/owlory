@@ -2419,6 +2419,39 @@
       "notes": "Immediate small runtime diagnostics improvement. Surface the stamped GitStatus field directly in Build Info so future device/TestFlight provenance gates do not have to infer clean/dirty state from commit suffixes or releaseability banners. Do not change stamping behavior, release provenance rules, or TestFlight proof claims. Build Info should show GitStatus directly as clean, dirty, or unknown/unavailable while preserving the existing Not releaseable banner. proof_level target: build-tested."
     },
     {
+      "slice_id": "xcode-default-destination-ios-26-5",
+      "title": "Refresh default Xcode simulator destination to iOS 26.5",
+      "status": "done",
+      "priority": 153,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "Makefile",
+        "Tools/validate.sh",
+        "automation/smoke/running_app_smoke.py",
+        "automation/tests/test_running_app_smoke.py",
+        "docs/workflows/validation.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id xcode-default-destination-ios-26-5",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=runtime",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "build-info-display-git-status"
+      ],
+      "max_files_changed": 10,
+      "notes": "Harness-only follow-up after installing the Xcode 26.5-compatible iOS simulator runtime. The repo default still points at iPhone 16 / iOS 26.3.1, which is no longer available on this machine and causes make test-domain DOMAIN=runtime to fail unless OWLORY_XCODE_DESTINATION is remembered out of band. Refresh the default simulator destination used by Tools/validate.sh, Makefile UI lanes, running_app_smoke.py, and validation docs to a standard available iOS 26.5 simulator such as iPhone 17 / OS=26.5. Do not touch product code or proof artifacts. Keep OWLORY_XCODE_DESTINATION override support. proof_level target: tooling-tested."
+    },
+    {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
       "title": "Retry TestFlight proof with clean provenance",
       "status": "blocked",

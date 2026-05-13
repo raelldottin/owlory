@@ -97,9 +97,9 @@ class FakeRunner:
     def available_devices(self) -> dict:
         return {
             "devices": {
-                "com.apple.CoreSimulator.SimRuntime.iOS-26-3": [
+                "com.apple.CoreSimulator.SimRuntime.iOS-26-5": [
                     {
-                        "name": "iPhone 16",
+                        "name": "iPhone 17",
                         "udid": "TEST-DEVICE",
                         "state": "Shutdown",
                         "isAvailable": True
@@ -125,14 +125,14 @@ class RunningAppSmokeTests(unittest.TestCase):
         )
 
     def test_parse_destination_reads_xcode_key_value_destination(self) -> None:
-        parsed = parse_destination("platform=iOS Simulator,name=iPhone 16,OS=26.3.1")
+        parsed = parse_destination("platform=iOS Simulator,name=iPhone 17,OS=26.5")
 
         self.assertEqual("iOS Simulator", parsed["platform"])
-        self.assertEqual("iPhone 16", parsed["name"])
-        self.assertEqual("26.3.1", parsed["os"])
+        self.assertEqual("iPhone 17", parsed["name"])
+        self.assertEqual("26.5", parsed["os"])
 
     def test_runtime_match_accepts_major_minor_runtime_identifier(self) -> None:
-        self.assertTrue(runtime_matches("com.apple.CoreSimulator.SimRuntime.iOS-26-3", "26.3.1"))
+        self.assertTrue(runtime_matches("com.apple.CoreSimulator.SimRuntime.iOS-26-5", "26.5"))
 
     def test_find_simulator_uses_destination_name_and_os(self) -> None:
         runner = FakeRunner(Path("/tmp/owlory-test"))
