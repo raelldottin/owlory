@@ -1,0 +1,42 @@
+{
+  "attempt_id": "20260513T142117Z",
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "gate_status": "blocked_before_testflight_ui_proof",
+  "blocked_reason": "Paired iPhone still has com.raelldottin.owlory bundleVersion 20260417081911 installed, while local clean main at d0513a41a3e438a76494f43e5f4094a6983ad75e has committed build 20260417081904.",
+  "local_source": {
+    "commit": "d0513a41a3e438a76494f43e5f4094a6983ad75e",
+    "commit_short": "d0513a41a3e4",
+    "branch": "main",
+    "version": "0.2.0",
+    "build_number": "20260417081904",
+    "working_tree": "clean",
+    "releaseable": true
+  },
+  "device": {
+    "name": "Raell Dottin's iPhone",
+    "identifier": "691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F",
+    "model": "iPhone 15 Pro Max",
+    "product_type": "iPhone16,2",
+    "os": "iOS 26.4.2"
+  },
+  "installed_app_metadata": {
+    "bundle_identifier": "com.raelldottin.owlory",
+    "marketing_version": "0.2.0",
+    "bundle_version": "20260417081911"
+  },
+  "commands": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof-retry",
+    "make build-provenance",
+    "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps.json",
+    "./Tools/verify-build-provenance.sh --expected-build 20260417081911 --expected-commit d0513a41a3e438a76494f43e5f4094a6983ad75e"
+  ],
+  "failed_comparison": {
+    "expected_build_from_installed_app": "20260417081911",
+    "local_committed_build": "20260417081904",
+    "error": "expected build '20260417081911' but Xcode CURRENT_PROJECT_VERSION is '20260417081904'"
+  },
+  "continue_proof_claimed": [],
+  "testflight_verified": false,
+  "next_action": "Install the fresh clean TestFlight build on the paired iPhone and rerun the Build Info provenance gate before capturing Continue surfaces."
+}
