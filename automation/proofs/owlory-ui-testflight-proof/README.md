@@ -64,6 +64,18 @@ error: expected build '20260417081911' but Xcode CURRENT_PROJECT_VERSION is '202
 
 No Build Info screenshot or Continue surface was captured in this retry. The likely next action is to install the fresh clean TestFlight build on the paired iPhone, then rerun the Build Info gate.
 
+## 2026-05-13 Second Retry Gate Record
+
+The second retry attempt in [`20260513T163220Z-retry/`](20260513T163220Z-retry/) also stopped before Continue capture. The paired iPhone had a newer installed Owlory build, bundle version `20260417081912`, but mirrored local `main` at `c70ab71f9402ab2b97f0676260c171b868c22ae4` still has committed build `20260417081904`. A Git search found no committed `project.pbxproj` state on `main` containing `20260417081912`.
+
+The provenance comparison failed:
+
+```text
+error: expected build '20260417081912' but Xcode CURRENT_PROJECT_VERSION is '20260417081904'
+```
+
+No Build Info screenshot or Continue surface was captured in this retry. A future TestFlight proof attempt must start from an uploaded build whose bundle version matches committed source.
+
 ## Follow-up
 
 `owlory-release-provenance-stamp-audit` (queued; see slices.json). The audit slice must:

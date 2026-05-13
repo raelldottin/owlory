@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-test-testflight-proof-retry fresh install gate](sessions/2026-05-13/123220-owlory-ui-test-testflight-proof-retry.md)
 - [owlory-ui-test-testflight-proof-retry](sessions/2026-05-13/102117-owlory-ui-test-testflight-proof-retry.md)
 - [owlory-release-clean-testflight-build-prep](sessions/2026-05-13/095701-owlory-release-clean-testflight-build-prep.md)
 - [harness-blocked-slice-unblocker-policy](sessions/2026-05-13/094648-harness-blocked-slice-unblocker-policy.md)
