@@ -3,7 +3,7 @@
 Set `OWLORY_XCODE_DESTINATION` to override the default simulator destination.
 
 ```bash
-export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.3.1"
+export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 ```
 
 ## Common Commands

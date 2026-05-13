@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 
-DEFAULT_DESTINATION = "platform=iOS Simulator,name=iPhone 16,OS=26.3.1"
+DEFAULT_DESTINATION = "platform=iOS Simulator,name=iPhone 17,OS=26.5"
 RUNNING_APP_PROOF_LEVEL = "running-app-smoke"
 BUILD_PROOF_LEVEL = "build-tested"
 

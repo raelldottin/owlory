@@ -158,7 +158,7 @@ This is environmental, not a product or test-logic regression. It happens when a
 
 ```bash
 xcrun simctl shutdown all
-xcrun simctl erase 93831D66-8855-467D-8991-81886B30A57F   # or the iPhone 16 UDID from `xcrun simctl list devices available`
+xcrun simctl erase <available-simulator-udid>   # choose the default destination UDID from `xcrun simctl list devices available`
 rm -rf /tmp/owlory-ui-smoke-derived-data
 make ui-smoke
 ```

@@ -5,7 +5,7 @@ set -e
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT_DIR="$ROOT/owlory_xcode"
-DESTINATION="${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 16,OS=26.3.1}"
+DESTINATION="${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"
 MODE="${1:-fast}"
 DOMAIN="${2:-${DOMAIN:-}}"
 

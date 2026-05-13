@@ -31,7 +31,7 @@ review-preflight:
 	./Tools/review-preflight.sh
 
 ui-smoke:
-	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 16,OS=26.3.1}"; \
+	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"; \
 	echo "Running Owlory UI smoke on $$DESTINATION"; \
 	xcodebuild test \
 		-project owlory_xcode/Owlory.xcodeproj \
@@ -45,7 +45,7 @@ ui-smoke-proof: ui-smoke
 	python3 automation/smoke/extract_ui_smoke_screenshots.py
 
 ui-regression:
-	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 16,OS=26.3.1}"; \
+	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"; \
 	echo "Running Owlory UI regression batch on $$DESTINATION"; \
 	xcodebuild test \
 		-project owlory_xcode/Owlory.xcodeproj \
