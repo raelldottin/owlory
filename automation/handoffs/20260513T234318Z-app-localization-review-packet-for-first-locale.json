@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "slice_id": "app-localization-review-packet-for-first-locale",
+  "status": "done",
+  "proof_level": "doc/export-tested",
+  "completed_at": "2026-05-13T23:43:18Z",
+  "summary": "Prepared the German-first localization review packet. The packet contains 320 review entries derived from the current localization export: 282 Localizable.strings entries and 38 Localizable.stringsdict plural entries. All German values are currently english-placeholder. No app resources were replaced and no native-review claim was made.",
+  "files_touched": [
+    "localization/review/README.md",
+    "localization/review/de/README.md",
+    "localization/review/de/german-review-packet.csv",
+    "localization/review/de/german-review-packet.json",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/roadmap-status.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260513T234318Z-app-localization-review-packet-for-first-locale.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/194318-app-localization-review-packet-for-first-locale.md"
+  ],
+  "validations_passed": [
+    "python3 Tools/localization-review-export.py --output-dir localization/review",
+    "python3 automation/context/build_context.py --slice-id app-localization-review-packet-for-first-locale",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool localization/review/de/german-review-packet.json",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "contract_status_changes": [
+    {
+      "contract": "First-locale localization review",
+      "before": "German review intake was blocked because no reviewed translation packet existed.",
+      "after": "German has a reviewer-ready packet and return format; intake remains blocked until reviewed values are returned with reviewer/status metadata.",
+      "proof": [
+        "localization/review/de/README.md",
+        "localization/review/de/german-review-packet.csv",
+        "localization/review/de/german-review-packet.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No translations were replaced in app resources.",
+    "No native or fluent German review has been completed.",
+    "Manual German per-app language behavior remains a separate diagnostic path.",
+    "The first-locale intake slice remains blocked until reviewed rows return."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "app-localization-first-locale-review-intake",
+  "next_recommended_reason": "Only after reviewed German values return with reviewer/status metadata."
+}

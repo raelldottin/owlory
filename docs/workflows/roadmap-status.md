@@ -76,7 +76,7 @@ When a blocked slice needs progress, work on its `recommended_unblocker` instead
 Current unblocker chain:
 
 - `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
-- `app-localization-review-packet-for-first-locale` should be queued only when localization review should move forward; it prepares reviewer input and does not replace translations.
+- `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
 - `owlory-ui-regression-next-surface-triage` should be queued only when the next UI regression surface needs selection; it does not add tests.
 
 ## Suggested Order
