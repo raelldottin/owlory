@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "slice_id": "owlory-ui-test-testflight-proof",
+  "status": "done",
+  "proof_level": "testflight-verified",
+  "completed_at": "2026-05-13T21:03:09Z",
+  "summary": "Promoted the fresh clean TestFlight screenshots into a repo-managed proof packet. Build Info provenance passed for Owlory 0.2.0 (20260513202827) from clean commit adb5de52bf90233e64257d5c0aa1dc37f59a6bf2, and the captured natural-data path shows Today Continue plus one Home protocol run route.",
+  "files_touched": [
+    "automation/proofs/owlory-ui-testflight-proof/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/manifest.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/manifest.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/01-build-info-overview.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/02-build-info-provenance.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/03-continue-surface.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/04-route-or-result.png",
+    "automation/queue/slices.json",
+    "docs/workflows/release.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/170309-owlory-ui-testflight-proof.md"
+  ],
+  "validations_passed": [
+    "git cat-file -e adb5de52bf90233e64257d5c0aa1dc37f59a6bf2^{commit}",
+    "git show adb5de52bf90233e64257d5c0aa1dc37f59a6bf2:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg 'CURRENT_PROJECT_VERSION' | sort -u",
+    "git branch --contains adb5de52bf90233e64257d5c0aa1dc37f59a6bf2 --all",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/*.png",
+    "sips -g pixelWidth -g pixelHeight automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/*.png",
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight proof for selected Continue path",
+      "from": "blocked by Build Info provenance",
+      "to": "testflight-verified for captured natural-data path only"
+    }
+  ],
+  "residual_risks": [
+    "This does not prove every Continue source.",
+    "This does not prove the broad Continue routing matrix.",
+    "This does not prove debug-seeded parity on TestFlight.",
+    "This does not prove full UI regression coverage.",
+    "This does not prove App Store production behavior beyond this TestFlight install."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "Clean stop is valid; broaden TestFlight proof only if a new concrete release-channel path needs proof."
+}

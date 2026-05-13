@@ -59,7 +59,7 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression`, with the first batch covering Today Continue source visibility, source-derived routing, and Focus row actions; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable.
+- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression`, with the first batch covering Today Continue source visibility, source-derived routing, and Focus row actions; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - The immediate UI proof queue continues to broaden source and routing smoke and to grow the regression batch with edge cases when new product surfaces ship. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
@@ -67,8 +67,6 @@ UI regression and snapshot coverage:
 
 The following items are intentionally represented as blocked/deferred slices so future agents do not lose them or start them prematurely:
 
-- `owlory-ui-test-testflight-proof-retry` - blocked until a fresh clean TestFlight build exists.
-- `owlory-ui-test-testflight-proof-capture` - blocked until the TestFlight Build Info gate passes.
 - `app-localization-first-locale-review-intake` - blocked until reviewed translation values and reviewer/status metadata exist.
 - `owlory-ui-regression-expansion-next-surface` - blocked until the next regression surface is explicitly chosen.
 
@@ -77,7 +75,7 @@ When a blocked slice needs progress, work on its `recommended_unblocker` instead
 
 Current unblocker chain:
 
-- `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. TestFlight proof retry remains blocked until a fresh installed TestFlight build exists and its Build Info gate passes.
+- `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - `app-localization-review-packet-for-first-locale` should be queued only when localization review should move forward; it prepares reviewer input and does not replace translations.
 - `owlory-ui-regression-next-surface-triage` should be queued only when the next UI regression surface needs selection; it does not add tests.
 
@@ -85,13 +83,12 @@ Current unblocker chain:
 
 For implementation work, prefer this order unless a user request or concrete bug changes priority:
 
-1. Create/upload/install a fresh clean TestFlight build outside the repo, then unblock `owlory-ui-test-testflight-proof-retry` only if Build Info provenance passes.
-2. Performance observability expansion.
-3. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
-4. Continue Skip for today.
-5. ML eval fixtures and manual device checklist.
-6. Continue persisted provenance and later prune/migrate pass.
-7. Home protocol overdue/stale treatment and future Home-project modeling.
+1. Performance observability expansion.
+2. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
+3. Continue Skip for today.
+4. ML eval fixtures and manual device checklist.
+5. Continue persisted provenance and later prune/migrate pass.
+6. Home protocol overdue/stale treatment and future Home-project modeling.
 
 ## Update Rule
 

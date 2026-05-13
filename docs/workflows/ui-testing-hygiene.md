@@ -9,6 +9,7 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
+- Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - Owlory does not currently have a batched UI regression suite.
 
 Do not treat the single smoke test as broad UI regression coverage.
@@ -104,7 +105,7 @@ Deferred proof lanes:
 | --- | --- | --- |
 | `owlory-ui-test-screenshot-proof-pack` | Source and routing smoke should be clear enough that screenshots preserve useful evidence rather than random surfaces. | `screenshot-verified` |
 | `owlory-ui-test-device-proof` | Running simulator paths should be stable, and the chosen device flows should have explicit provenance expectations. | `device-verified` |
-| `owlory-ui-test-testflight-proof` | TestFlight build identity and seeding strategy must be explicit; debug-only seed flags are not assumed available. | `testflight-verified` |
+| `owlory-ui-test-testflight-proof` | Completed for the captured natural-data Today Continue launch surface plus one Home protocol run route; debug-only seed flags were not used. | `testflight-verified` for the captured path only |
 | `owlory-ui-regression-suite-plan` | Smoke/source/routing proof should be mature enough to define what broader regression coverage means. | `doc-only` |
 
 Do not claim broad UI regression coverage until that suite is intentionally designed and maintained.

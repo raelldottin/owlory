@@ -2230,7 +2230,7 @@
     {
       "slice_id": "owlory-ui-test-testflight-proof",
       "title": "Verify selected Continue flows from a TestFlight build",
-      "status": "blocked",
+      "status": "done",
       "priority": 157,
       "domain": "automation",
       "allowed_paths": [
@@ -2258,7 +2258,7 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "A fresh TestFlight build exists and a specific TestFlight proof strategy is selected: natural user data, an intentional Release-safe fixture path, or launch plus Build Info only.",
-      "notes": "Verify selected Continue flows from a TestFlight build. Constraint: the existing debug-only --owlory-ui-seed-* paths in OwloryUITestSupport are gated by #if DEBUG and are not present in a TestFlight (Release) build, so they cannot be assumed. This slice must first pick one path: (a) verify using real user data captured in a documented dataset; (b) add an explicitly TestFlight-safe fixture/demo-mode toggle compiled into Release builds and document its scope and access path (must be intentional, narrow, and not user-data-destructive); or (c) limit TestFlight proof to launch + Build Info verification only and explicitly classify Continue rendering as device-verified-only. Record the chosen approach in docs/workflows/release.md or ui-testing-hygiene.md before capturing artifacts. Preserve TestFlight build metadata, Build Info screenshot, and selected flow artifacts under automation/proofs/owlory-ui-testflight-proof/ with a README and manifest. proof_level should land at testflight-verified only for the verified paths; everything else stays at device-verified or below. Out of scope: device-only flows, app-wide regression on TestFlight, any change to release process beyond what the chosen approach requires."
+      "notes": "Completed on 2026-05-13 with natural-data TestFlight proof in automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/. Build Info passed the provenance gate for Owlory 0.2.0 (20260513202827), clean commit adb5de52bf90233e64257d5c0aa1dc37f59a6bf2, branch main, configuration Release, bundle com.raelldottin.owlory, and Build source Xcode CURRENT_PROJECT_VERSION. The stamped commit is on origin/main and its committed project.pbxproj has CURRENT_PROJECT_VERSION 20260513202827. Claimed scope is intentionally narrow: Today Continue launch surface plus one natural-data Home protocol run route into the active run sheet. Not claimed: every Continue source, broad routing matrix, debug-seeded parity, full UI regression, or App Store production behavior."
     },
     {
       "slice_id": "owlory-ui-regression-suite-plan",
@@ -2683,7 +2683,7 @@
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
       "title": "Retry TestFlight proof with clean provenance",
-      "status": "blocked",
+      "status": "done",
       "priority": 153,
       "domain": "runtime",
       "allowed_paths": [
@@ -2705,12 +2705,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus.",
-      "notes": "Blocked entry condition: a new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus. Retry TestFlight proof only after that gate can be evaluated. Build Info gate comes first; reject the run if commit/build provenance does not match committed source, or if GitStatus is dirty or unavailable. Do not use debug seed flags, do not synthesize data, and capture only natural-data Continue paths exposed by the TestFlight install. If the gate fails, block the slice and do not capture Continue surfaces. proof_level target: testflight-verified for only the exercised TestFlight paths. Latest retry on 2026-05-13T173000Z preserved Build Info and Continue screenshots, but Build Info showed GitStatus dirty and source stamp de320a7dd2c38878df3343ae3f945df9ffb8f815-dirty; see automation/proofs/owlory-ui-testflight-proof/20260513T173000Z-retry/."
+      "notes": "Completed on 2026-05-13. The clean TestFlight retry passed the Build Info gate: installed build 20260513202827, clean commit adb5de52bf90233e64257d5c0aa1dc37f59a6bf2, Release configuration, and committed source CURRENT_PROJECT_VERSION 20260513202827. See automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-capture",
       "title": "Capture TestFlight Continue proof artifacts",
-      "status": "blocked",
+      "status": "done",
       "priority": 152,
       "domain": "runtime",
       "allowed_paths": [
@@ -2731,7 +2731,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "TestFlight Build Info provenance gate passed for the installed build.",
-      "notes": "Blocked entry condition: TestFlight Build Info provenance gate passed for the installed build. After TestFlight provenance passes, preserve screenshots and manifest evidence for the launch surface and any natural-data Continue routes actually exercised. Claim only captured surfaces. Preserve README.md and manifest.json with hashes. Do not claim debug-seeded parity, device/debug proof from TestFlight artifacts, or all Continue sources unless the TestFlight install naturally exposes them and they are exercised. proof_level target: testflight-verified for captured surfaces only.",
+      "notes": "Completed on 2026-05-13. Preserved Build Info screenshots, Today Continue surface, and one Home protocol run route/result screenshot with hashes under automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/. Claim only the captured natural-data TestFlight surfaces.",
       "recommended_unblocker": "owlory-ui-test-testflight-proof-retry"
     },
     {

@@ -1,0 +1,81 @@
+{
+  "attempt_id": "20260513T205620Z",
+  "slice_id": "owlory-ui-test-testflight-proof",
+  "status": "passed",
+  "proof_level": "testflight-verified",
+  "gate_status": "passed",
+  "installed_build_info": {
+    "marketing_version": "0.2.0",
+    "build_number": "20260513202827",
+    "git_commit_short": "adb5de52bf90",
+    "git_commit_full": "adb5de52bf90233e64257d5c0aa1dc37f59a6bf2",
+    "git_branch": "main",
+    "git_status": "clean",
+    "git_tag": "adb5de5",
+    "built": "2026-05-13T20:29:26Z",
+    "configuration": "Release",
+    "bundle_identifier": "com.raelldottin.owlory",
+    "build_source": "Xcode CURRENT_PROJECT_VERSION"
+  },
+  "committed_source_at_stamped_commit": {
+    "commit": "adb5de52bf90233e64257d5c0aa1dc37f59a6bf2",
+    "current_project_version": "20260513202827",
+    "contained_in": [
+      "main",
+      "origin/main"
+    ]
+  },
+  "testflight_verified_claims": [
+    "Build Info provenance gate passed for the installed TestFlight build.",
+    "Today launch surface rendered with natural-data Continue rows.",
+    "One natural-data Home protocol run Continue row opened the active run sheet."
+  ],
+  "missing_or_unclaimed_proof": [
+    "Every Continue source",
+    "Broad Continue routing matrix",
+    "Debug-seeded parity on TestFlight",
+    "Broad UI regression coverage",
+    "App Store production behavior"
+  ],
+  "artifacts": [
+    {
+      "file": "01-build-info-overview.png",
+      "description": "Build Info screenshot showing version/build, source commit, branch, Git status clean, build time, Release configuration, and bundle identifier.",
+      "sha256": "9fe791171ea715a5244a0f45f4d75359da37dc1ab1d4284d7d202eeac4fdf23b",
+      "size_bytes": 277276,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "02-build-info-provenance.png",
+      "description": "Build Info screenshot focused on source provenance, Git status clean, Build source Xcode CURRENT_PROJECT_VERSION, Release configuration, and bundle identifier.",
+      "sha256": "070a77b1f2e712a5334cacd703b557ccd7ee0cc05fc687529779550da605463d",
+      "size_bytes": 285607,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "03-continue-surface.png",
+      "description": "Today Continue surface screenshot from the same TestFlight install using natural user data.",
+      "sha256": "d3277ead8658c663a95cbce96cdb4880d4d01ede4a1fba6e74602e15bd14a196",
+      "size_bytes": 343588,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    },
+    {
+      "file": "04-route-or-result.png",
+      "description": "Result screenshot showing the Morning Routine Continue row opened the active Home protocol run sheet.",
+      "sha256": "c4341cbf339f1f3739c7ffe63dfaf5ab074396a1b621e6d66537d80762451f28",
+      "size_bytes": 240855,
+      "pixel_width": 1290,
+      "pixel_height": 2796
+    }
+  ],
+  "commands": [
+    "git cat-file -e adb5de52bf90233e64257d5c0aa1dc37f59a6bf2^{commit}",
+    "git show adb5de52bf90233e64257d5c0aa1dc37f59a6bf2:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg 'CURRENT_PROJECT_VERSION' | sort -u",
+    "git branch --contains adb5de52bf90233e64257d5c0aa1dc37f59a6bf2 --all",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/*.png",
+    "sips -g pixelWidth -g pixelHeight automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/*.png"
+  ]
+}
