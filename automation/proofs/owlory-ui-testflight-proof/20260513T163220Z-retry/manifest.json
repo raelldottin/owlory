@@ -1,0 +1,52 @@
+{
+  "attempt_id": "20260513T163220Z",
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "gate_status": "blocked_before_testflight_ui_proof",
+  "blocked_reason": "Paired iPhone has com.raelldottin.owlory bundleVersion 20260417081912 installed, while mirrored local main at c70ab71f9402ab2b97f0676260c171b868c22ae4 has committed build 20260417081904 and no committed project.pbxproj state on main contains 20260417081912.",
+  "local_source": {
+    "commit": "c70ab71f9402ab2b97f0676260c171b868c22ae4",
+    "commit_short": "c70ab71f9402",
+    "branch": "main",
+    "version": "0.2.0",
+    "build_number": "20260417081904",
+    "working_tree": "clean",
+    "releaseable": true,
+    "mirror_status": "0 0"
+  },
+  "device": {
+    "name": "Raell Dottin's iPhone",
+    "identifier": "691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F",
+    "model": "iPhone 15 Pro Max",
+    "product_type": "iPhone16,2",
+    "os": "iOS 26.4.2"
+  },
+  "installed_app_metadata": {
+    "bundle_identifier": "com.raelldottin.owlory",
+    "marketing_version": "0.2.0",
+    "bundle_version": "20260417081912"
+  },
+  "artifacts": [
+    {
+      "file": "device-apps.json",
+      "description": "Raw devicectl app metadata for the installed com.raelldottin.owlory app on the paired iPhone."
+    }
+  ],
+  "commands": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof-retry",
+    "make build-provenance",
+    "git fetch origin main",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "git log --all --oneline -S20260417081912 -- owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps-fresh.json",
+    "./Tools/verify-build-provenance.sh --expected-build 20260417081912 --expected-commit c70ab71f9402ab2b97f0676260c171b868c22ae4"
+  ],
+  "failed_comparison": {
+    "expected_build_from_installed_app": "20260417081912",
+    "local_committed_build": "20260417081904",
+    "error": "expected build '20260417081912' but Xcode CURRENT_PROJECT_VERSION is '20260417081904'"
+  },
+  "continue_proof_claimed": [],
+  "testflight_verified": false,
+  "next_action": "Create/upload/install a TestFlight build whose bundle version matches a committed project.pbxproj CURRENT_PROJECT_VERSION, then rerun the Build Info provenance gate before capturing Continue surfaces."
+}

@@ -1,0 +1,58 @@
+{
+  "slice_id": "owlory-ui-test-testflight-proof-retry",
+  "status": "blocked",
+  "summary": "Retried the TestFlight proof gate after the user installed a fresh TestFlight build on the paired iPhone. The installed Owlory app now reports bundleVersion 20260417081912, but mirrored local main at c70ab71f9402ab2b97f0676260c171b868c22ae4 still has committed build 20260417081904 and no committed project.pbxproj state on main contains 20260417081912. The gate stopped before Build Info screenshot or Continue capture.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/123220-owlory-ui-test-testflight-proof-retry.md",
+    "automation/handoffs/20260513T163220Z-owlory-ui-test-testflight-proof-retry.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/device-apps.json",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/manifest.json",
+    "automation/proofs/owlory-ui-testflight-proof/README.md",
+    "automation/queue/slices.json"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-test-testflight-proof-retry",
+    "make build-provenance",
+    "git fetch origin main",
+    "git rev-list --left-right --count HEAD...@{u}",
+    "git log --all --oneline -S20260417081912 -- owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps-fresh.json",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "./Tools/verify-build-provenance.sh --expected-build 20260417081912 --expected-commit c70ab71f9402ab2b97f0676260c171b868c22ae4"
+  ],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "TestFlight Build Info gate",
+      "before": "The user reported a fresh clean TestFlight build was installed on the paired iPhone.",
+      "after": "The installed app is newer than the prior failed retry, but it is still not reproducible from committed source: bundleVersion 20260417081912 does not exist in any committed project.pbxproj state on mirrored main.",
+      "proof": [
+        "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/README.md",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/manifest.json",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/device-apps.json",
+        "./Tools/verify-build-provenance.sh --expected-build 20260417081912 --expected-commit c70ab71f9402ab2b97f0676260c171b868c22ae4"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The installed TestFlight app may have been built from a local-only Xcode build-number bump or other release process not represented in Git.",
+    "No TestFlight Build Info screenshot was captured in this retry.",
+    "No natural-data Continue surface was exercised.",
+    "TestFlight proof remains blocked until the uploaded bundle version matches committed source and Build Info shows clean matching commit/build/GitStatus."
+  ],
+  "recommended_next_slice": "owlory-ui-test-testflight-proof-retry",
+  "recommended_next_reason": "Retry only after creating/uploading/installing a TestFlight build whose bundle version matches committed project.pbxproj CURRENT_PROJECT_VERSION.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T16:32:20Z"
+}

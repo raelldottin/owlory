@@ -1,0 +1,46 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "apps",
+      "--device",
+      "691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F",
+      "--bundle-id",
+      "com.raelldottin.owlory",
+      "--json-output",
+      "/tmp/owlory-device-apps-fresh.json"
+    ],
+    "commandType" : "devicectl.device.info.apps",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 3,
+    "outcome" : "success",
+    "version" : "518.31"
+  },
+  "result" : {
+    "apps" : [
+      {
+        "appClip" : false,
+        "builtByDeveloper" : true,
+        "bundleIdentifier" : "com.raelldottin.owlory",
+        "bundleVersion" : "20260417081912",
+        "defaultApp" : false,
+        "hidden" : false,
+        "internalApp" : false,
+        "name" : "Owlory",
+        "removable" : true,
+        "url" : "file:///private/var/containers/Bundle/Application/B0B9BC5D-8099-467F-8318-010A3140D804/Owlory.app/",
+        "version" : "0.2.0"
+      }
+    ],
+    "defaultAppsIncluded" : false,
+    "deviceIdentifier" : "691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F",
+    "hiddenAppsIncluded" : false,
+    "internalAppsIncluded" : false,
+    "matchingBundleIdentifier" : "com.raelldottin.owlory",
+    "removableAppsIncluded" : true
+  }
+}
