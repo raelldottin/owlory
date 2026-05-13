@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-13
+
+- [ui-simulator-validation-recovery](sessions/2026-05-13/022554-ui-simulator-validation-recovery.md)
+
 ## 2026-05-12
 
 - [owlory-ui-regression-batch-1-today-continue](sessions/2026-05-12/050254-owlory-ui-regression-batch-1-today-continue.md)
