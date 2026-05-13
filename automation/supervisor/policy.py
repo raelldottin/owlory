@@ -30,6 +30,15 @@ class ValidationOwnership:
 
 
 @dataclass
+class BlockedSliceReport:
+    slice_id: str
+    status: str
+    entry_condition: str
+    recommended_unblocker: str
+    notes: str
+
+
+@dataclass
 class CompletionDecision:
     queue_status: str
     decision: str
@@ -234,6 +243,12 @@ def validate_queue_integrity(queue_data: dict[str, Any]) -> list[str]:
                     f"slice {slice_record['slice_id']!r} is {slice_record['status']!r} "
                     "but is missing an explicit entry_condition"
                 )
+            recommended_unblocker = slice_record.get("recommended_unblocker", "").strip()
+            if recommended_unblocker and recommended_unblocker not in known_ids:
+                errors.append(
+                    f"slice {slice_record['slice_id']!r} recommends unknown unblocker "
+                    f"{recommended_unblocker!r}"
+                )
 
     return errors
 
@@ -274,6 +289,21 @@ def select_next_slice(queue_data: dict[str, Any]) -> Optional[dict[str, Any]]:
 
     candidates.sort(key=lambda item: (item[0], item[1]))
     return candidates[0][2]
+
+
+def blocked_slice_reports(queue_data: dict[str, Any]) -> list[BlockedSliceReport]:
+    reports: list[BlockedSliceReport] = []
+    for slice_record in queue_data["slices"]:
+        if slice_record["status"] not in {"blocked", "deferred"}:
+            continue
+        reports.append(BlockedSliceReport(
+            slice_id=slice_record["slice_id"],
+            status=slice_record["status"],
+            entry_condition=slice_record.get("entry_condition", "").strip(),
+            recommended_unblocker=slice_record.get("recommended_unblocker", "").strip(),
+            notes=slice_record.get("notes", "").strip()
+        ))
+    return reports
 
 
 def set_slice_status(queue_data: dict[str, Any], slice_id: str, status: str) -> dict[str, Any]:

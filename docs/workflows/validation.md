@@ -57,6 +57,14 @@ The command checks three levels:
 
 This is a read-only completion gate. If it fails, use its remediation text instead of guessing: finish or park open queue work, commit/push local changes, or add an entry condition to parked work before claiming a clean stop.
 
+Blocked slices are not executable work. When `make clean-stop` reports parked work and no queued slice is eligible, inspect unblockers with:
+
+```bash
+python3 automation/supervisor/run_next.py --dry-run --include-blocked
+```
+
+Queue or run the smallest unblocker slice rather than converting the blocked target to `queued` before its entry condition is true.
+
 ## ML, Speech, And Generated Output
 
 Use [ML QA](ml-qa.md) together with [ML Model Posture](../runtime/ml-model-posture.md) and [ML Privacy And Drafts](../runtime/ml-privacy.md) for any feature that drafts text, classifies content, transcribes speech, or suggests changes from user data.
@@ -239,6 +247,7 @@ Notes:
 - `python3 automation/context/build_context.py --slice-id <slice_id>`
 - `python3 automation/smoke/running_app_smoke.py`
 - `python3 automation/supervisor/run_next.py --dry-run`
+- `python3 automation/supervisor/run_next.py --dry-run --include-blocked`
 - `python3 automation/supervisor/run_next.py --agent-cmd 'your-agent-runner --cwd {repo_root} --prompt-file {prompt_file}'`
 - `./Tools/validate.sh architecture`
 - `./Tools/validate.sh app-icons`

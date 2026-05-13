@@ -73,17 +73,25 @@ The following items are intentionally represented as blocked/deferred slices so 
 - `owlory-ui-regression-expansion-next-surface` - blocked until the next regression surface is explicitly chosen.
 
 Do not convert blocked slices to active implementation work without satisfying their entry conditions. `make clean-stop` verifies this parking lot mechanically.
+When a blocked slice needs progress, work on its `recommended_unblocker` instead of the blocked target.
+
+Current unblocker chain:
+
+- `owlory-release-clean-testflight-build-prep` unblocks TestFlight proof retry preparation, but the retry remains blocked until a fresh installed TestFlight build exists.
+- `app-localization-review-packet-for-first-locale` should be queued only when localization review should move forward; it prepares reviewer input and does not replace translations.
+- `owlory-ui-regression-next-surface-triage` should be queued only when the next UI regression surface needs selection; it does not add tests.
 
 ## Suggested Order
 
 For implementation work, prefer this order unless a user request or concrete bug changes priority:
 
-1. Performance observability expansion.
-2. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
-3. Continue Skip for today.
-4. ML eval fixtures and manual device checklist.
-5. Continue persisted provenance and later prune/migrate pass.
-6. Home protocol overdue/stale treatment and future Home-project modeling.
+1. `owlory-release-clean-testflight-build-prep` if the next goal is TestFlight proof readiness.
+2. Performance observability expansion.
+3. UI proof source/routing triage and focused smoke batches already queued in `automation/queue/slices.json`.
+4. Continue Skip for today.
+5. ML eval fixtures and manual device checklist.
+6. Continue persisted provenance and later prune/migrate pass.
+7. Home protocol overdue/stale treatment and future Home-project modeling.
 
 ## Update Rule
 
