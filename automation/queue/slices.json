@@ -2770,6 +2770,35 @@
       "recommended_unblocker": "app-localization-review-packet-for-first-locale"
     },
     {
+      "slice_id": "app-localization-manual-language-setting-diagnostic",
+      "title": "Diagnose missing German in manual app-language picker",
+      "status": "done",
+      "priority": 150,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/validation.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/proofs/app-localization-manual-language-setting-diagnostic/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-manual-language-setting-diagnostic",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-manual-language-diagnostic-build CODE_SIGNING_ALLOWED=NO",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Record the manual finding that German did not appear in per-app language testing. Verify source and built-app localization packaging where locally possible, distinguish no Language row vs Language row without German, document IPA/xcarchive checks for TestFlight, and preserve a diagnostic proof artifact. Do not change translations, product code, localization resources, or claim manual German proof."
+    },
+    {
       "slice_id": "app-localization-manual-app-language-testing-doc",
       "title": "Document manual per-app language testing",
       "status": "done",
