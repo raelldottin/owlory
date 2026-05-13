@@ -1,12 +1,14 @@
 {
   "slice_id": "owlory-ui-test-testflight-proof-retry",
   "status": "blocked",
-  "summary": "Retried the TestFlight proof gate after the user installed a fresh TestFlight build on the paired iPhone. The installed Owlory app now reports bundleVersion 20260417081912, but mirrored local main at c70ab71f9402ab2b97f0676260c171b868c22ae4 still has committed build 20260417081904 and no committed project.pbxproj state on main contains 20260417081912. The gate stopped before Build Info screenshot or Continue capture.",
+  "summary": "Retried the TestFlight proof gate after the user installed a fresh TestFlight build on the paired iPhone, then preserved Build Info screenshots. The installed Owlory app reports bundleVersion 20260417081912 and Build Info shows clean Release commit d0513a41a3e438a76494f43e5f4094a6983ad75e, but that stamped commit's committed project.pbxproj still has CURRENT_PROJECT_VERSION 20260417081904. The gate stopped before Continue capture.",
   "files_touched": [
     "SecondBrain/INDEX.md",
     "SecondBrain/sessions/2026-05-13/123220-owlory-ui-test-testflight-proof-retry.md",
     "automation/handoffs/20260513T163220Z-owlory-ui-test-testflight-proof-retry.json",
     "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/README.md",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/01-build-info-top.png",
+    "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/02-build-info-source.png",
     "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/device-apps.json",
     "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/manifest.json",
     "automation/proofs/owlory-ui-testflight-proof/README.md",
@@ -18,7 +20,9 @@
     "git fetch origin main",
     "git rev-list --left-right --count HEAD...@{u}",
     "git log --all --oneline -S20260417081912 -- owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "git show d0513a41a3e438a76494f43e5f4094a6983ad75e:owlory_xcode/Owlory.xcodeproj/project.pbxproj | rg \"CURRENT_PROJECT_VERSION\" | sort -u",
     "xcrun devicectl device info apps --device 691FB5B7-A8F2-5AE4-BE95-EC1CABC5872F --bundle-id com.raelldottin.owlory --json-output /tmp/owlory-device-apps-fresh.json",
+    "shasum -a 256 automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/01-build-info-top.png automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/02-build-info-source.png",
     "make architecture",
     "make automation-check",
     "git diff --check"
@@ -34,18 +38,19 @@
     {
       "contract": "TestFlight Build Info gate",
       "before": "The user reported a fresh clean TestFlight build was installed on the paired iPhone.",
-      "after": "The installed app is newer than the prior failed retry, but it is still not reproducible from committed source: bundleVersion 20260417081912 does not exist in any committed project.pbxproj state on mirrored main.",
+      "after": "The installed app is newer than the prior failed retry, and Build Info confirms clean Release commit d0513a41a3e438a76494f43e5f4094a6983ad75e. It is still not reproducible from committed source because that commit's project.pbxproj has CURRENT_PROJECT_VERSION 20260417081904 while the TestFlight bundle reports 20260417081912.",
       "proof": [
         "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/README.md",
         "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/manifest.json",
         "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/device-apps.json",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/01-build-info-top.png",
+        "automation/proofs/owlory-ui-testflight-proof/20260513T163220Z-retry/02-build-info-source.png",
         "./Tools/verify-build-provenance.sh --expected-build 20260417081912 --expected-commit c70ab71f9402ab2b97f0676260c171b868c22ae4"
       ]
     }
   ],
   "residual_risks": [
     "The installed TestFlight app may have been built from a local-only Xcode build-number bump or other release process not represented in Git.",
-    "No TestFlight Build Info screenshot was captured in this retry.",
     "No natural-data Continue surface was exercised.",
     "TestFlight proof remains blocked until the uploaded bundle version matches committed source and Build Info shows clean matching commit/build/GitStatus."
   ],
