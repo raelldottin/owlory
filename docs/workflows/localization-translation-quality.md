@@ -127,6 +127,22 @@ git diff --check
 
 Translation replacement slices should add the affected locale smoke command and screenshot proof when the changed keys affect high-visibility launch or navigation surfaces.
 
+## German First Review Packet
+
+The first locale review packet is prepared under:
+
+```text
+localization/review/de/
+```
+
+It contains:
+
+- `german-review-packet.csv`
+- `german-review-packet.json`
+- `README.md`
+
+Use this packet to collect reviewed German values and reviewer/status metadata. It is not an app-resource replacement and does not claim German translation quality. `app-localization-first-locale-review-intake` stays blocked until reviewed rows return with `reviewed_de_value`, `review_status`, reviewer identity, and review date.
+
 ## Manual Device Review
 
 For TestFlight or physical-device translation review, testers may switch only Owlory's app language instead of changing the whole phone:

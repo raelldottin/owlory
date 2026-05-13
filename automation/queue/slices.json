@@ -2624,7 +2624,7 @@
     {
       "slice_id": "app-localization-review-packet-for-first-locale",
       "title": "Prepare first-locale translation review packet",
-      "status": "deferred",
+      "status": "done",
       "priority": 146,
       "domain": "localization",
       "allowed_paths": [
@@ -2649,7 +2649,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Localization review should move forward and a target first locale or reviewed subset is selected.",
-      "notes": "Unblocker for app-localization-first-locale-review-intake. Choose one locale or subset, prepare reviewer instructions and return format from the existing export, and do not replace app resources or claim native review. Keep deferred until translation review is an active priority."
+      "notes": "Completed on 2026-05-13 for German / Deutsch. Prepared localization/review/de/german-review-packet.csv and german-review-packet.json with 320 review entries (282 strings, 38 plural entries), all currently english-placeholder. This is reviewer input only; no app resources were replaced and no native-review claim was made. app-localization-first-locale-review-intake remains blocked until reviewed German values return with reviewer/status metadata."
     },
     {
       "slice_id": "owlory-ui-regression-next-surface-triage",
