@@ -1181,7 +1181,7 @@
       ],
       "depends_on": [],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing \u2014 Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
+      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing — Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
     },
     {
       "slice_id": "train-row-status-pill-uniformity",
@@ -1313,7 +1313,7 @@
         "write-promotion-device-verification"
       ],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level \u2014 do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
+      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level — do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
     },
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
@@ -2162,7 +2162,7 @@
         "owlory-ui-test-continue-routing-smoke-batch"
       ],
       "max_files_changed": 10,
-      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action \u2014 decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem \u2014 confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
+      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action — decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem — confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
     },
     {
       "slice_id": "owlory-ui-test-screenshot-proof-pack",
@@ -2258,7 +2258,8 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "A fresh TestFlight build exists and a specific TestFlight proof strategy is selected: natural user data, an intentional Release-safe fixture path, or launch plus Build Info only.",
-      "notes": "Verify selected Continue flows from a TestFlight build. Constraint: the existing debug-only --owlory-ui-seed-* paths in OwloryUITestSupport are gated by #if DEBUG and are not present in a TestFlight (Release) build, so they cannot be assumed. This slice must first pick one path: (a) verify using real user data captured in a documented dataset; (b) add an explicitly TestFlight-safe fixture/demo-mode toggle compiled into Release builds and document its scope and access path (must be intentional, narrow, and not user-data-destructive); or (c) limit TestFlight proof to launch + Build Info verification only and explicitly classify Continue rendering as device-verified-only. Record the chosen approach in docs/workflows/release.md or ui-testing-hygiene.md before capturing artifacts. Preserve TestFlight build metadata, Build Info screenshot, and selected flow artifacts under automation/proofs/owlory-ui-testflight-proof/ with a README and manifest. proof_level should land at testflight-verified only for the verified paths; everything else stays at device-verified or below. Out of scope: device-only flows, app-wide regression on TestFlight, any change to release process beyond what the chosen approach requires."
+      "notes": "Verify selected Continue flows from a TestFlight build. Constraint: the existing debug-only --owlory-ui-seed-* paths in OwloryUITestSupport are gated by #if DEBUG and are not present in a TestFlight (Release) build, so they cannot be assumed. This slice must first pick one path: (a) verify using real user data captured in a documented dataset; (b) add an explicitly TestFlight-safe fixture/demo-mode toggle compiled into Release builds and document its scope and access path (must be intentional, narrow, and not user-data-destructive); or (c) limit TestFlight proof to launch + Build Info verification only and explicitly classify Continue rendering as device-verified-only. Record the chosen approach in docs/workflows/release.md or ui-testing-hygiene.md before capturing artifacts. Preserve TestFlight build metadata, Build Info screenshot, and selected flow artifacts under automation/proofs/owlory-ui-testflight-proof/ with a README and manifest. proof_level should land at testflight-verified only for the verified paths; everything else stays at device-verified or below. Out of scope: device-only flows, app-wide regression on TestFlight, any change to release process beyond what the chosen approach requires.",
+      "recommended_unblocker": "owlory-release-clean-testflight-build-prep"
     },
     {
       "slice_id": "owlory-ui-regression-suite-plan",
@@ -2357,7 +2358,7 @@
         "owlory-ui-test-testflight-proof"
       ],
       "max_files_changed": 10,
-      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified \u2014 that re-attempt is a separate slice that depends_on this audit landing."
+      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified — that re-attempt is a separate slice that depends_on this audit landing."
     },
     {
       "slice_id": "owlory-release-provenance-stamp-gate-fix",
@@ -2491,6 +2492,128 @@
       "notes": "Harness-only slice. Encode the clean-stop standard as a read-only command that checks queue state, Git cleanliness/mirror status, and blocked/deferred entry conditions. Do not touch product code, proof artifacts, or parked slice semantics. Failure messages should explain remediation. proof_level target: tooling-tested."
     },
     {
+      "slice_id": "harness-blocked-slice-unblocker-policy",
+      "title": "Report blocked slices with recommended unblockers",
+      "status": "done",
+      "priority": 148,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/schemas/slice.schema.json",
+        "automation/supervisor/policy.py",
+        "automation/supervisor/run_next.py",
+        "automation/tests/",
+        "automation/README.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id harness-blocked-slice-unblocker-policy",
+        "python3 automation/supervisor/run_next.py --dry-run --include-blocked",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "clean-stop-completion-check"
+      ],
+      "max_files_changed": 14,
+      "notes": "Harness-only slice. Blocked slices are not executable work; when no queued slice is eligible, the supervisor should report missing entry conditions and recommended unblocker slices. Do not queue blocked targets directly or touch product code. proof_level target: tooling-tested."
+    },
+    {
+      "slice_id": "owlory-release-clean-testflight-build-prep",
+      "title": "Prepare a clean reproducible TestFlight build",
+      "status": "queued",
+      "priority": 147,
+      "domain": "runtime",
+      "allowed_paths": [
+        "automation/proofs/owlory-release-clean-testflight-build-prep/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-release-clean-testflight-build-prep",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make clean-stop",
+        "make build-provenance",
+        "make release-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "harness-blocked-slice-unblocker-policy"
+      ],
+      "max_files_changed": 10,
+      "notes": "Unblocker for TestFlight proof retry. Prepare the repo and release checklist for a clean, reproducible TestFlight build: verify main is clean/mirrored, verify build number matches committed pbxproj, run provenance/release gates, and document exact archive/upload expectations. Do not claim TestFlight proof, capture Continue routes, or upload unless explicitly done outside this slice. Ends by leaving the TestFlight proof retry blocked until a new installed TestFlight build actually exists."
+    },
+    {
+      "slice_id": "app-localization-review-packet-for-first-locale",
+      "title": "Prepare first-locale translation review packet",
+      "status": "deferred",
+      "priority": 146,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-review-packet-for-first-locale",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "harness-blocked-slice-unblocker-policy"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Localization review should move forward and a target first locale or reviewed subset is selected.",
+      "notes": "Unblocker for app-localization-first-locale-review-intake. Choose one locale or subset, prepare reviewer instructions and return format from the existing export, and do not replace app resources or claim native review. Keep deferred until translation review is an active priority."
+    },
+    {
+      "slice_id": "owlory-ui-regression-next-surface-triage",
+      "title": "Choose next UI regression surface",
+      "status": "deferred",
+      "priority": 145,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-next-surface-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "harness-blocked-slice-unblocker-policy"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
+      "notes": "Unblocker for owlory-ui-regression-expansion-next-surface. Compare candidate surfaces such as Write, Home protocols, Train, Patterns, and localization layout; choose exactly one next surface and coverage goal. Do not add XCUITest code in this triage slice."
+    },
+    {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
       "title": "Retry TestFlight proof with clean provenance",
       "status": "blocked",
@@ -2515,7 +2638,8 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus.",
-      "notes": "Blocked entry condition: a new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus. Retry TestFlight proof only after that gate can be evaluated. Build Info gate comes first; reject the run if commit/build provenance does not match committed source, or if GitStatus is dirty or unavailable. Do not use debug seed flags, do not synthesize data, and capture only natural-data Continue paths exposed by the TestFlight install. If the gate fails, block the slice and do not capture Continue surfaces. proof_level target: testflight-verified for only the exercised TestFlight paths."
+      "notes": "Blocked entry condition: a new TestFlight build exists from a clean, committed source state, and Build Info shows Release configuration, matching commit/build provenance, and clean GitStatus. Retry TestFlight proof only after that gate can be evaluated. Build Info gate comes first; reject the run if commit/build provenance does not match committed source, or if GitStatus is dirty or unavailable. Do not use debug seed flags, do not synthesize data, and capture only natural-data Continue paths exposed by the TestFlight install. If the gate fails, block the slice and do not capture Continue surfaces. proof_level target: testflight-verified for only the exercised TestFlight paths.",
+      "recommended_unblocker": "owlory-release-clean-testflight-build-prep"
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-capture",
@@ -2541,7 +2665,8 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "TestFlight Build Info provenance gate passed for the installed build.",
-      "notes": "Blocked entry condition: TestFlight Build Info provenance gate passed for the installed build. After TestFlight provenance passes, preserve screenshots and manifest evidence for the launch surface and any natural-data Continue routes actually exercised. Claim only captured surfaces. Preserve README.md and manifest.json with hashes. Do not claim debug-seeded parity, device/debug proof from TestFlight artifacts, or all Continue sources unless the TestFlight install naturally exposes them and they are exercised. proof_level target: testflight-verified for captured surfaces only."
+      "notes": "Blocked entry condition: TestFlight Build Info provenance gate passed for the installed build. After TestFlight provenance passes, preserve screenshots and manifest evidence for the launch surface and any natural-data Continue routes actually exercised. Claim only captured surfaces. Preserve README.md and manifest.json with hashes. Do not claim debug-seeded parity, device/debug proof from TestFlight artifacts, or all Continue sources unless the TestFlight install naturally exposes them and they are exercised. proof_level target: testflight-verified for captured surfaces only.",
+      "recommended_unblocker": "owlory-ui-test-testflight-proof-retry"
     },
     {
       "slice_id": "app-localization-first-locale-review-intake",
@@ -2575,7 +2700,8 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Reviewed translation values exist with reviewer basis/status metadata.",
-      "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. Ingest one reviewed locale or small reviewed subset from the translation review packet, replacing only values with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested."
+      "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. Ingest one reviewed locale or small reviewed subset from the translation review packet, replacing only values with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested.",
+      "recommended_unblocker": "app-localization-review-packet-for-first-locale"
     },
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
@@ -2605,7 +2731,8 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "A concrete next UI regression surface is selected and scoped.",
-      "notes": "Blocked entry condition: a concrete next UI regression surface is selected and scoped. Expand beyond Today Continue only after a concrete target surface is chosen, such as Write, Home protocols, Train, Patterns, or localization layout. Do not create a broad app-wide suite in one pass, expand without a named surface and coverage goal, or blur proof lanes. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke."
+      "notes": "Blocked entry condition: a concrete next UI regression surface is selected and scoped. Expand beyond Today Continue only after a concrete target surface is chosen, such as Write, Home protocols, Train, Patterns, or localization layout. Do not create a broad app-wide suite in one pass, expand without a named surface and coverage goal, or blur proof lanes. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke.",
+      "recommended_unblocker": "owlory-ui-regression-next-surface-triage"
     }
   ]
 }

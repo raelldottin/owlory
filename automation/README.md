@@ -74,9 +74,11 @@ Each slice record includes:
 - `max_files_changed`: hard cap on final changed paths for the slice
 - `notes`: concise operator note for the slice
 - `entry_condition`: required for `blocked` and `deferred` slices; names the external fact or explicit decision that must become true before the slice may run
+- `recommended_unblocker`: optional slice ID that prepares or satisfies the blocked slice's entry condition
 
 `allowed_paths` are prefix-based, not glob-based. `owlory_xcode/Owlory/Features/Today/` allows any file under that directory. `README.md` allows only that file.
 Use `blocked` or `deferred` instead of leaving work `queued` when it is parked behind external input. This keeps `make clean-stop` meaningful: no `queued` or `in_progress` slice should remain when the repo is truly at a clean stop.
+Do not make blocked slices executable just to keep the supervisor busy. Queue the smallest unblocker slice instead, and have the blocked slice name it in `recommended_unblocker`.
 
 ## Handoff Model
 
@@ -263,6 +265,18 @@ Decision values:
 
 The decision report includes the final queue status, reason, recommended/selected next slice IDs, changed-file count, validation failures, out-of-scope paths, and the autonomous run counter.
 It also includes any supervisor validation replays and whether they passed.
+
+When no queued slice is eligible, use:
+
+```bash
+python3 automation/supervisor/run_next.py --dry-run --include-blocked
+```
+
+This does not run blocked work. It reports parked slices, their missing entry conditions, and their `recommended_unblocker` values. The intended flow is:
+
+```text
+blocked target -> unblocker slice -> blocked target becomes queued only after its entry condition is true
+```
 
 ## Stop Conditions
 

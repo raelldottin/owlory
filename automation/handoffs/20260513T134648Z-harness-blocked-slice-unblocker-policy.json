@@ -1,0 +1,61 @@
+{
+  "slice_id": "harness-blocked-slice-unblocker-policy",
+  "status": "done",
+  "summary": "Added a first-class blocked-slice unblocker policy to the automation harness. Blocked/deferred slices can now name a recommended_unblocker, supervisor dry-run can report parked work with --include-blocked, and the queue now includes the first concrete unblocker slice for clean TestFlight build preparation instead of making blocked TestFlight proof executable prematurely.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/094648-harness-blocked-slice-unblocker-policy.md",
+    "automation/README.md",
+    "automation/handoffs/20260513T134648Z-harness-blocked-slice-unblocker-policy.json",
+    "automation/queue/slices.json",
+    "automation/schemas/slice.schema.json",
+    "automation/supervisor/policy.py",
+    "automation/supervisor/run_next.py",
+    "automation/tests/test_harness.py",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id harness-blocked-slice-unblocker-policy",
+    "python3 automation/supervisor/run_next.py --dry-run --include-blocked",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [],
+  "contract_status_changes": [
+    {
+      "contract": "Blocked slice handling",
+      "before": "Blocked slices had entry conditions, but the supervisor did not expose a blocked-work report or a machine-readable unblocker relationship.",
+      "after": "Blocked/deferred slices can name `recommended_unblocker`, `run_next.py --dry-run --include-blocked` reports missing entry conditions and unblockers, and queue integrity rejects unknown unblocker IDs.",
+      "proof": [
+        "automation/schemas/slice.schema.json",
+        "automation/supervisor/policy.py",
+        "automation/supervisor/run_next.py",
+        "make automation-check"
+      ]
+    },
+    {
+      "contract": "TestFlight proof parking",
+      "before": "TestFlight proof slices were correctly blocked, but there was no queued preparatory slice that could make progress without claiming TestFlight proof.",
+      "after": "`owlory-release-clean-testflight-build-prep` is queued as the smallest immediate unblocker; TestFlight proof retry/capture remain blocked until their entry conditions are actually true.",
+      "proof": [
+        "automation/queue/slices.json",
+        "docs/workflows/roadmap-status.md",
+        "python3 automation/supervisor/run_next.py --dry-run --include-blocked"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The harness now reports recommended unblockers, but it does not auto-create unblocker slices. That remains deliberate to avoid inventing work without scoped queue records.",
+    "`app-localization-review-packet-for-first-locale` and `owlory-ui-regression-next-surface-triage` are represented as deferred unblocker records. They should not be made executable until their own entry conditions are true."
+  ],
+  "recommended_next_slice": "owlory-release-clean-testflight-build-prep",
+  "recommended_next_reason": "This is the highest-priority queued unblocker and prepares the release/TestFlight gate without claiming TestFlight proof.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T13:46:48Z"
+}

@@ -55,6 +55,44 @@ class AutomationHarnessTests(unittest.TestCase):
             errors
         )
 
+    def test_queue_integrity_rejects_unknown_recommended_unblocker(self) -> None:
+        queue_data = policy.load_json(self.example_queue_path)
+        queue_data["slices"][0]["status"] = "blocked"
+        queue_data["slices"][0]["entry_condition"] = "External reviewer input exists."
+        queue_data["slices"][0]["recommended_unblocker"] = "missing-unblocker"
+
+        errors = policy.validate_queue_integrity(queue_data)
+
+        self.assertTrue(
+            any("recommends unknown unblocker" in error for error in errors),
+            errors
+        )
+
+    def test_blocked_slice_reports_surface_entry_condition_and_unblocker(self) -> None:
+        queue_data = policy.load_json(self.example_queue_path)
+        queue_data["slices"].append({
+            "slice_id": "review-packet",
+            "title": "Prepare review packet",
+            "status": "done",
+            "priority": 1,
+            "domain": "localization",
+            "allowed_paths": ["docs/"],
+            "required_validations": ["make architecture"],
+            "depends_on": [],
+            "max_files_changed": 1,
+            "notes": ""
+        })
+        queue_data["slices"][0]["status"] = "blocked"
+        queue_data["slices"][0]["entry_condition"] = "Reviewed values exist."
+        queue_data["slices"][0]["recommended_unblocker"] = "review-packet"
+
+        reports = policy.blocked_slice_reports(queue_data)
+
+        self.assertEqual(1, len(reports))
+        self.assertEqual("today-nonfocus-add-to-focus", reports[0].slice_id)
+        self.assertEqual("Reviewed values exist.", reports[0].entry_condition)
+        self.assertEqual("review-packet", reports[0].recommended_unblocker)
+
     def test_example_handoff_matches_schema(self) -> None:
         handoff = policy.load_json(self.example_handoff_path)
         handoff_schema = policy.load_schema(self.handoff_schema_path)

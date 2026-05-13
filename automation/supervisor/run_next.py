@@ -44,6 +44,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Select and package the next slice without launching the agent or mutating the queue."
     )
+    parser.add_argument(
+        "--include-blocked",
+        action="store_true",
+        help="When no queued slice is eligible, report blocked/deferred slices and their recommended unblockers."
+    )
     return parser.parse_args()
 
 
@@ -83,6 +88,18 @@ def main() -> int:
         next_slice = policy.select_next_slice(queue_data)
         if next_slice is None:
             print("stop: no eligible queued slice found.")
+            if args.include_blocked:
+                reports = policy.blocked_slice_reports(queue_data)
+                if reports:
+                    print()
+                    print("blocked/deferred slices:")
+                    for report in reports:
+                        print(f"- {report.status}: {report.slice_id}")
+                        print(f"  missing entry condition: {report.entry_condition}")
+                        if report.recommended_unblocker:
+                            print(f"  recommended unblocker: {report.recommended_unblocker}")
+                        else:
+                            print("  recommended unblocker: <none recorded>")
             return 0
 
         dirty_paths_before_run = policy.git_dirty_paths(repo_root)
@@ -110,20 +127,28 @@ def main() -> int:
         )
 
         if args.dry_run:
-            print(json.dumps(
-                {
-                    "selected_slice": next_slice["slice_id"],
-                    "handoff_path": str(handoff_path),
-                    "required_validations": next_slice["required_validations"],
-                    "supervisor_replayable_validations": policy.supervisor_replayable_validations(
-                        next_slice["required_validations"]
-                    ),
-                    "validation_ownership": context_bundle["validation_ownership"],
-                    "allowed_paths": next_slice["allowed_paths"],
-                    "context_documents": [doc["path"] for doc in context_bundle["documents"]]
-                },
-                indent=2
-            ))
+            report = {
+                "selected_slice": next_slice["slice_id"],
+                "handoff_path": str(handoff_path),
+                "required_validations": next_slice["required_validations"],
+                "supervisor_replayable_validations": policy.supervisor_replayable_validations(
+                    next_slice["required_validations"]
+                ),
+                "validation_ownership": context_bundle["validation_ownership"],
+                "allowed_paths": next_slice["allowed_paths"],
+                "context_documents": [doc["path"] for doc in context_bundle["documents"]]
+            }
+            if args.include_blocked:
+                report["blocked_slices"] = [
+                    {
+                        "slice_id": blocked.slice_id,
+                        "status": blocked.status,
+                        "entry_condition": blocked.entry_condition,
+                        "recommended_unblocker": blocked.recommended_unblocker
+                    }
+                    for blocked in policy.blocked_slice_reports(queue_data)
+                ]
+            print(json.dumps(report, indent=2))
             return 0
 
         queue_data = policy.set_slice_status(queue_data, next_slice["slice_id"], "in_progress")

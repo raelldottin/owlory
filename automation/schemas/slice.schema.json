@@ -119,6 +119,9 @@
           },
           "entry_condition": {
             "type": "string"
+          },
+          "recommended_unblocker": {
+            "type": "string"
           }
         }
       }
