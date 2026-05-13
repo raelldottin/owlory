@@ -2654,7 +2654,7 @@
     {
       "slice_id": "owlory-ui-regression-next-surface-triage",
       "title": "Choose next UI regression surface",
-      "status": "deferred",
+      "status": "done",
       "priority": 145,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -2678,7 +2678,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
-      "notes": "Unblocker for owlory-ui-regression-expansion-next-surface. Compare candidate surfaces such as Write, Home protocols, Train, Patterns, and localization layout; choose exactly one next surface and coverage goal. Do not add XCUITest code in this triage slice."
+      "notes": "Completed on 2026-05-13. Compared Write, Home protocols, Train, Patterns, and localization layout against current contract status, existing smoke coverage, and cross-domain blast radius. Chose Write capture inbox as the next regression surface because Write Lab is the only Partially implemented capture domain currently shipping, its promotion flows cross Today/Home tasks/Home protocols, and only the Today-Continue ingress to an in-progress Writing note has smoke coverage today. Did not pick Home protocols or Train because they are stabilized and their Continue routes are already smoke-covered, did not pick Patterns because the digest UI is read-only with low interaction risk, and did not pick localization layout because it is gated on the parked first-locale review intake. Coverage goal for the unblocked target: open Write from the tab bar with a deterministic seed, assert one in-progress Writing note row plus the capture field render, and assert one promotion affordance (Add to Today) is visible without exercising the cross-domain side effect; defer voice/live transcription, task promotion side effects, protocol promotion side effects, and screenshot/device/TestFlight claims to follow-up slices."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
@@ -2771,12 +2771,14 @@
     },
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
-      "title": "Expand Owlory UI regression coverage to the next selected surface",
-      "status": "blocked",
+      "title": "Add Write capture inbox UI regression batch",
+      "status": "queued",
       "priority": 150,
       "domain": "ui-testing",
       "allowed_paths": [
         "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Write/",
         "Makefile",
         "docs/workflows/ui-regression-plan.md",
         "docs/workflows/ui-testing-hygiene.md",
@@ -2797,8 +2799,7 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "A concrete next UI regression surface is selected and scoped.",
-      "notes": "Blocked entry condition: a concrete next UI regression surface is selected and scoped. Expand beyond Today Continue only after a concrete target surface is chosen, such as Write, Home protocols, Train, Patterns, or localization layout. Do not create a broad app-wide suite in one pass, expand without a named surface and coverage goal, or blur proof lanes. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke.",
-      "recommended_unblocker": "owlory-ui-regression-next-surface-triage"
+      "notes": "Scope chosen by owlory-ui-regression-next-surface-triage on 2026-05-13. Target surface: Write capture inbox. Coverage: (a) open Write from the tab bar via accessibility identifier, (b) seed and render one in-progress Writing note row plus the capture field, (c) assert visibility of one promotion affordance (Add to Today) without exercising the cross-domain side effect. Add a new XCUITest class (e.g., OwloryUITests/WriteCaptureRegression) following the TodayContinueRegression pattern so the smoke loop stays fast; wire either a DOMAIN= matrix or an additional `-only-testing` filter into `make ui-regression` rather than collapsing Write into the Today smoke class. Add one deterministic seed launch arg (e.g., --owlory-ui-seed-write-capture-inbox) under OwloryUITestSupport that resets app-local state and writes a single in-progress WritingNote. Use deterministic seed data, keep simulator state isolated, and classify failures per docs/workflows/ui-testing-hygiene.md. Out of scope: voice/live transcription (microphone-permission environmental constraint), task promotion side effects, protocol promotion side effects, screenshot proof pack, device proof, TestFlight proof. proof_level target: running-app-smoke."
     }
   ]
 }
