@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [[ -z "$ROOT" ]]; then
+  echo "Owlory pre-push provenance check failed: not inside a Git repository." >&2
+  exit 1
+fi
+
+cd "$ROOT"
+
+echo "Running Owlory pre-push provenance checks..."
+
+dirty_state="$(git status --short --untracked-files=all)"
+if [[ -n "$dirty_state" ]]; then
+  cat >&2 <<'EOF'
+Refusing push: the working tree is dirty.
+
+Why this exists:
+  Owlory release/TestFlight proof depends on Xcode build metadata matching
+  committed Git history. Pushing while local release metadata or proof files are
+  uncommitted recreates unreproducible TestFlight builds.
+
+How to fix:
+  Commit the intended changes, or stash/remove unrelated local files, then run:
+    ./Tools/verify-build-provenance.sh --require-clean
+    make build-provenance
+
+Read next:
+  docs/workflows/release.md
+EOF
+  printf '%s\n' "$dirty_state" >&2
+  exit 1
+fi
+
+if ! ./Tools/verify-build-provenance.sh --require-clean; then
+  cat >&2 <<'EOF'
+Pre-push provenance check failed.
+
+Why this exists:
+  The Xcode CURRENT_PROJECT_VERSION used for TestFlight must be reproducible
+  from the committed project.pbxproj at HEAD.
+
+How to fix:
+  If you intentionally bumped the build number, commit the project.pbxproj bump
+  first. If you did not intend the bump, remove it before pushing.
+
+Read next:
+  docs/workflows/release.md
+EOF
+  exit 1
+fi
+
+if ! make build-provenance; then
+  cat >&2 <<'EOF'
+Pre-push build-provenance target failed.
+
+How to fix:
+  Run make build-provenance locally, read the specific failure, and repair the
+  release metadata before pushing.
+EOF
+  exit 1
+fi
+
+echo "Pre-push provenance checks passed."

@@ -243,6 +243,7 @@ Notes:
 - `python3 Tools/localization-review-export.py --output-dir localization/review`
 - `./Tools/review-preflight.sh`
 - `./Tools/verify-build-provenance.sh`
+- `.githooks/pre-push`
 - `./Tools/verify-build-provenance.sh --expected-build <testflight-build> --expected-commit <build-info-git-commit>`
 - `python3 automation/context/build_context.py --slice-id <slice_id>`
 - `python3 automation/smoke/running_app_smoke.py`
@@ -281,6 +282,20 @@ Notes:
 Run the narrowest relevant check first. If a change touches shared rules, run the domain tests and `make architecture`. If it touches app wiring, widget behavior, build identity, or release behavior, run an Xcode build/test path rather than relying on Swift package tests alone.
 
 For TestFlight or rollback work, start with `make build-provenance`. Use `--expected-build` and `--expected-commit` when comparing a local checkout against Build Info metadata copied from an installed TestFlight build.
+
+For push-time release provenance enforcement, install the committed hook once:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Then run the same check manually when validating hook changes:
+
+```bash
+.githooks/pre-push
+```
+
+The hook is intentionally not the archive gate. It protects pushes; Xcode Archive still requires the release preflight in [Release And Rollback Workflow](release.md).
 
 For a blocked TestFlight proof retry, use the clean-build prep evidence path before any upload or capture attempt:
 

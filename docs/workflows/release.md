@@ -10,9 +10,9 @@
 
 ## Version Control Contract
 
-Implementation status: `Partially implemented` and `Needs automation enforcement`.
+Implementation status: `Implemented` for local provenance checks and pre-push refusal; `Needs archive discipline` for Xcode Organizer.
 Proof level: Local Xcode/Git build provenance is implemented and checked by `make build-provenance`.
-Missing/deferred: Automatic proof that a release commit/tag has been pushed to GitHub before archive remains future enforcement.
+Missing/deferred: A Git hook cannot stop someone from clicking Archive in Xcode. Archive still requires the explicit release preflight below.
 
 - Owlory release identity is shared across GitHub and Xcode, not split between them.
 - GitHub is the durable source of committed history: commits, tags, changelog context, and the exact revision that a shipped build came from.
@@ -23,6 +23,25 @@ Missing/deferred: Automatic proof that a release commit/tag has been pushed to G
 - Do not ship archives from unpublished commits, dirty trees, or local-only Xcode version edits that are not represented in GitHub history.
 
 Use `make build-provenance` before release or rollback work to print the current version, build number, Git commit, dirty-state warning, and rollback checkout command.
+
+## Git Hook Enforcement
+
+Owlory ships a committed pre-push hook at `.githooks/pre-push`. Install it once per checkout:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The hook blocks pushes when the working tree is dirty, when `CURRENT_PROJECT_VERSION` differs from the committed `project.pbxproj` at `HEAD`, or when `make build-provenance` fails. Its failure messages explain why the rule exists and the remediation path.
+
+This is a push-time guard only. It cannot stop Xcode Organizer from archiving local uncommitted state, so do not use a successful push as an archive proof. Before every TestFlight archive, still run:
+
+```bash
+git status --short --untracked-files=all
+git rev-list --left-right --count HEAD...@{u}
+./Tools/verify-build-provenance.sh --require-clean
+make build-provenance
+```
 
 ## Data Channel Boundary
 
@@ -44,10 +63,11 @@ Keep TestFlight and debug data separate by default. Do not point a debug build a
 5. Commit the version and changelog changes.
 6. Push the release candidate commit to GitHub so the archive will point at published source history.
 7. Run `make release-check` from a clean tree before archiving.
-8. Tag `vX.Y.Z`.
-9. Push the tag.
-10. Re-run `./Tools/verify-build-provenance.sh --require-clean` immediately before archive to confirm the on-disk Xcode `CURRENT_PROJECT_VERSION` still matches the committed value at HEAD.
-11. Archive the committed state in Xcode.
+8. Confirm the pre-push hook is installed with `git config core.hooksPath .githooks`.
+9. Tag `vX.Y.Z`.
+10. Push the tag.
+11. Re-run `./Tools/verify-build-provenance.sh --require-clean` immediately before archive to confirm the on-disk Xcode `CURRENT_PROJECT_VERSION` still matches the committed value at HEAD.
+12. Archive the committed state in Xcode.
 
 `make release-check` requires a clean tree and runs the runtime validation slice. It is intentionally stricter than `make build-provenance`.
 

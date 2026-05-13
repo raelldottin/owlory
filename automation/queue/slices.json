@@ -2392,6 +2392,38 @@
       "notes": "Implement the release-workflow gate fix identified by the stamp audit. Diagnosis recorded in automation/proofs/owlory-release-provenance-stamp-audit/: the release workflow's current clean-tree gate is necessary but insufficient. An archive was uploaded to TestFlight whose CFBundleVersion (20260417081911) was never committed to any pbxproj state on any branch or in the reflog, while the stamp script reported GitStatus=clean (visible Commit/Full commit/Tag fields lacked -dirty suffixes). Required change: extend Tools/verify-build-provenance.sh to assert that the current pbxproj CURRENT_PROJECT_VERSION matches a committed pbxproj state at HEAD (i.e., `git show HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj` contains the same CURRENT_PROJECT_VERSION value). The check should fail loudly with a message instructing the operator to commit the build-number bump before re-running the verifier. When invoked with --require-clean (as `make release-check` does), the new assertion must also fire. Update docs/workflows/release.md to record the strengthened gate as a numbered step before `Archive in Xcode` (the existing step 10), and to call out the failure mode this catches (uncommitted set-build-number.sh bumps that produce TestFlight builds whose build number is not reproducible from committed source). Add a focused test under automation/tests/ that simulates the failure mode (dirty pbxproj with a bumped value vs clean HEAD) and asserts the verifier exits non-zero. Out of scope: surfacing GitStatus directly in BuildInfoView (the UI gap noted in the audit is a separate product question), extending the audit to App Store Connect API checks, fixing prior unreproducible TestFlight builds retroactively. proof_level should land at domain-tested for the new verifier test path; the workflow doc change is doc-only addressing release.md."
     },
     {
+      "slice_id": "release-provenance-git-hooks",
+      "title": "Add release provenance pre-push hook",
+      "status": "done",
+      "priority": 156,
+      "domain": "repo-tooling",
+      "allowed_paths": [
+        ".githooks/pre-push",
+        "automation/handoffs/",
+        "automation/queue/slices.json",
+        "docs/workflows/release.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-provenance-git-hooks",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        ".githooks/pre-push",
+        "make architecture",
+        "make build-provenance",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-release-provenance-stamp-gate-fix"
+      ],
+      "max_files_changed": 10,
+      "notes": "Harness-only slice. Add a committed .githooks/pre-push hook that blocks pushes when the worktree is dirty, when verify-build-provenance --require-clean fails, or when make build-provenance fails. Document git config core.hooksPath .githooks and state clearly that the hook cannot stop Xcode Organizer archive clicks; archive still requires the release preflight immediately before TestFlight upload. The worktree entered this slice with a pre-existing Xcode build-number bump to 20260513172951; preserve it as release metadata so the new hook can pass from a clean committed state. Do not claim TestFlight proof or change app behavior."
+    },
+    {
       "slice_id": "build-info-display-git-status",
       "title": "Display GitStatus in Build Info",
       "status": "done",
