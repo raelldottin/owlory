@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-check handoff drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check automation-check
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -11,6 +11,9 @@ verify:
 
 handoff:
 	./Tools/agent-handoff.sh
+
+clean-stop:
+	python3 Tools/clean-stop-check.py
 
 automation-check:
 	python3 -m unittest discover -s automation/tests -p 'test_*.py'

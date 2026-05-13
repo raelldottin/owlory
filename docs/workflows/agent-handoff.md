@@ -38,7 +38,20 @@ When taking over or reviewing a broad dirty change set, run `make review-preflig
 1. Update the `SecondBrain` entry with changed files and validation results.
 2. Run the narrowest honest validation path.
 3. Report exact commands, failures, reruns, and residual risk.
-4. Name the next best slice when useful.
+4. If claiming all actionable work is complete, run `make clean-stop`.
+5. Name the next best slice when useful.
+
+## Clean-Stop Standard
+
+All currently actionable slices are complete only when the queue has no eligible or open queued/in-progress entries, the repo is clean, `HEAD` is mirrored with upstream, and any remaining work is represented as `blocked` or `deferred` slices with explicit entry conditions.
+
+Use:
+
+```bash
+make clean-stop
+```
+
+Do not treat a clean Git workspace as proof that all work is complete. The clean-stop command also checks supervisor selection and parked proof/translation/UI work.
 
 ## Guardrail
 

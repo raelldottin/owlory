@@ -65,7 +65,7 @@ Each slice record includes:
 
 - `slice_id`: stable identifier used by the queue and handoffs
 - `title`: short human-readable label
-- `status`: one of `queued`, `in_progress`, `blocked`, `done`, or `failed`
+- `status`: one of `queued`, `in_progress`, `blocked`, `deferred`, `done`, or `failed`
 - `priority`: lower number means higher priority
 - `domain`: owner or product/runtime area used for context selection
 - `allowed_paths`: repo-relative path prefixes the slice is allowed to leave dirty
@@ -73,8 +73,10 @@ Each slice record includes:
 - `depends_on`: slice IDs that must already be `done`
 - `max_files_changed`: hard cap on final changed paths for the slice
 - `notes`: concise operator note for the slice
+- `entry_condition`: required for `blocked` and `deferred` slices; names the external fact or explicit decision that must become true before the slice may run
 
 `allowed_paths` are prefix-based, not glob-based. `owlory_xcode/Owlory/Features/Today/` allows any file under that directory. `README.md` allows only that file.
+Use `blocked` or `deferred` instead of leaving work `queued` when it is parked behind external input. This keeps `make clean-stop` meaningful: no `queued` or `in_progress` slice should remain when the repo is truly at a clean stop.
 
 ## Handoff Model
 

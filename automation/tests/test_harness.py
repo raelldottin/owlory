@@ -32,6 +32,29 @@ class AutomationHarnessTests(unittest.TestCase):
         self.assertTrue(validation.is_valid, validation.errors)
         self.assertEqual([], policy.validate_queue_integrity(queue_data))
 
+    def test_queue_schema_accepts_parked_slice_with_entry_condition(self) -> None:
+        queue_data = policy.load_json(self.example_queue_path)
+        queue_data["slices"][0]["status"] = "deferred"
+        queue_data["slices"][0]["entry_condition"] = "External reviewer input exists."
+        queue_schema = policy.load_schema(self.queue_schema_path)
+
+        validation = policy.validate_document(queue_data, queue_schema)
+
+        self.assertTrue(validation.is_valid, validation.errors)
+        self.assertEqual([], policy.validate_queue_integrity(queue_data))
+
+    def test_queue_integrity_rejects_parked_slice_without_entry_condition(self) -> None:
+        queue_data = policy.load_json(self.example_queue_path)
+        queue_data["slices"][0]["status"] = "blocked"
+        queue_data["slices"][0].pop("entry_condition", None)
+
+        errors = policy.validate_queue_integrity(queue_data)
+
+        self.assertTrue(
+            any("missing an explicit entry_condition" in error for error in errors),
+            errors
+        )
+
     def test_example_handoff_matches_schema(self) -> None:
         handoff = policy.load_json(self.example_handoff_path)
         handoff_schema = policy.load_schema(self.handoff_schema_path)

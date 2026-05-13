@@ -227,6 +227,13 @@ def validate_queue_integrity(queue_data: dict[str, Any]) -> list[str]:
             errors.append(
                 f"slice {slice_record['slice_id']!r} depends on unknown slice IDs: {missing}"
             )
+        if slice_record["status"] in {"blocked", "deferred"}:
+            entry_condition = slice_record.get("entry_condition", "").strip()
+            if not entry_condition:
+                errors.append(
+                    f"slice {slice_record['slice_id']!r} is {slice_record['status']!r} "
+                    "but is missing an explicit entry_condition"
+                )
 
     return errors
 

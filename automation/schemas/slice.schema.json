@@ -75,6 +75,7 @@
               "queued",
               "in_progress",
               "blocked",
+              "deferred",
               "done",
               "failed"
             ]
@@ -114,6 +115,9 @@
             "minimum": 1
           },
           "notes": {
+            "type": "string"
+          },
+          "entry_condition": {
             "type": "string"
           }
         }
