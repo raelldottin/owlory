@@ -12,6 +12,7 @@ Localization is not complete. Treat resource readiness, runtime proof, and trans
 - **Representative screenshot proof**: implemented for `en`, `es`, `fr`, `ar`, and `zh-Hans` launch surfaces only. This does not prove translation quality or full layout correctness.
 - **Translation review input**: prepared. The generated review packet exists, and the German-first packet is ready under `localization/review/de/`.
 - **All-locale smoke**: implemented. `app-localization-all-locale-smoke` passed for all 19 supported locales and proves launch/resource loading only.
+- **All-locale screenshot proof**: blocked. The idb-first capture harness exists, but the proof lane requires `make localization-screenshot-idb-check` to report ready and then a clean capture for all 19 locales.
 - **Reviewed translations**: incomplete. No non-English locale may be claimed as reviewed until translated values return with reviewer/status metadata and are ingested.
 - **Translation quality**: incomplete. Non-English resources remain English placeholders unless a scoped intake slice explicitly records reviewed replacements.
 

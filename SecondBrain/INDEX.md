@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [localization-screenshot-proof-idb-harness](sessions/2026-05-14/022552-localization-screenshot-proof-idb-harness.md)
 - [app-localization-all-locale-smoke](sessions/2026-05-14/010204-app-localization-all-locale-smoke.md)
 - [app-localization-completion-status-audit](sessions/2026-05-14/005751-app-localization-completion-status-audit.md)
 - [app-localization-german-values-absent](sessions/2026-05-14/005211-app-localization-german-values-absent.md)

@@ -2800,6 +2800,42 @@
       "notes": "Completed on 2026-05-14. The running-app smoke runner passed for all 19 supported locales: en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, vi. Each JSON result reports status=passed, proof_level=running-app-smoke, repo.dirty=no, matching launch locale, and packaged Localizable.strings plus Localizable.stringsdict resources. Results are preserved under automation/proofs/app-localization-all-locale-smoke/. This proves launch/resource loading only. It does not claim translation quality, layout completeness, screenshot-verified proof, device proof, or TestFlight proof."
     },
     {
+      "slice_id": "localization-screenshot-proof-idb-harness",
+      "title": "Add idb preflight for localization screenshot proof",
+      "status": "done",
+      "priority": 154,
+      "domain": "localization",
+      "allowed_paths": [
+        "Makefile",
+        "automation/smoke/capture_locale_screenshots.py",
+        "automation/tests/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id localization-screenshot-proof-idb-harness",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make localization-screenshot-idb-check",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-smoke"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "All-locale smoke has passed and the all-locale screenshot proof needs an idb-first capture harness before retrying.",
+      "notes": "Completed on 2026-05-14. Added an idb-first localization screenshot capture helper, a check-only Makefile target, dependency diagnostics for idb and idb_companion, remediation for the missing idb CLI, docs that keep xcodebuild/simctl as the running-app smoke foundation, and unit coverage for dependency and prompt-detection helpers. This does not claim screenshot proof, change app code, or change localization resources. proof_level: tooling-tested."
+    },
+    {
       "slice_id": "app-localization-all-locale-screenshot-proof",
       "title": "Preserve screenshot proof for every supported locale",
       "status": "blocked",
@@ -2827,9 +2863,9 @@
         "app-localization-all-locale-smoke"
       ],
       "max_files_changed": 30,
-      "entry_condition": "All-locale smoke has passed and full-locale launch-surface visual evidence is explicitly requested.",
-      "notes": "Optional proof-preservation slice. Preserve one launch-surface screenshot per supported locale with README and manifest hashes. Claim screenshot-verified only for launch surfaces. Do not claim translation quality, full layout correctness, device proof, or TestFlight proof.",
-      "recommended_unblocker": "app-localization-all-locale-smoke"
+      "entry_condition": "All-locale smoke has passed, full-locale launch-surface visual evidence is explicitly requested, and make localization-screenshot-idb-check reports ready on the capture machine.",
+      "notes": "Optional proof-preservation slice. Preserve one launch-surface screenshot per supported locale with README and manifest hashes. Claim screenshot-verified only for launch surfaces. Do not claim translation quality, full layout correctness, device proof, or TestFlight proof. If the dependency check reports missing idb, install the idb client outside the repo and rerun the check before attempting capture.",
+      "recommended_unblocker": "localization-screenshot-proof-idb-harness"
     },
     {
       "slice_id": "app-localization-first-locale-review-intake",

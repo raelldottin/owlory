@@ -15,6 +15,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 - `make clean-system-metadata` - remove only obvious OS metadata files listed in the drift-control policy.
 - `make verify-app-icons` - prove the shipped app-icon catalog and classify generated icon archives/folders.
 - `make localization-check` - verify approved locale folders, matching `Localizable.strings` and `Localizable.stringsdict` keys, and Xcode variant-group packaging.
+- `make localization-screenshot-idb-check` - report whether the idb screenshot harness can run on this machine, with remediation when `idb` or `idb_companion` is missing.
 - `make review-preflight` - infer touched areas, docs, validation, and review risks for current changes.
 - `make automation-check` - run the Python tests for the automation supervisor and context builder.
 - `make build-provenance` - print and validate current Xcode version/build plus Git rollback identity.
@@ -175,6 +176,26 @@ done
 
 All-locale smoke proves launch/resource loading for supported locales only. It does not prove translation quality, layout correctness, screenshot-preserved proof, real-device behavior, or TestFlight behavior.
 
+For full supported-locale screenshot proof, check the idb capture harness before attempting to preserve PNGs:
+
+```bash
+make localization-screenshot-idb-check
+```
+
+The check reports whether both `idb` and `idb_companion` are available. `xcodebuild` and `simctl` remain the build/install/launch smoke foundation; the screenshot proof harness uses idb for UI interaction because it can inspect accessibility state, dismiss known system prompts, and refuse to preserve screenshots when the app has not settled on the Today launch surface. A blocked dependency check is not a localization failure. It means the screenshot proof lane is not ready on that machine.
+
+After the check reports `status: "ready"`, use the idb harness with an explicit target UDID:
+
+```bash
+python3 automation/smoke/capture_locale_screenshots.py \
+  --udid <simulator-udid> \
+  --output-dir automation/proofs/app-localization-all-locale-screenshot-proof
+```
+
+The capture helper writes proof artifacts only after every requested locale reaches the settled Today surface and no known notification prompt remains. It does not prove translation quality, full layout correctness, physical-device behavior, or TestFlight behavior.
+
+Use an empty output directory. The helper blocks instead of writing into a non-empty proof directory so a failed retry cannot accidentally mingle fresh screenshots with stale evidence.
+
 ### Manual Per-App Language Testing
 
 Use this path for manual device or TestFlight localization review. Do not use it for automated locale smoke; automation should keep using the smoke runner's `--locale` / `--apple-locale` launch arguments, which map to `-AppleLanguages` and `-AppleLocale`.
@@ -320,6 +341,7 @@ Notes:
 - `./Tools/verify-app-icons.sh`
 - `./Tools/localization-parity.sh`
 - `python3 Tools/localization-review-export.py --output-dir localization/review`
+- `python3 automation/smoke/capture_locale_screenshots.py --check-dependencies`
 - `./Tools/review-preflight.sh`
 - `./Tools/verify-build-provenance.sh`
 - `./Tools/release-preflight.sh`

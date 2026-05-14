@@ -1,0 +1,64 @@
+{
+  "slice_id": "localization-screenshot-proof-idb-harness",
+  "status": "done",
+  "proof_level": "tooling-tested",
+  "summary": "Added an idb-first dependency check and guarded capture helper for full-locale localization screenshot proof without claiming screenshot proof yet.",
+  "files_touched": [
+    "Makefile",
+    "automation/smoke/capture_locale_screenshots.py",
+    "automation/tests/test_capture_locale_screenshots.py",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260514T062552Z-localization-screenshot-proof-idb-harness.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/022552-localization-screenshot-proof-idb-harness.md"
+  ],
+  "allowed_path_result": "passed",
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id localization-screenshot-proof-idb-harness",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m py_compile automation/smoke/capture_locale_screenshots.py",
+    "python3 -m unittest automation.tests.test_capture_locale_screenshots",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260514T062552Z-localization-screenshot-proof-idb-harness.json",
+    "make localization-screenshot-idb-check (exited cleanly and reported blocked because idb is missing while idb_companion is installed)",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "missing_proof_levels": [
+    "screenshot-verified for all locales",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Full-locale localization screenshot proof",
+      "before": "The screenshot proof lane was requested after all-locale smoke, but simctl-only capture was too blunt when system prompts appeared.",
+      "after": "The repo now has a check-only idb dependency gate and an idb-first capture helper that can inspect UI state, dismiss known prompts, and refuse unsettled screenshots before preserving proof artifacts."
+    },
+    {
+      "contract": "Translation quality",
+      "before": "Non-English locale values were English placeholders unless reviewed.",
+      "after": "Unchanged. This slice adds screenshot-capture tooling only and does not claim translation quality."
+    }
+  ],
+  "residual_risks": [
+    "The current machine is missing the idb client; make localization-screenshot-idb-check reports status=blocked with remediation.",
+    "No all-locale screenshots were captured or preserved in this slice.",
+    "The future proof slice must still run the helper against an explicit simulator UDID and preserve one settled launch screenshot per supported locale.",
+    "The helper blocks on non-empty output directories so stale and fresh screenshots are not mixed.",
+    "Physical-device and TestFlight localization proof remain separate lanes."
+  ],
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "recommended_next_slice": "app-localization-all-locale-screenshot-proof",
+  "recommended_next_reason": "Only after installing idb and rerunning make localization-screenshot-idb-check until it reports ready.",
+  "timestamp": "2026-05-14T06:25:52Z"
+}

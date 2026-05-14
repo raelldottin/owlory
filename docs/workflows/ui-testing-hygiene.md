@@ -11,6 +11,7 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
 - Owlory has three Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, and `TrainRegression`, narrowable with `DOMAIN=today`, `DOMAIN=write`, and `DOMAIN=train`.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
+- Owlory has an idb-first dependency check and capture helper for full-locale screenshot proof: `make localization-screenshot-idb-check` and `python3 automation/smoke/capture_locale_screenshots.py`.
 
 Do not treat the current Today, Write, and Train regression batches as broad app-wide UI regression coverage.
 
@@ -160,6 +161,28 @@ Each proof directory needs:
 - a clear list of what the screenshots do not prove
 
 Do not preserve white launch-transition screenshots or stale screenshots just because a file exists. Recapture after the surface settles, or keep the proof level lower.
+
+## Localization Screenshot Capture
+
+Use the idb capture helper for full-locale localization screenshot proof:
+
+```bash
+make localization-screenshot-idb-check
+python3 automation/smoke/capture_locale_screenshots.py --udid <simulator-udid>
+```
+
+The check is intentionally separate from `make localization-check` and the running-app smoke runner. Missing `idb` or `idb_companion` blocks the screenshot proof lane on that machine, but it does not invalidate localization parity or all-locale resource-loading smoke.
+
+The helper uses idb for the pieces where `simctl` is too blunt:
+
+- launch Owlory with locale arguments against a specific target
+- inspect accessibility state through `idb ui describe-all`
+- dismiss known system prompts such as notification permission
+- wait for the settled Today launch surface
+- reject captures while a prompt remains or the expected surface is missing
+- require an empty proof directory so stale and fresh screenshots are never mixed
+
+`xcodebuild` and `simctl` remain the build/install/running-app smoke foundation. idb is the UI interaction/capture helper for screenshot proof, not a replacement for the existing smoke lane.
 
 ## Maintained Smoke Screenshot Pack
 
