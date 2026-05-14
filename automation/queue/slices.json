@@ -2678,7 +2678,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
-      "notes": "Completed on 2026-05-13. Compared Write, Home protocols, Train, Patterns, and localization layout against current contract status, existing smoke coverage, and cross-domain blast radius. Chose Write capture inbox as the next regression surface because Write Lab is the only Partially implemented capture domain currently shipping, its promotion flows cross Today/Home tasks/Home protocols, and only the Today-Continue ingress to an in-progress Writing note has smoke coverage today. Did not pick Home protocols or Train because they are stabilized and their Continue routes are already smoke-covered, did not pick Patterns because the digest UI is read-only with low interaction risk, and did not pick localization layout because it is gated on the parked first-locale review intake. Coverage goal for the unblocked target: open Write from the tab bar with a deterministic seed, assert one in-progress Writing note row plus the capture field render, and assert one promotion affordance (Add to Today) is visible without exercising the cross-domain side effect; defer voice/live transcription, task promotion side effects, protocol promotion side effects, and screenshot/device/TestFlight claims to follow-up slices."
+      "notes": "Completed on 2026-05-13 by two parallel agents. Agent A chose Write capture inbox as the next regression surface (Write Lab is the only Partially implemented capture domain currently shipping; promotion flows cross Today/Home tasks/Home protocols; only the Today-Continue ingress to an in-progress Writing note had smoke coverage). Agent B independently chose Train active/history transition (small, deterministic, distinct from Today Continue; exercises a domain-owned screen transition rather than another Continue route). Reconciled non-destructively: Agent A's Write coverage shipped through owlory-ui-regression-expansion-next-surface (status done, WriteCaptureRegression class). Agent B's Train scope was preserved as owlory-ui-regression-batch-3-train-active-history (status queued). Both choices stand; neither was discarded. Subsequent triage slices should pick a single next surface upfront to avoid re-collision."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
@@ -2851,11 +2851,50 @@
         "git diff --check"
       ],
       "depends_on": [
-        "owlory-ui-regression-batch-1-today-continue"
+        "owlory-ui-regression-batch-1-today-continue",
+        "owlory-ui-regression-next-surface-triage"
       ],
       "max_files_changed": 15,
       "entry_condition": "A concrete next UI regression surface is selected and scoped.",
       "notes": "Completed on 2026-05-13. Added OwloryUITests/WriteCaptureRegression with two tests: (a) testSeededWriteCaptureInboxRendersInProgressNoteRowAndCaptureEntry opens the Write tab and asserts the seeded in-progress note row plus the write.capture.entry affordance render, and (b) testSeededWriteNoteDetailExposesAddToTodayPromotion opens the note detail sheet, opens the Note options menu, and asserts the Add to Today promotion is reachable without tapping it. Reused --owlory-ui-seed-in-progress-writing-continue-item rather than adding a parallel seed arg with identical data shape. Added accessibility identifiers write.note.row.<uuid>, write.capture.entry, and write.note.action.addToToday.<uuid> to WriteView. Wired DOMAIN= matrix into `make ui-regression`: bare invocation runs every regression class, DOMAIN=today narrows to TodayContinueRegression, DOMAIN=write narrows to WriteCaptureRegression. make ui-regression passed all 15 regression tests across both classes in 138s. proof_level achieved: running-app-smoke for the Write capture inbox surface."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-3-train-active-history",
+      "title": "Add Train active/history transition UI regression batch",
+      "status": "queued",
+      "priority": 160,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Train/",
+        "Makefile",
+        "docs/product/domains/train.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-3-train-active-history",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=train",
+        "make ui-regression",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-expansion-next-surface",
+        "owlory-ui-regression-next-surface-triage"
+      ],
+      "max_files_changed": 15,
+      "entry_condition": "Satisfied by owlory-ui-regression-next-surface-triage (Agent B's parallel triage): Train active/history transition is selected and scoped.",
+      "notes": "Scope inherited verbatim from the parallel-agent triage on 2026-05-13 (handoff 20260514T002253Z-owlory-ui-regression-next-surface-triage.json, session 202149-owlory-ui-regression-next-surface-triage.md). Target: seed one planned Train session for today, open Train, assert the session appears in the active Today surface, resolve it through one visible action (prefer Complete), and assert it leaves active Today and appears in History. Add a new XCUITest class (e.g., OwloryUITests/TrainActiveHistoryRegression) and a DOMAIN=train branch in `make ui-regression`. Do not broaden into recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke."
     }
   ]
 }

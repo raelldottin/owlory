@@ -9,10 +9,10 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
+- Owlory has two Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression` and `WriteCaptureRegression`, narrowable with `DOMAIN=today` and `DOMAIN=write`.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
-- Owlory does not currently have a batched UI regression suite.
 
-Do not treat the single smoke test as broad UI regression coverage.
+Do not treat the current Today and Write regression batches as broad app-wide UI regression coverage.
 
 ## Proof Lanes
 
@@ -115,7 +115,7 @@ The maintained XCUITest smoke suite proves selected high-value Today Continue pa
 
 Treat the remaining UI proof gaps as a roadmap, not one giant slice. Broaden source coverage first, then routing, then preserved screenshots, then physical-device and TestFlight proof, then design a full regression suite. The five-lane shape that this roadmap converges on is defined in [UI Regression Plan](ui-regression-plan.md).
 
-Immediate queued slices:
+Completed foundation slices:
 
 | Slice | Purpose | Proof target |
 | --- | --- | --- |
@@ -123,6 +123,14 @@ Immediate queued slices:
 | `owlory-ui-test-continue-source-smoke-batch` | Add deterministic source-visibility smoke for due-today Training, carried-forward Focus, and in-progress Writing. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-test-continue-routing-matrix-triage` | Define expected routes for each Continue source before adding more route tests. | `doc-only` |
 | `owlory-ui-test-continue-routing-smoke-batch` | Add deterministic route smoke for the highest-value missing sources selected by the matrix. | `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-regression-batch-1-today-continue` | Establish Lane 2 regression wiring around Today Continue source visibility, source-derived routing, and Focus row actions. | `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-regression-expansion-next-surface` | Lane 2 Batch 2 covering the Write capture inbox row, capture entry affordance, and Add to Today promotion visibility. | `running-app-smoke`, XCUITest-backed |
+
+Next selected regression surface:
+
+| Slice | Purpose | Proof target |
+| --- | --- | --- |
+| `owlory-ui-regression-batch-3-train-active-history` | Lane 2 Batch 3 covering the Train tab active/history transition: seed one planned session, resolve it through a visible action, and assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
 
 Deferred proof lanes:
 
