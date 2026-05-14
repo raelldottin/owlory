@@ -59,8 +59,8 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression`, with the first batch covering Today Continue source visibility, source-derived routing, and Focus row actions; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
-- The next selected Lane 2 surface is Train active/history transition: seed one planned session, resolve it through a visible Train-tab action, and assert it leaves active Today and appears in History. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
+- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression` (Today Continue source visibility, source-derived routing, Focus row actions) and `OwloryUITests/TrainActiveHistoryRegression` (Train tab active/history transition via the Completed status pill and Save), with `DOMAIN=today` and `DOMAIN=train` matrix support; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
+- The next Lane 2 surface has not been selected; a new `owlory-ui-regression-next-surface-triage` slice should pick exactly one from Write, Home protocols, Patterns, or localization layout. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
 ## Parked Proof And Localization Work
@@ -68,7 +68,6 @@ UI regression and snapshot coverage:
 The following items are intentionally represented as blocked/deferred slices so future agents do not lose them or start them prematurely:
 
 - `app-localization-first-locale-review-intake` - blocked until reviewed translation values and reviewer/status metadata exist.
-- `owlory-ui-regression-expansion-next-surface` - queued for the selected Train active/history transition; keep it narrow.
 
 Do not convert blocked slices to active implementation work without satisfying their entry conditions. `make clean-stop` verifies this parking lot mechanically.
 When a blocked slice needs progress, work on its `recommended_unblocker` instead of the blocked target.
@@ -77,7 +76,7 @@ Current unblocker chain:
 
 - `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
-- `owlory-ui-regression-next-surface-triage` selected Train active/history transition as the next UI regression surface and did not add tests.
+- `owlory-ui-regression-next-surface-triage` selected Train active/history transition as the next UI regression surface on 2026-05-13; `owlory-ui-regression-expansion-next-surface` shipped the `TrainActiveHistoryRegression` Lane 2 batch with `running-app-smoke` proof.
 
 ## Suggested Order
 

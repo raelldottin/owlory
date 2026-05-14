@@ -9,10 +9,10 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
-- Owlory has a first regression batch, `TodayContinueRegression`, run by `make ui-regression`.
+- Owlory has two Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression` and `TrainActiveHistoryRegression`, narrowable with `DOMAIN=today` and `DOMAIN=train`.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 
-Do not treat the Today Continue regression batch as broad app-wide UI regression coverage.
+Do not treat the current Today and Train regression batches as broad app-wide UI regression coverage.
 
 ## Proof Lanes
 
@@ -77,16 +77,23 @@ OwloryUITests/OwloryUITests
 The regression lane (Lane 2 in [UI Regression Plan](ui-regression-plan.md)) runs separately so the smoke loop stays fast:
 
 ```bash
-make ui-regression
+make ui-regression                 # every regression class
+make ui-regression DOMAIN=today    # only OwloryUITests/TodayContinueRegression
+make ui-regression DOMAIN=train    # only OwloryUITests/TrainActiveHistoryRegression
 ```
 
-That command uses `/tmp/owlory-ui-regression-derived-data` and targets the regression class only:
+That command uses `/tmp/owlory-ui-regression-derived-data` and targets these regression classes:
 
 ```text
 OwloryUITests/TodayContinueRegression
+OwloryUITests/TrainActiveHistoryRegression
 ```
 
-The first batch lives in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but is intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a Today/Continue refactor, or on demand — not on every PR.
+The regression classes live in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but are intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a domain refactor, or on demand — not on every PR.
+
+`TodayContinueRegression` covers source visibility for all six composer-backed Continue sources, source-derived routing for the four route smokes (Home task, active Home protocol run, in-progress Writing, due-today Training), and Focus row actions (Done, Defer, Drop) via `--owlory-ui-seed-today-continue-item` and the other Today seed launch args.
+
+`TrainActiveHistoryRegression` covers the Train tab active/history transition via the new `--owlory-ui-seed-planned-train-session-today` seed: it opens the Train tab, asserts the seeded session renders as an active Today card, taps the Completed status pill, taps Save, and asserts the row leaves active Today and appears in History. The card row uses `.accessibilityElement(children: .contain)` so the inner pill and Save buttons remain individually addressable; do not remove that modifier without rewriting the test. Recurrence rollover, voice/reflection fallback, multiple status variants in one slice, Continue routing, screenshot proof, device proof, and TestFlight proof are intentionally out of scope; follow-up slices own those.
 
 The app-side seed path is intentionally narrow:
 
@@ -98,6 +105,7 @@ The app-side seed path is intentionally narrow:
 - `--owlory-ui-seed-due-today-training-continue-item` resets the same app-local state, writes one planned `TrainingSession` dated today, and verifies that Today Continue renders the due-today Training row via the `trainingSession` source.
 - `--owlory-ui-seed-carried-forward-focus-continue-item` resets the same app-local state, writes four consecutive daily entries (three prior + today) carrying the same focus title/domain so `PatternEngine.computeCarryForward` produces a stalled-item streak >= 3, and verifies that Today Continue renders today's row via the `carriedFocusItem` source rather than the current Focus source.
 - `--owlory-ui-seed-in-progress-writing-continue-item` resets the same app-local state, writes one in-progress `WritingNote` (capture stage), and verifies that Today Continue renders the in-progress Writing row via the `writingNote` source.
+- `--owlory-ui-seed-planned-train-session-today` resets the same app-local state and writes one planned `TrainingSession` dated today, so the Train tab renders it as an active Today card whose status pills and Save action are individually addressable.
 - The tests verify the Today dashboard, seeded Continue rows for all six composer source kinds (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue Done action, one Home-task-backed Continue route into Home, and one Home-protocol-run-backed Continue route into the active run sheet through stable accessibility identifiers.
 
 This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface, source visibility across all six composer-backed Continue sources (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue row action, four route smokes (Home task -> Home highlight, Home protocol run -> active run sheet, in-progress Writing -> Write note detail sheet, due-today Training -> Train session highlight). It does not prove focus or carried-forward Focus routing, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
@@ -117,12 +125,9 @@ Completed foundation slices:
 | `owlory-ui-test-continue-routing-matrix-triage` | Define expected routes for each Continue source before adding more route tests. | `doc-only` |
 | `owlory-ui-test-continue-routing-smoke-batch` | Add deterministic route smoke for the highest-value missing sources selected by the matrix. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-batch-1-today-continue` | Establish Lane 2 regression wiring around Today Continue source visibility, source-derived routing, and Focus row actions. | `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-regression-expansion-next-surface` | Lane 2 Batch 2 covering the Train tab active/history transition: seed one planned session, resolve it via the Completed status pill and Save, assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
 
-Next selected regression surface:
-
-| Slice | Purpose | Proof target |
-| --- | --- | --- |
-| `owlory-ui-regression-expansion-next-surface` | Batch 2 should cover the Train tab active/history transition: seed one planned session, resolve it through a visible action, and assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
+Next selected regression surface: none. A new `owlory-ui-regression-next-surface-triage` slice should pick exactly one from Write, Home protocols, Patterns, or localization layout before any further Lane 2 expansion.
 
 Deferred proof lanes:
 

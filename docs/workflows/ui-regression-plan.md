@@ -41,39 +41,18 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` runs the regression class with `-only-testing:OwloryUITests/TodayContinueRegression` against `/tmp/owlory-ui-regression-derived-data`. Wired by `owlory-ui-regression-batch-1-today-continue`; the first batch covers Today Continue source visibility, source-derived routing, and Focus row actions.
-- `make ui-regression DOMAIN=<domain>` is the intended per-domain narrowing shape; not yet wired (a future batch can introduce it when more than one domain has a regression class).
+- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Train active/history regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded planned Train session through the Completed status pill and Save action into History.
+- `make ui-regression DOMAIN=today` narrows to `OwloryUITests/TodayContinueRegression`.
+- `make ui-regression DOMAIN=train` narrows to `OwloryUITests/TrainActiveHistoryRegression`.
+- New regression classes should extend the `DOMAIN=` matrix rather than collapse multiple surfaces into one class.
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
 
 ## Next Regression Surface
 
-The next selected Lane 2 expansion surface is **Train active/history transition**.
+Batch 2 has shipped: `OwloryUITests/TrainActiveHistoryRegression` (Train tab active/history transition: seed one planned session, resolve via the Completed status pill and Save, assert it leaves active Today and appears in History).
 
-Why this surface:
-
-| Candidate | Current proof | Regression value | Decision |
-| --- | --- | --- | --- |
-| Write promotion | Domain coverage plus flow/screenshot proof for Write -> Home task -> source-note return. Continue routing to in-progress Writing is already smoke-covered. | Useful later for broader promotion variants, but the highest-value task path already has preserved proof. | Defer. |
-| Home protocols | Domain coverage plus Continue route smoke for active runs; archive, schedule, and step-revert UI proof remain useful. | High value, but candidate surface is broader and should be split by behavior before adding a regression batch. | Defer until scoped to one Home behavior. |
-| Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist, but the Train tab active-to-history transition has no UI regression proof. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Select for Batch 2. |
-| Patterns | Domain rules are well-covered; UI surfaces are summary/report oriented. | Valuable after a concrete visual/report contract changes. | Defer until a Patterns UI claim needs proof. |
-| Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Defer until translation intake or layout risk exists. |
-
-Batch 2 target:
-
-- Seed one planned Train session for the current day.
-- Open the Train tab and assert the session appears in the active Today surface.
-- Resolve the session through one user-visible action, preferably `Complete`.
-- Assert the session leaves the active Today surface and appears in History.
-
-Out of scope for Batch 2:
-
-- Recurrence rollover edge cases.
-- Voice/reflection fallback.
-- Multiple Train statuses in one slice.
-- Continue routing, which is already covered by smoke.
-- Screenshot, device, or TestFlight proof.
+The next regression surface has not been chosen yet. A new `owlory-ui-regression-next-surface-triage` slice should pick exactly one from Write, Home protocols, Patterns, or localization layout before any further Lane 2 expansion.
 
 ## Lane 3: Screenshot Proof
 

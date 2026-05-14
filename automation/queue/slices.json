@@ -2827,8 +2827,8 @@
     },
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
-      "title": "Expand UI regression coverage to Train active/history transition",
-      "status": "queued",
+      "title": "Add Train active/history transition UI regression batch",
+      "status": "done",
       "priority": 150,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -2861,8 +2861,7 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "Satisfied by owlory-ui-regression-next-surface-triage: Train active/history transition is selected and scoped.",
-      "notes": "Batch 2 target: seed one planned Train session for today, open Train, assert the session appears in the active Today surface, resolve it through one visible action (prefer Complete), and assert it leaves active Today and appears in History. Do not broaden into recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke.",
-      "recommended_unblocker": "owlory-ui-regression-next-surface-triage"
+      "notes": "Completed on 2026-05-13. Added OwloryUITests/TrainActiveHistoryRegression with one test (testSeededPlannedTrainSessionResolvesFromActiveTodayIntoHistory): seeds one planned TrainingSession for today via the new --owlory-ui-seed-planned-train-session-today launch arg, opens the Train tab, asserts the session renders as an active Today card, taps the Completed status pill, taps Save, asserts the row leaves active Today, and asserts the row appears in History. Added accessibility identifiers train.session.action.setStatus.<status>.<uuid>, train.session.action.save.<uuid>, and train.history.item.<uuid> to TrainView. Applied .accessibilityElement(children: .contain) to the SessionCardView row so the inner pill and Save buttons remain individually addressable under the existing train.session.item.<uuid> identifier. Wired DOMAIN= matrix into make ui-regression: bare invocation runs every regression class, DOMAIN=today narrows to TodayContinueRegression, DOMAIN=train narrows to TrainActiveHistoryRegression. make ui-regression DOMAIN=train passed in 34s after applying the documented simulator preflight recovery (xcrun simctl shutdown all / erase / rm DerivedData / boot). proof_level achieved: running-app-smoke for the Train active/history transition surface."
     }
   ]
 }

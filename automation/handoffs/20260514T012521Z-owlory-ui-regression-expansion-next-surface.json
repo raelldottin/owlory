@@ -1,0 +1,59 @@
+{
+  "slice_id": "owlory-ui-regression-expansion-next-surface",
+  "status": "done",
+  "summary": "Added the second Lane 2 UI regression batch targeting the Train tab active/history transition. New OwloryUITests/TrainActiveHistoryRegression class with one test that seeds one planned TrainingSession for today via a new --owlory-ui-seed-planned-train-session-today launch arg, opens the Train tab, asserts the seeded session renders as an active Today card, taps the Completed status pill, taps Save, asserts the row leaves active Today, and asserts it appears in History. Added accessibility identifiers train.session.action.setStatus.<status>.<uuid>, train.session.action.save.<uuid>, and train.history.item.<uuid> to TrainView. Applied .accessibilityElement(children: .contain) to the SessionCardView row so the existing train.session.item.<uuid> identifier coexists with addressable inner pill and Save buttons. Wired the DOMAIN= matrix into make ui-regression so the regression suite can grow per surface without bloating any single class.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260514T012521Z-owlory-ui-regression-expansion-next-surface.json",
+    "automation/queue/slices.json",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/212521-owlory-ui-regression-expansion-next-surface.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make ui-regression DOMAIN=train",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "UI regression coverage scope",
+      "before": "Lane 2 regression suite contained one class: OwloryUITests/TodayContinueRegression. make ui-regression ran only that class. The Train tab active/history transition had no UI regression proof.",
+      "after": "Lane 2 regression suite contains two classes: OwloryUITests/TodayContinueRegression and OwloryUITests/TrainActiveHistoryRegression. make ui-regression runs both by default; make ui-regression DOMAIN=today and DOMAIN=train narrow to a single class. TrainActiveHistoryRegression asserts the seeded planned Train session resolves from active Today into History via the Completed status pill and Save action without exercising recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof.",
+      "proof": [
+        "Makefile",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "make ui-regression DOMAIN=train"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Recurrence rollover edge cases, voice/reflection fallback, multiple Train statuses in one slice, Continue routing, screenshot proof, device proof, and TestFlight proof are intentionally out of scope; follow-up slices own those.",
+    "The simulator preflight recovery (shutdown / erase / clean DerivedData / boot) was needed once during validation. Future runs may need the same recovery if the iPhone 17 simulator reaches a Mach -308 state; the recovery steps are already documented in docs/workflows/ui-testing-hygiene.md.",
+    "A parallel agent's PR for the Write capture inbox regression also targets owlory-ui-regression-expansion-next-surface and adds DOMAIN= matrix entries; the merge that lands second will need to reconcile slices.json, Makefile, and docs/workflows/* by keeping both regression classes and both matrix branches. The test classes themselves do not conflict.",
+    "The full `make ui-regression` (both classes) was not re-run on this branch. Today regression code on this branch is unchanged from origin/main and was passing on Agent A's parallel branch; the Today suite should still pass here, but only DOMAIN=train was explicitly validated in this session.",
+    "The xcresult bundle at /tmp/owlory-ui-regression-derived-data is transient per Lane 2 policy and is not preserved in automation/proofs/."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The next Lane 2 surface needs a fresh owlory-ui-regression-next-surface-triage to pick from Write, Home protocols, Patterns, or localization layout. Do not start that triage until after the parallel-agent Write PR and this Train PR have both merged and the queue state is reconciled.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T01:25:21Z"
+}

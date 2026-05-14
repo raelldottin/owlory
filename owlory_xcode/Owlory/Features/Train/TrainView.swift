@@ -99,6 +99,7 @@ struct TrainView: View {
                         isHighlighted: session.id == highlightedSessionID
                     )
                     .id(session.id)
+                    .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
                 }
                 .onDelete { offsets in
@@ -150,6 +151,7 @@ struct TrainView: View {
                     }
                     .continueHighlight(session.id == highlightedSessionID)
                     .id(session.id)
+                    .accessibilityIdentifier("train.history.item.\(session.id.uuidString)")
                 }
             }
         }
@@ -340,6 +342,7 @@ private struct SessionCardView: View {
                             .accessibilityLabel(
                                 trainingStatusAccessibilityLabel(status: s, isSelected: status == s)
                             )
+                            .accessibilityIdentifier("train.session.action.setStatus.\(s.rawValue).\(session.id.uuidString)")
                         }
                     }
                 }
@@ -390,6 +393,7 @@ private struct SessionCardView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)
                 .disabled(status == .planned)
+                .accessibilityIdentifier("train.session.action.save.\(session.id.uuidString)")
             } else {
                 HStack(spacing: 6) {
                     Image(systemName: "heart.text.square")

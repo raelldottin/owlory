@@ -9,6 +9,7 @@ enum OwloryUITestSupport {
     static let dueTodayTrainingContinueSeedArgument = "--owlory-ui-seed-due-today-training-continue-item"
     static let carriedForwardFocusContinueSeedArgument = "--owlory-ui-seed-carried-forward-focus-continue-item"
     static let inProgressWritingContinueSeedArgument = "--owlory-ui-seed-in-progress-writing-continue-item"
+    static let plannedTrainSessionTodaySeedArgument = "--owlory-ui-seed-planned-train-session-today"
 
     static let continueFixtureItemID = UUID(uuidString: "9D215686-176C-4C13-936E-AB3092D62A96")!
     static let continueFixtureItemTitle = "Review seeded Continue item"
@@ -25,6 +26,8 @@ enum OwloryUITestSupport {
     static let carriedForwardFocusContinueFixtureTitle = "Review seeded carried Focus"
     static let inProgressWritingContinueFixtureNoteID = UUID(uuidString: "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B")!
     static let inProgressWritingContinueFixtureTitle = "Review seeded Writing note"
+    static let plannedTrainSessionTodayFixtureSessionID = UUID(uuidString: "F1E2D3C4-B5A6-4978-89A1-2B3C4D5E6F70")!
+    static let plannedTrainSessionTodayFixtureTitle = "Resolve seeded Train session"
 
     static var isUITesting: Bool {
         ProcessInfo.processInfo.arguments.contains(enabledArgument)
@@ -45,13 +48,15 @@ enum OwloryUITestSupport {
         let shouldSeedDueTodayTrainingContinueItem = arguments.contains(dueTodayTrainingContinueSeedArgument)
         let shouldSeedCarriedForwardFocusContinueItem = arguments.contains(carriedForwardFocusContinueSeedArgument)
         let shouldSeedInProgressWritingContinueItem = arguments.contains(inProgressWritingContinueSeedArgument)
+        let shouldSeedPlannedTrainSessionToday = arguments.contains(plannedTrainSessionTodaySeedArgument)
         guard shouldSeedFreshDay ||
                 shouldSeedContinueItem ||
                 shouldSeedHomeTaskContinueItem ||
                 shouldSeedHomeProtocolRunContinueItem ||
                 shouldSeedDueTodayTrainingContinueItem ||
                 shouldSeedCarriedForwardFocusContinueItem ||
-                shouldSeedInProgressWritingContinueItem else { return }
+                shouldSeedInProgressWritingContinueItem ||
+                shouldSeedPlannedTrainSessionToday else { return }
 
         #if DEBUG
         resetAppSupport(fileManager: fileManager)
@@ -72,6 +77,9 @@ enum OwloryUITestSupport {
         }
         if shouldSeedInProgressWritingContinueItem {
             seedInProgressWritingContinueItem()
+        }
+        if shouldSeedPlannedTrainSessionToday {
+            seedPlannedTrainSessionToday()
         }
         #endif
     }
@@ -222,6 +230,22 @@ enum OwloryUITestSupport {
             directory: "Write",
             fileName: "notes"
         ).saveAll([note])
+    }
+
+    private static func seedPlannedTrainSessionToday(
+        calendar: Calendar = .current,
+        now: Date = Date()
+    ) {
+        let session = TrainingSession(
+            id: plannedTrainSessionTodayFixtureSessionID,
+            date: calendar.startOfDay(for: now),
+            plannedActivity: plannedTrainSessionTodayFixtureTitle,
+            status: .planned
+        )
+        try? FileItemListRepository<TrainingSession>(
+            directory: "Train",
+            fileName: "sessions"
+        ).saveAll([session])
     }
     #endif
 }

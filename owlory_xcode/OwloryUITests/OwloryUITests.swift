@@ -702,3 +702,120 @@ final class TodayContinueRegression: XCTestCase {
         wait(for: [removal], timeout: 10)
     }
 }
+
+/// Second UI regression batch defined by `docs/workflows/ui-regression-plan.md`
+/// Lane 2. Targets the Train tab active/history transition (not Today Continue).
+/// Reached via `make ui-regression DOMAIN=train` (or by default `make
+/// ui-regression`, which runs every regression class).
+///
+/// Scope per `owlory-ui-regression-expansion-next-surface` (selected by
+/// `owlory-ui-regression-next-surface-triage` on 2026-05-13):
+///
+/// - Seed one planned Train session for the current day.
+/// - Open the Train tab and assert the session appears in active Today.
+/// - Resolve the session via the Completed status pill and Save.
+/// - Assert the session leaves active Today and appears in History.
+///
+/// Out of scope: recurrence rollover, voice/reflection fallback, multiple
+/// Train statuses in one slice, Continue routing (already smoke-covered),
+/// screenshot proof, device proof, TestFlight proof.
+final class TrainActiveHistoryRegression: XCTestCase {
+    private let plannedTrainFixtureSessionID = "F1E2D3C4-B5A6-4978-89A1-2B3C4D5E6F70"
+    private let plannedTrainFixtureTitle = "Resolve seeded Train session"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testSeededPlannedTrainSessionResolvesFromActiveTodayIntoHistory() throws {
+        launchTrainSurface()
+
+        let activeIdentifier = "train.session.item.\(plannedTrainFixtureSessionID)"
+        let activeRow = app.descendants(matching: .any)
+            .matching(identifier: activeIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            activeRow.waitForExistence(timeout: 10),
+            "Expected the seeded planned Train session to render in active Today."
+        )
+        XCTAssertTrue(
+            app.staticTexts[plannedTrainFixtureTitle].exists,
+            "Expected the seeded Train session title to be visible in active Today."
+        )
+
+        let completedPillIdentifier = "train.session.action.setStatus.completed.\(plannedTrainFixtureSessionID)"
+        let completedPill = app
+            .descendants(matching: .any)
+            .matching(identifier: completedPillIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            completedPill.waitForExistence(timeout: 10),
+            "Expected the Completed status pill to be reachable on the seeded active session card."
+        )
+        completedPill.tap()
+
+        let saveIdentifier = "train.session.action.save.\(plannedTrainFixtureSessionID)"
+        let saveButton = app
+            .descendants(matching: .any)
+            .matching(identifier: saveIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            saveButton.waitForExistence(timeout: 10),
+            "Expected the Save action to be reachable after selecting Completed."
+        )
+        XCTAssertTrue(
+            saveButton.isEnabled,
+            "Expected the Save action to be enabled once a non-planned status is selected."
+        )
+        saveButton.tap()
+
+        waitForElementToDisappear(activeRow)
+
+        let historyIdentifier = "train.history.item.\(plannedTrainFixtureSessionID)"
+        let historyRow = app.descendants(matching: .any)
+            .matching(identifier: historyIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            historyRow.waitForExistence(timeout: 10),
+            "Expected the resolved Train session to appear in History."
+        )
+    }
+
+    // MARK: - Helpers
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+
+    private func launchTrainSurface() {
+        launch(arguments: ["--owlory-ui-seed-planned-train-session-today"])
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to launch on Today's dashboard before navigating to Train."
+        )
+
+        let trainTab = app.tabBars.buttons["Train"]
+        XCTAssertTrue(
+            trainTab.waitForExistence(timeout: 10),
+            "Expected the Train tab to be reachable from the tab bar."
+        )
+        trainTab.tap()
+    }
+
+    private func waitForElementToDisappear(_ element: XCUIElement) {
+        let removal = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: element,
+            handler: nil
+        )
+        wait(for: [removal], timeout: 10)
+    }
+}

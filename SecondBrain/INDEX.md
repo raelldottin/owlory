@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-regression-expansion-next-surface (Train batch)](sessions/2026-05-13/212521-owlory-ui-regression-expansion-next-surface.md)
 - [owlory-ui-regression-next-surface-triage](sessions/2026-05-13/202149-owlory-ui-regression-next-surface-triage.md)
 - [app-localization-review-packet-for-first-locale](sessions/2026-05-13/194318-app-localization-review-packet-for-first-locale.md)
 - [app-localization-manual-language-setting-diagnostic](sessions/2026-05-13/192736-app-localization-manual-language-setting-diagnostic.md)
