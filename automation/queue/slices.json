@@ -3069,6 +3069,48 @@
       "max_files_changed": 30,
       "entry_condition": "Static-literal extraction audit is complete and dynamic-formatting plan classifies recurrence intervals as a presentation-layer responsibility.",
       "notes": "Completed on 2026-05-14. Added recurrence.interval.days (one/other plural form) and recurrence.interval.compact (single form) to all 19 locale Localizable.stringsdict files with English values; non-English locales remain English placeholders per the translation-quality policy (13 plural keys total, up from 11). Introduced Core/Application/RecurrenceIntervalPresentation.swift with longLabel(days:) and compactBadge(days:) and registered it in Owlory.xcodeproj. Updated six call sites: HomeView add-task sheet, HomeView edit-task sheet, HomeView recurring task badge, TodayView quick-capture sheet, TrainView plan-session sheet, TrainView session-card recurring badge. Domain models (DomainModels.TrainingSession, DomainModels.HomeTask) keep recurrenceIntervalDays: Int? semantic; RecurrenceRules unchanged. Did not translate non-English values; did not touch readiness/digest/protocol-schedule copy. Validations: make architecture, make localization-check (19 locales, 282 keys, 13 plural keys), make test-domain DOMAIN=home (TEST SUCCEEDED), make test-domain DOMAIN=train (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build for Debug iOS Simulator (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
+    },
+    {
+      "slice_id": "app-localization-readiness-summary-formatting",
+      "title": "Localize readiness summary labels and per-axis tier copy",
+      "status": "done",
+      "priority": 175,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory.xcodeproj/",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-readiness-summary-formatting",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=train",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-readiness-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-string-extraction-audit",
+        "app-localization-dynamic-formatting-plan",
+        "app-localization-recurrence-interval-formatting"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "Static-literal extraction and recurrence-interval formatting slices are complete; the dynamic-formatting plan classifies readiness summaries as a presentation-layer responsibility.",
+      "notes": "Completed on 2026-05-14. Added 14 readiness.* keys to all 19 locale Localizable.strings files (296 keys total, up from 282; 13 plural keys unchanged): readiness.checkin.summary.{tap,tap.compact,strong,strong.compact,low,low.compact,mixed}, readiness.axis.tier.{low,okay,high} (%@ format strings), readiness.summary.tier.{low,okay,high} (Train compact form), readiness.session.readout (Readiness %d/5). Non-English locales remain English placeholders per the translation-quality policy. Introduced Core/Application/ReadinessSummaryPresentation.swift exposing todayCheckInLabel(energy:mood:sleep:layout:), trainingReadinessSummary(for:), and sessionReadinessReadout(level:), and registered it in Owlory.xcodeproj. TodayView readinessSummaryLabel now delegates to the helper (passing usesAccessibilityCompactHeader and usesCompactHeightAccessibilityLayout via the CheckInLayout struct). TrainView trainingReadinessSummary(for:) is now a thin pass-through; TrainView session-card readout uses sessionReadinessReadout(level:). Domain rules (ReadinessRules, ReadinessOutcomeRules) unchanged; did not touch digest insight copy, weeklyDigest.averageReadiness.value, or today.readiness.scale.accessibility. Validations: make architecture, make localization-check (19 locales, 296 keys, 13 plural keys), make test-domain DOMAIN=today (TEST SUCCEEDED), make test-domain DOMAIN=train (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
     }
   ]
 }

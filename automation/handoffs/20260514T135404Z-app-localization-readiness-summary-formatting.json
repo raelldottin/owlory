@@ -1,0 +1,86 @@
+{
+  "slice_id": "app-localization-readiness-summary-formatting",
+  "status": "done",
+  "summary": "Routed Today check-in header copy, per-axis Energy/Mood/Sleep tier phrases, the Train compact readiness summary, and the Train session-card readonly readout through localization keys plus a shared presentation helper. Added 14 readiness.* keys to all 19 locale Localizable.strings (296 keys total, up from 282; 13 plural keys unchanged). New Core/Application/ReadinessSummaryPresentation.swift exposes todayCheckInLabel(energy:mood:sleep:layout:), trainingReadinessSummary(for:), and sessionReadinessReadout(level:). Non-English locales remain English placeholders per the translation-quality policy. Domain rules (ReadinessRules, ReadinessOutcomeRules) unchanged; digest insight copy and today.readiness.scale.accessibility stringsdict entries untouched.",
+  "files_touched": [
+    "automation/handoffs/20260514T135404Z-app-localization-readiness-summary-formatting.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Core/Application/ReadinessSummaryPresentation.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/095404-app-localization-readiness-summary-formatting.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-readiness-summary-formatting",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=train",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-readiness-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Readiness summary copy localization",
+      "before": "TodayView.readinessSummaryLabel returned 7 hardcoded English Strings depending on layout flags and concatenated per-axis tag phrases (`Energy low`, `Mood okay`, `Sleep high`) inline. TrainView.trainingReadinessSummary returned 4 hardcoded Strings. The TrainView session card readout interpolated `Readiness \\(level)/5` verbatim. None of these had matching keys in Localizable.strings; non-English locales rendered the English literals regardless of locale.",
+      "after": "Three TodayView and TrainView surfaces delegate to Core/Application/ReadinessSummaryPresentation.swift. 14 keys under the readiness.* namespace are present in all 19 locales with English placeholder values (296 keys total, 13 plural keys unchanged). localization-string-inventory.md and localization-dynamic-formatting.md updated; readiness summaries are no longer in the deferred bucket.",
+      "proof": [
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+        "owlory_xcode/Owlory/Core/Application/ReadinessSummaryPresentation.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "make localization-check",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=train",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English locales render English placeholder text for the new readiness keys; this matches the existing translation-quality policy and is gated on the reviewer-intake workflow.",
+    "The per-axis tier format %@ low / %@ okay / %@ high places the axis name first. Some target languages may prefer reversed order; reviewers can rewrite the format string per-locale without code changes.",
+    "I did not exercise the new copy under the all-locale screenshot harness; the existing launch-surface screenshots show the Today check-in label in its default 'Tap to check in' state, which is visually unchanged.",
+    "Today.readinessSummaryLabel is now an indirection through the helper. Any test that targets the rendered text continues to work because the English output is byte-identical to the prior inline branching; tests that targeted the helper's structure directly would be a new path.",
+    "Train session card readout rendering is unchanged ('Readiness 4/5'); only the localization plumbing differs."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. Remaining deferred dynamic-formatting candidates are weekly digest insight/highlight summaries (DigestListView/DigestDetailView interpolations) and any remaining model-backed accessibility interpolation outside the already-implemented today.readiness.scale.accessibility stringsdict. Pick one explicitly before reopening the queue.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T13:54:04Z"
+}

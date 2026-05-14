@@ -404,7 +404,7 @@ private struct SessionCardView: View {
                     Image(systemName: "heart.text.square")
                         .foregroundStyle(trainingReadinessColor(for: session.readinessLevel))
                         .font(.caption)
-                    Text("Readiness \(session.readinessLevel)/5")
+                    Text(ReadinessSummaryPresentation.sessionReadinessReadout(level: session.readinessLevel))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -529,12 +529,7 @@ struct TrainingReadinessScaleRow: View {
 }
 
 func trainingReadinessSummary(for value: Int) -> String {
-    switch value {
-    case 1...2: return "Readiness low"
-    case 3: return "Readiness okay"
-    case 4...5: return "Readiness high"
-    default: return "Tap to check in"
-    }
+    ReadinessSummaryPresentation.trainingReadinessSummary(for: value)
 }
 
 private func statusPillColor(_ status: TrainingStatus) -> Color {

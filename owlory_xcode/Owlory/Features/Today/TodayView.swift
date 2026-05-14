@@ -227,26 +227,15 @@ struct TodayView: View {
     }
 
     private var readinessSummaryLabel: String {
-        let e = currentEntry.energy
-        let m = currentEntry.mood
-        let s = currentEntry.sleepQuality
-        guard e != 3 || m != 3 || s != 3 else {
-            return usesAccessibilityCompactHeader ? "Check in now" : "Tap to check in"
-        }
-        let avg = Double(e + m + s) / 3.0
-        if avg >= 4.0 { return usesAccessibilityCompactHeader ? "Strong today" : "Feeling strong today" }
-        if avg <= 2.0 { return usesAccessibilityCompactHeader ? "Low reserves" : "Low reserves today" }
-        if usesCompactHeightAccessibilityLayout { return "Mixed readiness" }
-
-        func tag(_ label: String, _ v: Int) -> String {
-            switch v {
-            case 1...2: return "\(label) low"
-            case 3: return "\(label) okay"
-            case 4...5: return "\(label) high"
-            default: return label
-            }
-        }
-        return "\(tag("Energy", e)) · \(tag("Mood", m)) · \(tag("Sleep", s))"
+        ReadinessSummaryPresentation.todayCheckInLabel(
+            energy: currentEntry.energy,
+            mood: currentEntry.mood,
+            sleep: currentEntry.sleepQuality,
+            layout: ReadinessSummaryPresentation.CheckInLayout(
+                usesCompactHeader: usesAccessibilityCompactHeader,
+                prefersMixedShortcut: usesCompactHeightAccessibilityLayout
+            )
+        )
     }
 
     // MARK: - Continue

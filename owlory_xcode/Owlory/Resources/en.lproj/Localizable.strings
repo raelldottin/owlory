@@ -290,3 +290,17 @@
 "today.continue.accessibility.addToFocus" = "Opens %@. Swipe to add this work to Focus Three.";
 "today.continue.accessibility.openDomain" = "Opens %@";
 "today.quickCareer.recordTitle" = "Record %@";
+"readiness.checkin.summary.tap" = "Tap to check in";
+"readiness.checkin.summary.tap.compact" = "Check in now";
+"readiness.checkin.summary.strong" = "Feeling strong today";
+"readiness.checkin.summary.strong.compact" = "Strong today";
+"readiness.checkin.summary.low" = "Low reserves today";
+"readiness.checkin.summary.low.compact" = "Low reserves";
+"readiness.checkin.summary.mixed" = "Mixed readiness";
+"readiness.axis.tier.low" = "%@ low";
+"readiness.axis.tier.okay" = "%@ okay";
+"readiness.axis.tier.high" = "%@ high";
+"readiness.summary.tier.low" = "Readiness low";
+"readiness.summary.tier.okay" = "Readiness okay";
+"readiness.summary.tier.high" = "Readiness high";
+"readiness.session.readout" = "Readiness %d/5";
