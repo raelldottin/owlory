@@ -3153,6 +3153,75 @@
       "max_files_changed": 30,
       "entry_condition": "Static-literal extraction is complete, prior dynamic-formatting slices established the WeeklyDigestPresentationFormatting helper, and the user agreed to refactor WeeklyDigestRules from String composition to semantic enums + structured highlight data while keeping its decision-making role intact.",
       "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility — old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
+    },
+    {
+      "slice_id": "app-localization-accessibility-interpolation-audit",
+      "title": "Audit remaining accessibility-label interpolations for localization gaps",
+      "status": "done",
+      "priority": 185,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-accessibility-interpolation-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-readiness-summary-formatting",
+        "app-localization-digest-insight-summary-formatting"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "All prior named dynamic-formatting buckets (recurrence, readiness, digest insight) are localized; only remaining model-backed accessibility interpolations are unaudited.",
+      "notes": "Completed on 2026-05-14. Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites across the Owlory app target (test target excluded). 12 sites already localized (literal keys matched in en.lproj/Localizable.strings, or routed through existing helpers writeRowAccessibilityHint / continueAccessibilityHint / readinessScaleAccessibilityLabel / trainingStatusAccessibilityLabel). 10 real gaps clustered into four groups: A (Home action labels — Edit/Skip task, Mark/Restore via leadingButtonAccessibilityLabel, Complete/Skip protocol step), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row accessibility — same shape as today.readiness.scale.accessibility), D (BuildInfoView label:value pattern, low priority). 1 system-generated site (TrainView.swift:499 .accessibilityValue('\\(value)') — Apple expects bare numeric). Group A queued as app-localization-home-action-accessibility-formatting. Groups B/C/D documented in localization-string-inventory.md but not queued. Doc-only slice; no Swift source touched. proof_level achieved: doc-only."
+    },
+    {
+      "slice_id": "app-localization-home-action-accessibility-formatting",
+      "title": "Localize Home task and protocol-step action accessibility labels",
+      "status": "queued",
+      "priority": 190,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Features/Home/",
+        "owlory_xcode/Owlory.xcodeproj/",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-home-action-accessibility-formatting",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-home-accessibility-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-accessibility-interpolation-audit"
+      ],
+      "max_files_changed": 20,
+      "entry_condition": "Group A from the accessibility-label interpolation audit (Home task / protocol-step action labels) is the named follow-up to implement; other audit groups stay documented but unqueued.",
+      "notes": "Audit Group A: localize five interpolated accessibility labels in HomeView (Edit task, Skip task swipe, leadingButtonAccessibilityLabel with three states Mark complete / Mark incomplete / Restore, Complete protocol step, Skip protocol step). Add %@-format keys home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore} and home.protocol.step.accessibility.{complete,skip} to all 19 locales as English placeholders. Route via a new Core/Application/HomeAccessibilityLabels.swift helper (or inline String.localizedStringWithFormat calls if a helper feels heavy for so few strings — implementer's call). Do not touch unrelated copy. Do not translate non-English values. proof_level target: build-tested."
     }
   ]
 }

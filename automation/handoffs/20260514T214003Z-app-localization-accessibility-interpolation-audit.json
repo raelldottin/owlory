@@ -1,0 +1,53 @@
+{
+  "slice_id": "app-localization-accessibility-interpolation-audit",
+  "status": "done",
+  "summary": "Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites in the Owlory app target. 12 already localized (literal keys or helper-routed via writeRowAccessibilityHint, continueAccessibilityHint, readinessScaleAccessibilityLabel, trainingStatusAccessibilityLabel). 10 real gaps grouped into A (Home task and protocol-step action labels), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row labels — mirrors today.readiness.scale.accessibility shape), D (BuildInfoView label:value diagnostic line, low priority). 1 system-generated (TrainView.swift:499 .accessibilityValue with a bare integer). Group A is queued as app-localization-home-action-accessibility-formatting; Groups B/C/D are documented in localization-string-inventory.md but not queued. Doc-only; no Swift source touched.",
+  "files_touched": [
+    "automation/handoffs/20260514T214003Z-app-localization-accessibility-interpolation-audit.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-string-inventory.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/174003-app-localization-accessibility-interpolation-audit.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-accessibility-interpolation-audit",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Accessibility label interpolation audit completeness",
+      "before": "The localization-string-inventory deferred bucket listed 'remaining model-backed accessibility interpolation outside today.readiness.scale.accessibility' as unaudited. No inventory existed of which accessibility-modifier sites were unlocalized.",
+      "after": "All 25 accessibility-modifier sites in the app target are classified. The doc lists 10 real gaps in four thematic groups with concrete file/line citations. Group A is queued as a follow-up implementation slice; B/C/D are documented but unqueued, awaiting prioritization.",
+      "proof": [
+        "docs/workflows/localization-string-inventory.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Groups B, C, and D from the audit are documented but not queued. They remain concrete gaps until prioritized into their own scoped slices.",
+    "The audit only inspects the Owlory app target. Widget extension and test targets are excluded; they have separate accessibility concerns.",
+    "Static-analysis only: the audit relies on call-site shape (literal vs variable vs helper call) to classify localized-ness. A future regression that converts a literal `Text` literal to a non-LocalizedStringKey String variable would silently bypass localization without showing up as a new accessibility-modifier site.",
+    "No UI surface was exercised; the audit does not prove any of the already-localized sites actually render correctly under non-English locales."
+  ],
+  "recommended_next_slice": "app-localization-home-action-accessibility-formatting",
+  "recommended_next_reason": "Group A is the highest-leverage follow-up: it covers user-visible Home task and protocol-step action accessibility (Edit/Skip/Mark complete/Mark incomplete/Restore/Complete step/Skip step), and the strings are clustered in a single file with a clean format-string shape (%@ for the title interpolation). The slice is already classified in the queue with allowed_paths, validations, and an entry condition tied to this audit.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T21:40:03Z"
+}
