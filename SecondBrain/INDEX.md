@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-regression-next-surface-triage](sessions/2026-05-13/202149-owlory-ui-regression-next-surface-triage.md)
 - [app-localization-review-packet-for-first-locale](sessions/2026-05-13/194318-app-localization-review-packet-for-first-locale.md)
 - [app-localization-manual-language-setting-diagnostic](sessions/2026-05-13/192736-app-localization-manual-language-setting-diagnostic.md)
 - [app-localization-manual-app-language-testing-doc](sessions/2026-05-13/192209-app-localization-manual-app-language-testing-doc.md)

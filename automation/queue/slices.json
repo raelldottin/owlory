@@ -2654,7 +2654,7 @@
     {
       "slice_id": "owlory-ui-regression-next-surface-triage",
       "title": "Choose next UI regression surface",
-      "status": "deferred",
+      "status": "done",
       "priority": 145,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -2678,7 +2678,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
-      "notes": "Unblocker for owlory-ui-regression-expansion-next-surface. Compare candidate surfaces such as Write, Home protocols, Train, Patterns, and localization layout; choose exactly one next surface and coverage goal. Do not add XCUITest code in this triage slice."
+      "notes": "Completed on 2026-05-13. Selected Train active/history transition as the next UI regression surface: seed one planned Train session, resolve it through a visible Train-tab action, and assert it leaves active Today and appears in History. No XCUITest code was added in this triage slice."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
@@ -2827,15 +2827,19 @@
     },
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
-      "title": "Expand Owlory UI regression coverage to the next selected surface",
-      "status": "blocked",
+      "title": "Expand UI regression coverage to Train active/history transition",
+      "status": "queued",
       "priority": 150,
       "domain": "ui-testing",
       "allowed_paths": [
         "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Train/",
         "Makefile",
+        "docs/product/domains/train.md",
         "docs/workflows/ui-regression-plan.md",
         "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
         "docs/workflows/validation.md",
         "automation/queue/slices.json",
         "automation/handoffs/",
@@ -2843,17 +2847,21 @@
         "SecondBrain/sessions/"
       ],
       "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-expansion-next-surface",
+        "python3 automation/supervisor/run_next.py --dry-run",
         "make architecture",
+        "make test-domain DOMAIN=train",
         "make ui-regression",
         "make automation-check",
         "git diff --check"
       ],
       "depends_on": [
-        "owlory-ui-regression-batch-1-today-continue"
+        "owlory-ui-regression-batch-1-today-continue",
+        "owlory-ui-regression-next-surface-triage"
       ],
       "max_files_changed": 15,
-      "entry_condition": "A concrete next UI regression surface is selected and scoped.",
-      "notes": "Blocked entry condition: a concrete next UI regression surface is selected and scoped. Expand beyond Today Continue only after a concrete target surface is chosen, such as Write, Home protocols, Train, Patterns, or localization layout. Do not create a broad app-wide suite in one pass, expand without a named surface and coverage goal, or blur proof lanes. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke.",
+      "entry_condition": "Satisfied by owlory-ui-regression-next-surface-triage: Train active/history transition is selected and scoped.",
+      "notes": "Batch 2 target: seed one planned Train session for today, open Train, assert the session appears in the active Today surface, resolve it through one visible action (prefer Complete), and assert it leaves active Today and appears in History. Do not broaden into recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke.",
       "recommended_unblocker": "owlory-ui-regression-next-surface-triage"
     }
   ]
