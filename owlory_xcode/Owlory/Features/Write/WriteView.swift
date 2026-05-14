@@ -48,6 +48,7 @@ struct WriteView: View {
                         Image(systemName: "plus")
                     }
                     .accessibilityLabel("Capture new note")
+                    .accessibilityIdentifier("write.capture.entry")
                 }
             }
             .sheet(isPresented: $showingCapture) {
@@ -181,6 +182,7 @@ struct WriteView: View {
                     }
                 }
                 .accessibilityHint(writeRowAccessibilityHint(for: note))
+                .accessibilityIdentifier("write.note.row.\(note.id.uuidString)")
             }
         } header: {
             HStack {
@@ -509,6 +511,7 @@ private struct NoteDetailView: View {
                                 Button("Add to Today") {
                                     saveAndAddToToday()
                                 }
+                                .accessibilityIdentifier("write.note.action.addToToday.\(note.id.uuidString)")
                             }
                             if canTurnIntoTask {
                                 Button("Turn into Task") {

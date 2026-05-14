@@ -702,3 +702,128 @@ final class TodayContinueRegression: XCTestCase {
         wait(for: [removal], timeout: 10)
     }
 }
+
+/// Second UI regression batch defined by `docs/workflows/ui-regression-plan.md`
+/// Lane 2. Targets the Write capture inbox surface (the Write tab), not Today
+/// Continue. Lives in the same `OwloryUITests` target as the smoke and
+/// `TodayContinueRegression` classes but is reached via
+/// `make ui-regression DOMAIN=write` (or by default `make ui-regression`,
+/// which runs every regression class).
+///
+/// Scope per `owlory-ui-regression-expansion-next-surface` (selected by
+/// `owlory-ui-regression-next-surface-triage` on 2026-05-13):
+///
+/// - Open Write from the tab bar.
+/// - Render one seeded in-progress Writing note row and the capture entry
+///   affordance on the Write surface.
+/// - Assert one promotion affordance (Add to Today) is reachable from the
+///   note detail sheet without exercising the cross-domain side effect.
+///
+/// Reuses `--owlory-ui-seed-in-progress-writing-continue-item` because that
+/// arg already resets app-local state and writes a single capture-stage
+/// `WritingNote`; the slice scope requires a deterministic seed, not a new
+/// one.
+///
+/// Out of scope: voice/live transcription paths, task promotion side
+/// effects, protocol promotion side effects, screenshot proof pack, device
+/// proof, TestFlight proof.
+final class WriteCaptureRegression: XCTestCase {
+    private let inProgressWritingFixtureNoteID = "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B"
+    private let inProgressWritingFixtureTitle = "Review seeded Writing note"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    // MARK: - Tests
+
+    func testSeededWriteCaptureInboxRendersInProgressNoteRowAndCaptureEntry() throws {
+        launchWriteSurface()
+
+        let rowIdentifier = "write.note.row.\(inProgressWritingFixtureNoteID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded in-progress Writing note row to render on the Write surface."
+        )
+        XCTAssertTrue(
+            app.staticTexts[inProgressWritingFixtureTitle].exists,
+            "Expected the seeded Writing note title to be visible inside its row."
+        )
+
+        let captureEntry = app.buttons["write.capture.entry"]
+        XCTAssertTrue(
+            captureEntry.waitForExistence(timeout: 10),
+            "Expected the Write capture entry affordance to render alongside the seeded note row."
+        )
+    }
+
+    func testSeededWriteNoteDetailExposesAddToTodayPromotion() throws {
+        launchWriteSurface()
+
+        let rowIdentifier = "write.note.row.\(inProgressWritingFixtureNoteID)"
+        let row = app.buttons[rowIdentifier]
+        XCTAssertTrue(
+            row.waitForExistence(timeout: 10),
+            "Expected the seeded in-progress Writing note row to render before opening the detail sheet."
+        )
+
+        row.tap()
+
+        let detailIdentifier = "write.note.detail.\(inProgressWritingFixtureNoteID)"
+        let detail = app
+            .descendants(matching: .any)
+            .matching(identifier: detailIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            detail.waitForExistence(timeout: 10),
+            "Expected the Write note detail sheet to present after tapping the row."
+        )
+
+        let optionsMenu = app.buttons["Note options"]
+        XCTAssertTrue(
+            optionsMenu.waitForExistence(timeout: 10),
+            "Expected the note-options menu button to render in the detail sheet toolbar."
+        )
+        optionsMenu.tap()
+
+        let addToTodayIdentifier = "write.note.action.addToToday.\(inProgressWritingFixtureNoteID)"
+        let addToTodayButton = app.buttons[addToTodayIdentifier]
+        XCTAssertTrue(
+            addToTodayButton.waitForExistence(timeout: 10),
+            "Expected Add to Today to be reachable from the note detail options menu without exercising the cross-domain side effect."
+        )
+        // Do not tap. The slice scope intentionally stops at affordance
+        // visibility; exercising the side effect belongs to a follow-up
+        // slice with its own Today-side seed and assertion.
+    }
+
+    // MARK: - Helpers
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+
+    private func launchWriteSurface() {
+        launch(arguments: ["--owlory-ui-seed-in-progress-writing-continue-item"])
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to launch on Today's dashboard before navigating to Write."
+        )
+
+        let writeTab = app.tabBars.buttons["Write"]
+        XCTAssertTrue(
+            writeTab.waitForExistence(timeout: 10),
+            "Expected the Write tab to be reachable from the tab bar."
+        )
+        writeTab.tap()
+    }
+}

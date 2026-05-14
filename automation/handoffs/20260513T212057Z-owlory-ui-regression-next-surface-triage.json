@@ -1,0 +1,57 @@
+{
+  "slice_id": "owlory-ui-regression-next-surface-triage",
+  "status": "done",
+  "summary": "Chose Write capture inbox as the next UI regression surface and scoped a running-app-smoke coverage goal. Compared Write, Home protocols, Train, Patterns, and localization layout against current contract status, existing smoke coverage, and cross-domain blast radius. Write was selected because it is the only Partially implemented capture domain currently shipping, its promotion flows cross Today/Home tasks/Home protocols, and only the Today-Continue ingress to an in-progress Writing note has smoke coverage today. The blocked target slice owlory-ui-regression-expansion-next-surface was flipped to queued, retitled to 'Add Write capture inbox UI regression batch', and given a scoped notes block plus Write-specific allowed_paths.",
+  "files_touched": [
+    "automation/handoffs/20260513T212057Z-owlory-ui-regression-next-surface-triage.json",
+    "automation/queue/slices.json",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/212057-owlory-ui-regression-next-surface-triage.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-next-surface-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Next UI regression surface selection",
+      "before": "owlory-ui-regression-expansion-next-surface was blocked with entry_condition 'A concrete next UI regression surface is selected and scoped.' No surface was named.",
+      "after": "Write capture inbox is the named next surface with a scoped running-app-smoke coverage goal. owlory-ui-regression-expansion-next-surface is queued, retitled, and its allowed_paths cover OwloryUITests/, OwloryUITestSupport.swift, Owlory/Features/Write/, and the relevant doc surfaces.",
+      "proof": [
+        "automation/queue/slices.json",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This triage does not prove the Write regression batch will land at running-app-smoke; the implementation slice still has to satisfy make ui-regression and the failure-classification rules.",
+    "This triage does not pick the next surface after Write; that decision belongs to a future triage slice once Write coverage is in place.",
+    "Localization layout regression remains gated on the parked first-locale review intake; revisiting that surface requires unblocking app-localization-first-locale-review-intake first.",
+    "Voice / live transcription coverage is explicitly deferred because microphone permission is environmental; no slice currently owns that gap."
+  ],
+  "recommended_next_slice": "owlory-ui-regression-expansion-next-surface",
+  "recommended_next_reason": "This is now the highest-priority queued slice. Its scope is fully defined (Write capture inbox, running-app-smoke proof level) and supervisor dry-run already selects it.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-13T21:20:57Z"
+}
