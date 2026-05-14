@@ -1,0 +1,149 @@
+{
+  "captures": [
+    {
+      "bytes": 315254,
+      "file": "01-locale-en-launch.png",
+      "locale": "en",
+      "sha256": "62ab8b045edb32421e3d28de4e7c4a2f6aaefa6d74e97b68d207a2e2a5cf9d22",
+      "status": "passed"
+    },
+    {
+      "bytes": 316813,
+      "file": "02-locale-ar-launch.png",
+      "locale": "ar",
+      "sha256": "aa7d3e1cbd2fcf1ca5e92d28b57f7f449ccf850729772069cc0a09834afe0b99",
+      "status": "passed"
+    },
+    {
+      "bytes": 315320,
+      "file": "03-locale-nl-launch.png",
+      "locale": "nl",
+      "sha256": "3c17988fe147ac1cf6ffbbf9aeb17ca72a8a652d470ef731578f6afbe5e8c082",
+      "status": "passed"
+    },
+    {
+      "bytes": 313994,
+      "file": "04-locale-fr-launch.png",
+      "locale": "fr",
+      "sha256": "d96911c6f3a2f638361b2fa413aa013b3f95e0d317af848216204a61a7e2c091",
+      "status": "passed"
+    },
+    {
+      "bytes": 316256,
+      "file": "05-locale-de-launch.png",
+      "locale": "de",
+      "sha256": "1187285dcc555ceff518b6f7043eaa401f2cb8de915f835def5a032e5a7c0ba6",
+      "status": "passed"
+    },
+    {
+      "bytes": 315810,
+      "file": "06-locale-it-launch.png",
+      "locale": "it",
+      "sha256": "6a7de53d009a01245a7d3a9ab22a101cc8b9befdfc4bfafc69a8fe87c6738bad",
+      "status": "passed"
+    },
+    {
+      "bytes": 310656,
+      "file": "07-locale-ja-launch.png",
+      "locale": "ja",
+      "sha256": "d5d68cda666d4ef1c46e9dcb9cb4e80683b2f47c173813afca452d186ae71837",
+      "status": "passed"
+    },
+    {
+      "bytes": 310172,
+      "file": "08-locale-ko-launch.png",
+      "locale": "ko",
+      "sha256": "48314796539839d9213e6c5cc34df426bb53b16f4fe20b86ed0d9ae1356c2a11",
+      "status": "passed"
+    },
+    {
+      "bytes": 315234,
+      "file": "09-locale-nb-launch.png",
+      "locale": "nb",
+      "sha256": "80eb43c8d816d95e97ac7c4372dc8ed9e4f840e091cae0a715101911272c390f",
+      "status": "passed"
+    },
+    {
+      "bytes": 316004,
+      "file": "10-locale-pt-launch.png",
+      "locale": "pt",
+      "sha256": "bc768f790443235aecc4d9bf83be6a86df2e693b724503e534e90fbb41d2c1bf",
+      "status": "passed"
+    },
+    {
+      "bytes": 316009,
+      "file": "11-locale-pt-BR-launch.png",
+      "locale": "pt-BR",
+      "sha256": "b88cd8752262f5a20a07c6cc862de4987a1b0b7eda81c48863be6339bd2168aa",
+      "status": "passed"
+    },
+    {
+      "bytes": 314852,
+      "file": "12-locale-ru-launch.png",
+      "locale": "ru",
+      "sha256": "ca83b3751d3056a9d596618121a7ffed80e3bdfa901c61d3dcdadf5874964275",
+      "status": "passed"
+    },
+    {
+      "bytes": 316189,
+      "file": "13-locale-es-launch.png",
+      "locale": "es",
+      "sha256": "b9d966db84ac028ffd3a7e744bdca10fd5d0f465d0a2745fdb879c2bfc9a5d6e",
+      "status": "passed"
+    },
+    {
+      "bytes": 315346,
+      "file": "14-locale-sv-launch.png",
+      "locale": "sv",
+      "sha256": "99050cfaac3f51d3954b76c36ed5b6af58819de038856fdda414de1369dd9d3f",
+      "status": "passed"
+    },
+    {
+      "bytes": 310275,
+      "file": "15-locale-zh-Hans-launch.png",
+      "locale": "zh-Hans",
+      "sha256": "59eab43a5585a1f17be60fae2677e3932719b348fa20b4e873a26b78ce85b00c",
+      "status": "passed"
+    },
+    {
+      "bytes": 310270,
+      "file": "16-locale-zh-Hant-launch.png",
+      "locale": "zh-Hant",
+      "sha256": "ae2ba505ad733ae6ec59575fbbd7a29ce41a256ec3cbe61920476ad804269d65",
+      "status": "passed"
+    },
+    {
+      "bytes": 315865,
+      "file": "17-locale-tr-launch.png",
+      "locale": "tr",
+      "sha256": "8b0f02af631e358dc0cd107a2ec3d8604f6a51599c7c9e951298ab978e9eb7f3",
+      "status": "passed"
+    },
+    {
+      "bytes": 314937,
+      "file": "18-locale-uk-launch.png",
+      "locale": "uk",
+      "sha256": "81130fca0e0402161a4854f83051bf0f5b53130a2dfd13adbc4b846d06536f93",
+      "status": "passed"
+    },
+    {
+      "bytes": 318459,
+      "file": "19-locale-vi-launch.png",
+      "locale": "vi",
+      "sha256": "531f113f6f7620b6f48e339d04a48fb6d85e5c3e2a1cb36670f60060264a3744",
+      "status": "passed"
+    }
+  ],
+  "failures": [],
+  "non_claims": [
+    "translation quality",
+    "full layout correctness",
+    "device proof",
+    "TestFlight proof"
+  ],
+  "proof_level": "screenshot-verified",
+  "schema_version": 1,
+  "slice_id": "app-localization-all-locale-screenshot-proof",
+  "status": "passed",
+  "timestamp": "2026-05-14T07:40:04Z"
+}

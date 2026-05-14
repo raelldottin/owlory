@@ -2838,7 +2838,7 @@
     {
       "slice_id": "app-localization-all-locale-screenshot-proof",
       "title": "Preserve screenshot proof for every supported locale",
-      "status": "queued",
+      "status": "done",
       "priority": 154,
       "domain": "localization",
       "allowed_paths": [
@@ -2864,7 +2864,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "All-locale smoke has passed, full-locale launch-surface visual evidence is explicitly requested, and make localization-screenshot-idb-check reports ready on the capture machine.",
-      "notes": "Optional proof-preservation slice. Preserve one launch-surface screenshot per supported locale with README and manifest hashes. Claim screenshot-verified only for launch surfaces. Do not claim translation quality, full layout correctness, device proof, or TestFlight proof. Unblocked on 2026-05-14 after idb was installed with uv tool install fb-idb and make localization-screenshot-idb-check reported status=ready.",
+      "notes": "Completed on 2026-05-14. Captured one settled launch-surface screenshot per supported locale (19 PNGs, 50KB+ each) via `python3 automation/smoke/capture_locale_screenshots.py --udid <iPhone 17 simulator UDID> --allow-simctl-screenshot-fallback`. Preserved under automation/proofs/app-localization-all-locale-screenshot-proof/ with README, manifest.json (sha256 + bytes per file), and capture timestamp. Each capture flow: idb terminates Owlory, relaunches with --owlory-ui-testing -AppleLanguages (<locale>) -AppleLocale <locale>, settles, dismisses any notification prompt via idb ui describe-all + idb ui tap, asserts SETTLED_SURFACE_LABEL='Today' is present, screenshots via simctl fallback because the installed fb-idb client lacked a screenshot subcommand on this machine. proof_level achieved: screenshot-verified for the launch surface of all 19 locales. Does not claim translation quality, full layout correctness, device proof, or TestFlight proof.",
       "recommended_unblocker": "localization-screenshot-proof-idb-harness"
     },
     {

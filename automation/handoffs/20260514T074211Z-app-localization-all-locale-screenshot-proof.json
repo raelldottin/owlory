@@ -1,0 +1,74 @@
+{
+  "slice_id": "app-localization-all-locale-screenshot-proof",
+  "status": "done",
+  "summary": "Captured one settled launch-surface screenshot per supported locale (19 PNGs) using the idb-first harness with the documented --allow-simctl-screenshot-fallback path. Preserved under automation/proofs/app-localization-all-locale-screenshot-proof/ with README and manifest.json (sha256 + bytes per file). Each capture flow used idb to terminate Owlory, relaunch with --owlory-ui-testing -AppleLanguages (<locale>) -AppleLocale <locale>, settle, dismiss any notification prompt via idb ui describe-all + idb ui tap, and assert SETTLED_SURFACE_LABEL='Today' was present. simctl handled the final PNG capture because the installed fb-idb client lacks a screenshot subcommand. proof_level achieved: screenshot-verified for the launch surface of all 19 locales.",
+  "files_touched": [
+    "automation/handoffs/20260514T074211Z-app-localization-all-locale-screenshot-proof.json",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/01-locale-en-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/02-locale-ar-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/03-locale-nl-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/04-locale-fr-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/05-locale-de-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/06-locale-it-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/07-locale-ja-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/08-locale-ko-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/09-locale-nb-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/10-locale-pt-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/11-locale-pt-BR-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/12-locale-ru-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/13-locale-es-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/14-locale-sv-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/15-locale-zh-Hans-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/16-locale-zh-Hant-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/17-locale-tr-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/18-locale-uk-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/19-locale-vi-launch.png",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/README.md",
+    "automation/proofs/app-localization-all-locale-screenshot-proof/manifest.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/034211-app-localization-all-locale-screenshot-proof.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-all-locale-screenshot-proof",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "All-locale launch-surface screenshot proof",
+      "before": "Blocked. The idb-first capture harness existed (localization-screenshot-proof-idb-harness), but no captured artifact existed under automation/proofs/app-localization-all-locale-screenshot-proof/. localization-translation-quality.md and roadmap-status.md listed the all-locale screenshot proof as blocked.",
+      "after": "Implemented. 19 settled launch-surface PNGs preserved under automation/proofs/app-localization-all-locale-screenshot-proof/ with README and manifest.json (sha256 + bytes). proof_level: screenshot-verified for the launch surface only. localization-translation-quality.md, roadmap-status.md, and validation.md now reflect the captured artifact.",
+      "proof": [
+        "automation/proofs/app-localization-all-locale-screenshot-proof/manifest.json",
+        "automation/proofs/app-localization-all-locale-screenshot-proof/README.md",
+        "automation/proofs/app-localization-all-locale-screenshot-proof/01-locale-en-launch.png"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English locales currently render English placeholder text because non-en.lproj Localizable.strings values are still copies of the English source. These screenshots prove launch settling per locale; they do not prove visible localized strings beyond reviewed German values.",
+    "The --allow-simctl-screenshot-fallback path was needed because the installed fb-idb client lacks an idb screenshot subcommand. Future runs on a machine with a newer idb may drop the fallback flag; the proof harness still requires idb to own launch, describe, and prompt dismissal.",
+    "Re-running the capture against a non-empty output directory is intentionally blocked by the helper. Cleaning the directory before retry is the operator's responsibility; this avoids mingling fresh and stale screenshots.",
+    "This proof does not claim Dynamic Type, RTL pseudolocalization, on-device renderer behavior, or App Store production behavior. Those remain separate lanes.",
+    "The German screenshot reflects placeholder text for keys that have not yet been ingested via app-localization-first-locale-review-intake; only reviewed keys are visible in localized form once that slice ships."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The remaining blocked slice is app-localization-first-locale-review-intake, which still waits on reviewed German translation values with reviewer/status metadata. No queued slice is eligible after this completes.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T07:42:11Z"
+}

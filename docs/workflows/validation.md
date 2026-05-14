@@ -192,9 +192,13 @@ python3 automation/smoke/capture_locale_screenshots.py \
   --output-dir automation/proofs/app-localization-all-locale-screenshot-proof
 ```
 
+Add `--allow-simctl-screenshot-fallback` when the installed `idb` client lacks a screenshot subcommand; idb still owns launch, UI describe, and prompt dismissal while `simctl io <udid> screenshot` captures the final PNG.
+
 The capture helper writes proof artifacts only after every requested locale reaches the settled Today surface and no known notification prompt remains. It does not prove translation quality, full layout correctness, physical-device behavior, or TestFlight behavior.
 
 Use an empty output directory. The helper blocks instead of writing into a non-empty proof directory so a failed retry cannot accidentally mingle fresh screenshots with stale evidence.
+
+The first full capture ran on 2026-05-14 (commit `5fe752a` for the unblock; capture run on the same head). Preserved 19 PNGs (one per supported locale) under `automation/proofs/app-localization-all-locale-screenshot-proof/` with `manifest.json` (sha256 + bytes per file) and a README that lists the locale set and the explicit non-claims (no translation quality, no full layout correctness, no device proof, no TestFlight proof).
 
 ### Manual Per-App Language Testing
 

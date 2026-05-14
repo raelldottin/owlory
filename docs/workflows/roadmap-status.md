@@ -68,7 +68,6 @@ UI regression and snapshot coverage:
 
 The following items are intentionally represented as blocked/deferred slices so future agents do not lose them or start them prematurely:
 
-- `app-localization-all-locale-screenshot-proof` - blocked until all-locale smoke passes, full-locale launch-surface visual evidence is explicitly requested, and `make localization-screenshot-idb-check` reports ready.
 - `app-localization-first-locale-review-intake` - blocked until reviewed translation values and reviewer/status metadata exist.
 
 Do not convert blocked slices to active implementation work without satisfying their entry conditions. `make clean-stop` verifies this parking lot mechanically.
@@ -80,7 +79,7 @@ Current unblocker chain:
 - `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. As of 2026-05-14, manual follow-up confirmed tested German translation values do not exist yet. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
 - `app-localization-completion-status-audit` corrected the maintained status: localization infrastructure is implemented, but localization as a product-quality claim is not complete until reviewed translations and all-locale proof land.
 - `app-localization-all-locale-smoke` passed for all 19 supported locales and preserved JSON proof under `automation/proofs/app-localization-all-locale-smoke/`. This proves launch/resource loading only, not translation quality.
-- `localization-screenshot-proof-idb-harness` added a check-only idb dependency gate and idb-first capture helper for all-locale screenshot proof. It does not claim screenshot proof until the idb client is installed and all 19 settled screenshots are captured and preserved.
+- `localization-screenshot-proof-idb-harness` added a check-only idb dependency gate and idb-first capture helper for all-locale screenshot proof. The follow-up `app-localization-all-locale-screenshot-proof` slice ran the capture on 2026-05-14 and preserved one settled launch-surface PNG per supported locale (19 total) under `automation/proofs/app-localization-all-locale-screenshot-proof/` with README, manifest, and sha256 hashes. proof_level: screenshot-verified for the launch surface only.
 - `owlory-ui-regression-next-surface-triage` ran in parallel by two agents on 2026-05-13. Agent A selected Write capture inbox and `owlory-ui-regression-expansion-next-surface` shipped the `WriteCaptureRegression` Lane 2 batch with `running-app-smoke` proof. Agent B selected Train active/history transition and `owlory-ui-regression-batch-3-train-active-history` shipped the `TrainRegression` Lane 2 batch with `running-app-smoke` proof.
 
 ## Suggested Order
