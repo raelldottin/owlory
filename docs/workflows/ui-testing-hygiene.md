@@ -40,6 +40,24 @@ Future UI tests should:
 
 If a UI test requires manual taps because the environment lacks a driver, record that as residual risk and queue automation follow-up instead of calling the proof repeatable.
 
+## Manual Localization UI Checks
+
+Manual device and TestFlight localization checks may use iOS per-app language selection:
+
+```text
+Settings > Apps > Owlory > Language
+```
+
+If the option is missing, add the target language through:
+
+```text
+Settings > General > Language & Region > Add Language
+```
+
+This is a manual review path for language and layout inspection. Do not use Settings automation as the maintained smoke lane; automated locale checks should use the running-app smoke runner's launch arguments instead.
+
+If the desired language does not appear, classify the result as `manual language setting diagnostic needed`, not as a UI regression. Follow the diagnostic steps in [Validation Workflows](validation.md#manual-per-app-language-testing) and preserve the failure shape: no Language row, or Language row present but target language missing.
+
 ## Maintained XCUITest Smoke
 
 Run the maintained smoke path with:

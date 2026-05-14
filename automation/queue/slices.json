@@ -2624,7 +2624,7 @@
     {
       "slice_id": "app-localization-review-packet-for-first-locale",
       "title": "Prepare first-locale translation review packet",
-      "status": "deferred",
+      "status": "done",
       "priority": 146,
       "domain": "localization",
       "allowed_paths": [
@@ -2649,7 +2649,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Localization review should move forward and a target first locale or reviewed subset is selected.",
-      "notes": "Unblocker for app-localization-first-locale-review-intake. Choose one locale or subset, prepare reviewer instructions and return format from the existing export, and do not replace app resources or claim native review. Keep deferred until translation review is an active priority."
+      "notes": "Completed on 2026-05-13 for German / Deutsch. Prepared localization/review/de/german-review-packet.csv and german-review-packet.json with 320 review entries (282 strings, 38 plural entries), all currently english-placeholder. This is reviewer input only; no app resources were replaced and no native-review claim was made. app-localization-first-locale-review-intake remains blocked until reviewed German values return with reviewer/status metadata."
     },
     {
       "slice_id": "owlory-ui-regression-next-surface-triage",
@@ -2768,6 +2768,62 @@
       "entry_condition": "Reviewed translation values exist with reviewer basis/status metadata.",
       "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. Ingest one reviewed locale or small reviewed subset from the translation review packet, replacing only values with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested.",
       "recommended_unblocker": "app-localization-review-packet-for-first-locale"
+    },
+    {
+      "slice_id": "app-localization-manual-language-setting-diagnostic",
+      "title": "Diagnose missing German in manual app-language picker",
+      "status": "done",
+      "priority": 150,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/validation.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/proofs/app-localization-manual-language-setting-diagnostic/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-manual-language-setting-diagnostic",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-manual-language-diagnostic-build CODE_SIGNING_ALLOWED=NO",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "notes": "Record the manual finding that German did not appear in per-app language testing. Verify source and built-app localization packaging where locally possible, distinguish no Language row vs Language row without German, document IPA/xcarchive checks for TestFlight, and preserve a diagnostic proof artifact. Do not change translations, product code, localization resources, or claim manual German proof."
+    },
+    {
+      "slice_id": "app-localization-manual-app-language-testing-doc",
+      "title": "Document manual per-app language testing",
+      "status": "done",
+      "priority": 149,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/validation.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-manual-app-language-testing-doc",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 8,
+      "notes": "Docs-only slice. Add manual per-app language testing instructions for newer iOS and TestFlight localization review, including the Settings > Apps > Owlory > Language path and fallback through Settings > General > Language & Region > Add Language. Distinguish manual/TestFlight review from automated locale smoke, which should continue using launch arguments (-AppleLanguages and -AppleLocale) through the smoke runner. Do not change app code, localization resources, or automation launch behavior."
     },
     {
       "slice_id": "owlory-ui-regression-expansion-next-surface",
