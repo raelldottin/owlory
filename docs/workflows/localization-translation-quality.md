@@ -143,6 +143,8 @@ It contains:
 
 Use this packet to collect reviewed German values and reviewer/status metadata. It is not an app-resource replacement and does not claim German translation quality. `app-localization-first-locale-review-intake` stays blocked until reviewed rows return with `reviewed_de_value`, `review_status`, reviewer identity, and review date.
 
+As of 2026-05-14, manual follow-up confirmed that tested German translation values do not exist yet. Do not start `app-localization-first-locale-review-intake` from the current packet alone; it remains review input with English placeholders until reviewed German values are returned with the required metadata.
+
 ## Manual Device Review
 
 For TestFlight or physical-device translation review, testers may switch only Owlory's app language instead of changing the whole phone:

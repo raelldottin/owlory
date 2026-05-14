@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-14
+
+- [app-localization-german-values-absent](sessions/2026-05-14/005211-app-localization-german-values-absent.md)
+
 ## 2026-05-13
 
 - [owlory-ui-regression-batch-3-train-active-history](sessions/2026-05-13/213214-owlory-ui-regression-batch-3-train-active-history.md)

@@ -75,7 +75,7 @@ When a blocked slice needs progress, work on its `recommended_unblocker` instead
 Current unblocker chain:
 
 - `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
-- `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
+- `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. As of 2026-05-14, manual follow-up confirmed tested German translation values do not exist yet. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
 - `owlory-ui-regression-next-surface-triage` ran in parallel by two agents on 2026-05-13. Agent A selected Write capture inbox and `owlory-ui-regression-expansion-next-surface` shipped the `WriteCaptureRegression` Lane 2 batch with `running-app-smoke` proof. Agent B selected Train active/history transition and `owlory-ui-regression-batch-3-train-active-history` shipped the `TrainRegression` Lane 2 batch with `running-app-smoke` proof.
 
 ## Suggested Order

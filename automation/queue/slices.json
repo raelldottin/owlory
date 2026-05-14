@@ -2766,7 +2766,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Reviewed translation values exist with reviewer basis/status metadata.",
-      "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. Ingest one reviewed locale or small reviewed subset from the translation review packet, replacing only values with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested.",
+      "notes": "Blocked entry condition: reviewed translation values exist with reviewer basis/status metadata. As of 2026-05-14, manual follow-up confirmed tested German translation values do not exist yet, so the German packet remains review input only. Ingest one reviewed locale or small reviewed subset from the translation review packet only after reviewed values are returned with reviewer/status metadata. Do not bulk-replace all locales. Keep unreviewed locales as english-placeholder. Preserve key and plural parity. Do not claim native review for unreviewed locales, add new localization plumbing, or claim device/TestFlight proof unless separately captured. proof_level target: build-tested.",
       "recommended_unblocker": "app-localization-review-packet-for-first-locale"
     },
     {
