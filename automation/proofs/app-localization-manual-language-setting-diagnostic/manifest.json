@@ -1,0 +1,37 @@
+{
+  "slice_id": "app-localization-manual-language-setting-diagnostic",
+  "status": "diagnostic-recorded",
+  "proof_level": "doc/build-diagnostic",
+  "manual_finding": {
+    "language": "de",
+    "language_label": "German / Deutsch",
+    "observed": "German did not appear during manual per-app language testing.",
+    "failure_shape_needed": [
+      "no-language-row",
+      "target-language-missing"
+    ]
+  },
+  "local_source_checks": {
+    "de_lproj_present_in_source": true,
+    "de_localizable_strings": "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "de_localizable_stringsdict": "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+    "xcode_known_regions_contains_de": true,
+    "localization_check": "passed (19 locales, 282 keys, 11 plural keys)"
+  },
+  "unsigned_simulator_build_checks": {
+    "command": "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-manual-language-diagnostic-build CODE_SIGNING_ALLOWED=NO",
+    "de_lproj_present_in_built_app": true,
+    "built_files": [
+      "/tmp/owlory-manual-language-diagnostic-build/Build/Products/Debug-iphonesimulator/Owlory.app/de.lproj/Localizable.strings",
+      "/tmp/owlory-manual-language-diagnostic-build/Build/Products/Debug-iphonesimulator/Owlory.app/de.lproj/Localizable.stringsdict"
+    ],
+    "cf_bundle_localizations": "missing",
+    "cf_bundle_development_region": "en"
+  },
+  "testflight_archive_checks": {
+    "ipa_or_xcarchive_available_locally": false,
+    "de_lproj_present_in_testflight_artifact": "not-checked",
+    "cf_bundle_localizations_in_testflight_artifact": "not-checked"
+  },
+  "next_step": "If German remains absent after adding German to Settings > General > Language & Region, inspect the actual TestFlight IPA or xcarchive for de.lproj resources and CFBundleLocalizations."
+}

@@ -156,6 +156,57 @@ Locale smoke proves the built app bundle contains the requested locale resources
 
 Repo-managed screenshot proof for the representative locale launch surfaces lives in `automation/proofs/app-localization-locale-screenshot-proof/`. Use that artifact only for launch-surface screenshot evidence; it does not expand the claim to translation quality or full layout review.
 
+### Manual Per-App Language Testing
+
+Use this path for manual device or TestFlight localization review. Do not use it for automated locale smoke; automation should keep using the smoke runner's `--locale` / `--apple-locale` launch arguments, which map to `-AppleLanguages` and `-AppleLocale`.
+
+On newer iOS versions, a tester can often switch only Owlory's language:
+
+1. Open **Settings**.
+2. Tap **Apps**.
+3. Tap **Owlory**.
+4. Tap **Language** or **Preferred Language**.
+5. Select the target language, such as **German / Deutsch**.
+6. Close and reopen Owlory.
+
+The app-language option appears only when iOS sees multiple supported or preferred languages for the app. If **Language** does not appear:
+
+1. Go to **Settings > General > Language & Region**.
+2. Tap **Add Language**.
+3. Select the target language, such as **German / Deutsch**.
+4. Keep the current iPhone language as primary unless testing the full-device language path.
+5. Return to **Settings > Apps > Owlory > Language** and select the target language.
+
+Apple documents the fallback system-language path in [Change the language on your iPhone or iPad](https://support.apple.com/en-us/109358), including **Settings > General > Language & Region > Add Language**. If the per-app option still does not appear, the installed build may not expose multiple localized resources to iOS, or the locale resources may not be packaged correctly.
+
+If a target language such as German does not appear during manual TestFlight testing, treat it as a diagnostic finding rather than a translation failure. There are two different failure shapes:
+
+- **No Language row**: `Settings > Apps > Owlory` has no **Language** or **Preferred Language** row.
+- **Missing target language**: the row exists, but **German / Deutsch** is not in the list.
+
+First verify:
+
+1. The target language is in **Settings > General > Language & Region**.
+2. The installed build contains the target `.lproj` resources.
+3. The installed build is the same TestFlight build whose resources and Build Info were verified.
+4. If resources are packaged but iOS still does not expose the app-language picker or target language, inspect whether explicit `CFBundleLocalizations` metadata is needed.
+
+Apple's archived QA for app-language selection explains that iOS matches the user's preferred languages against the app bundle's localized `.lproj` folders and falls back when none match: [How iOS Determines the Language For Your App](https://developer.apple.com/library/archive/qa/qa1828/_index.html).
+
+Useful archive or IPA checks:
+
+```bash
+unzip -l Owlory.ipa | rg 'de\.lproj/(Localizable\.strings|Localizable\.stringsdict)'
+
+find "Owlory.xcarchive/Products/Applications/Owlory.app" \
+  -path '*de.lproj*' -maxdepth 4 -type f
+
+/usr/libexec/PlistBuddy -c 'Print :CFBundleLocalizations' \
+  "Owlory.xcarchive/Products/Applications/Owlory.app/Info.plist"
+```
+
+As of the `app-localization-manual-language-setting-diagnostic` slice, source and unsigned simulator build checks confirm `de.lproj/Localizable.strings` and `de.lproj/Localizable.stringsdict` are present, and the generated app `Info.plist` does not contain `CFBundleLocalizations`. The TestFlight IPA/archive packaging still needs direct inspection if the manual Settings picker omits German after German has been added to the iPhone language list.
+
 ## UI Testing Hygiene
 
 Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for deterministic Today smoke coverage. It is not a broad UI regression suite.

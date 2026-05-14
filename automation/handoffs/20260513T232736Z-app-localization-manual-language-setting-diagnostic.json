@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "slice_id": "app-localization-manual-language-setting-diagnostic",
+  "status": "done",
+  "proof_level": "doc/build-diagnostic",
+  "completed_at": "2026-05-13T23:27:36Z",
+  "summary": "Recorded the manual finding that German did not appear in per-app language testing, documented the two failure shapes, and preserved a diagnostic artifact. Verified current source and an unsigned simulator build package de.lproj resources; no local TestFlight IPA or xcarchive was available to inspect.",
+  "files_touched": [
+    "docs/workflows/validation.md",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "automation/proofs/app-localization-manual-language-setting-diagnostic/README.md",
+    "automation/proofs/app-localization-manual-language-setting-diagnostic/manifest.json",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260513T232736Z-app-localization-manual-language-setting-diagnostic.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/192736-app-localization-manual-language-setting-diagnostic.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-manual-language-setting-diagnostic",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-manual-language-diagnostic-build CODE_SIGNING_ALLOWED=NO",
+    "find /tmp/owlory-manual-language-diagnostic-build/Build/Products/Debug-iphonesimulator/Owlory.app -maxdepth 3 -path '*de.lproj*' -print",
+    "/usr/libexec/PlistBuddy -c 'Print :CFBundleDevelopmentRegion' /tmp/owlory-manual-language-diagnostic-build/Build/Products/Debug-iphonesimulator/Owlory.app/Info.plist",
+    "make automation-check",
+    "git diff --check",
+    "web.open https://developer.apple.com/library/archive/qa/qa1828/_index.html",
+    "web.open https://support.apple.com/en-us/109358"
+  ],
+  "validations_failed": [
+    "/usr/libexec/PlistBuddy -c 'Print :CFBundleLocalizations' /tmp/owlory-manual-language-diagnostic-build/Build/Products/Debug-iphonesimulator/Owlory.app/Info.plist returned missing key.",
+    "No local .ipa or .xcarchive was available to inspect the installed TestFlight artifact."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Manual per-app language testing",
+      "before": "Docs gave the manual Settings path but did not record the observed German-missing failure or the diagnostic fork.",
+      "after": "Docs and proof artifact record the failure shapes, source/build packaging checks, TestFlight archive checks, and CFBundleLocalizations follow-up condition.",
+      "proof": [
+        "automation/proofs/app-localization-manual-language-setting-diagnostic/README.md",
+        "automation/proofs/app-localization-manual-language-setting-diagnostic/manifest.json",
+        "docs/workflows/validation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The actual TestFlight IPA or xcarchive was not available locally, so TestFlight packaging of de.lproj remains unverified.",
+    "Manual German language selection remains unproven.",
+    "If the TestFlight artifact packages de.lproj but iOS still omits German after German is added to Language & Region, a narrow CFBundleLocalizations metadata slice may be needed."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "",
+  "next_recommended_reason": "Clean stop is valid; if German still does not appear, inspect the actual TestFlight IPA/xcarchive before changing app metadata.",
+  "source_references": [
+    {
+      "title": "Apple Developer QA1828: How iOS Determines the Language For Your App",
+      "url": "https://developer.apple.com/library/archive/qa/qa1828/_index.html",
+      "retrieved_at": "2026-05-13T23:27:36Z"
+    },
+    {
+      "title": "Apple Support: Change the language on your iPhone or iPad",
+      "url": "https://support.apple.com/en-us/109358",
+      "retrieved_at": "2026-05-13T23:27:36Z"
+    }
+  ]
+}

@@ -4,6 +4,9 @@
 
 - [owlory-ui-regression-expansion-next-surface](sessions/2026-05-13/235054-owlory-ui-regression-expansion-next-surface.md)
 - [owlory-ui-regression-next-surface-triage](sessions/2026-05-13/212057-owlory-ui-regression-next-surface-triage.md)
+- [app-localization-review-packet-for-first-locale](sessions/2026-05-13/194318-app-localization-review-packet-for-first-locale.md)
+- [app-localization-manual-language-setting-diagnostic](sessions/2026-05-13/192736-app-localization-manual-language-setting-diagnostic.md)
+- [app-localization-manual-app-language-testing-doc](sessions/2026-05-13/192209-app-localization-manual-app-language-testing-doc.md)
 - [owlory-ui-testflight-proof](sessions/2026-05-13/170309-owlory-ui-testflight-proof.md)
 - [release-discipline-preflight-and-hooks](sessions/2026-05-13/164212-release-discipline-preflight-and-hooks.md)
 - [queue-release-discipline-preflight-and-hooks](sessions/2026-05-13/163413-queue-release-discipline-preflight-and-hooks.md)

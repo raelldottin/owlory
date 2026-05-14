@@ -59,7 +59,7 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression`, with the first batch covering Today Continue source visibility, source-derived routing, and Focus row actions; the next regression batch is queued as `owlory-ui-regression-expansion-next-surface` targeting the Write capture inbox; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
+- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression` (Today Continue source visibility, source-derived routing, Focus row actions) and `OwloryUITests/WriteCaptureRegression` (Write capture inbox row + capture entry affordance + Add to Today promotion visibility), with `DOMAIN=today` and `DOMAIN=write` matrix support; screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - The immediate UI proof queue continues to broaden source and routing smoke and to grow the regression batch with edge cases when new product surfaces ship. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
@@ -75,8 +75,8 @@ When a blocked slice needs progress, work on its `recommended_unblocker` instead
 Current unblocker chain:
 
 - `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
-- `app-localization-review-packet-for-first-locale` should be queued only when localization review should move forward; it prepares reviewer input and does not replace translations.
-- `owlory-ui-regression-next-surface-triage` selected Write capture inbox as the next regression surface on 2026-05-13; `owlory-ui-regression-expansion-next-surface` is now queued with that scope.
+- `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
+- `owlory-ui-regression-next-surface-triage` selected Write capture inbox as the next regression surface on 2026-05-13; `owlory-ui-regression-expansion-next-surface` shipped the `WriteCaptureRegression` Lane 2 batch with `running-app-smoke` proof.
 
 ## Suggested Order
 
