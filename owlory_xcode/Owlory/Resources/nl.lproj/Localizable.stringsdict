@@ -152,5 +152,23 @@
       other = "%d days";
     };
   };
+  "recurrence.interval.days" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "Every %d day";
+      other = "Every %d days";
+    };
+  };
+  "recurrence.interval.compact" = {
+    NSStringLocalizedFormatKey = "%#@days@";
+    days = {
+      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
+      NSStringFormatValueTypeKey = "d";
+      one = "Every %dd";
+      other = "Every %dd";
+    };
+  };
 
 }

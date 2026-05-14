@@ -1,0 +1,85 @@
+{
+  "slice_id": "app-localization-recurrence-interval-formatting",
+  "status": "done",
+  "summary": "Routed the six 'Every n day(s)' / 'Every nd' copy sites (HomeView add/edit task sheets and recurring badge, TodayView quick-capture, TrainView plan-session sheet and session-card badge) through plural-aware Localizable.stringsdict entries via a shared presentation helper. Added recurrence.interval.days (one/other) and recurrence.interval.compact (single form) to all 19 locale stringsdict files; non-English locales remain English placeholders per the translation-quality policy (13 plural keys total, up from 11). New Core/Application/RecurrenceIntervalPresentation.swift exposes longLabel(days:) and compactBadge(days:) and was registered in Owlory.xcodeproj. Domain models keep recurrenceIntervalDays: Int? semantic; RecurrenceRules and TrainStore/HomeStore unchanged.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260514T122207Z-app-localization-recurrence-interval-formatting.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Core/Application/RecurrenceIntervalPresentation.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.stringsdict",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/082207-app-localization-recurrence-interval-formatting.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-recurrence-interval-formatting",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=train",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-recurrence-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Recurrence-interval copy localization",
+      "before": "Six hardcoded interpolated strings (`Every \\(days) days`, `Every \\(days)d`, `Every \\(days) \\(days == 1 ? \"day\" : \"days\")`) in HomeView/TodayView/TrainView. No matching keys in Localizable.strings or stringsdict, so SwiftUI fell back to the interpolated literal verbatim regardless of locale. Listed under the deferred-bucket in localization-string-inventory.md.",
+      "after": "Two plural-aware keys (recurrence.interval.days one/other, recurrence.interval.compact single) in all 19 locale stringsdict files; six call sites route through Core/Application/RecurrenceIntervalPresentation.swift. localization-string-inventory.md and localization-dynamic-formatting.md updated; the recurrence-interval bucket is no longer deferred.",
+      "proof": [
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.stringsdict",
+        "owlory_xcode/Owlory/Core/Application/RecurrenceIntervalPresentation.swift",
+        "make localization-check",
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=train",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English locales still render English placeholder text for the new keys; that matches the existing translation-quality policy and is gated on the reviewer-intake workflow.",
+    "The new UI strings were not exercised under the all-locale screenshot harness; the existing launch-surface screenshot pack does not drill into add-task/plan-session sheets where the new copy lives.",
+    "Switching `Stepper('Every n days', value:in:)` to `Stepper(value:in:label:)` changes the auto-generated accessibility label for the stepper. No existing XCUITest selectors target this label, but a future UI test that wants to interact with the stepper should rely on its accessibility identifier rather than the legacy literal.",
+    "The Home recurring-row compact badge now reads 'Every nd' instead of just 'nd' (visual width slightly larger). Not a regression but worth knowing for any future screenshot proof packs that captured the prior form."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The next dynamic-formatting candidates from the deferred bucket are readiness summaries (Train/Today) and digest insight/highlight summaries (Today); each is its own scoped slice with its own boundary. None of those are currently queued; pick one explicitly before the supervisor reopens.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T12:22:07Z"
+}

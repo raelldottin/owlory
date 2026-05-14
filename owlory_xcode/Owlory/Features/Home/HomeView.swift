@@ -503,7 +503,7 @@ private struct TaskRow: View {
                                 Image(systemName: "arrow.trianglehead.2.counterclockwise")
                                     .font(.caption2)
                                 if let days = task.recurrenceIntervalDays {
-                                    Text("Every \(days)d")
+                                    Text(RecurrenceIntervalPresentation.compactBadge(days: days))
                                         .font(.caption2)
                                 }
                             }
@@ -609,7 +609,9 @@ private struct AddTaskSheet: View {
                 Section {
                     Toggle("Recurring", isOn: $isRecurring)
                     if isRecurring {
-                        Stepper("Every \(recurrenceDays) days", value: $recurrenceDays, in: 1...365)
+                        Stepper(value: $recurrenceDays, in: 1...365) {
+                            Text(RecurrenceIntervalPresentation.longLabel(days: recurrenceDays))
+                        }
                     }
                 }
                 Section("Voice Recording") {
@@ -708,7 +710,9 @@ private struct EditTaskSheet: View {
                     .lineLimit(2...4)
                 Toggle("Recurring", isOn: $isRecurring)
                 if isRecurring {
-                    Stepper("Every \(recurrenceDays) days", value: $recurrenceDays, in: 1...365)
+                    Stepper(value: $recurrenceDays, in: 1...365) {
+                        Text(RecurrenceIntervalPresentation.longLabel(days: recurrenceDays))
+                    }
                 }
                 sourceNoteSection
             }

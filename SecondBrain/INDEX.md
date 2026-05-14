@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [app-localization-recurrence-interval-formatting](sessions/2026-05-14/082207-app-localization-recurrence-interval-formatting.md)
 - [app-localization-all-locale-screenshot-proof](sessions/2026-05-14/034211-app-localization-all-locale-screenshot-proof.md)
 - [localization-idb-cli-unblock](sessions/2026-05-14/033011-localization-idb-cli-unblock.md)
 - [localization-screenshot-proof-idb-harness](sessions/2026-05-14/022552-localization-screenshot-proof-idb-harness.md)

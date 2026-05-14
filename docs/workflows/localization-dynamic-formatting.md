@@ -45,6 +45,7 @@ Recommended implementation order:
 3. `app-localization-protocol-schedule-projection` - implemented for Home protocol schedule row labels and schedule-picker help text.
 4. `app-localization-notification-copy` - implemented for delivered prediction, Today prompt, and protocol schedule notification titles/bodies.
 5. `app-localization-display-name-adapters` - implemented for the first low-risk presentation adapters: LifeDomain labels in Today and digest presentation, Focus/previous-day statuses in Today history, TrainingStatus labels in Train, WritingStage/WritingSourceType labels in Write, and CareerRecordType labels in Career/Today quick capture.
+6. `app-localization-recurrence-interval-formatting` - implemented for recurring task/session interval copy. `recurrence.interval.days` (one/other plural) and `recurrence.interval.compact` (single form) in `Localizable.stringsdict`, routed through `Core/Application/RecurrenceIntervalPresentation.swift`; the six HomeView/TodayView/TrainView call sites that previously interpolated `"Every n day(s)"` inline now use the presentation helper. Domain models keep `recurrenceIntervalDays: Int?` semantic; localization stays in the presentation layer.
 
 Keep each implementation batch narrow. Add English source keys first, mirror keys across every locale, and leave non-English values as English placeholders until a translation-quality slice replaces them.
 

@@ -192,7 +192,9 @@ struct TrainView: View {
                 Section {
                     Toggle("Repeat this session", isOn: $isRecurring)
                     if isRecurring {
-                        Stepper("Every \(recurrenceDays) \(recurrenceDays == 1 ? "day" : "days")", value: $recurrenceDays, in: 1...365)
+                        Stepper(value: $recurrenceDays, in: 1...365) {
+                            Text(RecurrenceIntervalPresentation.longLabel(days: recurrenceDays))
+                        }
                     }
                 }
             }
@@ -269,7 +271,7 @@ private struct SessionCardView: View {
                         Image(systemName: "arrow.trianglehead.2.counterclockwise")
                             .font(.caption2)
                         if let days = session.recurrenceIntervalDays {
-                            Text("Every \(days) \(days == 1 ? "day" : "days")")
+                            Text(RecurrenceIntervalPresentation.longLabel(days: days))
                                 .font(.caption2)
                         }
                     }

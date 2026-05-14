@@ -49,8 +49,8 @@ The extraction changed only `Localizable.strings` keys and docs; it did not modi
 
 ## Deferred Buckets
 
-- Dynamic/pluralized copy such as `Every <n> day(s)`, previous-day record counts, non-Today-dashboard readiness/accessibility interpolation, and digest insight/highlight summaries still needs `.stringsdict`, explicit localized formatting, or a separate presentation-adapter slice.
-- Domain/application `String` values such as readiness summaries, weekly digest insights/highlight summaries, recurrence interval labels, and remaining model-backed accessibility interpolation still need separate code-routing slices before keys alone can affect runtime output.
+- Dynamic/pluralized copy such as previous-day record counts, non-Today-dashboard readiness/accessibility interpolation, and digest insight/highlight summaries still needs `.stringsdict`, explicit localized formatting, or a separate presentation-adapter slice. Recurrence-interval copy (`Every n day(s)` and the compact `Every nd` badge) is now backed by `recurrence.interval.days` and `recurrence.interval.compact` in `Localizable.stringsdict` and routed through `RecurrenceIntervalPresentation`; it is no longer in the deferred bucket.
+- Domain/application `String` values such as readiness summaries, weekly digest insights/highlight summaries, and remaining model-backed accessibility interpolation still need separate code-routing slices before keys alone can affect runtime output.
 - Notification preference UI, delivered-notification locale smoke, and real device notification proof remain separate validation slices.
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.
 

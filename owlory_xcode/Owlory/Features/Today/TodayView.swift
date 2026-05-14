@@ -1550,7 +1550,9 @@ private struct QuickTrainSheet: View {
                 }
                 Toggle("Repeat this session", isOn: $isRecurring)
                 if isRecurring {
-                    Stepper("Every \(recurrenceDays) \(recurrenceDays == 1 ? "day" : "days")", value: $recurrenceDays, in: 1...365)
+                    Stepper(value: $recurrenceDays, in: 1...365) {
+                        Text(RecurrenceIntervalPresentation.longLabel(days: recurrenceDays))
+                    }
                 }
             }
             .navigationTitle("Plan Session")
