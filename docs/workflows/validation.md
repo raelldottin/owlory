@@ -103,6 +103,13 @@ Use [Localization Dynamic Formatting](localization-dynamic-formatting.md) before
 
 Use [Localization Translation Quality](localization-translation-quality.md) before replacing English placeholders in non-English locale files. Parity checks, running-app smoke, and screenshot proof do not prove translation quality by themselves.
 
+Localization is not complete merely because resources package or launch. Owlory currently separates these claims:
+
+- infrastructure, packaging, and parity can be `Implemented`
+- representative locale smoke/screenshots can prove selected launch surfaces
+- all-locale smoke must pass before claiming all supported locales launch
+- reviewed translations and translation quality remain blocked until reviewer/status metadata exists and a scoped intake slice replaces placeholders
+
 Use the generated review packet in `localization/review/` when handing source values to translators or reviewers:
 
 ```bash
@@ -155,6 +162,18 @@ python3 automation/smoke/running_app_smoke.py --locale zh-Hans --output /tmp/owl
 Locale smoke proves the built app bundle contains the requested locale resources and that the simulator app launches with `-AppleLanguages`/`-AppleLocale` arguments. It does not prove translation quality, layout correctness, screenshot-preserved proof, real-device behavior, or TestFlight behavior.
 
 Repo-managed screenshot proof for the representative locale launch surfaces lives in `automation/proofs/app-localization-locale-screenshot-proof/`. Use that artifact only for launch-surface screenshot evidence; it does not expand the claim to translation quality or full layout review.
+
+For full supported-locale resource loading, run the dedicated all-locale smoke slice and preserve one JSON result per locale under `automation/proofs/app-localization-all-locale-smoke/`:
+
+```bash
+for locale in en ar nl fr de it ja ko nb pt pt-BR ru es sv zh-Hans zh-Hant tr uk vi; do
+  python3 automation/smoke/running_app_smoke.py \
+    --locale "$locale" \
+    --output "automation/proofs/app-localization-all-locale-smoke/${locale}.json"
+done
+```
+
+All-locale smoke proves launch/resource loading for supported locales only. It does not prove translation quality, layout correctness, screenshot-preserved proof, real-device behavior, or TestFlight behavior.
 
 ### Manual Per-App Language Testing
 

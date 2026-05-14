@@ -2735,6 +2735,103 @@
       "recommended_unblocker": "owlory-ui-test-testflight-proof-retry"
     },
     {
+      "slice_id": "app-localization-completion-status-audit",
+      "title": "Correct localization completion status",
+      "status": "done",
+      "priority": 156,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/README.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-completion-status-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-translation-review-export",
+        "app-localization-locale-screenshot-proof"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Localization status needs to distinguish completed infrastructure from incomplete translation quality and all-locale proof.",
+      "notes": "Completed on 2026-05-14. Localization docs and roadmap status now say localization is not complete: infrastructure, packaging/parity, representative locale smoke, representative screenshot proof, and the German review packet are implemented/prepared; translation quality, reviewed translations, and all-locale smoke coverage remain incomplete. Non-English resources remain English placeholders unless explicitly reviewed and ingested. No localization resources, app code, translations, or proof artifacts changed. proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-all-locale-smoke",
+      "title": "Run localization smoke for every supported locale",
+      "status": "queued",
+      "priority": 155,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-all-locale-smoke/",
+        "automation/smoke/running_app_smoke.py",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-all-locale-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-completion-status-audit"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "Localization status audit has made clear that all-locale launch/resource proof is still incomplete.",
+      "notes": "Proof slice only. Run the running-app smoke runner for all 19 supported locales: en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, vi. Use --locale/--apple-locale launch arguments and verify each built app contains matching .lproj resources. Preserve one JSON result per locale under automation/proofs/app-localization-all-locale-smoke/. Classify failures as packaging/resource/loading issues, not translation-quality issues. Do not claim translation quality, layout completeness, screenshot-verified proof, device proof, or TestFlight proof. proof_level target: running-app-smoke."
+    },
+    {
+      "slice_id": "app-localization-all-locale-screenshot-proof",
+      "title": "Preserve screenshot proof for every supported locale",
+      "status": "blocked",
+      "priority": 154,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-all-locale-screenshot-proof/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-all-locale-screenshot-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-smoke"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "All-locale smoke has passed and full-locale launch-surface visual evidence is explicitly requested.",
+      "notes": "Optional proof-preservation slice. Preserve one launch-surface screenshot per supported locale with README and manifest hashes. Claim screenshot-verified only for launch surfaces. Do not claim translation quality, full layout correctness, device proof, or TestFlight proof.",
+      "recommended_unblocker": "app-localization-all-locale-smoke"
+    },
+    {
       "slice_id": "app-localization-first-locale-review-intake",
       "title": "Ingest first reviewed locale translations",
       "status": "blocked",

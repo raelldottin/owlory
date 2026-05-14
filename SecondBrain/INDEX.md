@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [app-localization-completion-status-audit](sessions/2026-05-14/005751-app-localization-completion-status-audit.md)
 - [app-localization-german-values-absent](sessions/2026-05-14/005211-app-localization-german-values-absent.md)
 
 ## 2026-05-13
