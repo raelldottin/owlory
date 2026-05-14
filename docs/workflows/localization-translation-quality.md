@@ -11,13 +11,13 @@ Localization is not complete. Treat resource readiness, runtime proof, and trans
 - **Representative runtime proof**: implemented for `en`, `es`, `fr`, `ar`, and `zh-Hans` only. This proves representative resource loading and launch stability, not every locale.
 - **Representative screenshot proof**: implemented for `en`, `es`, `fr`, `ar`, and `zh-Hans` launch surfaces only. This does not prove translation quality or full layout correctness.
 - **Translation review input**: prepared. The generated review packet exists, and the German-first packet is ready under `localization/review/de/`.
+- **All-locale smoke**: implemented. `app-localization-all-locale-smoke` passed for all 19 supported locales and proves launch/resource loading only.
 - **Reviewed translations**: incomplete. No non-English locale may be claimed as reviewed until translated values return with reviewer/status metadata and are ingested.
 - **Translation quality**: incomplete. Non-English resources remain English placeholders unless a scoped intake slice explicitly records reviewed replacements.
-- **All-locale smoke**: incomplete. `app-localization-all-locale-smoke` must pass before claiming all 19 supported locales launch with packaged resources.
 
 English (`en`) remains the source language and key source of truth. The approved non-English locales are: `ar`, `nl`, `fr`, `de`, `it`, `ja`, `ko`, `nb`, `pt`, `pt-BR`, `ru`, `es`, `sv`, `zh-Hans`, `zh-Hant`, `tr`, `uk`, and `vi`.
 
-As of the completion-status audit, every non-English `Localizable.strings` file has 282 values exactly matching English, and every non-English `Localizable.stringsdict` file has the same 11 plural resources as English. German appearing in Settings while the app still displays English is expected until `de.lproj` contains reviewed German values instead of English placeholders.
+As of the all-locale smoke proof, every non-English `Localizable.strings` file has 282 values exactly matching English, and every non-English `Localizable.stringsdict` file has the same 11 plural resources as English. German appearing in Settings while the app still displays English is expected until `de.lproj` contains reviewed German values instead of English placeholders.
 
 ## Status Labels
 

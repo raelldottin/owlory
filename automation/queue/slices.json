@@ -2769,7 +2769,7 @@
     {
       "slice_id": "app-localization-all-locale-smoke",
       "title": "Run localization smoke for every supported locale",
-      "status": "queued",
+      "status": "done",
       "priority": 155,
       "domain": "localization",
       "allowed_paths": [
@@ -2797,7 +2797,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Localization status audit has made clear that all-locale launch/resource proof is still incomplete.",
-      "notes": "Proof slice only. Run the running-app smoke runner for all 19 supported locales: en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, vi. Use --locale/--apple-locale launch arguments and verify each built app contains matching .lproj resources. Preserve one JSON result per locale under automation/proofs/app-localization-all-locale-smoke/. Classify failures as packaging/resource/loading issues, not translation-quality issues. Do not claim translation quality, layout completeness, screenshot-verified proof, device proof, or TestFlight proof. proof_level target: running-app-smoke."
+      "notes": "Completed on 2026-05-14. The running-app smoke runner passed for all 19 supported locales: en, ar, nl, fr, de, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, vi. Each JSON result reports status=passed, proof_level=running-app-smoke, repo.dirty=no, matching launch locale, and packaged Localizable.strings plus Localizable.stringsdict resources. Results are preserved under automation/proofs/app-localization-all-locale-smoke/. This proves launch/resource loading only. It does not claim translation quality, layout completeness, screenshot-verified proof, device proof, or TestFlight proof."
     },
     {
       "slice_id": "app-localization-all-locale-screenshot-proof",

@@ -19,7 +19,7 @@ Use [Product Overview](../product/overview.md) for the status-marker vocabulary.
 | Train stale planned-session rollover | `Implemented` | Train tests and `make fast` cover auto-skip before recurring spawn. | Future affect/check-in relationship design remains `Contract only`. |
 | Build provenance | `Implemented` | `BuildInfo`, Xcode stamp scripts, `make build-provenance`, and `BuildInfoTests`. | No known gap for local build identity. |
 | GitHub / Xcode release mirroring | `Implemented` locally, `Needs operator discipline` for Xcode Organizer | Xcode build metadata and Git identity are stamped and validated locally; `.githooks/pre-push` protects pushes; `make release-preflight` protects Archive readiness. | Git hooks cannot stop Xcode Organizer archive clicks; operators must still run `make release-preflight` immediately before archive. |
-| Localization | `Partially implemented` | Apple-native resources, parity checks, dynamic formatting boundaries, representative locale smoke, representative screenshot proof, and German review packet exist. | Translation quality is incomplete, reviewed translations are incomplete, and all-locale launch/resource smoke is still queued. |
+| Localization | `Partially implemented` | Apple-native resources, parity checks, dynamic formatting boundaries, all-locale smoke, representative screenshot proof, and German review packet exist. | Translation quality and reviewed translations are incomplete; all-locale screenshot proof remains optional/blocked until explicitly requested. |
 | Write Lab capture inbox | `Partially implemented` | Fast Write capture, source-note conversion, Add to Today, task promotion, protocol promotion, and visible destination status exist; the product contract allows todo-like thoughts to enter Write Lab. | Processing prompts, running-app proof, and user-legibility proof still need implementation. |
 | Write Lab promotion model | `Partially implemented` | `Turn into Source Note` preserves note content; Add to Today creates Today-owned Focus work; task promotion creates Home-owned tasks; protocol promotion creates Home-owned protocol drafts/templates without active runs or Today Continue leakage. Destination promotions preserve typed Write-note origin metadata; Write note detail shows Today/task/protocol status; Home task/protocol detail routes back to existing source notes. | Permanent-note conversion, richer duplicate choices, running-app proof, and screenshot/UI proof for route/status affordances remain future work. |
 | UI / screenshot regression coverage | `Needs UI proof` | Manual UI review guidance exists. | Broad snapshot or screenshot regression infrastructure is not present. |
@@ -68,7 +68,6 @@ UI regression and snapshot coverage:
 
 The following items are intentionally represented as blocked/deferred slices so future agents do not lose them or start them prematurely:
 
-- `app-localization-all-locale-smoke` - queued to prove launch/resource loading for all 19 supported locales. This is not translation-quality proof.
 - `app-localization-all-locale-screenshot-proof` - blocked until all-locale smoke passes and full-locale launch-surface visual evidence is explicitly requested.
 - `app-localization-first-locale-review-intake` - blocked until reviewed translation values and reviewer/status metadata exist.
 
@@ -80,6 +79,7 @@ Current unblocker chain:
 - `owlory-release-clean-testflight-build-prep` recorded clean local release-prep evidence in `automation/proofs/owlory-release-clean-testflight-build-prep/`. The follow-up TestFlight proof passed for the captured natural-data path in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - `app-localization-review-packet-for-first-locale` prepared the German-first packet in `localization/review/de/`. As of 2026-05-14, manual follow-up confirmed tested German translation values do not exist yet. The intake slice remains blocked until reviewed German values return with reviewer/status metadata.
 - `app-localization-completion-status-audit` corrected the maintained status: localization infrastructure is implemented, but localization as a product-quality claim is not complete until reviewed translations and all-locale proof land.
+- `app-localization-all-locale-smoke` passed for all 19 supported locales and preserved JSON proof under `automation/proofs/app-localization-all-locale-smoke/`. This proves launch/resource loading only, not translation quality.
 - `owlory-ui-regression-next-surface-triage` ran in parallel by two agents on 2026-05-13. Agent A selected Write capture inbox and `owlory-ui-regression-expansion-next-surface` shipped the `WriteCaptureRegression` Lane 2 batch with `running-app-smoke` proof. Agent B selected Train active/history transition and `owlory-ui-regression-batch-3-train-active-history` shipped the `TrainRegression` Lane 2 batch with `running-app-smoke` proof.
 
 ## Suggested Order

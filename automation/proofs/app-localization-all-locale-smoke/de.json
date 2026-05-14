@@ -1,0 +1,190 @@
+{
+  "artifacts": {
+    "localized_resources": {
+      "files": [
+        {
+          "bytes": 10287,
+          "name": "Localizable.strings",
+          "path": "/tmp/owlory-all-locale-smoke-build/Build/Products/Debug-iphonesimulator/Owlory.app/de.lproj/Localizable.strings"
+        },
+        {
+          "bytes": 1664,
+          "name": "Localizable.stringsdict",
+          "path": "/tmp/owlory-all-locale-smoke-build/Build/Products/Debug-iphonesimulator/Owlory.app/de.lproj/Localizable.stringsdict"
+        }
+      ],
+      "locale": "de",
+      "resource_dir": "/tmp/owlory-all-locale-smoke-build/Build/Products/Debug-iphonesimulator/Owlory.app/de.lproj"
+    },
+    "screenshot_bytes": 2240598,
+    "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/de/20260514T050604Z/owlory-running-app-smoke-de.png"
+  },
+  "blocked_before": null,
+  "blocked_contract": null,
+  "failed_stage": null,
+  "locale": {
+    "apple_locale": "de",
+    "launch_arguments": [
+      "-AppleLanguages",
+      "(de)",
+      "-AppleLocale",
+      "de"
+    ],
+    "requested_locale": "de"
+  },
+  "proof_level": "running-app-smoke",
+  "reason": "App built, installed, launched, and produced a screenshot artifact.",
+  "repo": {
+    "branch": "main",
+    "commit": "dffce2f714f16964bdb761d48be56a84df8e9228",
+    "describe": "dffce2f",
+    "dirty": "no",
+    "short_commit": "dffce2f714f1"
+  },
+  "schema_version": 1,
+  "simulator": {
+    "destination": "platform=iOS Simulator,name=iPhone 17,OS=26.5",
+    "name": "iPhone 17",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "state": "Booted",
+    "udid": "E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0"
+  },
+  "status": "passed",
+  "steps": [
+    {
+      "command": [
+        "xcodebuild",
+        "-list",
+        "-json",
+        "-project",
+        "/Users/raelldottin/Documents/Personal/Owlory/owlory_xcode/Owlory.xcodeproj"
+      ],
+      "exit_code": 0,
+      "name": "check-xcode-project-list",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"project\" : {\n    \"configurations\" : [\n      \"Debug\",\n      \"Release\"\n    ],\n    \"name\" : \"Owlory\",\n    \"schemes\" : [\n      \"Owlory\",\n      \"OwloryWidgetsExtension\"\n    ],\n    \"targets\" : [\n      \"Owlory\",\n      \"OwloryCoreTests\",\n      \"OwloryUITests\",\n      \"OwloryWidgetsExtension\"\n    ]\n  }\n}\n"
+    },
+    {
+      "command": [
+        "xcodebuild",
+        "-showBuildSettings",
+        "-json",
+        "-project",
+        "/Users/raelldottin/Documents/Personal/Owlory/owlory_xcode/Owlory.xcodeproj",
+        "-scheme",
+        "Owlory",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "platform=iOS Simulator,name=iPhone 17,OS=26.5",
+        "-derivedDataPath",
+        "/tmp/owlory-all-locale-smoke-build"
+      ],
+      "exit_code": 0,
+      "name": "check-runnable-app-target",
+      "stderr_tail": "",
+      "stdout_tail": " \"/tmp/owlory-all-locale-smoke-build/Build/Intermediates.noindex/Owlory.build/Debug-iphonesimulator/Owlory.build\",\n      \"TEMP_FILES_DIR\" : \"/tmp/owlory-all-locale-smoke-build/Build/Intermediates.noindex/Owlory.build/Debug-iphonesimulator/Owlory.build\",\n      \"TEMP_ROOT\" : \"/tmp/owlory-all-locale-smoke-build/Build/Intermediates.noindex\",\n      \"TEMP_SANDBOX_DIR\" : \"/tmp/owlory-all-locale-smoke-build/Build/Intermediates.noindex/TemporaryTaskSandboxes\",\n      \"TEST_FRAMEWORK_SEARCH_PATHS\" : \" /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks\",\n      \"TEST_LIBRARY_SEARCH_PATHS\" : \" /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib\",\n      \"TOOLCHAIN_DIR\" : \"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain\",\n      \"TOOLCHAINS\" : \"com.apple.dt.toolchain.XcodeDefault\",\n      \"TREAT_MISSING_BASELINES_AS_TEST_FAILURES\" : \"NO\",\n      \"TREAT_MISSING_SCRIPT_PHASE_OUTPUTS_AS_ERRORS\" : \"NO\",\n      \"TVOS_DEPLOYMENT_TARGET\" : \"26.5\",\n      \"UID\" : \"502\",\n      \"UNINSTALLED_PRODUCTS_DIR\" : \"/tmp/owlory-all-locale-smoke-build/Build/Intermediates.noindex/UninstalledProducts\",\n      \"UNLOCALIZED_RESOURCES_FOLDER_PATH\" : \"Owlory.app\",\n      \"UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_NO\" : \"Owlory.app/Resources\",\n      \"UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_YES\" : \"Owlory.app\",\n      \"UNSTRIPPED_PRODUCT\" : \"NO\",\n      \"USE_DYNAMIC_NO_PIC\" : \"YES\",\n      \"USE_HEADER_SYMLINKS\" : \"NO\",\n      \"USE_HEADERMAP\" : \"YES\",\n      \"USER\" : \"raelldottin\",\n      \"USER_APPS_DIR\" : \"/Users/raelldottin/Applications\",\n      \"USER_LIBRARY_DIR\" : \"/Users/raelldottin/Library\",\n      \"VALID_ARCHS\" : \"arm64 x86_64\",\n      \"VALIDATE_DEVELOPMENT_ASSET_PATHS\" : \"YES_ERROR\",\n      \"VALIDATE_PRODUCT\" : \"NO\",\n      \"variant\" : \"normal\",\n      \"VERBOSE_PBXCP\" : \"NO\",\n      \"VERSION_INFO_BUILDER\" : \"raelldottin\",\n      \"VERSION_INFO_FILE\" : \"Owlory_vers.c\",\n      \"VERSION_INFO_STRING\" : \"\\\"@(#)PROGRAM:Owlory  PROJECT:Owlory-20260513202827\\\"\",\n      \"VERSIONPLIST_PATH\" : \"Owlory.app/version.plist\",\n      \"WATCHOS_DEPLOYMENT_TARGET\" : \"26.5\",\n      \"WORKSPACE_DIR\" : \"/Users/raelldottin/Documents/Personal/Owlory/owlory_xcode/Owlory.xcodeproj\",\n      \"WRAP_ASSET_PACKS_IN_SEPARATE_DIRECTORIES\" : \"NO\",\n      \"WRAPPER_EXTENSION\" : \"app\",\n      \"WRAPPER_NAME\" : \"Owlory.app\",\n      \"WRAPPER_SUFFIX\" : \".app\",\n      \"XCODE_APP_SUPPORT_DIR\" : \"/Applications/Xcode.app/Contents/Developer/Library/Xcode\",\n      \"XCODE_PRODUCT_BUILD_VERSION\" : \"17F42\",\n      \"XCODE_VERSION_ACTUAL\" : \"2650\",\n      \"XCODE_VERSION_MAJOR\" : \"2600\",\n      \"XCODE_VERSION_MINOR\" : \"2650\",\n      \"XPCSERVICES_FOLDER_PATH\" : \"Owlory.app/XPCServices\",\n      \"XROS_DEPLOYMENT_TARGET\" : \"26.5\",\n      \"YACC\" : \"yacc\"\n    },\n    \"target\" : \"Owlory\"\n  }\n]\n"
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "available",
+        "-j"
+      ],
+      "exit_code": 0,
+      "name": "list-simulators",
+      "stderr_tail": "",
+      "stdout_tail": "7B6179F1-FF38-4BD2-AC97-CFD942775360\",\n        \"isAvailable\" : true,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M5-12GB\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"iPad Pro 11-inch (M5)\"\n      },\n      {\n        \"dataPath\" : \"\\/Users\\/raelldottin\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/227C9BEE-7CA2-499C-AF62-1C95B5D657B6\\/data\",\n        \"dataPathSize\" : 18337792,\n        \"logPath\" : \"\\/Users\\/raelldottin\\/Library\\/Logs\\/CoreSimulator\\/227C9BEE-7CA2-499C-AF62-1C95B5D657B6\",\n        \"udid\" : \"227C9BEE-7CA2-499C-AF62-1C95B5D657B6\",\n        \"isAvailable\" : true,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"iPad mini (A17 Pro)\"\n      },\n      {\n        \"dataPath\" : \"\\/Users\\/raelldottin\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/0AE3538C-E0F2-4609-ADB6-3F454A881B0A\\/data\",\n        \"dataPathSize\" : 18337792,\n        \"logPath\" : \"\\/Users\\/raelldottin\\/Library\\/Logs\\/CoreSimulator\\/0AE3538C-E0F2-4609-ADB6-3F454A881B0A\",\n        \"udid\" : \"0AE3538C-E0F2-4609-ADB6-3F454A881B0A\",\n        \"isAvailable\" : true,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPad-Air-13-inch-M4\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"iPad Air 13-inch (M4)\"\n      },\n      {\n        \"dataPath\" : \"\\/Users\\/raelldottin\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/61E92AFD-A1E2-4CC5-887D-E4F1DEEE7823\\/data\",\n        \"dataPathSize\" : 18337792,\n        \"logPath\" : \"\\/Users\\/raelldottin\\/Library\\/Logs\\/CoreSimulator\\/61E92AFD-A1E2-4CC5-887D-E4F1DEEE7823\",\n        \"udid\" : \"61E92AFD-A1E2-4CC5-887D-E4F1DEEE7823\",\n        \"isAvailable\" : true,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"iPad Air 11-inch (M4)\"\n      },\n      {\n        \"dataPath\" : \"\\/Users\\/raelldottin\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/07145700-35F4-45A0-99BB-A5F75FEE3925\\/data\",\n        \"dataPathSize\" : 18337792,\n        \"logPath\" : \"\\/Users\\/raelldottin\\/Library\\/Logs\\/CoreSimulator\\/07145700-35F4-45A0-99BB-A5F75FEE3925\",\n        \"udid\" : \"07145700-35F4-45A0-99BB-A5F75FEE3925\",\n        \"isAvailable\" : true,\n        \"deviceTypeIdentifier\" : \"com.apple.CoreSimulator.SimDeviceType.iPad-A16\",\n        \"state\" : \"Shutdown\",\n        \"name\" : \"iPad (A16)\"\n      }\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.watchOS-9-4\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-16-4\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.watchOS-10-5\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.tvOS-16-4\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.watchOS-26-2\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-17-0\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.tvOS-17-5\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-3\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-17-5\" : [\n\n    ]\n  }\n}\n"
+    },
+    {
+      "command": [
+        "xcodebuild",
+        "build",
+        "-project",
+        "/Users/raelldottin/Documents/Personal/Owlory/owlory_xcode/Owlory.xcodeproj",
+        "-scheme",
+        "Owlory",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "platform=iOS Simulator,name=iPhone 17,OS=26.5",
+        "-derivedDataPath",
+        "/tmp/owlory-all-locale-smoke-build",
+        "-quiet"
+      ],
+      "exit_code": 0,
+      "name": "build-app",
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "install",
+        "E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0",
+        "/tmp/owlory-all-locale-smoke-build/Build/Products/Debug-iphonesimulator/Owlory.app"
+      ],
+      "exit_code": 0,
+      "name": "install-app",
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "launch",
+        "E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0",
+        "com.raelldottin.owlory",
+        "-AppleLanguages",
+        "(de)",
+        "-AppleLocale",
+        "de"
+      ],
+      "exit_code": 0,
+      "name": "launch-app",
+      "stderr_tail": "",
+      "stdout_tail": "com.raelldottin.owlory: 17549\n"
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "io",
+        "E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0",
+        "screenshot",
+        "/tmp/owlory-all-locale-smoke-artifacts-clean/de/20260514T050604Z/owlory-running-app-smoke-de.png"
+      ],
+      "exit_code": 0,
+      "name": "capture-screenshot",
+      "stderr_tail": "Detected file type from extension: PNG\nNote: No display specified. Defaulting to display: FEF60DAB-5A23-48ED-B445-8FF469E35C40 (screenID: 1, name: LCD)\nWrote screenshot to: /tmp/owlory-all-locale-smoke-artifacts-clean/de/20260514T050604Z/owlory-running-app-smoke-de.png\n",
+      "stdout_tail": ""
+    }
+  ],
+  "timestamp": "20260514T050604Z",
+  "xcode": {
+    "app_path": "/tmp/owlory-all-locale-smoke-build/Build/Products/Debug-iphonesimulator/Owlory.app",
+    "available_schemes": [
+      "Owlory",
+      "OwloryWidgetsExtension"
+    ],
+    "available_targets": [
+      "Owlory",
+      "OwloryCoreTests",
+      "OwloryUITests",
+      "OwloryWidgetsExtension"
+    ],
+    "build_number": "20260513202827",
+    "bundle_id": "com.raelldottin.owlory",
+    "configuration": "Debug",
+    "derived_data_path": "/tmp/owlory-all-locale-smoke-build",
+    "marketing_version": "0.2.0",
+    "project": "/Users/raelldottin/Documents/Personal/Owlory/owlory_xcode/Owlory.xcodeproj",
+    "scheme": "Owlory",
+    "target": "Owlory"
+  }
+}

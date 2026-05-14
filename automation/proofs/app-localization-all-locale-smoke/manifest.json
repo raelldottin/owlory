@@ -1,0 +1,319 @@
+{
+  "claim": "All 19 supported locales built, installed, launched, and exposed Localizable.strings plus Localizable.stringsdict resources in the simulator app bundle.",
+  "locales": [
+    {
+      "apple_locale": "en",
+      "bytes": 12306,
+      "file": "en.json",
+      "locale": "en",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "en",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/en/20260514T050539Z/owlory-running-app-smoke-en.png",
+      "sha256": "f297c7076377e50d0c5d2bc181edb54906eae2d7b38d8156c79fc498fec3c724",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "ar",
+      "bytes": 12305,
+      "file": "ar.json",
+      "locale": "ar",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "ar",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/ar/20260514T050545Z/owlory-running-app-smoke-ar.png",
+      "sha256": "8f9864e659fda0d7b0ed17b34da318051b2b85d9591d69a7c85e2f1ca049205b",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "nl",
+      "bytes": 12306,
+      "file": "nl.json",
+      "locale": "nl",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "nl",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/nl/20260514T050551Z/owlory-running-app-smoke-nl.png",
+      "sha256": "66be7c4669f9ba284b654ec5a17661f39be30dbe9b12894a24bf66ca143dae0a",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "fr",
+      "bytes": 12306,
+      "file": "fr.json",
+      "locale": "fr",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "fr",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/fr/20260514T050557Z/owlory-running-app-smoke-fr.png",
+      "sha256": "a1d4173248eb2f0b619dae5198bc3f7d86dd14e078267aedf5641f862af549fd",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "de",
+      "bytes": 12306,
+      "file": "de.json",
+      "locale": "de",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "de",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/de/20260514T050604Z/owlory-running-app-smoke-de.png",
+      "sha256": "f17ab95f066afe5ba814304c2b8dde2a82829ffca80886825baa90b796edfb5d",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "it",
+      "bytes": 12306,
+      "file": "it.json",
+      "locale": "it",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "it",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/it/20260514T050611Z/owlory-running-app-smoke-it.png",
+      "sha256": "54a072c87cd7a2cee0407cd2777e434f41d1b3cc6c67a4ef94dbbf6abceec454",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "ja",
+      "bytes": 12306,
+      "file": "ja.json",
+      "locale": "ja",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "ja",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/ja/20260514T050616Z/owlory-running-app-smoke-ja.png",
+      "sha256": "6fbe9dbf4982ae44eb730907215ae42865782a44bae1c26e0a34217c3ad75f8a",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "ko",
+      "bytes": 12306,
+      "file": "ko.json",
+      "locale": "ko",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "ko",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/ko/20260514T050621Z/owlory-running-app-smoke-ko.png",
+      "sha256": "f1d2997e0200c7f6246ab2640fd655b287738e63b8abd78cc78a4cbf807785dd",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "nb",
+      "bytes": 12306,
+      "file": "nb.json",
+      "locale": "nb",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "nb",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/nb/20260514T050626Z/owlory-running-app-smoke-nb.png",
+      "sha256": "2e4266490aca35ca69e58d227bd13f5fc5f11d04916886f55c96e248f84aaf93",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "pt",
+      "bytes": 12306,
+      "file": "pt.json",
+      "locale": "pt",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "pt",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/pt/20260514T050631Z/owlory-running-app-smoke-pt.png",
+      "sha256": "07f8d6cf870b5334487301754db1d8373df57d00ef7b7981bc0c3d59912bf510",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "pt-BR",
+      "bytes": 12354,
+      "file": "pt-BR.json",
+      "locale": "pt-BR",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "pt-BR",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/pt-BR/20260514T050636Z/owlory-running-app-smoke-pt-BR.png",
+      "sha256": "85b68b8ad6efbf3931e7fd3c3828feac90c552b60ee361cbe224899d6fb03059",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "ru",
+      "bytes": 12306,
+      "file": "ru.json",
+      "locale": "ru",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "ru",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/ru/20260514T050641Z/owlory-running-app-smoke-ru.png",
+      "sha256": "df80b9937e733e35e2a6fa9bf63f3f4babdd46e892cdc461b1bbd872f5b2672e",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "es",
+      "bytes": 12306,
+      "file": "es.json",
+      "locale": "es",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "es",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/es/20260514T050646Z/owlory-running-app-smoke-es.png",
+      "sha256": "87677c3f4a6c00318cfd3a99a73900c3ff9dd93a6fe5563e1d2b4e0b507d8435",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "sv",
+      "bytes": 12306,
+      "file": "sv.json",
+      "locale": "sv",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "sv",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/sv/20260514T050652Z/owlory-running-app-smoke-sv.png",
+      "sha256": "0d9e7db44456f5d9e2937d96fa8f34439301c9c0230b1253921dfa513aa2327f",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "zh-Hans",
+      "bytes": 12385,
+      "file": "zh-Hans.json",
+      "locale": "zh-Hans",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "zh-Hans",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/zh-Hans/20260514T050657Z/owlory-running-app-smoke-zh-Hans.png",
+      "sha256": "84d3a7dac31fc19fbe2ef8cc2903ca2f3dbc6a003fc8d8666cad8d32ac868198",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "zh-Hant",
+      "bytes": 12386,
+      "file": "zh-Hant.json",
+      "locale": "zh-Hant",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "zh-Hant",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/zh-Hant/20260514T050702Z/owlory-running-app-smoke-zh-Hant.png",
+      "sha256": "fe3512d2e959dd2337295b46668983f749d791d2f83f205735c7d388e4ff1cde",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "tr",
+      "bytes": 12305,
+      "file": "tr.json",
+      "locale": "tr",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "tr",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/tr/20260514T050708Z/owlory-running-app-smoke-tr.png",
+      "sha256": "ad3a514cb6bc6f49dc85411fa0290d9a8245b63273c94a98437649014b632fa0",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "uk",
+      "bytes": 12305,
+      "file": "uk.json",
+      "locale": "uk",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "uk",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/uk/20260514T050714Z/owlory-running-app-smoke-uk.png",
+      "sha256": "3962c4762b02312f44d998cab353ff1fdcdd8ba84216610fddb63f1f6b7881ae",
+      "status": "passed"
+    },
+    {
+      "apple_locale": "vi",
+      "bytes": 12306,
+      "file": "vi.json",
+      "locale": "vi",
+      "localized_resources": [
+        "Localizable.strings",
+        "Localizable.stringsdict"
+      ],
+      "proof_level": "running-app-smoke",
+      "repo_dirty": "no",
+      "requested_locale": "vi",
+      "screenshot_path": "/tmp/owlory-all-locale-smoke-artifacts-clean/vi/20260514T050720Z/owlory-running-app-smoke-vi.png",
+      "sha256": "87f64bdf42fd268fe4c2fac3d5d00a92abb85fbc6797c7da4f2917a7d59c52a6",
+      "status": "passed"
+    }
+  ],
+  "non_claims": [
+    "translation quality",
+    "layout correctness",
+    "screenshot-verified proof",
+    "device behavior",
+    "TestFlight behavior"
+  ],
+  "proof_level": "running-app-smoke",
+  "schema_version": 1,
+  "slice_id": "app-localization-all-locale-smoke"
+}
