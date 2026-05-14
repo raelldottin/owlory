@@ -526,7 +526,7 @@ private struct TaskRow: View {
             .buttonStyle(.plain)
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
-            .accessibilityLabel("Edit \(task.title)")
+            .accessibilityLabel(HomeAccessibilityLabels.taskEdit(title: task.title))
             .accessibilityHint("Opens task details.")
             .accessibilityIdentifier("home.task.item.\(task.id.uuidString)")
 
@@ -544,7 +544,7 @@ private struct TaskRow: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Skip \(task.title)")
+                .accessibilityLabel(HomeAccessibilityLabels.taskSkip(title: task.title))
             }
         }
         .continueHighlight(isHighlighted)
@@ -576,12 +576,12 @@ private struct TaskRow: View {
 
     private var leadingButtonAccessibilityLabel: String {
         if task.isCompleted {
-            return "Mark \(task.title) incomplete"
+            return HomeAccessibilityLabels.taskMarkIncomplete(title: task.title)
         }
         if task.isSkipped {
-            return "Restore \(task.title)"
+            return HomeAccessibilityLabels.taskRestore(title: task.title)
         }
-        return "Mark \(task.title) complete"
+        return HomeAccessibilityLabels.taskMarkComplete(title: task.title)
     }
 }
 
@@ -1120,7 +1120,7 @@ private struct ProtocolRunSheet: View {
                                         .contentShape(Rectangle())
                                 }
                                 .buttonStyle(.plain)
-                                .accessibilityLabel("Complete \(step.title)")
+                                .accessibilityLabel(HomeAccessibilityLabels.protocolStepComplete(title: step.title))
                             } else {
                                 stepStatusIcon(step.status)
                             }
@@ -1149,7 +1149,7 @@ private struct ProtocolRunSheet: View {
                                         .contentShape(Rectangle())
                                 }
                                 .buttonStyle(.plain)
-                                .accessibilityLabel("Skip \(step.title)")
+                                .accessibilityLabel(HomeAccessibilityLabels.protocolStepSkip(title: step.title))
                             }
                         }
                         .swipeActions(edge: .trailing) {

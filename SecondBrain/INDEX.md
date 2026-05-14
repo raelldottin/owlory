@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [app-localization-home-action-accessibility-formatting](sessions/2026-05-14/191848-app-localization-home-action-accessibility-formatting.md)
 - [app-localization-accessibility-interpolation-audit](sessions/2026-05-14/174003-app-localization-accessibility-interpolation-audit.md)
 - [app-localization-digest-insight-summary-formatting](sessions/2026-05-14/172932-app-localization-digest-insight-summary-formatting.md)
 - [app-localization-readiness-summary-formatting](sessions/2026-05-14/095404-app-localization-readiness-summary-formatting.md)

@@ -315,3 +315,10 @@
 "weeklyDigest.insight.severalDeferred" = "Several items deferred. The plan may have been bigger than the week.";
 "weeklyDigest.insight.lowCompletion" = "Completion was under 50%. Fewer priorities might mean more follow-through.";
 "weeklyDigest.insight.steady" = "Steady week. Keep building the rhythm.";
+"home.task.accessibility.edit" = "Edit %@";
+"home.task.accessibility.skip" = "Skip %@";
+"home.task.accessibility.markComplete" = "Mark %@ complete";
+"home.task.accessibility.markIncomplete" = "Mark %@ incomplete";
+"home.task.accessibility.restore" = "Restore %@";
+"home.protocol.step.accessibility.complete" = "Complete %@";
+"home.protocol.step.accessibility.skip" = "Skip %@";

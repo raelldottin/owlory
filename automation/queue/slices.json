@@ -3189,7 +3189,7 @@
     {
       "slice_id": "app-localization-home-action-accessibility-formatting",
       "title": "Localize Home task and protocol-step action accessibility labels",
-      "status": "queued",
+      "status": "done",
       "priority": 190,
       "domain": "localization",
       "allowed_paths": [
@@ -3221,7 +3221,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Group A from the accessibility-label interpolation audit (Home task / protocol-step action labels) is the named follow-up to implement; other audit groups stay documented but unqueued.",
-      "notes": "Audit Group A: localize five interpolated accessibility labels in HomeView (Edit task, Skip task swipe, leadingButtonAccessibilityLabel with three states Mark complete / Mark incomplete / Restore, Complete protocol step, Skip protocol step). Add %@-format keys home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore} and home.protocol.step.accessibility.{complete,skip} to all 19 locales as English placeholders. Route via a new Core/Application/HomeAccessibilityLabels.swift helper (or inline String.localizedStringWithFormat calls if a helper feels heavy for so few strings — implementer's call). Do not touch unrelated copy. Do not translate non-English values. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-14. Added 7 %@-format accessibility keys to all 19 locale Localizable.strings (314 keys total, up from 307; 13 plural keys unchanged): home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore} and home.protocol.step.accessibility.{complete,skip}. Non-English locales remain English placeholders per the translation-quality policy. Introduced Core/Application/HomeAccessibilityLabels.swift with seven static methods (taskEdit, taskSkip, taskMarkComplete, taskMarkIncomplete, taskRestore, protocolStepComplete, protocolStepSkip) each delegating to a private format helper; registered in Owlory.xcodeproj alongside the other presentation helpers. Updated 5 HomeView call sites: line 529 (Edit task swipe action), line 547 (Skip task swipe action), line 577-585 (leadingButtonAccessibilityLabel three branches), line 1123 (Complete protocol step), line 1152 (Skip protocol step). Did not touch unrelated copy. Validations: make architecture, make localization-check (19 locales, 314 keys, 13 plural keys), make test-domain DOMAIN=home (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
     }
   ]
 }

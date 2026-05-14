@@ -86,6 +86,7 @@
 		A079 /* OwloryUITestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A178 /* OwloryUITestSupport.swift */; };
 		A080 /* RecurrenceIntervalPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A179 /* RecurrenceIntervalPresentation.swift */; };
 		A081 /* ReadinessSummaryPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A180 /* ReadinessSummaryPresentation.swift */; };
+		A082 /* HomeAccessibilityLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A181 /* HomeAccessibilityLabels.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -308,6 +309,7 @@
 		A178 /* OwloryUITestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwloryUITestSupport.swift; sourceTree = "<group>"; };
 		A179 /* RecurrenceIntervalPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceIntervalPresentation.swift; sourceTree = "<group>"; };
 		A180 /* ReadinessSummaryPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessSummaryPresentation.swift; sourceTree = "<group>"; };
+		A181 /* HomeAccessibilityLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAccessibilityLabels.swift; sourceTree = "<group>"; };
 		L101 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L102 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L103 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 				A178 /* OwloryUITestSupport.swift */,
 				A179 /* RecurrenceIntervalPresentation.swift */,
 				A180 /* ReadinessSummaryPresentation.swift */,
+				A181 /* HomeAccessibilityLabels.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 				A079 /* OwloryUITestSupport.swift in Sources */,
 				A080 /* RecurrenceIntervalPresentation.swift in Sources */,
 				A081 /* ReadinessSummaryPresentation.swift in Sources */,
+				A082 /* HomeAccessibilityLabels.swift in Sources */,
 				A066 /* ReminderSchedulingRules.swift in Sources */,
 				A055 /* CompletionHistoryStore.swift in Sources */,
 				A056 /* ReminderScheduler.swift in Sources */,

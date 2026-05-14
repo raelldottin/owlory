@@ -51,7 +51,7 @@ The extraction changed only `Localizable.strings` keys and docs; it did not modi
 
 - Dynamic/pluralized copy such as previous-day record counts, non-Today-dashboard readiness/accessibility interpolation, and digest insight/highlight summaries still needs `.stringsdict`, explicit localized formatting, or a separate presentation-adapter slice. Recurrence-interval copy (`Every n day(s)` and the compact `Every nd` badge) is now backed by `recurrence.interval.days` and `recurrence.interval.compact` in `Localizable.stringsdict` and routed through `RecurrenceIntervalPresentation`; it is no longer in the deferred bucket.
 - Readiness summaries (Today check-in header label and Train session readiness summary/readout) are now backed by `readiness.checkin.summary.*`, `readiness.axis.tier.*`, `readiness.summary.tier.*`, and `readiness.session.readout` keys and routed through `ReadinessSummaryPresentation`. Weekly digest insight and highlight summaries now flow through `WeeklyDigest.InsightKind`, the structured `DayHighlight` fields (`doneCount`, `plannedCount`, `readinessBand`), and `WeeklyDigestPresentationFormatting`'s `bestDayHighlightSummary`, `hardestDayHighlightSummary`, and `keyInsightLabel`; the eight `weeklyDigest.insight.*` keys and the three `weeklyDigest.highlight.{bestDay,hardestDay}.summary*` keys cover the rendered sentences. Both buckets are no longer deferred.
-- Remaining accessibility-label interpolations are audited (see [Accessibility Label Interpolation Audit](#accessibility-label-interpolation-audit) below). Concrete gaps remain in four thematic groups; the first (Home action labels) is queued as `app-localization-home-action-accessibility-formatting`. The rest are documented but not yet queued.
+- Remaining accessibility-label interpolations are audited (see [Accessibility Label Interpolation Audit](#accessibility-label-interpolation-audit) below). The first thematic group (Home action labels) shipped as `app-localization-home-action-accessibility-formatting`; Groups B (Voice/Audio button state phrases), C (Train readiness scale row), and D (BuildInfoView label:value) are documented but not yet queued.
 - Notification preference UI, delivered-notification locale smoke, and real device notification proof remain separate validation slices.
 - SF Symbol names, color asset names, telemetry event names, URL routes, storage directories, date format tokens, and separators are not product copy.
 
@@ -70,15 +70,15 @@ Recorded by `app-localization-accessibility-interpolation-audit` on 2026-05-14. 
 
 ### Real gaps — concrete groups for follow-up slices
 
-**Group A — Home action accessibility labels (queued as `app-localization-home-action-accessibility-formatting`):**
+**Group A — Home action accessibility labels (shipped as `app-localization-home-action-accessibility-formatting`):**
 
-- `HomeView.swift:529` `"Edit \(task.title)"`
-- `HomeView.swift:547` `"Skip \(task.title)"` (top-level Home task swipe action)
-- `HomeView.swift:577-585` `leadingButtonAccessibilityLabel`: `"Mark \(task.title) incomplete"`, `"Restore \(task.title)"`, `"Mark \(task.title) complete"`
-- `HomeView.swift:1123` `"Complete \(step.title)"` (protocol step swipe action)
-- `HomeView.swift:1152` `"Skip \(step.title)"` (protocol step swipe action)
+- `HomeView.swift:529` `"Edit \(task.title)"` — now routes through `HomeAccessibilityLabels.taskEdit(title:)`.
+- `HomeView.swift:547` `"Skip \(task.title)"` (top-level Home task swipe action) — now `HomeAccessibilityLabels.taskSkip(title:)`.
+- `HomeView.swift:577-585` `leadingButtonAccessibilityLabel`: three branches — now `taskMarkIncomplete`, `taskRestore`, `taskMarkComplete` from the helper.
+- `HomeView.swift:1123` `"Complete \(step.title)"` — now `HomeAccessibilityLabels.protocolStepComplete(title:)`.
+- `HomeView.swift:1152` `"Skip \(step.title)"` — now `HomeAccessibilityLabels.protocolStepSkip(title:)`.
 
-All five live in `HomeView`, all interpolate a task or step title into a verb phrase. Implementation: add `%@`-format keys (`home.task.accessibility.edit`, `.skip`, `.markComplete`, `.markIncomplete`, `.restore`, `home.protocol.step.accessibility.complete`, `.skip`) and route through a `HomeAccessibilityLabels` helper.
+Backed by 7 `%@`-format keys (`home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore}`, `home.protocol.step.accessibility.{complete,skip}`) in `Localizable.strings`, routed through `Core/Application/HomeAccessibilityLabels.swift`.
 
 **Group B — Voice / Audio button accessibility (not queued):**
 
@@ -108,7 +108,7 @@ Same shape as `today.readiness.scale.accessibility{,.selected}` stringsdict. The
 | Category | Sites |
 | --- | --- |
 | Already localized | 12 |
-| Real gaps (Group A queued, B/C/D documented) | 10 |
+| Real gaps (Group A shipped, B/C/D documented) | 10 |
 | System-generated | 1 (`.accessibilityValue` on Train readiness) |
 | Total accessibility modifier sites in app target | 25 (test target excluded) |
 
