@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "slice_id": "owlory-ui-regression-next-surface-triage",
+  "status": "done",
+  "proof_level": "doc-only",
+  "completed_at": "2026-05-14T00:21:49Z",
+  "summary": "Selected Train active/history transition as the next UI regression expansion surface. The triage compared Write promotion, Home protocols, Train, Patterns, and localization layout, then queued the existing expansion slice with a narrow Train Batch 2 scope. No product code or XCUITest code changed.",
+  "files_touched": [
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/roadmap-status.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260514T002149Z-owlory-ui-regression-next-surface-triage.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/202149-owlory-ui-regression-next-surface-triage.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-next-surface-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 automation/supervisor/run_next.py --dry-run after queueing owlory-ui-regression-expansion-next-surface",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "contract_status_changes": [
+    {
+      "contract": "UI regression next-surface selection",
+      "before": "The next UI regression expansion slice was blocked because no concrete surface was selected.",
+      "after": "Train active/history transition is selected and scoped as Batch 2: seed one planned Train session, resolve it through a visible Train-tab action, and assert it leaves active Today and appears in History.",
+      "proof": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json"
+      ]
+    },
+    {
+      "contract": "UI regression proof boundary",
+      "before": "Some workflow text still described Owlory as lacking a batched regression suite even though TodayContinueRegression exists.",
+      "after": "Workflow docs now describe the current Today Continue regression batch honestly and warn not to treat it as broad app-wide UI regression coverage.",
+      "proof": [
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/ui-regression-plan.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This was a triage slice only; no Train XCUITest implementation was added.",
+    "The selected Train batch will still need deterministic seed support, stable Train accessibility identifiers if missing, and a passing make ui-regression run.",
+    "Screenshot, device, and TestFlight proof are out of scope for the queued Train regression batch."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "owlory-ui-regression-expansion-next-surface",
+  "next_recommended_reason": "The next surface is now selected and scoped; the queued implementation slice should add Train active/history transition regression coverage without broadening into other surfaces."
+}
