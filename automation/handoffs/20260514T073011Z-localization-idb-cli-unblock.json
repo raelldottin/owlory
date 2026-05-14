@@ -1,0 +1,66 @@
+{
+  "slice_id": "localization-idb-cli-unblock",
+  "status": "done",
+  "proof_level": "tooling-tested",
+  "summary": "Installed the missing idb CLI outside the repo and fixed the localization screenshot harness to use the installed client's subcommand-specific --udid syntax.",
+  "files_touched": [
+    "automation/smoke/capture_locale_screenshots.py",
+    "automation/tests/test_capture_locale_screenshots.py",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260514T073011Z-localization-idb-cli-unblock.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/033011-localization-idb-cli-unblock.md"
+  ],
+  "allowed_path_result": "manual follow-up to localization-screenshot-proof-idb-harness",
+  "validations_passed": [
+    "uv tool install fb-idb",
+    "which idb",
+    "which idb_companion",
+    "idb --help",
+    "idb list-targets",
+    "idb describe --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 --json",
+    "idb ui describe-all --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 --json",
+    "idb screenshot --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 /tmp/owlory-idb-screenshot.png",
+    "make localization-screenshot-idb-check",
+    "python3 -m py_compile automation/smoke/capture_locale_screenshots.py",
+    "python3 -m unittest automation.tests.test_capture_locale_screenshots",
+    "make automation-check",
+    "make architecture",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "python3.11 -m pip install --user fb-idb failed because the uv-managed Python is externally managed; uv tool install fb-idb was used instead."
+  ],
+  "missing_proof_levels": [
+    "screenshot-verified for all locales",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "idb screenshot harness dependency readiness",
+      "before": "idb_companion existed but the idb CLI was missing, so make localization-screenshot-idb-check reported status=blocked.",
+      "after": "idb is installed at /Users/raelldottin/.local/bin/idb and make localization-screenshot-idb-check reports status=ready."
+    },
+    {
+      "contract": "idb command syntax",
+      "before": "The harness used idb --udid <target> <command>, which the installed fb-idb client rejects.",
+      "after": "The harness places --udid on each idb subcommand, matching the installed client's command help."
+    },
+    {
+      "contract": "All-locale screenshot proof queue state",
+      "before": "app-localization-all-locale-screenshot-proof was blocked on idb dependency readiness.",
+      "after": "The slice is queued because idb dependency readiness now passes."
+    }
+  ],
+  "residual_risks": [
+    "Full all-locale screenshot proof was not captured in this prompt.",
+    "The future screenshot proof slice must still capture all 19 settled launch screenshots and preserve manifest hashes.",
+    "Translation quality remains incomplete."
+  ],
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "recommended_next_slice": "app-localization-all-locale-screenshot-proof",
+  "recommended_next_reason": "The idb dependency check now reports ready and the proof slice is queued for the next supervisor run.",
+  "timestamp": "2026-05-14T07:30:11Z"
+}

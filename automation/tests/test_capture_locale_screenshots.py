@@ -47,7 +47,13 @@ class CaptureLocaleScreenshotsTests(unittest.TestCase):
     def test_idb_command_targets_udid_first(self):
         self.assertEqual(
             screenshots.idb_command("SIM-1", ["ui", "describe-all"]),
-            ["idb", "--udid", "SIM-1", "ui", "describe-all"],
+            ["idb", "ui", "describe-all", "--udid", "SIM-1"],
+        )
+
+    def test_idb_command_places_udid_before_positional_arguments(self):
+        self.assertEqual(
+            screenshots.idb_command("SIM-1", ["screenshot", "/tmp/out.png"]),
+            ["idb", "screenshot", "--udid", "SIM-1", "/tmp/out.png"],
         )
 
     def test_capture_blocks_when_output_dir_is_not_empty(self):

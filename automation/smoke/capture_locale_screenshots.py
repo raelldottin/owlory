@@ -253,8 +253,8 @@ def capture_one_locale(
         args.udid,
         [
             "launch",
-            args.bundle_id,
             "--foreground-if-running",
+            args.bundle_id,
             "--owlory-ui-testing",
             "-AppleLanguages",
             f"({locale})",
@@ -333,7 +333,13 @@ def capture_one_locale(
 
 
 def idb_command(udid: str, args: list[str]) -> list[str]:
-    return ["idb", "--udid", udid, *args]
+    if not args:
+        raise ValueError("idb_command requires a command")
+    if args[0] == "ui":
+        if len(args) < 2:
+            raise ValueError("idb ui commands require a subcommand")
+        return ["idb", "ui", args[1], "--udid", udid, *args[2:]]
+    return ["idb", args[0], "--udid", udid, *args[1:]]
 
 
 def describe_ui(udid: str, runner: CommandRunner) -> dict[str, Any]:
