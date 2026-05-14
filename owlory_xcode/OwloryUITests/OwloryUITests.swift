@@ -703,30 +703,8 @@ final class TodayContinueRegression: XCTestCase {
     }
 }
 
-/// Second UI regression batch defined by `docs/workflows/ui-regression-plan.md`
-/// Lane 2. Targets the Write capture inbox surface (the Write tab), not Today
-/// Continue. Lives in the same `OwloryUITests` target as the smoke and
-/// `TodayContinueRegression` classes but is reached via
-/// `make ui-regression DOMAIN=write` (or by default `make ui-regression`,
-/// which runs every regression class).
-///
-/// Scope per `owlory-ui-regression-expansion-next-surface` (selected by
-/// `owlory-ui-regression-next-surface-triage` on 2026-05-13):
-///
-/// - Open Write from the tab bar.
-/// - Render one seeded in-progress Writing note row and the capture entry
-///   affordance on the Write surface.
-/// - Assert one promotion affordance (Add to Today) is reachable from the
-///   note detail sheet without exercising the cross-domain side effect.
-///
-/// Reuses `--owlory-ui-seed-in-progress-writing-continue-item` because that
-/// arg already resets app-local state and writes a single capture-stage
-/// `WritingNote`; the slice scope requires a deterministic seed, not a new
-/// one.
-///
-/// Out of scope: voice/live transcription paths, task promotion side
-/// effects, protocol promotion side effects, screenshot proof pack, device
-/// proof, TestFlight proof.
+/// Second UI regression batch defined by `docs/workflows/ui-regression-plan.md`.
+/// Targets the Write capture inbox surface, not Today Continue.
 final class WriteCaptureRegression: XCTestCase {
     private let inProgressWritingFixtureNoteID = "3D5F7A91-1E2F-4C5D-86A7-9C8D0E1F2A3B"
     private let inProgressWritingFixtureTitle = "Review seeded Writing note"
@@ -740,8 +718,6 @@ final class WriteCaptureRegression: XCTestCase {
     override func tearDownWithError() throws {
         app = nil
     }
-
-    // MARK: - Tests
 
     func testSeededWriteCaptureInboxRendersInProgressNoteRowAndCaptureEntry() throws {
         launchWriteSurface()
@@ -800,11 +776,8 @@ final class WriteCaptureRegression: XCTestCase {
             "Expected Add to Today to be reachable from the note detail options menu without exercising the cross-domain side effect."
         )
         // Do not tap. The slice scope intentionally stops at affordance
-        // visibility; exercising the side effect belongs to a follow-up
-        // slice with its own Today-side seed and assertion.
+        // visibility; exercising the side effect belongs to a follow-up slice.
     }
-
-    // MARK: - Helpers
 
     private func launch(arguments: [String]) {
         app.launchArguments = ["--owlory-ui-testing"] + arguments
@@ -825,5 +798,107 @@ final class WriteCaptureRegression: XCTestCase {
             "Expected the Write tab to be reachable from the tab bar."
         )
         writeTab.tap()
+    }
+}
+
+/// Third UI regression batch defined by `docs/workflows/ui-regression-plan.md`.
+/// Keeps the Train active/history transition separate from the Today Continue
+/// and Write capture regression batches.
+final class TrainRegression: XCTestCase {
+    private let dueTodayTrainingContinueFixtureSessionID = "B7E14C81-6D2A-4F3E-9C0B-5A8D2E1F4C9D"
+    private let dueTodayTrainingContinueFixtureTitle = "Review seeded Training session"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testSeededTrainSessionMovesFromActiveTodayToHistoryWhenCompleted() throws {
+        launch(arguments: ["--owlory-ui-seed-due-today-training-continue-item"])
+
+        let trainTab = app.tabBars.buttons["Train"]
+        XCTAssertTrue(
+            trainTab.waitForExistence(timeout: 10),
+            "Expected the Train tab to be available after seeded launch."
+        )
+        trainTab.tap()
+
+        let activeIdentifier = "train.session.item.\(dueTodayTrainingContinueFixtureSessionID)"
+        let activeSession = app.otherElements[activeIdentifier]
+        XCTAssertTrue(
+            activeSession.waitForExistence(timeout: 10),
+            "Expected the seeded planned Train session to appear in the active Today section."
+        )
+        XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+
+        let readinessIdentifier = "train.session.readiness.\(dueTodayTrainingContinueFixtureSessionID)"
+        let readinessDisclosure = app.buttons[readinessIdentifier]
+        if readinessDisclosure.waitForExistence(timeout: 3), readinessDisclosure.isHittable {
+            readinessDisclosure.tap()
+        }
+
+        let completedIdentifier = "train.session.status.completed.\(dueTodayTrainingContinueFixtureSessionID)"
+        let completedButton = app.buttons[completedIdentifier]
+        scrollToElement(completedButton)
+        XCTAssertTrue(
+            completedButton.waitForExistence(timeout: 10),
+            "Expected the seeded Train session to expose a Completed status action."
+        )
+        completedButton.tap()
+
+        let saveIdentifier = "train.session.save.\(dueTodayTrainingContinueFixtureSessionID)"
+        let saveButton = app.buttons[saveIdentifier]
+        scrollToElement(saveButton)
+        XCTAssertTrue(
+            saveButton.waitForExistence(timeout: 10),
+            "Expected the seeded Train session to expose Save after choosing a terminal status."
+        )
+        let saveEnabled = expectation(
+            for: NSPredicate(format: "isEnabled == true"),
+            evaluatedWith: saveButton,
+            handler: nil
+        )
+        wait(for: [saveEnabled], timeout: 5)
+        saveButton.tap()
+
+        let activeRowRemoved = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: activeSession,
+            handler: nil
+        )
+        wait(for: [activeRowRemoved], timeout: 10)
+
+        let historyIdentifier = "train.session.history.item.\(dueTodayTrainingContinueFixtureSessionID)"
+        let historySession = app.otherElements[historyIdentifier]
+        scrollToElement(historySession)
+        XCTAssertTrue(
+            historySession.waitForExistence(timeout: 10),
+            "Expected the completed Train session to move into History."
+        )
+        XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
+
+        let completedHistoryStatusIdentifier = "train.session.history.status.completed.\(dueTodayTrainingContinueFixtureSessionID)"
+        XCTAssertTrue(
+            app.staticTexts[completedHistoryStatusIdentifier].exists,
+            "Expected the Train history row to show the completed status."
+        )
+    }
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+
+    private func scrollToElement(_ element: XCUIElement, maxSwipes: Int = 4) {
+        var remainingSwipes = maxSwipes
+        while !element.isHittable && remainingSwipes > 0 {
+            app.swipeUp()
+            remainingSwipes -= 1
+        }
     }
 }

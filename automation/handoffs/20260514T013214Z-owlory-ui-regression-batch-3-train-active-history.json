@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "slice_id": "owlory-ui-regression-batch-3-train-active-history",
+  "status": "done",
+  "proof_level": "running-app-smoke",
+  "completed_at": "2026-05-14T01:32:14Z",
+  "summary": "Expanded Lane 2 UI regression coverage with TrainRegression. The maintained regression lane now seeds one planned Train session, opens Train, completes the session through the existing status/save controls, and verifies it leaves active Today and appears in History with completed status.",
+  "files_touched": [
+    "Makefile",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "docs/product/domains/train.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/validation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260514T013214Z-owlory-ui-regression-batch-3-train-active-history.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-13/213214-owlory-ui-regression-batch-3-train-active-history.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-3-train-active-history",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=train",
+    "xcodebuild test -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' -derivedDataPath /tmp/owlory-train-regression-derived-data-7 -only-testing:OwloryUITests/TrainRegression",
+    "make ui-regression",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "Initial make ui-regression attempts failed while Train controls and History projection were not exposed through stable accessibility identifiers. The final implementation adds contained accessibility identifiers and passes the focused Train regression before the full validation lane."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Train active/history UI regression proof",
+      "before": "Train domain tests covered active Today and History projections, but no maintained XCUITest proved the Train tab transition.",
+      "after": "TrainRegression proves one planned session can be completed through the visible Train tab controls and then appears in History.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "docs/product/domains/train.md"
+      ]
+    },
+    {
+      "contract": "UI regression lane contents",
+      "before": "make ui-regression targeted TodayContinueRegression only.",
+      "after": "make ui-regression targets TodayContinueRegression and TrainRegression, keeping smoke and regression lanes separate.",
+      "proof": [
+        "Makefile",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Only the completed status path is covered for the Train active/history transition; modified and skipped are not covered in this batch.",
+    "Recurrence rollover, voice/reflection fallback, and Continue routing are out of scope for this Train regression batch.",
+    "No screenshot, device, or TestFlight proof was captured for the Train transition.",
+    "The broader app still does not have a full UI regression suite."
+  ],
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "next_recommended_slice": "clean-stop",
+  "next_recommended_reason": "No next Lane 2 surface is selected. Run a triage slice before expanding UI regression again."
+}

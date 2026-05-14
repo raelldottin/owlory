@@ -39,8 +39,8 @@ Missing/deferred: Future affect/check-in relationship design remains `Contract o
 ## Train History Projection Contract
 
 Implementation status: `Implemented`.
-Proof level: Train domain tests cover the active Today and History projections.
-Missing/deferred: No screenshot/UI regression proof exists for the Train section transition.
+Proof level: Train domain tests cover the active Today and History projections; `make ui-regression` includes `TrainRegression`, which seeds one planned session, completes it through the Train tab, and verifies it moves from active Today into History.
+Missing/deferred: No screenshot, device, or TestFlight proof exists for the Train section transition.
 
 - `todaySessions` keeps all sessions dated today for cross-domain summaries and Today counts.
 - `activeTodaySessions` is the Train tab's active Today surface and includes only planned sessions dated today.

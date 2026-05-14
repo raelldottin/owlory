@@ -41,18 +41,21 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and the Add to Today promotion visibility on the note detail sheet.
+- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and Add to Today promotion visibility on the note detail sheet. Train regression is wired by `owlory-ui-regression-batch-3-train-active-history`, covering the Train active Today -> History transition.
 - `make ui-regression DOMAIN=today` narrows to `OwloryUITests/TodayContinueRegression`.
 - `make ui-regression DOMAIN=write` narrows to `OwloryUITests/WriteCaptureRegression`.
+- `make ui-regression DOMAIN=train` narrows to `OwloryUITests/TrainRegression`.
 - New regression classes should extend the `DOMAIN=` matrix rather than collapse multiple surfaces into one class.
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
 
-## Next Regression Surface
+## Latest Regression Expansion
 
 Batch 2 has shipped: `OwloryUITests/WriteCaptureRegression` (selected by Agent A's triage on 2026-05-13, covering the Write capture inbox row, capture entry affordance, and Add to Today promotion visibility).
 
-The next queued Lane 2 expansion surface is **Train active/history transition**, selected by Agent B's parallel triage on 2026-05-13 and preserved as the queued slice `owlory-ui-regression-batch-3-train-active-history`.
+Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's parallel triage on 2026-05-13, covering the Train active/history transition).
+
+No next regression surface is selected yet; run a triage slice before broadening the suite again.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -60,11 +63,11 @@ Why Train was chosen (Agent B's reasoning, preserved):
 | --- | --- | --- | --- |
 | Write promotion | Domain coverage plus flow/screenshot proof for Write -> Home task -> source-note return. Continue routing to in-progress Writing is already smoke-covered. | Useful later for broader promotion variants, but the highest-value task path already has preserved proof. | Selected by Agent A and shipped as Batch 2. |
 | Home protocols | Domain coverage plus Continue route smoke for active runs; archive, schedule, and step-revert UI proof remain useful. | High value, but candidate surface is broader and should be split by behavior before adding a regression batch. | Defer until scoped to one Home behavior. |
-| Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist, but the Train tab active-to-history transition has no UI regression proof. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Selected for Batch 3. |
+| Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist; Batch 3 now covers the Train tab active-to-history transition. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Implemented in Batch 3. |
 | Patterns | Domain rules are well-covered; UI surfaces are summary/report oriented. | Valuable after a concrete visual/report contract changes. | Defer until a Patterns UI claim needs proof. |
 | Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Defer until translation intake or layout risk exists. |
 
-Batch 3 target:
+Batch 3 implemented target:
 
 - Seed one planned Train session for the current day.
 - Open the Train tab and assert the session appears in the active Today surface.

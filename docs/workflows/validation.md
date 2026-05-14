@@ -25,7 +25,7 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 - `make test-domain DOMAIN=today` - run tests for one product domain.
 - `make test-domain DOMAIN=voice` - run voice transcription routing and fallback tests.
 - `make ui-smoke` - run the maintained focused XCUITest smoke path with isolated DerivedData.
-- `make ui-regression` - run every regression class (Lane 2) with its own isolated DerivedData; not invoked by `make ui-smoke`. Narrow with `DOMAIN=today` (`TodayContinueRegression`) or `DOMAIN=write` (`WriteCaptureRegression`).
+- `make ui-regression` - run every regression class (Lane 2) with its own isolated DerivedData; not invoked by `make ui-smoke`. Narrow with `DOMAIN=today` (`TodayContinueRegression`), `DOMAIN=write` (`WriteCaptureRegression`), or `DOMAIN=train` (`TrainRegression`).
 - `python3 automation/smoke/running_app_smoke.py` - build, install, launch, and screenshot the simulator app when running-app-smoke proof is needed. Use `--locale <locale>` for localization resource-loading smoke.
 
 Use [PR Hygiene](pr-hygiene.md) before opening or reviewing a branch. Use [UI Testing Hygiene](ui-testing-hygiene.md) before adding UI tests, preserving screenshot proof, or claiming running-app behavior. Use [UI Regression Plan](ui-regression-plan.md) to choose which UI coverage lane a new claim belongs in and which gating commands to run for that lane.
@@ -209,7 +209,7 @@ As of the `app-localization-manual-language-setting-diagnostic` slice, source an
 
 ## UI Testing Hygiene
 
-Owlory has a maintained minimal XCUITest target, `OwloryUITests`, for deterministic Today smoke coverage. It is not a broad UI regression suite.
+Owlory has a maintained XCUITest target, `OwloryUITests`, for deterministic Today smoke coverage and focused regression batches. It is not a broad UI regression suite.
 
 Run it with isolated DerivedData:
 
@@ -217,7 +217,15 @@ Run it with isolated DerivedData:
 make ui-smoke
 ```
 
-The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard surface plus seeded Today Continue rows for one current Focus item, one source-derived active Home task, and one source-derived active Home protocol run through stable accessibility identifiers. They also exercise the existing Focus-backed Continue Done swipe action, assert that the completed row leaves the visible Continue list, tap one Home-task-backed Continue row to prove it routes into Home with the seeded task visible, and tap one Home-protocol-run-backed Continue row to prove it presents the active run sheet.
+The smoke tests launch the app with `--owlory-ui-testing`, reset app-local Owlory/Trajectory application-support data in Debug builds, skip notification authorization prompts, and verify the Today dashboard plus selected seeded Today Continue paths through stable accessibility identifiers.
+
+Run the focused regression lane with:
+
+```bash
+make ui-regression
+```
+
+The regression lane currently runs `TodayContinueRegression` and `TrainRegression`. It covers all six composer-backed Continue source rows, selected Continue actions/routes, and one Train tab active Today -> History transition for a completed session.
 
 When adding another UI test or proof runner:
 

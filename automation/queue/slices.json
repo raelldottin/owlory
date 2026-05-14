@@ -2861,7 +2861,7 @@
     {
       "slice_id": "owlory-ui-regression-batch-3-train-active-history",
       "title": "Add Train active/history transition UI regression batch",
-      "status": "queued",
+      "status": "done",
       "priority": 160,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -2894,7 +2894,7 @@
       ],
       "max_files_changed": 15,
       "entry_condition": "Satisfied by owlory-ui-regression-next-surface-triage (Agent B's parallel triage): Train active/history transition is selected and scoped.",
-      "notes": "Scope inherited verbatim from the parallel-agent triage on 2026-05-13 (handoff 20260514T002253Z-owlory-ui-regression-next-surface-triage.json, session 202149-owlory-ui-regression-next-surface-triage.md). Target: seed one planned Train session for today, open Train, assert the session appears in the active Today surface, resolve it through one visible action (prefer Complete), and assert it leaves active Today and appears in History. Add a new XCUITest class (e.g., OwloryUITests/TrainActiveHistoryRegression) and a DOMAIN=train branch in `make ui-regression`. Do not broaden into recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof. Use deterministic seed data, keep simulator state isolated, and classify failures instead of broadening scope. proof_level target: running-app-smoke."
+      "notes": "Done on 2026-05-13. Batch 3 adds TrainRegression under make ui-regression and DOMAIN=train: seed one planned Train session for today, open Train, assert the session appears in the active Today surface, complete it through the existing Train status/save controls, and assert it leaves active Today and appears in History with completed status. Did not broaden into recurrence rollover, voice/reflection fallback, multiple Train statuses, Continue routing, screenshot proof, device proof, or TestFlight proof. Proof level: running-app-smoke, XCUITest-backed."
     }
   ]
 }

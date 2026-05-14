@@ -99,6 +99,7 @@ struct TrainView: View {
                         isHighlighted: session.id == highlightedSessionID
                     )
                     .id(session.id)
+                    .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
                 }
                 .onDelete { offsets in
@@ -137,6 +138,7 @@ struct TrainView: View {
                             }
                             Spacer()
                             StatusBadge(status: session.status)
+                                .accessibilityIdentifier("train.session.history.status.\(session.status.rawValue).\(session.id.uuidString)")
                         }
                         Text(sessionDateString(session.date))
                             .font(.caption)
@@ -150,6 +152,8 @@ struct TrainView: View {
                     }
                     .continueHighlight(session.id == highlightedSessionID)
                     .id(session.id)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("train.session.history.item.\(session.id.uuidString)")
                 }
             }
         }
@@ -302,6 +306,7 @@ private struct SessionCardView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .accessibilityIdentifier("train.session.readiness.\(session.id.uuidString)")
 
                 Divider()
 
@@ -340,6 +345,7 @@ private struct SessionCardView: View {
                             .accessibilityLabel(
                                 trainingStatusAccessibilityLabel(status: s, isSelected: status == s)
                             )
+                            .accessibilityIdentifier("train.session.status.\(s.rawValue).\(session.id.uuidString)")
                         }
                     }
                 }
@@ -389,6 +395,7 @@ private struct SessionCardView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)
+                .accessibilityIdentifier("train.session.save.\(session.id.uuidString)")
                 .disabled(status == .planned)
             } else {
                 HStack(spacing: 6) {

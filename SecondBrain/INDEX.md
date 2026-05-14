@@ -2,6 +2,7 @@
 
 ## 2026-05-13
 
+- [owlory-ui-regression-batch-3-train-active-history](sessions/2026-05-13/213214-owlory-ui-regression-batch-3-train-active-history.md)
 - [owlory-ui-regression-expansion-next-surface](sessions/2026-05-13/235054-owlory-ui-regression-expansion-next-surface.md)
 - [owlory-ui-regression-next-surface-triage (Agent A, chose Write)](sessions/2026-05-13/212057-owlory-ui-regression-next-surface-triage.md)
 - [owlory-ui-regression-next-surface-triage (Agent B, chose Train)](sessions/2026-05-13/202149-owlory-ui-regression-next-surface-triage.md)
