@@ -304,3 +304,14 @@
 "readiness.summary.tier.okay" = "Readiness okay";
 "readiness.summary.tier.high" = "Readiness high";
 "readiness.session.readout" = "Readiness %d/5";
+"weeklyDigest.highlight.bestDay.summary" = "%@: %d of %d completed";
+"weeklyDigest.highlight.hardestDay.summary.low" = "%@: low readiness";
+"weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: moderate readiness";
+"weeklyDigest.insight.lightWeek" = "Light week. Showing up is the first step.";
+"weeklyDigest.insight.strongWeek" = "Strong week. High readiness translated into follow-through.";
+"weeklyDigest.insight.finishedMost" = "You finished most of what you planned.";
+"weeklyDigest.insight.toughWeek" = "Tough week with low reserves. Consider planning lighter next time.";
+"weeklyDigest.insight.stalledCarryOver" = "Some items carried over repeatedly. Worth deciding: commit, defer, or drop?";
+"weeklyDigest.insight.severalDeferred" = "Several items deferred. The plan may have been bigger than the week.";
+"weeklyDigest.insight.lowCompletion" = "Completion was under 50%. Fewer priorities might mean more follow-through.";
+"weeklyDigest.insight.steady" = "Steady week. Keep building the rhythm.";

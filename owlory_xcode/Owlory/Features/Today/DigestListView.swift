@@ -238,4 +238,76 @@ enum WeeklyDigestPresentationFormatting {
         formatter.setLocalizedDateFormatFromTemplate("MMM d")
         return formatter.string(from: date)
     }
+
+    static func bestDayHighlightSummary(
+        _ highlight: WeeklyDigest.DayHighlight,
+        calendar: Calendar
+    ) -> String {
+        guard let doneCount = highlight.doneCount,
+              let plannedCount = highlight.plannedCount else {
+            return highlight.summary
+        }
+        let weekday = weekdayName(for: highlight.date, calendar: calendar)
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                "weeklyDigest.highlight.bestDay.summary",
+                comment: "Weekly digest best-day highlight summary with weekday, done count, and planned count."
+            ),
+            weekday,
+            doneCount,
+            plannedCount
+        )
+    }
+
+    static func hardestDayHighlightSummary(
+        _ highlight: WeeklyDigest.DayHighlight,
+        calendar: Calendar
+    ) -> String {
+        guard let bandRawValue = highlight.readinessBand,
+              let band = WeeklyDigest.ReadinessBand(rawValue: bandRawValue) else {
+            return highlight.summary
+        }
+        let weekday = weekdayName(for: highlight.date, calendar: calendar)
+        let key: String
+        switch band {
+        case .low: key = "weeklyDigest.highlight.hardestDay.summary.low"
+        case .moderate: key = "weeklyDigest.highlight.hardestDay.summary.moderate"
+        }
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                key,
+                comment: "Weekly digest hardest-day highlight summary with weekday and readiness band."
+            ),
+            weekday
+        )
+    }
+
+    static func keyInsightLabel(_ keyInsight: String) -> String {
+        guard let kind = WeeklyDigest.InsightKind(rawValue: keyInsight) else {
+            return keyInsight
+        }
+        let key: String
+        switch kind {
+        case .lightWeek: key = "weeklyDigest.insight.lightWeek"
+        case .strongWeek: key = "weeklyDigest.insight.strongWeek"
+        case .finishedMost: key = "weeklyDigest.insight.finishedMost"
+        case .toughWeek: key = "weeklyDigest.insight.toughWeek"
+        case .stalledCarryOver: key = "weeklyDigest.insight.stalledCarryOver"
+        case .severalDeferred: key = "weeklyDigest.insight.severalDeferred"
+        case .lowCompletion: key = "weeklyDigest.insight.lowCompletion"
+        case .steady: key = "weeklyDigest.insight.steady"
+        }
+        return NSLocalizedString(
+            key,
+            comment: "Weekly digest insight sentence for a deterministic insight kind."
+        )
+    }
+
+    private static func weekdayName(for date: Date, calendar: Calendar) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.setLocalizedDateFormatFromTemplate("EEEE")
+        return formatter.string(from: date)
+    }
 }

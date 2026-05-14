@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [app-localization-digest-insight-summary-formatting](sessions/2026-05-14/172932-app-localization-digest-insight-summary-formatting.md)
 - [app-localization-readiness-summary-formatting](sessions/2026-05-14/095404-app-localization-readiness-summary-formatting.md)
 - [app-localization-recurrence-interval-formatting](sessions/2026-05-14/082207-app-localization-recurrence-interval-formatting.md)
 - [app-localization-all-locale-screenshot-proof](sessions/2026-05-14/034211-app-localization-all-locale-screenshot-proof.md)

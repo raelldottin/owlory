@@ -63,7 +63,7 @@ struct DigestDetailView: View {
                         VStack(alignment: .leading) {
                             Text("Best day")
                                 .font(.caption.weight(.medium))
-                            Text(best.summary)
+                            Text(WeeklyDigestPresentationFormatting.bestDayHighlightSummary(best, calendar: calendar))
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -76,7 +76,7 @@ struct DigestDetailView: View {
                         VStack(alignment: .leading) {
                             Text("Hardest day")
                                 .font(.caption.weight(.medium))
-                            Text(hardest.summary)
+                            Text(WeeklyDigestPresentationFormatting.hardestDayHighlightSummary(hardest, calendar: calendar))
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -109,7 +109,7 @@ struct DigestDetailView: View {
     private var insightSection: some View {
         if !digest.keyInsight.isEmpty {
             Section("Insight") {
-                Text(digest.keyInsight)
+                Text(WeeklyDigestPresentationFormatting.keyInsightLabel(digest.keyInsight))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

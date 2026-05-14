@@ -36,7 +36,70 @@ struct WeeklyDigest: Identifiable, Codable, Equatable {
 
     struct DayHighlight: Codable, Equatable {
         let date: Date
+        /// Legacy English-only fallback. New digests store an empty summary
+        /// and rely on the structured fields below; old digests on disk
+        /// still carry a composed English sentence here so presentation can
+        /// fall through when the structured fields are absent.
         let summary: String
+        /// Best-day signals. Non-nil on best-day highlights from new digests.
+        let doneCount: Int?
+        let plannedCount: Int?
+        /// Hardest-day signal. Non-nil on hardest-day highlights from new
+        /// digests. Encoded as the raw value of `ReadinessBand` so the
+        /// model stays Codable-stable.
+        let readinessBand: String?
+
+        init(
+            date: Date,
+            summary: String = "",
+            doneCount: Int? = nil,
+            plannedCount: Int? = nil,
+            readinessBand: String? = nil
+        ) {
+            self.date = date
+            self.summary = summary
+            self.doneCount = doneCount
+            self.plannedCount = plannedCount
+            self.readinessBand = readinessBand
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case date
+            case summary
+            case doneCount
+            case plannedCount
+            case readinessBand
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            date = try container.decode(Date.self, forKey: .date)
+            summary = try container.decodeIfPresent(String.self, forKey: .summary) ?? ""
+            doneCount = try container.decodeIfPresent(Int.self, forKey: .doneCount)
+            plannedCount = try container.decodeIfPresent(Int.self, forKey: .plannedCount)
+            readinessBand = try container.decodeIfPresent(String.self, forKey: .readinessBand)
+        }
+    }
+
+    /// Raw values for keyInsight on new digests. WeeklyDigest.keyInsight stays
+    /// a plain `String` so legacy stored digests (which hold a full English
+    /// sentence) keep decoding; new digests store the rawValue and the
+    /// presentation helper resolves it back to a localized sentence.
+    enum InsightKind: String, Codable {
+        case lightWeek
+        case strongWeek
+        case finishedMost
+        case toughWeek
+        case stalledCarryOver
+        case severalDeferred
+        case lowCompletion
+        case steady
+    }
+
+    /// Raw values for the hardest-day `readinessBand` field.
+    enum ReadinessBand: String, Codable {
+        case low
+        case moderate
     }
 
     func withStableID(_ stableID: UUID) -> WeeklyDigest {

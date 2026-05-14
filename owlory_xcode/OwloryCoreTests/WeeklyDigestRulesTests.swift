@@ -317,7 +317,8 @@ final class WeeklyDigestRulesTests: XCTestCase {
         )!
 
         XCTAssertNotNil(digest.bestDay)
-        XCTAssertTrue(digest.bestDay!.summary.contains("2 of 2"))
+        XCTAssertEqual(digest.bestDay!.doneCount, 2)
+        XCTAssertEqual(digest.bestDay!.plannedCount, 2)
     }
 
     func testDayHighlightLabelsUseExplicitCalendar() {
@@ -351,14 +352,20 @@ final class WeeklyDigestRulesTests: XCTestCase {
             calendar: utcCalendar
         )!
 
-        let localDay = expectedLabel(for: boundaryDate, calendar: localCalendar, dateFormat: "EEEE")
-        let utcDay = expectedLabel(for: boundaryDate, calendar: utcCalendar, dateFormat: "EEEE")
+        // The underlying boundary Date is the same in both digests; what
+        // differs is the calendar that the *presentation* helper uses to
+        // resolve the weekday. The domain-level invariant we still care
+        // about here is that the boundary Date is preserved unchanged on
+        // the highlight, and that the two calendars assign it different
+        // weekday components.
+        let localWeekday = localCalendar.component(.weekday, from: boundaryDate)
+        let utcWeekday = utcCalendar.component(.weekday, from: boundaryDate)
+        XCTAssertNotEqual(localWeekday, utcWeekday)
 
-        XCTAssertNotEqual(localDay, utcDay)
-        XCTAssertTrue(localDigest.bestDay!.summary.hasPrefix("\(localDay):"))
-        XCTAssertTrue(localDigest.hardestDay!.summary.hasPrefix("\(localDay):"))
-        XCTAssertTrue(utcDigest.bestDay!.summary.hasPrefix("\(utcDay):"))
-        XCTAssertTrue(utcDigest.hardestDay!.summary.hasPrefix("\(utcDay):"))
+        XCTAssertEqual(localDigest.bestDay!.date, boundaryDate)
+        XCTAssertEqual(localDigest.hardestDay!.date, boundaryDate)
+        XCTAssertEqual(utcDigest.bestDay!.date, boundaryDate)
+        XCTAssertEqual(utcDigest.hardestDay!.date, boundaryDate)
     }
 
     func testDomainActivityCounts() {
@@ -572,7 +579,7 @@ final class WeeklyDigestRulesTests: XCTestCase {
             generatedAt: Date()
         )!
 
-        XCTAssertTrue(digest.keyInsight.contains("Strong week"))
+        XCTAssertEqual(digest.keyInsight, WeeklyDigest.InsightKind.strongWeek.rawValue)
     }
 
     func testKeyInsightForLightWeek() {
@@ -590,7 +597,7 @@ final class WeeklyDigestRulesTests: XCTestCase {
             generatedAt: Date()
         )!
 
-        XCTAssertTrue(digest.keyInsight.contains("Light week"))
+        XCTAssertEqual(digest.keyInsight, WeeklyDigest.InsightKind.lightWeek.rawValue)
     }
 
     private func carriedItem(title: String, carriedFrom: Date) -> FocusItem {

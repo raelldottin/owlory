@@ -210,11 +210,13 @@ enum WeeklyDigestRules {
         }!
 
         let doneCount = best.focusThree.filter { $0.status == .done }.count
-        let dayName = weekdayName(for: best.date, calendar: calendar)
+        let plannedCount = best.focusThree.count
 
         return WeeklyDigest.DayHighlight(
             date: best.date,
-            summary: "\(dayName): \(doneCount) of \(best.focusThree.count) completed"
+            summary: "",
+            doneCount: doneCount,
+            plannedCount: plannedCount
         )
     }
 
@@ -231,20 +233,13 @@ enum WeeklyDigestRules {
         }!
 
         let avg = Double(hardest.energy + hardest.mood + hardest.sleepQuality) / 3.0
-        let dayName = weekdayName(for: hardest.date, calendar: calendar)
+        let band: WeeklyDigest.ReadinessBand = avg <= 2.0 ? .low : .moderate
 
-        let label: String
-        if avg <= 2.0 {
-            label = "\(dayName): low readiness"
-        } else {
-            label = "\(dayName): moderate readiness"
-        }
-
-        return WeeklyDigest.DayHighlight(date: hardest.date, summary: label)
-    }
-
-    private static func weekdayName(for date: Date, calendar: Calendar) -> String {
-        label(for: date, calendar: calendar, dateFormat: "EEEE")
+        return WeeklyDigest.DayHighlight(
+            date: hardest.date,
+            summary: "",
+            readinessBand: band.rawValue
+        )
     }
 
     private static func monthDayLabel(for date: Date, calendar: Calendar) -> String {
@@ -285,26 +280,26 @@ enum WeeklyDigestRules {
         stalledItemCount: Int
     ) -> String {
         if daysWithEntries <= 2 {
-            return "Light week. Showing up is the first step."
+            return WeeklyDigest.InsightKind.lightWeek.rawValue
         }
         if completionRate >= 0.8 && averageReadiness >= 3.5 {
-            return "Strong week. High readiness translated into follow-through."
+            return WeeklyDigest.InsightKind.strongWeek.rawValue
         }
         if completionRate >= 0.8 {
-            return "You finished most of what you planned."
+            return WeeklyDigest.InsightKind.finishedMost.rawValue
         }
         if completionRate < 0.4 && averageReadiness <= 2.5 {
-            return "Tough week with low reserves. Consider planning lighter next time."
+            return WeeklyDigest.InsightKind.toughWeek.rawValue
         }
         if stalledItemCount >= 2 {
-            return "Some items carried over repeatedly. Worth deciding: commit, defer, or drop?"
+            return WeeklyDigest.InsightKind.stalledCarryOver.rawValue
         }
         if totalDeferred >= 3 {
-            return "Several items deferred. The plan may have been bigger than the week."
+            return WeeklyDigest.InsightKind.severalDeferred.rawValue
         }
         if completionRate < 0.5 {
-            return "Completion was under 50%. Fewer priorities might mean more follow-through."
+            return WeeklyDigest.InsightKind.lowCompletion.rawValue
         }
-        return "Steady week. Keep building the rhythm."
+        return WeeklyDigest.InsightKind.steady.rawValue
     }
 }

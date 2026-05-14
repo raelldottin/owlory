@@ -1,0 +1,87 @@
+{
+  "slice_id": "app-localization-digest-insight-summary-formatting",
+  "status": "done",
+  "summary": "Refactored WeeklyDigestRules to emit semantic insight/highlight data and moved sentence rendering to WeeklyDigestPresentationFormatting. Added WeeklyDigest.InsightKind (8 cases) and WeeklyDigest.ReadinessBand (low/moderate) enums. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields and a custom Codable conformance using decodeIfPresent, so old stored digests fall through to their pre-composed English summary while new digests use the structured path. WeeklyDigestRules.generateInsight now stores InsightKind rawValue strings in WeeklyDigest.keyInsight; the presentation helper resolves rawValues to localized sentences and falls through to verbatim text for unknown values (preserving the prior UX for legacy stored digests). Added 11 keys across all 19 locale Localizable.strings files (307 keys total, 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary, weeklyDigest.highlight.hardestDay.summary.{low,moderate}, and 8 weeklyDigest.insight.* keys. WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} are the new entry points; DigestDetailView's three call sites delegate to them. WeeklyDigestRulesTests assertions updated to read structured fields and rawValue equality.",
+  "files_touched": [
+    "automation/handoffs/20260514T212932Z-app-localization-digest-insight-summary-formatting.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/localization-string-inventory.md",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigest.swift",
+    "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+    "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+    "owlory_xcode/Owlory/Features/Today/DigestListView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/172932-app-localization-digest-insight-summary-formatting.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-digest-insight-summary-formatting",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make test-domain DOMAIN=patterns",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-digest-insight-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Weekly digest insight and highlight summary localization",
+      "before": "WeeklyDigestRules emitted full English sentences (Strong week..., Wed: 2 of 2 completed, Wed: low readiness, etc.) directly into WeeklyDigest.keyInsight and DayHighlight.summary. DigestDetailView rendered them verbatim. No localization keys covered the prose; non-English locales rendered the English literals regardless of locale.",
+      "after": "WeeklyDigest carries semantic data: InsightKind rawValue in keyInsight, plus optional doneCount/plannedCount/readinessBand on DayHighlight. WeeklyDigestPresentationFormatting renders localized sentences from 11 new keys (weeklyDigest.highlight.bestDay.summary, weeklyDigest.highlight.hardestDay.summary.{low,moderate}, weeklyDigest.insight.{lightWeek,strongWeek,finishedMost,toughWeek,stalledCarryOver,severalDeferred,lowCompletion,steady}). Old stored digests fall through to their original English summary/keyInsight strings without a migration; new digests follow the localized path. localization-string-inventory.md and localization-dynamic-formatting.md updated.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigest.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestListView.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+        "make test-domain DOMAIN=patterns",
+        "make localization-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English locales render English placeholder text for the new digest keys per the existing translation-quality policy.",
+    "weeklyDigest.highlight.bestDay.summary format `%@: %d of %d completed` places the weekday first. Some target languages may prefer different ordering; reviewers can rewrite the format per-locale without code changes.",
+    "Old stored digests fall through to their pre-composed English summary/keyInsight strings. They will continue to render in English until they regenerate; mixed UX is expected and intentional.",
+    "DayHighlight's Codable conformance is now custom. Future fields require updating the explicit init(from:)/CodingKeys rather than relying on synthesized Codable.",
+    "InsightKind rawValue strings are now a stable contract for stored digest JSON. Renaming a case changes persisted values; deleting one forces fallthrough to verbatim rendering.",
+    "make verify and broader cross-domain suites were not run; the slice-required validations cover patterns + build, but other domains' runtime behavior was not re-checked in this slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The localization-string-inventory deferred bucket now narrows to 'remaining model-backed accessibility interpolation outside today.readiness.scale.accessibility' — not a single concrete slice yet; would need an audit first to find which accessibility interpolations still bypass localization.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-14T21:29:32Z"
+}

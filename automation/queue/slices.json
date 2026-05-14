@@ -3111,6 +3111,48 @@
       "max_files_changed": 30,
       "entry_condition": "Static-literal extraction and recurrence-interval formatting slices are complete; the dynamic-formatting plan classifies readiness summaries as a presentation-layer responsibility.",
       "notes": "Completed on 2026-05-14. Added 14 readiness.* keys to all 19 locale Localizable.strings files (296 keys total, up from 282; 13 plural keys unchanged): readiness.checkin.summary.{tap,tap.compact,strong,strong.compact,low,low.compact,mixed}, readiness.axis.tier.{low,okay,high} (%@ format strings), readiness.summary.tier.{low,okay,high} (Train compact form), readiness.session.readout (Readiness %d/5). Non-English locales remain English placeholders per the translation-quality policy. Introduced Core/Application/ReadinessSummaryPresentation.swift exposing todayCheckInLabel(energy:mood:sleep:layout:), trainingReadinessSummary(for:), and sessionReadinessReadout(level:), and registered it in Owlory.xcodeproj. TodayView readinessSummaryLabel now delegates to the helper (passing usesAccessibilityCompactHeader and usesCompactHeightAccessibilityLayout via the CheckInLayout struct). TrainView trainingReadinessSummary(for:) is now a thin pass-through; TrainView session-card readout uses sessionReadinessReadout(level:). Domain rules (ReadinessRules, ReadinessOutcomeRules) unchanged; did not touch digest insight copy, weeklyDigest.averageReadiness.value, or today.readiness.scale.accessibility. Validations: make architecture, make localization-check (19 locales, 296 keys, 13 plural keys), make test-domain DOMAIN=today (TEST SUCCEEDED), make test-domain DOMAIN=train (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
+    },
+    {
+      "slice_id": "app-localization-digest-insight-summary-formatting",
+      "title": "Localize weekly digest insight and highlight summaries",
+      "status": "done",
+      "priority": 180,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigest.swift",
+        "owlory_xcode/Owlory/Core/Domain/WeeklyDigestRules.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestListView.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+        "owlory_xcode/OwloryCoreTests/WeeklyDigestRulesTests.swift",
+        "owlory_xcode/Owlory.xcodeproj/",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-digest-insight-summary-formatting",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make test-domain DOMAIN=patterns",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-localization-digest-insight-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-digest-formatting",
+        "app-localization-readiness-summary-formatting"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "Static-literal extraction is complete, prior dynamic-formatting slices established the WeeklyDigestPresentationFormatting helper, and the user agreed to refactor WeeklyDigestRules from String composition to semantic enums + structured highlight data while keeping its decision-making role intact.",
+      "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility — old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
     }
   ]
 }
