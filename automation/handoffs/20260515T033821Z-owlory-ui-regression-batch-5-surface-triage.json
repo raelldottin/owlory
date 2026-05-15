@@ -1,16 +1,16 @@
 {
-  "slice_id": "owlory-ui-regression-batch-4-surface-triage",
+  "slice_id": "owlory-ui-regression-batch-5-surface-triage",
   "status": "done",
-  "summary": "Doc-only triage. Lane 2 Batches 1-3 are shipped (Today Continue, Write capture inbox, Train active/history). Compared the three remaining surfaces (Home protocols, Patterns, localization layout) and selected Home protocols, narrowed to active-run step progression. Patterns deferred (no concrete UI claim has changed). Localization layout deferred (translation intake still parked; without translated values, layout regression has nothing locale-distinctive to verify). Within Home protocols, narrowed further to step progression specifically; step skip, revert, archive, schedule-window status, and template editing remain deferred. Added Batch 4 decision memo to docs/workflows/ui-regression-plan.md. Queued the implementation slice owlory-ui-regression-batch-4-home-protocol-run-step-progression with explicit allowed_paths and required_validations.",
+  "summary": "Doc-only triage. While Lane 2 Batches 1-3 were shipped (Today Continue, Write capture inbox, Train active/history), a parallel agent (Agent B) triaged and shipped Batch 4 as HomeProtocolRegression covering Home protocol template archive/restore. This triage independently selected Home protocols as the next surface but narrowed to active-run step progression — a different sub-behavior. Non-destructive reconciliation: Batch 4 archive/restore (Agent B) stands; this triage's step-progression selection is preserved as Batch 5 with a distinct slice_id. Decision memo added to docs/workflows/ui-regression-plan.md under '### Batch 5 decision'. Queued implementation slice owlory-ui-regression-batch-5-home-protocol-run-step-progression. Patterns and localization layout remain deferred.",
   "files_touched": [
-    "automation/handoffs/20260515T033821Z-owlory-ui-regression-batch-4-surface-triage.json",
+    "automation/handoffs/20260515T033821Z-owlory-ui-regression-batch-5-surface-triage.json",
     "automation/queue/slices.json",
     "docs/workflows/ui-regression-plan.md",
     "SecondBrain/INDEX.md",
-    "SecondBrain/sessions/2026-05-14/233821-owlory-ui-regression-batch-4-surface-triage.md"
+    "SecondBrain/sessions/2026-05-14/233821-owlory-ui-regression-batch-5-surface-triage.md"
   ],
   "validations_passed": [
-    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-surface-triage",
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-5-surface-triage",
     "python3 automation/supervisor/run_next.py --dry-run",
     "make architecture",
     "make automation-check",
@@ -29,9 +29,9 @@
   ],
   "contract_status_changes": [
     {
-      "contract": "Next UI regression surface selection (Batch 4)",
-      "before": "Lane 2 Batches 1-3 shipped (Today Continue, Write capture inbox, Train active/history). docs/workflows/ui-regression-plan.md noted that no next surface had been selected; the original owlory-ui-regression-next-surface-triage slice (which selected Write and Train via two parallel agents) was already done. No Batch 4 candidate had been chosen.",
-      "after": "Batch 4 surface explicitly selected: Home protocols, narrowed to active-run step progression. Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 4 decision' with a candidate comparison table and a Why-Home reasoning section. Implementation slice owlory-ui-regression-batch-4-home-protocol-run-step-progression queued with explicit scope (open active run sheet via Today Continue route, tap Complete on first pending step, assert step transitions out of pending), required infrastructure (home.protocolRun.step.<uuid> and home.protocolRun.step.action.complete.<uuid> identifiers, new XCUITest class, DOMAIN=home matrix branch), and proof_level target running-app-smoke.",
+      "contract": "Next UI regression sub-behavior selection (Batch 5)",
+      "before": "After Lane 2 Batches 1-3 (Today/Write/Train) shipped and Agent B picked Home protocol template archive/restore as Batch 4, the next sub-behavior within Home protocols was unscoped. Active-run step interactions inside home.protocolRun.sheet had no Lane 2 UI proof.",
+      "after": "Batch 5 sub-behavior explicitly selected: Home protocols active-run step progression. Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 5 decision' with a sub-behavior comparison table within Home protocols (step progression, step skip, step revert, schedule windows, template editing). Implementation slice owlory-ui-regression-batch-5-home-protocol-run-step-progression queued with explicit scope (open active run sheet via Today Continue route, tap Complete on first pending step, assert step transitions out of pending), required infrastructure (home.protocolRun.step.<uuid> and home.protocolRun.step.action.complete.<uuid> identifiers, new HomeProtocolRunStepRegression class separate from HomeProtocolRegression), and proof_level target running-app-smoke.",
       "proof": [
         "docs/workflows/ui-regression-plan.md",
         "automation/queue/slices.json"
@@ -39,12 +39,12 @@
     }
   ],
   "residual_risks": [
-    "Triage premise reconciliation: the incoming prompt described the *original* Batch 2 triage (Write vs Train) as if it had not yet been performed. The user confirmed the right interpretation was Batch 4 selection from remaining surfaces. A parallel agent running with a stale view could try the original triage again; the new slice ID owlory-ui-regression-batch-4-surface-triage prevents direct queue-record collision with the existing owlory-ui-regression-next-surface-triage.",
-    "Active-run step progression is one sub-behavior of Home protocols. Skip, revert, archive, template editing, and schedule-window status remain deferred and would need their own future scoped slices.",
-    "The implementation slice will add new accessibility identifiers (home.protocolRun.step.<uuid>, home.protocolRun.step.action.complete.<uuid>) on the same SessionCardView-equivalent that already carries the home.protocol.step.accessibility.* labels added in the prior Home action accessibility slice. Identifiers and labels coexist (different SwiftUI modifiers); reviewers should know both exist for the same view.",
+    "Slice numbering matters because the queue is multi-agent. Reviewers should note that Batch 4 = archive/restore (HomeProtocolRegression, Agent B) and Batch 5 = step progression (queued, this triage).",
+    "Active-run step progression is one of several Home-protocols sub-behaviors. Skip, revert, schedule, and template editing remain deferred; each needs its own future triage if prioritized.",
+    "The implementation slice will add new accessibility identifiers on the same view that already carries Group-A labels and Agent B's home.protocol.row.* / home.protocol.archived.* identifiers. All namespaces coexist; reviewers should not confuse labels with identifiers.",
     "This slice does not prove anything about running-app behavior, screenshot integrity, device behavior, or TestFlight identity. proof_level is doc-only."
   ],
-  "recommended_next_slice": "owlory-ui-regression-batch-4-home-protocol-run-step-progression",
+  "recommended_next_slice": "owlory-ui-regression-batch-5-home-protocol-run-step-progression",
   "recommended_next_reason": "Queued behind this triage with explicit scope and required validations. The supervisor dry-run already selects it as the next eligible slice.",
   "repo_clean_status": "dirty",
   "git_mirror_status": "not-relevant",
