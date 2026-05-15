@@ -12,7 +12,8 @@ Files:
 
 - `translation-review-export.csv` - reviewer-friendly flat rows for `Localizable.strings` and `Localizable.stringsdict` values. Newlines are escaped as `\n` so each review row stays on one CSV line.
 - `translation-review-export.json` - structured packet preserving locale values, status labels, and summary counts.
-- `de/` - German-first reviewer packet derived from the export. Use this when preparing the first reviewed-locale intake. Regenerate with `python3 Tools/german-review-packet-regenerate.py`.
+- `de/` - German-first reviewer packet. Regenerate with `python3 Tools/german-review-packet-regenerate.py`. Includes `german-review-return.json` recording the LLM-drafted German ingest.
+- `<locale>/` - per-locale review return file (`<locale>-review-return.json`) for each of the 17 other non-English locales, recording the LLM-drafted values ingested on 2026-05-15. NONE of these are native-reviewed.
 
 Status labels:
 

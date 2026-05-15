@@ -1,174 +1,306 @@
-/*
- Localizable.stringsdict
- Owlory
- Plural-aware Today dashboard and accessibility source strings.
- Non-English locales intentionally keep English values until translation-quality work.
-*/
-{
-  "today.dashboard.train.summary" = {
-    NSStringLocalizedFormatKey = "%#@planned@ · %#@completed@";
-    planned = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d planned";
-      other = "%d planned";
-    };
-    completed = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d completed";
-      other = "%d completed";
-    };
-  };
-  "today.dashboard.write.summary" = {
-    NSStringLocalizedFormatKey = "%#@captures@ · %#@sources@ · %#@drafts@";
-    captures = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d capture";
-      other = "%d captures";
-    };
-    sources = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d source";
-      other = "%d sources";
-    };
-    drafts = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d draft";
-      other = "%d drafts";
-    };
-  };
-  "today.dashboard.career.records" = {
-    NSStringLocalizedFormatKey = "%#@records@";
-    records = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d record";
-      other = "%d records";
-    };
-  };
-  "today.dashboard.home.summary" = {
-    NSStringLocalizedFormatKey = "%#@runs@ · %#@tasks@ · %#@done@";
-    runs = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d run";
-      other = "%d runs";
-    };
-    tasks = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d task";
-      other = "%d tasks";
-    };
-    done = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d done";
-      other = "%d done";
-    };
-  };
-  "today.dashboard.home.summary.withSkipped" = {
-    NSStringLocalizedFormatKey = "%#@runs@ · %#@tasks@ · %#@done@ · %#@skipped@";
-    runs = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d run";
-      other = "%d runs";
-    };
-    tasks = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d task";
-      other = "%d tasks";
-    };
-    done = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d done";
-      other = "%d done";
-    };
-    skipped = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d skipped";
-      other = "%d skipped";
-    };
-  };
-  "today.readiness.scale.accessibility" = {
-    NSStringLocalizedFormatKey = "%@ %#@level@";
-    level = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d of 5";
-      other = "%d of 5";
-    };
-  };
-  "today.readiness.scale.accessibility.selected" = {
-    NSStringLocalizedFormatKey = "%@ %#@level@, selected";
-    level = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d of 5";
-      other = "%d of 5";
-    };
-  };
-  "weeklyDigest.domainActivity.items" = {
-    NSStringLocalizedFormatKey = "%#@items@";
-    items = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d item";
-      other = "%d items";
-    };
-  };
-  "weeklyDigest.row.daysActive" = {
-    NSStringLocalizedFormatKey = "%#@days@";
-    days = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d/7 days";
-      other = "%d/7 days";
-    };
-  };
-  "weeklyDigest.streak.compact" = {
-    NSStringLocalizedFormatKey = "%#@days@";
-    days = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%dd";
-      other = "%dd";
-    };
-  };
-  "weeklyDigest.streak.days" = {
-    NSStringLocalizedFormatKey = "%#@days@";
-    days = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "%d day";
-      other = "%d days";
-    };
-  };
-  "recurrence.interval.days" = {
-    NSStringLocalizedFormatKey = "%#@days@";
-    days = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "Every %d day";
-      other = "Every %d days";
-    };
-  };
-  "recurrence.interval.compact" = {
-    NSStringLocalizedFormatKey = "%#@days@";
-    days = {
-      NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
-      NSStringFormatValueTypeKey = "d";
-      one = "Every %dd";
-      other = "Every %dd";
-    };
-  };
-
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Localizable.stringsdict for Owlory.
+     LLM-drafted plural values produced by claude-opus-4-7 on 2026-05-15.
+     Not native-reviewed. See localization/review/fr/fr-review-return.json
+     and docs/workflows/localization-translation-quality.md for provenance. -->
+<plist version="1.0">
+<dict>
+	<key>recurrence.interval.compact</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tous les %dj</string>
+			<key>other</key>
+			<string>Tous les %dj</string>
+		</dict>
+	</dict>
+	<key>recurrence.interval.days</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tous les %d jour</string>
+			<key>other</key>
+			<string>Tous les %d jours</string>
+		</dict>
+	</dict>
+	<key>today.dashboard.career.records</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@records@</string>
+		<key>records</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d entrée</string>
+			<key>other</key>
+			<string>%d entrées</string>
+		</dict>
+	</dict>
+	<key>today.dashboard.home.summary</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@runs@ · %#@tasks@ · %#@done@</string>
+		<key>done</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d terminé</string>
+			<key>other</key>
+			<string>%d terminés</string>
+		</dict>
+		<key>runs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d passage</string>
+			<key>other</key>
+			<string>%d passages</string>
+		</dict>
+		<key>tasks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d tâche</string>
+			<key>other</key>
+			<string>%d tâches</string>
+		</dict>
+	</dict>
+	<key>today.dashboard.home.summary.withSkipped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@runs@ · %#@tasks@ · %#@done@ · %#@skipped@</string>
+		<key>done</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d terminé</string>
+			<key>other</key>
+			<string>%d terminés</string>
+		</dict>
+		<key>runs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d passage</string>
+			<key>other</key>
+			<string>%d passages</string>
+		</dict>
+		<key>skipped</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d ignoré</string>
+			<key>other</key>
+			<string>%d ignorés</string>
+		</dict>
+		<key>tasks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d tâche</string>
+			<key>other</key>
+			<string>%d tâches</string>
+		</dict>
+	</dict>
+	<key>today.dashboard.train.summary</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@planned@ · %#@completed@</string>
+		<key>completed</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d terminé</string>
+			<key>other</key>
+			<string>%d terminés</string>
+		</dict>
+		<key>planned</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d prévu</string>
+			<key>other</key>
+			<string>%d prévus</string>
+		</dict>
+	</dict>
+	<key>today.dashboard.write.summary</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@captures@ · %#@sources@ · %#@drafts@</string>
+		<key>captures</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d capture</string>
+			<key>other</key>
+			<string>%d captures</string>
+		</dict>
+		<key>drafts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d brouillon</string>
+			<key>other</key>
+			<string>%d brouillons</string>
+		</dict>
+		<key>sources</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d source</string>
+			<key>other</key>
+			<string>%d sources</string>
+		</dict>
+	</dict>
+	<key>today.readiness.scale.accessibility</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@level@</string>
+		<key>level</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d sur 5</string>
+			<key>other</key>
+			<string>%d sur 5</string>
+		</dict>
+	</dict>
+	<key>today.readiness.scale.accessibility.selected</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@level@, selected</string>
+		<key>level</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d sur 5</string>
+			<key>other</key>
+			<string>%d sur 5</string>
+		</dict>
+	</dict>
+	<key>weeklyDigest.domainActivity.items</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d élément</string>
+			<key>other</key>
+			<string>%d éléments</string>
+		</dict>
+	</dict>
+	<key>weeklyDigest.row.daysActive</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d/7 jour</string>
+			<key>other</key>
+			<string>%d/7 jours</string>
+		</dict>
+	</dict>
+	<key>weeklyDigest.streak.compact</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%dj</string>
+			<key>other</key>
+			<string>%dj</string>
+		</dict>
+	</dict>
+	<key>weeklyDigest.streak.days</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d jour</string>
+			<key>other</key>
+			<string>%d jours</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
