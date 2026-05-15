@@ -3559,6 +3559,37 @@
       "max_files_changed": 30,
       "entry_condition": "At least one per-locale review return file has provenance.native_reviewed=true with non-LLM reviewer metadata, OR a reviewer-supplied native-review document is provided alongside the return file. Until human/native-supplied reviewed values arrive, this slice must remain blocked.",
       "notes": "Blocked entry condition: native-reviewed values exist for at least one locale. As of 2026-05-15, all 18 non-English locales hold LLM-drafted values produced by claude-opus-4-7 and recorded with review_status=needs-layout-check or keep-english-term. Native review is outstanding for every locale. Scope when unblocked: ingest native-reviewed values into the matching de.lproj / fr.lproj / etc. .strings and .stringsdict files, flip the relevant per-locale return file's status entries from needs-layout-check to native-reviewed for accepted rows, preserve keys and plural parity, do not bulk-replace unreviewed rows. Do not claim native review for unreviewed locales. proof_level target: build-tested. The dashboard (Tools/localization-review-status.py) reports per-locale native-reviewed counts; this slice flips them upward by ingesting human-supplied reviewer values, not by re-running LLM translation."
+    },
+    {
+      "slice_id": "app-localization-automated-lqa-and-llm-quality-pass",
+      "title": "Add automated LQA + LLM-quality-pass as an honest intermediate gate",
+      "status": "done",
+      "priority": 108,
+      "domain": "localization",
+      "allowed_paths": [
+        "Tools/localization-lqa.py",
+        "Tools/localization-review-status.py",
+        "localization/review/",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-lqa.py",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-native-review-tracking-dashboard"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "Per-locale review return files exist for all 18 non-English locales (currently true as of 2026-05-15).",
+      "notes": "Completed on 2026-05-15. Added Tools/localization-lqa.py running deterministic checks (format-specifier parity, empty-value, identical-to-English-outside-keep, length-outlier, mojibake-suspect) plus LLM second-pass attribution across all 18 per-locale review return files. Each entry gains an lqa block: status=passed (6354 total) / warning (54) / reverted (0). The format-specifier check was tuned to treat missing %d in stringsdict plural_category=one as idiomatic (not a failure) to avoid auto-reverting correct Arabic plural one translations. Updated Tools/localization-review-status.py and localization/review/STATUS.md to surface LQA counts per locale. Wrote localization/review/LQA.md. Updated docs/workflows/localization-translation-quality.md to record the LQA gate as honest intermediate, not a native-review claim. No app resources modified. No provenance.native_reviewed flag flipped. proof_level: doc-only."
     }
   ]
 }

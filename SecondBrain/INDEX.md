@@ -2,6 +2,7 @@
 
 ## 2026-05-15
 
+- [app-localization-automated-lqa-and-llm-quality-pass (doc-only; 6354 passed / 54 warning / 0 reverted across 18 locales; NOT a native-review claim)](sessions/2026-05-15/210004-app-localization-automated-lqa-and-llm-quality-pass.md)
 - [app-localization-native-review-tracking-dashboard (doc-only; reports 0 native-reviewed across 18 LLM-drafted locales)](sessions/2026-05-15/190123-app-localization-native-review-tracking-dashboard.md)
 - [app-localization-all-locale-llm-draft-intake (17 remaining locales LLM-drafted by claude-opus-4-7, NOT native-reviewed; build-tested)](sessions/2026-05-15/181907-app-localization-all-locale-llm-draft-intake.md)
 - [app-localization-first-locale-review-intake (German LLM-drafted by claude-opus-4-7, NOT native-reviewed; build-tested)](sessions/2026-05-15/162026-app-localization-first-locale-review-intake.md)

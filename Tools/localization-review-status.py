@@ -78,12 +78,14 @@ def summarize_locale(locale: str) -> dict[str, Any]:
             "reviewer": None,
             "review_date": None,
             "status_counts": {},
+            "lqa_counts": {},
             "entry_count": 0,
         }
     data = json.loads(return_path.read_text(encoding="utf-8"))
     provenance = data.get("provenance", {})
     summary = data.get("summary", {})
     counts = summary.get("status_counts", {})
+    lqa_counts = summary.get("lqa_counts", {})
     return {
         "locale": locale,
         "has_return_file": True,
@@ -93,26 +95,30 @@ def summarize_locale(locale: str) -> dict[str, Any]:
         "reviewer": provenance.get("reviewer"),
         "review_date": provenance.get("review_date"),
         "status_counts": {status: counts.get(status, 0) for status in STATUS_VALUES},
+        "lqa_counts": lqa_counts,
+        "lqa_run_date": summary.get("lqa_run_date"),
         "entry_count": summary.get("review_entry_count", sum(counts.values())),
     }
 
 
 def render_table(rows: list[dict[str, Any]]) -> str:
     """Render a fixed-width table for the terminal."""
-    header = ["Locale", "Lang", "Entries", "Native?"] + STATUS_VALUES + ["Reviewer", "Date"]
+    header = ["Locale", "Lang", "Entries", "Native?", "LQA passed", "LQA warn", "LQA reverted", "LQA date"]
     body: list[list[str]] = []
     for row in rows:
         if not row["has_return_file"]:
-            body.append([row["locale"], "?", "?", "—", *(["—"] * len(STATUS_VALUES)), "(no return file)", "—"])
+            body.append([row["locale"], "?", "?", "—", "—", "—", "—", "—"])
             continue
+        lqa = row.get("lqa_counts", {})
         body.append([
             row["locale"],
             row["target_language"].split(" / ")[0],
             str(row["entry_count"]),
             "yes" if row["native_reviewed"] else "no",
-            *(str(row["status_counts"].get(s, 0)) for s in STATUS_VALUES),
-            (row["reviewer"] or "")[:42],
-            row["review_date"] or "",
+            str(lqa.get("passed", "—")),
+            str(lqa.get("warning", "—")),
+            str(lqa.get("reverted", "—")),
+            row.get("lqa_run_date") or "—",
         ])
     widths = [max(len(c) for c in [header[i], *(r[i] for r in body)]) for i in range(len(header))]
     lines = []
@@ -126,8 +132,10 @@ def render_table(rows: list[dict[str, Any]]) -> str:
 
 def aggregate_totals(rows: list[dict[str, Any]]) -> dict[str, Any]:
     totals = {status: 0 for status in STATUS_VALUES}
+    lqa_totals = {"passed": 0, "warning": 0, "reverted": 0}
     locales_with_returns = 0
     native_locales: list[str] = []
+    locales_with_lqa: list[str] = []
     for row in rows:
         if not row["has_return_file"]:
             continue
@@ -136,11 +144,18 @@ def aggregate_totals(rows: list[dict[str, Any]]) -> dict[str, Any]:
             native_locales.append(row["locale"])
         for status in STATUS_VALUES:
             totals[status] += row["status_counts"].get(status, 0)
+        lqa = row.get("lqa_counts", {})
+        if lqa:
+            locales_with_lqa.append(row["locale"])
+            for k in lqa_totals:
+                lqa_totals[k] += lqa.get(k, 0)
     return {
         "locales_total": len(rows),
         "locales_with_returns": locales_with_returns,
         "native_reviewed_locales": native_locales,
+        "locales_with_lqa": locales_with_lqa,
         "totals": totals,
+        "lqa_totals": lqa_totals,
     }
 
 
@@ -169,21 +184,37 @@ def render_doc(rows: list[dict[str, Any]], totals: dict[str, Any]) -> str:
     for status in STATUS_VALUES:
         out.append(f"| `{status}` | {totals['totals'].get(status, 0)} |")
     out.append("")
+    out.append("### Aggregate LQA counts (entries with `lqa` block written by `Tools/localization-lqa.py`)")
+    out.append("")
+    out.append(f"- Locales with LQA results: **{len(totals['locales_with_lqa'])}**.")
+    out.append("")
+    out.append("| LQA status | Count |")
+    out.append("| --- | ---: |")
+    for k in ("passed", "warning", "reverted"):
+        out.append(f"| `{k}` | {totals['lqa_totals'].get(k, 0)} |")
+    out.append("")
+    out.append("`lqa.status=passed` means deterministic checks plus an LLM second-pass have no machine-detectable issues for that entry. It is NOT a native-review claim.")
+    out.append("")
     out.append("## Per-locale status")
     out.append("")
-    headers = ["Locale", "Language", "Entries", "Native?", *STATUS_VALUES, "Reviewer", "Review date"]
+    headers = ["Locale", "Language", "Entries", "Native?", *STATUS_VALUES, "LQA passed", "LQA warn", "LQA reverted", "LQA date", "Reviewer", "Review date"]
     out.append("| " + " | ".join(headers) + " |")
     out.append("| " + " | ".join("---" for _ in headers) + " |")
     for row in rows:
         if not row["has_return_file"]:
-            out.append(f"| `{row['locale']}` | ? | — | — | " + " | ".join("—" for _ in STATUS_VALUES) + " | (no return file) | — |")
+            out.append(f"| `{row['locale']}` | ? | — | — | " + " | ".join("—" for _ in STATUS_VALUES) + " | — | — | — | — | (no return file) | — |")
             continue
+        lqa = row.get("lqa_counts", {})
         cols = [
             f"`{row['locale']}`",
             row["target_language"],
             str(row["entry_count"]),
             "yes" if row["native_reviewed"] else "no",
             *(str(row["status_counts"].get(s, 0)) for s in STATUS_VALUES),
+            str(lqa.get("passed", "—")),
+            str(lqa.get("warning", "—")),
+            str(lqa.get("reverted", "—")),
+            row.get("lqa_run_date") or "—",
             f"`{row['reviewer'] or ''}`" if row["reviewer"] else "—",
             row["review_date"] or "—",
         ]
@@ -231,6 +262,10 @@ def main() -> int:
     print("Aggregate status counts (across all locale return files):")
     for status in STATUS_VALUES:
         print(f"  {status:<25} {totals['totals'].get(status, 0)}")
+    print()
+    print(f"LQA results (across {len(totals['locales_with_lqa'])} locales with lqa blocks):")
+    for k in ("passed", "warning", "reverted"):
+        print(f"  {k:<25} {totals['lqa_totals'].get(k, 0)}")
     if args.write_doc:
         doc_path = REVIEW_DIR / "STATUS.md"
         doc_path.write_text(render_doc(rows, totals), encoding="utf-8")

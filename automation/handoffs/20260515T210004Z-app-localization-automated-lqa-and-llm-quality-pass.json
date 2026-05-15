@@ -1,0 +1,78 @@
+{
+  "slice_id": "app-localization-automated-lqa-and-llm-quality-pass",
+  "status": "done",
+  "summary": "Added automated LQA + LLM-second-pass as an honest intermediate quality gate between LLM-drafted (needs-layout-check) and native-reviewed. Tools/localization-lqa.py runs format-specifier parity, empty-value, identical-to-English-outside-keep, length-outlier, and mojibake-suspect checks across all 18 per-locale review return files. Each entry receives an `lqa` block: status=passed (6354 total) / warning (54) / reverted (0). The format-specifier check was tuned to treat missing %d in stringsdict plural_category=one as idiomatic (Arabic-style 'one item' drops %d intentionally) rather than auto-reverting. Tools/localization-review-status.py was extended to surface LQA counts per locale in both stdout table and STATUS.md markdown. localization/review/LQA.md is the aggregate report. docs/workflows/localization-translation-quality.md records the gate explicitly as 'NOT a native-review claim'. No app resources were modified. No provenance.native_reviewed flags were flipped. app-localization-native-review-intake remains blocked.",
+  "files_touched": [
+    "Tools/localization-lqa.py",
+    "Tools/localization-review-status.py",
+    "localization/review/LQA.md",
+    "localization/review/STATUS.md",
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/de/german-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260515T210004Z-app-localization-automated-lqa-and-llm-quality-pass.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/210004-app-localization-automated-lqa-and-llm-quality-pass.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "python3 Tools/localization-lqa.py",
+    "python3 Tools/localization-review-status.py",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "native-reviewed",
+    "build-tested (for translated content quality, not just compilation)",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Automated LQA gate between LLM-drafted and native-reviewed",
+      "before": "Per-locale return files carried only review_status=needs-layout-check or keep-english-term, with no machine-verified consistency check. There was no honest intermediate signal between 'LLM produced a draft' and 'a native reviewer accepted it'.",
+      "after": "Each entry in every per-locale return file carries an lqa block with status=passed | warning | reverted plus the issues list. The dashboard counts these. The LQA gate is documented as 'NOT a native-review claim' in localization/review/LQA.md, localization/review/STATUS.md, the tool docstrings, and docs/workflows/localization-translation-quality.md. The intake slice remains blocked until human native review supplies corrected values.",
+      "proof": [
+        "Tools/localization-lqa.py",
+        "Tools/localization-review-status.py",
+        "localization/review/LQA.md",
+        "localization/review/STATUS.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The LQA only checks deterministic surface properties. It does not catch wrong gender, wrong formality, wrong idiom, or wrong argument order — those need a native reviewer.",
+    "The format-specifier check skips strict equality for stringsdict plural_category=one so Arabic-style 'one item' translations pass. This is intentional but could let through a real bug in that specific category if the LLM-draft dropped %d unintentionally.",
+    "Length-outlier warnings are noisy for CJK (zh-Hans 21 warnings, zh-Hant 16) because CJK legitimately compresses text. The threshold is relaxed to 0.25x for CJK locales, but UI layout under translated short labels still wants screenshot verification.",
+    "Auto-revert (status=reverted) drops a candidate translation back to English and re-tags it needs-translation. Currently 0 entries triggered this. If a future LLM pass introduces a bad specifier, the auto-revert will silently swap it; the lqa.auto_fix_action field records the change but downstream tooling that ignores this field will misread the resource state.",
+    "lqa.status=passed could mistakenly be read as a quality claim. The dashboard, report, and docs all explicitly say it is not, but downstream agents must be careful.",
+    "The LQA does not run on app resources directly — it operates on per-locale return files. A future native-reviewed locale that bypasses the return-file workflow would not gain LQA coverage."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop. app-localization-native-review-intake remains blocked on human-supplied native review of at least one locale. The automated LQA does not unblock it. No new actionable slice is created from this work.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T21:00:04Z"
+}
