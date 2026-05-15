@@ -94,7 +94,8 @@ run_domain() {
         -only-testing:OwloryCoreTests/PatternNudgeRulesTests \
         -only-testing:OwloryCoreTests/ReadinessOutcomeRulesTests \
         -only-testing:OwloryCoreTests/WeeklyDigestRulesTests \
-        -only-testing:OwloryCoreTests/WeeklyDigestCadenceRulesTests
+        -only-testing:OwloryCoreTests/WeeklyDigestCadenceRulesTests \
+        -only-testing:OwloryCoreTests/WeeklyDigestPresentationFormattingTests
       ;;
     reminders)
       run_xcode_tests \

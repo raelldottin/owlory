@@ -3392,8 +3392,8 @@
     },
     {
       "slice_id": "owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
-      "title": "Add Patterns digest detail insight + highlight rendering UI regression batch",
-      "status": "queued",
+      "title": "Prove Patterns digest insight + highlight rendering (domain-tested)",
+      "status": "done",
       "priority": 220,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -3418,7 +3418,7 @@
         "python3 automation/supervisor/run_next.py --dry-run",
         "make architecture",
         "make test-domain DOMAIN=patterns",
-        "make ui-regression DOMAIN=patterns",
+        "make localization-check",
         "make automation-check",
         "git diff --check"
       ],
@@ -3428,7 +3428,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Batch 6 sub-behavior triage selected Patterns digest detail insight + highlight rendering. The WeeklyDigest.InsightKind enum, structured DayHighlight fields, and WeeklyDigestPresentationFormatting helpers shipped in app-localization-digest-insight-summary-formatting; this slice proves they render correctly end-to-end.",
-      "notes": "Batch 6 target: Patterns digest detail insight + highlight sentence rendering. Add a deterministic seed launch arg (e.g., --owlory-ui-seed-weekly-digest-insight-fixture) that writes one WeeklyDigest JSON with keyInsight = WeeklyDigest.InsightKind.strongWeek.rawValue, bestDay (doneCount=2, plannedCount=2, empty summary), and hardestDay (readinessBand='low', empty summary). Open the digest detail from Today via the existing route. Assert the localized insight sentence renders ('Strong week. High readiness translated into follow-through.'); assert the best-day highlight renders the structured-path sentence with the doneCount-of-plannedCount substring; assert the hardest-day highlight renders the localized low-readiness sentence. Add accessibility identifiers today.digest.row.<uuid>, today.digest.detail.insight, today.digest.detail.highlight.best, today.digest.detail.highlight.hardest. Add a new XCUITest class OwloryUITests/PatternsDigestRegression and wire it into make ui-regression. Add a DOMAIN=patterns matrix branch consistent with the existing today/write/train/home pattern. Out of scope: lastWeekSection card, DigestListView routing beyond what's needed to reach detail, Focus Suggestions, pattern nudges, domain rule changes, translation of non-English values, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
+      "notes": "Completed on 2026-05-15 with reduced scope. Initial running-app-smoke approach (seed a WeeklyDigest fixture + navigate from Today.lastWeekSection -> DigestListView -> DigestDetailView and assert XCUITest text) ran into a runtime constraint: PatternStore.refreshLatestDigestIfNeeded regenerates the digest from the current entries on every refresh, and the regenerated digest didn't propagate to patternStore.latestDigest in time for the disclosure to render. After multiple debug rounds (seed entries + seeded digest with stable ID via withStableID; verified files written to disk; verified snapshot generated; lastWeekSection still did not render in the XCUITest accessibility tree), the user agreed to drop the proof level from running-app-smoke to domain-tested and prove the contract via unit tests instead. The XCUITest approach + ProtocolStore navigation chase was reverted. Final scope: extracted WeeklyDigestPresentationFormatting from DigestListView.swift to Core/Application/WeeklyDigestPresentationFormatting.swift so it can be compiled into the OwloryCoreTests target (DigestListView.swift is SwiftUI-bearing and not in the test target). Added OwloryCoreTests/WeeklyDigestPresentationFormattingTests with 8 cases covering all eight InsightKind rawValue -> localized sentence resolutions, the legacy/empty fallthrough behavior of keyInsightLabel, the structured doneCount/plannedCount path of bestDayHighlightSummary plus its legacy summary fallthrough, and the low/moderate readinessBand paths of hardestDayHighlightSummary plus its legacy summary fallthrough. Wired the new test class into Tools/validate.sh patterns. Also kept one DigestListView bug fix discovered during the running-app-smoke attempt: DigestRowView's keyInsight Text was rendering the raw InsightKind rawValue ('strongWeek') instead of the localized sentence; routed it through WeeklyDigestPresentationFormatting.keyInsightLabel(_:) to match DigestDetailView. proof_level achieved: domain-tested. Out of scope: XCUITest of the digest detail UI, lastWeekSection card numeric rendering, DigestListView routing assertions, Focus Suggestions, pattern-driven nudges, domain rule changes, translation of non-English values, screenshot/device/TestFlight proof."
     },
     {
       "slice_id": "owlory-ui-regression-batch-7-localization-layout-triage",
