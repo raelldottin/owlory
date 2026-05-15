@@ -3359,6 +3359,76 @@
       "max_files_changed": 20,
       "entry_condition": "Batch 5 sub-behavior triage selected Home protocol run step progression. The Batch 4 Home archive/restore regression class HomeProtocolRegression already exists in OwloryUITests; this slice extends Lane 2 with a separate test class for run-step interactions, not by adding methods to HomeProtocolRegression.",
       "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) — not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-6-surface-triage",
+      "title": "Triage Batch 6 sub-behavior within Patterns UI",
+      "status": "done",
+      "priority": 215,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-6-surface-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-batch-5-home-protocol-run-step-progression",
+        "app-localization-digest-insight-summary-formatting"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "User explicitly selected Patterns UI from the parked candidate list as the next surface to triage. Lane 2 Batches 1-5 are shipped. Patterns UI is a broad surface; the triage must narrow to exactly one sub-behavior.",
+      "notes": "Completed on 2026-05-15. Compared Patterns UI sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection digest summary card, DigestListView → detail routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred: lastWeekSection (mostly numeric, low contract-change pressure), DigestListView routing (lower leverage), Focus Suggestions (deterministic, no recent contract change), pattern-driven nudges (overlaps existing nudge unit tests). Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render). proof_level achieved: doc-only. No XCUITest code touched."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
+      "title": "Add Patterns digest detail insight + highlight rendering UI regression batch",
+      "status": "queued",
+      "priority": 220,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestListView.swift",
+        "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory.xcodeproj/",
+        "Makefile",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=patterns",
+        "make ui-regression DOMAIN=patterns",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-batch-6-surface-triage",
+        "app-localization-digest-insight-summary-formatting"
+      ],
+      "max_files_changed": 20,
+      "entry_condition": "Batch 6 sub-behavior triage selected Patterns digest detail insight + highlight rendering. The WeeklyDigest.InsightKind enum, structured DayHighlight fields, and WeeklyDigestPresentationFormatting helpers shipped in app-localization-digest-insight-summary-formatting; this slice proves they render correctly end-to-end.",
+      "notes": "Batch 6 target: Patterns digest detail insight + highlight sentence rendering. Add a deterministic seed launch arg (e.g., --owlory-ui-seed-weekly-digest-insight-fixture) that writes one WeeklyDigest JSON with keyInsight = WeeklyDigest.InsightKind.strongWeek.rawValue, bestDay (doneCount=2, plannedCount=2, empty summary), and hardestDay (readinessBand='low', empty summary). Open the digest detail from Today via the existing route. Assert the localized insight sentence renders ('Strong week. High readiness translated into follow-through.'); assert the best-day highlight renders the structured-path sentence with the doneCount-of-plannedCount substring; assert the hardest-day highlight renders the localized low-readiness sentence. Add accessibility identifiers today.digest.row.<uuid>, today.digest.detail.insight, today.digest.detail.highlight.best, today.digest.detail.highlight.hardest. Add a new XCUITest class OwloryUITests/PatternsDigestRegression and wire it into make ui-regression. Add a DOMAIN=patterns matrix branch consistent with the existing today/write/train/home pattern. Out of scope: lastWeekSection card, DigestListView routing beyond what's needed to reach detail, Focus Suggestions, pattern nudges, domain rule changes, translation of non-English values, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
     }
   ]
 }

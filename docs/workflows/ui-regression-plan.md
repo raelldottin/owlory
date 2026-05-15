@@ -58,7 +58,9 @@ Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's para
 
 Batch 4 has shipped: `OwloryUITests/HomeProtocolRegression` (selected by Agent B's 2026-05-15 triage, covering Home protocol template archive/restore management).
 
-Batch 5 selected: **Home protocols — active run step progression** (chosen by `owlory-ui-regression-batch-5-surface-triage` on 2026-05-14, running in parallel with Agent B's Batch 4 archive/restore triage). The implementation slice `owlory-ui-regression-batch-5-home-protocol-run-step-progression` is queued; see [Batch 5 decision](#batch-5-decision) below.
+Batch 5 has shipped: `OwloryUITests/HomeProtocolRunStepRegression` (Home protocol active-run step progression).
+
+Batch 6 selected: **Patterns UI — digest detail insight + highlight sentence rendering** (chosen by `owlory-ui-regression-batch-6-surface-triage` on 2026-05-15 after the user picked Patterns UI from the parked candidate list). The implementation slice `owlory-ui-regression-batch-6-patterns-digest-insight-rendering` is queued; see [Batch 6 decision](#batch-6-decision) below.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -156,6 +158,47 @@ Out of scope for Batch 5:
 - Schedule-window status display.
 - Patterns UI proof.
 - Localization layout regression.
+- Screenshot, device, or TestFlight proof.
+
+### Batch 6 decision
+
+Triage (`owlory-ui-regression-batch-6-surface-triage`, 2026-05-15) was scoped to a single Patterns UI sub-behavior after the user picked Patterns UI from the parked candidate list. The prior audit reasoning ("Defer until a Patterns UI claim needs proof") is satisfied now because the 2026-05-14 digest-insight-summary-formatting slice is an active Patterns UI contract change with no UI regression proof.
+
+Sub-behavior comparison within Patterns UI:
+
+| Sub-behavior | Surface | Current proof | Regression value | Decision |
+| --- | --- | --- | --- | --- |
+| Digest insight + highlight sentence rendering | `DigestDetailView` highlights + insight section | Unit tests verify domain emits the right `InsightKind` rawValue and structured `DayHighlight` fields. `WeeklyDigestPresentationFormatting` is unit-coverable but has no UI proof that the localized sentences actually render. | High — directly exercises the recent insight-formatting refactor (`WeeklyDigest.InsightKind`, structured `DayHighlight`, `WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel}`) end-to-end. Single bounded sheet. | **Selected for Batch 6.** |
+| Today lastWeekSection digest summary card | `TodayView.lastWeekSection` | None. The card already routes counts through `WeeklyDigestPresentationFormatting` helpers. | Useful but mostly numeric rendering; lower contract-change pressure. | Defer until a Today-side digest copy claim changes. |
+| DigestListView row → detail navigation | `DigestListView` → `DigestDetailView` | None. | Useful as a routing smoke, but routing is well-trodden in TodayContinueRegression patterns; adds less leverage than the insight-rendering sub-behavior. | Defer. |
+| Focus Suggestions section | `TodayView.focusSuggestionSection` | Domain rules (`FocusSuggestionRules`) heavily unit-tested. | Suggestion list rendering is deterministic; no recent contract change. | Defer until a focus-suggestion presentation claim lands. |
+| Pattern-driven nudges (readiness, evening reflection, Write pipeline, Train consistency) | Various views | Domain nudge rules unit-covered. | The visible nudge text is already routed through localized keys (or, for nudge messages, computed by `CalibrationRules`); UI proof would mostly verify the calibration → presentation path, which overlaps existing tests. | Defer until a nudge presentation claim lands. |
+
+Batch 6 target (for the queued implementation slice `owlory-ui-regression-batch-6-patterns-digest-insight-rendering`):
+
+- Add a new deterministic seed launch arg (e.g., `--owlory-ui-seed-weekly-digest-insight-fixture`) that writes one `WeeklyDigest` JSON file with: `keyInsight = WeeklyDigest.InsightKind.strongWeek.rawValue`, `bestDay` with `doneCount=2`, `plannedCount=2`, empty `summary`; `hardestDay` with `readinessBand="low"`, empty `summary`. Use the digest's calendar/timezone consistently so the rendered weekday is deterministic.
+- Open the digest detail from Today (via the lastWeekSection card or via `DigestListView` row).
+- Assert the localized insight sentence renders: `"Strong week. High readiness translated into follow-through."`
+- Assert the best-day highlight renders the localized format with the structured fields: e.g., `"<Weekday>: 2 of 2 completed"`. Test asserts the prefix or the doneCount-of-plannedCount substring, depending on calendar determinism.
+- Assert the hardest-day highlight renders the localized low-readiness form: `"<Weekday>: low readiness"`.
+
+Coverage goal: `running-app-smoke` for digest detail insight + highlight rendering from the new structured path.
+
+Required infrastructure for the implementation slice:
+
+- New seed launch arg + fixture constants in `OwloryUITestSupport`.
+- Accessibility identifiers on `DigestListView` row (e.g., `today.digest.row.<uuid>`), `DigestDetailView` insight section (`today.digest.detail.insight`), and best/hardest highlight rows (`today.digest.detail.highlight.best`, `today.digest.detail.highlight.hardest`). Identifiers, not labels — the test needs to locate the rendered Text by XCUITest selector.
+- New XCUITest class `OwloryUITests/PatternsDigestRegression`.
+- New `DOMAIN=patterns` branch in `make ui-regression` (or fold into bare invocation only if a single Patterns class makes a separate filter pointless — implementer decides; matching the existing `DOMAIN=` pattern is preferred for consistency).
+
+Out of scope for Batch 6:
+
+- Today lastWeekSection summary card rendering.
+- DigestListView row → detail routing assertions beyond what's required to reach the detail sheet.
+- Focus Suggestions section.
+- Pattern-driven nudges (readiness, evening reflection, Write pipeline, Train consistency).
+- Domain rule changes (`WeeklyDigestRules` stays untouched).
+- Translation of non-English values.
 - Screenshot, device, or TestFlight proof.
 
 ## Lane 3: Screenshot Proof

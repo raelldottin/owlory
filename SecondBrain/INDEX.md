@@ -2,6 +2,7 @@
 
 ## 2026-05-15
 
+- [owlory-ui-regression-batch-6-surface-triage](sessions/2026-05-15/002954-owlory-ui-regression-batch-6-surface-triage.md)
 - [owlory-ui-regression-batch-5-home-protocol-run-step-progression](sessions/2026-05-15/000435-owlory-ui-regression-batch-5-home-protocol-run-step-progression.md)
 
 ## 2026-05-14

@@ -1,0 +1,53 @@
+{
+  "slice_id": "owlory-ui-regression-batch-6-surface-triage",
+  "status": "done",
+  "summary": "Doc-only triage. User picked Patterns UI from the parked candidate list. Compared the Patterns sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection summary card, DigestListView routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 app-localization-digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred to future scoped triages. Decision memo added to docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render).",
+  "files_touched": [
+    "automation/handoffs/20260515T042954Z-owlory-ui-regression-batch-6-surface-triage.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-regression-plan.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/002954-owlory-ui-regression-batch-6-surface-triage.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-6-surface-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Next UI regression sub-behavior selection within Patterns UI (Batch 6)",
+      "before": "Patterns UI was a parked candidate surface with no scoped triage. The 2026-05-14 digest-insight-summary-formatting refactor moved sentence composition from WeeklyDigestRules to WeeklyDigestPresentationFormatting (via WeeklyDigest.InsightKind + structured DayHighlight) but no UI regression asserted the localized sentences actually render through the new structured path.",
+      "after": "Batch 6 sub-behavior explicitly selected: digest detail insight + best/hardest highlight sentence rendering. Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision' with a sub-behavior comparison table within Patterns UI. Implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering queued with explicit scope (seed WeeklyDigest with structured fields, assert localized insight + highlight sentences render), required infrastructure (digest-related accessibility identifiers, new PatternsDigestRegression class, DOMAIN=patterns matrix branch), and proof_level target running-app-smoke.",
+      "proof": [
+        "docs/workflows/ui-regression-plan.md",
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The implementation slice will need to seed a WeeklyDigest JSON file directly into the PatternStore.digestRepository storage path. The seed writer must mirror the file format the production code reads; getting that wrong yields a no-digest state rather than a test failure.",
+    "Asserting the best-day highlight sentence depends on calendar resolution of the seeded Date to a known weekday. The implementer should pick a fixed Date such that the rendered weekday is locale-deterministic across iOS Simulator defaults, or assert only the count substring.",
+    "The other Patterns UI sub-behaviors (lastWeekSection, DigestListView routing, Focus Suggestions, pattern-driven nudges) remain deferred; each needs its own scoped triage when prioritized.",
+    "This slice does not prove anything about running-app behavior, screenshot integrity, device behavior, or TestFlight identity. proof_level is doc-only."
+  ],
+  "recommended_next_slice": "owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
+  "recommended_next_reason": "Queued behind this triage with explicit scope and required validations. The supervisor dry-run already selects it as the next eligible slice.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T04:29:54Z"
+}
