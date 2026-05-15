@@ -6,6 +6,7 @@ enum OwloryUITestSupport {
     static let todayContinueSeedArgument = "--owlory-ui-seed-today-continue-item"
     static let homeTaskContinueSeedArgument = "--owlory-ui-seed-home-task-continue-item"
     static let homeProtocolRunContinueSeedArgument = "--owlory-ui-seed-home-protocol-run-continue-item"
+    static let homeProtocolTemplateSeedArgument = "--owlory-ui-seed-home-protocol-template"
     static let dueTodayTrainingContinueSeedArgument = "--owlory-ui-seed-due-today-training-continue-item"
     static let carriedForwardFocusContinueSeedArgument = "--owlory-ui-seed-carried-forward-focus-continue-item"
     static let inProgressWritingContinueSeedArgument = "--owlory-ui-seed-in-progress-writing-continue-item"
@@ -19,6 +20,9 @@ enum OwloryUITestSupport {
     static let homeProtocolRunContinueFixtureStepID = UUID(uuidString: "079B060C-76D4-466A-82FB-22D69F65E8DE")!
     static let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
     static let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
+    static let homeProtocolTemplateFixtureProtocolID = UUID(uuidString: "8B82E9F0-7A18-4B5D-A23E-3CF9C61C7A1D")!
+    static let homeProtocolTemplateFixtureTitle = "Review seeded protocol template"
+    static let homeProtocolTemplateFixtureStepTitle = "Archive template proof step"
     static let dueTodayTrainingContinueFixtureSessionID = UUID(uuidString: "B7E14C81-6D2A-4F3E-9C0B-5A8D2E1F4C9D")!
     static let dueTodayTrainingContinueFixtureTitle = "Review seeded Training session"
     static let carriedForwardFocusContinueFixtureItemID = UUID(uuidString: "A5B7C9D1-3E5F-4A9B-8D6F-0E2C4A6B8D0F")!
@@ -42,6 +46,7 @@ enum OwloryUITestSupport {
         let shouldSeedContinueItem = arguments.contains(todayContinueSeedArgument)
         let shouldSeedHomeTaskContinueItem = arguments.contains(homeTaskContinueSeedArgument)
         let shouldSeedHomeProtocolRunContinueItem = arguments.contains(homeProtocolRunContinueSeedArgument)
+        let shouldSeedHomeProtocolTemplate = arguments.contains(homeProtocolTemplateSeedArgument)
         let shouldSeedDueTodayTrainingContinueItem = arguments.contains(dueTodayTrainingContinueSeedArgument)
         let shouldSeedCarriedForwardFocusContinueItem = arguments.contains(carriedForwardFocusContinueSeedArgument)
         let shouldSeedInProgressWritingContinueItem = arguments.contains(inProgressWritingContinueSeedArgument)
@@ -49,6 +54,7 @@ enum OwloryUITestSupport {
                 shouldSeedContinueItem ||
                 shouldSeedHomeTaskContinueItem ||
                 shouldSeedHomeProtocolRunContinueItem ||
+                shouldSeedHomeProtocolTemplate ||
                 shouldSeedDueTodayTrainingContinueItem ||
                 shouldSeedCarriedForwardFocusContinueItem ||
                 shouldSeedInProgressWritingContinueItem else { return }
@@ -63,6 +69,9 @@ enum OwloryUITestSupport {
         }
         if shouldSeedHomeProtocolRunContinueItem {
             seedHomeProtocolRunContinueItem()
+        }
+        if shouldSeedHomeProtocolTemplate {
+            seedHomeProtocolTemplate()
         }
         if shouldSeedDueTodayTrainingContinueItem {
             seedDueTodayTrainingContinueItem()
@@ -153,6 +162,18 @@ enum OwloryUITestSupport {
             directory: "Home",
             fileName: "runs"
         ).saveAll([run])
+    }
+
+    private static func seedHomeProtocolTemplate() {
+        let proto = HouseholdProtocol(
+            id: homeProtocolTemplateFixtureProtocolID,
+            title: homeProtocolTemplateFixtureTitle,
+            steps: [homeProtocolTemplateFixtureStepTitle]
+        )
+        try? FileItemListRepository<HouseholdProtocol>(
+            directory: "Home",
+            fileName: "protocols"
+        ).saveAll([proto])
     }
 
     private static func seedDueTodayTrainingContinueItem(

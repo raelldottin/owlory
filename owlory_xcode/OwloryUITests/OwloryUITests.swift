@@ -902,3 +902,109 @@ final class TrainRegression: XCTestCase {
         }
     }
 }
+
+/// Fourth UI regression batch defined by `docs/workflows/ui-regression-plan.md`.
+/// Targets Home protocol template archive/restore management only. Active-run
+/// lifecycle, schedule labels, step revert, and per-step archive are separate
+/// product/testing surfaces.
+final class HomeProtocolRegression: XCTestCase {
+    private let protocolTemplateFixtureID = "8B82E9F0-7A18-4B5D-A23E-3CF9C61C7A1D"
+    private let protocolTemplateFixtureTitle = "Review seeded protocol template"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testSeededProtocolTemplateCanArchiveAndRestore() throws {
+        launch(arguments: ["--owlory-ui-seed-home-protocol-template"])
+        openHome()
+
+        let activeIdentifier = "home.protocol.item.\(protocolTemplateFixtureID)"
+        let activeProtocol = element(identifier: activeIdentifier)
+        XCTAssertTrue(
+            activeProtocol.waitForExistence(timeout: 10),
+            "Expected the seeded protocol template to appear in the active Protocols list."
+        )
+        XCTAssertTrue(app.staticTexts[protocolTemplateFixtureTitle].exists)
+
+        let archiveIdentifier = "home.protocol.archive.\(protocolTemplateFixtureID)"
+        let archiveButton = app.buttons[archiveIdentifier]
+        XCTAssertTrue(
+            archiveButton.waitForExistence(timeout: 10),
+            "Expected the seeded protocol template to expose a direct protocol-level archive affordance."
+        )
+        archiveButton.tap()
+
+        waitForElementToDisappear(activeProtocol)
+
+        let archivedDisclosure = app.buttons["Archived Protocols"]
+        XCTAssertTrue(
+            archivedDisclosure.waitForExistence(timeout: 10),
+            "Expected archiving the protocol template to reveal the Archived Protocols section."
+        )
+        archivedDisclosure.tap()
+
+        let archivedIdentifier = "home.protocol.archived.item.\(protocolTemplateFixtureID)"
+        let archivedProtocol = element(identifier: archivedIdentifier)
+        XCTAssertTrue(
+            archivedProtocol.waitForExistence(timeout: 10),
+            "Expected the archived protocol template to move into Archived Protocols."
+        )
+        XCTAssertTrue(app.staticTexts[protocolTemplateFixtureTitle].exists)
+
+        let restoreIdentifier = "home.protocol.restore.\(protocolTemplateFixtureID)"
+        let restoreButton = app.buttons[restoreIdentifier]
+        XCTAssertTrue(
+            restoreButton.waitForExistence(timeout: 10),
+            "Expected the archived protocol template to expose a restore affordance."
+        )
+        restoreButton.tap()
+
+        waitForElementToDisappear(archivedProtocol)
+        XCTAssertTrue(
+            activeProtocol.waitForExistence(timeout: 10),
+            "Expected restoring the protocol template to return it to the active Protocols list."
+        )
+        XCTAssertTrue(app.staticTexts[protocolTemplateFixtureTitle].exists)
+    }
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.terminate()
+        app.launch()
+    }
+
+    private func openHome() {
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to launch on Today's dashboard before navigating to Home."
+        )
+
+        let homeTab = app.tabBars.buttons["Home"]
+        XCTAssertTrue(
+            homeTab.waitForExistence(timeout: 10),
+            "Expected the Home tab to be reachable from the tab bar."
+        )
+        homeTab.tap()
+    }
+
+    private func element(identifier: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(identifier: identifier).firstMatch
+    }
+
+    private func waitForElementToDisappear(_ element: XCUIElement) {
+        let removal = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: element,
+            handler: nil
+        )
+        wait(for: [removal], timeout: 10)
+    }
+}

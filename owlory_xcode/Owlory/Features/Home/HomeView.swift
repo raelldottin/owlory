@@ -235,6 +235,7 @@ struct HomeView: View {
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
+                    .accessibilityIdentifier("home.protocol.item.\(proto.id.uuidString)")
                 }
             }
         } header: {
@@ -266,7 +267,10 @@ struct HomeView: View {
                                 Text("Restore")
                             }
                             .buttonStyle(.borderless)
+                            .accessibilityIdentifier("home.protocol.restore.\(proto.id.uuidString)")
                         }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("home.protocol.archived.item.\(proto.id.uuidString)")
                         .swipeActions(edge: .trailing) {
                             Button {
                                 store.unarchiveProtocol(id: proto.id)
@@ -310,6 +314,7 @@ struct HomeView: View {
             }
             .buttonStyle(.borderless)
             .accessibilityLabel("Archive Protocol")
+            .accessibilityIdentifier("home.protocol.archive.\(proto.id.uuidString)")
         }
     }
 

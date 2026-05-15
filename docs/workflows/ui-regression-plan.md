@@ -32,7 +32,7 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 
 **Trigger.** Pre-release, after a domain refactor, or on demand. Not every PR.
 
-**Target.** Broader per-domain coverage than the smoke set, including edge cases, multiple sources per domain, error paths, and action variants the smoke does not assert. Built as separate XCUITest classes (e.g., `OwloryUIRegressionTests/TodayContinueRegression`) so they do not run on every `make ui-smoke` invocation.
+**Target.** Broader per-domain coverage than the smoke set, including edge cases, multiple sources per domain, error paths, and action variants the smoke does not assert. Built as separate XCUITest classes (e.g., `OwloryUITests/TodayContinueRegression`) so they do not run on every `make ui-smoke` invocation.
 
 **Scope.** Batched simulator execution is allowed when state isolation is needed. Each test resets state via existing seed paths or new deterministic seeds; no test depends on residue from a prior test. May take longer than the smoke; tolerated because the trigger is rare.
 
@@ -41,10 +41,11 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and Add to Today promotion visibility on the note detail sheet. Train regression is wired by `owlory-ui-regression-batch-3-train-active-history`, covering the Train active Today -> History transition.
+- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and Add to Today promotion visibility on the note detail sheet. Train regression is wired by `owlory-ui-regression-batch-3-train-active-history`, covering the Train active Today -> History transition. Home protocol regression is wired by `owlory-ui-regression-batch-4-home-protocol-archive-restore`, covering protocol template archive/restore management.
 - `make ui-regression DOMAIN=today` narrows to `OwloryUITests/TodayContinueRegression`.
 - `make ui-regression DOMAIN=write` narrows to `OwloryUITests/WriteCaptureRegression`.
 - `make ui-regression DOMAIN=train` narrows to `OwloryUITests/TrainRegression`.
+- `make ui-regression DOMAIN=home` narrows to `OwloryUITests/HomeProtocolRegression`.
 - New regression classes should extend the `DOMAIN=` matrix rather than collapse multiple surfaces into one class.
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
@@ -55,7 +56,9 @@ Batch 2 has shipped: `OwloryUITests/WriteCaptureRegression` (selected by Agent A
 
 Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's parallel triage on 2026-05-13, covering the Train active/history transition).
 
-Batch 4 is selected and queued: Home protocol template archive/restore management. This is the next surface because Write already shipped as Batch 2, Train already shipped as Batch 3, and a recent Home protocol affordance bug showed that protocol-level archive needs maintained UI proof without implying per-step archive behavior.
+Batch 4 has shipped: `OwloryUITests/HomeProtocolRegression` (selected by the 2026-05-15 triage, covering Home protocol template archive/restore management).
+
+No next regression surface is selected yet; run a triage slice before broadening the suite again.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -77,7 +80,7 @@ Batch 4 triage decision:
 | Patterns | Domain rules are covered, but no concrete Patterns UI behavior is currently named. | Valuable only after a specific report/insight surface claim changes. | Defer. |
 | Localization layout | All-locale launch screenshots exist; translation quality is still blocked on reviewed values. | Valuable after reviewed translations or a layout defect lands. | Defer. |
 
-Batch 4 implementation target:
+Batch 4 implemented target:
 
 - Seed one active Home protocol template with a stable ID, title, and step, without creating an active run.
 - Open Home and assert the protocol template appears in the active protocol list.
@@ -86,11 +89,11 @@ Batch 4 implementation target:
 - Assert the template leaves the active protocol list and appears in Archived Protocols with a restore affordance.
 - Restore the template and assert it returns to the active protocol list.
 
-Required implementation support:
+Implemented support:
 
-- Add a deterministic UI seed launch argument for one Home protocol template only.
-- Add stable accessibility identifiers for the active protocol row, direct archive action, archived protocol row, and restore action.
-- Add a `HomeProtocolRegression` XCUITest class and wire `make ui-regression DOMAIN=home`.
+- Added a deterministic UI seed launch argument for one Home protocol template only.
+- Added stable accessibility identifiers for the active protocol row, direct archive action, archived protocol row, and restore action.
+- Added a `HomeProtocolRegression` XCUITest class and wired `make ui-regression DOMAIN=home`.
 
 Out of scope for Batch 4:
 

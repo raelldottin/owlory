@@ -9,11 +9,11 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
-- Owlory has three Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, and `TrainRegression`, narrowable with `DOMAIN=today`, `DOMAIN=write`, and `DOMAIN=train`.
+- Owlory has four Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, `TrainRegression`, and `HomeProtocolRegression`, narrowable with `DOMAIN=today`, `DOMAIN=write`, `DOMAIN=train`, and `DOMAIN=home`.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - Owlory has an idb-first dependency check and capture helper for full-locale screenshot proof: `make localization-screenshot-idb-check` and `python3 automation/smoke/capture_locale_screenshots.py`.
 
-Do not treat the current Today, Write, and Train regression batches as broad app-wide UI regression coverage.
+Do not treat the current Today, Write, Train, and Home protocol regression batches as broad app-wide UI regression coverage.
 
 ## Proof Lanes
 
@@ -82,6 +82,7 @@ make ui-regression                 # every regression class
 make ui-regression DOMAIN=today    # only OwloryUITests/TodayContinueRegression
 make ui-regression DOMAIN=write    # only OwloryUITests/WriteCaptureRegression
 make ui-regression DOMAIN=train    # only OwloryUITests/TrainRegression
+make ui-regression DOMAIN=home     # only OwloryUITests/HomeProtocolRegression
 ```
 
 That command uses `/tmp/owlory-ui-regression-derived-data` and targets these regression classes:
@@ -90,6 +91,7 @@ That command uses `/tmp/owlory-ui-regression-derived-data` and targets these reg
 OwloryUITests/TodayContinueRegression
 OwloryUITests/WriteCaptureRegression
 OwloryUITests/TrainRegression
+OwloryUITests/HomeProtocolRegression
 ```
 
 The regression classes live in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but are intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a domain refactor, or on demand — not on every PR.
@@ -100,6 +102,8 @@ The regression classes live in `owlory_xcode/OwloryUITests/OwloryUITests.swift` 
 
 `TrainRegression` covers the Train active/history transition via the existing `--owlory-ui-seed-due-today-training-continue-item` seed: it opens Train, asserts the seeded planned session appears in active Today, completes it through the existing status/save controls, and asserts it appears in History with completed status. Modified/skipped statuses, recurrence rollover UI, voice/reflection fallback, screenshot, device, and TestFlight claims are intentionally out of scope.
 
+`HomeProtocolRegression` covers Home protocol template archive/restore management via `--owlory-ui-seed-home-protocol-template`: it opens Home, asserts the seeded protocol template appears in the active protocol list, archives it through the direct protocol-level archive affordance, asserts it moves to Archived Protocols, restores it, and asserts it returns active. Active-run lifecycle, schedule labels, step revert, per-step archive, screenshot, device, and TestFlight claims are intentionally out of scope.
+
 The app-side seed path is intentionally narrow:
 
 - `--owlory-ui-testing` marks the launch as harness-owned and suppresses notification authorization prompts.
@@ -107,12 +111,13 @@ The app-side seed path is intentionally narrow:
 - `--owlory-ui-seed-today-continue-item` resets the same app-local state, writes one current-day planned Focus item, and verifies that Today Continue renders it through the normal Continue projection.
 - `--owlory-ui-seed-home-task-continue-item` resets the same app-local state, writes one active Home task, and verifies that Today Continue renders source-derived Home work without changing Home or Today product rules.
 - `--owlory-ui-seed-home-protocol-run-continue-item` resets the same app-local state, writes one active Home protocol run, and verifies that Today Continue renders and routes to the active run sheet without changing protocol lifecycle rules.
+- `--owlory-ui-seed-home-protocol-template` resets the same app-local state, writes one active Home protocol template without an active run, and verifies Home protocol template archive/restore management without changing protocol lifecycle rules.
 - `--owlory-ui-seed-due-today-training-continue-item` resets the same app-local state, writes one planned `TrainingSession` dated today, and verifies that Today Continue renders the due-today Training row via the `trainingSession` source.
 - `--owlory-ui-seed-carried-forward-focus-continue-item` resets the same app-local state, writes four consecutive daily entries (three prior + today) carrying the same focus title/domain so `PatternEngine.computeCarryForward` produces a stalled-item streak >= 3, and verifies that Today Continue renders today's row via the `carriedFocusItem` source rather than the current Focus source.
 - `--owlory-ui-seed-in-progress-writing-continue-item` resets the same app-local state, writes one in-progress `WritingNote` (capture stage), and verifies that Today Continue renders the in-progress Writing row via the `writingNote` source.
-- The tests verify the Today dashboard, seeded Continue rows for all six composer source kinds (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue Done action, one Home-task-backed Continue route into Home, one Home-protocol-run-backed Continue route into the active run sheet, and one Train tab active Today -> History transition through stable accessibility identifiers.
+- The tests verify the Today dashboard, seeded Continue rows for all six composer source kinds (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue Done action, one Home-task-backed Continue route into Home, one Home-protocol-run-backed Continue route into the active run sheet, one Train tab active Today -> History transition, and one Home protocol template archive/restore flow through stable accessibility identifiers.
 
-This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface, source visibility across all six composer-backed Continue sources (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue row action, four route smokes (Home task -> Home highlight, Home protocol run -> active run sheet, in-progress Writing -> Write note detail sheet, due-today Training -> Train session highlight), and the Train active Today -> History transition for a completed session. It does not prove focus or carried-forward Focus routing, every Train status, recurrence rollover UI, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
+This proves that deterministic UI seed paths and the XCUITest harness are operational for the Today launch surface, source visibility across all six composer-backed Continue sources (currentFocus, dueTodayTraining, carriedForwardFocus, activeHomeProtocolRun, activeHomeTask, inProgressWriting), one Focus-backed Continue row action, four route smokes (Home task -> Home highlight, Home protocol run -> active run sheet, in-progress Writing -> Write note detail sheet, due-today Training -> Train session highlight), the Train active Today -> History transition for a completed session, and Home protocol template archive/restore management. It does not prove focus or carried-forward Focus routing, every Train status, recurrence rollover UI, Home protocol schedule labels, per-step archive, screenshot-reviewed proof, device behavior, TestFlight behavior, or a full regression suite.
 
 The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
 
@@ -131,9 +136,9 @@ Completed foundation slices:
 | `owlory-ui-regression-batch-1-today-continue` | Establish Lane 2 regression wiring around Today Continue source visibility, source-derived routing, and Focus row actions. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-expansion-next-surface` | Lane 2 Batch 2 covering the Write capture inbox row, capture entry affordance, and Add to Today promotion visibility. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-batch-3-train-active-history` | Lane 2 Batch 3 covering the Train tab active/history transition: seed one planned session, complete it through visible Train UI, and assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
-| `owlory-ui-regression-batch-4-home-protocol-archive-restore` | Queued Lane 2 Batch 4 for Home protocol template archive/restore management: seed one template, archive it through a protocol-level affordance, verify it moves to Archived Protocols, restore it, and verify it returns active. | target: `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-regression-batch-4-home-protocol-archive-restore` | Lane 2 Batch 4 for Home protocol template archive/restore management: seed one template, archive it through a protocol-level affordance, verify it moves to Archived Protocols, restore it, and verify it returns active. | `running-app-smoke`, XCUITest-backed |
 
-Next selected regression surface: Home protocol template archive/restore management. Do not broaden this queued batch into active-run lifecycle, schedule labels, step revert, or per-step archive.
+No next regression surface is selected. Run another triage slice before expanding Lane 2 again.
 
 Deferred proof lanes:
 

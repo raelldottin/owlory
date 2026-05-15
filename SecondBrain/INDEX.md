@@ -2,6 +2,7 @@
 
 ## 2026-05-14
 
+- [owlory-ui-regression-batch-4-home-protocol-archive-restore](sessions/2026-05-14/213117-owlory-ui-regression-batch-4-home-protocol-archive-restore.md)
 - [owlory-ui-regression-next-surface-triage](sessions/2026-05-14/205219-owlory-ui-regression-next-surface-triage.md)
 - [home-protocol-direct-archive-affordance](sessions/2026-05-14/203542-home-protocol-direct-archive-affordance.md)
 - [home-protocol-archive-swipe-affordance](sessions/2026-05-14/195828-home-protocol-archive-swipe-affordance.md)

@@ -3257,7 +3257,7 @@
     {
       "slice_id": "owlory-ui-regression-batch-4-home-protocol-archive-restore",
       "title": "Add Home protocol archive/restore UI regression batch",
-      "status": "queued",
+      "status": "done",
       "priority": 162,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -3290,7 +3290,7 @@
       ],
       "max_files_changed": 14,
       "entry_condition": "The next UI regression surface has been triaged as Home protocol template archive/restore management; Write and Train already have Lane 2 coverage.",
-      "notes": "Implementation-only follow-up to the 2026-05-15 next-surface triage. Add one deterministic debug-only seed for a Home protocol template without an active run. Add stable accessibility identifiers for the active protocol row, the direct protocol-level archive affordance, the archived protocol row, and the restore affordance. Add a HomeProtocolRegression XCUITest class that opens Home, asserts the seeded template appears active, archives it through the protocol-level affordance, asserts it moves to Archived Protocols, restores it, and asserts it returns active. Wire make ui-regression DOMAIN=home without changing make ui-smoke. Do not add per-step archive, active-run lifecycle proof, schedule-window proof, step-revert proof, screenshot/device/TestFlight proof, or broad Home regression coverage."
+      "notes": "Completed on 2026-05-15. Added --owlory-ui-seed-home-protocol-template with stable protocol ID 8B82E9F0-7A18-4B5D-A23E-3CF9C61C7A1D and title 'Review seeded protocol template'. Added HomeView accessibility identifiers for active protocol row, direct archive button, archived protocol row, and restore button. Added OwloryUITests/HomeProtocolRegression covering active protocol template -> archive via protocol-level affordance -> Archived Protocols -> restore -> active list. Wired make ui-regression DOMAIN=home and added HomeProtocolRegression to the bare make ui-regression lane without changing make ui-smoke. Docs updated in validation, UI regression plan, UI testing hygiene, roadmap status, and Home domain. Did not add per-step archive, active-run lifecycle proof, schedule-window proof, step-revert proof, screenshot/device/TestFlight proof, or broad Home regression coverage. proof_level achieved: running-app-smoke, XCUITest-backed."
     }
   ]
 }
