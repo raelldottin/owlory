@@ -227,19 +227,6 @@ struct HomeView: View {
                     } label: {
                         protocolLabel(for: proto)
                     }
-                    .swipeActions(edge: .trailing) {
-                        Button {
-                            store.archiveProtocol(id: proto.id)
-                        } label: {
-                            Label("Archive", systemImage: "archivebox")
-                        }
-                        .tint(OwloryColor.textTertiary)
-                        Button(role: .destructive) {
-                            store.deleteProtocol(id: proto.id)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
                     .swipeActions(edge: .leading) {
                         Button {
                             editingProtocol = proto
@@ -875,6 +862,13 @@ private struct EditProtocolSheet: View {
                 } label: {
                     Label("Archive Protocol", systemImage: "archivebox")
                 }
+            }
+
+            Button(role: .destructive) {
+                store.deleteProtocol(id: proto.id)
+                onDismiss()
+            } label: {
+                Label("Delete", systemImage: "trash")
             }
         }
     }

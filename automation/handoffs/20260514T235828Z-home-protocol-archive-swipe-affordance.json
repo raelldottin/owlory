@@ -1,0 +1,62 @@
+{
+  "slice_id": "home-protocol-archive-swipe-affordance",
+  "status": "done",
+  "summary": "Removed the misleading trailing Archive/Delete swipe actions from expanded Home protocol rows because users could swipe what visually reads like a protocol item/step and archive the entire protocol template. Protocol templates still archive/restore from the explicit Edit Protocol sheet, and template deletion now also lives there as an explicit destructive template action. True per-step archive was not implemented because protocol template steps are plain strings and have no per-step identity/archive state.",
+  "files_touched": [
+    "automation/handoffs/20260514T235828Z-home-protocol-archive-swipe-affordance.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/workflows/roadmap-status.md",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/195828-home-protocol-archive-swipe-affordance.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id home-protocol-archive-swipe-affordance",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-home-protocol-archive-swipe-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol template archive affordance",
+      "before": "The expanded protocol DisclosureGroup owned trailing swipe actions for Archive and Delete. In the visible expanded UI this could read like an action on a protocol item/step, but it archived or deleted the whole protocol template.",
+      "after": "Expanded protocol rows keep the leading Edit swipe only. Template archive/restore and delete are explicit actions in the Edit Protocol sheet. This preserves existing template-level archive/delete behavior while removing the misleading row-level destructive affordance.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "docs/workflows/roadmap-status.md",
+        "make test-domain DOMAIN=home",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "True per-step archive remains unresolved. Protocol template steps are currently stored as plain strings, so supporting per-step archive would require a separate model, persistence, migration, and UI slice.",
+    "This slice was build-tested, not running-app or screenshot verified. The affordance change should be visually checked in Home before claiming screenshot/device/TestFlight proof.",
+    "The supervisor dry run was initially blocked by unrelated untracked browser-harness/ outside the selected slice boundary; this slice proceeded manually inside the selected allowed paths and did not touch that directory.",
+    "Pushing the local commit was blocked by the repo pre-push provenance hook because browser-harness/ remains untracked. The slice commit is local until that unrelated workspace dirt is resolved or explicitly ignored by its owner.",
+    "The build emitted an existing TodayView iOS 17 onChange deprecation warning unrelated to this Home protocol affordance slice."
+  ],
+  "recommended_next_slice": "home-protocol-step-archive-model-triage",
+  "recommended_next_reason": "Only if per-step archive is still desired: first decide whether protocol template steps need stable identity, archive state, persistence migration, and separate UI semantics. Do not bolt per-step archive onto plain string steps.",
+  "repo_clean_status": "dirty-preexisting-untracked",
+  "git_mirror_status": "1 0 after local commit; push blocked by unrelated untracked browser-harness/",
+  "dirty_paths_outside_scope": [
+    "browser-harness/"
+  ],
+  "timestamp": "2026-05-14T23:58:28Z"
+}

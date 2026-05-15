@@ -3222,6 +3222,37 @@
       "max_files_changed": 20,
       "entry_condition": "Group A from the accessibility-label interpolation audit (Home task / protocol-step action labels) is the named follow-up to implement; other audit groups stay documented but unqueued.",
       "notes": "Completed on 2026-05-14. Added 7 %@-format accessibility keys to all 19 locale Localizable.strings (314 keys total, up from 307; 13 plural keys unchanged): home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore} and home.protocol.step.accessibility.{complete,skip}. Non-English locales remain English placeholders per the translation-quality policy. Introduced Core/Application/HomeAccessibilityLabels.swift with seven static methods (taskEdit, taskSkip, taskMarkComplete, taskMarkIncomplete, taskRestore, protocolStepComplete, protocolStepSkip) each delegating to a private format helper; registered in Owlory.xcodeproj alongside the other presentation helpers. Updated 5 HomeView call sites: line 529 (Edit task swipe action), line 547 (Skip task swipe action), line 577-585 (leadingButtonAccessibilityLabel three branches), line 1123 (Complete protocol step), line 1152 (Skip protocol step). Did not touch unrelated copy. Validations: make architecture, make localization-check (19 locales, 314 keys, 13 plural keys), make test-domain DOMAIN=home (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
+    },
+    {
+      "slice_id": "home-protocol-archive-swipe-affordance",
+      "title": "Prevent protocol-step swipes from archiving the whole protocol",
+      "status": "done",
+      "priority": 191,
+      "domain": "home",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id home-protocol-archive-swipe-affordance",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-home-protocol-archive-swipe-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-home-action-accessibility-formatting"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "User reported that swiping a visible item inside a Home protocol exposes Archive but archives the entire protocol template.",
+      "notes": "Completed on 2026-05-14. Current data model has archive state for protocol templates only; protocol steps are stored as plain strings and have no per-step archive state. Removed the surprising protocol-level archive/delete trailing swipe affordance from the expanded protocol row, kept template archive/restore in the Edit Protocol sheet, moved template delete into the same explicit sheet using the existing Delete label, and documented that per-step archive would require a separate model slice. Did not change protocol lifecycle, schedule behavior, run steps, or localization resources."
     }
   ]
 }

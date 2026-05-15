@@ -37,6 +37,7 @@ Home protocol roadmap:
 
 - Maintained schedule-window ownership lives in `docs/product/domains/home.md` and `ProtocolScheduleRules`.
 - Current protocol schedule windows are template-owned labels only; they must not auto-abandon or auto-complete runs when a window ends.
+- Protocol template archive/delete actions are explicit template-level actions in the edit sheet. Do not add row-level swipe archive to expanded protocol templates unless the UI can distinguish template rows from step rows; per-step archive remains a separate model decision because template steps are currently plain strings.
 - Overdue/stale treatment beyond Home template labels and the future Home-project model remain open.
 
 ML, speech, and generated-output readiness:
