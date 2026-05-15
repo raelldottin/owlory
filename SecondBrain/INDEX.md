@@ -2,6 +2,7 @@
 
 ## 2026-05-15
 
+- [owlory-ui-regression-batch-7-localization-layout-shell (running-app-smoke; en/de/ar/zh-Hans launch-shell only)](sessions/2026-05-15/092224-owlory-ui-regression-batch-7-localization-layout-shell.md)
 - [owlory-ui-regression-batch-6-patterns-digest-insight-rendering (domain-tested; XCUITest dropped)](sessions/2026-05-15/050440-owlory-ui-regression-batch-6-patterns-digest-insight-rendering.md)
 - [owlory-ui-regression-batch-7-localization-layout-triage](sessions/2026-05-15/005854-owlory-ui-regression-batch-7-localization-layout-triage.md)
 - [owlory-ui-regression-batch-6-surface-triage](sessions/2026-05-15/002954-owlory-ui-regression-batch-6-surface-triage.md)

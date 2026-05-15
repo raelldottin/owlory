@@ -1,0 +1,56 @@
+{
+  "slice_id": "owlory-ui-regression-batch-7-localization-layout-shell",
+  "status": "done",
+  "summary": "Added OwloryUITests/LocalizationLayoutRegression as Lane 2 Batch 7 with four tests covering representative-locale launch-shell stability for en, de, ar, and zh-Hans. Each test launches with --owlory-ui-testing, --owlory-ui-seed-fresh-day, -AppleLanguages, and -AppleLocale, then asserts (a) the Today dashboard header settles through the stable today.dashboard.header identifier and (b) the root tab bar exposes exactly five hittable tab buttons. Extended make ui-regression: bare invocation now runs all six regression classes; DOMAIN=localization scopes to LocalizationLayoutRegression only. make ui-regression DOMAIN=localization passed 4/4 in ~62s. Initial implementation attempted per-tab accessibility identifiers on TabView children but those attach to active-tab content rather than tab-bar buttons in SwiftUI; reverted and switched to the locale-agnostic app.tabBars.firstMatch.buttons approach so no production code changes were retained on RootTabView/TodayView.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260515T092224Z-owlory-ui-regression-batch-7-localization-layout-shell.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/092224-owlory-ui-regression-batch-7-localization-layout-shell.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-7-localization-layout-shell",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make ui-regression DOMAIN=localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Representative locale launch-shell UI proof",
+      "before": "No Lane 2 regression class exercised the app under -AppleLanguages / -AppleLocale launch arguments. The all-locale screenshot proof at automation/proofs/app-localization-all-locale-screenshot-proof/ covered launch-surface visual evidence on 2026-05-14 but did not exercise the running app's accessibility tree under locale launch arguments and is not run by make ui-regression.",
+      "after": "LocalizationLayoutRegression runs four tests (en, de, ar, zh-Hans) that prove the Today dashboard shell settles and the root tab bar remains reachable with five hittable buttons under locale launch arguments. make ui-regression DOMAIN=localization scopes to this class.",
+      "proof": [
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "Makefile",
+        "make ui-regression DOMAIN=localization"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English values currently fall back to English placeholders in Localizable.strings/.stringsdict. Tests prove the shell does not blank or hide tabs under locale launch arguments; they do NOT prove translated-text layout correctness, translation quality, or that fluent translations would still fit on the same surfaces.",
+    "Tab presence is asserted by count (5 hittable buttons) rather than by stable per-tab identifiers because .accessibilityIdentifier() on TabView children attaches to active-tab content rather than tab-bar buttons in SwiftUI. A future change that reorders or replaces tabs would be caught only as a count mismatch.",
+    "Only four representative locales run in Lane 2 (en, de, ar, zh-Hans). The other 15 supported locales are exercised by the all-locale screenshot proof and by make localization-check parity but not by this regression class. Adding all 19 locales here would be out of scope; expand only if a specific locale demonstrates shell instability.",
+    "RTL (ar) and CJK (zh-Hans) shell hittability is proved at tab-bar level only. Internal RTL mirroring of nested layouts or CJK character truncation inside Today content is not asserted.",
+    "Dynamic Type matrix coverage, pseudo / long-text stress, and screenshot-, device-, or TestFlight-proof for these locale launches are out of scope and not claimed.",
+    "Tests depend on the existing --owlory-ui-seed-fresh-day seed and the today.dashboard.header identifier; regressions in either would surface as locale-test failures rather than seed/identifier-specific failures."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is the right call here. Remaining localization tracks (reviewed translations for non-English locales, pseudo / long-text layout stress, all-locale Lane 2 expansion, Dynamic Type matrix) each require their own scoped triage before queueing, and translation review is still blocked on reviewer-supplied values.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T09:22:24Z"
+}

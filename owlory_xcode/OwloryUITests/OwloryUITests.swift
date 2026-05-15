@@ -1095,3 +1095,100 @@ final class HomeProtocolRunStepRegression: XCTestCase {
         app.launch()
     }
 }
+
+/// Batch 7 regression: representative locale launch-shell stability.
+///
+/// Scope: prove the Today dashboard shell and the root tab bar remain reachable
+/// under `-AppleLanguages` / `-AppleLocale` launch arguments for four
+/// representative locales: English (`en`), German (`de`), Arabic (`ar`, RTL),
+/// and Simplified Chinese (`zh-Hans`, CJK). Assertions go through stable
+/// accessibility identifiers, not translated labels.
+///
+/// Does NOT prove: translation quality, translated-text layout correctness, all
+/// 19 supported locales in Lane 2, pseudo or long-text layout stress, Dynamic
+/// Type matrix coverage, screenshot proof, device proof, or TestFlight proof.
+/// Non-English values currently fall back to English placeholders; this batch
+/// is a launch-shell guard only.
+final class LocalizationLayoutRegression: XCTestCase {
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testFreshDayShellSettlesUnderEnglishLocale() throws {
+        launch(language: "en", locale: "en_US")
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderGermanLocale() throws {
+        launch(language: "de", locale: "de_DE")
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderArabicLocale() throws {
+        launch(language: "ar", locale: "ar_SA")
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderSimplifiedChineseLocale() throws {
+        launch(language: "zh-Hans", locale: "zh_Hans_CN")
+        assertShellSettled()
+    }
+
+    private func launch(language: String, locale: String) {
+        app.launchArguments = [
+            "--owlory-ui-testing",
+            "--owlory-ui-seed-fresh-day",
+            "-AppleLanguages",
+            "(\(language))",
+            "-AppleLocale",
+            locale,
+        ]
+        app.launch()
+    }
+
+    private func assertShellSettled() {
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 15),
+            "Expected the Today dashboard shell to settle under the seeded fresh-day launch for this locale."
+        )
+
+        // Tab-bar presence is the locale-agnostic shell signal: stable
+        // accessibility identifiers on TabView children attach to active-tab
+        // content rather than tab-bar buttons, so the tab bar itself is the
+        // load-bearing element. SwiftUI exposes the five tab buttons through
+        // `app.tabBars.firstMatch.buttons` regardless of locale or
+        // translated `tabItem` labels.
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(
+            tabBar.waitForExistence(timeout: 10),
+            "Expected the root tab bar to remain present under this locale."
+        )
+
+        let expectedTabCount = 5
+        let tabButtons = tabBar.buttons
+        XCTAssertEqual(
+            tabButtons.count, expectedTabCount,
+            "Expected exactly \(expectedTabCount) tab-bar buttons under this locale; the shell must not blank or hide tabs."
+        )
+
+        for index in 0..<expectedTabCount {
+            let tabButton = tabButtons.element(boundBy: index)
+            XCTAssertTrue(
+                tabButton.exists,
+                "Expected tab-bar button at index \(index) to exist under this locale."
+            )
+            XCTAssertTrue(
+                tabButton.isHittable,
+                "Expected tab-bar button at index \(index) to remain hittable under this locale."
+            )
+        }
+    }
+}

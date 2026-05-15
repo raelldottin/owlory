@@ -53,12 +53,13 @@ ui-smoke-proof: ui-smoke
 ui-regression:
 	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"; \
 	case "$(DOMAIN)" in \
-		"") ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression -only-testing:OwloryUITests/WriteCaptureRegression -only-testing:OwloryUITests/TrainRegression -only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression"; LABEL="all regression classes" ;; \
+		"") ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression -only-testing:OwloryUITests/WriteCaptureRegression -only-testing:OwloryUITests/TrainRegression -only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression -only-testing:OwloryUITests/LocalizationLayoutRegression"; LABEL="all regression classes" ;; \
 		today) ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression"; LABEL="Today Continue regression" ;; \
 		write) ONLY_TESTING="-only-testing:OwloryUITests/WriteCaptureRegression"; LABEL="Write capture inbox regression" ;; \
 		train) ONLY_TESTING="-only-testing:OwloryUITests/TrainRegression"; LABEL="Train active/history regression" ;; \
 		home) ONLY_TESTING="-only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression"; LABEL="Home protocol regression (template archive/restore + run step progression)" ;; \
-		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home]"; exit 2 ;; \
+		localization) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression"; LABEL="Localization layout shell regression (en, de, ar, zh-Hans launch-shell only)" ;; \
+		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home|localization]"; exit 2 ;; \
 	esac; \
 	echo "Running Owlory UI regression batch ($$LABEL) on $$DESTINATION"; \
 	xcodebuild test \
