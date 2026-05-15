@@ -3498,6 +3498,67 @@
       "max_files_changed": 16,
       "entry_condition": "Batch 7 localization layout triage selected representative locale launch-shell stability. Non-English resources remain English placeholders, so this slice must not claim translated-text layout or translation quality.",
       "notes": "Completed on 2026-05-15. Added OwloryUITests/LocalizationLayoutRegression with four tests that launch the app with --owlory-ui-testing, --owlory-ui-seed-fresh-day, -AppleLanguages, and -AppleLocale for en, de, ar, and zh-Hans. Each test asserts the Today dashboard shell settles via the today.dashboard.header accessibility identifier and asserts the root tab bar exposes exactly five hittable tab buttons. Initial attempt added per-tab accessibility identifiers on TabView children, but SwiftUI attaches them to the active tab content rather than tab-bar buttons; reverted those identifiers and switched to the locale-agnostic app.tabBars.firstMatch.buttons approach. Extended make ui-regression: bare invocation runs all six regression classes; DOMAIN=localization runs LocalizationLayoutRegression only. make ui-regression DOMAIN=localization passed (4/4, ~62s test time). Out of scope and not claimed: translation quality, all-locale layout correctness, pseudo/long-text layout stress, Dynamic Type matrix coverage, RTL or CJK rendering correctness beyond shell hittability, screenshot proof, device proof, TestFlight proof. proof_level achieved: running-app-smoke."
+    },
+    {
+      "slice_id": "app-localization-native-review-tracking-dashboard",
+      "title": "Add per-locale native-review tracking dashboard",
+      "status": "done",
+      "priority": 110,
+      "domain": "localization",
+      "allowed_paths": [
+        "Tools/localization-review-status.py",
+        "localization/review/STATUS.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-first-locale-review-intake"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Per-locale review return files exist for at least one non-English locale.",
+      "notes": "Completed on 2026-05-15. Added Tools/localization-review-status.py which reads every per-locale review return file under localization/review/<locale>/ and emits (a) a stdout table and (b) localization/review/STATUS.md when run with --write-doc. The German legacy filename (german-review-return.json) is handled alongside the canonical <locale>-review-return.json pattern. Native-reviewed status is read from provenance.native_reviewed and is true only when a return file explicitly sets it. Current state: 0 native-reviewed locales, 18 LLM-drafted by claude-opus-4-7. Tool is reporting-only; it does not modify app resources, return files, or make any translation-quality claim. proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-native-review-intake",
+      "title": "Ingest native-reviewed values per locale",
+      "status": "blocked",
+      "priority": 105,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "Tools/localization-review-status.py",
+        "Tools/localization-parity.sh",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-native-review-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-native-review-tracking-dashboard"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "At least one per-locale review return file has provenance.native_reviewed=true with non-LLM reviewer metadata, OR a reviewer-supplied native-review document is provided alongside the return file. Until human/native-supplied reviewed values arrive, this slice must remain blocked.",
+      "notes": "Blocked entry condition: native-reviewed values exist for at least one locale. As of 2026-05-15, all 18 non-English locales hold LLM-drafted values produced by claude-opus-4-7 and recorded with review_status=needs-layout-check or keep-english-term. Native review is outstanding for every locale. Scope when unblocked: ingest native-reviewed values into the matching de.lproj / fr.lproj / etc. .strings and .stringsdict files, flip the relevant per-locale return file's status entries from needs-layout-check to native-reviewed for accepted rows, preserve keys and plural parity, do not bulk-replace unreviewed rows. Do not claim native review for unreviewed locales. proof_level target: build-tested. The dashboard (Tools/localization-review-status.py) reports per-locale native-reviewed counts; this slice flips them upward by ingesting human-supplied reviewer values, not by re-running LLM translation."
     }
   ]
 }

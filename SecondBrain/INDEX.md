@@ -2,6 +2,7 @@
 
 ## 2026-05-15
 
+- [app-localization-native-review-tracking-dashboard (doc-only; reports 0 native-reviewed across 18 LLM-drafted locales)](sessions/2026-05-15/190123-app-localization-native-review-tracking-dashboard.md)
 - [app-localization-all-locale-llm-draft-intake (17 remaining locales LLM-drafted by claude-opus-4-7, NOT native-reviewed; build-tested)](sessions/2026-05-15/181907-app-localization-all-locale-llm-draft-intake.md)
 - [app-localization-first-locale-review-intake (German LLM-drafted by claude-opus-4-7, NOT native-reviewed; build-tested)](sessions/2026-05-15/162026-app-localization-first-locale-review-intake.md)
 - [owlory-ui-regression-batch-7-localization-layout-shell (running-app-smoke; en/de/ar/zh-Hans launch-shell only)](sessions/2026-05-15/092224-owlory-ui-regression-batch-7-localization-layout-shell.md)
