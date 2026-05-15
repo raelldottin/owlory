@@ -3324,7 +3324,7 @@
     {
       "slice_id": "owlory-ui-regression-batch-5-home-protocol-run-step-progression",
       "title": "Add Home protocol run step progression UI regression batch",
-      "status": "queued",
+      "status": "done",
       "priority": 210,
       "domain": "ui-testing",
       "allowed_paths": [
@@ -3358,7 +3358,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Batch 5 sub-behavior triage selected Home protocol run step progression. The Batch 4 Home archive/restore regression class HomeProtocolRegression already exists in OwloryUITests; this slice extends Lane 2 with a separate test class for run-step interactions, not by adding methods to HomeProtocolRegression.",
-      "notes": "Batch 5 target: active Home protocol run step progression. Open the active run sheet via the existing Today Continue route (smoke-covered), tap the Complete action on the first pending step, and assert the step transitions out of pending. Add accessibility identifiers on protocol step rows (home.protocolRun.step.<uuid>) and on the Complete action button (home.protocolRun.step.action.complete.<uuid>) — only the identifiers needed for this single test; do not add identifiers for skip, revert, archive, or schedule that this batch does not exercise. Reuse the existing --owlory-ui-seed-home-protocol-run-continue-item if its single-step protocol suffices; only add a new multi-step seed arg if proving sequential progression requires more than one pending step. Add a new XCUITest class OwloryUITests/HomeProtocolRunStepRegression (separate from HomeProtocolRegression, which already covers archive/restore) and add it to the bare make ui-regression lane alongside HomeProtocolRegression — keep the DOMAIN=home filter pointing at both. Out of scope: step skip and revert flows, protocol archive, template editing, schedule-window status display, Patterns UI proof, localization layout, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
+      "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) — not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
     }
   ]
 }

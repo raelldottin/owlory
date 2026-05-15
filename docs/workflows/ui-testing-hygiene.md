@@ -9,7 +9,7 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has a running-app smoke runner: `python3 automation/smoke/running_app_smoke.py`.
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
-- Owlory has four Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, `TrainRegression`, and `HomeProtocolRegression`, narrowable with `DOMAIN=today`, `DOMAIN=write`, `DOMAIN=train`, and `DOMAIN=home`.
+- Owlory has five Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, `TrainRegression`, `HomeProtocolRegression`, and `HomeProtocolRunStepRegression`. `DOMAIN=today`, `DOMAIN=write`, and `DOMAIN=train` filter to a single class each; `DOMAIN=home` filters to both Home regression classes.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - Owlory has an idb-first dependency check and capture helper for full-locale screenshot proof: `make localization-screenshot-idb-check` and `python3 automation/smoke/capture_locale_screenshots.py`.
 
@@ -82,7 +82,7 @@ make ui-regression                 # every regression class
 make ui-regression DOMAIN=today    # only OwloryUITests/TodayContinueRegression
 make ui-regression DOMAIN=write    # only OwloryUITests/WriteCaptureRegression
 make ui-regression DOMAIN=train    # only OwloryUITests/TrainRegression
-make ui-regression DOMAIN=home     # only OwloryUITests/HomeProtocolRegression
+make ui-regression DOMAIN=home     # OwloryUITests/HomeProtocolRegression + HomeProtocolRunStepRegression
 ```
 
 That command uses `/tmp/owlory-ui-regression-derived-data` and targets these regression classes:
@@ -92,6 +92,7 @@ OwloryUITests/TodayContinueRegression
 OwloryUITests/WriteCaptureRegression
 OwloryUITests/TrainRegression
 OwloryUITests/HomeProtocolRegression
+OwloryUITests/HomeProtocolRunStepRegression
 ```
 
 The regression classes live in `owlory_xcode/OwloryUITests/OwloryUITests.swift` alongside the smoke class but are intentionally excluded from `make ui-smoke` by the smoke command's `-only-testing` filter. Trigger the regression batch pre-release, after a domain refactor, or on demand — not on every PR.
@@ -103,6 +104,8 @@ The regression classes live in `owlory_xcode/OwloryUITests/OwloryUITests.swift` 
 `TrainRegression` covers the Train active/history transition via the existing `--owlory-ui-seed-due-today-training-continue-item` seed: it opens Train, asserts the seeded planned session appears in active Today, completes it through the existing status/save controls, and asserts it appears in History with completed status. Modified/skipped statuses, recurrence rollover UI, voice/reflection fallback, screenshot, device, and TestFlight claims are intentionally out of scope.
 
 `HomeProtocolRegression` covers Home protocol template archive/restore management via `--owlory-ui-seed-home-protocol-template`: it opens Home, asserts the seeded protocol template appears in the active protocol list, archives it through the direct protocol-level archive affordance, asserts it moves to Archived Protocols, restores it, and asserts it returns active. Active-run lifecycle, schedule labels, step revert, per-step archive, screenshot, device, and TestFlight claims are intentionally out of scope.
+
+`HomeProtocolRunStepRegression` covers active-run step progression via the existing `--owlory-ui-seed-home-protocol-run-continue-item` seed: it opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the step transitions out of pending state while the step title remains visible. Step skip, step revert, schedule-window status display, protocol template editing, additional pending steps, screenshot, device, and TestFlight claims are intentionally out of scope. The row uses `.accessibilityElement(children: .contain)` so the inner per-step Complete button remains individually addressable under the outer `home.protocolRun.step.<uuid>` identifier; do not remove that modifier without rewriting the test.
 
 The app-side seed path is intentionally narrow:
 

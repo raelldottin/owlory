@@ -1008,3 +1008,90 @@ final class HomeProtocolRegression: XCTestCase {
         wait(for: [removal], timeout: 10)
     }
 }
+
+/// Batch 5 regression: Home protocol run step progression. Separate from
+/// `HomeProtocolRegression` (Batch 4 archive/restore of templates). Reaches the
+/// active-run sheet via the existing Today Continue route smoke and proves the
+/// per-step Complete action transitions a pending step out of pending state.
+///
+/// Scope intentionally narrow: only the first pending step's Complete action.
+/// Step skip, step revert, schedule windows, protocol template editing, and
+/// archive flows are out of scope.
+final class HomeProtocolRunStepRegression: XCTestCase {
+    private let homeProtocolRunContinueFixtureRunID = "C9B98DD8-9AA9-4D8C-B0F7-8E82CF280A5A"
+    private let homeProtocolRunContinueFixtureStepID = "079B060C-76D4-466A-82FB-22D69F65E8DE"
+    private let homeProtocolRunContinueFixtureTitle = "Review seeded protocol run"
+    private let homeProtocolRunContinueFixtureStepTitle = "Check seeded protocol step"
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testSeededProtocolRunStepCompleteTransitionsOutOfPending() throws {
+        launch(arguments: ["--owlory-ui-seed-home-protocol-run-continue-item"])
+
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 10),
+            "Expected the deterministic seed to launch on Today's dashboard."
+        )
+
+        let continueRowIdentifier = "today.continue.item.homeProtocolRun.\(homeProtocolRunContinueFixtureRunID)"
+        let continueRow = app.buttons[continueRowIdentifier]
+        XCTAssertTrue(
+            continueRow.waitForExistence(timeout: 10),
+            "Expected the seeded protocol run to render as a Continue row."
+        )
+        continueRow.tap()
+
+        let sheetIdentifier = "home.protocolRun.sheet.\(homeProtocolRunContinueFixtureRunID)"
+        XCTAssertTrue(
+            app.staticTexts[sheetIdentifier].waitForExistence(timeout: 10),
+            "Expected the active protocol-run sheet to present after tapping the Continue row."
+        )
+
+        let stepIdentifier = "home.protocolRun.step.\(homeProtocolRunContinueFixtureStepID)"
+        let stepRow = app
+            .descendants(matching: .any)
+            .matching(identifier: stepIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            stepRow.waitForExistence(timeout: 10),
+            "Expected the seeded pending step row to render in the active-run sheet."
+        )
+
+        let completeActionIdentifier = "home.protocolRun.step.action.complete.\(homeProtocolRunContinueFixtureStepID)"
+        let completeButton = app
+            .descendants(matching: .any)
+            .matching(identifier: completeActionIdentifier)
+            .firstMatch
+        XCTAssertTrue(
+            completeButton.waitForExistence(timeout: 10),
+            "Expected the per-step Complete action to be reachable on the seeded pending step."
+        )
+        completeButton.tap()
+
+        let completeButtonGone = expectation(
+            for: NSPredicate(format: "exists == false"),
+            evaluatedWith: completeButton,
+            handler: nil
+        )
+        wait(for: [completeButtonGone], timeout: 10)
+
+        XCTAssertTrue(
+            app.staticTexts[homeProtocolRunContinueFixtureStepTitle].exists,
+            "Expected the step title to remain visible after the step transitions out of pending."
+        )
+    }
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+}

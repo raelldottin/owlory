@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-15
+
+- [owlory-ui-regression-batch-5-home-protocol-run-step-progression](sessions/2026-05-15/000435-owlory-ui-regression-batch-5-home-protocol-run-step-progression.md)
+
 ## 2026-05-14
 
 - [owlory-ui-regression-batch-5-surface-triage (Agent A, chose Home step progression)](sessions/2026-05-14/233821-owlory-ui-regression-batch-5-surface-triage.md)

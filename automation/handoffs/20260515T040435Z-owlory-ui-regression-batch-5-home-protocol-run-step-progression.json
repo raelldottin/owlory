@@ -1,0 +1,60 @@
+{
+  "slice_id": "owlory-ui-regression-batch-5-home-protocol-run-step-progression",
+  "status": "done",
+  "summary": "Added OwloryUITests/HomeProtocolRunStepRegression as Lane 2 Batch 5, separate from HomeProtocolRegression (Batch 4 archive/restore). The one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending) reuses the existing --owlory-ui-seed-home-protocol-run-continue-item seed, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Added accessibility identifiers home.protocolRun.step.<uuid> with .accessibilityElement(children: .contain) on the step row and home.protocolRun.step.action.complete.<uuid> on the Complete button in HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, schedule, or template-edit controls. Extended make ui-regression: bare invocation runs all five regression classes; DOMAIN=home now runs both Home regression classes. make ui-regression DOMAIN=home passed in 31.8s (2 tests).",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260515T040435Z-owlory-ui-regression-batch-5-home-protocol-run-step-progression.json",
+    "automation/queue/slices.json",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/000435-owlory-ui-regression-batch-5-home-protocol-run-step-progression.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-5-home-protocol-run-step-progression",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make ui-regression DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "running-app-smoke",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol run step Complete action UI proof",
+      "before": "TodayContinueRegression covered the Today Continue -> active run sheet route. Once inside the sheet, step-level interactions (Complete, Skip, Revert) had no Lane 2 UI proof. The home.protocolRun.sheet.<uuid> identifier existed but no step-level identifiers. HomeProtocolRegression (Batch 4) covered protocol template archive/restore management, not per-step actions inside a run.",
+      "after": "HomeProtocolRunStepRegression covers the per-step Complete action on the first pending step of a seeded active run. New accessibility identifiers home.protocolRun.step.<uuid> and home.protocolRun.step.action.complete.<uuid> are reachable by XCUITest. make ui-regression DOMAIN=home runs both HomeProtocolRegression and HomeProtocolRunStepRegression; bare make ui-regression runs all five classes.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "Makefile",
+        "make ui-regression DOMAIN=home"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The assertion is that the Complete button disappears after tap. This is a proxy for 'step transitioned out of pending' because the Button is rendered only when step.status == .pending. A future refactor that renders Complete in other states would let the test falsely pass.",
+    "Only the Complete action has an accessibility identifier. Skip and revert are not covered by this batch; their identifiers were not added per slice scope.",
+    "Only one step is exercised. Multi-step sequential progression is documented as out-of-scope; adding it would require a new multi-step seed arg under OwloryUITestSupport.",
+    "The seeded single-step protocol cannot prove 'second step remains the only pending step' from the slice notes; that assertion was vacuous and skipped.",
+    "Accessibility identifiers and labels coexist on the same view: home.protocolRun.step.<uuid> (identifier, this slice) plus home.protocol.step.accessibility.complete.<uuid> (label, prior slice). Reviewers should not confuse the namespaces.",
+    "The test depends on the Today Continue -> active run sheet route smoke-covered by TodayContinueRegression. Failures in that route would surface as a different error shape here."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. Remaining Home-protocols sub-behaviors (step skip, step revert, schedule-window status, protocol template editing) are documented as deferred. Patterns and localization layout remain deferred per the Batch 5 triage. Each would need its own scoped triage before queueing.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T04:04:35Z"
+}

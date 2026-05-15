@@ -1131,6 +1131,7 @@ private struct ProtocolRunSheet: View {
                                 }
                                 .buttonStyle(.plain)
                                 .accessibilityLabel(HomeAccessibilityLabels.protocolStepComplete(title: step.title))
+                                .accessibilityIdentifier("home.protocolRun.step.action.complete.\(step.id.uuidString)")
                             } else {
                                 stepStatusIcon(step.status)
                             }
@@ -1171,6 +1172,8 @@ private struct ProtocolRunSheet: View {
                                 }
                             }
                         }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("home.protocolRun.step.\(step.id.uuidString)")
                     }
                 } header: {
                     Text("Steps")
