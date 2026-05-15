@@ -227,19 +227,6 @@ struct HomeView: View {
                     } label: {
                         protocolLabel(for: proto)
                     }
-                    .swipeActions(edge: .trailing) {
-                        Button {
-                            store.archiveProtocol(id: proto.id)
-                        } label: {
-                            Label("Archive", systemImage: "archivebox")
-                        }
-                        .tint(OwloryColor.textTertiary)
-                        Button(role: .destructive) {
-                            store.deleteProtocol(id: proto.id)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
                     .swipeActions(edge: .leading) {
                         Button {
                             editingProtocol = proto
@@ -248,6 +235,7 @@ struct HomeView: View {
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
+                    .accessibilityIdentifier("home.protocol.item.\(proto.id.uuidString)")
                 }
             }
         } header: {
@@ -279,7 +267,10 @@ struct HomeView: View {
                                 Text("Restore")
                             }
                             .buttonStyle(.borderless)
+                            .accessibilityIdentifier("home.protocol.restore.\(proto.id.uuidString)")
                         }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("home.protocol.archived.item.\(proto.id.uuidString)")
                         .swipeActions(edge: .trailing) {
                             Button {
                                 store.unarchiveProtocol(id: proto.id)
@@ -312,6 +303,18 @@ struct HomeView: View {
                         .foregroundStyle(summary.status == .overdue ? .orange : .secondary)
                 }
             }
+            Spacer(minLength: 8)
+            Button {
+                store.archiveProtocol(id: proto.id)
+            } label: {
+                Image(systemName: "archivebox")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel("Archive Protocol")
+            .accessibilityIdentifier("home.protocol.archive.\(proto.id.uuidString)")
         }
     }
 
@@ -875,6 +878,13 @@ private struct EditProtocolSheet: View {
                 } label: {
                     Label("Archive Protocol", systemImage: "archivebox")
                 }
+            }
+
+            Button(role: .destructive) {
+                store.deleteProtocol(id: proto.id)
+                onDismiss()
+            } label: {
+                Label("Delete", systemImage: "trash")
             }
         }
     }

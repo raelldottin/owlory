@@ -2,7 +2,11 @@
 
 ## 2026-05-14
 
-- [owlory-ui-regression-batch-4-surface-triage](sessions/2026-05-14/233821-owlory-ui-regression-batch-4-surface-triage.md)
+- [owlory-ui-regression-batch-5-surface-triage (Agent A, chose Home step progression)](sessions/2026-05-14/233821-owlory-ui-regression-batch-5-surface-triage.md)
+- [owlory-ui-regression-batch-4-home-protocol-archive-restore](sessions/2026-05-14/213117-owlory-ui-regression-batch-4-home-protocol-archive-restore.md)
+- [owlory-ui-regression-next-surface-triage (Batch 4 follow-up, Agent B chose Home archive/restore)](sessions/2026-05-14/205219-owlory-ui-regression-next-surface-triage.md)
+- [home-protocol-direct-archive-affordance](sessions/2026-05-14/203542-home-protocol-direct-archive-affordance.md)
+- [home-protocol-archive-swipe-affordance](sessions/2026-05-14/195828-home-protocol-archive-swipe-affordance.md)
 - [app-localization-home-action-accessibility-formatting](sessions/2026-05-14/191848-app-localization-home-action-accessibility-formatting.md)
 - [app-localization-accessibility-interpolation-audit](sessions/2026-05-14/174003-app-localization-accessibility-interpolation-audit.md)
 - [app-localization-digest-insight-summary-formatting](sessions/2026-05-14/172932-app-localization-digest-insight-summary-formatting.md)

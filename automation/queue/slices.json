@@ -2678,7 +2678,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
-      "notes": "Completed on 2026-05-13 by two parallel agents. Agent A chose Write capture inbox as the next regression surface (Write Lab is the only Partially implemented capture domain currently shipping; promotion flows cross Today/Home tasks/Home protocols; only the Today-Continue ingress to an in-progress Writing note had smoke coverage). Agent B independently chose Train active/history transition (small, deterministic, distinct from Today Continue; exercises a domain-owned screen transition rather than another Continue route). Reconciled non-destructively: Agent A's Write coverage shipped through owlory-ui-regression-expansion-next-surface (status done, WriteCaptureRegression class). Agent B's Train scope was preserved as owlory-ui-regression-batch-3-train-active-history (status queued). Both choices stand; neither was discarded. Subsequent triage slices should pick a single next surface upfront to avoid re-collision."
+      "notes": "Completed on 2026-05-13 by two parallel agents. Agent A chose Write capture inbox as the next regression surface (Write Lab is the only Partially implemented capture domain currently shipping; promotion flows cross Today/Home tasks/Home protocols; only the Today-Continue ingress to an in-progress Writing note had smoke coverage). Agent B independently chose Train active/history transition (small, deterministic, distinct from Today Continue; exercises a domain-owned screen transition rather than another Continue route). Reconciled non-destructively: Agent A's Write coverage shipped through owlory-ui-regression-expansion-next-surface (status done, WriteCaptureRegression class). Agent B's Train scope was preserved as owlory-ui-regression-batch-3-train-active-history (status done, TrainRegression class). Both choices stand; neither was discarded. Subsequent triage slices should pick a single next surface upfront to avoid re-collision. Follow-up triage on 2026-05-15 selected Home protocol template archive/restore management for Batch 4 because Write and Train already have Lane 2 coverage, Patterns/localization layout lack a current concrete UI claim, and recent Home protocol archive-affordance work needs maintained UI proof without implying per-step archive."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
@@ -3224,10 +3224,79 @@
       "notes": "Completed on 2026-05-14. Added 7 %@-format accessibility keys to all 19 locale Localizable.strings (314 keys total, up from 307; 13 plural keys unchanged): home.task.accessibility.{edit,skip,markComplete,markIncomplete,restore} and home.protocol.step.accessibility.{complete,skip}. Non-English locales remain English placeholders per the translation-quality policy. Introduced Core/Application/HomeAccessibilityLabels.swift with seven static methods (taskEdit, taskSkip, taskMarkComplete, taskMarkIncomplete, taskRestore, protocolStepComplete, protocolStepSkip) each delegating to a private format helper; registered in Owlory.xcodeproj alongside the other presentation helpers. Updated 5 HomeView call sites: line 529 (Edit task swipe action), line 547 (Skip task swipe action), line 577-585 (leadingButtonAccessibilityLabel three branches), line 1123 (Complete protocol step), line 1152 (Skip protocol step). Did not touch unrelated copy. Validations: make architecture, make localization-check (19 locales, 314 keys, 13 plural keys), make test-domain DOMAIN=home (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: build-tested."
     },
     {
-      "slice_id": "owlory-ui-regression-batch-4-surface-triage",
-      "title": "Choose UI regression Batch 4 surface (Home / Patterns / Localization)",
+      "slice_id": "home-protocol-archive-swipe-affordance",
+      "title": "Prevent protocol-step swipes from archiving the whole protocol",
       "status": "done",
-      "priority": 195,
+      "priority": 191,
+      "domain": "home",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id home-protocol-archive-swipe-affordance",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-home-protocol-archive-swipe-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-home-action-accessibility-formatting"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "User reported that swiping a visible item inside a Home protocol exposes Archive but archives the entire protocol template.",
+      "notes": "Completed on 2026-05-14. Current data model has archive state for protocol templates only; protocol steps are stored as plain strings and have no per-step archive state. Removed the surprising protocol-level archive/delete trailing swipe affordance from the expanded protocol row, kept template archive/restore in the Edit Protocol sheet, moved template delete into the same explicit sheet using the existing Delete label, and documented that per-step archive would require a separate model slice. Did not change protocol lifecycle, schedule behavior, run steps, or localization resources."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-4-home-protocol-archive-restore",
+      "title": "Add Home protocol archive/restore UI regression batch",
+      "status": "done",
+      "priority": 162,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "Makefile",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-home-protocol-archive-restore",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make ui-regression DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-next-surface-triage",
+        "home-protocol-archive-swipe-affordance"
+      ],
+      "max_files_changed": 14,
+      "entry_condition": "The next UI regression surface has been triaged as Home protocol template archive/restore management; Write and Train already have Lane 2 coverage.",
+      "notes": "Completed on 2026-05-15. Added --owlory-ui-seed-home-protocol-template with stable protocol ID 8B82E9F0-7A18-4B5D-A23E-3CF9C61C7A1D and title 'Review seeded protocol template'. Added HomeView accessibility identifiers for active protocol row, direct archive button, archived protocol row, and restore button. Added OwloryUITests/HomeProtocolRegression covering active protocol template -> archive via protocol-level affordance -> Archived Protocols -> restore -> active list. Wired make ui-regression DOMAIN=home and added HomeProtocolRegression to the bare make ui-regression lane without changing make ui-smoke. Docs updated in validation, UI regression plan, UI testing hygiene, roadmap status, and Home domain. Did not add per-step archive, active-run lifecycle proof, schedule-window proof, step-revert proof, screenshot/device/TestFlight proof, or broad Home regression coverage. proof_level achieved: running-app-smoke, XCUITest-backed."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-5-surface-triage",
+      "title": "Triage Batch 5 sub-behavior within Home protocols (after Batch 4 archive/restore)",
+      "status": "done",
+      "priority": 205,
       "domain": "ui-testing",
       "allowed_paths": [
         "docs/workflows/ui-regression-plan.md",
@@ -3239,26 +3308,24 @@
         "SecondBrain/sessions/"
       ],
       "required_validations": [
-        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-surface-triage",
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-5-surface-triage",
         "python3 automation/supervisor/run_next.py --dry-run",
         "make architecture",
         "make automation-check",
         "git diff --check"
       ],
       "depends_on": [
-        "owlory-ui-regression-batch-1-today-continue",
-        "owlory-ui-regression-expansion-next-surface",
-        "owlory-ui-regression-batch-3-train-active-history"
+        "owlory-ui-regression-batch-4-home-protocol-archive-restore"
       ],
       "max_files_changed": 10,
-      "entry_condition": "Lane 2 Batches 1 (Today Continue), 2 (Write capture inbox), and 3 (Train active/history) are shipped. Remaining candidate surfaces are Home protocols, Patterns, and localization layout. The previous owlory-ui-regression-next-surface-triage slice (which selected Write and Train) is done; this triage picks the next surface only.",
-      "notes": "Completed on 2026-05-14. Compared Home protocols, Patterns, and localization layout for Batch 4 (Write shipped as Batch 2, Train as Batch 3). Selected Home protocols, narrowed further to active-run step progression. Rationale: protocol runs are a primary Home interaction surface; the active-run sheet is the natural extension of the existing Today Continue → home.protocolRun.sheet.<uuid> route smoke; step-level interactions inside the sheet currently have no UI proof; the accessibility-infrastructure cost (step row + step action identifiers) is bounded to one sheet. Patterns deferred (no concrete UI claim has changed). Localization layout deferred (translation intake still parked). Decision memo added to docs/workflows/ui-regression-plan.md (### Batch 4 decision). Queued implementation slice owlory-ui-regression-batch-4-home-protocol-run-step-progression with explicit allowed_paths and required_validations. proof_level achieved: doc-only. No XCUITest code touched."
+      "entry_condition": "Lane 2 Batches 1-4 are shipped. Batch 4 covers Home protocol template archive/restore; the active-run sheet step interactions inside the sheet remain unproven by Lane 2.",
+      "notes": "Completed on 2026-05-14 in parallel with Agent B's Batch 4 archive/restore work. Both agents independently picked Home protocols as the next surface; Agent B's archive/restore triage shipped first as Batch 4. This triage's decision (active-run step progression) is preserved as Batch 5, a different sub-behavior. Patterns and localization layout remain deferred per the original audit reasoning. Decision memo recorded in docs/workflows/ui-regression-plan.md alongside the Batch 4 archive/restore decision. Queued implementation slice owlory-ui-regression-batch-5-home-protocol-run-step-progression with scope: open the active run sheet via the existing Today Continue route, tap Complete on the first pending step, assert the step transitions out of pending. proof_level achieved: doc-only. No XCUITest code touched."
     },
     {
-      "slice_id": "owlory-ui-regression-batch-4-home-protocol-run-step-progression",
+      "slice_id": "owlory-ui-regression-batch-5-home-protocol-run-step-progression",
       "title": "Add Home protocol run step progression UI regression batch",
       "status": "queued",
-      "priority": 200,
+      "priority": 210,
       "domain": "ui-testing",
       "allowed_paths": [
         "owlory_xcode/OwloryUITests/",
@@ -3277,23 +3344,21 @@
         "SecondBrain/sessions/"
       ],
       "required_validations": [
-        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-home-protocol-run-step-progression",
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-5-home-protocol-run-step-progression",
         "python3 automation/supervisor/run_next.py --dry-run",
         "make architecture",
         "make test-domain DOMAIN=home",
-        "make ui-regression",
+        "make ui-regression DOMAIN=home",
         "make automation-check",
         "git diff --check"
       ],
       "depends_on": [
-        "owlory-ui-regression-batch-4-surface-triage",
-        "owlory-ui-regression-batch-1-today-continue",
-        "owlory-ui-regression-expansion-next-surface",
-        "owlory-ui-regression-batch-3-train-active-history"
+        "owlory-ui-regression-batch-5-surface-triage",
+        "owlory-ui-regression-batch-4-home-protocol-archive-restore"
       ],
       "max_files_changed": 20,
-      "entry_condition": "Batch 4 surface triage selected Home protocols (active-run step progression). Lane 2 Batches 1-3 are shipped. The implementation slice scope is bounded to one sub-behavior.",
-      "notes": "Batch 4 target: active Home protocol run step progression. Open the active run sheet via the existing Today Continue route (smoke-covered), tap the Complete action on the first pending step, and assert the step transitions out of pending. Add accessibility identifiers on protocol step rows (home.protocolRun.step.<uuid>) and on the Complete action button (home.protocolRun.step.action.complete.<uuid>) — only the identifiers needed for this single test; do not add identifiers for skip, revert, archive, or schedule that this batch does not exercise. Reuse the existing --owlory-ui-seed-home-protocol-run-continue-item if its single-step protocol suffices; only add a new multi-step seed arg if proving sequential progression requires more than one pending step. Add a new XCUITest class OwloryUITests/HomeProtocolRunStepRegression and a DOMAIN=home matrix branch to make ui-regression. Out of scope: step skip and revert flows, protocol archive, template editing, schedule-window status display, Patterns UI proof, localization layout, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
+      "entry_condition": "Batch 5 sub-behavior triage selected Home protocol run step progression. The Batch 4 Home archive/restore regression class HomeProtocolRegression already exists in OwloryUITests; this slice extends Lane 2 with a separate test class for run-step interactions, not by adding methods to HomeProtocolRegression.",
+      "notes": "Batch 5 target: active Home protocol run step progression. Open the active run sheet via the existing Today Continue route (smoke-covered), tap the Complete action on the first pending step, and assert the step transitions out of pending. Add accessibility identifiers on protocol step rows (home.protocolRun.step.<uuid>) and on the Complete action button (home.protocolRun.step.action.complete.<uuid>) — only the identifiers needed for this single test; do not add identifiers for skip, revert, archive, or schedule that this batch does not exercise. Reuse the existing --owlory-ui-seed-home-protocol-run-continue-item if its single-step protocol suffices; only add a new multi-step seed arg if proving sequential progression requires more than one pending step. Add a new XCUITest class OwloryUITests/HomeProtocolRunStepRegression (separate from HomeProtocolRegression, which already covers archive/restore) and add it to the bare make ui-regression lane alongside HomeProtocolRegression — keep the DOMAIN=home filter pointing at both. Out of scope: step skip and revert flows, protocol archive, template editing, schedule-window status display, Patterns UI proof, localization layout, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
     }
   ]
 }

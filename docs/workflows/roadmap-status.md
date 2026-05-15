@@ -37,6 +37,7 @@ Home protocol roadmap:
 
 - Maintained schedule-window ownership lives in `docs/product/domains/home.md` and `ProtocolScheduleRules`.
 - Current protocol schedule windows are template-owned labels only; they must not auto-abandon or auto-complete runs when a window ends.
+- Protocol template archive/delete actions are explicit template-level actions. Active protocol rows may expose a direct archive button, and the edit sheet owns archive/restore/delete management. Do not add trailing swipe archive to expanded protocol templates unless the UI can distinguish template rows from step rows; per-step archive remains a separate model decision because template steps are currently plain strings.
 - Overdue/stale treatment beyond Home template labels and the future Home-project model remain open.
 
 ML, speech, and generated-output readiness:
@@ -60,7 +61,7 @@ Custom compute or model feasibility:
 UI regression and snapshot coverage:
 
 - The maintained XCUITest smoke suite proves selected high-value Today Continue paths, not exhaustive UI behavior.
-- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression` (Today Continue source visibility, source-derived routing, Focus row actions), `OwloryUITests/WriteCaptureRegression` (Write capture inbox row, capture entry affordance, Add to Today promotion visibility), and `OwloryUITests/TrainRegression` (Train active Today -> History transition), with `DOMAIN=today`, `DOMAIN=write`, and `DOMAIN=train` matrix support. Screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
+- Current open proof gaps are tracked against the lanes defined in [UI Regression Plan](ui-regression-plan.md): the regression suite (Lane 2) is now wired via `make ui-regression` against `OwloryUITests/TodayContinueRegression` (Today Continue source visibility, source-derived routing, Focus row actions), `OwloryUITests/WriteCaptureRegression` (Write capture inbox row, capture entry affordance, Add to Today promotion visibility), `OwloryUITests/TrainRegression` (Train active Today -> History transition), and `OwloryUITests/HomeProtocolRegression` (Home protocol template archive/restore management), with `DOMAIN=today`, `DOMAIN=write`, `DOMAIN=train`, and `DOMAIN=home` matrix support. Screenshot, device, and TestFlight lanes already have at least one slice's worth of preserved evidence and remain extendable. TestFlight proof currently covers the natural-data Today Continue launch surface and one Home protocol run route in `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - No next Lane 2 surface is selected. Screenshot, device, TestFlight, and full-regression coverage is governed by the five-lane plan; one lane does not imply another.
 - Do not claim snapshot/UI proof beyond the specific proof lane that has preserved evidence; record manual/device/TestFlight gaps honestly.
 
@@ -81,6 +82,7 @@ Current unblocker chain:
 - `app-localization-all-locale-smoke` passed for all 19 supported locales and preserved JSON proof under `automation/proofs/app-localization-all-locale-smoke/`. This proves launch/resource loading only, not translation quality.
 - `localization-screenshot-proof-idb-harness` added a check-only idb dependency gate and idb-first capture helper for all-locale screenshot proof. The follow-up `app-localization-all-locale-screenshot-proof` slice ran the capture on 2026-05-14 and preserved one settled launch-surface PNG per supported locale (19 total) under `automation/proofs/app-localization-all-locale-screenshot-proof/` with README, manifest, and sha256 hashes. proof_level: screenshot-verified for the launch surface only.
 - `owlory-ui-regression-next-surface-triage` ran in parallel by two agents on 2026-05-13. Agent A selected Write capture inbox and `owlory-ui-regression-expansion-next-surface` shipped the `WriteCaptureRegression` Lane 2 batch with `running-app-smoke` proof. Agent B selected Train active/history transition and `owlory-ui-regression-batch-3-train-active-history` shipped the `TrainRegression` Lane 2 batch with `running-app-smoke` proof.
+- 2026-05-15 follow-up triage selected Home protocol template archive/restore management for Batch 4 because Write and Train already have Lane 2 coverage and recent Home protocol archive-affordance work needs maintained UI proof without implying per-step archive. `owlory-ui-regression-batch-4-home-protocol-archive-restore` shipped that coverage with `HomeProtocolRegression`.
 
 ## Suggested Order
 

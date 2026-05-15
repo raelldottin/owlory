@@ -1,0 +1,73 @@
+{
+  "slice_id": "owlory-ui-regression-batch-4-home-protocol-archive-restore",
+  "status": "done",
+  "summary": "Implemented UI regression Batch 4 for Home protocol template archive/restore management. Added a deterministic debug-only Home protocol template seed, stable protocol archive/restore accessibility identifiers, HomeProtocolRegression, and make ui-regression DOMAIN=home. The regression opens Home, verifies the seeded template is active, archives it through the explicit protocol-level archive affordance, verifies it moves to Archived Protocols, restores it, and verifies it returns active.",
+  "files_touched": [
+    "Makefile",
+    "automation/handoffs/20260515T013117Z-owlory-ui-regression-batch-4-home-protocol-archive-restore.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md",
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/213117-owlory-ui-regression-batch-4-home-protocol-archive-restore.md"
+  ],
+  "validations_passed": [
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-home-protocol-archive-restore",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make test-domain DOMAIN=home",
+    "make ui-regression DOMAIN=home",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    {
+      "command": "make ui-regression DOMAIN=home",
+      "reason": "Initial harness attempt could not find the archived-row Restore affordance because the archived row accessibility identifier collapsed child controls.",
+      "remediation": "Marked the archived protocol row as an accessibility container so the row remains identifiable while the Restore button remains targetable."
+    },
+    {
+      "command": "make ui-regression DOMAIN=home",
+      "reason": "A retry reused a previous failed app process with archived state, so the seed hook did not get a fresh active-template launch.",
+      "remediation": "Scoped app.terminate() to HomeProtocolRegression.launch(arguments:) so this deterministic fixture always relaunches before seeding."
+    }
+  ],
+  "proof_level": "running-app-smoke, XCUITest-backed",
+  "missing_proof_levels": [
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Home protocol template archive/restore UI regression",
+      "before": "Home protocol archive/restore behavior had domain/store coverage and product affordance docs, but no maintained Lane 2 XCUITest regression.",
+      "after": "HomeProtocolRegression covers one seeded protocol template moving active -> archived -> active through visible Home UI affordances. make ui-regression DOMAIN=home runs this class, and bare make ui-regression includes it with the other Lane 2 regression batches.",
+      "proof": [
+        "make ui-regression DOMAIN=home",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice proves protocol template archive/restore management only. It does not prove per-step archive because no per-step archive model exists.",
+    "This slice does not prove protocol schedule labels, active-run lifecycle, step revert, or broad Home regression behavior.",
+    "This slice does not add screenshot, device, or TestFlight proof for Home protocol archive/restore.",
+    "No next Lane 2 regression surface is selected yet."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "The supervisor queue has no eligible queued slice after this Batch 4 implementation. Future UI regression expansion should start with a new triage slice for one named surface.",
+  "repo_clean_status": "dirty before commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T01:31:17Z"
+}

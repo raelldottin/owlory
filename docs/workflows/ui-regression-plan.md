@@ -32,7 +32,7 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 
 **Trigger.** Pre-release, after a domain refactor, or on demand. Not every PR.
 
-**Target.** Broader per-domain coverage than the smoke set, including edge cases, multiple sources per domain, error paths, and action variants the smoke does not assert. Built as separate XCUITest classes (e.g., `OwloryUIRegressionTests/TodayContinueRegression`) so they do not run on every `make ui-smoke` invocation.
+**Target.** Broader per-domain coverage than the smoke set, including edge cases, multiple sources per domain, error paths, and action variants the smoke does not assert. Built as separate XCUITest classes (e.g., `OwloryUITests/TodayContinueRegression`) so they do not run on every `make ui-smoke` invocation.
 
 **Scope.** Batched simulator execution is allowed when state isolation is needed. Each test resets state via existing seed paths or new deterministic seeds; no test depends on residue from a prior test. May take longer than the smoke; tolerated because the trigger is rare.
 
@@ -41,10 +41,11 @@ The five lanes map directly onto the proof levels recorded in slice handoffs (`d
 **Does not prove.** Visual correctness, device behavior, TestFlight identity, surfaces outside the batch, or behavior under non-seeded real-user data.
 
 **Gating commands.**
-- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and Add to Today promotion visibility on the note detail sheet. Train regression is wired by `owlory-ui-regression-batch-3-train-active-history`, covering the Train active Today -> History transition.
+- `make ui-regression` runs every regression class against `/tmp/owlory-ui-regression-derived-data`. Today Continue regression is wired by `owlory-ui-regression-batch-1-today-continue`, covering Today Continue source visibility, source-derived routing, and Focus row actions. Write capture inbox regression is wired by `owlory-ui-regression-expansion-next-surface`, covering the seeded in-progress note row, capture entry affordance, and Add to Today promotion visibility on the note detail sheet. Train regression is wired by `owlory-ui-regression-batch-3-train-active-history`, covering the Train active Today -> History transition. Home protocol regression is wired by `owlory-ui-regression-batch-4-home-protocol-archive-restore`, covering protocol template archive/restore management.
 - `make ui-regression DOMAIN=today` narrows to `OwloryUITests/TodayContinueRegression`.
 - `make ui-regression DOMAIN=write` narrows to `OwloryUITests/WriteCaptureRegression`.
 - `make ui-regression DOMAIN=train` narrows to `OwloryUITests/TrainRegression`.
+- `make ui-regression DOMAIN=home` narrows to `OwloryUITests/HomeProtocolRegression`.
 - New regression classes should extend the `DOMAIN=` matrix rather than collapse multiple surfaces into one class.
 
 **Artifact location.** `/tmp/owlory-ui-regression-derived-data` (transient). Preserved failure artifacts go to `automation/proofs/<slice-id>/` only when a slice claims them as durable evidence.
@@ -55,7 +56,9 @@ Batch 2 has shipped: `OwloryUITests/WriteCaptureRegression` (selected by Agent A
 
 Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's parallel triage on 2026-05-13, covering the Train active/history transition).
 
-Batch 4 selected: **Home protocols — active run step progression** (chosen by `owlory-ui-regression-batch-4-surface-triage` on 2026-05-14). The implementation slice `owlory-ui-regression-batch-4-home-protocol-run-step-progression` is queued; see [Batch 4 decision](#batch-4-decision) below.
+Batch 4 has shipped: `OwloryUITests/HomeProtocolRegression` (selected by Agent B's 2026-05-15 triage, covering Home protocol template archive/restore management).
+
+Batch 5 selected: **Home protocols — active run step progression** (chosen by `owlory-ui-regression-batch-5-surface-triage` on 2026-05-14, running in parallel with Agent B's Batch 4 archive/restore triage). The implementation slice `owlory-ui-regression-batch-5-home-protocol-run-step-progression` is queued; see [Batch 5 decision](#batch-5-decision) below.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -66,6 +69,39 @@ Why Train was chosen (Agent B's reasoning, preserved):
 | Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist; Batch 3 now covers the Train tab active-to-history transition. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Implemented in Batch 3. |
 | Patterns | Domain rules are well-covered; UI surfaces are summary/report oriented. | Valuable after a concrete visual/report contract changes. | Defer until a Patterns UI claim needs proof. |
 | Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Defer until translation intake or layout risk exists. |
+
+Batch 4 triage decision:
+
+| Candidate | Current proof | Regression value | Decision |
+| --- | --- | --- | --- |
+| Write | `WriteCaptureRegression` already covers the capture inbox row, capture entry affordance, and Add to Today visibility. Write promotion also has flow/screenshot/device-style proof for selected paths. | More Write coverage is useful later, but choosing Write again would duplicate the current Batch 2 floor rather than broaden the suite. | Do not select for Batch 4. |
+| Home protocols | Domain tests cover archive/run/schedule semantics; smoke covers active protocol runs through Today Continue, but Home's own protocol template management has no Lane 2 regression. Recent archive-affordance work changed exactly this UI contract. | High value and narrow when scoped to template archive/restore only. It proves whole-protocol management stays discoverable without reintroducing step-looking swipe archive. | Select for Batch 4. |
+| Train | `TrainRegression` already covers active Today -> History transition. | Additional statuses can wait for a concrete bug or release risk. | Do not select for Batch 4. |
+| Patterns | Domain rules are covered, but no concrete Patterns UI behavior is currently named. | Valuable only after a specific report/insight surface claim changes. | Defer. |
+| Localization layout | All-locale launch screenshots exist; translation quality is still blocked on reviewed values. | Valuable after reviewed translations or a layout defect lands. | Defer. |
+
+Batch 4 implemented target:
+
+- Seed one active Home protocol template with a stable ID, title, and step, without creating an active run.
+- Open Home and assert the protocol template appears in the active protocol list.
+- Assert the direct protocol-level archive affordance is present on the protocol header row.
+- Archive the template through that affordance.
+- Assert the template leaves the active protocol list and appears in Archived Protocols with a restore affordance.
+- Restore the template and assert it returns to the active protocol list.
+
+Implemented support:
+
+- Added a deterministic UI seed launch argument for one Home protocol template only.
+- Added stable accessibility identifiers for the active protocol row, direct archive action, archived protocol row, and restore action.
+- Added a `HomeProtocolRegression` XCUITest class and wired `make ui-regression DOMAIN=home`.
+
+Out of scope for Batch 4:
+
+- Per-step archive, because protocol template steps are still plain strings.
+- Active run lifecycle, which already has domain tests and Continue route smoke.
+- Schedule-window status proof.
+- Protocol step revert proof.
+- Screenshot, device, or TestFlight proof.
 
 Batch 3 implemented target:
 
@@ -82,19 +118,23 @@ Out of scope for Batch 3:
 - Continue routing, which is already covered by smoke.
 - Screenshot, device, or TestFlight proof.
 
-### Batch 4 decision
+### Batch 5 decision
 
-Triage (`owlory-ui-regression-batch-4-surface-triage`, 2026-05-14) compared the three remaining surfaces. Write and Train are already shipped; localization layout, Patterns, and Home protocols are the candidates.
+Triage (`owlory-ui-regression-batch-5-surface-triage`, 2026-05-14) ran in parallel with Agent B's Batch 4 archive/restore triage. Both agents independently selected Home protocols as the next surface but picked different sub-behaviors. Agent B's archive/restore work shipped first as Batch 4 (`HomeProtocolRegression`); this triage's selection is preserved as Batch 5 — a distinct Home-protocols sub-behavior, not a re-do of Batch 4.
 
-| Candidate | Current proof | Regression value for Batch 4 | Decision |
+Sub-behavior comparison within Home protocols, given Batch 4 already covers template archive/restore:
+
+| Sub-behavior | Current proof | Regression value | Decision |
 | --- | --- | --- | --- |
-| Home protocols | Domain coverage for protocol lifecycle, schedule rules, and rollover. `today.continue.item.homeProtocolRun.<uuid>` route smoke routes into the active run sheet (`home.protocolRun.sheet.<uuid>` identifier exists). Step-level interactions inside the sheet have no UI proof. Recent localization slice wired accessibility labels for protocol step Complete/Skip but added no XCUITest identifiers. | High value — protocol runs are a primary Home interaction surface, the active-run sheet is the natural extension of the Continue route smoke, and the sub-behavior is contained enough to test deterministically in one batch. The accessibility infrastructure to add (step row identifiers, step action identifiers) is bounded to a single sheet. | **Selected for Batch 4** — narrowed to step progression. |
-| Patterns | Domain rules heavily unit-tested. UI surfaces are summary/report-oriented (digest cards, balance nudges, focus suggestions). | Lower interaction risk; no concrete UI claim has changed recently. Audit reasoning from Batch 2/3 triage still applies. | Defer until a Patterns UI claim needs proof. |
-| Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. All-locale screenshot proof shipped 2026-05-14. | Reviewed translations are still parked; without translated values, layout regression has nothing locale-distinctive to verify. | Defer until translation intake or a layout issue surfaces. |
+| Active-run step progression | `today.continue.item.homeProtocolRun.<uuid>` route smoke routes into the active run sheet (`home.protocolRun.sheet.<uuid>` identifier exists). Step-level interactions inside the sheet have no UI proof. | High — protocol runs are a primary Home interaction surface, the active-run sheet is the natural extension of the Continue route smoke, and the sub-behavior is contained enough to test deterministically in one batch. | **Selected for Batch 5.** |
+| Step skip | Same accessibility-identifier gap as step Complete; skip is a less common state transition. | Useful but lower priority than the primary Complete path. | Defer to a future scoped slice. |
+| Step revert | Same identifier gap; revert is rarer still. | Useful for protocols where a step was mistakenly completed. | Defer to a future scoped slice. |
+| Schedule-window status display | Domain rules tested at unit level; no Lane 2 UI proof for the schedule preset/status row. | Useful pre-release of a schedule-content change; not currently a release risk. | Defer until a schedule UI claim changes. |
+| Protocol template editing | Edit sheet has localized strings but no Lane 2 regression. | Useful for the edit flow; broader than this slice should hold. | Defer until template editing changes shape. |
 
-Within Home protocols, Batch 4 narrows to **active-run step progression** specifically. Other Home-protocols sub-behaviors (step revert, schedule windows, archive flow, protocol template editing) are deferred to future scoped slices.
+Patterns and localization layout remain deferred per the prior triage reasoning.
 
-Batch 4 target (for the queued implementation slice `owlory-ui-regression-batch-4-home-protocol-run-step-progression`):
+Batch 5 target (for the queued implementation slice `owlory-ui-regression-batch-5-home-protocol-run-step-progression`):
 
 - Reuse `--owlory-ui-seed-home-protocol-run-continue-item` if its single-step protocol is enough, or add a new `--owlory-ui-seed-home-protocol-run-multi-step` arg if proving sequential step progression requires more than one pending step. The implementer makes this call inside the slice scope.
 - Open the active run sheet via the Today Continue row (route already smoke-covered).
@@ -107,13 +147,12 @@ Coverage goal: `running-app-smoke` for the active-run-sheet step Complete intera
 Required infrastructure for the implementation slice:
 
 - New accessibility identifiers on `HomeView` protocol step rows and the Complete action button (the existing `home.protocol.step.accessibility.complete` is a *label*; the test needs an *identifier*). Candidate IDs: `home.protocolRun.step.<uuid>` and `home.protocolRun.step.action.complete.<uuid>`.
-- A new XCUITest class `HomeProtocolRunStepRegression` reached via `make ui-regression DOMAIN=home`.
-- Makefile `DOMAIN=home` matrix branch.
+- A new XCUITest class `HomeProtocolRunStepRegression`, **separate from** `HomeProtocolRegression` (which already covers archive/restore as Batch 4). Add it to the bare `make ui-regression` lane alongside `HomeProtocolRegression`; the `DOMAIN=home` filter should run both classes.
 
-Out of scope for Batch 4:
+Out of scope for Batch 5:
 
 - Step skip and step revert flows (separate scoped slices later if needed).
-- Protocol archive or template editing.
+- Protocol archive or template editing (Batch 4 covers archive/restore for templates).
 - Schedule-window status display.
 - Patterns UI proof.
 - Localization layout regression.
