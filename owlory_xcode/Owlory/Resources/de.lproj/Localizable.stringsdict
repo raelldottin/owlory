@@ -1,8 +1,9 @@
 /*
  Localizable.stringsdict
  Owlory
- Plural-aware Today dashboard and accessibility source strings.
- Non-English locales intentionally keep English values until translation-quality work.
+ LLM-drafted German plural values produced by claude-opus-4-7 on 2026-05-15.
+ Not native-reviewed. See localization/review/de/german-review-return.json
+ and docs/workflows/localization-translation-quality.md for provenance.
 */
 {
   "today.dashboard.train.summary" = {
@@ -10,14 +11,14 @@
     planned = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d planned";
-      other = "%d planned";
+      one = "%d geplant";
+      other = "%d geplant";
     };
     completed = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d completed";
-      other = "%d completed";
+      one = "%d abgeschlossen";
+      other = "%d abgeschlossen";
     };
   };
   "today.dashboard.write.summary" = {
@@ -25,20 +26,20 @@
     captures = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d capture";
-      other = "%d captures";
+      one = "%d Erfassung";
+      other = "%d Erfassungen";
     };
     sources = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d source";
-      other = "%d sources";
+      one = "%d Quelle";
+      other = "%d Quellen";
     };
     drafts = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d draft";
-      other = "%d drafts";
+      one = "%d Entwurf";
+      other = "%d Entwürfe";
     };
   };
   "today.dashboard.career.records" = {
@@ -46,8 +47,8 @@
     records = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d record";
-      other = "%d records";
+      one = "%d Eintrag";
+      other = "%d Einträge";
     };
   };
   "today.dashboard.home.summary" = {
@@ -55,20 +56,20 @@
     runs = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d run";
-      other = "%d runs";
+      one = "%d Durchlauf";
+      other = "%d Durchläufe";
     };
     tasks = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d task";
-      other = "%d tasks";
+      one = "%d Aufgabe";
+      other = "%d Aufgaben";
     };
     done = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d done";
-      other = "%d done";
+      one = "%d erledigt";
+      other = "%d erledigt";
     };
   };
   "today.dashboard.home.summary.withSkipped" = {
@@ -76,26 +77,26 @@
     runs = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d run";
-      other = "%d runs";
+      one = "%d Durchlauf";
+      other = "%d Durchläufe";
     };
     tasks = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d task";
-      other = "%d tasks";
+      one = "%d Aufgabe";
+      other = "%d Aufgaben";
     };
     done = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d done";
-      other = "%d done";
+      one = "%d erledigt";
+      other = "%d erledigt";
     };
     skipped = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d skipped";
-      other = "%d skipped";
+      one = "%d übersprungen";
+      other = "%d übersprungen";
     };
   };
   "today.readiness.scale.accessibility" = {
@@ -103,8 +104,8 @@
     level = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d of 5";
-      other = "%d of 5";
+      one = "%d von 5";
+      other = "%d von 5";
     };
   };
   "today.readiness.scale.accessibility.selected" = {
@@ -112,8 +113,8 @@
     level = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d of 5";
-      other = "%d of 5";
+      one = "%d von 5";
+      other = "%d von 5";
     };
   };
   "weeklyDigest.domainActivity.items" = {
@@ -121,8 +122,8 @@
     items = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d item";
-      other = "%d items";
+      one = "%d Element";
+      other = "%d Elemente";
     };
   };
   "weeklyDigest.row.daysActive" = {
@@ -130,8 +131,8 @@
     days = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d/7 days";
-      other = "%d/7 days";
+      one = "%d/7 Tage";
+      other = "%d/7 Tage";
     };
   };
   "weeklyDigest.streak.compact" = {
@@ -139,8 +140,8 @@
     days = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%dd";
-      other = "%dd";
+      one = "%dT";
+      other = "%dT";
     };
   };
   "weeklyDigest.streak.days" = {
@@ -148,8 +149,8 @@
     days = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "%d day";
-      other = "%d days";
+      one = "%d Tag";
+      other = "%d Tage";
     };
   };
   "recurrence.interval.days" = {
@@ -157,8 +158,8 @@
     days = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "Every %d day";
-      other = "Every %d days";
+      one = "Alle %d Tage";
+      other = "Alle %d Tage";
     };
   };
   "recurrence.interval.compact" = {
@@ -166,8 +167,8 @@
     days = {
       NSStringFormatSpecTypeKey = "NSStringPluralRuleType";
       NSStringFormatValueTypeKey = "d";
-      one = "Every %dd";
-      other = "Every %dd";
+      one = "Alle %dT";
+      other = "Alle %dT";
     };
   };
 

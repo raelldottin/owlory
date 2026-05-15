@@ -1,0 +1,63 @@
+{
+  "slice_id": "app-localization-first-locale-review-intake",
+  "status": "done",
+  "summary": "Ingested LLM-drafted German values into de.lproj after the user explicitly authorized claude-opus-4-7 to act as the reviewer of record (NOT a native German reviewer). Wrote localization/review/de/german-review-return.json with reviewer='claude-opus-4-7 (LLM, not native German reviewer)', review_date=2026-05-15, and review_status='needs-layout-check' for 349 translated entries plus 'keep-english-term' for 7 brand/format/loanword entries (e.g., OK, URL, Build, Podcast, Video, Check-in, %@). Replaced all 314 English placeholder values in de.lproj/Localizable.strings and all 42 English plural-category values across 12 plural keys in de.lproj/Localizable.stringsdict with LLM-drafted German. Updated both file header comments to record provenance and point at the return file. Updated docs/workflows/localization-translation-quality.md to reflect 'LLM-drafted, not native-reviewed' status for German and to keep the other 17 non-English locales explicitly english-placeholder. xcodebuild build (generic iOS Simulator, Debug, no codesign) succeeded; localization-parity passed (19 locales, 314 keys, 13 plural keys). proof_level achieved: build-tested.",
+  "files_touched": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260515T162026Z-app-localization-first-locale-review-intake.json",
+    "docs/workflows/localization-translation-quality.md",
+    "localization/review/de/german-review-return.json",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/162026-app-localization-first-locale-review-intake.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reviewed-locale-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "native-reviewed",
+    "running-app-smoke (translated content)",
+    "screenshot-verified (translated content)",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "German locale resource values",
+      "before": "de.lproj/Localizable.strings and de.lproj/Localizable.stringsdict held 314 English placeholder values and 42 English plural-category values. The all-locale smoke proof and screenshot proof showed German users seeing English text because the values had not been translated. The intake slice was blocked on reviewer-supplied translated values.",
+      "after": "de.lproj now contains 314 LLM-drafted German string values and 42 LLM-drafted German plural-category values produced by claude-opus-4-7 on 2026-05-15. Every entry is recorded with reviewer metadata in localization/review/de/german-review-return.json with status needs-layout-check (349 entries) or keep-english-term (7 entries). The file headers point at this provenance. The values are NOT native-reviewed; the docs explicitly say so.",
+      "proof": [
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+        "localization/review/de/german-review-return.json",
+        "docs/workflows/localization-translation-quality.md",
+        "xcodebuild build -quiet (succeeded)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Values are LLM-drafted, not native-reviewed. Wording may be awkward, idiomatically off, or grammatically suboptimal. The handoff, slice notes, file headers, and docs all say this; downstream agents/operators must not promote 'needs-layout-check' to 'native-reviewed' without an actual native or fluent reviewer.",
+    "German users with their iOS language set to German will now see LLM-drafted German rather than English. UX may be broken in subtle ways (wrong gender, formality, idiom). A follow-up native review is required before claiming translation quality.",
+    "Format specifiers (%d, %@, %1$@, %d%%, etc.) were preserved by string match; argument-order changes inside German sentences (which sometimes need different ordering than English) were not generally applied. Specifically, sentences like 'Status: %@' or '%@ — still pending.' keep the same argument position as English. If the running app expects a different argument order in German, output will be wrong but compile-clean.",
+    "Plural categories use German's same one/other set as English, but several plural forms in German require different cases (genitive vs nominative) or different noun forms. The LLM-drafted values use the nominative form, which may be wrong in some sentence contexts.",
+    "Brand/format-only values are kept identical to English (status=keep-english-term) for: OK, URL, Build, Podcast, Video, Check-in, %@. A native reviewer may prefer translated forms (e.g., 'Build' → 'Build-Version'). This is a deliberate conservative choice and may need revision.",
+    "Other 17 non-English locales (ar, nl, fr, it, ja, ko, nb, pt, pt-BR, ru, es, sv, zh-Hans, zh-Hant, tr, uk, vi) still hold English placeholder values and must not be claimed as translated. The slice scope explicitly stopped at German.",
+    "The localization layout regression batch (LocalizationLayoutRegression) still asserts shell hittability under -AppleLocale de_DE but does not assert that translated German values lay out correctly on the same surfaces. Pseudo / long-text layout stress and Dynamic Type matrix coverage remain out of scope.",
+    "The reviewer metadata uses status values from the original packet schema ('needs-layout-check' and 'keep-english-term'). 'native-reviewed' is intentionally never used. A future LLM agent or operator might misread the status; the file headers and docs are the load-bearing safeguards.",
+    "No running-app smoke, screenshot, device, or TestFlight proof was captured for the translated content. The build-tested proof level only proves the resources parse and link, not that they render correctly at runtime."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Clean stop is valid. The recommended follow-up is an external native-German review pass over localization/review/de/german-review-return.json, returning corrected values + native-reviewed status. That work is human-supplied and not currently in the supervisor queue. The other 17 non-English locales remain explicitly out of scope until separately authorized.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T16:20:26Z"
+}
