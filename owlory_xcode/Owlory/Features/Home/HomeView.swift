@@ -299,6 +299,17 @@ struct HomeView: View {
                         .foregroundStyle(summary.status == .overdue ? .orange : .secondary)
                 }
             }
+            Spacer(minLength: 8)
+            Button {
+                store.archiveProtocol(id: proto.id)
+            } label: {
+                Image(systemName: "archivebox")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel("Archive Protocol")
         }
     }
 
