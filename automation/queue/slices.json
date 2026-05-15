@@ -3429,6 +3429,75 @@
       "max_files_changed": 20,
       "entry_condition": "Batch 6 sub-behavior triage selected Patterns digest detail insight + highlight rendering. The WeeklyDigest.InsightKind enum, structured DayHighlight fields, and WeeklyDigestPresentationFormatting helpers shipped in app-localization-digest-insight-summary-formatting; this slice proves they render correctly end-to-end.",
       "notes": "Batch 6 target: Patterns digest detail insight + highlight sentence rendering. Add a deterministic seed launch arg (e.g., --owlory-ui-seed-weekly-digest-insight-fixture) that writes one WeeklyDigest JSON with keyInsight = WeeklyDigest.InsightKind.strongWeek.rawValue, bestDay (doneCount=2, plannedCount=2, empty summary), and hardestDay (readinessBand='low', empty summary). Open the digest detail from Today via the existing route. Assert the localized insight sentence renders ('Strong week. High readiness translated into follow-through.'); assert the best-day highlight renders the structured-path sentence with the doneCount-of-plannedCount substring; assert the hardest-day highlight renders the localized low-readiness sentence. Add accessibility identifiers today.digest.row.<uuid>, today.digest.detail.insight, today.digest.detail.highlight.best, today.digest.detail.highlight.hardest. Add a new XCUITest class OwloryUITests/PatternsDigestRegression and wire it into make ui-regression. Add a DOMAIN=patterns matrix branch consistent with the existing today/write/train/home pattern. Out of scope: lastWeekSection card, DigestListView routing beyond what's needed to reach detail, Focus Suggestions, pattern nudges, domain rule changes, translation of non-English values, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-7-localization-layout-triage",
+      "title": "Triage Batch 7 localization layout regression surface",
+      "status": "done",
+      "priority": 210,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-7-localization-layout-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-screenshot-proof"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "User explicitly selected localization layout from the parked candidate list. The slice must classify what layout proof is meaningful while non-English resources remain English placeholders.",
+      "notes": "Completed on 2026-05-15. Compared localization layout sub-behaviors: all-locale launch screenshots, representative locale launch-shell layout, reviewed-translation layout, pseudo/long-text layout harness, and manual/TestFlight app-language layout. Selected representative locale launch-shell layout because all-locale screenshot proof already covers launch-surface visual evidence, reviewed translated-text layout is blocked until reviewed values exist, and a small maintained XCUITest can still guard locale launch arguments plus RTL/CJK shell stability without claiming translation quality. Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 7 decision'. Queued implementation slice owlory-ui-regression-batch-7-localization-layout-shell with explicit scope: launch with --owlory-ui-testing, --owlory-ui-seed-fresh-day, -AppleLanguages, and -AppleLocale for en, de, ar, zh-Hans; assert the Today shell settles through stable identifiers; add DOMAIN=localization to make ui-regression. proof_level achieved: doc-only. No XCUITest code touched."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-7-localization-layout-shell",
+      "title": "Add representative locale layout shell UI regression batch",
+      "status": "queued",
+      "priority": 211,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "Makefile",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-7-localization-layout-shell",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-batch-7-localization-layout-triage",
+        "app-localization-all-locale-screenshot-proof"
+      ],
+      "max_files_changed": 16,
+      "entry_condition": "Batch 7 localization layout triage selected representative locale launch-shell stability. Non-English resources remain English placeholders, so this slice must not claim translated-text layout or translation quality.",
+      "notes": "Batch 7 target: representative locale launch-shell regression. Add a new XCUITest class such as LocalizationLayoutRegression. Launch with --owlory-ui-testing, --owlory-ui-seed-fresh-day, -AppleLanguages, and -AppleLocale for en, de, ar, and zh-Hans. Assert the Today dashboard shell settles for each locale through stable accessibility identifiers rather than translated labels, and assert the main app shell remains reachable/hittable enough to prove the launch surface did not blank, crash, or hide the core tab/navigation structure. Reuse the existing fresh-day seed; do not add app data fixtures unless a concrete blocker appears. Add stable tab/shell identifiers only if the existing shell is label-only and therefore brittle under real translations. Add DOMAIN=localization to make ui-regression. Out of scope: translation replacement, native/fluent review, all 19 locales in Lane 2, pseudo/long-text layout stress, Dynamic Type matrix coverage, product copy rewrites, localization resource edits, screenshot/device/TestFlight proof. proof_level target: running-app-smoke."
     }
   ]
 }

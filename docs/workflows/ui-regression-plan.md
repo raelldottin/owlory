@@ -62,6 +62,8 @@ Batch 5 has shipped: `OwloryUITests/HomeProtocolRunStepRegression` (Home protoco
 
 Batch 6 selected: **Patterns UI — digest detail insight + highlight sentence rendering** (chosen by `owlory-ui-regression-batch-6-surface-triage` on 2026-05-15 after the user picked Patterns UI from the parked candidate list). The implementation slice `owlory-ui-regression-batch-6-patterns-digest-insight-rendering` is queued; see [Batch 6 decision](#batch-6-decision) below.
 
+Batch 7 selected: **Localization layout — representative locale launch-shell regression** (chosen by `owlory-ui-regression-batch-7-localization-layout-triage` on 2026-05-15 after the user picked localization layout from the parked candidate list). The implementation slice `owlory-ui-regression-batch-7-localization-layout-shell` is queued ahead of the still-queued Patterns implementation because this is an explicit user-directed surface selection; see [Batch 7 decision](#batch-7-decision) below.
+
 Why Train was chosen (Agent B's reasoning, preserved):
 
 | Candidate | Current proof | Regression value | Decision |
@@ -70,7 +72,7 @@ Why Train was chosen (Agent B's reasoning, preserved):
 | Home protocols | Domain coverage plus Continue route smoke for active runs; archive, schedule, and step-revert UI proof remain useful. | High value, but candidate surface is broader and should be split by behavior before adding a regression batch. | Defer until scoped to one Home behavior. |
 | Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist; Batch 3 now covers the Train tab active-to-history transition. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Implemented in Batch 3. |
 | Patterns | Domain rules are well-covered; UI surfaces are summary/report oriented. | Valuable after a concrete visual/report contract changes. | Defer until a Patterns UI claim needs proof. |
-| Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Defer until translation intake or layout risk exists. |
+| Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Deferred in this historical triage; later superseded by Batch 7's narrow launch-shell selection. |
 
 Batch 4 triage decision:
 
@@ -80,7 +82,7 @@ Batch 4 triage decision:
 | Home protocols | Domain tests cover archive/run/schedule semantics; smoke covers active protocol runs through Today Continue, but Home's own protocol template management has no Lane 2 regression. Recent archive-affordance work changed exactly this UI contract. | High value and narrow when scoped to template archive/restore only. It proves whole-protocol management stays discoverable without reintroducing step-looking swipe archive. | Select for Batch 4. |
 | Train | `TrainRegression` already covers active Today -> History transition. | Additional statuses can wait for a concrete bug or release risk. | Do not select for Batch 4. |
 | Patterns | Domain rules are covered, but no concrete Patterns UI behavior is currently named. | Valuable only after a specific report/insight surface claim changes. | Defer. |
-| Localization layout | All-locale launch screenshots exist; translation quality is still blocked on reviewed values. | Valuable after reviewed translations or a layout defect lands. | Defer. |
+| Localization layout | All-locale launch screenshots exist; translation quality is still blocked on reviewed values. | Valuable after reviewed translations or a layout defect lands. | Deferred in this historical triage; later superseded by Batch 7's narrow launch-shell selection. |
 
 Batch 4 implemented target:
 
@@ -134,7 +136,7 @@ Sub-behavior comparison within Home protocols, given Batch 4 already covers temp
 | Schedule-window status display | Domain rules tested at unit level; no Lane 2 UI proof for the schedule preset/status row. | Useful pre-release of a schedule-content change; not currently a release risk. | Defer until a schedule UI claim changes. |
 | Protocol template editing | Edit sheet has localized strings but no Lane 2 regression. | Useful for the edit flow; broader than this slice should hold. | Defer until template editing changes shape. |
 
-Patterns and localization layout remain deferred per the prior triage reasoning.
+Patterns remained deferred at the time of Batch 5 and became Batch 6 after a later user selection. Localization layout remained deferred at the time of Batch 5 and became Batch 7 after a later user selection.
 
 Batch 5 target (for the queued implementation slice `owlory-ui-regression-batch-5-home-protocol-run-step-progression`):
 
@@ -199,6 +201,45 @@ Out of scope for Batch 6:
 - Pattern-driven nudges (readiness, evening reflection, Write pipeline, Train consistency).
 - Domain rule changes (`WeeklyDigestRules` stays untouched).
 - Translation of non-English values.
+- Screenshot, device, or TestFlight proof.
+
+### Batch 7 decision
+
+Triage (`owlory-ui-regression-batch-7-localization-layout-triage`, 2026-05-15) was scoped to localization layout after the user picked it from the parked candidate list. This is intentionally not a translation-quality slice: non-English resources still contain English placeholder values unless reviewed and ingested, so a regression batch cannot honestly prove translated-text expansion, grammar, or truncation yet.
+
+Sub-behavior comparison within localization layout:
+
+| Sub-behavior | Current proof | Regression value | Decision |
+| --- | --- | --- | --- |
+| All-locale launch screenshots | `app-localization-all-locale-screenshot-proof` preserved one settled Today launch-surface PNG for all 19 locales. | Already covered as screenshot evidence for launch surfaces; rerunning this as Lane 2 would duplicate the proof lane. | Do not select. |
+| Representative locale launch-shell layout | All-locale screenshots exist, but no maintained XCUITest regression asserts that the Today shell remains reachable under locale launch arguments. | High enough and bounded: proves locale launch arguments, RTL/CJK shell loading, and core Today surface identifiers stay testable without claiming translated text quality. | **Selected for Batch 7.** |
+| Reviewed-translation layout | No reviewed non-English values have been ingested. German currently remains English placeholder text. | Highest eventual product value, but blocked until reviewed translations exist. | Defer until `app-localization-first-locale-review-intake` or another reviewed-locale intake lands. |
+| Pseudo/long-text layout harness | No pseudo-localization or long-text fixture exists. | Useful for truncation risk, but it requires a separate harness decision and should not be smuggled into locale smoke. | Defer to a dedicated pseudo/long-text design slice. |
+| Manual/TestFlight app-language layout | Manual per-app language switching exists as review guidance; TestFlight proof uses natural installed data. | Useful for release review but not deterministic local regression. | Keep in the manual/device/TestFlight proof lanes. |
+
+Batch 7 target (for the queued implementation slice `owlory-ui-regression-batch-7-localization-layout-shell`):
+
+- Add a new XCUITest class such as `LocalizationLayoutRegression`.
+- Launch with `--owlory-ui-testing`, `--owlory-ui-seed-fresh-day`, `-AppleLanguages`, and `-AppleLocale`.
+- Cover a small representative set: `en`, `de`, `ar`, and `zh-Hans`.
+- Assert the Today dashboard shell settles for each locale through stable identifiers, not translated labels.
+- Assert the main app shell remains reachable/hittable enough to prove the launch surface did not blank, crash, or hide the core tab/navigation structure.
+
+Coverage goal: `running-app-smoke` for representative localization layout shell stability.
+
+Required infrastructure for the implementation slice:
+
+- Reuse the existing fresh-day seed; no new product data fixture should be needed.
+- Add stable tab/shell accessibility identifiers only if the existing surface relies on localized labels. Candidate identifiers: `tab.today`, `tab.train`, `tab.write`, `tab.patterns`, and `tab.home`.
+- Add `DOMAIN=localization` to `make ui-regression` so the lane can run without the whole regression suite.
+
+Out of scope for Batch 7:
+
+- Translation replacement or native/fluent review.
+- All 19 locales in Lane 2; all-locale screenshot and smoke proof already cover launch/resource loading.
+- Long-text or pseudo-localization layout stress.
+- Dynamic Type matrix coverage.
+- Product copy rewrites or localization resource edits.
 - Screenshot, device, or TestFlight proof.
 
 ## Lane 3: Screenshot Proof

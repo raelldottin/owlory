@@ -1,0 +1,56 @@
+{
+  "slice_id": "owlory-ui-regression-batch-7-localization-layout-triage",
+  "status": "done",
+  "summary": "Doc-only triage. The user selected localization layout from the parked UI regression candidate list. Compared all-locale launch screenshots, representative locale launch-shell layout, reviewed-translation layout, pseudo/long-text layout, and manual/TestFlight app-language layout. Selected representative locale launch-shell layout because all-locale screenshot proof already exists, real translated-text layout is blocked until reviewed translations exist, and a small XCUITest batch can still guard locale launch arguments plus RTL/CJK shell stability without claiming translation quality. Decision memo added to docs/workflows/ui-regression-plan.md under '### Batch 7 decision'. Queued implementation slice owlory-ui-regression-batch-7-localization-layout-shell with explicit scope: en, de, ar, zh-Hans; fresh-day seed; locale launch args; stable identifiers; DOMAIN=localization.",
+  "files_touched": [
+    "automation/handoffs/20260515T045854Z-owlory-ui-regression-batch-7-localization-layout-triage.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-translation-quality.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-15/005854-owlory-ui-regression-batch-7-localization-layout-triage.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-7-localization-layout-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Next UI regression surface selection for localization layout (Batch 7)",
+      "before": "Localization layout was a parked candidate. All-locale locale smoke and screenshot proof existed, but no maintained Lane 2 XCUITest regression was selected. Non-English resources remained English placeholders, so full translated-text layout proof was not honest.",
+      "after": "Batch 7 surface explicitly selected: representative locale launch-shell regression for en, de, ar, and zh-Hans. The implementation slice is queued with the rule that it proves shell stability under locale launch arguments only, not translation quality or full layout correctness.",
+      "proof": [
+        "docs/workflows/ui-regression-plan.md",
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The implementation slice may need stable tab or shell accessibility identifiers if the current shell is label-only and therefore brittle once real translations land.",
+    "Representative locale shell regression does not prove all 19 locales in Lane 2; all-locale resource loading and launch-surface screenshots remain covered by the localization proof lanes.",
+    "The selected Batch 7 does not prove real translated-text layout because non-English resources are still English placeholders. Reviewed-translation layout remains blocked until reviewed values are ingested.",
+    "The previously queued Patterns implementation remains open but is now lower priority than the user-directed localization layout implementation."
+  ],
+  "recommended_next_slice": "owlory-ui-regression-batch-7-localization-layout-shell",
+  "recommended_next_reason": "Queued behind this triage with explicit implementation scope and higher priority than the still-queued Patterns Batch 6 implementation because the user explicitly selected localization layout.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T04:58:54Z"
+}

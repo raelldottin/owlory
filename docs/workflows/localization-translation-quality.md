@@ -13,6 +13,7 @@ Localization is not complete. Treat resource readiness, runtime proof, and trans
 - **Translation review input**: prepared. The generated review packet exists, and the German-first packet is ready under `localization/review/de/`.
 - **All-locale smoke**: implemented. `app-localization-all-locale-smoke` passed for all 19 supported locales and proves launch/resource loading only.
 - **All-locale screenshot proof**: implemented. `app-localization-all-locale-screenshot-proof` captured one settled launch-surface screenshot per supported locale (19 PNGs) on 2026-05-14 and preserved them under `automation/proofs/app-localization-all-locale-screenshot-proof/` with README and `manifest.json` (sha256 + bytes). This proves launch-surface visual evidence only, not translation quality, full layout correctness, device behavior, or TestFlight behavior.
+- **Localization layout regression**: selected but not implemented. `owlory-ui-regression-batch-7-localization-layout-triage` chose a representative locale launch-shell XCUITest batch (`en`, `de`, `ar`, `zh-Hans`) to prove the core Today shell remains reachable under locale launch arguments. This is a UI regression guard only; it does not prove translated-text layout because non-English values remain English placeholders.
 - **Reviewed translations**: incomplete. No non-English locale may be claimed as reviewed until translated values return with reviewer/status metadata and are ingested.
 - **Translation quality**: incomplete. Non-English resources remain English placeholders unless a scoped intake slice explicitly records reviewed replacements.
 
@@ -110,6 +111,7 @@ For each locale, the reviewer may choose translated or retained product terms, b
 - Do not add user-visible placeholder warnings.
 - Do not claim translation completeness from parity checks, simulator launch, or screenshots alone.
 - Do not use translation work to fix layout; queue a separate layout slice if translated text exposes a UI issue.
+- Do not treat the representative localization-layout regression as translation quality or full layout correctness; it proves launch-shell stability under locale arguments only.
 
 ## Validation
 

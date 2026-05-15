@@ -10,10 +10,11 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Owlory has repo-managed screenshot proof directories under `automation/proofs/`.
 - Owlory has a minimal first-class XCUITest target, `OwloryUITests`, with focused deterministic Today smoke coverage.
 - Owlory has five Lane 2 regression batches run by `make ui-regression`: `TodayContinueRegression`, `WriteCaptureRegression`, `TrainRegression`, `HomeProtocolRegression`, and `HomeProtocolRunStepRegression`. `DOMAIN=today`, `DOMAIN=write`, and `DOMAIN=train` filter to a single class each; `DOMAIN=home` filters to both Home regression classes.
+- Batch 7 localization layout has been selected and queued as a representative locale launch-shell regression, but it is not implemented yet. It should prove shell stability under locale launch arguments, not translation quality.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - Owlory has an idb-first dependency check and capture helper for full-locale screenshot proof: `make localization-screenshot-idb-check` and `python3 automation/smoke/capture_locale_screenshots.py`.
 
-Do not treat the current Today, Write, Train, and Home protocol regression batches as broad app-wide UI regression coverage.
+Do not treat the current Today, Write, Train, Home protocol, or queued localization-layout regression batches as broad app-wide UI regression coverage.
 
 ## Proof Lanes
 
@@ -141,7 +142,7 @@ Completed foundation slices:
 | `owlory-ui-regression-batch-3-train-active-history` | Lane 2 Batch 3 covering the Train tab active/history transition: seed one planned session, complete it through visible Train UI, and assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-batch-4-home-protocol-archive-restore` | Lane 2 Batch 4 for Home protocol template archive/restore management: seed one template, archive it through a protocol-level affordance, verify it moves to Archived Protocols, restore it, and verify it returns active. | `running-app-smoke`, XCUITest-backed |
 
-No next regression surface is selected. Run another triage slice before expanding Lane 2 again.
+The next selected regression surface is localization layout, scoped to representative locale launch-shell stability. The queued implementation slice is `owlory-ui-regression-batch-7-localization-layout-shell`; do not broaden it into translation quality, all-locale layout proof, screenshots, device proof, or TestFlight proof.
 
 Deferred proof lanes:
 
