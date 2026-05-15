@@ -12,7 +12,7 @@ Files:
 
 - `translation-review-export.csv` - reviewer-friendly flat rows for `Localizable.strings` and `Localizable.stringsdict` values. Newlines are escaped as `\n` so each review row stays on one CSV line.
 - `translation-review-export.json` - structured packet preserving locale values, status labels, and summary counts.
-- `de/` - German-first reviewer packet derived from the export. Use this when preparing the first reviewed-locale intake.
+- `de/` - German-first reviewer packet derived from the export. Use this when preparing the first reviewed-locale intake. Regenerate with `python3 Tools/german-review-packet-regenerate.py`.
 
 Status labels:
 

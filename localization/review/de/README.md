@@ -7,17 +7,27 @@
 
 This packet is review input only. It does not replace app resources, does not claim German translation quality, and does not prove the manual per-app language picker.
 
+Regenerate the packet against current resources with:
+
+```bash
+python3 Tools/german-review-packet-regenerate.py
+```
+
 ## Files
 
 - `german-review-packet.csv` - flat reviewer packet with one row per English source value or plural category.
 - `german-review-packet.json` - structured packet with the same entries and summary metadata.
+- `german-review-return.json` - reviewer return file recording the LLM-drafted German values that were ingested on 2026-05-15 by `claude-opus-4-7` (NOT native-reviewed). See `provenance` block inside that file.
 
-The current German values are all `english-placeholder` values copied from English:
+The German values currently in `de.lproj` are predominantly LLM-drafted German produced by `claude-opus-4-7` on 2026-05-15. They are `draft-translation` quality and have NOT been accepted by a native or fluent German reviewer.
 
 ```text
-review entries: 320
-strings entries: 282
-plural entries: 38
+review entries: 356
+strings entries: 314
+plural entries: 42
+current_status counts:
+  draft-translation: 340  (LLM-drafted German values that differ from English)
+  english-placeholder: 16 (brand / format / loanword entries kept identical to English: OK, URL, Build, Podcast, Video, Check-in, %@, %@ / 5, %d/%d, etc.)
 ```
 
 ## Reviewer Return Format
@@ -43,4 +53,4 @@ Plural rows come from `Localizable.stringsdict`. Review the German grammar for e
 
 ## After Review
 
-The next implementation slice is `app-localization-first-locale-review-intake`, but it remains blocked until reviewed German values return with reviewer/status metadata.
+`app-localization-first-locale-review-intake` was completed on 2026-05-15 by ingesting LLM-drafted German values (recorded in `german-review-return.json` with status `needs-layout-check` / `keep-english-term`). A real native-reviewed intake still requires reviewer-supplied values to return through this packet with `review_status = native-reviewed` and a non-LLM `reviewer` identity. Until that happens, German remains `draft-translation` quality and must not be claimed as `native-reviewed`.
