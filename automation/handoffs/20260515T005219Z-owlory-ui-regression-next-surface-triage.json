@@ -1,0 +1,59 @@
+{
+  "slice_id": "owlory-ui-regression-next-surface-triage",
+  "status": "done",
+  "summary": "Selected Home protocol template archive/restore management as the next UI regression surface. Write was not selected because WriteCaptureRegression already shipped as Batch 2; Train was not selected because TrainRegression already shipped as Batch 3. Patterns and localization layout remain deferred until they have a concrete UI contract or reviewed-translation/layout risk. Queued owlory-ui-regression-batch-4-home-protocol-archive-restore with a narrow implementation target: seed one Home protocol template, verify it appears active, archive it through an explicit protocol-level affordance, verify it moves to Archived Protocols, restore it, and verify it returns active.",
+  "files_touched": [
+    "automation/handoffs/20260515T005219Z-owlory-ui-regression-next-surface-triage.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/home.md",
+    "docs/workflows/roadmap-status.md",
+    "docs/workflows/ui-regression-plan.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-14/205219-owlory-ui-regression-next-surface-triage.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id owlory-ui-regression-next-surface-triage",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "domain-tested",
+    "build-tested",
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Next UI regression surface selection",
+      "before": "The maintained UI regression lane had TodayContinueRegression, WriteCaptureRegression, and TrainRegression, but no selected next Lane 2 surface.",
+      "after": "Home protocol template archive/restore management is selected for Batch 4 and queued as owlory-ui-regression-batch-4-home-protocol-archive-restore. The implementation slice must add HomeProtocolRegression and make ui-regression DOMAIN=home without changing make ui-smoke.",
+      "proof": [
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This triage does not implement XCUITests, seed data, accessibility identifiers, or Makefile DOMAIN=home support; those belong to the queued implementation slice.",
+    "This triage does not claim running-app, screenshot, device, or TestFlight proof.",
+    "Home protocol Batch 4 is deliberately limited to template archive/restore management. Active-run lifecycle, schedule labels, step revert, and per-step archive remain out of scope.",
+    "Write and Train can receive later regression batches, but they were not selected here because their first Lane 2 batches already exist."
+  ],
+  "recommended_next_slice": "owlory-ui-regression-batch-4-home-protocol-archive-restore",
+  "recommended_next_reason": "Supervisor dry-run selects the queued Batch 4 implementation slice. Its scope is narrow, concrete, and tied to recent Home protocol archive affordance work.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-15T00:52:19Z"
+}

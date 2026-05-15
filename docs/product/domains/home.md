@@ -67,7 +67,7 @@ Missing/deferred: Screenshot/UI regression proof is not present.
 ## Protocol Run Contract
 
 Implementation status: `Implemented` for the current active-run lifecycle, template preservation, run persistence, duplicate prevention, and Today projection rules.
-Proof level: Home protocol lifecycle and Today projection rules have focused domain coverage.
+Proof level: Home protocol lifecycle and Today projection rules have focused domain coverage. Lane 2 UI regression proof is queued for template archive/restore management only.
 Missing/deferred: Home projects remain `Contract only`; protocol schedule windows currently affect Home template labels only.
 
 - Protocols are reusable templates. A run must not mutate the template that created it.

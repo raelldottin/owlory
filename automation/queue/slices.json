@@ -2678,7 +2678,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "A concrete need exists to expand UI regression coverage beyond Today Continue.",
-      "notes": "Completed on 2026-05-13 by two parallel agents. Agent A chose Write capture inbox as the next regression surface (Write Lab is the only Partially implemented capture domain currently shipping; promotion flows cross Today/Home tasks/Home protocols; only the Today-Continue ingress to an in-progress Writing note had smoke coverage). Agent B independently chose Train active/history transition (small, deterministic, distinct from Today Continue; exercises a domain-owned screen transition rather than another Continue route). Reconciled non-destructively: Agent A's Write coverage shipped through owlory-ui-regression-expansion-next-surface (status done, WriteCaptureRegression class). Agent B's Train scope was preserved as owlory-ui-regression-batch-3-train-active-history (status queued). Both choices stand; neither was discarded. Subsequent triage slices should pick a single next surface upfront to avoid re-collision."
+      "notes": "Completed on 2026-05-13 by two parallel agents. Agent A chose Write capture inbox as the next regression surface (Write Lab is the only Partially implemented capture domain currently shipping; promotion flows cross Today/Home tasks/Home protocols; only the Today-Continue ingress to an in-progress Writing note had smoke coverage). Agent B independently chose Train active/history transition (small, deterministic, distinct from Today Continue; exercises a domain-owned screen transition rather than another Continue route). Reconciled non-destructively: Agent A's Write coverage shipped through owlory-ui-regression-expansion-next-surface (status done, WriteCaptureRegression class). Agent B's Train scope was preserved as owlory-ui-regression-batch-3-train-active-history (status done, TrainRegression class). Both choices stand; neither was discarded. Subsequent triage slices should pick a single next surface upfront to avoid re-collision. Follow-up triage on 2026-05-15 selected Home protocol template archive/restore management for Batch 4 because Write and Train already have Lane 2 coverage, Patterns/localization layout lack a current concrete UI claim, and recent Home protocol archive-affordance work needs maintained UI proof without implying per-step archive."
     },
     {
       "slice_id": "owlory-ui-test-testflight-proof-retry",
@@ -3253,6 +3253,44 @@
       "max_files_changed": 8,
       "entry_condition": "User reported that swiping a visible item inside a Home protocol exposes Archive but archives the entire protocol template.",
       "notes": "Completed on 2026-05-14. Current data model has archive state for protocol templates only; protocol steps are stored as plain strings and have no per-step archive state. Removed the surprising protocol-level archive/delete trailing swipe affordance from the expanded protocol row, kept template archive/restore in the Edit Protocol sheet, moved template delete into the same explicit sheet using the existing Delete label, and documented that per-step archive would require a separate model slice. Did not change protocol lifecycle, schedule behavior, run steps, or localization resources."
+    },
+    {
+      "slice_id": "owlory-ui-regression-batch-4-home-protocol-archive-restore",
+      "title": "Add Home protocol archive/restore UI regression batch",
+      "status": "queued",
+      "priority": 162,
+      "domain": "ui-testing",
+      "allowed_paths": [
+        "Makefile",
+        "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "docs/workflows/ui-regression-plan.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id owlory-ui-regression-batch-4-home-protocol-archive-restore",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=home",
+        "make ui-regression DOMAIN=home",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "owlory-ui-regression-next-surface-triage",
+        "home-protocol-archive-swipe-affordance"
+      ],
+      "max_files_changed": 14,
+      "entry_condition": "The next UI regression surface has been triaged as Home protocol template archive/restore management; Write and Train already have Lane 2 coverage.",
+      "notes": "Implementation-only follow-up to the 2026-05-15 next-surface triage. Add one deterministic debug-only seed for a Home protocol template without an active run. Add stable accessibility identifiers for the active protocol row, the direct protocol-level archive affordance, the archived protocol row, and the restore affordance. Add a HomeProtocolRegression XCUITest class that opens Home, asserts the seeded template appears active, archives it through the protocol-level affordance, asserts it moves to Archived Protocols, restores it, and asserts it returns active. Wire make ui-regression DOMAIN=home without changing make ui-smoke. Do not add per-step archive, active-run lifecycle proof, schedule-window proof, step-revert proof, screenshot/device/TestFlight proof, or broad Home regression coverage."
     }
   ]
 }

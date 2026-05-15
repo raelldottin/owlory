@@ -55,7 +55,7 @@ Batch 2 has shipped: `OwloryUITests/WriteCaptureRegression` (selected by Agent A
 
 Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's parallel triage on 2026-05-13, covering the Train active/history transition).
 
-No next regression surface is selected yet; run a triage slice before broadening the suite again.
+Batch 4 is selected and queued: Home protocol template archive/restore management. This is the next surface because Write already shipped as Batch 2, Train already shipped as Batch 3, and a recent Home protocol affordance bug showed that protocol-level archive needs maintained UI proof without implying per-step archive behavior.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -66,6 +66,39 @@ Why Train was chosen (Agent B's reasoning, preserved):
 | Train | Domain coverage for Today/History projections; Continue visibility and routing smoke exist; Batch 3 now covers the Train tab active-to-history transition. | Small, deterministic, and distinct from Today Continue. It exercises a domain-owned screen transition rather than another Continue route. | Implemented in Batch 3. |
 | Patterns | Domain rules are well-covered; UI surfaces are summary/report oriented. | Valuable after a concrete visual/report contract changes. | Defer until a Patterns UI claim needs proof. |
 | Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. | Valuable after reviewed translations enter or a layout issue is found. | Defer until translation intake or layout risk exists. |
+
+Batch 4 triage decision:
+
+| Candidate | Current proof | Regression value | Decision |
+| --- | --- | --- | --- |
+| Write | `WriteCaptureRegression` already covers the capture inbox row, capture entry affordance, and Add to Today visibility. Write promotion also has flow/screenshot/device-style proof for selected paths. | More Write coverage is useful later, but choosing Write again would duplicate the current Batch 2 floor rather than broaden the suite. | Do not select for Batch 4. |
+| Home protocols | Domain tests cover archive/run/schedule semantics; smoke covers active protocol runs through Today Continue, but Home's own protocol template management has no Lane 2 regression. Recent archive-affordance work changed exactly this UI contract. | High value and narrow when scoped to template archive/restore only. It proves whole-protocol management stays discoverable without reintroducing step-looking swipe archive. | Select for Batch 4. |
+| Train | `TrainRegression` already covers active Today -> History transition. | Additional statuses can wait for a concrete bug or release risk. | Do not select for Batch 4. |
+| Patterns | Domain rules are covered, but no concrete Patterns UI behavior is currently named. | Valuable only after a specific report/insight surface claim changes. | Defer. |
+| Localization layout | All-locale launch screenshots exist; translation quality is still blocked on reviewed values. | Valuable after reviewed translations or a layout defect lands. | Defer. |
+
+Batch 4 implementation target:
+
+- Seed one active Home protocol template with a stable ID, title, and step, without creating an active run.
+- Open Home and assert the protocol template appears in the active protocol list.
+- Assert the direct protocol-level archive affordance is present on the protocol header row.
+- Archive the template through that affordance.
+- Assert the template leaves the active protocol list and appears in Archived Protocols with a restore affordance.
+- Restore the template and assert it returns to the active protocol list.
+
+Required implementation support:
+
+- Add a deterministic UI seed launch argument for one Home protocol template only.
+- Add stable accessibility identifiers for the active protocol row, direct archive action, archived protocol row, and restore action.
+- Add a `HomeProtocolRegression` XCUITest class and wire `make ui-regression DOMAIN=home`.
+
+Out of scope for Batch 4:
+
+- Per-step archive, because protocol template steps are still plain strings.
+- Active run lifecycle, which already has domain tests and Continue route smoke.
+- Schedule-window status proof.
+- Protocol step revert proof.
+- Screenshot, device, or TestFlight proof.
 
 Batch 3 implemented target:
 

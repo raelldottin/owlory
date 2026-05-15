@@ -131,8 +131,9 @@ Completed foundation slices:
 | `owlory-ui-regression-batch-1-today-continue` | Establish Lane 2 regression wiring around Today Continue source visibility, source-derived routing, and Focus row actions. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-expansion-next-surface` | Lane 2 Batch 2 covering the Write capture inbox row, capture entry affordance, and Add to Today promotion visibility. | `running-app-smoke`, XCUITest-backed |
 | `owlory-ui-regression-batch-3-train-active-history` | Lane 2 Batch 3 covering the Train tab active/history transition: seed one planned session, complete it through visible Train UI, and assert it leaves active Today and appears in History. | `running-app-smoke`, XCUITest-backed |
+| `owlory-ui-regression-batch-4-home-protocol-archive-restore` | Queued Lane 2 Batch 4 for Home protocol template archive/restore management: seed one template, archive it through a protocol-level affordance, verify it moves to Archived Protocols, restore it, and verify it returns active. | target: `running-app-smoke`, XCUITest-backed |
 
-No next regression surface is selected. Run another triage slice before expanding Lane 2 again.
+Next selected regression surface: Home protocol template archive/restore management. Do not broaden this queued batch into active-run lifecycle, schedule labels, step revert, or per-step archive.
 
 Deferred proof lanes:
 
