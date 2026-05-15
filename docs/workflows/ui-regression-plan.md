@@ -55,7 +55,7 @@ Batch 2 has shipped: `OwloryUITests/WriteCaptureRegression` (selected by Agent A
 
 Batch 3 has shipped: `OwloryUITests/TrainRegression` (selected by Agent B's parallel triage on 2026-05-13, covering the Train active/history transition).
 
-No next regression surface is selected yet; run a triage slice before broadening the suite again.
+Batch 4 selected: **Home protocols — active run step progression** (chosen by `owlory-ui-regression-batch-4-surface-triage` on 2026-05-14). The implementation slice `owlory-ui-regression-batch-4-home-protocol-run-step-progression` is queued; see [Batch 4 decision](#batch-4-decision) below.
 
 Why Train was chosen (Agent B's reasoning, preserved):
 
@@ -80,6 +80,43 @@ Out of scope for Batch 3:
 - Voice/reflection fallback.
 - Multiple Train statuses in one slice.
 - Continue routing, which is already covered by smoke.
+- Screenshot, device, or TestFlight proof.
+
+### Batch 4 decision
+
+Triage (`owlory-ui-regression-batch-4-surface-triage`, 2026-05-14) compared the three remaining surfaces. Write and Train are already shipped; localization layout, Patterns, and Home protocols are the candidates.
+
+| Candidate | Current proof | Regression value for Batch 4 | Decision |
+| --- | --- | --- | --- |
+| Home protocols | Domain coverage for protocol lifecycle, schedule rules, and rollover. `today.continue.item.homeProtocolRun.<uuid>` route smoke routes into the active run sheet (`home.protocolRun.sheet.<uuid>` identifier exists). Step-level interactions inside the sheet have no UI proof. Recent localization slice wired accessibility labels for protocol step Complete/Skip but added no XCUITest identifiers. | High value — protocol runs are a primary Home interaction surface, the active-run sheet is the natural extension of the Continue route smoke, and the sub-behavior is contained enough to test deterministically in one batch. The accessibility infrastructure to add (step row identifiers, step action identifiers) is bounded to a single sheet. | **Selected for Batch 4** — narrowed to step progression. |
+| Patterns | Domain rules heavily unit-tested. UI surfaces are summary/report-oriented (digest cards, balance nudges, focus suggestions). | Lower interaction risk; no concrete UI claim has changed recently. Audit reasoning from Batch 2/3 triage still applies. | Defer until a Patterns UI claim needs proof. |
+| Localization layout | Locale smoke and screenshot proof exist for representative launch surfaces. All-locale screenshot proof shipped 2026-05-14. | Reviewed translations are still parked; without translated values, layout regression has nothing locale-distinctive to verify. | Defer until translation intake or a layout issue surfaces. |
+
+Within Home protocols, Batch 4 narrows to **active-run step progression** specifically. Other Home-protocols sub-behaviors (step revert, schedule windows, archive flow, protocol template editing) are deferred to future scoped slices.
+
+Batch 4 target (for the queued implementation slice `owlory-ui-regression-batch-4-home-protocol-run-step-progression`):
+
+- Reuse `--owlory-ui-seed-home-protocol-run-continue-item` if its single-step protocol is enough, or add a new `--owlory-ui-seed-home-protocol-run-multi-step` arg if proving sequential step progression requires more than one pending step. The implementer makes this call inside the slice scope.
+- Open the active run sheet via the Today Continue row (route already smoke-covered).
+- Tap the Complete action on the first pending step.
+- Assert the step transitions out of pending state.
+- If a second step exists, assert it remains the only pending step.
+
+Coverage goal: `running-app-smoke` for the active-run-sheet step Complete interaction.
+
+Required infrastructure for the implementation slice:
+
+- New accessibility identifiers on `HomeView` protocol step rows and the Complete action button (the existing `home.protocol.step.accessibility.complete` is a *label*; the test needs an *identifier*). Candidate IDs: `home.protocolRun.step.<uuid>` and `home.protocolRun.step.action.complete.<uuid>`.
+- A new XCUITest class `HomeProtocolRunStepRegression` reached via `make ui-regression DOMAIN=home`.
+- Makefile `DOMAIN=home` matrix branch.
+
+Out of scope for Batch 4:
+
+- Step skip and step revert flows (separate scoped slices later if needed).
+- Protocol archive or template editing.
+- Schedule-window status display.
+- Patterns UI proof.
+- Localization layout regression.
 - Screenshot, device, or TestFlight proof.
 
 ## Lane 3: Screenshot Proof
