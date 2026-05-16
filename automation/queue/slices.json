@@ -3912,7 +3912,7 @@
     {
       "slice_id": "app-localization-accessibility-bypass-audit",
       "title": "Verify accessibility String-variable upstream is localized",
-      "status": "queued",
+      "status": "done",
       "priority": 91,
       "domain": "localization",
       "allowed_paths": [
@@ -3937,7 +3937,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Visible-string audit identified ~10 `bypass-string-var-true` accessibility cases.",
-      "notes": "For each `.accessibilityLabel(var)` / `.accessibilityHint(var)` / `.accessibilityValue(var)` call site where the upstream String is built from English fragments, route it through `NSLocalizedString` or `String(localized:)`. Cross-check that accessibility output matches visible output in non-English locales. No app-resource changes unless a key is missing. proof_level target: doc-only + build-tested."
+      "notes": "Completed on 2026-05-16. 22 accessibility call sites found across the app target (16 label / 5 hint / 1 value). Of 9 variable forms: 7 are already-safe (HomeAccessibilityLabels, leadingButtonAccessibilityLabel, continueAccessibilityHint, writeRowAccessibilityHint all route through NSLocalizedString upstream); 2 are real bypasses (AudioPlaybackButton.accessibilityText, VoiceCaptureButton.accessibilityText return hardcoded English from switch). Of 13 literal forms: 11 already-safe (key in Localizable.strings + SwiftUI LocalizedStringKey overload); 1 interpolation-pattern bypass at TrainView.swift:516 already covered by app-localization-string-interpolation-formatters; 1 acceptable as-is (BuildInfoView \"label: value\" developer string). Doc: docs/workflows/localization-accessibility-bypass-audit.md. Queued ONE narrow follow-up: app-localization-audio-voice-button-accessibility-routing. proof_level: doc-only."
     },
     {
       "slice_id": "app-localization-complete-nls-routing-pass",
@@ -3970,6 +3970,37 @@
       "max_files_changed": 14,
       "entry_condition": "Visible-string bypass audit catalog exists.",
       "notes": "Added DesignSystem/LocalizationHelpers.swift with a single inlinable helper `L(_ key: String) -> LocalizedStringKey` and routed 130 call sites across 8 files through it via a mechanical Python regex pass: 87 Section/Label literals + Label String-variable sites in commit phase A; 43 Button literal sites in phase B. Files touched: TodayView.swift, HomeView.swift, WriteView.swift, TrainView.swift, CareerView.swift, BuildInfoView.swift, DigestDetailView.swift, RootTabView.swift. The script skips Label-{Text}-icon-{Image} explicit forms and any literal containing `\\\\(` (Swift string interpolation). One manual revert was applied for a count-display Label that the script had over-converted. Helper file registered in project.pbxproj (A091 build, A191 file reference). Build succeeded, no app behavior change beyond localization routing. Supersedes 7 per-surface follow-up slices and the Button-literal-verify slice. Does not handle string-interpolation patterns or accessibility var-bypasses (still queued separately). proof_level: build-tested."
+    },
+    {
+      "slice_id": "app-localization-audio-voice-button-accessibility-routing",
+      "title": "Route AudioPlaybackButton / VoiceCaptureButton accessibility text through Localizable.strings",
+      "status": "queued",
+      "priority": 90,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-accessibility-bypass-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-a11y-buttons-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-accessibility-bypass-audit"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Accessibility-bypass audit identified 2 real-bypass variable sites in DesignSystem audio/voice buttons.",
+      "notes": "Add ~7 new keys to Localizable.strings across all 19 locales (LLM-drafted, status=needs-layout-check). Wrap AudioPlaybackButton.accessibilityText returns and VoiceCaptureButton.accessibilityText returns in NSLocalizedString / String(localized:) calls, with String.localizedStringWithFormat for the two interpolated error/playback-error cases. Approach mirrors the existing HomeAccessibilityLabels pattern. Do not touch other DesignSystem files or view code. proof_level target: build-tested."
     }
   ]
 }

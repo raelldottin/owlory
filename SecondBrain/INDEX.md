@@ -2,6 +2,7 @@
 
 ## 2026-05-16
 
+- [app-localization-accessibility-bypass-audit (doc-only; 22 sites scanned, 7 already-safe via helpers, 2 real bypasses in DesignSystem audio/voice buttons; 1 narrow follow-up queued)](sessions/2026-05-16/062009-app-localization-accessibility-bypass-audit.md)
 - [app-localization-complete-nls-routing-pass (build-tested; 130 sites routed through L() across 8 files; supersedes 7 surface slices + button-verify)](sessions/2026-05-16/054329-app-localization-complete-nls-routing-pass.md)
 - [app-localization-visible-string-bypass-audit (doc-only; 400 candidates, 116 must-fix, 10 follow-up slices queued)](sessions/2026-05-16/013410-app-localization-visible-string-bypass-audit.md)
 

@@ -1,0 +1,55 @@
+{
+  "slice_id": "app-localization-accessibility-bypass-audit",
+  "status": "done",
+  "summary": "Doc-only audit. Scanned the app target for accessibility-label/hint/value call sites and traced each variable form to its upstream definition. Found 22 sites (16 label, 5 hint, 1 value). Of 9 variable sites: 7 are already-safe (HomeAccessibilityLabels.taskEdit/taskSkip/protocolStepComplete/protocolStepSkip + leadingButtonAccessibilityLabel + continueAccessibilityHint + writeRowAccessibilityHint all route through NSLocalizedString + String.localizedStringWithFormat); 2 are real bypasses (AudioPlaybackButton.accessibilityText, VoiceCaptureButton.accessibilityText return hardcoded English from switch statements). Of 13 literal sites: 11 already-safe (key in Localizable.strings + SwiftUI LocalizedStringKey overload); 1 interpolation-pattern bypass at TrainView line 516 already covered by app-localization-string-interpolation-formatters; 1 acceptable as-is (BuildInfoView label: value pair displays developer fields). Wrote docs/workflows/localization-accessibility-bypass-audit.md. Queued exactly ONE narrow follow-up slice (app-localization-audio-voice-button-accessibility-routing) for the 2 real bypasses. No view code, no resources, no helper code touched in this slice.",
+  "files_touched": [
+    "automation/handoffs/20260516T062009Z-app-localization-accessibility-bypass-audit.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-accessibility-bypass-audit.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/062009-app-localization-accessibility-bypass-audit.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-accessibility-bypass-audit",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "build-tested for any view-code change",
+    "VoiceOver running-app verification per locale",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Accessibility-string call-site routing through localization",
+      "before": "The 2026-05-16 visible-string bypass audit flagged ~10 accessibility var-bypasses as candidates but did not classify the upstream helpers. It was unclear whether HomeAccessibilityLabels / continueAccessibilityHint / writeRowAccessibilityHint already routed through NSLocalizedString.",
+      "after": "Each of the 7 Home/Today/Write accessibility helpers is confirmed to use NSLocalizedString + String.localizedStringWithFormat (Home) or String(localized:) (Write fallback). Only 2 sites are real bypasses, both isolated to DesignSystem audio/voice buttons. The audit catalog and the queued follow-up explicitly scope the fix to those 2 files.",
+      "proof": [
+        "docs/workflows/localization-accessibility-bypass-audit.md",
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Static scan + helper trace does not verify runtime VoiceOver output. A native-reviewed locale + on-device VoiceOver pass would catch wording errors the LLM-drafted translations might contain.",
+    "BuildInfoView line 102's accessibilityLabel('\\(label): \\(value)') was classified acceptable-as-is. If a future translation needs locale-specific punctuation (e.g., Arabic colon variants), this would surface as a follow-up.",
+    "TrainView line 516's accessibilityLabel('\\(label), \\(value) of 5') is classified as interpolation-pattern bypass. The fix belongs to app-localization-string-interpolation-formatters; this audit does NOT duplicate that work.",
+    "The follow-up slice app-localization-audio-voice-button-accessibility-routing will need to add ~7 new keys plus 2 stringsdict-style format strings (Playback error: %@ / Error: %@). All 19 locales must receive LLM-drafted values to preserve parity.",
+    "Native review of new keys remains outstanding for every locale. app-localization-native-review-intake is still blocked."
+  ],
+  "recommended_next_slice": "app-localization-audio-voice-button-accessibility-routing",
+  "recommended_next_reason": "The only real-bypass class surfaced by the accessibility audit. Both files are small (under 100 lines each) and the fix follows the existing HomeAccessibilityLabels pattern, so the slice is low-risk and quickly verifiable.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T06:20:09Z"
+}
