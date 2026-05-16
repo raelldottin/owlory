@@ -23,7 +23,7 @@ struct DigestDetailView: View {
     // MARK: - Overview
 
     private var overviewSection: some View {
-        Section("Overview") {
+        Section(L("Overview")) {
             LabeledContent(
                 "Days active",
                 value: WeeklyDigestPresentationFormatting.daysActiveValue(digest.daysWithEntries)
@@ -55,7 +55,7 @@ struct DigestDetailView: View {
     @ViewBuilder
     private var highlightsSection: some View {
         if digest.bestDay != nil || digest.hardestDay != nil {
-            Section("Highlights") {
+            Section(L("Highlights")) {
                 if let best = digest.bestDay {
                     HStack {
                         Image(systemName: "star.fill")
@@ -92,7 +92,7 @@ struct DigestDetailView: View {
     private var domainActivitySection: some View {
         let active = digest.domainActivity.filter { $0.value > 0 }.sorted { $0.value > $1.value }
         if !active.isEmpty {
-            Section("Domain Activity") {
+            Section(L("Domain Activity")) {
                 ForEach(active, id: \.key) { domain, count in
                     LabeledContent(
                         domain.localizedDisplayName,
@@ -108,7 +108,7 @@ struct DigestDetailView: View {
     @ViewBuilder
     private var insightSection: some View {
         if !digest.keyInsight.isEmpty {
-            Section("Insight") {
+            Section(L("Insight")) {
                 Text(WeeklyDigestPresentationFormatting.keyInsightLabel(digest.keyInsight))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)

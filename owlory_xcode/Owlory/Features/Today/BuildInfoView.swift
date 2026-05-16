@@ -21,11 +21,11 @@ struct BuildInfoView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Version") {
+                Section(L("Version")) {
                     labeled("Version", info.marketingVersion)
                     labeled("Build", info.buildNumber)
                 }
-                Section("Source") {
+                Section(L("Source")) {
                     labeled("Commit", info.gitCommit)
                     if info.gitCommitFull != info.gitCommit {
                         labeled("Full commit", info.gitCommitFull)
@@ -47,7 +47,7 @@ struct BuildInfoView: View {
                         .foregroundStyle(OwloryColor.warning)
                     }
                 }
-                Section("Build") {
+                Section(L("Build")) {
                     if !info.buildDate.isEmpty {
                         labeled("Built", info.buildDate)
                     }
@@ -80,7 +80,7 @@ struct BuildInfoView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { onDismiss() }
+                    Button(L("Done")) { onDismiss() }
                 }
             }
         }

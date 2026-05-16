@@ -46,7 +46,7 @@ struct TrainView: View {
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }
             )) {
-                Button("OK", role: .cancel) {}
+                Button(L("OK"), role: .cancel) {}
             } message: {
                 Text(store.lastError ?? "")
             }
@@ -88,7 +88,7 @@ struct TrainView: View {
                     Button {
                         showingAddSession = true
                     } label: {
-                        Label("Plan a Session", systemImage: "plus.circle")
+                        Label(L("Plan a Session"), systemImage: "plus.circle")
                     }
                 }
             } else {
@@ -111,7 +111,7 @@ struct TrainView: View {
                 Button {
                     showingAddSession = true
                 } label: {
-                    Label("Add another session", systemImage: "plus.circle")
+                    Label(L("Add another session"), systemImage: "plus.circle")
                         .font(.subheadline)
                         .foregroundStyle(OwloryColor.brandPrimary)
                 }
@@ -212,12 +212,12 @@ struct TrainView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(L("Cancel")) {
                         resetAddSession()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button(L("Add")) {
                         store.addSession(
                             plannedActivity: plannedActivity,
                             readinessLevel: readinessLevel,
@@ -399,7 +399,7 @@ private struct SessionCardView: View {
                     }
                 }
 
-                Button("Save") {
+                Button(L("Save")) {
                     store.updateSession(
                         id: session.id,
                         actualActivity: actualActivity,

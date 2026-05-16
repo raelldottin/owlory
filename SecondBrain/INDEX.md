@@ -2,6 +2,7 @@
 
 ## 2026-05-16
 
+- [app-localization-complete-nls-routing-pass (build-tested; 130 sites routed through L() across 8 files; supersedes 7 surface slices + button-verify)](sessions/2026-05-16/054329-app-localization-complete-nls-routing-pass.md)
 - [app-localization-visible-string-bypass-audit (doc-only; 400 candidates, 116 must-fix, 10 follow-up slices queued)](sessions/2026-05-16/013410-app-localization-visible-string-bypass-audit.md)
 
 ## 2026-05-15

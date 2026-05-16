@@ -67,7 +67,7 @@ struct TodayView: View {
             get: { store.lastError != nil },
             set: { if !$0 { store.lastError = nil } }
         )) {
-            Button("OK", role: .cancel) {}
+            Button(L("OK"), role: .cancel) {}
         } message: {
             Text(store.lastError ?? "")
         }
@@ -288,7 +288,7 @@ struct TodayView: View {
             Button {
                 store.updateStatus(for: focusItem.id, to: .done)
             } label: {
-                Label("Done", systemImage: "checkmark.circle")
+                Label(L("Done"), systemImage: "checkmark.circle")
             }
             .tint(OwloryColor.success)
             .accessibilityIdentifier(continueActionAccessibilityIdentifier("done", for: item))
@@ -296,7 +296,7 @@ struct TodayView: View {
             Button {
                 store.addContinueItemToFocus(item)
             } label: {
-                Label("Add to Focus", systemImage: "plus.circle")
+                Label(L("Add to Focus"), systemImage: "plus.circle")
             }
             .tint(OwloryColor.brandPrimary)
         }
@@ -309,7 +309,7 @@ struct TodayView: View {
                 Button {
                     store.updateStatus(for: focusItem.id, to: .deferred)
                 } label: {
-                    Label("Defer", systemImage: "clock.arrow.circlepath")
+                    Label(L("Defer"), systemImage: "clock.arrow.circlepath")
                 }
                 .tint(OwloryColor.warning)
                 .accessibilityIdentifier(continueActionAccessibilityIdentifier("defer", for: item))
@@ -319,7 +319,7 @@ struct TodayView: View {
                 Button(role: .destructive) {
                     store.updateStatus(for: focusItem.id, to: .dropped)
                 } label: {
-                    Label("Drop", systemImage: "xmark.circle")
+                    Label(L("Drop"), systemImage: "xmark.circle")
                 }
                 .accessibilityIdentifier(continueActionAccessibilityIdentifier("drop", for: item))
             }
@@ -528,12 +528,12 @@ struct TodayView: View {
             Button {
                 showingQuickTrainSession = true
             } label: {
-                Label("Add session", systemImage: "plus.circle")
+                Label(L("Add session"), systemImage: "plus.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
         } header: {
-            Label("Train", systemImage: "figure.run")
+            Label(L("Train"), systemImage: "figure.run")
         }
     }
 
@@ -569,12 +569,12 @@ struct TodayView: View {
             Button {
                 showingQuickCapture = true
             } label: {
-                Label("Capture a note", systemImage: "plus.circle")
+                Label(L("Capture a note"), systemImage: "plus.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
         } header: {
-            Label("Write", systemImage: "square.and.pencil")
+            Label(L("Write"), systemImage: "square.and.pencil")
         }
     }
 
@@ -598,12 +598,12 @@ struct TodayView: View {
             Button {
                 showingQuickCareerRecord = true
             } label: {
-                Label("Record a win", systemImage: "plus.circle")
+                Label(L("Record a win"), systemImage: "plus.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
         } header: {
-            Label("Career", systemImage: "briefcase")
+            Label(L("Career"), systemImage: "briefcase")
         }
     }
 
@@ -646,12 +646,12 @@ struct TodayView: View {
             Button {
                 showingQuickHomeTask = true
             } label: {
-                Label("Add task", systemImage: "plus.circle")
+                Label(L("Add task"), systemImage: "plus.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
         } header: {
-            Label("Home", systemImage: "house")
+            Label(L("Home"), systemImage: "house")
         }
     }
 
@@ -763,7 +763,7 @@ struct TodayView: View {
             } label: {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Label("Evening Reflection", systemImage: "moon.stars")
+                        Label(L("Evening Reflection"), systemImage: "moon.stars")
                             .font(.subheadline.weight(.medium))
                         if !reflectionSaved && currentEntry.eveningReflection.isEmpty {
                             Text("Close the day with one quick note")
@@ -903,7 +903,7 @@ struct TodayView: View {
                     )
                 } label: {
                     HStack {
-                        Label("Browse Previous Days", systemImage: "clock.arrow.circlepath")
+                        Label(L("Browse Previous Days"), systemImage: "clock.arrow.circlepath")
                             .font(.subheadline)
                         Spacer()
                         Text("\(store.recentEntries.count)")
@@ -1306,7 +1306,7 @@ private struct PreviousDayRow: View {
                     Label(readinessLabel, systemImage: "heart.text.clipboard")
                 }
                 if !entry.eveningReflection.isEmpty {
-                    Label("Reflected", systemImage: "moon.stars")
+                    Label(L("Reflected"), systemImage: "moon.stars")
                 }
             }
             .font(.caption)
@@ -1423,7 +1423,7 @@ private struct PreviousDayDetailView: View {
     }
 
     private var overviewSection: some View {
-        Section("Overview") {
+        Section(L("Overview")) {
             if entry.energy > 0 || entry.mood > 0 || entry.sleepQuality > 0 {
                 LabeledContent("Energy", value: "\(entry.energy)/5")
                 LabeledContent("Mood", value: "\(entry.mood)/5")
@@ -1438,7 +1438,7 @@ private struct PreviousDayDetailView: View {
     @ViewBuilder
     private var focusSection: some View {
         if !entry.focusThree.isEmpty {
-            Section("Focus") {
+            Section(L("Focus")) {
                 ForEach(entry.focusThree) { item in
                     VStack(alignment: .leading, spacing: 4) {
                         Text(item.title)
@@ -1465,7 +1465,7 @@ private struct PreviousDayDetailView: View {
             .filter { !$0.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
             .sorted { $0.key.rawValue < $1.key.rawValue }
         if !intentions.isEmpty {
-            Section("Domain Intentions") {
+            Section(L("Domain Intentions")) {
                 ForEach(intentions, id: \.key) { domain, text in
                     VStack(alignment: .leading, spacing: 2) {
                         Text(domain.localizedDisplayName)
@@ -1482,7 +1482,7 @@ private struct PreviousDayDetailView: View {
     @ViewBuilder
     private var carryForwardSection: some View {
         if !entry.carryForward.isEmpty {
-            Section("Carry Forward") {
+            Section(L("Carry Forward")) {
                 ForEach(entry.carryForward) { item in
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
@@ -1507,7 +1507,7 @@ private struct PreviousDayDetailView: View {
     @ViewBuilder
     private var reflectionSection: some View {
         if !entry.eveningReflection.isEmpty {
-            Section("Reflection") {
+            Section(L("Reflection")) {
                 Text(entry.eveningReflection)
                     .font(.subheadline)
             }
@@ -1540,7 +1540,7 @@ private struct QuickTrainSheet: View {
         NavigationStack {
             Form {
                 TextField("What's the session?", text: $activity)
-                Section("Readiness") {
+                Section(L("Readiness")) {
                     TrainingReadinessScaleRow(
                         label: "Training",
                         value: readinessLevel,
@@ -1560,10 +1560,10 @@ private struct QuickTrainSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button(L("Add")) {
                         store.addSession(
                             plannedActivity: activity,
                             readinessLevel: readinessLevel,
@@ -1621,10 +1621,10 @@ private struct QuickCaptureSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.addNote(title: title, body: body_, audioFileName: audioFileName)
                         onDismiss()
                     }
@@ -1692,10 +1692,10 @@ private struct QuickCareerSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.addRecord(type: recordType, title: title, body: details, audioFileName: audioFileName)
                         onDismiss()
                     }
@@ -1721,10 +1721,10 @@ private struct QuickHomeTaskSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button(L("Add")) {
                         store.addTask(title: title)
                         onDismiss()
                     }

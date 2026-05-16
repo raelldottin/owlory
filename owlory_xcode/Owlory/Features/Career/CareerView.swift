@@ -35,7 +35,7 @@ struct CareerView: View {
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }
             )) {
-                Button("OK", role: .cancel) {}
+                Button(L("OK"), role: .cancel) {}
             } message: {
                 Text(store.lastError ?? "")
             }
@@ -137,7 +137,7 @@ struct CareerView: View {
                         Button(role: .destructive) {
                             store.deleteRecord(id: record.id)
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(L("Delete"), systemImage: "trash")
                         }
                     }
                 }
@@ -190,7 +190,7 @@ private struct AddRecordSheet: View {
                 TextField("Details", text: $details, axis: .vertical)
                     .lineLimit(3...6)
                 TextField("Metrics (optional)", text: $metrics)
-                Section("Voice Recording") {
+                Section(L("Voice Recording")) {
                     VoiceCaptureButton(recordID: recordID) { text, fileName in
                         audioFileName = fileName
                         audioTranscription = text
@@ -233,12 +233,12 @@ private struct AddRecordSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(L("Cancel")) {
                         onDismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.addRecord(
                             type: recordType,
                             title: title,
@@ -283,7 +283,7 @@ private struct EditRecordSheet: View {
                     .lineLimit(3...6)
                 TextField("Metrics", text: $metrics)
                 if let audioFile = record.audioFileName {
-                    Section("Voice Recording") {
+                    Section(L("Voice Recording")) {
                         HStack {
                             Text("Recording")
                                 .font(.subheadline)
@@ -316,10 +316,10 @@ private struct EditRecordSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.updateRecord(id: record.id, title: title, body: details, metrics: metrics)
                         onDismiss()
                     }

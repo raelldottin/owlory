@@ -1,0 +1,71 @@
+{
+  "slice_id": "app-localization-complete-nls-routing-pass",
+  "status": "done",
+  "summary": "Added DesignSystem/LocalizationHelpers.swift with a single inlinable helper `L(_ key: String) -> LocalizedStringKey` and routed 130 call sites across 8 files through it via a mechanical Python regex pass. Two phases: (A) 87 Section/Label-literal + Label-String-variable sites; (B) 43 Button-literal sites. Files touched: TodayView.swift, HomeView.swift, WriteView.swift, TrainView.swift, CareerView.swift, BuildInfoView.swift, DigestDetailView.swift, RootTabView.swift, plus the new DesignSystem/LocalizationHelpers.swift and project.pbxproj wiring (A091 build, A191 file reference). One manual revert for a count-display Label that the script over-converted (`Label(L(\"\\(entry.focusThree.count)\"))` → `Label(\"\\(entry.focusThree.count)\")` and the readinessLabel companion). Build green, all 4 touched-surface domain tests pass, localization parity holds at 19/316/13. Supersedes 7 per-surface follow-up slices (Today/Home/Write/Train-followup/Career/Root/Widgets shell-copy-routing) and the Button-literal-verify slice — all marked done with cross-reference notes. Does NOT handle string-interpolation patterns (`app-localization-string-interpolation-formatters` still queued) or accessibility var-bypasses (`app-localization-accessibility-bypass-audit` still queued). Does NOT make any native-review claim.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/LocalizationHelpers.swift",
+    "owlory_xcode/Owlory/Features/Career/CareerView.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift",
+    "owlory_xcode/Owlory/Features/Today/DigestDetailView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/RootTabView.swift",
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260516T054329Z-app-localization-complete-nls-routing-pass.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/054329-app-localization-complete-nls-routing-pass.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=train",
+    "make test-domain DOMAIN=write",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-L-final-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke for translated content per locale",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Visible-string call-site routing through localization",
+      "before": "The audit slice (commit f80efb9) identified 116 must-fix call sites where SwiftUI's overload resolution selected the StringProtocol path, bypassing Localizable.strings even when the key was present. Of those, 8 had already been fixed by commit 2dfd2d0 (Train + Today/Home Check-in + Write Capture). 108 remained.",
+      "after": "All 130 Section, Label, and Button literal/variable call sites across the 8 listed files now route through `L(_:)` which constructs a `LocalizedStringKey` from a runtime `String`. SwiftUI's LocalizedStringKey overload is now unambiguous because the helper's return type is `LocalizedStringKey` (no longer ambiguous between `String` and `LocalizedStringKey`).",
+      "proof": [
+        "owlory_xcode/Owlory/DesignSystem/LocalizationHelpers.swift",
+        "8 view files now contain L(\"...\") or L(varName) at every Section/Label/Button literal/variable site",
+        "xcodebuild build green",
+        "make test-domain DOMAIN=today|home|train|write all green",
+        "make localization-check 19/316/13 holds"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The mechanical script's interpolation guard was added after one over-conversion was caught. The reverted `entry.focusThree.count` Label and `readinessLabel` Label now display the runtime String verbatim through Label's StringProtocol overload (acceptable — those are dynamic counts/formatted values, not translation keys). If a future numeric-display literal slips through L() with interpolation, it will look up the interpolated runtime string as a key and silently fall back to the verbatim text — visually correct but semantically wrong.",
+    "The L() helper takes a runtime String and constructs LocalizedStringKey. SwiftUI's lookup will then search Localizable.strings for that exact key. Variables that DO carry a valid key (e.g., readinessRow's `label: \"Energy\"`) work correctly. Variables that hold dynamic strings (computed values, user data) effectively become non-localized but display the dynamic value as-is — same as before the routing, just routed through the localization machinery.",
+    "Some visible strings still bypass localization at sites this slice did not touch: `.accessibilityLabel(varString)` cases (10 sites flagged in audit), `Text(varString)` cases where the variable carries a localization key (separate from user content), and interpolated copy like `\"Next: \\(latest.title)\"`. Those remain queued under `app-localization-accessibility-bypass-audit` and `app-localization-string-interpolation-formatters`.",
+    "Non-English values for the 130 routed sites remain LLM-drafted. Translation quality has not been validated. `app-localization-native-review-intake` remains blocked.",
+    "The L() helper is `@inlinable` and `public`. If the app extension targets (e.g., OwloryWidgets) ever import it, ensure they link the same Owlory module. Today the helper is only used inside the main Owlory target.",
+    "If a developer adds a new Section/Label/Button literal call site in the future and forgets to wrap with L(), it may be subject to the same SwiftUI overload bypass. A lint rule or a CI grep check could enforce this; not in scope of this slice.",
+    "The SwiftUI behavior pattern is empirical, not formally documented by Apple. Future Xcode/iOS releases could change overload resolution rules such that the L() wrapper becomes unnecessary or, conversely, that more call site classes need it. The fix is conservative — adding L() does not break anything if Apple later prefers LocalizedStringKey by default."
+  ],
+  "recommended_next_slice": "app-localization-string-interpolation-formatters",
+  "recommended_next_reason": "Now that Section/Label/Button literals route correctly, the remaining must-fix class is the ~12 interpolated copy sites (\"Next: \\(x)\", \"Active protocol: \\(x)\", \"\\(n)/\\(m) completed\"). Those require presentation formatters and stringsdict-style work, not mechanical regex. After those, the accessibility var-bypass audit can complete the visible-string NLS pass.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T05:43:29Z"
+}

@@ -40,7 +40,7 @@ struct RootTabView: View {
                 )
             }
             .tabItem {
-                Label("Today", systemImage: "sun.max")
+                Label(L("Today"), systemImage: "sun.max")
             }
             .tag(OwloryTab.today)
 
@@ -52,7 +52,7 @@ struct RootTabView: View {
                 )
             }
             .tabItem {
-                Label("Train", systemImage: "figure.run")
+                Label(L("Train"), systemImage: "figure.run")
             }
             .tag(OwloryTab.train)
 
@@ -72,7 +72,7 @@ struct RootTabView: View {
                 )
             }
             .tabItem {
-                Label("Write", systemImage: "square.and.pencil")
+                Label(L("Write"), systemImage: "square.and.pencil")
             }
             .tag(OwloryTab.write)
 
@@ -83,7 +83,7 @@ struct RootTabView: View {
                 )
             }
             .tabItem {
-                Label("Career", systemImage: "briefcase")
+                Label(L("Career"), systemImage: "briefcase")
             }
             .tag(OwloryTab.career)
 
@@ -102,7 +102,7 @@ struct RootTabView: View {
                 )
             }
             .tabItem {
-                Label("Home", systemImage: "house")
+                Label(L("Home"), systemImage: "house")
             }
             .tag(OwloryTab.home)
         }

@@ -37,12 +37,12 @@ struct HomeView: View {
                         Button {
                             showingAddTask = true
                         } label: {
-                            Label("Add Task", systemImage: "checklist")
+                            Label(L("Add Task"), systemImage: "checklist")
                         }
                         Button {
                             showingAddProtocol = true
                         } label: {
-                            Label("Add Protocol", systemImage: "list.clipboard")
+                            Label(L("Add Protocol"), systemImage: "list.clipboard")
                         }
                     } label: {
                         Image(systemName: "plus")
@@ -98,7 +98,7 @@ struct HomeView: View {
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }
             )) {
-                Button("OK", role: .cancel) {}
+                Button(L("OK"), role: .cancel) {}
             } message: {
                 Text(store.lastError ?? "")
             }
@@ -130,7 +130,7 @@ struct HomeView: View {
                     Button {
                         showingAddTask = true
                     } label: {
-                        Label("Add a Task", systemImage: "plus.circle")
+                        Label(L("Add a Task"), systemImage: "plus.circle")
                     }
                 }
             } else {
@@ -177,7 +177,7 @@ struct HomeView: View {
     private var skippedTasksSection: some View {
         let skipped = store.skippedTasks
         if !skipped.isEmpty {
-            Section("Skipped") {
+            Section(L("Skipped")) {
                 ForEach(skipped) { task in
                     TaskRow(
                         task: task,
@@ -205,7 +205,7 @@ struct HomeView: View {
                     Button {
                         showingAddProtocol = true
                     } label: {
-                        Label("Add a Protocol", systemImage: "plus.circle")
+                        Label(L("Add a Protocol"), systemImage: "plus.circle")
                     }
                 }
             } else {
@@ -231,7 +231,7 @@ struct HomeView: View {
                         Button {
                             editingProtocol = proto
                         } label: {
-                            Label("Edit", systemImage: "pencil")
+                            Label(L("Edit"), systemImage: "pencil")
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
@@ -275,7 +275,7 @@ struct HomeView: View {
                             Button {
                                 store.unarchiveProtocol(id: proto.id)
                             } label: {
-                                Label("Restore", systemImage: "arrow.uturn.backward")
+                                Label(L("Restore"), systemImage: "arrow.uturn.backward")
                             }
                             .tint(OwloryColor.brandPrimary)
                         }
@@ -348,12 +348,12 @@ struct HomeView: View {
                         Button(role: .destructive) {
                             store.abandonRun(id: run.id)
                         } label: {
-                            Label("Abandon", systemImage: "xmark.circle")
+                            Label(L("Abandon"), systemImage: "xmark.circle")
                         }
                     }
             }
         } header: {
-            Label("Protocol Runs", systemImage: "play.circle")
+            Label(L("Protocol Runs"), systemImage: "play.circle")
         }
     }
     }
@@ -427,7 +427,7 @@ struct HomeView: View {
             Button {
                 activeRunID = activeRun.id
             } label: {
-                Label("Continue Run", systemImage: "play.circle")
+                Label(L("Continue Run"), systemImage: "play.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
@@ -437,7 +437,7 @@ struct HomeView: View {
                     activeRunID = runID
                 }
             } label: {
-                Label("Start New Run", systemImage: "plus.circle")
+                Label(L("Start New Run"), systemImage: "plus.circle")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -447,7 +447,7 @@ struct HomeView: View {
                     activeRunID = runID
                 }
             } label: {
-                Label("Run Protocol", systemImage: "play.circle")
+                Label(L("Run Protocol"), systemImage: "play.circle")
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
@@ -519,7 +519,7 @@ private struct TaskRow: View {
                                 .lineLimit(1)
                         }
                         if task.isSkipped {
-                            Label("Skipped", systemImage: "forward.fill")
+                            Label(L("Skipped"), systemImage: "forward.fill")
                                 .font(.caption2)
                                 .foregroundStyle(OwloryColor.textTertiary)
                         }
@@ -555,7 +555,7 @@ private struct TaskRow: View {
             Button(role: .destructive) {
                 store.deleteTask(id: task.id)
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(L("Delete"), systemImage: "trash")
             }
         }
     }
@@ -604,7 +604,7 @@ private struct AddTaskSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Task") {
+                Section(L("Task")) {
                     TextField("Task title", text: $title)
                     TextField("Notes (optional)", text: $notes, axis: .vertical)
                         .lineLimit(2...4)
@@ -617,7 +617,7 @@ private struct AddTaskSheet: View {
                         }
                     }
                 }
-                Section("Voice Recording") {
+                Section(L("Voice Recording")) {
                     VoiceCaptureButton(recordID: captureRecordID) { text, fileName in
                         audioFileName = fileName
                         audioTranscription = text
@@ -652,10 +652,10 @@ private struct AddTaskSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button(L("Add")) {
                         store.addTask(
                             title: title,
                             isRecurring: isRecurring,
@@ -723,10 +723,10 @@ private struct EditTaskSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.updateTask(
                             id: task.id,
                             title: title,
@@ -749,16 +749,16 @@ private struct EditTaskSheet: View {
         case .none:
             EmptyView()
         case .availableWritingNote(let noteID):
-            Section("Source") {
+            Section(L("Source")) {
                 Button {
                     onViewSourceNote(noteID)
                 } label: {
-                    Label("View source note", systemImage: "doc.text")
+                    Label(L("View source note"), systemImage: "doc.text")
                 }
             }
         case .missingWritingNote:
-            Section("Source") {
-                Label("Source note unavailable", systemImage: "exclamationmark.triangle")
+            Section(L("Source")) {
+                Label(L("Source note unavailable"), systemImage: "exclamationmark.triangle")
                     .foregroundStyle(.secondary)
             }
         }
@@ -803,7 +803,7 @@ private struct EditProtocolSheet: View {
         NavigationStack {
             Form {
                 TextField("Protocol title", text: $title)
-                Section("Steps (one per line)") {
+                Section(L("Steps (one per line)")) {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
@@ -815,10 +815,10 @@ private struct EditProtocolSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         let steps = stepsText
                             .components(separatedBy: .newlines)
                             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -847,16 +847,16 @@ private struct EditProtocolSheet: View {
         case .none:
             EmptyView()
         case .availableWritingNote(let noteID):
-            Section("Source") {
+            Section(L("Source")) {
                 Button {
                     onViewSourceNote(noteID)
                 } label: {
-                    Label("View source note", systemImage: "doc.text")
+                    Label(L("View source note"), systemImage: "doc.text")
                 }
             }
         case .missingWritingNote:
-            Section("Source") {
-                Label("Source note unavailable", systemImage: "exclamationmark.triangle")
+            Section(L("Source")) {
+                Label(L("Source note unavailable"), systemImage: "exclamationmark.triangle")
                     .foregroundStyle(.secondary)
             }
         }
@@ -869,14 +869,14 @@ private struct EditProtocolSheet: View {
                     store.unarchiveProtocol(id: proto.id)
                     onDismiss()
                 } label: {
-                    Label("Restore Protocol", systemImage: "arrow.uturn.backward")
+                    Label(L("Restore Protocol"), systemImage: "arrow.uturn.backward")
                 }
             } else {
                 Button {
                     store.archiveProtocol(id: proto.id)
                     onDismiss()
                 } label: {
-                    Label("Archive Protocol", systemImage: "archivebox")
+                    Label(L("Archive Protocol"), systemImage: "archivebox")
                 }
             }
 
@@ -884,7 +884,7 @@ private struct EditProtocolSheet: View {
                 store.deleteProtocol(id: proto.id)
                 onDismiss()
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(L("Delete"), systemImage: "trash")
             }
         }
     }
@@ -903,7 +903,7 @@ private struct AddProtocolSheet: View {
         NavigationStack {
             Form {
                 TextField("Protocol title", text: $title)
-                Section("Steps (one per line)") {
+                Section(L("Steps (one per line)")) {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
@@ -913,10 +913,10 @@ private struct AddProtocolSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button(L("Add")) {
                         let steps = stepsText
                             .components(separatedBy: .newlines)
                             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -943,7 +943,7 @@ private struct ProtocolScheduleSection: View {
     @Binding var draft: ProtocolScheduleRules.Draft
 
     var body: some View {
-        Section("Schedule") {
+        Section(L("Schedule")) {
             Picker("Window", selection: presetBinding) {
                 Text("Anytime").tag(ProtocolSchedulePreset?.none)
                 Text("Today").tag(Optional(ProtocolSchedulePreset.today))
@@ -1168,7 +1168,7 @@ private struct ProtocolRunSheet: View {
                                 Button {
                                     store.revertStep(runID: run.id, stepID: step.id)
                                 } label: {
-                                    Label("Mark Pending", systemImage: "arrow.uturn.backward.circle")
+                                    Label(L("Mark Pending"), systemImage: "arrow.uturn.backward.circle")
                                 }
                             }
                         }
@@ -1185,7 +1185,7 @@ private struct ProtocolRunSheet: View {
                             store.abandonRun(id: run.id)
                             onDismiss()
                         } label: {
-                            Label("Abandon Run", systemImage: "xmark.circle")
+                            Label(L("Abandon Run"), systemImage: "xmark.circle")
                         }
                     }
                 }
@@ -1194,7 +1194,7 @@ private struct ProtocolRunSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { onDismiss() }
+                    Button(L("Done")) { onDismiss() }
                 }
             }
         }

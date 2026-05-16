@@ -61,7 +61,7 @@ struct WriteView: View {
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }
             )) {
-                Button("OK", role: .cancel) {}
+                Button(L("OK"), role: .cancel) {}
             } message: {
                 Text(store.lastError ?? "")
             }
@@ -165,7 +165,7 @@ struct WriteView: View {
                         Button {
                             store.advanceStage(id: note.id)
                         } label: {
-                            Label("Advance", systemImage: "arrow.right.circle")
+                            Label(L("Advance"), systemImage: "arrow.right.circle")
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
@@ -174,13 +174,13 @@ struct WriteView: View {
                     Button(role: .destructive) {
                         store.deleteNote(id: note.id)
                     } label: {
-                        Label("Delete", systemImage: "trash")
+                        Label(L("Delete"), systemImage: "trash")
                     }
                     if WritingStageRules.canTransition(from: stage, to: .archived) {
                         Button {
                             store.transitionStage(id: note.id, to: .archived)
                         } label: {
-                            Label("Archive", systemImage: "archivebox")
+                            Label(L("Archive"), systemImage: "archivebox")
                         }
                         .tint(OwloryColor.textTertiary)
                     }
@@ -228,7 +228,7 @@ struct WriteView: View {
                             Button {
                                 store.transitionStage(id: note.id, to: .capture)
                             } label: {
-                                Label("Restore", systemImage: "arrow.uturn.backward")
+                                Label(L("Restore"), systemImage: "arrow.uturn.backward")
                             }
                             .tint(OwloryColor.brandPrimary)
                         }
@@ -236,7 +236,7 @@ struct WriteView: View {
                             Button(role: .destructive) {
                                 store.deleteNote(id: note.id)
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                Label(L("Delete"), systemImage: "trash")
                             }
                         }
                     }
@@ -253,7 +253,7 @@ struct WriteView: View {
                 TextField("Title", text: $captureTitle)
                 TextField("Body", text: $captureBody, axis: .vertical)
                     .lineLimit(3...8)
-                Section("Voice Recording") {
+                Section(L("Voice Recording")) {
                     VoiceCaptureButton(
                         recordID: captureRecordID,
                         onRecordingStarted: {
@@ -306,12 +306,12 @@ struct WriteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(L("Cancel")) {
                         resetCapture()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.addNote(
                             title: captureTitle,
                             body: captureBody,
@@ -434,14 +434,14 @@ private struct NoteDetailView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Content") {
+                Section(L("Content")) {
                     TextField("Title", text: $title)
                     TextField("Body", text: $bodyText, axis: .vertical)
                         .lineLimit(5...12)
                 }
                 promotionSection
                 if let audioFile = note.audioFileName {
-                    Section("Voice Recording") {
+                    Section(L("Voice Recording")) {
                         HStack {
                             Text("Recording")
                                 .font(.subheadline)
@@ -462,7 +462,7 @@ private struct NoteDetailView: View {
                     }
                 }
                 if stage == .source || hasSourceMetadata {
-                    Section("Source") {
+                    Section(L("Source")) {
                         if hasSourceMetadata {
                             LabeledContent("Type", value: sourceType.localizedDisplayName)
                             if !sourceTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -479,12 +479,12 @@ private struct NoteDetailView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
-                        Button("Edit Source Details") {
+                        Button(L("Edit Source Details")) {
                             prepareSourceNoteSheet()
                         }
                     }
                 }
-                Section("Stage") {
+                Section(L("Stage")) {
                     LabeledContent("Current", value: stage.localizedDisplayName)
                     if let next = WritingStageRules.nextStage(after: stage) {
                         Button(
@@ -506,24 +506,24 @@ private struct NoteDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onDismiss() }
+                    Button(L("Cancel")) { onDismiss() }
                 }
                 if canOpenNoteOptions {
                     ToolbarItem(placement: .primaryAction) {
                         Menu {
                             if canAddToToday {
-                                Button("Add to Today") {
+                                Button(L("Add to Today")) {
                                     saveAndAddToToday()
                                 }
                                 .accessibilityIdentifier("write.note.action.addToToday.\(note.id.uuidString)")
                             }
                             if canTurnIntoTask {
-                                Button("Turn into Task") {
+                                Button(L("Turn into Task")) {
                                     saveAndTurnIntoTask()
                                 }
                             }
                             if canAddToProtocol {
-                                Button("Add to Protocol") {
+                                Button(L("Add to Protocol")) {
                                     saveAndAddToProtocol()
                                 }
                             }
@@ -539,13 +539,13 @@ private struct NoteDetailView: View {
                                 Button {
                                     saveAndArchiveNote()
                                 } label: {
-                                    Label("Archive Note", systemImage: "archivebox")
+                                    Label(L("Archive Note"), systemImage: "archivebox")
                                 }
                             }
                             Button(role: .destructive) {
                                 showingDeleteConfirmation = true
                             } label: {
-                                Label("Delete Note", systemImage: "trash")
+                                Label(L("Delete Note"), systemImage: "trash")
                             }
                         } label: {
                             Image(systemName: "ellipsis.circle")
@@ -554,7 +554,7 @@ private struct NoteDetailView: View {
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L("Save")) {
                         store.updateNote(id: note.id, title: title, body: bodyText)
                         onDismiss()
                     }
@@ -568,10 +568,10 @@ private struct NoteDetailView: View {
                 isPresented: $showingDeleteConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Delete Note", role: .destructive) {
+                Button(L("Delete Note"), role: .destructive) {
                     deleteNote()
                 }
-                Button("Cancel", role: .cancel) {}
+                Button(L("Cancel"), role: .cancel) {}
             } message: {
                 Text("This removes the note from Write. Archived notes can be kept without appearing in active stages.")
             }
@@ -649,7 +649,7 @@ private struct NoteDetailView: View {
         action: (() -> Void)?
     ) -> some View {
         HStack(spacing: 12) {
-            Label(title, systemImage: systemImage)
+            Label(L(title), systemImage: systemImage)
             Spacer()
             Text(status)
                 .font(.caption)
@@ -732,7 +732,7 @@ private struct NoteDetailView: View {
                     Text("Owlory keeps your original note text and adds source fields quietly.")
                 }
 
-                Section("Source Details") {
+                Section(L("Source Details")) {
                     TextField("Source title", text: $sourceTitle)
                     TextField("Author / creator", text: $sourceCreator)
                     TextField("URL", text: $sourceURL)
@@ -743,7 +743,7 @@ private struct NoteDetailView: View {
                     TextField("Date accessed or created", text: $sourceDate)
                 }
 
-                Section("Optional Reference") {
+                Section(L("Optional Reference")) {
                     TextField("Citation", text: $sourceCitation, axis: .vertical)
                         .lineLimit(2...5)
                     TextField("Quote", text: $sourceQuote, axis: .vertical)
@@ -754,12 +754,12 @@ private struct NoteDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(L("Cancel")) {
                         showingSourceNoteSheet = false
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
+                    Button(L("Done")) {
                         saveSourceNote()
                     }
                 }
