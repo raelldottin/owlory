@@ -1,0 +1,75 @@
+{
+  "slice_id": "app-localization-audio-voice-button-accessibility-routing",
+  "status": "done",
+  "summary": "Routed AudioPlaybackButton.accessibilityText and VoiceCaptureButton.accessibilityText through Localizable.strings. Added 8 new keys (audio.playback.accessibility.{play,stop,error} + voice.capture.accessibility.{start,stop,transcribing,finished,error}) across all 19 locales with LLM-drafted translations. Two keys (audio.playback.accessibility.error and voice.capture.accessibility.error) carry a %@ format specifier wrapping the runtime error message; the call sites use String.localizedStringWithFormat. Approach mirrors the existing HomeAccessibilityLabels pattern. Build green, parity 19/324/13.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+    "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260516T121000Z-app-localization-audio-voice-button-accessibility-routing.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/121000-app-localization-audio-voice-button-accessibility-routing.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-a11y-buttons-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "VoiceOver running-app verification per locale",
+    "native-reviewed for the 8 new keys",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Accessibility-string routing for DesignSystem audio/voice buttons",
+      "before": "AudioPlaybackButton.accessibilityText and VoiceCaptureButton.accessibilityText returned hardcoded English from switch statements. Non-English VoiceOver users heard English regardless of system language.",
+      "after": "Both computed properties route through NSLocalizedString with comments. Error cases use String.localizedStringWithFormat with the new %@-bearing keys. Translations exist for all 19 locales (LLM-drafted).",
+      "proof": [
+        "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "Localizable.strings (19 files, parity 324/13)",
+        "xcodebuild build green"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "VoiceOver runtime output per locale was not verified. Native reviewer should check that the LLM-drafted accessibility labels read correctly aloud.",
+    "The %@ error messages themselves (AudioPlayerService 'Recording not found.' / 'Could not play recording.') are NOT localized — only the surrounding 'Playback error: %@' / 'Error: %@' wrapper is. A future slice could localize the inner messages too.",
+    "The 8 new keys join the 316 prior keys at draft-translation quality. Each per-locale review return file currently snapshots 356 entries from 2026-05-15; the 8 new keys are NOT reflected there. STATUS.md / LQA.md will report stale counts until those derived artifacts are regenerated (out of scope of this slice).",
+    "Native review of any locale remains outstanding. app-localization-native-review-intake is still blocked.",
+    "The widget extension does not currently use AudioPlaybackButton or VoiceCaptureButton, so no widget-target localization concerns. If a future widget uses them, ensure the widget bundle correctly loads Localizable.strings."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "The visible/accessibility shell routing pass is now complete to the build-tested gate. Remaining queued work is app-localization-string-interpolation-formatters (~12 interpolated copy sites) plus the standing blocked app-localization-native-review-intake. Clean stop is valid.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T12:10:00Z"
+}

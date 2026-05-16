@@ -39,9 +39,24 @@ struct AudioPlaybackButton: View {
 
     private var accessibilityText: String {
         switch player.state {
-        case .idle: return "Play recording"
-        case .playing: return "Stop playback"
-        case .error(let msg): return "Playback error: \(msg)"
+        case .idle:
+            return NSLocalizedString(
+                "audio.playback.accessibility.play",
+                comment: "Audio playback button accessibility label when the recording is idle."
+            )
+        case .playing:
+            return NSLocalizedString(
+                "audio.playback.accessibility.stop",
+                comment: "Audio playback button accessibility label when playback is active."
+            )
+        case .error(let msg):
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "audio.playback.accessibility.error",
+                    comment: "Audio playback button accessibility label when playback failed; %@ is the error message."
+                ),
+                msg
+            )
         }
     }
 

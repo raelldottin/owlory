@@ -3974,7 +3974,7 @@
     {
       "slice_id": "app-localization-audio-voice-button-accessibility-routing",
       "title": "Route AudioPlaybackButton / VoiceCaptureButton accessibility text through Localizable.strings",
-      "status": "queued",
+      "status": "done",
       "priority": 90,
       "domain": "localization",
       "allowed_paths": [
@@ -4000,7 +4000,7 @@
       ],
       "max_files_changed": 6,
       "entry_condition": "Accessibility-bypass audit identified 2 real-bypass variable sites in DesignSystem audio/voice buttons.",
-      "notes": "Add ~7 new keys to Localizable.strings across all 19 locales (LLM-drafted, status=needs-layout-check). Wrap AudioPlaybackButton.accessibilityText returns and VoiceCaptureButton.accessibilityText returns in NSLocalizedString / String(localized:) calls, with String.localizedStringWithFormat for the two interpolated error/playback-error cases. Approach mirrors the existing HomeAccessibilityLabels pattern. Do not touch other DesignSystem files or view code. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-16. Added 8 new localization keys (audio.playback.accessibility.play / .stop / .error; voice.capture.accessibility.start / .stop / .transcribing / .finished / .error) to all 19 Localizable.strings files with LLM-drafted translations (claude-opus-4-7, not native-reviewed). 2 of the 8 keys include %@ format specifiers for the error message. Wrapped AudioPlaybackButton.accessibilityText and VoiceCaptureButton.accessibilityText switch returns in NSLocalizedString + String.localizedStringWithFormat for the %@ cases. Approach mirrors the existing HomeAccessibilityLabels pattern. No view code outside the two DesignSystem files changed. localization-parity now reports 19 locales / 324 keys / 13 plural keys. proof_level: build-tested."
     }
   ]
 }

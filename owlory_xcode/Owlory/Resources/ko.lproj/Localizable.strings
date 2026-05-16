@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "%@ 건너뛰기";
 "Check-in" = "체크인";
 "Check in" = "체크인";
+"audio.playback.accessibility.play" = "녹음 재생";
+"audio.playback.accessibility.stop" = "재생 중지";
+"audio.playback.accessibility.error" = "재생 오류: %@";
+"voice.capture.accessibility.start" = "음성 캡처 시작";
+"voice.capture.accessibility.stop" = "녹음 중지";
+"voice.capture.accessibility.transcribing" = "텍스트 변환 중";
+"voice.capture.accessibility.finished" = "음성 캡처 완료";
+"voice.capture.accessibility.error" = "오류: %@";

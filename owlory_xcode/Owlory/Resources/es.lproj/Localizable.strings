@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "Omitir %@";
 "Check-in" = "Check-in";
 "Check in" = "Check-in";
+"audio.playback.accessibility.play" = "Reproducir grabación";
+"audio.playback.accessibility.stop" = "Detener reproducción";
+"audio.playback.accessibility.error" = "Error de reproducción: %@";
+"voice.capture.accessibility.start" = "Iniciar captura de voz";
+"voice.capture.accessibility.stop" = "Detener grabación";
+"voice.capture.accessibility.transcribing" = "Transcribiendo";
+"voice.capture.accessibility.finished" = "Captura de voz completada";
+"voice.capture.accessibility.error" = "Error: %@";

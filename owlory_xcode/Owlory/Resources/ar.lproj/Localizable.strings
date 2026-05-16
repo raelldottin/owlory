@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "تخطي %@";
 "Check-in" = "تسجيل الوصول";
 "Check in" = "تسجيل دخول";
+"audio.playback.accessibility.play" = "تشغيل التسجيل";
+"audio.playback.accessibility.stop" = "إيقاف التشغيل";
+"audio.playback.accessibility.error" = "خطأ في التشغيل: %@";
+"voice.capture.accessibility.start" = "بدء التقاط الصوت";
+"voice.capture.accessibility.stop" = "إيقاف التسجيل";
+"voice.capture.accessibility.transcribing" = "جارٍ النسخ";
+"voice.capture.accessibility.finished" = "اكتمل التقاط الصوت";
+"voice.capture.accessibility.error" = "خطأ: %@";

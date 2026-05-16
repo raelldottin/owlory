@@ -69,11 +69,34 @@ struct VoiceCaptureButton: View {
 
     private var accessibilityText: String {
         switch service.state {
-        case .idle: return "Start voice capture"
-        case .recording: return "Stop recording"
-        case .transcribing: return "Transcribing"
-        case .finished: return "Voice capture complete"
-        case .error(let msg): return "Error: \(msg)"
+        case .idle:
+            return NSLocalizedString(
+                "voice.capture.accessibility.start",
+                comment: "Voice capture button accessibility label when idle."
+            )
+        case .recording:
+            return NSLocalizedString(
+                "voice.capture.accessibility.stop",
+                comment: "Voice capture button accessibility label when recording."
+            )
+        case .transcribing:
+            return NSLocalizedString(
+                "voice.capture.accessibility.transcribing",
+                comment: "Voice capture button accessibility label while transcription is running."
+            )
+        case .finished:
+            return NSLocalizedString(
+                "voice.capture.accessibility.finished",
+                comment: "Voice capture button accessibility label after capture completes."
+            )
+        case .error(let msg):
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "voice.capture.accessibility.error",
+                    comment: "Voice capture button accessibility label after capture failed; %@ is the error message."
+                ),
+                msg
+            )
         }
     }
 

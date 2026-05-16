@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "%@をスキップ";
 "Check-in" = "チェックイン";
 "Check in" = "チェックイン";
+"audio.playback.accessibility.play" = "録音を再生";
+"audio.playback.accessibility.stop" = "再生を停止";
+"audio.playback.accessibility.error" = "再生エラー: %@";
+"voice.capture.accessibility.start" = "音声取り込みを開始";
+"voice.capture.accessibility.stop" = "録音を停止";
+"voice.capture.accessibility.transcribing" = "文字起こし中";
+"voice.capture.accessibility.finished" = "音声取り込み完了";
+"voice.capture.accessibility.error" = "エラー: %@";

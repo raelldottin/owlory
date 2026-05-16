@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "Hopp over %@";
 "Check-in" = "Innsjekking";
 "Check in" = "Sjekk inn";
+"audio.playback.accessibility.play" = "Spill opptak";
+"audio.playback.accessibility.stop" = "Stopp avspilling";
+"audio.playback.accessibility.error" = "Avspillingsfeil: %@";
+"voice.capture.accessibility.start" = "Start stemmeopptak";
+"voice.capture.accessibility.stop" = "Stopp opptak";
+"voice.capture.accessibility.transcribing" = "Transkriberer";
+"voice.capture.accessibility.finished" = "Stemmeopptak fullført";
+"voice.capture.accessibility.error" = "Feil: %@";

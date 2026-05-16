@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "%@ overslaan";
 "Check-in" = "Inchecken";
 "Check in" = "Inchecken";
+"audio.playback.accessibility.play" = "Opname afspelen";
+"audio.playback.accessibility.stop" = "Afspelen stoppen";
+"audio.playback.accessibility.error" = "Afspeelfout: %@";
+"voice.capture.accessibility.start" = "Spraakopname starten";
+"voice.capture.accessibility.stop" = "Opname stoppen";
+"voice.capture.accessibility.transcribing" = "Aan het transcriberen";
+"voice.capture.accessibility.finished" = "Spraakopname voltooid";
+"voice.capture.accessibility.error" = "Fout: %@";

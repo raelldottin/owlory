@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "Hoppa över %@";
 "Check-in" = "Incheckning";
 "Check in" = "Checka in";
+"audio.playback.accessibility.play" = "Spela upp inspelning";
+"audio.playback.accessibility.stop" = "Stoppa uppspelning";
+"audio.playback.accessibility.error" = "Uppspelningsfel: %@";
+"voice.capture.accessibility.start" = "Starta röstinspelning";
+"voice.capture.accessibility.stop" = "Stoppa inspelning";
+"voice.capture.accessibility.transcribing" = "Transkriberar";
+"voice.capture.accessibility.finished" = "Röstinspelning klar";
+"voice.capture.accessibility.error" = "Fel: %@";

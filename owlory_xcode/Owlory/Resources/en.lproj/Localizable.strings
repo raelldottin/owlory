@@ -324,3 +324,11 @@
 "home.protocol.step.accessibility.skip" = "Skip %@";
 "Check-in" = "Check-in";
 "Check in" = "Check in";
+"audio.playback.accessibility.play" = "Play recording";
+"audio.playback.accessibility.stop" = "Stop playback";
+"audio.playback.accessibility.error" = "Playback error: %@";
+"voice.capture.accessibility.start" = "Start voice capture";
+"voice.capture.accessibility.stop" = "Stop recording";
+"voice.capture.accessibility.transcribing" = "Transcribing";
+"voice.capture.accessibility.finished" = "Voice capture complete";
+"voice.capture.accessibility.error" = "Error: %@";

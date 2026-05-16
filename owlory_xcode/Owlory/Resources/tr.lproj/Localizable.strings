@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "%@ atla";
 "Check-in" = "Check-in";
 "Check in" = "Check-in";
+"audio.playback.accessibility.play" = "Kaydı oynat";
+"audio.playback.accessibility.stop" = "Oynatmayı durdur";
+"audio.playback.accessibility.error" = "Oynatma hatası: %@";
+"voice.capture.accessibility.start" = "Sesi yakalamayı başlat";
+"voice.capture.accessibility.stop" = "Kaydı durdur";
+"voice.capture.accessibility.transcribing" = "Transkript ediliyor";
+"voice.capture.accessibility.finished" = "Ses yakalama tamamlandı";
+"voice.capture.accessibility.error" = "Hata: %@";

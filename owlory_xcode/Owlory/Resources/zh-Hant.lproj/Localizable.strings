@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "略過 %@";
 "Check-in" = "簽到";
 "Check in" = "簽到";
+"audio.playback.accessibility.play" = "播放錄音";
+"audio.playback.accessibility.stop" = "停止播放";
+"audio.playback.accessibility.error" = "播放錯誤：%@";
+"voice.capture.accessibility.start" = "開始語音擷取";
+"voice.capture.accessibility.stop" = "停止錄音";
+"voice.capture.accessibility.transcribing" = "轉錄中";
+"voice.capture.accessibility.finished" = "語音擷取完成";
+"voice.capture.accessibility.error" = "錯誤：%@";

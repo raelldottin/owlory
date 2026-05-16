@@ -322,3 +322,11 @@
 "home.protocol.step.accessibility.skip" = "Пропустити %@";
 "Check-in" = "Чек-ін";
 "Check in" = "Чек-ін";
+"audio.playback.accessibility.play" = "Відтворити запис";
+"audio.playback.accessibility.stop" = "Зупинити відтворення";
+"audio.playback.accessibility.error" = "Помилка відтворення: %@";
+"voice.capture.accessibility.start" = "Почати запис голосу";
+"voice.capture.accessibility.stop" = "Зупинити запис";
+"voice.capture.accessibility.transcribing" = "Триває транскрипція";
+"voice.capture.accessibility.finished" = "Запис голосу завершено";
+"voice.capture.accessibility.error" = "Помилка: %@";
