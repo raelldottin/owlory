@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-16
+
+- [app-localization-visible-string-bypass-audit (doc-only; 400 candidates, 116 must-fix, 10 follow-up slices queued)](sessions/2026-05-16/013410-app-localization-visible-string-bypass-audit.md)
+
 ## 2026-05-15
 
 - [app-localization-automated-lqa-and-llm-quality-pass (doc-only; 6354 passed / 54 warning / 0 reverted across 18 locales; NOT a native-review claim)](sessions/2026-05-15/210004-app-localization-automated-lqa-and-llm-quality-pass.md)

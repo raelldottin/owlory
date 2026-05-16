@@ -1,0 +1,60 @@
+{
+  "slice_id": "app-localization-visible-string-bypass-audit",
+  "status": "done",
+  "summary": "Audit-only slice. Scanned 82 app-target Swift files for SwiftUI initializers that take a title/label/key argument and cross-referenced against the 316 keys in Localizable.strings. Found 400 candidate visible-string call sites: 116 must-fix bypasses, 37 should-fix (suspect Button literals), 247 low/ok (already-localized literals, user content, intentional English, or debug-internal). Wrote docs/workflows/localization-visible-string-audit.md as the catalog and queued 10 narrow follow-up slices (one per surface + cross-cutting interpolation/Button-verify/accessibility). Did NOT change app resources, view code, or per-locale return files. Did NOT make any native-review claim.",
+  "files_touched": [
+    "automation/handoffs/20260516T013410Z-app-localization-visible-string-bypass-audit.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-visible-string-audit.md",
+    "docs/workflows/localization-string-inventory.md",
+    "docs/workflows/localization-dynamic-formatting.md",
+    "docs/workflows/roadmap-status.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/013410-app-localization-visible-string-bypass-audit.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-visible-string-bypass-audit",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "build-tested for any view-code change",
+    "running-app-smoke for translated content per locale",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Localization visible-string call-site routing",
+      "before": "No catalog existed for SwiftUI initializers that bypass Localizable.strings even when the key is present. Commit 2dfd2d0 fixed the user-reported gaps (Train Section/Label literals, Today Check-in, Write Capture button) but the broader pattern was uncatalogued.",
+      "after": "docs/workflows/localization-visible-string-audit.md is the canonical catalog. 116 must-fix call sites identified across Today (73) / Home (54) / Write (31) / Train (19) / Career (13) / Root tabs (5) / Widgets (3). 9 classification categories. Tier mapping (must-fix / should-fix / low/ok). 10 narrow follow-up slices queued. localization-string-inventory.md and localization-dynamic-formatting.md cross-reference the audit. roadmap-status.md updates the Localization row to note the audit existence and the queued follow-ups.",
+      "proof": [
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json (10 new queued follow-ups)"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The audit is a static heuristic. Some `bypass-label-literal` findings may localize correctly on iOS 17 even though the static pattern is suspect. Each per-surface fix slice should verify behavior on simulator under -AppleLanguages before mass-converting.",
+    "The classifier treats `Text(varString)` aggressively: it splits into ok-user-content (e.g., note.title), ok-localized-display-helper (e.g., stage.localizedDisplayName), and bypass-string-var-true (everything else). The heuristic uses substring matching; edge cases may be misclassified. Each fix slice must inspect upstream before deciding.",
+    "Button literal classification (`bypass-button-literal-suspect`) is a guess. Single-argument Button(\"...\") literals empirically DO localize on iOS 17 in most projects. The follow-up slice `app-localization-button-literal-verify` is explicitly an audit-then-fix to avoid mass-converting things that already work.",
+    "The 17 `missing-key` findings are almost all interpolated copy (\"Next: \\(x)\") that should NOT be added as keys verbatim — they need presentation formatters with positional substitution. The `app-localization-string-interpolation-formatters` slice owns that work.",
+    "The `Text(\"Focus lives in Continue. ...\")` footer in TodayView line 279 was classified ok-literal-text because the literal + key exist. The user-reported observation that it doesn't translate is unexplained by the audit. If the gap reproduces, follow-up investigation is needed (simulator cache, deployment target, or a SwiftUI iOS-specific quirk).",
+    "Native review remains outstanding for every locale. The audit and its follow-ups can route copy through Localizable.strings but cannot fix translation quality. `app-localization-native-review-intake` stays blocked.",
+    "The audit does NOT cover assets / image names, color names, sound names, or system-symbol names. Those are out of scope of visible-string localization."
+  ],
+  "recommended_next_slice": "app-localization-today-shell-copy-routing",
+  "recommended_next_reason": "Highest must-fix count (73 across Today/Digest/BuildInfo views) and most user-impacting per the prior manual/TestFlight gap reports.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-relevant",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T01:34:10Z"
+}

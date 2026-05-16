@@ -3590,6 +3590,354 @@
       "max_files_changed": 30,
       "entry_condition": "Per-locale review return files exist for all 18 non-English locales (currently true as of 2026-05-15).",
       "notes": "Completed on 2026-05-15. Added Tools/localization-lqa.py running deterministic checks (format-specifier parity, empty-value, identical-to-English-outside-keep, length-outlier, mojibake-suspect) plus LLM second-pass attribution across all 18 per-locale review return files. Each entry gains an lqa block: status=passed (6354 total) / warning (54) / reverted (0). The format-specifier check was tuned to treat missing %d in stringsdict plural_category=one as idiomatic (not a failure) to avoid auto-reverting correct Arabic plural one translations. Updated Tools/localization-review-status.py and localization/review/STATUS.md to surface LQA counts per locale. Wrote localization/review/LQA.md. Updated docs/workflows/localization-translation-quality.md to record the LQA gate as honest intermediate, not a native-review claim. No app resources modified. No provenance.native_reviewed flag flipped. proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-visible-string-bypass-audit",
+      "title": "Audit visible-string localization bypasses across app target",
+      "status": "done",
+      "priority": 107,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/localization-visible-string-audit.md",
+        "docs/workflows/localization-string-inventory.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/roadmap-status.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-visible-string-bypass-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-automated-lqa-and-llm-quality-pass"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Visible English strings observed on TestFlight/manual testing despite localization infrastructure existing. Audit-first slice: inventory, classify, and queue narrow follow-ups; do not fix strings in this slice.",
+      "notes": "Completed on 2026-05-16. Wrote docs/workflows/localization-visible-string-audit.md: 82 files scanned, 400 candidate findings, 116 must-fix, 37 should-fix, 247 low/ok. Updated localization-string-inventory.md, localization-dynamic-formatting.md, and roadmap-status.md to reference the audit. Queued 7 narrow per-surface follow-up slices plus 2 cross-cutting follow-ups (interpolation formatters, button-literal verify, accessibility bypass audit). No app resources or call sites changed. proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-today-shell-copy-routing",
+      "title": "Route Today / DigestDetail / DigestList / BuildInfo Section/Label/Button literals through localization",
+      "status": "queued",
+      "priority": 100,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "docs/workflows/localization-string-inventory.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=today",
+        "make ui-regression DOMAIN=today",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-today-shell-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix the ~73 must-fix call sites in TodayView.swift, DigestDetailView.swift, DigestListView.swift, BuildInfoView.swift identified by docs/workflows/localization-visible-string-audit.md. Approach: convert `Section(\"Lit\")` to `Section { ... } header: { Text(\"Lit\") }`; convert `Label(\"Lit\", systemImage:)` to `Label { Text(\"Lit\") } icon: { Image(systemName:) }`; convert `Text(varString)` where varString is a localization key candidate to `Text(LocalizedStringKey(varString))`; add any missing `Localizable.strings` keys across all 19 locales (LLM-drafted). Do NOT change product copy. Do NOT touch string-interpolation patterns (separate slice). proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-home-shell-copy-routing",
+      "title": "Route Home Section/Label/Button literals through localization",
+      "status": "queued",
+      "priority": 99,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Home/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=home",
+        "make ui-regression DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-home-shell-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix the ~54 must-fix call sites in HomeView.swift. Same approach as the Today shell slice. Cover all Section/Label/Button literals and missing-key call sites; defer string-interpolation patterns (\"\\\\(n)/\\\\(m) completed\") to app-localization-string-interpolation-formatters. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-write-shell-copy-routing",
+      "title": "Route Write Section/Label/Button literals through localization",
+      "status": "queued",
+      "priority": 98,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=write",
+        "make ui-regression DOMAIN=write",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-write-shell-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix the ~31 must-fix call sites in WriteView.swift not already addressed by commit 2dfd2d0 (Capture sheet, Edit sheet, source detail, archive disclosure). Same approach as the Today/Home shell slices. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-train-shell-copy-routing-followup",
+      "title": "Route remaining Train Button/Label call sites through localization",
+      "status": "queued",
+      "priority": 97,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=train",
+        "make ui-regression DOMAIN=train",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-train-shell-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix the ~19 must-fix call sites in TrainView.swift NOT already addressed by commit 2dfd2d0 (which covered the inline-readiness and session-editor disclosure plus Section(Today/History/Plan)). Remaining items are accessibility-label interpolations, `bypass-button-literal-suspect` cases, and a few missing keys. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-career-shell-copy-routing",
+      "title": "Route Career Section/Label/Button literals through localization",
+      "status": "queued",
+      "priority": 96,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Career/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-career-shell-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix the ~13 must-fix call sites in CareerView.swift. No CareerRegression XCUITest exists yet, so build-tested only. Section/Label/Button literals + a small number of bypass-string-var sites. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-root-tab-shell-labels",
+      "title": "Route RootTabView tab labels through localization",
+      "status": "queued",
+      "priority": 95,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-root-tab-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 3,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Convert the 5 `Label(\"Train\"/\"Write\"/\"Career\"/\"Home\"/\"Today\", systemImage:)` tab-item calls in RootTabView.swift to explicit `Label { Text(\"Lit\") } icon: { Image(systemName:) }` pattern. The Batch 7 localization layout regression should still pass since it asserts tab-bar presence by count, not by label. proof_level target: running-app-smoke (DOMAIN=localization XCUITest exercises tab bar under -AppleLanguages/-AppleLocale)."
+    },
+    {
+      "slice_id": "app-localization-widget-shell-strings",
+      "title": "Route OwloryWidgets visible strings through localization",
+      "status": "queued",
+      "priority": 94,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/OwloryWidgets/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-widget-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "Visible-string audit exists and queues this surface.",
+      "notes": "Fix ~3 bypass-string-var cases in widget views. Widget extension uses its own bundle for resources; verify Localizable.strings is correctly packaged in the widget target. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-string-interpolation-formatters",
+      "title": "Replace interpolated visible copy with presentation formatters",
+      "status": "queued",
+      "priority": 93,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=today",
+        "make test-domain DOMAIN=home",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-interp-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 16,
+      "entry_condition": "Visible-string audit identified ~12 interpolated-visible-copy sites.",
+      "notes": "Replace `\"Next: \\\\(latest.title)\"`, `\"Active protocol: \\\\(nextRun.protocolTitle)\"`, `\"Next task: \\\\(next.title)\"`, `\"\\\\(completedStepCount)/\\\\(totalStepCount) completed\"`, `\"\\\\(currentRun.resolvedStepCount) of \\\\(currentRun.totalStepCount)\"`, `\"\\\\(staleDayCount)d\"` etc. with UI-adjacent presentation formatters that use `String(localized:)` with positional arguments. Add necessary stringsdict keys for plural-sensitive cases. Cover both Today and Home surfaces. Domain rules unchanged. proof_level target: domain-tested + build-tested."
+    },
+    {
+      "slice_id": "app-localization-button-literal-verify",
+      "title": "Verify Button literal localization and convert if needed",
+      "status": "queued",
+      "priority": 92,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-btn-verify-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Visible-string audit identified 37 `bypass-button-literal-suspect` sites.",
+      "notes": "Audit-then-fix: build a tiny test view that renders `Button(\"Save\", action:)` in a non-English simulator. If the literal localizes via LocalizedStringKey, leave Button literals alone. If not, convert all 37 to explicit `Button { Text(\"...\") } action: { ... }` pattern. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-accessibility-bypass-audit",
+      "title": "Verify accessibility String-variable upstream is localized",
+      "status": "queued",
+      "priority": 91,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/",
+        "owlory_xcode/Owlory/DesignSystem/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-visible-string-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-visible-string-bypass-audit"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Visible-string audit identified ~10 `bypass-string-var-true` accessibility cases.",
+      "notes": "For each `.accessibilityLabel(var)` / `.accessibilityHint(var)` / `.accessibilityValue(var)` call site where the upstream String is built from English fragments, route it through `NSLocalizedString` or `String(localized:)`. Cross-check that accessibility output matches visible output in non-English locales. No app-resource changes unless a key is missing. proof_level target: doc-only + build-tested."
     }
   ]
 }

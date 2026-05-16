@@ -2,6 +2,8 @@
 
 Use this inventory before starting translation work. It separates source-string readiness from translation quality so agents do not overclaim localization completeness.
 
+> **2026-05-16 update.** A separate visible-string bypass audit (`docs/workflows/localization-visible-string-audit.md`) catalogs SwiftUI call sites where a localization key exists but the initializer overload selects the `StringProtocol` path, bypassing `Localizable.strings`. The classifications below describe whether a key *exists*; the bypass audit describes whether the *runtime call site* routes through that key. Both gates must hold for a string to actually appear localized.
+
 ## Current Contract
 
 - Localization foundation: `Implemented`.

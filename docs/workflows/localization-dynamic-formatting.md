@@ -2,6 +2,8 @@
 
 Use this contract before localizing counts, dates, statuses, notifications, display labels, or interpolated copy. The goal is to keep localization work readable without moving presentation concerns into pure product rules.
 
+> **2026-05-16 update.** The visible-string bypass audit (`docs/workflows/localization-visible-string-audit.md`) flagged ~17 interpolated copy sites that fail this contract: `"Next: \(latest.title)"`, `"Active protocol: \(nextRun.protocolTitle)"`, `"\(completedStepCount)/\(totalStepCount) completed"`, etc. These are now queued as `app-localization-string-interpolation-formatters`. Future agents must route these through a UI-adjacent presentation formatter (see [API Guidance](#api-guidance)), not concatenate English fragments around a runtime value.
+
 ## Boundary Rule
 
 ```text
