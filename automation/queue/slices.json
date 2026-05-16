@@ -4001,6 +4001,40 @@
       "max_files_changed": 6,
       "entry_condition": "Accessibility-bypass audit identified 2 real-bypass variable sites in DesignSystem audio/voice buttons.",
       "notes": "Completed on 2026-05-16. Added 8 new localization keys (audio.playback.accessibility.play / .stop / .error; voice.capture.accessibility.start / .stop / .transcribing / .finished / .error) to all 19 Localizable.strings files with LLM-drafted translations (claude-opus-4-7, not native-reviewed). 2 of the 8 keys include %@ format specifiers for the error message. Wrapped AudioPlaybackButton.accessibilityText and VoiceCaptureButton.accessibilityText switch returns in NSLocalizedString + String.localizedStringWithFormat for the %@ cases. Approach mirrors the existing HomeAccessibilityLabels pattern. No view code outside the two DesignSystem files changed. localization-parity now reports 19 locales / 324 keys / 13 plural keys. proof_level: build-tested."
+    },
+    {
+      "slice_id": "app-localization-return-files-refresh",
+      "title": "Refresh per-locale review return files + dashboard/LQA artifacts to include 16 new keys",
+      "status": "queued",
+      "priority": 85,
+      "domain": "localization",
+      "allowed_paths": [
+        "Tools/localization-return-files-refresh.py",
+        "Tools/localization-lqa.py",
+        "Tools/localization-review-status.py",
+        "Tools/german-review-packet-regenerate.py",
+        "localization/review/",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-lqa.py",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-string-interpolation-formatters"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "Localizable.strings now contains 16 keys added after the 2026-05-15 ingest (2 Check-in/Check in keys, 8 audio/voice accessibility keys, 6 interpolation format-string keys including 1 reserved-but-unused), so per-locale review return files at 356 entries are stale relative to the current 372 (358 strings + 14 from the lqa context: 314 + 16 - 0 unused tracking). Dashboard and LQA reports show stale counts.",
+      "notes": "Housekeeping slice. Doc-only / artifact regeneration. Build Tools/localization-return-files-refresh.py that reads the current Localizable.strings and Localizable.stringsdict files, plus each existing per-locale return file, and rewrites each return file to include the new keys with reviewer = 'claude-opus-4-7 (LLM, not native <language> reviewer)', review_date = today, and review_status = needs-layout-check (for translated entries) or keep-english-term (for entries identical to English). Then re-run Tools/localization-lqa.py --apply --write-md and Tools/localization-review-status.py --write-doc to update LQA.md and STATUS.md. Re-run Tools/german-review-packet-regenerate.py for the German packet. Do NOT change app resources. Do NOT flip any provenance.native_reviewed flag. Do NOT claim native review. proof_level target: doc-only."
     }
   ]
 }
