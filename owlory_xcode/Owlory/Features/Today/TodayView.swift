@@ -205,16 +205,24 @@ struct TodayView: View {
                     compactHeightCheckInLabel
                 } else if usesStackedCheckInLabel {
                     VStack(alignment: .leading, spacing: 4) {
-                        Label(checkInTitle, systemImage: "heart.text.clipboard")
-                            .font(checkInTitleFont)
+                        Label {
+                            Text(LocalizedStringKey(checkInTitle))
+                        } icon: {
+                            Image(systemName: "heart.text.clipboard")
+                        }
+                        .font(checkInTitleFont)
                         Text(readinessSummaryLabel)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 } else {
                     HStack(spacing: 12) {
-                        Label(checkInTitle, systemImage: "heart.text.clipboard")
-                            .font(checkInTitleFont)
+                        Label {
+                            Text(LocalizedStringKey(checkInTitle))
+                        } icon: {
+                            Image(systemName: "heart.text.clipboard")
+                        }
+                        .font(checkInTitleFont)
                         Spacer()
                         Text(readinessSummaryLabel)
                             .font(.caption)
@@ -974,9 +982,13 @@ struct TodayView: View {
     ) -> some View {
         VStack(spacing: 4) {
             HStack(spacing: 0) {
-                Label(label, systemImage: systemImage)
-                    .font(.subheadline)
-                    .frame(width: 90, alignment: .leading)
+                Label {
+                    Text(LocalizedStringKey(label))
+                } icon: {
+                    Image(systemName: systemImage)
+                }
+                .font(.subheadline)
+                .frame(width: 90, alignment: .leading)
                 ForEach(1...5, id: \.self) { level in
                     Button {
                         onChange(level)
@@ -1207,7 +1219,7 @@ struct TodayView: View {
 
     private var compactHeightCheckInLabel: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(checkInTitle)
+            Text(LocalizedStringKey(checkInTitle))
                 .font(checkInTitleFont)
             Text(readinessSummaryLabel)
                 .font(.caption)

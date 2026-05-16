@@ -79,7 +79,7 @@ struct TrainView: View {
     // MARK: - Today
 
     private var todaySection: some View {
-        Section("Today") {
+        Section {
             let todaySessions = store.activeTodaySessions
             if todaySessions.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
@@ -116,6 +116,8 @@ struct TrainView: View {
                         .foregroundStyle(OwloryColor.brandPrimary)
                 }
             }
+        } header: {
+            Text("Today")
         }
     }
 
@@ -125,7 +127,7 @@ struct TrainView: View {
     private var historySection: some View {
         let history = store.historySessions
         if !history.isEmpty {
-            Section("History") {
+            Section {
                 ForEach(history) { session in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
@@ -155,6 +157,8 @@ struct TrainView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.history.item.\(session.id.uuidString)")
                 }
+            } header: {
+                Text("History")
             }
         }
     }
@@ -164,8 +168,10 @@ struct TrainView: View {
     private var addSessionSheet: some View {
         NavigationStack {
             Form {
-                Section("Plan") {
+                Section {
                     TextField("What's the session?", text: $plannedActivity)
+                } header: {
+                    Text("Plan")
                 }
                 Section {
                     DisclosureGroup(isExpanded: $isReadinessExpanded) {
@@ -180,7 +186,11 @@ struct TrainView: View {
                             .lineLimit(2...4)
                     } label: {
                         HStack(spacing: 12) {
-                            Label("Training", systemImage: "heart.text.square")
+                            Label {
+                                Text("Training")
+                            } icon: {
+                                Image(systemName: "heart.text.square")
+                            }
                                 .font(.subheadline.weight(.medium))
                             Spacer()
                             Text(trainingReadinessSummary(for: readinessLevel))
@@ -300,8 +310,12 @@ private struct SessionCardView: View {
                         }
                 } label: {
                     HStack(spacing: 12) {
-                        Label("Training", systemImage: "heart.text.square")
-                            .font(.subheadline.weight(.medium))
+                        Label {
+                            Text("Training")
+                        } icon: {
+                            Image(systemName: "heart.text.square")
+                        }
+                        .font(.subheadline.weight(.medium))
                         Spacer()
                         Text(trainingReadinessSummary(for: readinessLevel))
                             .font(.caption)
@@ -477,9 +491,13 @@ struct TrainingReadinessScaleRow: View {
     var body: some View {
         VStack(spacing: 4) {
             HStack(spacing: 0) {
-                Label(label, systemImage: "heart.text.square")
-                    .font(.subheadline)
-                    .frame(width: 90, alignment: .leading)
+                Label {
+                    Text(LocalizedStringKey(label))
+                } icon: {
+                    Image(systemName: "heart.text.square")
+                }
+                .font(.subheadline)
+                .frame(width: 90, alignment: .leading)
                 ForEach(1...5, id: \.self) { level in
                     Button {
                         onChange(level)

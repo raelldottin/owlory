@@ -119,7 +119,11 @@ struct WriteView: View {
                     Button {
                         showingCapture = true
                     } label: {
-                        Label("Capture a Note", systemImage: "plus.circle")
+                        Label {
+                            Text("Capture a Note")
+                        } icon: {
+                            Image(systemName: "plus.circle")
+                        }
                     }
                 }
             }

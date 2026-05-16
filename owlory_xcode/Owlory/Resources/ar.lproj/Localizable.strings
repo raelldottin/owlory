@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "استعادة %@";
 "home.protocol.step.accessibility.complete" = "إكمال %@";
 "home.protocol.step.accessibility.skip" = "تخطي %@";
+"Check-in" = "تسجيل الوصول";
+"Check in" = "تسجيل دخول";

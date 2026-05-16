@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "%@ geri yükle";
 "home.protocol.step.accessibility.complete" = "%@ tamamla";
 "home.protocol.step.accessibility.skip" = "%@ atla";
+"Check-in" = "Check-in";
+"Check in" = "Check-in";

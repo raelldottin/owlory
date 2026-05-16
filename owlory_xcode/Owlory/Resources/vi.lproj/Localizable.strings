@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "Khôi phục %@";
 "home.protocol.step.accessibility.complete" = "Hoàn thành %@";
 "home.protocol.step.accessibility.skip" = "Bỏ qua %@";
+"Check-in" = "Check-in";
+"Check in" = "Check-in";

@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "恢复 %@";
 "home.protocol.step.accessibility.complete" = "完成 %@";
 "home.protocol.step.accessibility.skip" = "跳过 %@";
+"Check-in" = "签到";
+"Check in" = "签到";

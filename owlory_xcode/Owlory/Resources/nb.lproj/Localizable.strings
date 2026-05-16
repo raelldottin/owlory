@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "Gjenopprett %@";
 "home.protocol.step.accessibility.complete" = "Fullfør %@";
 "home.protocol.step.accessibility.skip" = "Hopp over %@";
+"Check-in" = "Innsjekking";
+"Check in" = "Sjekk inn";

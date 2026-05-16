@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "%@ 복원";
 "home.protocol.step.accessibility.complete" = "%@ 완료";
 "home.protocol.step.accessibility.skip" = "%@ 건너뛰기";
+"Check-in" = "체크인";
+"Check in" = "체크인";

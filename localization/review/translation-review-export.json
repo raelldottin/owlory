@@ -3552,6 +3552,174 @@
     },
     {
       "comment": "",
+      "english_value": "Check in",
+      "key": "Check in",
+      "locales": {
+        "ar": {
+          "current_value": "تسجيل دخول",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Einchecken",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Check in",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Bilan",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "チェックイン",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "체크인",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Sjekk inn",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Inchecken",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Чек-ин",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Checka in",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Чек-ін",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Check-in",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "签到",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "簽到",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Check-in",
+      "key": "Check-in",
+      "locales": {
+        "ar": {
+          "current_value": "تسجيل الوصول",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Einchecken",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Check-in",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "fr": {
+          "current_value": "Bilan",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "ja": {
+          "current_value": "チェックイン",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "체크인",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Innsjekking",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Inchecken",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "pt-BR": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "ru": {
+          "current_value": "Чек-ин",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Incheckning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "uk": {
+          "current_value": "Чек-ін",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Check-in",
+          "status": "english-placeholder"
+        },
+        "zh-Hans": {
+          "current_value": "签到",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "簽到",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
       "english_value": "Citation",
       "key": "Citation",
       "locales": {
@@ -30019,86 +30187,86 @@
     "english-source": "English source key/value reviewed as product copy."
   },
   "summary": {
-    "csv_row_count": 6764,
+    "csv_row_count": 6802,
     "locale_count": 19,
     "plural_review_entry_count": 42,
     "status_by_locale": {
       "ar": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       },
       "de": {
-        "draft-translation": 340,
+        "draft-translation": 342,
         "english-placeholder": 16
       },
       "en": {
-        "english-source": 356
+        "english-source": 358
       },
       "es": {
-        "draft-translation": 340,
-        "english-placeholder": 16
+        "draft-translation": 341,
+        "english-placeholder": 17
       },
       "fr": {
-        "draft-translation": 328,
+        "draft-translation": 330,
         "english-placeholder": 28
       },
       "it": {
-        "draft-translation": 341,
-        "english-placeholder": 15
+        "draft-translation": 342,
+        "english-placeholder": 16
       },
       "ja": {
-        "draft-translation": 344,
+        "draft-translation": 346,
         "english-placeholder": 12
       },
       "ko": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       },
       "nb": {
-        "draft-translation": 338,
+        "draft-translation": 340,
         "english-placeholder": 18
       },
       "nl": {
-        "draft-translation": 328,
+        "draft-translation": 330,
         "english-placeholder": 28
       },
       "pt": {
-        "draft-translation": 339,
-        "english-placeholder": 17
-      },
-      "pt-BR": {
-        "draft-translation": 338,
+        "draft-translation": 340,
         "english-placeholder": 18
       },
+      "pt-BR": {
+        "draft-translation": 339,
+        "english-placeholder": 19
+      },
       "ru": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       },
       "sv": {
-        "draft-translation": 338,
+        "draft-translation": 340,
         "english-placeholder": 18
       },
       "tr": {
-        "draft-translation": 344,
-        "english-placeholder": 12
+        "draft-translation": 345,
+        "english-placeholder": 13
       },
       "uk": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       },
       "vi": {
-        "draft-translation": 344,
-        "english-placeholder": 12
+        "draft-translation": 345,
+        "english-placeholder": 13
       },
       "zh-Hans": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       },
       "zh-Hant": {
-        "draft-translation": 345,
+        "draft-translation": 347,
         "english-placeholder": 11
       }
     },
-    "strings_key_count": 314
+    "strings_key_count": 316
   }
 }

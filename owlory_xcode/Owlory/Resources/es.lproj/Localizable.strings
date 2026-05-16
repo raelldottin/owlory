@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "Restaurar %@";
 "home.protocol.step.accessibility.complete" = "Completar %@";
 "home.protocol.step.accessibility.skip" = "Omitir %@";
+"Check-in" = "Check-in";
+"Check in" = "Check-in";

@@ -320,3 +320,5 @@
 "home.task.accessibility.restore" = "%@を復元";
 "home.protocol.step.accessibility.complete" = "%@を完了";
 "home.protocol.step.accessibility.skip" = "%@をスキップ";
+"Check-in" = "チェックイン";
+"Check in" = "チェックイン";

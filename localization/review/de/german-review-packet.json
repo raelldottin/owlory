@@ -592,6 +592,34 @@
     {
       "comment": "",
       "current_status": "draft-translation",
+      "current_value": "Einchecken",
+      "english_value": "Check in",
+      "key": "Check in",
+      "locale": "de",
+      "resource_type": "strings",
+      "review_date": "",
+      "review_status": "",
+      "reviewed_value": "",
+      "reviewer": "",
+      "reviewer_notes": ""
+    },
+    {
+      "comment": "",
+      "current_status": "draft-translation",
+      "current_value": "Einchecken",
+      "english_value": "Check-in",
+      "key": "Check-in",
+      "locale": "de",
+      "resource_type": "strings",
+      "review_date": "",
+      "review_status": "",
+      "reviewed_value": "",
+      "reviewer": "",
+      "reviewer_notes": ""
+    },
+    {
+      "comment": "",
+      "current_status": "draft-translation",
       "current_value": "Zitat",
       "english_value": "Citation",
       "key": "Citation",
@@ -5082,12 +5110,12 @@
   "source_packet": "localization/review/translation-review-export.json",
   "summary": {
     "current_status_counts": {
-      "draft-translation": 340,
+      "draft-translation": 342,
       "english-placeholder": 16
     },
     "plural_entry_count": 42,
-    "review_entry_count": 356,
-    "strings_entry_count": 314
+    "review_entry_count": 358,
+    "strings_entry_count": 316
   },
   "target_language": "German / Deutsch",
   "target_locale": "de"
