@@ -20,15 +20,15 @@
     "warning": "These values are LLM-drafted and have not been accepted by a native or fluent German reviewer. Do not claim German translation quality without further native review. The intake slice records this provenance in app resources via status=needs-layout-check / keep-english-term."
   },
   "summary": {
-    "review_entry_count": 356,
-    "strings_entry_count": 314,
+    "review_entry_count": 372,
+    "strings_entry_count": 330,
     "plural_entry_count": 42,
     "status_counts": {
-      "needs-layout-check": 340,
-      "keep-english-term": 16
+      "needs-layout-check": 355,
+      "keep-english-term": 17
     },
     "lqa_counts": {
-      "passed": 356,
+      "passed": 372,
       "warning": 0,
       "reverted": 0
     },
@@ -9334,6 +9334,422 @@
       "review_date": "2026-05-15",
       "reviewer_notes": "[Added after original packet] LLM-drafted German plural value; not native-reviewed. Verify grammar (genitive vs nominative) and on-device layout.",
       "resource_type": "stringsdict",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Check-in",
+      "english_value": "Check-in",
+      "reviewed_value": "Einchecken",
+      "review_status": "keep-english-term",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. Term kept identical to English source (brand/format/loanword); native review still required.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Check in",
+      "english_value": "Check in",
+      "reviewed_value": "Einchecken",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "audio.playback.accessibility.play",
+      "english_value": "Play recording",
+      "reviewed_value": "Aufnahme abspielen",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "audio.playback.accessibility.stop",
+      "english_value": "Stop playback",
+      "reviewed_value": "Wiedergabe stoppen",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "audio.playback.accessibility.error",
+      "english_value": "Playback error: %@",
+      "reviewed_value": "Wiedergabefehler: %@",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "voice.capture.accessibility.start",
+      "english_value": "Start voice capture",
+      "reviewed_value": "Sprachaufnahme starten",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "voice.capture.accessibility.stop",
+      "english_value": "Stop recording",
+      "reviewed_value": "Aufnahme stoppen",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "voice.capture.accessibility.transcribing",
+      "english_value": "Transcribing",
+      "reviewed_value": "Wird transkribiert",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "voice.capture.accessibility.finished",
+      "english_value": "Voice capture complete",
+      "reviewed_value": "Sprachaufnahme abgeschlossen",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "voice.capture.accessibility.error",
+      "english_value": "Error: %@",
+      "reviewed_value": "Fehler: %@",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.preview.next",
+      "english_value": "Next: %@",
+      "reviewed_value": "Als Nächstes: %@",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.preview.home.activeProtocol",
+      "english_value": "Active protocol: %@",
+      "reviewed_value": "Aktives Protokoll: %@",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.preview.home.nextTask",
+      "english_value": "Next task: %@",
+      "reviewed_value": "Nächste Aufgabe: %@",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "home.protocol.run.progress.completed",
+      "english_value": "%1$d/%2$d completed",
+      "reviewed_value": "%1$d/%2$d abgeschlossen",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "home.protocol.steps.placeholder",
+      "english_value": "Step 1\nStep 2\nStep 3",
+      "reviewed_value": "Schritt 1\nSchritt 2\nSchritt 3",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "de",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "home.protocol.run.progress.summary",
+      "english_value": "%1$d of %2$d",
+      "reviewed_value": "%1$d von %2$d",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native German reviewer)",
+      "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
       "locale": "de",
       "post_packet_addition": true,
       "lqa": {

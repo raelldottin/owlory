@@ -1,0 +1,81 @@
+{
+  "slice_id": "app-localization-return-files-refresh",
+  "status": "done",
+  "summary": "Built Tools/localization-return-files-refresh.py and applied it. Added 288 new entries (16 strings × 18 locales) to bring each per-locale review return file from 356 → 372 entries. Existing entries left untouched so any prior reviewer-supplied metadata is preserved. Refreshed all derived artifacts: LQA report (Tools/localization-lqa.py --apply --write-md), dashboard (Tools/localization-review-status.py --write-doc), German packet (Tools/german-review-packet-regenerate.py), all-locale export (Tools/localization-review-export.py). LQA across 18 locales × 372 entries: 6642 passed / 54 warning / 0 reverted. localization-parity unchanged at 19/330/13.",
+  "files_touched": [
+    "Tools/localization-return-files-refresh.py",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260516T184324Z-app-localization-return-files-refresh.json",
+    "localization/review/LQA.md",
+    "localization/review/README.md",
+    "localization/review/STATUS.md",
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/de/german-review-packet.csv",
+    "localization/review/de/german-review-packet.json",
+    "localization/review/de/german-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/translation-review-export.csv",
+    "localization/review/translation-review-export.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/184324-app-localization-return-files-refresh.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "python3 Tools/localization-lqa.py",
+    "python3 Tools/localization-review-status.py",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "native-reviewed",
+    "running-app-smoke for translated content per locale",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Per-locale review return file freshness",
+      "before": "Per-locale return files were a snapshot of 356 entries from the 2026-05-15 ingest. 16 keys had been added to Localizable.strings since then (2 Check-in/Check in, 8 audio/voice accessibility, 6 interpolation format-strings). The dashboard and LQA reports counted the stale 356 figure across 18 locales.",
+      "after": "All 18 per-locale return files now hold 372 entries each. New entries carry today's review_date (2026-05-16), the same reviewer (claude-opus-4-7 LLM), and status needs-layout-check / keep-english-term following the same rules as the prior ingest. Existing entries left untouched. Dashboard (STATUS.md), LQA report (LQA.md), German packet, and all-locale export all refreshed.",
+      "proof": [
+        "Tools/localization-return-files-refresh.py (new tool, idempotent)",
+        "18 per-locale return files now 372 entries each",
+        "LQA aggregate: 6642 passed / 54 warning / 0 reverted",
+        "STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all current"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The 16 newly-appended-per-locale entries inherit needs-layout-check / keep-english-term status with no manual review. They are LLM-drafted and unverified. Native review still outstanding for every locale.",
+    "Tools/localization-return-files-refresh.py is append-only by design — it does NOT update existing entries if their reviewed_value drifts away from the current resource value. A future divergence detection slice could compare each existing entry against current resources and flag mismatches.",
+    "review_date on the new entries is 2026-05-16; existing entries keep 2026-05-15. The dashboard shows the file-level provenance.review_date, not per-entry dates, so this divergence is invisible at the summary level. The lqa_run_date on each file is now 2026-05-16.",
+    "The refresh tool's new entries set post_packet_addition: true to mark them as later-added. Downstream consumers should respect that flag when sorting or filtering.",
+    "Native review remains outstanding for every locale. app-localization-native-review-intake is still blocked. The dashboard correctly reports 0 native-reviewed locales."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "All NLS implementation and housekeeping work is complete. Only blocked slice remaining is app-localization-native-review-intake (needs human-supplied review). Clean stop.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T18:43:24Z"
+}

@@ -18,9 +18,9 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 | Status | Count |
 | --- | ---: |
 | `native-reviewed` | 0 |
-| `needs-layout-check` | 6132 |
+| `needs-layout-check` | 6401 |
 | `needs-product-decision` | 0 |
-| `keep-english-term` | 242 |
+| `keep-english-term` | 261 |
 | `needs-translation` | 34 |
 | `reject` | 0 |
 
@@ -30,7 +30,7 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 
 | LQA status | Count |
 | --- | ---: |
-| `passed` | 6354 |
+| `passed` | 6642 |
 | `warning` | 54 |
 | `reverted` | 0 |
 
@@ -40,24 +40,24 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 
 | Locale | Language | Entries | Native? | native-reviewed | needs-layout-check | needs-product-decision | keep-english-term | needs-translation | reject | LQA passed | LQA warn | LQA reverted | LQA date | Reviewer | Review date |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ar` | Arabic / العربية | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 355 | 1 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Arabic / العربية reviewer)` | 2026-05-15 |
-| `nl` | Dutch / Nederlands | 356 | no | 0 | 328 | 0 | 26 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Dutch / Nederlands reviewer)` | 2026-05-15 |
-| `fr` | French / Français | 356 | no | 0 | 328 | 0 | 26 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native French / Français reviewer)` | 2026-05-15 |
-| `de` | German / Deutsch | 356 | no | 0 | 340 | 0 | 16 | 0 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native German reviewer)` | 2026-05-15 |
-| `it` | Italian / Italiano | 356 | no | 0 | 341 | 0 | 13 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Italian / Italiano reviewer)` | 2026-05-15 |
-| `ja` | Japanese / 日本語 | 356 | no | 0 | 344 | 0 | 10 | 2 | 0 | 348 | 8 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)` | 2026-05-15 |
-| `ko` | Korean / 한국어 | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 351 | 5 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Korean / 한국어 reviewer)` | 2026-05-15 |
-| `nb` | Norwegian Bokmål / Norsk Bokmål | 356 | no | 0 | 338 | 0 | 16 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Norwegian Bokmål / Norsk Bokmål reviewer)` | 2026-05-15 |
-| `pt` | Portuguese / Português | 356 | no | 0 | 339 | 0 | 15 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Portuguese / Português reviewer)` | 2026-05-15 |
-| `pt-BR` | Brazilian Portuguese / Português (Brasil) | 356 | no | 0 | 338 | 0 | 16 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Brazilian Portuguese / Português (Brasil) reviewer)` | 2026-05-15 |
-| `ru` | Russian / Русский | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Russian / Русский reviewer)` | 2026-05-15 |
-| `es` | Spanish / Español | 356 | no | 0 | 340 | 0 | 14 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Spanish / Español reviewer)` | 2026-05-15 |
-| `sv` | Swedish / Svenska | 356 | no | 0 | 338 | 0 | 16 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)` | 2026-05-15 |
-| `zh-Hans` | Simplified Chinese / 简体中文 | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 335 | 21 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Simplified Chinese / 简体中文 reviewer)` | 2026-05-15 |
-| `zh-Hant` | Traditional Chinese / 繁體中文 | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 340 | 16 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Traditional Chinese / 繁體中文 reviewer)` | 2026-05-15 |
-| `tr` | Turkish / Türkçe | 356 | no | 0 | 344 | 0 | 10 | 2 | 0 | 354 | 2 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)` | 2026-05-15 |
-| `uk` | Ukrainian / Українська | 356 | no | 0 | 345 | 0 | 9 | 2 | 0 | 356 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Ukrainian / Українська reviewer)` | 2026-05-15 |
-| `vi` | Vietnamese / Tiếng Việt | 356 | no | 0 | 344 | 0 | 10 | 2 | 0 | 355 | 1 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Vietnamese / Tiếng Việt reviewer)` | 2026-05-15 |
+| `ar` | Arabic / العربية | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 371 | 1 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Arabic / العربية reviewer)` | 2026-05-15 |
+| `nl` | Dutch / Nederlands | 372 | no | 0 | 343 | 0 | 27 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Dutch / Nederlands reviewer)` | 2026-05-15 |
+| `fr` | French / Français | 372 | no | 0 | 343 | 0 | 27 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native French / Français reviewer)` | 2026-05-15 |
+| `de` | German / Deutsch | 372 | no | 0 | 355 | 0 | 17 | 0 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native German reviewer)` | 2026-05-15 |
+| `it` | Italian / Italiano | 372 | no | 0 | 356 | 0 | 14 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Italian / Italiano reviewer)` | 2026-05-15 |
+| `ja` | Japanese / 日本語 | 372 | no | 0 | 359 | 0 | 11 | 2 | 0 | 364 | 8 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)` | 2026-05-15 |
+| `ko` | Korean / 한국어 | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 367 | 5 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Korean / 한국어 reviewer)` | 2026-05-15 |
+| `nb` | Norwegian Bokmål / Norsk Bokmål | 372 | no | 0 | 353 | 0 | 17 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Norwegian Bokmål / Norsk Bokmål reviewer)` | 2026-05-15 |
+| `pt` | Portuguese / Português | 372 | no | 0 | 354 | 0 | 16 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Portuguese / Português reviewer)` | 2026-05-15 |
+| `pt-BR` | Brazilian Portuguese / Português (Brasil) | 372 | no | 0 | 353 | 0 | 17 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Brazilian Portuguese / Português (Brasil) reviewer)` | 2026-05-15 |
+| `ru` | Russian / Русский | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Russian / Русский reviewer)` | 2026-05-15 |
+| `es` | Spanish / Español | 372 | no | 0 | 354 | 0 | 16 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Spanish / Español reviewer)` | 2026-05-15 |
+| `sv` | Swedish / Svenska | 372 | no | 0 | 353 | 0 | 17 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)` | 2026-05-15 |
+| `zh-Hans` | Simplified Chinese / 简体中文 | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 351 | 21 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Simplified Chinese / 简体中文 reviewer)` | 2026-05-15 |
+| `zh-Hant` | Traditional Chinese / 繁體中文 | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 356 | 16 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Traditional Chinese / 繁體中文 reviewer)` | 2026-05-15 |
+| `tr` | Turkish / Türkçe | 372 | no | 0 | 359 | 0 | 11 | 2 | 0 | 370 | 2 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)` | 2026-05-15 |
+| `uk` | Ukrainian / Українська | 372 | no | 0 | 360 | 0 | 10 | 2 | 0 | 372 | 0 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Ukrainian / Українська reviewer)` | 2026-05-15 |
+| `vi` | Vietnamese / Tiếng Việt | 372 | no | 0 | 359 | 0 | 11 | 2 | 0 | 371 | 1 | 0 | 2026-05-15 | `claude-opus-4-7 (LLM, not native Vietnamese / Tiếng Việt reviewer)` | 2026-05-15 |
 
 ## Reading guide
 

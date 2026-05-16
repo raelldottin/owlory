@@ -4005,7 +4005,7 @@
     {
       "slice_id": "app-localization-return-files-refresh",
       "title": "Refresh per-locale review return files + dashboard/LQA artifacts to include 16 new keys",
-      "status": "queued",
+      "status": "done",
       "priority": 85,
       "domain": "localization",
       "allowed_paths": [
@@ -4034,7 +4034,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Localizable.strings now contains 16 keys added after the 2026-05-15 ingest (2 Check-in/Check in keys, 8 audio/voice accessibility keys, 6 interpolation format-string keys including 1 reserved-but-unused), so per-locale review return files at 356 entries are stale relative to the current 372 (358 strings + 14 from the lqa context: 314 + 16 - 0 unused tracking). Dashboard and LQA reports show stale counts.",
-      "notes": "Housekeeping slice. Doc-only / artifact regeneration. Build Tools/localization-return-files-refresh.py that reads the current Localizable.strings and Localizable.stringsdict files, plus each existing per-locale return file, and rewrites each return file to include the new keys with reviewer = 'claude-opus-4-7 (LLM, not native <language> reviewer)', review_date = today, and review_status = needs-layout-check (for translated entries) or keep-english-term (for entries identical to English). Then re-run Tools/localization-lqa.py --apply --write-md and Tools/localization-review-status.py --write-doc to update LQA.md and STATUS.md. Re-run Tools/german-review-packet-regenerate.py for the German packet. Do NOT change app resources. Do NOT flip any provenance.native_reviewed flag. Do NOT claim native review. proof_level target: doc-only."
+      "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings \u00d7 18 locales) to bring each per-locale review return file from 356 \u2192 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified \u2014 only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales \u00d7 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
     }
   ]
 }

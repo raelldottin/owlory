@@ -16488,6 +16488,258 @@
     },
     {
       "comment": "",
+      "english_value": "Playback error: %@",
+      "key": "audio.playback.accessibility.error",
+      "locales": {
+        "ar": {
+          "current_value": "خطأ في التشغيل: %@",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Wiedergabefehler: %@",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Playback error: %@",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Error de reproducción: %@",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Erreur de lecture : %@",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Errore di riproduzione: %@",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "再生エラー: %@",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "재생 오류: %@",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Avspillingsfeil: %@",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Afspeelfout: %@",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Erro de reprodução: %@",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Erro de reprodução: %@",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Ошибка воспроизведения: %@",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Uppspelningsfel: %@",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Oynatma hatası: %@",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Помилка відтворення: %@",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Lỗi phát: %@",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "播放错误：%@",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "播放錯誤：%@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Play recording",
+      "key": "audio.playback.accessibility.play",
+      "locales": {
+        "ar": {
+          "current_value": "تشغيل التسجيل",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Aufnahme abspielen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Play recording",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Reproducir grabación",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Lire l'enregistrement",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Riproduci registrazione",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "録音を再生",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "녹음 재생",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Spill opptak",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Opname afspelen",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Reproduzir gravação",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Reproduzir gravação",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Воспроизвести запись",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Spela upp inspelning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Kaydı oynat",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Відтворити запис",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Phát bản ghi",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "播放录音",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "播放錄音",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Stop playback",
+      "key": "audio.playback.accessibility.stop",
+      "locales": {
+        "ar": {
+          "current_value": "إيقاف التشغيل",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Wiedergabe stoppen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Stop playback",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Detener reproducción",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Arrêter la lecture",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Interrompi riproduzione",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "再生を停止",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "재생 중지",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Stopp avspilling",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Afspelen stoppen",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Parar reprodução",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Parar reprodução",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Остановить воспроизведение",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Stoppa uppspelning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Oynatmayı durdur",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Зупинити відтворення",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Dừng phát",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "停止播放",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "停止播放",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
       "english_value": "Add %@",
       "key": "career.records.addTitle",
       "locales": {
@@ -20352,6 +20604,174 @@
     },
     {
       "comment": "",
+      "english_value": "%1$d/%2$d completed",
+      "key": "home.protocol.run.progress.completed",
+      "locales": {
+        "ar": {
+          "current_value": "%1$d/%2$d مكتمل",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "%1$d/%2$d abgeschlossen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "%1$d/%2$d completed",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "%1$d/%2$d completados",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "%1$d/%2$d terminés",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "%1$d/%2$d completati",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "%1$d/%2$d 完了",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "%1$d/%2$d 완료",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "%1$d/%2$d fullført",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "%1$d/%2$d voltooid",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "%1$d/%2$d concluídos",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "%1$d/%2$d concluídos",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "%1$d/%2$d выполнено",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "%1$d/%2$d slutförda",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "%1$d/%2$d tamamlandı",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "%1$d/%2$d виконано",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "%1$d/%2$d đã hoàn thành",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "%1$d/%2$d 已完成",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "%1$d/%2$d 已完成",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "%1$d of %2$d",
+      "key": "home.protocol.run.progress.summary",
+      "locales": {
+        "ar": {
+          "current_value": "%1$d من %2$d",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "%1$d von %2$d",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "%1$d of %2$d",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "%1$d de %2$d",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "%1$d sur %2$d",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "%1$d di %2$d",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "%1$d / %2$d",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "%1$d / %2$d",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "%1$d av %2$d",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "%1$d van %2$d",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "%1$d de %2$d",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "%1$d de %2$d",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "%1$d из %2$d",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "%1$d av %2$d",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "%1$d / %2$d",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "%1$d з %2$d",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "%1$d trên %2$d",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "%1$d / %2$d",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "%1$d / %2$d",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
       "english_value": "Scheduled for %@",
       "key": "home.protocol.schedule.custom",
       "locales": {
@@ -21353,6 +21773,90 @@
         },
         "zh-Hant": {
           "current_value": "略過 %@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Step 1\nStep 2\nStep 3",
+      "key": "home.protocol.steps.placeholder",
+      "locales": {
+        "ar": {
+          "current_value": "الخطوة 1\nالخطوة 2\nالخطوة 3",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Schritt 1\nSchritt 2\nSchritt 3",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Step 1\nStep 2\nStep 3",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Paso 1\nPaso 2\nPaso 3",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Étape 1\nÉtape 2\nÉtape 3",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Passo 1\nPasso 2\nPasso 3",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "ステップ1\nステップ2\nステップ3",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "단계 1\n단계 2\n단계 3",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Trinn 1\nTrinn 2\nTrinn 3",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Stap 1\nStap 2\nStap 3",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Passo 1\nPasso 2\nPasso 3",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Etapa 1\nEtapa 2\nEtapa 3",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Шаг 1\nШаг 2\nШаг 3",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Steg 1\nSteg 2\nSteg 3",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Adım 1\nAdım 2\nAdım 3",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Крок 1\nКрок 2\nКрок 3",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Bước 1\nBước 2\nBước 3",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "步骤 1\n步骤 2\n步骤 3",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "步驟 1\n步驟 2\n步驟 3",
           "status": "draft-translation"
         }
       },
@@ -24552,6 +25056,258 @@
     },
     {
       "comment": "",
+      "english_value": "Active protocol: %@",
+      "key": "today.preview.home.activeProtocol",
+      "locales": {
+        "ar": {
+          "current_value": "البروتوكول النشط: %@",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Aktives Protokoll: %@",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Active protocol: %@",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Protocolo activo: %@",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Protocole actif : %@",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Protocollo attivo: %@",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "アクティブなプロトコル: %@",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "활성 프로토콜: %@",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Aktiv protokoll: %@",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Actief protocol: %@",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Protocolo ativo: %@",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Protocolo ativo: %@",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Активный протокол: %@",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Aktivt protokoll: %@",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Aktif protokol: %@",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Активний протокол: %@",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Quy trình đang hoạt động: %@",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "活动协议：%@",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "活躍協定：%@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Next task: %@",
+      "key": "today.preview.home.nextTask",
+      "locales": {
+        "ar": {
+          "current_value": "المهمة التالية: %@",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Nächste Aufgabe: %@",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Next task: %@",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Próxima tarea: %@",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Prochaine tâche : %@",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Prossima attività: %@",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "次のタスク: %@",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "다음 작업: %@",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Neste oppgave: %@",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Volgende taak: %@",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Próxima tarefa: %@",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Próxima tarefa: %@",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Следующая задача: %@",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Nästa uppgift: %@",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Sıradaki görev: %@",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Наступне завдання: %@",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Nhiệm vụ tiếp theo: %@",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "下一项任务：%@",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "下一項任務：%@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Next: %@",
+      "key": "today.preview.next",
+      "locales": {
+        "ar": {
+          "current_value": "التالي: %@",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Als Nächstes: %@",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Next: %@",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Siguiente: %@",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Suivant : %@",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Successivo: %@",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "次へ: %@",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "다음: %@",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Neste: %@",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Volgende: %@",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Seguinte: %@",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Próximo: %@",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Далее: %@",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Nästa: %@",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Sıradaki: %@",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Далі: %@",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Tiếp theo: %@",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "下一项：%@",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "下一項：%@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
       "english_value": "Record %@",
       "key": "today.quickCareer.recordTitle",
       "locales": {
@@ -24629,6 +25385,426 @@
         },
         "zh-Hant": {
           "current_value": "記錄 %@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Error: %@",
+      "key": "voice.capture.accessibility.error",
+      "locales": {
+        "ar": {
+          "current_value": "خطأ: %@",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Fehler: %@",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Error: %@",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Error: %@",
+          "status": "english-placeholder"
+        },
+        "fr": {
+          "current_value": "Erreur : %@",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Errore: %@",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "エラー: %@",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "오류: %@",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Feil: %@",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Fout: %@",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Erro: %@",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Erro: %@",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Ошибка: %@",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Fel: %@",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Hata: %@",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Помилка: %@",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Lỗi: %@",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "错误：%@",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "錯誤：%@",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Voice capture complete",
+      "key": "voice.capture.accessibility.finished",
+      "locales": {
+        "ar": {
+          "current_value": "اكتمل التقاط الصوت",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Sprachaufnahme abgeschlossen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Voice capture complete",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Captura de voz completada",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Capture vocale terminée",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Acquisizione vocale completata",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "音声取り込み完了",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "음성 캡처 완료",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Stemmeopptak fullført",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Spraakopname voltooid",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Captura de voz concluída",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Captura de voz concluída",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Запись голоса завершена",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Röstinspelning klar",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Ses yakalama tamamlandı",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Запис голосу завершено",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Đã ghi xong",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "语音捕获完成",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "語音擷取完成",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Start voice capture",
+      "key": "voice.capture.accessibility.start",
+      "locales": {
+        "ar": {
+          "current_value": "بدء التقاط الصوت",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Sprachaufnahme starten",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Start voice capture",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Iniciar captura de voz",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Démarrer la capture vocale",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Avvia acquisizione vocale",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "音声取り込みを開始",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "음성 캡처 시작",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Start stemmeopptak",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Spraakopname starten",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Iniciar captura de voz",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Iniciar captura de voz",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Начать запись голоса",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Starta röstinspelning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Sesi yakalamayı başlat",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Почати запис голосу",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Bắt đầu ghi âm",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "开始语音捕获",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "開始語音擷取",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Stop recording",
+      "key": "voice.capture.accessibility.stop",
+      "locales": {
+        "ar": {
+          "current_value": "إيقاف التسجيل",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Aufnahme stoppen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Stop recording",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Detener grabación",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Arrêter l'enregistrement",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Interrompi registrazione",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "録音を停止",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "녹음 중지",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Stopp opptak",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Opname stoppen",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Parar gravação",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Parar gravação",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Остановить запись",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Stoppa inspelning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Kaydı durdur",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Зупинити запис",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Dừng ghi âm",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "停止录音",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "停止錄音",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Transcribing",
+      "key": "voice.capture.accessibility.transcribing",
+      "locales": {
+        "ar": {
+          "current_value": "جارٍ النسخ",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Wird transkribiert",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Transcribing",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Transcribiendo",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Transcription en cours",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Trascrizione in corso",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "文字起こし中",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "텍스트 변환 중",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Transkriberer",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Aan het transcriberen",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "A transcrever",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Transcrevendo",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Идёт транскрипция",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Transkriberar",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Transkript ediliyor",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Триває транскрипція",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Đang phiên âm",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "转写中",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "轉錄中",
           "status": "draft-translation"
         }
       },
@@ -30187,86 +31363,86 @@
     "english-source": "English source key/value reviewed as product copy."
   },
   "summary": {
-    "csv_row_count": 6802,
+    "csv_row_count": 7068,
     "locale_count": 19,
     "plural_review_entry_count": 42,
     "status_by_locale": {
       "ar": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       },
       "de": {
-        "draft-translation": 342,
+        "draft-translation": 356,
         "english-placeholder": 16
       },
       "en": {
-        "english-source": 358
+        "english-source": 372
       },
       "es": {
-        "draft-translation": 341,
-        "english-placeholder": 17
+        "draft-translation": 354,
+        "english-placeholder": 18
       },
       "fr": {
-        "draft-translation": 330,
+        "draft-translation": 344,
         "english-placeholder": 28
       },
       "it": {
-        "draft-translation": 342,
+        "draft-translation": 356,
         "english-placeholder": 16
       },
       "ja": {
-        "draft-translation": 346,
+        "draft-translation": 360,
         "english-placeholder": 12
       },
       "ko": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       },
       "nb": {
-        "draft-translation": 340,
+        "draft-translation": 354,
         "english-placeholder": 18
       },
       "nl": {
-        "draft-translation": 330,
+        "draft-translation": 344,
         "english-placeholder": 28
       },
       "pt": {
-        "draft-translation": 340,
+        "draft-translation": 354,
         "english-placeholder": 18
       },
       "pt-BR": {
-        "draft-translation": 339,
+        "draft-translation": 353,
         "english-placeholder": 19
       },
       "ru": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       },
       "sv": {
-        "draft-translation": 340,
+        "draft-translation": 354,
         "english-placeholder": 18
       },
       "tr": {
-        "draft-translation": 345,
+        "draft-translation": 359,
         "english-placeholder": 13
       },
       "uk": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       },
       "vi": {
-        "draft-translation": 345,
+        "draft-translation": 359,
         "english-placeholder": 13
       },
       "zh-Hans": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       },
       "zh-Hant": {
-        "draft-translation": 347,
+        "draft-translation": 361,
         "english-placeholder": 11
       }
     },
-    "strings_key_count": 316
+    "strings_key_count": 330
   }
 }
