@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Transkriberer";
 "voice.capture.accessibility.finished" = "Stemmeopptak fullført";
 "voice.capture.accessibility.error" = "Feil: %@";
+"today.preview.next" = "Neste: %@";
+"today.preview.home.activeProtocol" = "Aktiv protokoll: %@";
+"today.preview.home.nextTask" = "Neste oppgave: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d fullført";
+"home.protocol.steps.placeholder" = "Trinn 1\nTrinn 2\nTrinn 3";
+"home.protocol.run.progress.summary" = "%1$d av %2$d";

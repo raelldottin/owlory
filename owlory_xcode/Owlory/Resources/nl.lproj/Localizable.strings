@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Aan het transcriberen";
 "voice.capture.accessibility.finished" = "Spraakopname voltooid";
 "voice.capture.accessibility.error" = "Fout: %@";
+"today.preview.next" = "Volgende: %@";
+"today.preview.home.activeProtocol" = "Actief protocol: %@";
+"today.preview.home.nextTask" = "Volgende taak: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d voltooid";
+"home.protocol.steps.placeholder" = "Stap 1\nStap 2\nStap 3";
+"home.protocol.run.progress.summary" = "%1$d van %2$d";

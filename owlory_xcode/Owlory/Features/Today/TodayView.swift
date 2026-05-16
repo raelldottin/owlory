@@ -520,7 +520,15 @@ struct TodayView: View {
                         .foregroundStyle(.secondary)
                 }
                 if let next = todaySessions.first(where: { $0.status == .planned }) {
-                    Text("Next: \(next.plannedActivity)")
+                    Text(
+                        String.localizedStringWithFormat(
+                            NSLocalizedString(
+                                "today.preview.next",
+                                comment: "Today Train preview row showing the next planned activity title."
+                            ),
+                            next.plannedActivity
+                        )
+                    )
                         .font(.caption)
                         .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                 }
@@ -559,7 +567,15 @@ struct TodayView: View {
                             .font(.caption)
                             .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                     } else if let latest = writeStore.notes.first(where: { $0.stage != .archived && $0.stage != .published }) {
-                        Text("Next: \(latest.title)")
+                        Text(
+                            String.localizedStringWithFormat(
+                                NSLocalizedString(
+                                    "today.preview.next",
+                                    comment: "Today Write preview row showing the latest in-progress note title."
+                                ),
+                                latest.title
+                            )
+                        )
                             .font(.caption)
                             .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                             .lineLimit(1)
@@ -631,12 +647,28 @@ struct TodayView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     if let nextRun = activeRuns.first {
-                        Text("Active protocol: \(nextRun.protocolTitle)")
+                        Text(
+                            String.localizedStringWithFormat(
+                                NSLocalizedString(
+                                    "today.preview.home.activeProtocol",
+                                    comment: "Today Home preview row showing the currently active protocol title."
+                                ),
+                                nextRun.protocolTitle
+                            )
+                        )
                             .font(.caption)
                             .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                             .lineLimit(1)
                     } else if let next = active.first {
-                        Text("Next task: \(next.title)")
+                        Text(
+                            String.localizedStringWithFormat(
+                                NSLocalizedString(
+                                    "today.preview.home.nextTask",
+                                    comment: "Today Home preview row showing the next active home task title."
+                                ),
+                                next.title
+                            )
+                        )
                             .font(.caption)
                             .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                             .lineLimit(1)

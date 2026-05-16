@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Transkript ediliyor";
 "voice.capture.accessibility.finished" = "Ses yakalama tamamlandı";
 "voice.capture.accessibility.error" = "Hata: %@";
+"today.preview.next" = "Sıradaki: %@";
+"today.preview.home.activeProtocol" = "Aktif protokol: %@";
+"today.preview.home.nextTask" = "Sıradaki görev: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d tamamlandı";
+"home.protocol.steps.placeholder" = "Adım 1\nAdım 2\nAdım 3";
+"home.protocol.run.progress.summary" = "%1$d / %2$d";

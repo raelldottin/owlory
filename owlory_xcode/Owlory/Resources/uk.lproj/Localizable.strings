@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Триває транскрипція";
 "voice.capture.accessibility.finished" = "Запис голосу завершено";
 "voice.capture.accessibility.error" = "Помилка: %@";
+"today.preview.next" = "Далі: %@";
+"today.preview.home.activeProtocol" = "Активний протокол: %@";
+"today.preview.home.nextTask" = "Наступне завдання: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d виконано";
+"home.protocol.steps.placeholder" = "Крок 1\nКрок 2\nКрок 3";
+"home.protocol.run.progress.summary" = "%1$d з %2$d";

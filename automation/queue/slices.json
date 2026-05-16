@@ -3847,7 +3847,7 @@
     {
       "slice_id": "app-localization-string-interpolation-formatters",
       "title": "Replace interpolated visible copy with presentation formatters",
-      "status": "queued",
+      "status": "done",
       "priority": 93,
       "domain": "localization",
       "allowed_paths": [
@@ -3877,7 +3877,7 @@
       ],
       "max_files_changed": 16,
       "entry_condition": "Visible-string audit identified ~12 interpolated-visible-copy sites.",
-      "notes": "Replace `\"Next: \\\\(latest.title)\"`, `\"Active protocol: \\\\(nextRun.protocolTitle)\"`, `\"Next task: \\\\(next.title)\"`, `\"\\\\(completedStepCount)/\\\\(totalStepCount) completed\"`, `\"\\\\(currentRun.resolvedStepCount) of \\\\(currentRun.totalStepCount)\"`, `\"\\\\(staleDayCount)d\"` etc. with UI-adjacent presentation formatters that use `String(localized:)` with positional arguments. Add necessary stringsdict keys for plural-sensitive cases. Cover both Today and Home surfaces. Domain rules unchanged. proof_level target: domain-tested + build-tested."
+      "notes": "Completed on 2026-05-16. Added 6 new format-string keys across 19 locales (today.preview.next, today.preview.home.activeProtocol, today.preview.home.nextTask, home.protocol.run.progress.completed, home.protocol.steps.placeholder [reserved, not used at any call site since existing literal-key route works], home.protocol.run.progress.summary). Wired 8 call sites: 4 in TodayView (Train/Write/Home preview rows), 2 in HomeView (run progress and active-run progress summary), 2 in TrainView (TrainingReadinessScaleRow per-button and container accessibility labels). TrainView gets a new private helper trainingReadinessScaleAccessibilityLabel mirroring TodayView pattern; both share the existing today.readiness.scale.accessibility stringsdict keys to avoid a new stringsdict. The TextField placeholder TextField(\"Step 1\\nStep 2\\nStep 3\", ...) was confirmed already-routing through Localizable.strings (key exists with English source matching), so left untouched. Pure-number interpolations (\\(count), \\(value), \\(staleDayCount)d) and developer field interpolation (\\(label): \\(value) in BuildInfoView) were left as-is per slice boundary. Inner AudioPlayerService error messages remain hardcoded English (deferred). proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-button-literal-verify",

@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Идёт транскрипция";
 "voice.capture.accessibility.finished" = "Запись голоса завершена";
 "voice.capture.accessibility.error" = "Ошибка: %@";
+"today.preview.next" = "Далее: %@";
+"today.preview.home.activeProtocol" = "Активный протокол: %@";
+"today.preview.home.nextTask" = "Следующая задача: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d выполнено";
+"home.protocol.steps.placeholder" = "Шаг 1\nШаг 2\nШаг 3";
+"home.protocol.run.progress.summary" = "%1$d из %2$d";

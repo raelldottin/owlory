@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "텍스트 변환 중";
 "voice.capture.accessibility.finished" = "음성 캡처 완료";
 "voice.capture.accessibility.error" = "오류: %@";
+"today.preview.next" = "다음: %@";
+"today.preview.home.activeProtocol" = "활성 프로토콜: %@";
+"today.preview.home.nextTask" = "다음 작업: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d 완료";
+"home.protocol.steps.placeholder" = "단계 1\n단계 2\n단계 3";
+"home.protocol.run.progress.summary" = "%1$d / %2$d";

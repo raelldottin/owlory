@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Transcription en cours";
 "voice.capture.accessibility.finished" = "Capture vocale terminée";
 "voice.capture.accessibility.error" = "Erreur : %@";
+"today.preview.next" = "Suivant : %@";
+"today.preview.home.activeProtocol" = "Protocole actif : %@";
+"today.preview.home.nextTask" = "Prochaine tâche : %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d terminés";
+"home.protocol.steps.placeholder" = "Étape 1\nÉtape 2\nÉtape 3";
+"home.protocol.run.progress.summary" = "%1$d sur %2$d";

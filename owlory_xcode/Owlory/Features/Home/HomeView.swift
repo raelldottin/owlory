@@ -375,7 +375,16 @@ struct HomeView: View {
                                     Image(systemName: run.status == .completed ? "checkmark.circle.fill" : "xmark.circle")
                                         .font(.caption2)
                                         .foregroundStyle(run.status == .completed ? OwloryColor.success : OwloryColor.textTertiary)
-                                    Text("\(run.completedStepCount)/\(run.totalStepCount) completed")
+                                    Text(
+                                        String.localizedStringWithFormat(
+                                            NSLocalizedString(
+                                                "home.protocol.run.progress.completed",
+                                                comment: "Home protocol recent-run progress line; %1$d is completed step count, %2$d is total step count."
+                                            ),
+                                            run.completedStepCount,
+                                            run.totalStepCount
+                                        )
+                                    )
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
@@ -1112,7 +1121,16 @@ private struct ProtocolRunSheet: View {
                             .foregroundStyle(.secondary)
                             .accessibilityIdentifier("home.protocolRun.sheet.\(run.id.uuidString)")
                         Spacer()
-                    Text("\(currentRun.resolvedStepCount) of \(currentRun.totalStepCount)")
+                    Text(
+                        String.localizedStringWithFormat(
+                            NSLocalizedString(
+                                "home.protocol.run.progress.summary",
+                                comment: "Home protocol active-run progress summary; %1$d is resolved step count, %2$d is total step count."
+                            ),
+                            currentRun.resolvedStepCount,
+                            currentRun.totalStepCount
+                        )
+                    )
                         .font(.subheadline.weight(.medium))
                 }
                     ProgressView(value: Double(currentRun.resolvedStepCount), total: Double(currentRun.totalStepCount))

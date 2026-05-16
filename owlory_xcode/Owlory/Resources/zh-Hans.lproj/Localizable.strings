@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "转写中";
 "voice.capture.accessibility.finished" = "语音捕获完成";
 "voice.capture.accessibility.error" = "错误：%@";
+"today.preview.next" = "下一项：%@";
+"today.preview.home.activeProtocol" = "活动协议：%@";
+"today.preview.home.nextTask" = "下一项任务：%@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d 已完成";
+"home.protocol.steps.placeholder" = "步骤 1\n步骤 2\n步骤 3";
+"home.protocol.run.progress.summary" = "%1$d / %2$d";

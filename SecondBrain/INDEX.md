@@ -2,6 +2,7 @@
 
 ## 2026-05-16
 
+- [app-localization-string-interpolation-formatters (build-tested; 8 interpolation sites rewired through 6 new format-string keys × 19 locales; TrainView reuses Today readiness stringsdict via new helper)](sessions/2026-05-16/182802-app-localization-string-interpolation-formatters.md)
 - [app-localization-audio-voice-button-accessibility-routing (build-tested; 8 new keys × 19 locales; AudioPlaybackButton + VoiceCaptureButton accessibility text now localized)](sessions/2026-05-16/121000-app-localization-audio-voice-button-accessibility-routing.md)
 - [app-localization-accessibility-bypass-audit (doc-only; 22 sites scanned, 7 already-safe via helpers, 2 real bypasses in DesignSystem audio/voice buttons; 1 narrow follow-up queued)](sessions/2026-05-16/062009-app-localization-accessibility-bypass-audit.md)
 - [app-localization-complete-nls-routing-pass (build-tested; 130 sites routed through L() across 8 files; supersedes 7 surface slices + button-verify)](sessions/2026-05-16/054329-app-localization-complete-nls-routing-pass.md)

@@ -1,0 +1,83 @@
+{
+  "slice_id": "app-localization-string-interpolation-formatters",
+  "status": "done",
+  "summary": "Routed 8 interpolated user-facing copy sites through NSLocalizedString + String.localizedStringWithFormat. Added 6 new format-string keys across all 19 locales (LLM-drafted, not native-reviewed). TrainView gained a private trainingReadinessScaleAccessibilityLabel helper that reuses the existing today.readiness.scale.accessibility stringsdict keys to avoid duplicating plural-aware accessibility data. Build green, parity 19/330/13. The TextField('Step 1\\nStep 2\\nStep 3', ...) placeholders in HomeView were verified already-localizing via the existing literal-key route, so left untouched. Pure-number interpolations and developer fields were left as-is per slice boundary.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260516T182802Z-app-localization-string-interpolation-formatters.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-16/182802-app-localization-string-interpolation-formatters.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=home",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-interp-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke for translated content per locale",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Interpolated user-facing copy localization",
+      "before": "8 interpolation sites in TodayView/HomeView/TrainView mixed English copy with runtime values: 'Next: <activity>', 'Active protocol: <title>', 'Next task: <title>', '<n>/<m> completed', '<n> of <m>', '<label> <level> of 5', '<label>, <value> of 5'. The English fragments were displayed verbatim to all locales.",
+      "after": "All 8 sites use String.localizedStringWithFormat with new keys (or the existing today.readiness.scale.accessibility stringsdict for the Train readiness scale). Format-string positional args (%1$d, %2$d) used where multiple counts appear in one line, allowing per-language reordering.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift lines 523/562/634/639",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift lines 378/1115",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift lines 512/516 + new helper",
+        "6 new keys × 19 locales added; localization-parity 19/330/13"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "All 6 new keys are LLM-drafted by claude-opus-4-7, not native-reviewed. Subtle wording/punctuation errors are possible. The colon/separator choices may not match locale conventions (e.g., Arabic might prefer different punctuation than ':').",
+    "home.protocol.steps.placeholder was added across 19 locales but is not currently wired into any call site (the existing TextField('Step 1\\nStep 2\\nStep 3', ...) route works via the existing literal-key). The unused key is reserved; can be wired if the literal-key approach ever stops working.",
+    "TrainView's TrainingReadinessScaleRow now reuses today.readiness.scale.accessibility stringsdict keys. If those keys are renamed in the future, TrainView accessibility breaks too. Cross-feature coupling is intentional but worth noting.",
+    "The %1$d/%2$d positional format style assumes the language's number conventions allow direct digit substitution. Right-to-left locales (Arabic) may need additional review for whether the number order should swap in the visible string. Currently the format keeps left-first numeral.",
+    "VoiceOver per-locale not verified.",
+    "Pure-number interpolations were intentionally left as-is (\\(count), \\(value), \\(staleDayCount)d). The 'd' suffix on the day counter remains hardcoded English; that's a minor compact-format issue, separate slice if needed.",
+    "BuildInfoView developer field interpolation '\\(label): \\(value)' remains as-is per slice boundary.",
+    "AudioPlayerService inner error messages ('Recording not found.', 'Could not play recording.') remain hardcoded English. They route into the now-localized 'Playback error: %@' wrapper but the inner content is still untranslated. Separate slice if needed.",
+    "Per-locale review return files snapshot 356 entries from 2026-05-15; the 6 new keys are NOT reflected. STATUS.md / LQA.md show stale counts. Housekeeping task.",
+    "Native review remains outstanding for every locale."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "All open NLS implementation slices are complete. Remaining queued items: only app-localization-native-review-intake (blocked on human-supplied review). Clean stop on actionable NLS work.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-16T18:28:02Z"
+}

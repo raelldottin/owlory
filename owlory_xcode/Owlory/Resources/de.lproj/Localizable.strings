@@ -330,3 +330,9 @@
 "voice.capture.accessibility.transcribing" = "Wird transkribiert";
 "voice.capture.accessibility.finished" = "Sprachaufnahme abgeschlossen";
 "voice.capture.accessibility.error" = "Fehler: %@";
+"today.preview.next" = "Als Nächstes: %@";
+"today.preview.home.activeProtocol" = "Aktives Protokoll: %@";
+"today.preview.home.nextTask" = "Nächste Aufgabe: %@";
+"home.protocol.run.progress.completed" = "%1$d/%2$d abgeschlossen";
+"home.protocol.steps.placeholder" = "Schritt 1\nSchritt 2\nSchritt 3";
+"home.protocol.run.progress.summary" = "%1$d von %2$d";

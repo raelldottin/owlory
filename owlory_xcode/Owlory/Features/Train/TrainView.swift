@@ -509,11 +509,11 @@ struct TrainingReadinessScaleRow: View {
                     }
                     .buttonStyle(.plain)
                     .frame(maxWidth: .infinity, minHeight: 44)
-                    .accessibilityLabel("\(label) \(level) of 5\(level == value ? ", selected" : "")")
+                    .accessibilityLabel(trainingReadinessScaleAccessibilityLabel(level: level, isSelected: level == value))
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("\(label), \(value) of 5")
+            .accessibilityLabel(trainingReadinessScaleAccessibilityLabel(level: value, isSelected: false))
             .accessibilityValue("\(value)")
             .accessibilityAdjustableAction { direction in
                 switch direction {
@@ -543,6 +543,20 @@ struct TrainingReadinessScaleRow: View {
             .foregroundStyle(.tertiary)
             .accessibilityHidden(true)
         }
+    }
+
+    private func trainingReadinessScaleAccessibilityLabel(level: Int, isSelected: Bool) -> String {
+        let key = isSelected
+            ? "today.readiness.scale.accessibility.selected"
+            : "today.readiness.scale.accessibility"
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                key,
+                comment: "Training readiness scale accessibility label with dimension name and level."
+            ),
+            NSLocalizedString(label, comment: "Training readiness dimension label."),
+            level
+        )
     }
 }
 
