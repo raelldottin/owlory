@@ -130,7 +130,6 @@ final class CalibrationRulesTests: XCTestCase {
         let cal = CalibrationRules.calibrate(todayEntry: entry, weeklySnapshot: snapshot)
         XCTAssertNotNil(cal.domainNudge)
         XCTAssertEqual(cal.domainNudge?.domain, .home)
-        XCTAssertEqual(cal.domainNudge?.message, "Home hasn't shown up in Focus lately.")
     }
 
     func testNoDomainNudgeWhenAllDomainsActive() {

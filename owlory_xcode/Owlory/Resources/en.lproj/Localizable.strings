@@ -359,6 +359,7 @@
 "today.continue.subtitle.protocolRun" = "Protocol run";
 "today.continue.subtitle.active" = "Active";
 "today.continue.subtitle.inProgress" = "In progress";
+"today.domainNudge.focusMissing" = "%@ hasn't shown up in Focus lately.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "You finished this %1$@ on %2$@ check-in days.";
 "today.focus.suggestion.completion.recentCompletions" = "You completed this %@ recently.";
 "today.focus.suggestion.timing.predictedTime" = "Usually completed around %@.";

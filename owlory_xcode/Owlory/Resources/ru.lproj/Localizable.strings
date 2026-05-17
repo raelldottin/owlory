@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Запуск протокола";
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "В процессе";
+"today.domainNudge.focusMissing" = "%@ в последнее время не появлялось в фокусе.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Вы выполнили это %1$@ в дни чек-ина %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Вы выполнили это %@ недавно.";
 "today.focus.suggestion.timing.predictedTime" = "Обычно завершается около %@.";

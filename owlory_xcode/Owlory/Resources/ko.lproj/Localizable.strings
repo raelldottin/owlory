@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "프로토콜 실행";
 "today.continue.subtitle.active" = "활성";
 "today.continue.subtitle.inProgress" = "진행 중";
+"today.domainNudge.focusMissing" = "%@이(가) 최근 포커스에 나타나지 않았습니다.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "%2$@ 체크인 날에 이것을 %1$@ 완료했습니다.";
 "today.focus.suggestion.completion.recentCompletions" = "최근에 이것을 %@ 완료했습니다.";
 "today.focus.suggestion.timing.predictedTime" = "보통 %@ 즈음에 완료됩니다.";

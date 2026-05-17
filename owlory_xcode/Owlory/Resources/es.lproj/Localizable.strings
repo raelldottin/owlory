@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Ejecución de protocolo";
 "today.continue.subtitle.active" = "Activo";
 "today.continue.subtitle.inProgress" = "En curso";
+"today.domainNudge.focusMissing" = "%@ no ha aparecido en Foco últimamente.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Completaste esto %1$@ en días de check-in %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Completaste esto %@ recientemente.";
 "today.focus.suggestion.timing.predictedTime" = "Normalmente completado alrededor de las %@.";

@@ -4130,7 +4130,7 @@
     {
       "slice_id": "app-localization-pattern-nudge-rules-helper-copy-routing",
       "title": "Route PatternNudgeRules domainNudge message + focusBalanceTitle through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 81,
       "domain": "localization",
       "allowed_paths": [
@@ -4157,7 +4157,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. domainNudge.message gets a localized format string ('%@ hasn't shown up in Focus lately.'). focusBalanceTitle delegated to existing LifeDomain.localizedDisplayName (drop the dedicated helper). LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-17 via structural refactor. PatternNudgeRules.DomainNudge now carries semantic LifeDomain only; TodayView formats the visible domain nudge with the existing LifeDomain.localizedDisplayName presentation adapter and today.domainNudge.focusMissing. Added 1 key across 19 locales (LLM-drafted; not native-reviewed). Updated PatternNudgeRulesTests and CalibrationRulesTests to assert semantic domains instead of English message copy. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-focus-suggestion-reason-routing",
@@ -4189,10 +4189,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Return structured FocusSuggestionReasonData (similarReadinessCount, completionCount, predictedTime, lastCompletedDaysAgo, todayBand). Features/ formats into localized String. Multiple fragments + countPhrase + dayDistancePhrase + ReadinessBand.phrase. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested.",
-      "proof_level": "build-tested + domain-tested",
-      "completed_at": "2026-05-17T09:16:59Z",
-      "handoff": "automation/handoffs/20260517T091659Z-app-localization-focus-suggestion-reason-routing.json"
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Return structured FocusSuggestionReasonData (similarReadinessCount, completionCount, predictedTime, lastCompletedDaysAgo, todayBand). Features/ formats into localized String. Multiple fragments + countPhrase + dayDistancePhrase + ReadinessBand.phrase. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
     },
     {
       "slice_id": "app-localization-continue-row-subtitle-routing",

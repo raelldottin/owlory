@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Protokollkjøring";
 "today.continue.subtitle.active" = "Aktiv";
 "today.continue.subtitle.inProgress" = "Pågår";
+"today.domainNudge.focusMissing" = "%@ har ikke dukket opp i Fokus i det siste.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Du fullførte dette %1$@ på %2$@ innsjekkingsdager.";
 "today.focus.suggestion.completion.recentCompletions" = "Du har fullført dette %@ nylig.";
 "today.focus.suggestion.timing.predictedTime" = "Vanligvis fullført rundt %@.";

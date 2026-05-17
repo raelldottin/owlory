@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Protokol çalıştırması";
 "today.continue.subtitle.active" = "Aktif";
 "today.continue.subtitle.inProgress" = "Sürüyor";
+"today.domainNudge.focusMissing" = "%@ son zamanlarda Odak'ta görünmedi.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Bunu %2$@ check-in günlerinde %1$@ tamamladınız.";
 "today.focus.suggestion.completion.recentCompletions" = "Bunu son zamanlarda %@ tamamladınız.";
 "today.focus.suggestion.timing.predictedTime" = "Genelde %@ civarında tamamlanır.";

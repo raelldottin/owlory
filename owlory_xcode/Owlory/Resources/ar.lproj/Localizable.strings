@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "تشغيل بروتوكول";
 "today.continue.subtitle.active" = "نشط";
 "today.continue.subtitle.inProgress" = "قيد التقدم";
+"today.domainNudge.focusMissing" = "لم يظهر %@ في التركيز مؤخراً.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "أنهيت هذا %1$@ في أيام تسجيل %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "أكملت هذا %@ مؤخراً.";
 "today.focus.suggestion.timing.predictedTime" = "يُكمل عادةً حوالي %@.";

@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Запуск протоколу";
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "Триває";
+"today.domainNudge.focusMissing" = "%@ останнім часом не з'являлося у Фокусі.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Ви виконали це %1$@ у дні чек-іну %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Ви виконали це %@ нещодавно.";
 "today.focus.suggestion.timing.predictedTime" = "Зазвичай завершується близько %@.";

@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "協定執行";
 "today.continue.subtitle.active" = "活躍";
 "today.continue.subtitle.inProgress" = "進行中";
+"today.domainNudge.focusMissing" = "%@最近沒有出現在專注中。";
 "today.focus.suggestion.completion.similarReadinessHistory" = "您在%2$@簽到日完成此項%1$@。";
 "today.focus.suggestion.completion.recentCompletions" = "您最近完成了此項%@。";
 "today.focus.suggestion.timing.predictedTime" = "通常在%@左右完成。";

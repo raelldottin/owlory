@@ -1,0 +1,76 @@
+{
+  "slice_id": "app-localization-pattern-nudge-rules-helper-copy-routing",
+  "status": "done",
+  "summary": "Removed domain-owned English copy from PatternNudgeRules.DomainNudge. Domain nudges now carry only the semantic LifeDomain; TodayView formats the visible message with the existing LifeDomain.localizedDisplayName adapter and the new today.domainNudge.focusMissing localized format key. Added the key across all 19 supported Localizable.strings files with LLM-drafted values, and updated PatternNudgeRulesTests plus CalibrationRulesTests to assert semantic domain data instead of English message strings.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/095354-app-localization-pattern-nudge-rules-helper-copy-routing.md",
+    "automation/handoffs/20260517T100024Z-app-localization-pattern-nudge-rules-helper-copy-routing.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/OwloryCoreTests/CalibrationRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/PatternNudgeRulesTests.swift"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check",
+    "make test-domain DOMAIN=patterns"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Pattern domain nudge localization boundary",
+      "before": "PatternNudgeRules.DomainNudge carried a preformatted English message built in Core/Domain using focusBalanceTitle(for:). TodayView rendered domainNudge.message directly, bypassing Localizable.strings and keeping presentation copy in the domain layer.",
+      "after": "PatternNudgeRules.DomainNudge carries only LifeDomain. TodayView owns presentation formatting through today.domainNudge.focusMissing and LifeDomain.localizedDisplayName. The format key is present in all 19 supported locale files; non-English values are LLM-drafted and not native-reviewed.",
+      "proof": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=patterns",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "New non-English today.domainNudge.focusMissing values are LLM-drafted and have not been native-reviewed.",
+    "No running-app smoke, screenshot proof, physical-device proof, or TestFlight proof was run for this copy surface."
+  ],
+  "recommended_next_slice": "app-localization-readiness-rules-helper-copy-routing",
+  "recommended_next_reason": "ReadinessRules is the adjacent helper-generated domain-copy follow-up with a larger visible Today nudge payload. It can mirror this structural pattern by returning semantic nudge data from Core/Domain and formatting visible copy in Features/Today.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T10:00:24Z"
+}

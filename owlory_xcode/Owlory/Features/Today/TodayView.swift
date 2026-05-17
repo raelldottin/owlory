@@ -442,6 +442,16 @@ struct TodayView: View {
         }
     }
 
+    private func domainNudgeMessage(for nudge: PatternNudgeRules.DomainNudge) -> String {
+        String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.domainNudge.focusMissing",
+                comment: "Today domain nudge: '%@ has not shown up in Focus lately.'"
+            ),
+            nudge.domain.localizedDisplayName
+        )
+    }
+
     private func continueSubtitleLabel(for kind: ContinueSubtitleKind) -> String {
         switch kind {
         case .focus:
@@ -1334,7 +1344,7 @@ struct TodayView: View {
                     Image(systemName: "eye")
                         .font(.caption)
                         .foregroundStyle(OwloryColor.warning)
-                    Text(domainNudge.message)
+                    Text(domainNudgeMessage(for: domainNudge))
                         .font(headerSupportingFont)
                         .foregroundStyle(.secondary)
                 }
@@ -1373,7 +1383,7 @@ struct TodayView: View {
                 .font(headerGreetingFont)
                 .accessibilityIdentifier("today.dashboard.header")
             if let domainNudge = calibration.domainNudge {
-                Text(domainNudge.message)
+                Text(domainNudgeMessage(for: domainNudge))
                     .font(headerSupportingFont)
                     .foregroundStyle(.secondary)
             }

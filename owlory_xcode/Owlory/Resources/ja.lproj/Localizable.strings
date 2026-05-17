@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "プロトコル実行";
 "today.continue.subtitle.active" = "アクティブ";
 "today.continue.subtitle.inProgress" = "進行中";
+"today.domainNudge.focusMissing" = "%@は最近フォーカスに表示されていません。";
 "today.focus.suggestion.completion.similarReadinessHistory" = "%2$@のチェックインの日に%1$@これを完了しました。";
 "today.focus.suggestion.completion.recentCompletions" = "最近これを%@完了しました。";
 "today.focus.suggestion.timing.predictedTime" = "通常%@頃に完了します。";

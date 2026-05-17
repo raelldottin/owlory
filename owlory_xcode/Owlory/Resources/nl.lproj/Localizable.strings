@@ -357,6 +357,7 @@
 "today.continue.subtitle.protocolRun" = "Protocoluitvoering";
 "today.continue.subtitle.active" = "Actief";
 "today.continue.subtitle.inProgress" = "Bezig";
+"today.domainNudge.focusMissing" = "%@ is de laatste tijd niet in Focus verschenen.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Je hebt dit %1$@ afgemaakt op %2$@ check-in dagen.";
 "today.focus.suggestion.completion.recentCompletions" = "Je hebt dit %@ recentelijk afgemaakt.";
 "today.focus.suggestion.timing.predictedTime" = "Meestal voltooid rond %@.";
