@@ -4258,7 +4258,7 @@
     {
       "slice_id": "app-localization-readiness-anchors-routing",
       "title": "Route Today + Train readiness scale anchor labels through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 77,
       "domain": "localization",
       "allowed_paths": [
@@ -4286,7 +4286,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Replace anchors: ('Low', 'Okay', 'High') and similar tuples with NSLocalizedString-backed values. Add 9 unique keys (Low/Okay/High, Rough/Steady/Good, Poor/Fine/Great) across 19 locales. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-17. Added 9 new keys (readiness.anchor.low/okay/high, .rough/steady/good, .poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 anchor tuple call sites in TodayView (3 check-in rows + 1 PreviousDay) and TrainView (2 readiness disclosures) to use String(localized:). The TrainingReadinessScaleRow/readinessRow body Text(anchors.X) continues to display the already-localized string verbatim \u2014 no internal view changes needed. localization-parity now 19/339/13. proof_level: build-tested."
     }
   ]
 }

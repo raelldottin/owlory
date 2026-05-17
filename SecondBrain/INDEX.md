@@ -2,6 +2,7 @@
 
 ## 2026-05-17
 
+- [app-localization-readiness-anchors-routing (build-tested; 9 new keys × 19 locales; 6 anchor tuple call sites in Today + Train routed via String(localized:))](sessions/2026-05-17/074138-app-localization-readiness-anchors-routing.md)
 - [app-localization-helper-generated-copy-audit (doc-only; 4 TestFlight screenshots → ~30+ helper-built English strings across 6 files; 7 narrow follow-up slices queued)](sessions/2026-05-17/020723-app-localization-helper-generated-copy-audit.md)
 
 ## 2026-05-16

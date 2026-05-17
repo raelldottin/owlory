@@ -1,0 +1,76 @@
+{
+  "slice_id": "app-localization-readiness-anchors-routing",
+  "status": "done",
+  "summary": "Added 9 new keys (readiness.anchor.low/okay/high/rough/steady/good/poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 call sites: 3 TodayView check-in readinessRow anchors (Energy/Mood/Sleep), 1 TodayView PreviousDay TrainingReadinessScaleRow, 2 TrainView readiness disclosures (inline + session editor). All anchor tuples now use String(localized:) so the inner Text(anchors.0/1/2) displays the already-localized string verbatim. The TrainingReadinessScaleRow / readinessRow body code was NOT modified — the existing Text(varString) display path correctly shows the resolved localized string. Localization-parity 19/339/13.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260517T074138Z-app-localization-readiness-anchors-routing.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/074138-app-localization-readiness-anchors-routing.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-anchors-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke per locale (Today check-in section + Train readiness disclosure)",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Readiness scale anchor label localization",
+      "before": "TodayView Energy / Mood / Sleep rows and TodayView PreviousDay + TrainView (2 places) passed raw English tuples like (\"Low\", \"Okay\", \"High\") to readinessRow / TrainingReadinessScaleRow. The inner Text(anchors.0) displayed the raw string verbatim, so German VoiceOver and German visible UI both showed English Low/Okay/High under the scale circles.",
+      "after": "Each anchor tuple is built from String(localized: \"readiness.anchor.<word>\") at the call site. The inner display code is unchanged. 9 new keys exist across all 19 locales. German users now see Niedrig/Okay/Hoch / Mies/Stabil/Gut / Schlecht/In Ordnung/Großartig under the scale circles.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift (4 call sites updated)",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift (2 call sites updated)",
+        "localization-parity 19/339/13 (up from 330)",
+        "xcodebuild build green"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "LLM-drafted translations are unverified by a native speaker. Subtle wording (e.g., German Mies for Rough is conversational and might not match Owlory voice) may need adjustment.",
+    "The same key (readiness.anchor.low/okay/high) is reused for Energy intensity (Today check-in) AND Training readiness (Train session). Some languages may prefer distinct translations for the two contexts — currently shared.",
+    "Rough/Steady/Good and Poor/Fine/Great are Mood- and Sleep-specific; reusing them in other contexts would need consideration.",
+    "The TrainingReadinessScaleRow / readinessRow internal `Text(anchors.X)` path was NOT modified. It works because the input strings are now already-localized via String(localized:) at the call site. If anyone passes a non-localized String tuple in the future, it will silently bypass localization again.",
+    "Per-locale review return files snapshot 372 entries from 2026-05-16; the 9 new keys are NOT reflected there. Dashboard / LQA / German-packet now show stale counts. Housekeeping refresh can be re-run with python3 Tools/localization-return-files-refresh.py --apply.",
+    "Native review remains outstanding for every locale."
+  ],
+  "recommended_next_slice": "app-localization-today-header-greeting-routing",
+  "recommended_next_reason": "Next priority Features-located slice (in-place wrap). Pairs naturally with the anchors slice since both are user-visible Today copy. Then the Domain-located slices (readiness-rules / pattern-nudge-rules / calibration-rules / focus-suggestion-reason / continue-row-subtitle) can be done one at a time using the structural-refactor approach.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T07:41:38Z"
+}

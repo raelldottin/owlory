@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d tamamlandı";
 "home.protocol.steps.placeholder" = "Adım 1\nAdım 2\nAdım 3";
 "home.protocol.run.progress.summary" = "%1$d / %2$d";
+"readiness.anchor.low" = "Düşük";
+"readiness.anchor.okay" = "İyi";
+"readiness.anchor.high" = "Yüksek";
+"readiness.anchor.rough" = "Zor";
+"readiness.anchor.steady" = "Sabit";
+"readiness.anchor.good" = "İyi";
+"readiness.anchor.poor" = "Kötü";
+"readiness.anchor.fine" = "Fena değil";
+"readiness.anchor.great" = "Harika";

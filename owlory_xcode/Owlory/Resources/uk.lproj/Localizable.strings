@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d виконано";
 "home.protocol.steps.placeholder" = "Крок 1\nКрок 2\nКрок 3";
 "home.protocol.run.progress.summary" = "%1$d з %2$d";
+"readiness.anchor.low" = "Низький";
+"readiness.anchor.okay" = "Нормально";
+"readiness.anchor.high" = "Високий";
+"readiness.anchor.rough" = "Важко";
+"readiness.anchor.steady" = "Стабільно";
+"readiness.anchor.good" = "Добре";
+"readiness.anchor.poor" = "Погано";
+"readiness.anchor.fine" = "Нормально";
+"readiness.anchor.great" = "Чудово";

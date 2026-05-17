@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d concluídos";
 "home.protocol.steps.placeholder" = "Etapa 1\nEtapa 2\nEtapa 3";
 "home.protocol.run.progress.summary" = "%1$d de %2$d";
+"readiness.anchor.low" = "Baixo";
+"readiness.anchor.okay" = "Ok";
+"readiness.anchor.high" = "Alto";
+"readiness.anchor.rough" = "Difícil";
+"readiness.anchor.steady" = "Estável";
+"readiness.anchor.good" = "Bom";
+"readiness.anchor.poor" = "Ruim";
+"readiness.anchor.fine" = "Razoável";
+"readiness.anchor.great" = "Ótimo";

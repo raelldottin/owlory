@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d 완료";
 "home.protocol.steps.placeholder" = "단계 1\n단계 2\n단계 3";
 "home.protocol.run.progress.summary" = "%1$d / %2$d";
+"readiness.anchor.low" = "낮음";
+"readiness.anchor.okay" = "보통";
+"readiness.anchor.high" = "높음";
+"readiness.anchor.rough" = "거침";
+"readiness.anchor.steady" = "안정";
+"readiness.anchor.good" = "좋음";
+"readiness.anchor.poor" = "나쁨";
+"readiness.anchor.fine" = "괜찮음";
+"readiness.anchor.great" = "훌륭함";

@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d 已完成";
 "home.protocol.steps.placeholder" = "步骤 1\n步骤 2\n步骤 3";
 "home.protocol.run.progress.summary" = "%1$d / %2$d";
+"readiness.anchor.low" = "低";
+"readiness.anchor.okay" = "尚可";
+"readiness.anchor.high" = "高";
+"readiness.anchor.rough" = "糟糕";
+"readiness.anchor.steady" = "平稳";
+"readiness.anchor.good" = "良好";
+"readiness.anchor.poor" = "差";
+"readiness.anchor.fine" = "还行";
+"readiness.anchor.great" = "极佳";

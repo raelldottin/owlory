@@ -178,7 +178,11 @@ struct TrainView: View {
                         TrainingReadinessScaleRow(
                             label: "Readiness",
                             value: readinessLevel,
-                            anchors: ("Low", "Okay", "High")
+                            anchors: (
+                                String(localized: "readiness.anchor.low"),
+                                String(localized: "readiness.anchor.okay"),
+                                String(localized: "readiness.anchor.high")
+                            )
                         ) { value in
                             readinessLevel = value
                         }
@@ -296,7 +300,11 @@ private struct SessionCardView: View {
                     TrainingReadinessScaleRow(
                         label: "Readiness",
                         value: readinessLevel,
-                        anchors: ("Low", "Okay", "High")
+                        anchors: (
+                            String(localized: "readiness.anchor.low"),
+                            String(localized: "readiness.anchor.okay"),
+                            String(localized: "readiness.anchor.high")
+                        )
                     ) { value in
                         readinessLevel = value
                         store.updateReadinessLevel(id: session.id, readinessLevel: value)

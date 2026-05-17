@@ -191,13 +191,40 @@ struct TodayView: View {
     private var checkInSection: some View {
         Section {
             DisclosureGroup(isExpanded: $showingCheckin) {
-                readinessRow(label: "Energy", value: currentEntry.energy, systemImage: "bolt.fill", anchors: ("Low", "Okay", "High")) { val in
+                readinessRow(
+                    label: "Energy",
+                    value: currentEntry.energy,
+                    systemImage: "bolt.fill",
+                    anchors: (
+                        String(localized: "readiness.anchor.low"),
+                        String(localized: "readiness.anchor.okay"),
+                        String(localized: "readiness.anchor.high")
+                    )
+                ) { val in
                     store.updateReadiness(energy: val, mood: currentEntry.mood, sleepQuality: currentEntry.sleepQuality)
                 }
-                readinessRow(label: "Mood", value: currentEntry.mood, systemImage: "face.smiling", anchors: ("Rough", "Steady", "Good")) { val in
+                readinessRow(
+                    label: "Mood",
+                    value: currentEntry.mood,
+                    systemImage: "face.smiling",
+                    anchors: (
+                        String(localized: "readiness.anchor.rough"),
+                        String(localized: "readiness.anchor.steady"),
+                        String(localized: "readiness.anchor.good")
+                    )
+                ) { val in
                     store.updateReadiness(energy: currentEntry.energy, mood: val, sleepQuality: currentEntry.sleepQuality)
                 }
-                readinessRow(label: "Sleep", value: currentEntry.sleepQuality, systemImage: "moon.zzz", anchors: ("Poor", "Fine", "Great")) { val in
+                readinessRow(
+                    label: "Sleep",
+                    value: currentEntry.sleepQuality,
+                    systemImage: "moon.zzz",
+                    anchors: (
+                        String(localized: "readiness.anchor.poor"),
+                        String(localized: "readiness.anchor.fine"),
+                        String(localized: "readiness.anchor.great")
+                    )
+                ) { val in
                     store.updateReadiness(energy: currentEntry.energy, mood: currentEntry.mood, sleepQuality: val)
                 }
             } label: {
@@ -1576,7 +1603,11 @@ private struct QuickTrainSheet: View {
                     TrainingReadinessScaleRow(
                         label: "Training",
                         value: readinessLevel,
-                        anchors: ("Low", "Okay", "High")
+                        anchors: (
+                            String(localized: "readiness.anchor.low"),
+                            String(localized: "readiness.anchor.okay"),
+                            String(localized: "readiness.anchor.high")
+                        )
                     ) { value in
                         readinessLevel = value
                     }

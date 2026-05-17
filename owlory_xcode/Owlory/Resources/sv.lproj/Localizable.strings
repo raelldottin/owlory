@@ -336,3 +336,12 @@
 "home.protocol.run.progress.completed" = "%1$d/%2$d slutförda";
 "home.protocol.steps.placeholder" = "Steg 1\nSteg 2\nSteg 3";
 "home.protocol.run.progress.summary" = "%1$d av %2$d";
+"readiness.anchor.low" = "Låg";
+"readiness.anchor.okay" = "Ok";
+"readiness.anchor.high" = "Hög";
+"readiness.anchor.rough" = "Tufft";
+"readiness.anchor.steady" = "Stabilt";
+"readiness.anchor.good" = "Bra";
+"readiness.anchor.poor" = "Dåligt";
+"readiness.anchor.fine" = "Helt ok";
+"readiness.anchor.great" = "Utmärkt";
