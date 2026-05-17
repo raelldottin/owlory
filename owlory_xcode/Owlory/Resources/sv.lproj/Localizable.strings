@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "låg beredskap";
 "today.focus.suggestion.band.steady" = "stabil";
 "today.focus.suggestion.band.high" = "hög beredskap";
+"write.calibration.pipelineNudge.captureBacklog" = "Du har %d fångster som väntar. Försök utveckla en till en källanteckning.";
+"train.calibration.consistencySummary.strong" = "Stark konsekvens — %d%% av passen slutförda eller anpassade.";
+"train.calibration.consistencySummary.solid" = "Stadig rytm — %d%% uppföljning under den här perioden.";
+"train.calibration.consistencySummary.low" = "Träningsuppföljning på %d%%. Överväg färre, mer åtagna pass.";

@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "準備度低い";
 "today.focus.suggestion.band.steady" = "安定";
 "today.focus.suggestion.band.high" = "準備度高い";
+"write.calibration.pipelineNudge.captureBacklog" = "%d件のキャプチャが待機しています。1つをソースノートに発展させてみましょう。";
+"train.calibration.consistencySummary.strong" = "高い一貫性 — セッションの%d%%を完了または調整しました。";
+"train.calibration.consistencySummary.solid" = "安定したリズム — この期間のフォロースルーは%d%%です。";
+"train.calibration.consistencySummary.low" = "トレーニングのフォロースルーは%d%%です。少なめで、より確実に取り組めるセッションを検討しましょう。";

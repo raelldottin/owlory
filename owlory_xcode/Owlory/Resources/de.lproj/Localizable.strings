@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "niedriger Bereitschaft";
 "today.focus.suggestion.band.steady" = "stetiger";
 "today.focus.suggestion.band.high" = "hoher Bereitschaft";
+"write.calibration.pipelineNudge.captureBacklog" = "Du hast %d Erfassungen in der Warteschlange. Entwickle eine davon zu einer Quellnotiz weiter.";
+"train.calibration.consistencySummary.strong" = "Starke Konstanz — %d%% der Sitzungen abgeschlossen oder angepasst.";
+"train.calibration.consistencySummary.solid" = "Solider Rhythmus — %d%% Durchziehen in diesem Zeitraum.";
+"train.calibration.consistencySummary.low" = "Trainings-Dranbleiben bei %d%%. Erwäge weniger, dafür verbindlichere Sitzungen.";

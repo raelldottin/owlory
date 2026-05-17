@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "低就绪度";
 "today.focus.suggestion.band.steady" = "稳定";
 "today.focus.suggestion.band.high" = "高就绪度";
+"write.calibration.pipelineNudge.captureBacklog" = "你有 %d 条捕捉内容待处理。试着把其中一条发展成来源笔记。";
+"train.calibration.consistencySummary.strong" = "一致性很强 — %d%% 的训练已完成或调整。";
+"train.calibration.consistencySummary.solid" = "节奏稳定 — 本周期跟进率为 %d%%。";
+"train.calibration.consistencySummary.low" = "训练跟进率为 %d%%。考虑减少数量，安排更有承诺的训练。";

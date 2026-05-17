@@ -4064,7 +4064,7 @@
     {
       "slice_id": "app-localization-calibration-rules-helper-copy-routing",
       "title": "Route CalibrationRules writingPipelineNudge + trainingConsistencySummary messages through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 83,
       "domain": "localization",
       "allowed_paths": [
@@ -4072,6 +4072,8 @@
         "owlory_xcode/Owlory/Features/Today/",
         "owlory_xcode/Owlory/Features/Train/",
         "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/OwloryCoreTests/CalibrationRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/TrainingConsistencyTests.swift",
         "owlory_xcode/Owlory/Resources/",
         "docs/workflows/localization-helper-generated-copy-audit.md",
         "docs/workflows/localization-dynamic-formatting.md",
@@ -4091,9 +4093,9 @@
       "depends_on": [
         "app-localization-helper-generated-copy-audit"
       ],
-      "max_files_changed": 12,
+      "max_files_changed": 32,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Move presentation copy out of Core/Domain. Have CalibrationRules return semantic enums (WritingPipelineNudgeKind, TrainingConsistencyBand) plus structured data (captureCount, percent). Add a UI-adjacent presentation helper in Features/ that maps enum + data \u2192 localized String via NSLocalizedString + String.localizedStringWithFormat. 4 messages. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed in 20260517T150141Z handoff. Surface-scoped follow-up from app-localization-helper-generated-copy-audit. CalibrationRules now returns semantic WritingPipelineNudge.Kind, TrainingConsistencySummary.Band, captureCount, completionRate, and completionPercent; Train/Write format visible copy through localized keys with NSLocalizedString + String.localizedStringWithFormat. Added 4 keys across all 19 locales. Focused training tests assert semantic values, not English strings. Non-English values are LLM-drafted; no native-review claim. proof_level reached: build-tested."
     },
     {
       "slice_id": "app-localization-readiness-rules-helper-copy-routing",

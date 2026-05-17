@@ -381,3 +381,7 @@
 "today.focus.suggestion.band.low" = "low-readiness";
 "today.focus.suggestion.band.steady" = "steady";
 "today.focus.suggestion.band.high" = "high-readiness";
+"write.calibration.pipelineNudge.captureBacklog" = "You have %d captures waiting. Try developing one into a source note.";
+"train.calibration.consistencySummary.strong" = "Strong consistency — %d%% of sessions completed or adapted.";
+"train.calibration.consistencySummary.solid" = "Solid rhythm — %d%% follow-through this period.";
+"train.calibration.consistencySummary.low" = "Training follow-through at %d%%. Consider fewer, more committed sessions.";

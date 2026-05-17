@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "низкой готовности";
 "today.focus.suggestion.band.steady" = "ровной";
 "today.focus.suggestion.band.high" = "высокой готовности";
+"write.calibration.pipelineNudge.captureBacklog" = "У вас %d ожидающих заметок-захватов. Попробуйте развить одну из них в исходную заметку.";
+"train.calibration.consistencySummary.strong" = "Сильная регулярность — %d%% сессий завершены или адаптированы.";
+"train.calibration.consistencySummary.solid" = "Устойчивый ритм — %d%% выполнения за этот период.";
+"train.calibration.consistencySummary.low" = "Выполнение тренировок на уровне %d%%. Рассмотрите меньше, но более обязательных сессий.";

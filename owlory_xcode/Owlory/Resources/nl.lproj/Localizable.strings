@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "lage gereedheid";
 "today.focus.suggestion.band.steady" = "stabiel";
 "today.focus.suggestion.band.high" = "hoge gereedheid";
+"write.calibration.pipelineNudge.captureBacklog" = "Je hebt %d captures klaarstaan. Probeer er één uit te werken tot een bronnotitie.";
+"train.calibration.consistencySummary.strong" = "Sterke consistentie — %d%% van de sessies voltooid of aangepast.";
+"train.calibration.consistencySummary.solid" = "Solide ritme — %d%% opvolging in deze periode.";
+"train.calibration.consistencySummary.low" = "Trainingsopvolging op %d%%. Overweeg minder, maar meer toegewijde sessies.";

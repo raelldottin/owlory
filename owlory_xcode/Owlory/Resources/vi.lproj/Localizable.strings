@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "sẵn sàng thấp";
 "today.focus.suggestion.band.steady" = "ổn định";
 "today.focus.suggestion.band.high" = "sẵn sàng cao";
+"write.calibration.pipelineNudge.captureBacklog" = "Bạn có %d mục ghi nhanh đang chờ. Hãy thử phát triển một mục thành ghi chú nguồn.";
+"train.calibration.consistencySummary.strong" = "Tính nhất quán mạnh — %d%% phiên đã hoàn tất hoặc được điều chỉnh.";
+"train.calibration.consistencySummary.solid" = "Nhịp ổn định — %d%% mức theo sát trong giai đoạn này.";
+"train.calibration.consistencySummary.low" = "Mức theo sát luyện tập là %d%%. Cân nhắc ít phiên hơn nhưng cam kết hơn.";

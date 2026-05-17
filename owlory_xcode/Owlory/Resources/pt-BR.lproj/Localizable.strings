@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "baixa prontidão";
 "today.focus.suggestion.band.steady" = "estável";
 "today.focus.suggestion.band.high" = "alta prontidão";
+"write.calibration.pipelineNudge.captureBacklog" = "Você tem %d capturas aguardando. Tente desenvolver uma delas em uma nota-fonte.";
+"train.calibration.consistencySummary.strong" = "Consistência forte — %d%% das sessões concluídas ou adaptadas.";
+"train.calibration.consistencySummary.solid" = "Ritmo sólido — %d%% de continuidade neste período.";
+"train.calibration.consistencySummary.low" = "Continuidade do treino em %d%%. Considere menos sessões, com mais compromisso.";

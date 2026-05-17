@@ -6,14 +6,25 @@ enum CalibrationRules {
     typealias DomainNudge = PatternNudgeRules.DomainNudge
 
     struct WritingPipelineNudge: Equatable {
-        let message: String
+        enum Kind: Equatable {
+            case captureBacklog
+        }
+
+        let kind: Kind
         let captureCount: Int
         let bottleneckStage: WritingStage?
     }
 
     struct TrainingConsistencySummary: Equatable {
-        let message: String
+        enum Band: Equatable {
+            case strong
+            case solid
+            case low
+        }
+
+        let band: Band
         let completionRate: Double
+        let completionPercent: Int
     }
 
     struct Calibration {
@@ -84,8 +95,7 @@ enum CalibrationRules {
         let advancedCount = velocity.stageDistribution.filter { $0.key.rawValue >= WritingStage.source.rawValue }.values.reduce(0, +)
         guard advancedCount == 0 || velocity.bottleneckStage == .capture else { return nil }
 
-        let message = "You have \(captureCount) captures waiting. Try developing one into a source note."
-        return WritingPipelineNudge(message: message, captureCount: captureCount, bottleneckStage: velocity.bottleneckStage)
+        return WritingPipelineNudge(kind: .captureBacklog, captureCount: captureCount, bottleneckStage: velocity.bottleneckStage)
     }
 
     private static func trainingConsistencySummary(from snapshot: PatternSnapshot?) -> TrainingConsistencySummary? {
@@ -94,14 +104,14 @@ enum CalibrationRules {
         guard total >= 3 else { return nil }
 
         let pct = Int(consistency.completionRate * 100)
-        let message: String
+        let band: TrainingConsistencySummary.Band
         if consistency.completionRate >= 0.8 {
-            message = "Strong consistency — \(pct)% of sessions completed or adapted."
+            band = .strong
         } else if consistency.completionRate >= 0.5 {
-            message = "Solid rhythm — \(pct)% follow-through this period."
+            band = .solid
         } else {
-            message = "Training follow-through at \(pct)%. Consider fewer, more committed sessions."
+            band = .low
         }
-        return TrainingConsistencySummary(message: message, completionRate: consistency.completionRate)
+        return TrainingConsistencySummary(band: band, completionRate: consistency.completionRate, completionPercent: pct)
     }
 }

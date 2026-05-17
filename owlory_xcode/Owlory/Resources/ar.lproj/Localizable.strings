@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "جاهزية منخفضة";
 "today.focus.suggestion.band.steady" = "ثابتة";
 "today.focus.suggestion.band.high" = "جاهزية عالية";
+"write.calibration.pipelineNudge.captureBacklog" = "لديك %d ملاحظات ملتقطة في الانتظار. جرّب تطوير واحدة منها إلى ملاحظة مصدر.";
+"train.calibration.consistencySummary.strong" = "ثبات قوي — اكتملت أو عُدلت %d%% من الجلسات.";
+"train.calibration.consistencySummary.solid" = "إيقاع جيد — متابعة بنسبة %d%% في هذه الفترة.";
+"train.calibration.consistencySummary.low" = "متابعة التدريب عند %d%%. فكّر في جلسات أقل وأكثر التزاماً.";

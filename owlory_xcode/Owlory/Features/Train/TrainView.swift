@@ -68,12 +68,32 @@ struct TrainView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "chart.bar")
                         .foregroundStyle(OwloryColor.brandPrimary)
-                    Text(summary.message)
+                    Text(trainingConsistencySummaryMessage(for: summary))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }
         }
+    }
+
+    private func trainingConsistencySummaryMessage(for summary: CalibrationRules.TrainingConsistencySummary) -> String {
+        let key: String
+        switch summary.band {
+        case .strong:
+            key = "train.calibration.consistencySummary.strong"
+        case .solid:
+            key = "train.calibration.consistencySummary.solid"
+        case .low:
+            key = "train.calibration.consistencySummary.low"
+        }
+
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                key,
+                comment: "Train consistency summary with completion percent."
+            ),
+            summary.completionPercent
+        )
     }
 
     // MARK: - Today

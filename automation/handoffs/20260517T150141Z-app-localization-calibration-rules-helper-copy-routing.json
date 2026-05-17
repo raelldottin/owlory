@@ -1,0 +1,81 @@
+{
+  "slice_id": "app-localization-calibration-rules-helper-copy-routing",
+  "status": "done",
+  "summary": "Routed CalibrationRules writing pipeline nudge and training consistency summary copy out of Core/Domain. CalibrationRules now returns semantic writing nudge kind and training consistency band plus structured counts/rates; TrainView and WriteView format the visible copy through localized keys. Added four keys across all 19 locales and updated focused training tests to assert semantic values instead of English strings.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/150141-app-localization-calibration-rules-helper-copy-routing.md",
+    "automation/handoffs/20260517T150141Z-app-localization-calibration-rules-helper-copy-routing.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/Owlory/Core/Domain/CalibrationRules.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/OwloryCoreTests/TrainingConsistencyTests.swift"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "make test-domain DOMAIN=train",
+    "make test-domain DOMAIN=patterns",
+    "make test-domain DOMAIN=write",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "CalibrationRules writing/training helper-generated visible-copy routing",
+      "before": "Core/Domain/CalibrationRules built English strings for writingPipelineNudge.message and trainingConsistencySummary.message, and TrainView/WriteView rendered those strings directly.",
+      "after": "Core/Domain/CalibrationRules returns semantic WritingPipelineNudge.Kind and TrainingConsistencySummary.Band plus captureCount/completionPercent. TrainView and WriteView own localized visible formatting through train.calibration.consistencySummary.* and write.calibration.pipelineNudge.captureBacklog keys.",
+      "proof": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=train",
+        "make test-domain DOMAIN=patterns",
+        "make test-domain DOMAIN=write",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Non-English strings are LLM-drafted and have not been native-reviewed.",
+    "No running-app smoke, screenshot proof, device proof, or TestFlight proof was performed for these new Train/Write strings.",
+    "The required build still reports the pre-existing TodayView onChange(of:perform:) iOS 17 deprecation warning; this slice did not touch that path."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Supervisor dry-run after marking this slice done reported: stop: no eligible queued slice found.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T15:11:01Z"
+}

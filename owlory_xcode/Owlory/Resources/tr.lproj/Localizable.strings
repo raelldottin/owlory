@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "düşük hazırlık";
 "today.focus.suggestion.band.steady" = "sabit";
 "today.focus.suggestion.band.high" = "yüksek hazırlık";
+"write.calibration.pipelineNudge.captureBacklog" = "Bekleyen %d yakalaman var. Birini kaynak nota dönüştürmeyi dene.";
+"train.calibration.consistencySummary.strong" = "Güçlü tutarlılık — oturumların %d%% kadarı tamamlandı veya uyarlandı.";
+"train.calibration.consistencySummary.solid" = "Sağlam ritim — bu dönemde %d%% takip.";
+"train.calibration.consistencySummary.low" = "Antrenman takibi %d%% düzeyinde. Daha az ama daha bağlı oturumlar düşün.";

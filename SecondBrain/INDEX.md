@@ -2,6 +2,7 @@
 
 ## 2026-05-17
 
+- [app-localization-calibration-rules-helper-copy-routing (build-tested + train/write/patterns-tested; CalibrationRules writing/training outputs now semantic; Train/Write format through 4 localized keys × 19 locales)](sessions/2026-05-17/150141-app-localization-calibration-rules-helper-copy-routing.md)
 - [app-localization-readiness-rules-helper-copy-routing (build-tested + domain-tested; ReadinessRules.Nudge now semantic Kind + suggestedMaxPriorities; Today formats through 9 today.readiness.nudge.* keys × 19 locales)](sessions/2026-05-17/103206-app-localization-readiness-rules-helper-copy-routing.md)
 - [app-localization-pattern-nudge-rules-helper-copy-routing (build-tested + domain-tested; PatternNudgeRules.DomainNudge now semantic LifeDomain only; Today formats through today.domainNudge.focusMissing × 19 locales)](sessions/2026-05-17/095354-app-localization-pattern-nudge-rules-helper-copy-routing.md)
 - [app-localization-focus-suggestion-reason-routing (build-tested + domain-tested; FocusSuggestionRules.Reason semantic struct with Completion/Timing/ReadinessContext enums; structural refactor restores Domain/Features boundary; 12 new today.focus.suggestion.* keys × 19 locales)](sessions/2026-05-17/091659-app-localization-focus-suggestion-reason-routing.md)

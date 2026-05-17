@@ -87,11 +87,24 @@ struct WriteView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "arrow.right.circle")
                         .foregroundStyle(OwloryColor.brandPrimary)
-                    Text(nudge.message)
+                    Text(writingPipelineNudgeMessage(for: nudge))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }
+        }
+    }
+
+    private func writingPipelineNudgeMessage(for nudge: CalibrationRules.WritingPipelineNudge) -> String {
+        switch nudge.kind {
+        case .captureBacklog:
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "write.calibration.pipelineNudge.captureBacklog",
+                    comment: "Write pipeline nudge with capture count."
+                ),
+                nudge.captureCount
+            )
         }
     }
 

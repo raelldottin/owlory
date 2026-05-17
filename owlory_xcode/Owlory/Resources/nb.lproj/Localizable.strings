@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "lav beredskap";
 "today.focus.suggestion.band.steady" = "stødig";
 "today.focus.suggestion.band.high" = "høy beredskap";
+"write.calibration.pipelineNudge.captureBacklog" = "Du har %d fangster som venter. Prøv å utvikle én til et kildenotat.";
+"train.calibration.consistencySummary.strong" = "Sterk kontinuitet — %d%% av øktene er fullført eller tilpasset.";
+"train.calibration.consistencySummary.solid" = "Solid rytme — %d%% oppfølging i denne perioden.";
+"train.calibration.consistencySummary.low" = "Treningsoppfølging på %d%%. Vurder færre, mer forpliktende økter.";

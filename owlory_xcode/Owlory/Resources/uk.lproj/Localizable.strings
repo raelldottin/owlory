@@ -379,3 +379,7 @@
 "today.focus.suggestion.band.low" = "низької готовності";
 "today.focus.suggestion.band.steady" = "стабільної";
 "today.focus.suggestion.band.high" = "високої готовності";
+"write.calibration.pipelineNudge.captureBacklog" = "У вас %d записів-захоплень в очікуванні. Спробуйте розвинути один із них у вихідну нотатку.";
+"train.calibration.consistencySummary.strong" = "Сильна сталість — %d%% сесій завершено або адаптовано.";
+"train.calibration.consistencySummary.solid" = "Міцний ритм — %d%% виконання за цей період.";
+"train.calibration.consistencySummary.low" = "Виконання тренувань на рівні %d%%. Розгляньте менше, але більш зобов'язальні сесії.";
