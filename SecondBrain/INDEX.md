@@ -2,6 +2,7 @@
 
 ## 2026-05-17
 
+- [app-localization-focus-suggestion-reason-routing (build-tested + domain-tested; FocusSuggestionRules.Reason semantic struct with Completion/Timing/ReadinessContext enums; structural refactor restores Domain/Features boundary; 12 new today.focus.suggestion.* keys × 19 locales)](sessions/2026-05-17/091659-app-localization-focus-suggestion-reason-routing.md)
 - [app-localization-continue-row-subtitle-routing (build-tested + domain-tested; ContinueSubtitleKind semantic enum; structural refactor restores Application/Features boundary; 6 new today.continue.subtitle.* keys × 19 locales)](sessions/2026-05-17/090132-app-localization-continue-row-subtitle-routing.md)
 - [app-localization-today-header-greeting-routing (build-tested; 6 new today.header.greeting.* keys × 19 locales; headerGreeting 6 branches wrapped in String(localized:))](sessions/2026-05-17/075934-app-localization-today-header-greeting-routing.md)
 - [app-localization-readiness-anchors-routing (build-tested; 9 new keys × 19 locales; 6 anchor tuple call sites in Today + Train routed via String(localized:))](sessions/2026-05-17/074138-app-localization-readiness-anchors-routing.md)

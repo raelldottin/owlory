@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "プロトコル実行";
 "today.continue.subtitle.active" = "アクティブ";
 "today.continue.subtitle.inProgress" = "進行中";
+"today.focus.suggestion.completion.similarReadinessHistory" = "%2$@のチェックインの日に%1$@これを完了しました。";
+"today.focus.suggestion.completion.recentCompletions" = "最近これを%@完了しました。";
+"today.focus.suggestion.timing.predictedTime" = "通常%@頃に完了します。";
+"today.focus.suggestion.timing.lastCompletion" = "前回は%@。";
+"today.focus.suggestion.countPhrase.once" = "1回";
+"today.focus.suggestion.countPhrase.times" = "%d回";
+"today.focus.suggestion.dayPhrase.today" = "今日";
+"today.focus.suggestion.dayPhrase.yesterday" = "昨日";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d日前";
+"today.focus.suggestion.band.low" = "準備度低い";
+"today.focus.suggestion.band.steady" = "安定";
+"today.focus.suggestion.band.high" = "準備度高い";

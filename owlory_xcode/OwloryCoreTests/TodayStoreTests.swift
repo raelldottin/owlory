@@ -761,10 +761,10 @@ final class TodayStoreTests: XCTestCase {
         )
 
         let candidates: [TodayStore.FocusSuggestionCandidate] = [
-            .init(title: "Write outline", domain: .writing, reason: "In progress", priority: 0),
-            .init(title: "Clean kitchen", domain: .home, reason: "Active", priority: 1),
-            .init(title: "Morning run", domain: .training, reason: "Due today", priority: 2),
-            .init(title: "Review notes", domain: .career, reason: "Active", priority: 3)
+            .init(title: "Write outline", domain: .writing, reason: nil, priority: 0),
+            .init(title: "Clean kitchen", domain: .home, reason: nil, priority: 1),
+            .init(title: "Morning run", domain: .training, reason: nil, priority: 2),
+            .init(title: "Review notes", domain: .career, reason: nil, priority: 3)
         ]
 
         await MainActor.run {
@@ -799,7 +799,7 @@ final class TodayStoreTests: XCTestCase {
                 todayEntry: saved,
                 weeklySnapshot: nil,
                 candidates: [
-                    .init(title: "Morning run", domain: .training, reason: "Due today", priority: 0)
+                    .init(title: "Morning run", domain: .training, reason: nil, priority: 0)
                 ]
             )
         }
@@ -819,7 +819,7 @@ final class TodayStoreTests: XCTestCase {
         }
 
         let candidates: [TodayStore.FocusSuggestionCandidate] = [
-            .init(title: "Morning run", domain: .training, reason: "Due today", priority: 0)
+            .init(title: "Morning run", domain: .training, reason: nil, priority: 0)
         ]
 
         await MainActor.run {
@@ -856,7 +856,7 @@ final class TodayStoreTests: XCTestCase {
         }
 
         let candidates: [TodayStore.FocusSuggestionCandidate] = [
-            .init(title: "Clean kitchen", domain: .home, reason: "Active", priority: 0)
+            .init(title: "Clean kitchen", domain: .home, reason: nil, priority: 0)
         ]
 
         await MainActor.run {
@@ -921,7 +921,11 @@ final class TodayStoreTests: XCTestCase {
 
         XCTAssertEqual(candidates.map(\.title), ["Water plants"])
         XCTAssertEqual(candidates.first?.domain, .home)
-        XCTAssertTrue(candidates.first?.reason.contains("low-readiness") ?? false)
+        if case .similarReadinessHistory(_, let context) = candidates.first?.reason?.completion {
+            XCTAssertEqual(context, .low)
+        } else {
+            XCTFail("Expected .similarReadinessHistory completion with .low context")
+        }
         XCTAssertFalse(candidates.contains { $0.title == "Draft pitch" })
     }
 
@@ -984,7 +988,11 @@ final class TodayStoreTests: XCTestCase {
 
         XCTAssertEqual(candidates.map(\.title), ["Kitchen Reset"])
         XCTAssertEqual(candidates.first?.domain, .home)
-        XCTAssertTrue(candidates.first?.reason.contains("Usually completed around 7 PM") ?? false)
+        if case .predictedTime(let secondsSinceMidnight) = candidates.first?.reason?.timing {
+            XCTAssertEqual(secondsSinceMidnight, 19 * 3600, accuracy: 0.001)
+        } else {
+            XCTFail("Expected .predictedTime timing with 19h offset")
+        }
     }
 
     // MARK: - removeFocusItem

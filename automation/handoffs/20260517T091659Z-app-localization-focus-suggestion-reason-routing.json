@@ -1,0 +1,54 @@
+{
+  "slice_id": "app-localization-focus-suggestion-reason-routing",
+  "title": "Route FocusSuggestionRules.reason() multi-fragment copy through localization",
+  "status": "done",
+  "proof_level": "build-tested + domain-tested",
+  "completed_at": "2026-05-17T09:16:59Z",
+  "approach": "structural-refactor",
+  "summary": "Moved FocusSuggestionRules reason copy out of Core/Domain. Introduced semantic FocusSuggestionRules.Reason struct (Completion + Timing enums + ReadinessContext). Domain emits semantic values; Features/Today formats them into localized display copy using 12 new keys.",
+  "files_changed": [
+    "owlory_xcode/Owlory/Core/Domain/FocusSuggestionRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryCoreTests/FocusSuggestionRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+    "owlory_xcode/Owlory/Resources/{19 locales}/Localizable.strings"
+  ],
+  "keys_added": [
+    "today.focus.suggestion.completion.similarReadinessHistory",
+    "today.focus.suggestion.completion.recentCompletions",
+    "today.focus.suggestion.timing.predictedTime",
+    "today.focus.suggestion.timing.lastCompletion",
+    "today.focus.suggestion.countPhrase.once",
+    "today.focus.suggestion.countPhrase.times",
+    "today.focus.suggestion.dayPhrase.today",
+    "today.focus.suggestion.dayPhrase.yesterday",
+    "today.focus.suggestion.dayPhrase.daysAgo",
+    "today.focus.suggestion.band.low",
+    "today.focus.suggestion.band.steady",
+    "today.focus.suggestion.band.high"
+  ],
+  "locales": 19,
+  "localization_parity": "19 locales / 363 keys / 13 plural keys",
+  "validations": {
+    "make architecture": "passed",
+    "make localization-check": "19 / 363 / 13",
+    "./Tools/validate.sh localization": "passed",
+    "make test-domain DOMAIN=today": "TEST SUCCEEDED",
+    "make automation-check": "57/57 passed",
+    "xcodebuild build": "exit 0 (warnings only, pre-existing)",
+    "git diff --check": "clean"
+  },
+  "native_review": false,
+  "translation_quality_notes": "LLM-drafted by claude-opus-4-7. Predicted-time formatting uses Date.FormatStyle for locale-aware time strings. Status: needs-layout-check across all 19 locales.",
+  "residual_risk": [
+    "Translations remain LLM-drafted (status: needs-layout-check). Native review still queued under app-localization-native-review-intake.",
+    "Per-locale review return files are now 33 entries stale per locale (21 prior + 12 new). Run python3 Tools/localization-return-files-refresh.py --apply when next syncing.",
+    "Adding a new Completion or Timing case without matching localized keys would not fail build — lookup would silently fall back to raw key string.",
+    "Predicted-time format uses Date.FormatStyle which produces locale-default time (e.g., \"7:00 PM\" vs \"19:00\"). Layout review needed for very long locales (ar/de/ru)."
+  ],
+  "queue_remaining_helper_followups": [
+    "app-localization-calibration-rules-helper-copy-routing (priority 83)",
+    "app-localization-readiness-rules-helper-copy-routing (priority 82)",
+    "app-localization-pattern-nudge-rules-helper-copy-routing (priority 81)"
+  ]
+}

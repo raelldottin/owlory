@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Запуск протокола";
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "В процессе";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Вы выполнили это %1$@ в дни чек-ина %2$@.";
+"today.focus.suggestion.completion.recentCompletions" = "Вы выполнили это %@ недавно.";
+"today.focus.suggestion.timing.predictedTime" = "Обычно завершается около %@.";
+"today.focus.suggestion.timing.lastCompletion" = "В последний раз %@.";
+"today.focus.suggestion.countPhrase.once" = "один раз";
+"today.focus.suggestion.countPhrase.times" = "%d раз(а)";
+"today.focus.suggestion.dayPhrase.today" = "сегодня";
+"today.focus.suggestion.dayPhrase.yesterday" = "вчера";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d дней назад";
+"today.focus.suggestion.band.low" = "низкой готовности";
+"today.focus.suggestion.band.steady" = "ровной";
+"today.focus.suggestion.band.high" = "высокой готовности";

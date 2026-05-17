@@ -355,6 +355,93 @@ struct TodayView: View {
         }
     }
 
+    private func focusSuggestionReasonText(for reason: FocusSuggestionRules.Reason) -> String {
+        let completionText: String
+        switch reason.completion {
+        case .similarReadinessHistory(let count, let context):
+            completionText = String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.focus.suggestion.completion.similarReadinessHistory",
+                    comment: "Focus Suggestion reason: '%1$@ on %2$@ check-in days.'"
+                ),
+                focusSuggestionCountPhrase(count),
+                focusSuggestionBandPhrase(context)
+            )
+        case .recentCompletions(let count):
+            completionText = String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.focus.suggestion.completion.recentCompletions",
+                    comment: "Focus Suggestion reason: 'You completed this %@ recently.'"
+                ),
+                focusSuggestionCountPhrase(count)
+            )
+        }
+        guard let timing = reason.timing else { return completionText }
+        let timingText: String
+        switch timing {
+        case .predictedTime(let seconds):
+            let date = Calendar.current.startOfDay(for: Date()).addingTimeInterval(seconds)
+            let localizedTime = date.formatted(date: .omitted, time: .shortened)
+            timingText = String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.focus.suggestion.timing.predictedTime",
+                    comment: "Focus Suggestion reason timing: 'Usually completed around %@.'"
+                ),
+                localizedTime
+            )
+        case .lastCompletion(let daysAgo):
+            timingText = String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.focus.suggestion.timing.lastCompletion",
+                    comment: "Focus Suggestion reason timing: 'Last done %@.'"
+                ),
+                focusSuggestionDayPhrase(daysAgo)
+            )
+        }
+        return completionText + " " + timingText
+    }
+
+    private func focusSuggestionCountPhrase(_ count: Int) -> String {
+        if count <= 1 {
+            return String(localized: "today.focus.suggestion.countPhrase.once")
+        }
+        return String.localizedStringWithFormat(
+            NSLocalizedString(
+                "today.focus.suggestion.countPhrase.times",
+                comment: "Focus Suggestion count phrase: '%d times'."
+            ),
+            count
+        )
+    }
+
+    private func focusSuggestionDayPhrase(_ daysAgo: Int) -> String {
+        switch daysAgo {
+        case 0:
+            return String(localized: "today.focus.suggestion.dayPhrase.today")
+        case 1:
+            return String(localized: "today.focus.suggestion.dayPhrase.yesterday")
+        default:
+            return String.localizedStringWithFormat(
+                NSLocalizedString(
+                    "today.focus.suggestion.dayPhrase.daysAgo",
+                    comment: "Focus Suggestion day phrase: '%d days ago'."
+                ),
+                daysAgo
+            )
+        }
+    }
+
+    private func focusSuggestionBandPhrase(_ context: FocusSuggestionRules.Reason.ReadinessContext) -> String {
+        switch context {
+        case .low:
+            return String(localized: "today.focus.suggestion.band.low")
+        case .steady:
+            return String(localized: "today.focus.suggestion.band.steady")
+        case .high:
+            return String(localized: "today.focus.suggestion.band.high")
+        }
+    }
+
     private func continueSubtitleLabel(for kind: ContinueSubtitleKind) -> String {
         switch kind {
         case .focus:
@@ -502,8 +589,8 @@ struct TodayView: View {
                             }
                             Spacer()
                         }
-                        if !draft.reason.isEmpty {
-                            Text(draft.reason)
+                        if let reason = draft.reason {
+                            Text(focusSuggestionReasonText(for: reason))
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -1324,7 +1411,7 @@ struct TodayView: View {
             .map { "\($0.id.uuidString):\($0.status.rawValue):\($0.title)" }
             .joined(separator: ",")
         let candidateSignature = focusSuggestionCandidates
-            .map { "\($0.priority):\($0.domain.rawValue):\($0.title):\($0.reason)" }
+            .map { "\($0.priority):\($0.domain.rawValue):\($0.title):\(String(describing: $0.reason))" }
             .joined(separator: ",")
         let snapshotStamp = patternStore.weeklySnapshot?.generatedAt.timeIntervalSinceReferenceDate ?? 0
         return [

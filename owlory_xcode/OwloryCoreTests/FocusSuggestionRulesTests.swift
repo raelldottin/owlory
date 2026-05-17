@@ -50,7 +50,11 @@ final class FocusSuggestionRulesTests: XCTestCase {
         )
 
         XCTAssertEqual(candidates.map(\.title), ["Water plants", "Draft pitch"])
-        XCTAssertTrue(candidates.first?.reason.contains("low-readiness") ?? false)
+        if case .similarReadinessHistory(_, let context) = candidates.first?.reason?.completion {
+            XCTAssertEqual(context, .low)
+        } else {
+            XCTFail("Expected .similarReadinessHistory completion with .low context")
+        }
     }
 
     func testCurrentAndActiveItemsAreExcludedFromFallbackCandidates() {
@@ -110,7 +114,11 @@ final class FocusSuggestionRulesTests: XCTestCase {
 
         XCTAssertEqual(candidates.map(\.title), ["Kitchen Reset"])
         XCTAssertEqual(candidates.first?.domain, .home)
-        XCTAssertTrue(candidates.first?.reason.contains("Usually completed around 7 PM") ?? false)
+        if case .predictedTime(let secondsSinceMidnight) = candidates.first?.reason?.timing {
+            XCTAssertEqual(secondsSinceMidnight, 19 * 3600, accuracy: 0.001)
+        } else {
+            XCTFail("Expected .predictedTime timing with 19h offset")
+        }
     }
 
     func testSparseHistoryWithoutReadinessMatchOrPredictionDoesNotSuggest() {

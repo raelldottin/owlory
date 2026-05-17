@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Esecuzione protocollo";
 "today.continue.subtitle.active" = "Attivo";
 "today.continue.subtitle.inProgress" = "In corso";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Hai completato questo %1$@ nei giorni di check-in %2$@.";
+"today.focus.suggestion.completion.recentCompletions" = "Hai completato questo %@ di recente.";
+"today.focus.suggestion.timing.predictedTime" = "Solitamente completato verso le %@.";
+"today.focus.suggestion.timing.lastCompletion" = "Ultima volta %@.";
+"today.focus.suggestion.countPhrase.once" = "una volta";
+"today.focus.suggestion.countPhrase.times" = "%d volte";
+"today.focus.suggestion.dayPhrase.today" = "oggi";
+"today.focus.suggestion.dayPhrase.yesterday" = "ieri";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d giorni fa";
+"today.focus.suggestion.band.low" = "bassa prontezza";
+"today.focus.suggestion.band.steady" = "costante";
+"today.focus.suggestion.band.high" = "alta prontezza";

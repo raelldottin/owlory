@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "프로토콜 실행";
 "today.continue.subtitle.active" = "활성";
 "today.continue.subtitle.inProgress" = "진행 중";
+"today.focus.suggestion.completion.similarReadinessHistory" = "%2$@ 체크인 날에 이것을 %1$@ 완료했습니다.";
+"today.focus.suggestion.completion.recentCompletions" = "최근에 이것을 %@ 완료했습니다.";
+"today.focus.suggestion.timing.predictedTime" = "보통 %@ 즈음에 완료됩니다.";
+"today.focus.suggestion.timing.lastCompletion" = "마지막으로 %@.";
+"today.focus.suggestion.countPhrase.once" = "한 번";
+"today.focus.suggestion.countPhrase.times" = "%d번";
+"today.focus.suggestion.dayPhrase.today" = "오늘";
+"today.focus.suggestion.dayPhrase.yesterday" = "어제";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d일 전";
+"today.focus.suggestion.band.low" = "낮은 준비도";
+"today.focus.suggestion.band.steady" = "안정";
+"today.focus.suggestion.band.high" = "높은 준비도";

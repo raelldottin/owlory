@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Protocoluitvoering";
 "today.continue.subtitle.active" = "Actief";
 "today.continue.subtitle.inProgress" = "Bezig";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Je hebt dit %1$@ afgemaakt op %2$@ check-in dagen.";
+"today.focus.suggestion.completion.recentCompletions" = "Je hebt dit %@ recentelijk afgemaakt.";
+"today.focus.suggestion.timing.predictedTime" = "Meestal voltooid rond %@.";
+"today.focus.suggestion.timing.lastCompletion" = "Laatst gedaan %@.";
+"today.focus.suggestion.countPhrase.once" = "één keer";
+"today.focus.suggestion.countPhrase.times" = "%d keer";
+"today.focus.suggestion.dayPhrase.today" = "vandaag";
+"today.focus.suggestion.dayPhrase.yesterday" = "gisteren";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d dagen geleden";
+"today.focus.suggestion.band.low" = "lage gereedheid";
+"today.focus.suggestion.band.steady" = "stabiel";
+"today.focus.suggestion.band.high" = "hoge gereedheid";

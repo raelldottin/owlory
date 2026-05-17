@@ -11,18 +11,53 @@ enum FocusSuggestionRules {
         }
     }
 
+    /// Semantic reason for surfacing a Focus Suggestion. Carries the data
+    /// the user needs to evaluate the suggestion ("you completed this N times
+    /// on similar-readiness days, usually around midday") without owning the
+    /// English presentation copy. Features/Today maps each case to localized
+    /// display text via `focusSuggestionReasonText(for:)`. Per
+    /// `docs/workflows/localization-dynamic-formatting.md`, Core/Domain must
+    /// not own UI strings.
+    struct Reason: Equatable, Codable, Sendable {
+        enum ReadinessContext: String, Equatable, Codable, Sendable, CaseIterable {
+            case low
+            case steady
+            case high
+        }
+
+        enum Completion: Equatable, Codable, Sendable {
+            case similarReadinessHistory(count: Int, context: ReadinessContext)
+            case recentCompletions(count: Int)
+        }
+
+        enum Timing: Equatable, Codable, Sendable {
+            /// Median completion time as seconds since midnight.
+            case predictedTime(secondsSinceMidnight: TimeInterval)
+            /// How many days ago the user last completed this item.
+            case lastCompletion(daysAgo: Int)
+        }
+
+        let completion: Completion
+        let timing: Timing?
+
+        public init(completion: Completion, timing: Timing? = nil) {
+            self.completion = completion
+            self.timing = timing
+        }
+    }
+
     struct Candidate: Equatable {
         let title: String
         let domain: LifeDomain
         let linkedRecordID: UUID?
-        let reason: String
+        let reason: Reason?
         let priority: Int
 
         init(
             title: String,
             domain: LifeDomain,
             linkedRecordID: UUID? = nil,
-            reason: String = "",
+            reason: Reason? = nil,
             priority: Int
         ) {
             self.title = title
@@ -38,7 +73,7 @@ enum FocusSuggestionRules {
         let title: String
         let domain: LifeDomain
         let linkedRecordID: UUID?
-        let reason: String
+        let reason: Reason?
         let key: String
 
         init(
@@ -46,7 +81,7 @@ enum FocusSuggestionRules {
             title: String,
             domain: LifeDomain,
             linkedRecordID: UUID?,
-            reason: String,
+            reason: Reason?,
             key: String
         ) {
             self.id = id
@@ -251,17 +286,6 @@ private extension FocusSuggestionRules {
         case low
         case steady
         case high
-
-        var phrase: String {
-            switch self {
-            case .low:
-                return "low-readiness"
-            case .steady:
-                return "steady"
-            case .high:
-                return "high-readiness"
-            }
-        }
     }
 
     struct Signal {
@@ -350,57 +374,41 @@ private extension FocusSuggestionRules {
         todayBand: ReadinessBand,
         todayStart: Date,
         calendar: Calendar
-    ) -> String {
-        var parts: [String] = []
+    ) -> FocusSuggestionRules.Reason {
+        let completion: FocusSuggestionRules.Reason.Completion
         if signal.similarReadinessCount > 0 {
-            parts.append(
-                "You finished this \(countPhrase(signal.similarReadinessCount)) on \(todayBand.phrase) check-in days."
+            completion = .similarReadinessHistory(
+                count: signal.similarReadinessCount,
+                context: todayBand.reasonContext
             )
         } else {
-            parts.append("You completed this \(countPhrase(signal.completionCount)) recently.")
+            completion = .recentCompletions(count: signal.completionCount)
         }
 
+        let timing: FocusSuggestionRules.Reason.Timing?
         if let prediction = signal.prediction {
-            parts.append("Usually completed around \(timeOfDayString(prediction.medianTimeOfDay)).")
+            timing = .predictedTime(secondsSinceMidnight: prediction.medianTimeOfDay)
         } else if let lastCompletedDate = signal.lastCompletedDate {
             let daysAgo = calendar.dateComponents(
                 [.day],
                 from: calendar.startOfDay(for: lastCompletedDate),
                 to: todayStart
             ).day ?? 0
-            parts.append("Last done \(dayDistancePhrase(daysAgo)).")
+            timing = .lastCompletion(daysAgo: daysAgo)
+        } else {
+            timing = nil
         }
 
-        return parts.joined(separator: " ")
+        return FocusSuggestionRules.Reason(completion: completion, timing: timing)
     }
+}
 
-    static func countPhrase(_ count: Int) -> String {
-        if count <= 1 {
-            return "once"
+private extension FocusSuggestionRules.ReadinessBand {
+    var reasonContext: FocusSuggestionRules.Reason.ReadinessContext {
+        switch self {
+        case .low: return .low
+        case .steady: return .steady
+        case .high: return .high
         }
-        return "\(count) times"
-    }
-
-    static func dayDistancePhrase(_ daysAgo: Int) -> String {
-        switch daysAgo {
-        case 0:
-            return "today"
-        case 1:
-            return "yesterday"
-        default:
-            return "\(daysAgo) days ago"
-        }
-    }
-
-    static func timeOfDayString(_ secondsSinceMidnight: TimeInterval) -> String {
-        let totalMinutes = Int((secondsSinceMidnight / 60).rounded())
-        let hour24 = (totalMinutes / 60) % 24
-        let minute = totalMinutes % 60
-        let hour12 = hour24 % 12 == 0 ? 12 : hour24 % 12
-        let suffix = hour24 < 12 ? "AM" : "PM"
-        if minute == 0 {
-            return "\(hour12) \(suffix)"
-        }
-        return String(format: "%d:%02d %@", hour12, minute, suffix)
     }
 }

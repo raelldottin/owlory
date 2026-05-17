@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "協定執行";
 "today.continue.subtitle.active" = "活躍";
 "today.continue.subtitle.inProgress" = "進行中";
+"today.focus.suggestion.completion.similarReadinessHistory" = "您在%2$@簽到日完成此項%1$@。";
+"today.focus.suggestion.completion.recentCompletions" = "您最近完成了此項%@。";
+"today.focus.suggestion.timing.predictedTime" = "通常在%@左右完成。";
+"today.focus.suggestion.timing.lastCompletion" = "上次完成於%@。";
+"today.focus.suggestion.countPhrase.once" = "一次";
+"today.focus.suggestion.countPhrase.times" = "%d次";
+"today.focus.suggestion.dayPhrase.today" = "今天";
+"today.focus.suggestion.dayPhrase.yesterday" = "昨天";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d天前";
+"today.focus.suggestion.band.low" = "低就緒度";
+"today.focus.suggestion.band.steady" = "穩定";
+"today.focus.suggestion.band.high" = "高就緒度";

@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Запуск протоколу";
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "Триває";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Ви виконали це %1$@ у дні чек-іну %2$@.";
+"today.focus.suggestion.completion.recentCompletions" = "Ви виконали це %@ нещодавно.";
+"today.focus.suggestion.timing.predictedTime" = "Зазвичай завершується близько %@.";
+"today.focus.suggestion.timing.lastCompletion" = "Востаннє %@.";
+"today.focus.suggestion.countPhrase.once" = "один раз";
+"today.focus.suggestion.countPhrase.times" = "%d разів";
+"today.focus.suggestion.dayPhrase.today" = "сьогодні";
+"today.focus.suggestion.dayPhrase.yesterday" = "вчора";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d днів тому";
+"today.focus.suggestion.band.low" = "низької готовності";
+"today.focus.suggestion.band.steady" = "стабільної";
+"today.focus.suggestion.band.high" = "високої готовності";

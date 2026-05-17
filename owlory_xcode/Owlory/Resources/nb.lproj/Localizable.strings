@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Protokollkjøring";
 "today.continue.subtitle.active" = "Aktiv";
 "today.continue.subtitle.inProgress" = "Pågår";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Du fullførte dette %1$@ på %2$@ innsjekkingsdager.";
+"today.focus.suggestion.completion.recentCompletions" = "Du har fullført dette %@ nylig.";
+"today.focus.suggestion.timing.predictedTime" = "Vanligvis fullført rundt %@.";
+"today.focus.suggestion.timing.lastCompletion" = "Sist %@.";
+"today.focus.suggestion.countPhrase.once" = "én gang";
+"today.focus.suggestion.countPhrase.times" = "%d ganger";
+"today.focus.suggestion.dayPhrase.today" = "i dag";
+"today.focus.suggestion.dayPhrase.yesterday" = "i går";
+"today.focus.suggestion.dayPhrase.daysAgo" = "for %d dager siden";
+"today.focus.suggestion.band.low" = "lav beredskap";
+"today.focus.suggestion.band.steady" = "stødig";
+"today.focus.suggestion.band.high" = "høy beredskap";

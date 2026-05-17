@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "تشغيل بروتوكول";
 "today.continue.subtitle.active" = "نشط";
 "today.continue.subtitle.inProgress" = "قيد التقدم";
+"today.focus.suggestion.completion.similarReadinessHistory" = "أنهيت هذا %1$@ في أيام تسجيل %2$@.";
+"today.focus.suggestion.completion.recentCompletions" = "أكملت هذا %@ مؤخراً.";
+"today.focus.suggestion.timing.predictedTime" = "يُكمل عادةً حوالي %@.";
+"today.focus.suggestion.timing.lastCompletion" = "آخر مرة %@.";
+"today.focus.suggestion.countPhrase.once" = "مرة واحدة";
+"today.focus.suggestion.countPhrase.times" = "%d مرات";
+"today.focus.suggestion.dayPhrase.today" = "اليوم";
+"today.focus.suggestion.dayPhrase.yesterday" = "أمس";
+"today.focus.suggestion.dayPhrase.daysAgo" = "قبل %d أيام";
+"today.focus.suggestion.band.low" = "جاهزية منخفضة";
+"today.focus.suggestion.band.steady" = "ثابتة";
+"today.focus.suggestion.band.high" = "جاهزية عالية";

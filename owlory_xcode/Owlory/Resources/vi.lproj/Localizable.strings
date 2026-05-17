@@ -357,3 +357,15 @@
 "today.continue.subtitle.protocolRun" = "Lần chạy quy trình";
 "today.continue.subtitle.active" = "Đang hoạt động";
 "today.continue.subtitle.inProgress" = "Đang tiến hành";
+"today.focus.suggestion.completion.similarReadinessHistory" = "Bạn đã hoàn thành điều này %1$@ vào những ngày check-in %2$@.";
+"today.focus.suggestion.completion.recentCompletions" = "Bạn đã hoàn thành điều này %@ gần đây.";
+"today.focus.suggestion.timing.predictedTime" = "Thường hoàn thành vào khoảng %@.";
+"today.focus.suggestion.timing.lastCompletion" = "Lần cuối %@.";
+"today.focus.suggestion.countPhrase.once" = "một lần";
+"today.focus.suggestion.countPhrase.times" = "%d lần";
+"today.focus.suggestion.dayPhrase.today" = "hôm nay";
+"today.focus.suggestion.dayPhrase.yesterday" = "hôm qua";
+"today.focus.suggestion.dayPhrase.daysAgo" = "%d ngày trước";
+"today.focus.suggestion.band.low" = "sẵn sàng thấp";
+"today.focus.suggestion.band.steady" = "ổn định";
+"today.focus.suggestion.band.high" = "sẵn sàng cao";
