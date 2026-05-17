@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-17
+
+- [app-localization-helper-generated-copy-audit (doc-only; 4 TestFlight screenshots → ~30+ helper-built English strings across 6 files; 7 narrow follow-up slices queued)](sessions/2026-05-17/020723-app-localization-helper-generated-copy-audit.md)
+
 ## 2026-05-16
 
 - [app-localization-return-files-refresh (doc-only; 18 return files refreshed 356 → 372 entries each; LQA / dashboard / German packet / all-locale export all current)](sessions/2026-05-16/184324-app-localization-return-files-refresh.md)

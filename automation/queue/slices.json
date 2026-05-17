@@ -4035,6 +4035,258 @@
       "max_files_changed": 30,
       "entry_condition": "Localizable.strings now contains 16 keys added after the 2026-05-15 ingest (2 Check-in/Check in keys, 8 audio/voice accessibility keys, 6 interpolation format-string keys including 1 reserved-but-unused), so per-locale review return files at 356 entries are stale relative to the current 372 (358 strings + 14 from the lqa context: 314 + 16 - 0 unused tracking). Dashboard and LQA reports show stale counts.",
       "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings \u00d7 18 locales) to bring each per-locale review return file from 356 \u2192 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified \u2014 only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales \u00d7 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-helper-generated-copy-audit",
+      "title": "Audit helper-generated visible-copy bypasses in Core/Domain and Core/Application",
+      "status": "done",
+      "priority": 84,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-return-files-refresh"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "TestFlight/manual testing on 2026-05-16 surfaced visible English copy in Today/Train/Write tabs even after all prior NLS slices.",
+      "notes": "Doc-only audit. Catalogs ~30+ helper-generated English strings across 6 source files (CalibrationRules, ReadinessRules, PatternNudgeRules, FocusSuggestionRules, TodayContinueSourceComposer, TodayView/TrainView anchor tuples + headerGreeting). Identifies the audit-method gap: prior visible-string audit's 'ok-localized-display-helper' substring heuristic was too generous; helpers in Core/Domain/* build English directly. Notes architecture concern: Core/Domain owning UI copy violates the dynamic-formatting workflow boundary. Queues 7 narrow follow-up slices, one per source surface, each with an approach hint (in-place NSLocalizedString wrap vs structural refactor to move copy out of Domain). proof_level: doc-only."
+    },
+    {
+      "slice_id": "app-localization-calibration-rules-helper-copy-routing",
+      "title": "Route CalibrationRules writingPipelineNudge + trainingConsistencySummary messages through localization",
+      "status": "queued",
+      "priority": 83,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/CalibrationRules.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Move presentation copy out of Core/Domain. Have CalibrationRules return semantic enums (WritingPipelineNudgeKind, TrainingConsistencyBand) plus structured data (captureCount, percent). Add a UI-adjacent presentation helper in Features/ that maps enum + data \u2192 localized String via NSLocalizedString + String.localizedStringWithFormat. 4 messages. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-readiness-rules-helper-copy-routing",
+      "title": "Route ReadinessRules 9 nudge messages through localization",
+      "status": "queued",
+      "priority": 82,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/ReadinessRules.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Same structural pattern as CalibrationRules: ReadinessRules returns a ReadinessNudgeKind enum; Features/ maps enum \u2192 localized String. 9 messages. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-pattern-nudge-rules-helper-copy-routing",
+      "title": "Route PatternNudgeRules domainNudge message + focusBalanceTitle through localization",
+      "status": "queued",
+      "priority": 81,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/PatternNudgeRules.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. domainNudge.message gets a localized format string ('%@ hasn't shown up in Focus lately.'). focusBalanceTitle delegated to existing LifeDomain.localizedDisplayName (drop the dedicated helper). LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-focus-suggestion-reason-routing",
+      "title": "Route FocusSuggestionRules.reason() multi-fragment copy through localization",
+      "status": "queued",
+      "priority": 80,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/FocusSuggestionRules.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Return structured FocusSuggestionReasonData (similarReadinessCount, completionCount, predictedTime, lastCompletedDaysAgo, todayBand). Features/ formats into localized String. Multiple fragments + countPhrase + dayDistancePhrase + ReadinessBand.phrase. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-continue-row-subtitle-routing",
+      "title": "Route TodayContinueSourceComposer subtitle strings through localization",
+      "status": "queued",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Return enum (ContinueRowSubtitleKind: dueToday / protocolRun / inProgress); Features/ maps to localized String. 3 strings. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-today-header-greeting-routing",
+      "title": "Route TodayView.headerGreeting branches through localization",
+      "status": "queued",
+      "priority": 78,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. In-place fix: wrap each return branch of headerGreeting with NSLocalizedString. Add missing keys ('Day in progress', 'In progress') across 19 locales. headerGreeting is already in Features/, so the boundary concern doesn't apply. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-readiness-anchors-routing",
+      "title": "Route Today + Train readiness scale anchor labels through localization",
+      "status": "queued",
+      "priority": 77,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "owlory_xcode/Owlory/Resources/",
+        "docs/workflows/localization-helper-generated-copy-audit.md",
+        "docs/workflows/localization-dynamic-formatting.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-helper-generated-copy-audit"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Helper-generated copy audit catalogs this source.",
+      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Replace anchors: ('Low', 'Okay', 'High') and similar tuples with NSLocalizedString-backed values. Add 9 unique keys (Low/Okay/High, Rough/Steady/Good, Poor/Fine/Great) across 19 locales. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
     }
   ]
 }
