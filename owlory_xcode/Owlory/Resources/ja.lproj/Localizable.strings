@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "アクティブ";
 "today.continue.subtitle.inProgress" = "進行中";
 "today.domainNudge.focusMissing" = "%@は最近フォーカスに表示されていません。";
+"today.readiness.nudge.toughSignals" = "今日は厳しいサインです。大事なことを1つに絞り、残りは手放しましょう。";
+"today.readiness.nudge.lowReserves" = "今日は余力が少なめです。計画は軽くして、最小限の勝ちを狙いましょう。";
+"today.readiness.nudge.lowEnergy" = "今日はエネルギーが低めです。深い作業より簡単な達成を優先しましょう。";
+"today.readiness.nudge.sleepWasRough" = "睡眠が厳しかったようです。思っているより集中力が少ないかもしれません。";
+"today.readiness.nudge.roughMood" = "今日は気分が重めです。抱えられる量に正直になりましょう。";
+"today.readiness.nudge.strongSignals" = "今日は良いサインです。深い作業や難しい問題に向いた日です。";
+"today.readiness.nudge.solidDay" = "堅実な日です。余力があります — いちばん大事なことに使いましょう。";
+"today.readiness.nudge.steadyDay" = "安定した日です。計画を信じましょう。";
+"today.readiness.nudge.decentDay" = "まずまずの日になりそうです。優先事項に集中しましょう。";
 "today.focus.suggestion.completion.similarReadinessHistory" = "%2$@のチェックインの日に%1$@これを完了しました。";
 "today.focus.suggestion.completion.recentCompletions" = "最近これを%@完了しました。";
 "today.focus.suggestion.timing.predictedTime" = "通常%@頃に完了します。";

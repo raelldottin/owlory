@@ -4098,12 +4098,14 @@
     {
       "slice_id": "app-localization-readiness-rules-helper-copy-routing",
       "title": "Route ReadinessRules 9 nudge messages through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 82,
       "domain": "localization",
       "allowed_paths": [
         "owlory_xcode/Owlory/Core/Domain/ReadinessRules.swift",
         "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/OwloryCoreTests/ReadinessRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/CalibrationRulesTests.swift",
         "owlory_xcode/Owlory/Resources/",
         "docs/workflows/localization-helper-generated-copy-audit.md",
         "docs/workflows/localization-dynamic-formatting.md",
@@ -4123,9 +4125,9 @@
       "depends_on": [
         "app-localization-helper-generated-copy-audit"
       ],
-      "max_files_changed": 12,
+      "max_files_changed": 32,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Same structural pattern as CalibrationRules: ReadinessRules returns a ReadinessNudgeKind enum; Features/ maps enum \u2192 localized String. 9 messages. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-17 via structural refactor. ReadinessRules.Nudge now carries semantic Kind plus suggestedMaxPriorities only; TodayView maps Kind to localized today.readiness.nudge.* keys. Added 9 keys across 19 locales (LLM-drafted; not native-reviewed). Updated ReadinessRulesTests and CalibrationRulesTests to assert semantic kinds instead of English message substrings. Scope metadata expanded on 2026-05-17 to include focused readiness/calibration tests and realistic all-locale resource fan-out. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-pattern-nudge-rules-helper-copy-routing",

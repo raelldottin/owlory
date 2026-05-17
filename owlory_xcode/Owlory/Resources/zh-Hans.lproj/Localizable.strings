@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "活动中";
 "today.continue.subtitle.inProgress" = "进行中";
 "today.domainNudge.focusMissing" = "%@最近没有出现在专注中。";
+"today.readiness.nudge.toughSignals" = "今天状态信号较难。专注一件重要的事，其余先放下。";
+"today.readiness.nudge.lowReserves" = "今天储备较低。让计划轻一点 — 完成最低可行的胜利。";
+"today.readiness.nudge.lowEnergy" = "今天精力较低。优先选择容易完成的事，而不是深度工作。";
+"today.readiness.nudge.sleepWasRough" = "睡眠不太好。你的专注力可能比想象中少。";
+"today.readiness.nudge.roughMood" = "今天心情较难。诚实面对自己能承担多少。";
+"today.readiness.nudge.strongSignals" = "今天状态信号很强。适合深度工作或困难问题。";
+"today.readiness.nudge.solidDay" = "今天状态不错。你有容量 — 用在最重要的事上。";
+"today.readiness.nudge.steadyDay" = "今天很稳定。相信计划。";
+"today.readiness.nudge.decentDay" = "今天还不错。继续专注你的优先事项。";
 "today.focus.suggestion.completion.similarReadinessHistory" = "您在%2$@签到日完成此项%1$@。";
 "today.focus.suggestion.completion.recentCompletions" = "您最近完成了此项%@。";
 "today.focus.suggestion.timing.predictedTime" = "通常在%@左右完成。";

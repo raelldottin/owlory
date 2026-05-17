@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "활성";
 "today.continue.subtitle.inProgress" = "진행 중";
 "today.domainNudge.focusMissing" = "%@이(가) 최근 포커스에 나타나지 않았습니다.";
+"today.readiness.nudge.toughSignals" = "오늘 신호가 좋지 않습니다. 중요한 한 가지에 집중하고 나머지는 내려놓으세요.";
+"today.readiness.nudge.lowReserves" = "오늘 여력이 낮습니다. 계획을 가볍게 유지하고 최소한의 성취를 노리세요.";
+"today.readiness.nudge.lowEnergy" = "오늘 에너지가 낮습니다. 깊은 작업보다 쉬운 성취를 우선하세요.";
+"today.readiness.nudge.sleepWasRough" = "잠이 좋지 않았습니다. 생각보다 집중력이 낮을 수 있습니다.";
+"today.readiness.nudge.roughMood" = "오늘 기분이 좋지 않습니다. 감당할 수 있는 것에 솔직해지세요.";
+"today.readiness.nudge.strongSignals" = "오늘 신호가 강합니다. 깊은 작업이나 어려운 문제에 좋은 날입니다.";
+"today.readiness.nudge.solidDay" = "탄탄한 하루입니다. 여력이 있습니다 — 가장 중요한 일에 사용하세요.";
+"today.readiness.nudge.steadyDay" = "안정적인 하루입니다. 계획을 믿으세요.";
+"today.readiness.nudge.decentDay" = "괜찮은 하루가 될 것 같습니다. 우선순위에 집중하세요.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "%2$@ 체크인 날에 이것을 %1$@ 완료했습니다.";
 "today.focus.suggestion.completion.recentCompletions" = "최근에 이것을 %@ 완료했습니다.";
 "today.focus.suggestion.timing.predictedTime" = "보통 %@ 즈음에 완료됩니다.";

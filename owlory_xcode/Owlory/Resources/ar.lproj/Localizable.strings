@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "نشط";
 "today.continue.subtitle.inProgress" = "قيد التقدم";
 "today.domainNudge.focusMissing" = "لم يظهر %@ في التركيز مؤخراً.";
+"today.readiness.nudge.toughSignals" = "إشارات صعبة اليوم. ركّز على شيء واحد مهم ودع الباقي.";
+"today.readiness.nudge.lowReserves" = "احتياطيك منخفض اليوم. اجعل الخطة خفيفة — انتصارات بالحد الأدنى.";
+"today.readiness.nudge.lowEnergy" = "طاقة منخفضة اليوم. فضّل المكاسب السهلة على العمل العميق.";
+"today.readiness.nudge.sleepWasRough" = "كان النوم صعباً. قد يكون تركيزك أقل مما تظن.";
+"today.readiness.nudge.roughMood" = "مزاج صعب اليوم. كن صادقاً بشأن ما يمكنك حمله.";
+"today.readiness.nudge.strongSignals" = "إشارات قوية اليوم. يوم جيد للعمل العميق أو المشكلات الصعبة.";
+"today.readiness.nudge.solidDay" = "يوم جيد. لديك طاقة متاحة — استخدمها فيما يهم أكثر.";
+"today.readiness.nudge.steadyDay" = "يوم ثابت. ثق بالخطة.";
+"today.readiness.nudge.decentDay" = "يوم مقبول أمامك. ابق مركزاً على أولوياتك.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "أنهيت هذا %1$@ في أيام تسجيل %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "أكملت هذا %@ مؤخراً.";
 "today.focus.suggestion.timing.predictedTime" = "يُكمل عادةً حوالي %@.";

@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Attivo";
 "today.continue.subtitle.inProgress" = "In corso";
 "today.domainNudge.focusMissing" = "%@ non è apparso nel Focus ultimamente.";
+"today.readiness.nudge.toughSignals" = "Segnali difficili oggi. Concentrati su una cosa che conta e lascia andare il resto.";
+"today.readiness.nudge.lowReserves" = "Riserve basse oggi. Mantieni il piano leggero — vittorie minime praticabili.";
+"today.readiness.nudge.lowEnergy" = "Energia bassa oggi. Preferisci risultati facili al lavoro profondo.";
+"today.readiness.nudge.sleepWasRough" = "Il sonno è stato difficile. Potresti avere meno concentrazione di quanto pensi.";
+"today.readiness.nudge.roughMood" = "Umore difficile oggi. Sii onesto su ciò che puoi sostenere.";
+"today.readiness.nudge.strongSignals" = "Segnali forti oggi. Buona giornata per lavoro profondo o problemi difficili.";
+"today.readiness.nudge.solidDay" = "Giornata solida. Hai capacità — usala su ciò che conta di più.";
+"today.readiness.nudge.steadyDay" = "Giornata stabile. Fidati del piano.";
+"today.readiness.nudge.decentDay" = "Buona giornata davanti. Resta concentrato sulle tue priorità.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Hai completato questo %1$@ nei giorni di check-in %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Hai completato questo %@ di recente.";
 "today.focus.suggestion.timing.predictedTime" = "Solitamente completato verso le %@.";

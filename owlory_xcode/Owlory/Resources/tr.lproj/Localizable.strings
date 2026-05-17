@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Aktif";
 "today.continue.subtitle.inProgress" = "Sürüyor";
 "today.domainNudge.focusMissing" = "%@ son zamanlarda Odak'ta görünmedi.";
+"today.readiness.nudge.toughSignals" = "Bugün sinyaller zor. Önemli olan tek bir şeye odaklanın ve gerisini bırakın.";
+"today.readiness.nudge.lowReserves" = "Bugün rezervler düşük. Planı hafif tutun — minimum uygulanabilir kazanımlar.";
+"today.readiness.nudge.lowEnergy" = "Bugün enerji düşük. Derin çalışma yerine kolay kazanımları tercih edin.";
+"today.readiness.nudge.sleepWasRough" = "Uyku zordu. Sandığınızdan daha az odağınız olabilir.";
+"today.readiness.nudge.roughMood" = "Bugün ruh hali zor. Ne taşıyabileceğiniz konusunda dürüst olun.";
+"today.readiness.nudge.strongSignals" = "Bugün sinyaller güçlü. Derin çalışma veya zor problemler için iyi bir gün.";
+"today.readiness.nudge.solidDay" = "Sağlam bir gün. Kapasiteniz var — onu en önemli şeye kullanın.";
+"today.readiness.nudge.steadyDay" = "İstikrarlı gün. Plana güvenin.";
+"today.readiness.nudge.decentDay" = "Önünüzde makul bir gün var. Önceliklerinize odaklanın.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Bunu %2$@ check-in günlerinde %1$@ tamamladınız.";
 "today.focus.suggestion.completion.recentCompletions" = "Bunu son zamanlarda %@ tamamladınız.";
 "today.focus.suggestion.timing.predictedTime" = "Genelde %@ civarında tamamlanır.";

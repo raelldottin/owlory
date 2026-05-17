@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Actief";
 "today.continue.subtitle.inProgress" = "Bezig";
 "today.domainNudge.focusMissing" = "%@ is de laatste tijd niet in Focus verschenen.";
+"today.readiness.nudge.toughSignals" = "Lastige signalen vandaag. Richt je op één ding dat ertoe doet en laat de rest los.";
+"today.readiness.nudge.lowReserves" = "Lage reserves vandaag. Houd het plan licht — minimaal haalbare winst.";
+"today.readiness.nudge.lowEnergy" = "Lage energie vandaag. Kies makkelijke winst boven diep werk.";
+"today.readiness.nudge.sleepWasRough" = "De slaap was zwaar. Je hebt misschien minder focus dan je denkt.";
+"today.readiness.nudge.roughMood" = "Zware stemming vandaag. Wees eerlijk over wat je kunt dragen.";
+"today.readiness.nudge.strongSignals" = "Sterke signalen vandaag. Goede dag voor diep werk of moeilijke problemen.";
+"today.readiness.nudge.solidDay" = "Solide dag. Je hebt capaciteit — gebruik die voor wat het meest telt.";
+"today.readiness.nudge.steadyDay" = "Stabiele dag. Vertrouw op het plan.";
+"today.readiness.nudge.decentDay" = "Redelijke dag voor de boeg. Blijf gefocust op je prioriteiten.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Je hebt dit %1$@ afgemaakt op %2$@ check-in dagen.";
 "today.focus.suggestion.completion.recentCompletions" = "Je hebt dit %@ recentelijk afgemaakt.";
 "today.focus.suggestion.timing.predictedTime" = "Meestal voltooid rond %@.";

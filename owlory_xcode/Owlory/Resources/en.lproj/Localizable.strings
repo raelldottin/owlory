@@ -360,6 +360,15 @@
 "today.continue.subtitle.active" = "Active";
 "today.continue.subtitle.inProgress" = "In progress";
 "today.domainNudge.focusMissing" = "%@ hasn't shown up in Focus lately.";
+"today.readiness.nudge.toughSignals" = "Tough signals today. Focus on one thing that matters and let the rest go.";
+"today.readiness.nudge.lowReserves" = "Low reserves today. Keep the plan light — minimum viable wins.";
+"today.readiness.nudge.lowEnergy" = "Low energy today. Favor easy wins over deep work.";
+"today.readiness.nudge.sleepWasRough" = "Sleep was rough. You may have less focus than you think.";
+"today.readiness.nudge.roughMood" = "Rough mood today. Be honest about what you can carry.";
+"today.readiness.nudge.strongSignals" = "Strong signals today. Good day for deep work or hard problems.";
+"today.readiness.nudge.solidDay" = "Solid day. You have capacity — use it on what matters most.";
+"today.readiness.nudge.steadyDay" = "Steady day. Trust the plan.";
+"today.readiness.nudge.decentDay" = "Decent day ahead. Stay focused on your priorities.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "You finished this %1$@ on %2$@ check-in days.";
 "today.focus.suggestion.completion.recentCompletions" = "You completed this %@ recently.";
 "today.focus.suggestion.timing.predictedTime" = "Usually completed around %@.";

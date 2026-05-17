@@ -1,0 +1,77 @@
+{
+  "slice_id": "app-localization-readiness-rules-helper-copy-routing",
+  "status": "done",
+  "summary": "Moved ReadinessRules nudge presentation copy out of Core/Domain. ReadinessRules.Nudge now carries a semantic Kind plus suggestedMaxPriorities; TodayView maps each kind to a localized today.readiness.nudge.* string. Added 9 readiness nudge keys across all 19 supported Localizable.strings files with LLM-drafted values. Updated ReadinessRulesTests and CalibrationRulesTests to assert semantic kinds and priority limits instead of English message substrings. Also corrected this slice's queue metadata to include the explicitly required readiness/calibration test files and realistic all-locale resource fan-out.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/103206-app-localization-readiness-rules-helper-copy-routing.md",
+    "automation/handoffs/20260517T103925Z-app-localization-readiness-rules-helper-copy-routing.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/Owlory/Core/Domain/ReadinessRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/OwloryCoreTests/CalibrationRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/ReadinessRulesTests.swift"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check",
+    "make test-domain DOMAIN=today"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Readiness nudge localization boundary",
+      "before": "ReadinessRules.Nudge carried preformatted English message text in Core/Domain, and TodayView rendered nudge.message directly. Domain tests asserted English substrings.",
+      "after": "ReadinessRules.Nudge carries semantic Kind and suggestedMaxPriorities only. TodayView owns the visible message mapping through today.readiness.nudge.* keys. Readiness and calibration tests assert semantic kind values and priorities instead of English copy.",
+      "proof": [
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "make test-domain DOMAIN=today",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-helper-followup-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "New non-English today.readiness.nudge.* values are LLM-drafted and have not been native-reviewed.",
+    "No running-app smoke, screenshot proof, physical-device proof, or TestFlight proof was run for this copy surface.",
+    "Train validation was not run because this slice does not touch Train code or Train-owned readiness presentation."
+  ],
+  "recommended_next_slice": "app-localization-calibration-rules-helper-copy-routing",
+  "recommended_next_reason": "CalibrationRules is the adjacent queued helper-generated domain-copy follow-up. It still owns writingPipelineNudge and trainingConsistencySummary English presentation copy in Core/Domain and can follow the same semantic-data plus Today/feature formatting pattern.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T10:39:25Z"
+}

@@ -2,8 +2,20 @@ import Foundation
 
 enum ReadinessRules {
 
-    struct Nudge {
-        let message: String
+    struct Nudge: Equatable {
+        enum Kind: Equatable {
+            case toughSignals
+            case lowReserves
+            case lowEnergy
+            case sleepWasRough
+            case roughMood
+            case strongSignals
+            case solidDay
+            case steadyDay
+            case decentDay
+        }
+
+        let kind: Kind
         let suggestedMaxPriorities: Int
     }
 
@@ -20,7 +32,7 @@ enum ReadinessRules {
         // All signals low
         if low == 3 {
             return Nudge(
-                message: "Tough signals today. Focus on one thing that matters and let the rest go.",
+                kind: .toughSignals,
                 suggestedMaxPriorities: 1
             )
         }
@@ -28,7 +40,7 @@ enum ReadinessRules {
         // Two low signals
         if low >= 2 {
             return Nudge(
-                message: "Low reserves today. Keep the plan light — minimum viable wins.",
+                kind: .lowReserves,
                 suggestedMaxPriorities: 2
             )
         }
@@ -36,7 +48,7 @@ enum ReadinessRules {
         // Low energy specifically (common limiter)
         if energy <= 2 {
             return Nudge(
-                message: "Low energy today. Favor easy wins over deep work.",
+                kind: .lowEnergy,
                 suggestedMaxPriorities: 2
             )
         }
@@ -44,7 +56,7 @@ enum ReadinessRules {
         // Poor sleep specifically
         if sleepQuality <= 2 {
             return Nudge(
-                message: "Sleep was rough. You may have less focus than you think.",
+                kind: .sleepWasRough,
                 suggestedMaxPriorities: 2
             )
         }
@@ -52,7 +64,7 @@ enum ReadinessRules {
         // Rough mood
         if mood <= 2 {
             return Nudge(
-                message: "Rough mood today. Be honest about what you can carry.",
+                kind: .roughMood,
                 suggestedMaxPriorities: 2
             )
         }
@@ -60,7 +72,7 @@ enum ReadinessRules {
         // All signals high
         if high == 3 {
             return Nudge(
-                message: "Strong signals today. Good day for deep work or hard problems.",
+                kind: .strongSignals,
                 suggestedMaxPriorities: 3
             )
         }
@@ -68,7 +80,7 @@ enum ReadinessRules {
         // Two high signals
         if high >= 2 {
             return Nudge(
-                message: "Solid day. You have capacity — use it on what matters most.",
+                kind: .solidDay,
                 suggestedMaxPriorities: 3
             )
         }
@@ -76,14 +88,14 @@ enum ReadinessRules {
         // Everything moderate
         if avg >= 2.5 && avg <= 3.5 {
             return Nudge(
-                message: "Steady day. Trust the plan.",
+                kind: .steadyDay,
                 suggestedMaxPriorities: 3
             )
         }
 
         // Slightly above average
         return Nudge(
-            message: "Decent day ahead. Stay focused on your priorities.",
+            kind: .decentDay,
             suggestedMaxPriorities: 3
         )
     }

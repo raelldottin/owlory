@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "Триває";
 "today.domainNudge.focusMissing" = "%@ останнім часом не з'являлося у Фокусі.";
+"today.readiness.nudge.toughSignals" = "Сьогодні важкі сигнали. Зосередьтеся на одній важливій справі, а решту відпустіть.";
+"today.readiness.nudge.lowReserves" = "Сьогодні мало резервів. Тримайте план легким — мінімально життєздатні перемоги.";
+"today.readiness.nudge.lowEnergy" = "Сьогодні мало енергії. Обирайте легкі перемоги замість глибокої роботи.";
+"today.readiness.nudge.sleepWasRough" = "Сон був важким. Можливо, фокусу менше, ніж здається.";
+"today.readiness.nudge.roughMood" = "Сьогодні важкий настрій. Чесно оцініть, що можете взяти на себе.";
+"today.readiness.nudge.strongSignals" = "Сьогодні сильні сигнали. Добрий день для глибокої роботи або складних проблем.";
+"today.readiness.nudge.solidDay" = "Солідний день. У вас є ресурс — використайте його на найважливіше.";
+"today.readiness.nudge.steadyDay" = "Стабільний день. Довіртеся плану.";
+"today.readiness.nudge.decentDay" = "Попереду непоганий день. Залишайтеся зосередженими на пріоритетах.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Ви виконали це %1$@ у дні чек-іну %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Ви виконали це %@ нещодавно.";
 "today.focus.suggestion.timing.predictedTime" = "Зазвичай завершується близько %@.";

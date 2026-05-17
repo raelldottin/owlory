@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Aktiv";
 "today.continue.subtitle.inProgress" = "Pågår";
 "today.domainNudge.focusMissing" = "%@ har inte dykt upp i Fokus på sistone.";
+"today.readiness.nudge.toughSignals" = "Tuffa signaler i dag. Fokusera på en sak som betyder något och släpp resten.";
+"today.readiness.nudge.lowReserves" = "Låga reserver i dag. Håll planen lätt — minsta genomförbara vinster.";
+"today.readiness.nudge.lowEnergy" = "Låg energi i dag. Välj enkla vinster framför djupt arbete.";
+"today.readiness.nudge.sleepWasRough" = "Sömnen var tuff. Du kanske har mindre fokus än du tror.";
+"today.readiness.nudge.roughMood" = "Tufft humör i dag. Var ärlig med vad du kan bära.";
+"today.readiness.nudge.strongSignals" = "Starka signaler i dag. Bra dag för djupt arbete eller svåra problem.";
+"today.readiness.nudge.solidDay" = "Solid dag. Du har kapacitet — använd den på det som betyder mest.";
+"today.readiness.nudge.steadyDay" = "Stadig dag. Lita på planen.";
+"today.readiness.nudge.decentDay" = "Hyfsad dag framför dig. Håll fokus på dina prioriteringar.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Du slutförde detta %1$@ på %2$@ incheckningsdagar.";
 "today.focus.suggestion.completion.recentCompletions" = "Du har slutfört detta %@ nyligen.";
 "today.focus.suggestion.timing.predictedTime" = "Vanligtvis slutförd runt %@.";

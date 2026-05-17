@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Đang hoạt động";
 "today.continue.subtitle.inProgress" = "Đang tiến hành";
 "today.domainNudge.focusMissing" = "%@ gần đây chưa xuất hiện trong Tập trung.";
+"today.readiness.nudge.toughSignals" = "Tín hiệu hôm nay khá khó. Tập trung vào một việc quan trọng và buông phần còn lại.";
+"today.readiness.nudge.lowReserves" = "Dự trữ hôm nay thấp. Giữ kế hoạch nhẹ — những chiến thắng tối thiểu khả thi.";
+"today.readiness.nudge.lowEnergy" = "Năng lượng hôm nay thấp. Ưu tiên việc dễ thắng hơn công việc sâu.";
+"today.readiness.nudge.sleepWasRough" = "Giấc ngủ không ổn. Bạn có thể có ít tập trung hơn mình nghĩ.";
+"today.readiness.nudge.roughMood" = "Tâm trạng hôm nay khó. Hãy thành thật về những gì bạn có thể gánh.";
+"today.readiness.nudge.strongSignals" = "Tín hiệu hôm nay mạnh. Ngày tốt cho công việc sâu hoặc vấn đề khó.";
+"today.readiness.nudge.solidDay" = "Một ngày vững. Bạn có năng lực — dùng nó cho điều quan trọng nhất.";
+"today.readiness.nudge.steadyDay" = "Một ngày ổn định. Hãy tin vào kế hoạch.";
+"today.readiness.nudge.decentDay" = "Một ngày khá ổn phía trước. Giữ tập trung vào các ưu tiên.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Bạn đã hoàn thành điều này %1$@ vào những ngày check-in %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Bạn đã hoàn thành điều này %@ gần đây.";
 "today.focus.suggestion.timing.predictedTime" = "Thường hoàn thành vào khoảng %@.";

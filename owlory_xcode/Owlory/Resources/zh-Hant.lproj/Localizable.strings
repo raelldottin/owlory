@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "活躍";
 "today.continue.subtitle.inProgress" = "進行中";
 "today.domainNudge.focusMissing" = "%@最近沒有出現在專注中。";
+"today.readiness.nudge.toughSignals" = "今天狀態訊號較難。專注一件重要的事，其餘先放下。";
+"today.readiness.nudge.lowReserves" = "今天儲備較低。讓計畫輕一點 — 完成最低可行的勝利。";
+"today.readiness.nudge.lowEnergy" = "今天精力較低。優先選擇容易完成的事，而不是深度工作。";
+"today.readiness.nudge.sleepWasRough" = "睡眠不太好。你的專注力可能比想像中少。";
+"today.readiness.nudge.roughMood" = "今天心情較難。誠實面對自己能承擔多少。";
+"today.readiness.nudge.strongSignals" = "今天狀態訊號很強。適合深度工作或困難問題。";
+"today.readiness.nudge.solidDay" = "今天狀態不錯。你有容量 — 用在最重要的事上。";
+"today.readiness.nudge.steadyDay" = "今天很穩定。相信計畫。";
+"today.readiness.nudge.decentDay" = "今天還不錯。繼續專注你的優先事項。";
 "today.focus.suggestion.completion.similarReadinessHistory" = "您在%2$@簽到日完成此項%1$@。";
 "today.focus.suggestion.completion.recentCompletions" = "您最近完成了此項%@。";
 "today.focus.suggestion.timing.predictedTime" = "通常在%@左右完成。";

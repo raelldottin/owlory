@@ -442,6 +442,29 @@ struct TodayView: View {
         }
     }
 
+    private func readinessNudgeMessage(for nudge: ReadinessRules.Nudge) -> String {
+        switch nudge.kind {
+        case .toughSignals:
+            return String(localized: "today.readiness.nudge.toughSignals")
+        case .lowReserves:
+            return String(localized: "today.readiness.nudge.lowReserves")
+        case .lowEnergy:
+            return String(localized: "today.readiness.nudge.lowEnergy")
+        case .sleepWasRough:
+            return String(localized: "today.readiness.nudge.sleepWasRough")
+        case .roughMood:
+            return String(localized: "today.readiness.nudge.roughMood")
+        case .strongSignals:
+            return String(localized: "today.readiness.nudge.strongSignals")
+        case .solidDay:
+            return String(localized: "today.readiness.nudge.solidDay")
+        case .steadyDay:
+            return String(localized: "today.readiness.nudge.steadyDay")
+        case .decentDay:
+            return String(localized: "today.readiness.nudge.decentDay")
+        }
+    }
+
     private func domainNudgeMessage(for nudge: PatternNudgeRules.DomainNudge) -> String {
         String.localizedStringWithFormat(
             NSLocalizedString(
@@ -1333,7 +1356,7 @@ struct TodayView: View {
                     Image(systemName: "sparkle")
                         .font(.caption)
                         .foregroundStyle(OwloryColor.brandPrimary)
-                    Text(nudge.message)
+                    Text(readinessNudgeMessage(for: nudge))
                         .font(headerSupportingFont)
                         .foregroundStyle(.secondary)
                 }
@@ -1379,7 +1402,7 @@ struct TodayView: View {
             Text(headerDateString)
                 .font(headerDateFont)
                 .foregroundStyle(.secondary)
-            Text(readinessNudge?.message ?? headerGreeting)
+            Text(readinessNudge.map { readinessNudgeMessage(for: $0) } ?? headerGreeting)
                 .font(headerGreetingFont)
                 .accessibilityIdentifier("today.dashboard.header")
             if let domainNudge = calibration.domainNudge {

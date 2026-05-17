@@ -358,6 +358,15 @@
 "today.continue.subtitle.active" = "Активно";
 "today.continue.subtitle.inProgress" = "В процессе";
 "today.domainNudge.focusMissing" = "%@ в последнее время не появлялось в фокусе.";
+"today.readiness.nudge.toughSignals" = "Сегодня сложные сигналы. Сфокусируйтесь на одном важном деле, а остальное отпустите.";
+"today.readiness.nudge.lowReserves" = "Сегодня мало запаса. Оставьте план легким — минимум выполнимых побед.";
+"today.readiness.nudge.lowEnergy" = "Сегодня мало энергии. Выбирайте легкие победы вместо глубокой работы.";
+"today.readiness.nudge.sleepWasRough" = "Сон был тяжелым. Фокуса может быть меньше, чем кажется.";
+"today.readiness.nudge.roughMood" = "Сегодня тяжелое настроение. Честно оцените, что можете взять на себя.";
+"today.readiness.nudge.strongSignals" = "Сегодня сильные сигналы. Хороший день для глубокой работы или сложных задач.";
+"today.readiness.nudge.solidDay" = "Крепкий день. У вас есть ресурс — направьте его на самое важное.";
+"today.readiness.nudge.steadyDay" = "Стабильный день. Доверьтесь плану.";
+"today.readiness.nudge.decentDay" = "Впереди неплохой день. Сохраняйте фокус на приоритетах.";
 "today.focus.suggestion.completion.similarReadinessHistory" = "Вы выполнили это %1$@ в дни чек-ина %2$@.";
 "today.focus.suggestion.completion.recentCompletions" = "Вы выполнили это %@ недавно.";
 "today.focus.suggestion.timing.predictedTime" = "Обычно завершается около %@.";

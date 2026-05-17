@@ -37,10 +37,8 @@ final class CalibrationRulesTests: XCTestCase {
         )
         let cal = CalibrationRules.calibrate(todayEntry: entry, weeklySnapshot: snapshot)
         XCTAssertNotNil(cal.enhancedNudge)
+        XCTAssertEqual(cal.enhancedNudge?.kind, .steadyDay)
         XCTAssertNotNil(cal.completionContext)
-        // Nudge is pure daily read — does NOT contain weekly stats
-        XCTAssertFalse(cal.enhancedNudge!.message.contains("4 of 9"))
-        // Completion context exists separately for digest use
         XCTAssertTrue(cal.completionContext!.contains("44%"))
     }
 
@@ -60,7 +58,7 @@ final class CalibrationRulesTests: XCTestCase {
         XCTAssertNil(cal.completionContext)
     }
 
-    func testNudgeMessagePreservesPrioritySuggestion() {
+    func testNudgeKindPreservesPrioritySuggestion() {
         let entry = DailyEntry(date: Date(), energy: 1, mood: 1, sleepQuality: 1)
         let snapshot = PatternSnapshot(
             generatedAt: Date(),
@@ -72,10 +70,8 @@ final class CalibrationRulesTests: XCTestCase {
             readinessOutcome: nil
         )
         let cal = CalibrationRules.calibrate(todayEntry: entry, weeklySnapshot: snapshot)
+        XCTAssertEqual(cal.enhancedNudge?.kind, .toughSignals)
         XCTAssertEqual(cal.enhancedNudge?.suggestedMaxPriorities, 1)
-        // Nudge is pure daily — no weekly stats mixed in
-        XCTAssertFalse(cal.enhancedNudge!.message.contains("2 of 6"))
-        // But completion context is available separately
         XCTAssertNotNil(cal.completionContext)
     }
 
