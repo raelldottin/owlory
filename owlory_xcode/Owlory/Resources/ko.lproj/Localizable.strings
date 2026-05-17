@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "준비되면 시작하세요";
 "today.header.greeting.todaysPlan" = "오늘의 계획";
 "today.header.greeting.whatsActiveToday" = "오늘 무엇이 활성화되어 있나요?";
+"today.continue.subtitle.focus" = "포커스";
+"today.continue.subtitle.dueToday" = "오늘 마감";
+"today.continue.subtitle.carriedForward" = "이월됨";
+"today.continue.subtitle.protocolRun" = "프로토콜 실행";
+"today.continue.subtitle.active" = "활성";
+"today.continue.subtitle.inProgress" = "진행 중";

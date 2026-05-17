@@ -27,7 +27,7 @@ final class TodayContinueItemAssemblerTests: XCTestCase {
         XCTAssertEqual(items.count, 1)
         XCTAssertEqual(items.first?.title, "Performance review story")
         XCTAssertEqual(items.first?.domain, .career)
-        XCTAssertEqual(items.first?.reason, "Carried forward")
+        XCTAssertEqual(items.first?.subtitleKind, .carriedForward)
         XCTAssertEqual(items.first?.source, candidate.source)
         XCTAssertEqual(items.first?.linkedRecordID, linkedRecordID)
         XCTAssertEqual(items.first?.origin, origin)

@@ -39,7 +39,7 @@ enum TodayContinuationRules {
         let id: String
         let title: String
         let domain: LifeDomain
-        let reason: String
+        let subtitleKind: ContinueSubtitleKind
         let source: ContinueSource
         let linkedRecordID: UUID?
         let origin: FocusItemOrigin?
@@ -54,7 +54,7 @@ enum TodayContinuationRules {
             id: String,
             title: String,
             domain: LifeDomain,
-            reason: String,
+            subtitleKind: ContinueSubtitleKind,
             source: ContinueSource,
             linkedRecordID: UUID?,
             origin: FocusItemOrigin? = nil,
@@ -66,7 +66,7 @@ enum TodayContinuationRules {
             self.id = id
             self.title = title
             self.domain = domain
-            self.reason = reason
+            self.subtitleKind = subtitleKind
             self.source = source
             self.linkedRecordID = linkedRecordID
             self.origin = origin

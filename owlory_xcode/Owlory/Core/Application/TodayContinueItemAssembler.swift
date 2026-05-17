@@ -103,7 +103,7 @@ enum TodayContinueItemAssembler {
             ].joined(separator: "|"),
             title: candidate.title,
             domain: candidate.domain,
-            reason: candidate.reason,
+            subtitleKind: candidate.subtitleKind,
             source: candidate.source,
             linkedRecordID: candidate.linkedRecordID,
             origin: candidate.origin,

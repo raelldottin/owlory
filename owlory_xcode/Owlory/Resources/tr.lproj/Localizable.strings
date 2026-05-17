@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Hazır olduğunda başla";
 "today.header.greeting.todaysPlan" = "Bugünün planı";
 "today.header.greeting.whatsActiveToday" = "Bugün ne aktif?";
+"today.continue.subtitle.focus" = "Odak";
+"today.continue.subtitle.dueToday" = "Bugün dolan";
+"today.continue.subtitle.carriedForward" = "Devredildi";
+"today.continue.subtitle.protocolRun" = "Protokol çalıştırması";
+"today.continue.subtitle.active" = "Aktif";
+"today.continue.subtitle.inProgress" = "Sürüyor";

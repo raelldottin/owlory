@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Klaar wanneer jij dat bent";
 "today.header.greeting.todaysPlan" = "Plan voor vandaag";
 "today.header.greeting.whatsActiveToday" = "Wat is vandaag actief?";
+"today.continue.subtitle.focus" = "Focus";
+"today.continue.subtitle.dueToday" = "Vandaag gepland";
+"today.continue.subtitle.carriedForward" = "Doorgezet";
+"today.continue.subtitle.protocolRun" = "Protocoluitvoering";
+"today.continue.subtitle.active" = "Actief";
+"today.continue.subtitle.inProgress" = "Bezig";

@@ -56,6 +56,8 @@
 		A047 /* SpeechTranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147 /* SpeechTranscriptionService.swift */; };
 		A048 /* VoiceCaptureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148 /* VoiceCaptureResult.swift */; };
 		A091 /* LocalizationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A191 /* LocalizationHelpers.swift */; };
+		A092 /* ContinueSubtitleKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192 /* ContinueSubtitleKind.swift */; };
+		B097 /* ContinueSubtitleKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A192 /* ContinueSubtitleKind.swift */; };
 		A049 /* PerformanceTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A149 /* PerformanceTelemetry.swift */; };
 		A050 /* MetricKitTelemetrySubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150 /* MetricKitTelemetrySubscriber.swift */; };
 		A051 /* FoundationModelServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151 /* FoundationModelServices.swift */; };
@@ -283,6 +285,7 @@
 		A147 /* SpeechTranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriptionService.swift; sourceTree = "<group>"; };
 		A148 /* VoiceCaptureResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCaptureResult.swift; sourceTree = "<group>"; };
 		A191 /* LocalizationHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationHelpers.swift; sourceTree = "<group>"; };
+		A192 /* ContinueSubtitleKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueSubtitleKind.swift; sourceTree = "<group>"; };
 		A149 /* PerformanceTelemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTelemetry.swift; sourceTree = "<group>"; };
 		A150 /* MetricKitTelemetrySubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitTelemetrySubscriber.swift; sourceTree = "<group>"; };
 		A151 /* FoundationModelServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationModelServices.swift; sourceTree = "<group>"; };
@@ -578,6 +581,7 @@
 				A161 /* TodayContinueSourceComposer.swift */,
 				A162 /* TodayContinueItemAssembler.swift */,
 				A163 /* ContinuePipelineTrace.swift */,
+				A192 /* ContinueSubtitleKind.swift */,
 				A164 /* RecurringRolloverPlanner.swift */,
 				A166 /* ReminderScheduleTrace.swift */,
 				A149 /* PerformanceTelemetry.swift */,
@@ -995,6 +999,7 @@
 				A047 /* SpeechTranscriptionService.swift in Sources */,
 				A048 /* VoiceCaptureResult.swift in Sources */,
 				A091 /* LocalizationHelpers.swift in Sources */,
+				A092 /* ContinueSubtitleKind.swift in Sources */,
 				A049 /* PerformanceTelemetry.swift in Sources */,
 				A050 /* MetricKitTelemetrySubscriber.swift in Sources */,
 				A051 /* FoundationModelServices.swift in Sources */,
@@ -1089,6 +1094,7 @@
 				B049 /* TodayContinuationRules.swift in Sources */,
 				B050 /* TodayContinuationRulesTests.swift in Sources */,
 				B064 /* TodayContinueSourceComposer.swift in Sources */,
+				B097 /* ContinueSubtitleKind.swift in Sources */,
 				B065 /* TodayContinueSourceComposerTests.swift in Sources */,
 				B066 /* TodayContinueItemAssembler.swift in Sources */,
 				B067 /* TodayContinueItemAssemblerTests.swift in Sources */,

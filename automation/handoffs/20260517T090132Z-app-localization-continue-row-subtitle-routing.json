@@ -1,0 +1,88 @@
+{
+  "slice_id": "app-localization-continue-row-subtitle-routing",
+  "status": "done",
+  "summary": "Structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift (Sendable, Equatable, Codable, CaseIterable enum with 6 cases). Replaced TodayContinueSourceComposer.Step.reason: String → Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate, TodayContinueItemAssembler, and TodayContinuationRules.ContinueItem. TodayView gained a continueSubtitleLabel(for:) helper that maps each case to String(localized:). Added 6 today.continue.subtitle.* keys × 19 locales (LLM-drafted). Updated 9 test assertions across 4 test files to assert on the semantic enum, not English strings. Boundary restored: presentation copy now lives only in Features/Today, semantic intent flows through Application/Domain.",
+  "files_touched": [
+    "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+    "owlory_xcode/Owlory/Core/Application/ContinueSubtitleKind.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinuationRulesTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueItemAssemblerTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayContinueSourceComposerTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260517T090132Z-app-localization-continue-row-subtitle-routing.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/090132-app-localization-continue-row-subtitle-routing.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-continue-subtitle-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke per locale",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today Continue row subtitle localization + boundary restoration",
+      "before": "TodayContinueSourceComposer (Core/Application) owned English presentation copy ('Focus', 'Due today', 'Carried forward', 'Protocol run', 'Active', 'In progress') via Step.reason: String. ContinueItem.reason: String carried the same English to the view layer. Tests asserted on English strings. Non-English users saw English row subtitles. Architecture boundary violation: presentation copy in Application layer.",
+      "after": "Core/Application emits ContinueSubtitleKind (semantic enum). ContinueItem.subtitleKind: ContinueSubtitleKind carries the semantic intent. TodayView (Features/Today) owns the localized String mapping via continueSubtitleLabel(for:). Tests assert on the semantic enum cases (.focus, .dueToday, .carriedForward, .protocolRun, .active, .inProgress). 6 new today.continue.subtitle.* keys exist across all 19 locales. Boundary restored: presentation copy lives only in Features/, semantic intent flows through Application/Domain.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/ContinueSubtitleKind.swift (new)",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift (Step.subtitleKind, Candidate.subtitleKind)",
+        "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift (ContinueItem.subtitleKind)",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift (subtitleKind: candidate.subtitleKind)",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift (continueSubtitleLabel helper + display update)",
+        "4 test files updated to assert on enum cases",
+        "localization-parity 19/351/13",
+        "make test-domain DOMAIN=today green"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Other Core/Application or Core/Domain helpers still own English copy (FocusSuggestionRules, CalibrationRules, ReadinessRules, PatternNudgeRules). Five queued slices cover those. This slice only restored the Continue subtitle boundary.",
+    "Tests now assert on enum cases. If a developer adds a new ContinueSubtitleKind case without adding a matching today.continue.subtitle.<case> key, the helper's switch is exhaustive so the compiler flags it, but the localization lookup would fall back to the raw key string. No runtime breakage, just a missing translation.",
+    "Per-locale review return files now 21 entries stale per locale (9 anchors + 6 header greeting + 6 subtitle since 2026-05-16). Run python3 Tools/localization-return-files-refresh.py --apply to refresh.",
+    "Native review remains outstanding for every locale.",
+    "The 6 subtitle keys are LLM-drafted by claude-opus-4-7. The German 'Im Gange' (In progress) is correct but conversational; native review may pick differently."
+  ],
+  "recommended_next_slice": "app-localization-pattern-nudge-rules-helper-copy-routing",
+  "recommended_next_reason": "Next Core/Domain follow-up. Smallest payload (1 message + 4 focusBalanceTitle helper duplications). focusBalanceTitle can simply delegate to existing LifeDomain.localizedDisplayName — minimal new infrastructure needed. Good warm-up before the larger ReadinessRules/CalibrationRules/FocusSuggestionRules refactors.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T09:01:32Z"
+}

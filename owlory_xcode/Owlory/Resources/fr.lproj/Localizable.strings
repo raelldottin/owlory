@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Prêt quand vous l'êtes";
 "today.header.greeting.todaysPlan" = "Plan du jour";
 "today.header.greeting.whatsActiveToday" = "Qu'est-ce qui est actif aujourd'hui ?";
+"today.continue.subtitle.focus" = "Focus";
+"today.continue.subtitle.dueToday" = "Dû aujourd'hui";
+"today.continue.subtitle.carriedForward" = "Reporté";
+"today.continue.subtitle.protocolRun" = "Exécution de protocole";
+"today.continue.subtitle.active" = "Actif";
+"today.continue.subtitle.inProgress" = "En cours";

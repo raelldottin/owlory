@@ -353,3 +353,9 @@
 "today.header.greeting.readyWhenYouAre" = "Ready when you are";
 "today.header.greeting.todaysPlan" = "Today's plan";
 "today.header.greeting.whatsActiveToday" = "What's active today?";
+"today.continue.subtitle.focus" = "Focus";
+"today.continue.subtitle.dueToday" = "Due today";
+"today.continue.subtitle.carriedForward" = "Carried forward";
+"today.continue.subtitle.protocolRun" = "Protocol run";
+"today.continue.subtitle.active" = "Active";
+"today.continue.subtitle.inProgress" = "In progress";

@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Klar når du er det";
 "today.header.greeting.todaysPlan" = "Dagens plan";
 "today.header.greeting.whatsActiveToday" = "Hva er aktivt i dag?";
+"today.continue.subtitle.focus" = "Fokus";
+"today.continue.subtitle.dueToday" = "Forfaller i dag";
+"today.continue.subtitle.carriedForward" = "Overført";
+"today.continue.subtitle.protocolRun" = "Protokollkjøring";
+"today.continue.subtitle.active" = "Aktiv";
+"today.continue.subtitle.inProgress" = "Pågår";

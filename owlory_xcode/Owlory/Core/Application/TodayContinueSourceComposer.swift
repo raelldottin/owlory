@@ -9,20 +9,20 @@ enum TodayContinueSourceComposer {
         case activeHomeTask
         case inProgressWriting
 
-        var reason: String {
+        var subtitleKind: ContinueSubtitleKind {
             switch self {
             case .currentFocus:
-                return "Focus"
+                return .focus
             case .dueTodayTraining:
-                return "Due today"
+                return .dueToday
             case .carriedForwardFocus:
-                return "Carried forward"
+                return .carriedForward
             case .activeHomeProtocolRun:
-                return "Protocol run"
+                return .protocolRun
             case .activeHomeTask:
-                return "Active"
+                return .active
             case .inProgressWriting:
-                return "In progress"
+                return .inProgress
             }
         }
 
@@ -54,7 +54,7 @@ enum TodayContinueSourceComposer {
         let staleDayCount: Int?
         let predictionKey: String?
 
-        var reason: String { step.reason }
+        var subtitleKind: ContinueSubtitleKind { step.subtitleKind }
         var priority: ContinuePriority { step.priority }
     }
 

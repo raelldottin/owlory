@@ -4194,7 +4194,7 @@
     {
       "slice_id": "app-localization-continue-row-subtitle-routing",
       "title": "Route TodayContinueSourceComposer subtitle strings through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4221,7 +4221,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. Return enum (ContinueRowSubtitleKind: dueToday / protocolRun / inProgress); Features/ maps to localized String. 3 strings. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-17 via structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift \u2014 a Sendable, Equatable, Codable, CaseIterable enum with 6 cases (focus, dueToday, carriedForward, protocolRun, active, inProgress). Replaced TodayContinueSourceComposer.Step.reason: String with Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate.subtitleKind, TodayContinueItemAssembler (now passes subtitleKind:), and TodayContinuationRules.ContinueItem (subtitleKind: ContinueSubtitleKind replaces reason: String). TodayView gained continueSubtitleLabel(for:) helper that maps each enum case to String(localized:). Added 6 today.continue.subtitle.* keys \u00d7 19 locales (LLM-drafted). Updated 9 test assertions: 4 TodayStoreTests fixtures, 2 TodayContinueSourceComposerTests assertions, 1 TodayContinueItemAssemblerTests assertion, 1 TodayContinuationRulesTests assertion. All tests now assert on the semantic enum, not English strings. project.pbxproj wires A092 (main target) + B097 (test target) referencing A192. localization-parity 19/351/13. proof_level: build-tested + domain-tested."
     },
     {
       "slice_id": "app-localization-today-header-greeting-routing",

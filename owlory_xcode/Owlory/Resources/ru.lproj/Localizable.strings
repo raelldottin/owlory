@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Готов, когда вы готовы";
 "today.header.greeting.todaysPlan" = "План на сегодня";
 "today.header.greeting.whatsActiveToday" = "Что активно сегодня?";
+"today.continue.subtitle.focus" = "Фокус";
+"today.continue.subtitle.dueToday" = "На сегодня";
+"today.continue.subtitle.carriedForward" = "Перенесено";
+"today.continue.subtitle.protocolRun" = "Запуск протокола";
+"today.continue.subtitle.active" = "Активно";
+"today.continue.subtitle.inProgress" = "В процессе";

@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Sẵn sàng khi bạn muốn";
 "today.header.greeting.todaysPlan" = "Kế hoạch hôm nay";
 "today.header.greeting.whatsActiveToday" = "Hôm nay có gì đang diễn ra?";
+"today.continue.subtitle.focus" = "Trọng tâm";
+"today.continue.subtitle.dueToday" = "Hôm nay";
+"today.continue.subtitle.carriedForward" = "Chuyển tiếp";
+"today.continue.subtitle.protocolRun" = "Lần chạy quy trình";
+"today.continue.subtitle.active" = "Đang hoạt động";
+"today.continue.subtitle.inProgress" = "Đang tiến hành";

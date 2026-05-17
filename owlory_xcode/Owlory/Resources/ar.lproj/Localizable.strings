@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "جاهز عندما تكون مستعداً";
 "today.header.greeting.todaysPlan" = "خطة اليوم";
 "today.header.greeting.whatsActiveToday" = "ما هو النشط اليوم؟";
+"today.continue.subtitle.focus" = "تركيز";
+"today.continue.subtitle.dueToday" = "مستحق اليوم";
+"today.continue.subtitle.carriedForward" = "مُرحَّل";
+"today.continue.subtitle.protocolRun" = "تشغيل بروتوكول";
+"today.continue.subtitle.active" = "نشط";
+"today.continue.subtitle.inProgress" = "قيد التقدم";

@@ -38,7 +38,7 @@ final class TodayContinuationRulesTests: XCTestCase {
         XCTAssertEqual(entry, originalEntry)
         XCTAssertEqual(entry.carryForward, [carried])
         XCTAssertEqual(items.map(\.title), ["Write outline"])
-        XCTAssertEqual(items.first?.reason, "Carried forward")
+        XCTAssertEqual(items.first?.subtitleKind, .carriedForward)
         XCTAssertEqual(items.first?.staleDayCount, 4)
     }
 

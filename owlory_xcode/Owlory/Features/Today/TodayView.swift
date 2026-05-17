@@ -355,6 +355,23 @@ struct TodayView: View {
         }
     }
 
+    private func continueSubtitleLabel(for kind: ContinueSubtitleKind) -> String {
+        switch kind {
+        case .focus:
+            return String(localized: "today.continue.subtitle.focus")
+        case .dueToday:
+            return String(localized: "today.continue.subtitle.dueToday")
+        case .carriedForward:
+            return String(localized: "today.continue.subtitle.carriedForward")
+        case .protocolRun:
+            return String(localized: "today.continue.subtitle.protocolRun")
+        case .active:
+            return String(localized: "today.continue.subtitle.active")
+        case .inProgress:
+            return String(localized: "today.continue.subtitle.inProgress")
+        }
+    }
+
     private func continueAccessibilityHint(for item: TodayContinuationRules.ContinueItem) -> String {
         if focusItem(for: item) != nil {
             return String.localizedStringWithFormat(
@@ -409,14 +426,12 @@ struct TodayView: View {
                     Text(item.domain.localizedDisplayName)
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    if !item.reason.isEmpty {
-                        Text("·")
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
-                        Text(item.reason)
-                            .font(.caption)
-                            .foregroundStyle(.tertiary)
-                    }
+                    Text("·")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                    Text(continueSubtitleLabel(for: item.subtitleKind))
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 }
             }
             Spacer()

@@ -75,13 +75,13 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             "Laundry",
             "Essay source",
         ])
-        XCTAssertEqual(candidates.map(\.reason), [
-            "Focus",
-            "Due today",
-            "Carried forward",
-            "Protocol run",
-            "Active",
-            "In progress",
+        XCTAssertEqual(candidates.map(\.subtitleKind), [
+            .focus,
+            .dueToday,
+            .carriedForward,
+            .protocolRun,
+            .active,
+            .inProgress,
         ])
         XCTAssertEqual(candidates.map(\.priority), [
             .dueToday,
@@ -161,7 +161,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
 
         XCTAssertEqual(candidates.map(\.step), [.currentFocus])
         XCTAssertEqual(candidates.first?.source, .focusItem(focus.id))
-        XCTAssertEqual(candidates.first?.reason, "Focus")
+        XCTAssertEqual(candidates.first?.subtitleKind, .focus)
         XCTAssertNil(candidates.first?.staleDayCount)
     }
 

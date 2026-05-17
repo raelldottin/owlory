@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "Redo när du är det";
 "today.header.greeting.todaysPlan" = "Dagens plan";
 "today.header.greeting.whatsActiveToday" = "Vad är aktivt idag?";
+"today.continue.subtitle.focus" = "Fokus";
+"today.continue.subtitle.dueToday" = "Idag";
+"today.continue.subtitle.carriedForward" = "Överfört";
+"today.continue.subtitle.protocolRun" = "Protokollkörning";
+"today.continue.subtitle.active" = "Aktiv";
+"today.continue.subtitle.inProgress" = "Pågår";

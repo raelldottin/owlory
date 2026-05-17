@@ -2,6 +2,7 @@
 
 ## 2026-05-17
 
+- [app-localization-continue-row-subtitle-routing (build-tested + domain-tested; ContinueSubtitleKind semantic enum; structural refactor restores Application/Features boundary; 6 new today.continue.subtitle.* keys × 19 locales)](sessions/2026-05-17/090132-app-localization-continue-row-subtitle-routing.md)
 - [app-localization-today-header-greeting-routing (build-tested; 6 new today.header.greeting.* keys × 19 locales; headerGreeting 6 branches wrapped in String(localized:))](sessions/2026-05-17/075934-app-localization-today-header-greeting-routing.md)
 - [app-localization-readiness-anchors-routing (build-tested; 9 new keys × 19 locales; 6 anchor tuple call sites in Today + Train routed via String(localized:))](sessions/2026-05-17/074138-app-localization-readiness-anchors-routing.md)
 - [app-localization-helper-generated-copy-audit (doc-only; 4 TestFlight screenshots → ~30+ helper-built English strings across 6 files; 7 narrow follow-up slices queued)](sessions/2026-05-17/020723-app-localization-helper-generated-copy-audit.md)

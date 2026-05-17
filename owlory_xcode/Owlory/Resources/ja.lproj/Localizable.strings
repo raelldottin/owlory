@@ -351,3 +351,9 @@
 "today.header.greeting.readyWhenYouAre" = "準備が整いました";
 "today.header.greeting.todaysPlan" = "今日の予定";
 "today.header.greeting.whatsActiveToday" = "今日は何がアクティブですか?";
+"today.continue.subtitle.focus" = "フォーカス";
+"today.continue.subtitle.dueToday" = "今日が期限";
+"today.continue.subtitle.carriedForward" = "繰越";
+"today.continue.subtitle.protocolRun" = "プロトコル実行";
+"today.continue.subtitle.active" = "アクティブ";
+"today.continue.subtitle.inProgress" = "進行中";
