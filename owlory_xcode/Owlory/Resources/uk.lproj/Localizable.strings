@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Погано";
 "readiness.anchor.fine" = "Нормально";
 "readiness.anchor.great" = "Чудово";
+"today.header.greeting.dayComplete" = "День завершено";
+"today.header.greeting.inProgress.compact" = "Триває";
+"today.header.greeting.inProgress.regular" = "День триває";
+"today.header.greeting.readyWhenYouAre" = "Готовий, коли ви будете";
+"today.header.greeting.todaysPlan" = "План на сьогодні";
+"today.header.greeting.whatsActiveToday" = "Що активне сьогодні?";

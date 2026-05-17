@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Dårlig";
 "readiness.anchor.fine" = "Greit";
 "readiness.anchor.great" = "Flott";
+"today.header.greeting.dayComplete" = "Dag fullført";
+"today.header.greeting.inProgress.compact" = "Pågår";
+"today.header.greeting.inProgress.regular" = "Dagen pågår";
+"today.header.greeting.readyWhenYouAre" = "Klar når du er det";
+"today.header.greeting.todaysPlan" = "Dagens plan";
+"today.header.greeting.whatsActiveToday" = "Hva er aktivt i dag?";

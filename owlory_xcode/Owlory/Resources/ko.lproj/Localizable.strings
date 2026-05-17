@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "나쁨";
 "readiness.anchor.fine" = "괜찮음";
 "readiness.anchor.great" = "훌륭함";
+"today.header.greeting.dayComplete" = "하루 완료";
+"today.header.greeting.inProgress.compact" = "진행 중";
+"today.header.greeting.inProgress.regular" = "오늘 진행 중";
+"today.header.greeting.readyWhenYouAre" = "준비되면 시작하세요";
+"today.header.greeting.todaysPlan" = "오늘의 계획";
+"today.header.greeting.whatsActiveToday" = "오늘 무엇이 활성화되어 있나요?";

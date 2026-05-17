@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Slecht";
 "readiness.anchor.fine" = "Prima";
 "readiness.anchor.great" = "Geweldig";
+"today.header.greeting.dayComplete" = "Dag voltooid";
+"today.header.greeting.inProgress.compact" = "Bezig";
+"today.header.greeting.inProgress.regular" = "Dag in uitvoering";
+"today.header.greeting.readyWhenYouAre" = "Klaar wanneer jij dat bent";
+"today.header.greeting.todaysPlan" = "Plan voor vandaag";
+"today.header.greeting.whatsActiveToday" = "Wat is vandaag actief?";

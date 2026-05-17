@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Плохо";
 "readiness.anchor.fine" = "Норм";
 "readiness.anchor.great" = "Отлично";
+"today.header.greeting.dayComplete" = "День завершён";
+"today.header.greeting.inProgress.compact" = "В процессе";
+"today.header.greeting.inProgress.regular" = "День в процессе";
+"today.header.greeting.readyWhenYouAre" = "Готов, когда вы готовы";
+"today.header.greeting.todaysPlan" = "План на сегодня";
+"today.header.greeting.whatsActiveToday" = "Что активно сегодня?";

@@ -149,18 +149,20 @@ struct TodayView: View {
     private var headerGreeting: String {
         let hasCheckedIn = TodayStore.hasCheckIn(currentEntry)
         if case .reflected = store.entryState {
-            return "Day complete"
+            return String(localized: "today.header.greeting.dayComplete")
         }
         if hasCheckedIn {
-            return usesAccessibilityCompactHeader ? "In progress" : "Day in progress"
+            return usesAccessibilityCompactHeader
+                ? String(localized: "today.header.greeting.inProgress.compact")
+                : String(localized: "today.header.greeting.inProgress.regular")
         }
         if usesCompactHeightAccessibilityLayout {
-            return "Ready when you are"
+            return String(localized: "today.header.greeting.readyWhenYouAre")
         }
         if usesAccessibilityCompactHeader {
-            return "Today's plan"
+            return String(localized: "today.header.greeting.todaysPlan")
         }
-        return "What's active today?"
+        return String(localized: "today.header.greeting.whatsActiveToday")
     }
 
     private var calibration: CalibrationRules.Calibration {

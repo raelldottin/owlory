@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "悪い";
 "readiness.anchor.fine" = "まあまあ";
 "readiness.anchor.great" = "素晴らしい";
+"today.header.greeting.dayComplete" = "1日完了";
+"today.header.greeting.inProgress.compact" = "進行中";
+"today.header.greeting.inProgress.regular" = "1日進行中";
+"today.header.greeting.readyWhenYouAre" = "準備が整いました";
+"today.header.greeting.todaysPlan" = "今日の予定";
+"today.header.greeting.whatsActiveToday" = "今日は何がアクティブですか?";

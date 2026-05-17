@@ -347,3 +347,9 @@
 "readiness.anchor.poor" = "Poor";
 "readiness.anchor.fine" = "Fine";
 "readiness.anchor.great" = "Great";
+"today.header.greeting.dayComplete" = "Day complete";
+"today.header.greeting.inProgress.compact" = "In progress";
+"today.header.greeting.inProgress.regular" = "Day in progress";
+"today.header.greeting.readyWhenYouAre" = "Ready when you are";
+"today.header.greeting.todaysPlan" = "Today's plan";
+"today.header.greeting.whatsActiveToday" = "What's active today?";

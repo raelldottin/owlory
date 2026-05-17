@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "差";
 "readiness.anchor.fine" = "还行";
 "readiness.anchor.great" = "极佳";
+"today.header.greeting.dayComplete" = "今日已完成";
+"today.header.greeting.inProgress.compact" = "进行中";
+"today.header.greeting.inProgress.regular" = "今日进行中";
+"today.header.greeting.readyWhenYouAre" = "随时可以开始";
+"today.header.greeting.todaysPlan" = "今日计划";
+"today.header.greeting.whatsActiveToday" = "今天有什么在进行?";

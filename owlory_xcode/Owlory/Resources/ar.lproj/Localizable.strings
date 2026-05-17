@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "ضعيف";
 "readiness.anchor.fine" = "مقبول";
 "readiness.anchor.great" = "ممتاز";
+"today.header.greeting.dayComplete" = "اليوم مكتمل";
+"today.header.greeting.inProgress.compact" = "قيد التقدم";
+"today.header.greeting.inProgress.regular" = "اليوم قيد التقدم";
+"today.header.greeting.readyWhenYouAre" = "جاهز عندما تكون مستعداً";
+"today.header.greeting.todaysPlan" = "خطة اليوم";
+"today.header.greeting.whatsActiveToday" = "ما هو النشط اليوم؟";

@@ -1,0 +1,73 @@
+{
+  "slice_id": "app-localization-today-header-greeting-routing",
+  "status": "done",
+  "summary": "Added 6 new today.header.greeting.* keys across all 19 locales with LLM-drafted translations. Wrapped each of the 6 return branches of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) — the inner Text path is unchanged because the returned value is now already-localized. In-place wrap; no Domain boundary impact (headerGreeting is in Features/). localization-parity 19/345/13.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260517T075934Z-app-localization-today-header-greeting-routing.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-17/075934-app-localization-today-header-greeting-routing.md"
+  ],
+  "validations_passed": [
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-header-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke per locale (Today header greeting in each entry state)",
+    "native-reviewed",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Today header greeting localization",
+      "before": "TodayView.headerGreeting returned raw English from 6 branches: 'Day complete', 'In progress', 'Day in progress', 'Ready when you are', 'Today's plan', 'What's active today?'. Two display paths (standardDashboardHeader + compactHeightDashboardHeader) showed these via Text(headerGreeting), so non-English users saw English at the top of the Today tab in every state.",
+      "after": "Each return branch wraps the value in String(localized:) with a today.header.greeting.* key. 6 new keys across 19 locales. The two display paths are unchanged.",
+      "proof": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift (headerGreeting body)",
+        "19 × Localizable.strings updated",
+        "xcodebuild build green"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "LLM-drafted translations are unverified by a native speaker. Some compact-form keys (e.g., 'In progress' shortened) may not match the conventional brevity for that locale; native review needed.",
+    "today.header.greeting.inProgress.compact and today.header.greeting.inProgress.regular share the same English-language semantic — both mean 'the day is underway'. A native reviewer may prefer to use just one localized string for both layouts in some languages.",
+    "headerGreeting branches depend on usesAccessibilityCompactHeader and usesCompactHeightAccessibilityLayout. Each branch only renders under specific accessibility/Dynamic Type conditions; the build cannot exhaust all of them in one run. Manual VoiceOver / Dynamic Type testing per locale would close the loop.",
+    "Per-locale review return files snapshot 372 entries from 2026-05-16; the 6 new keys are NOT reflected there. Run python3 Tools/localization-return-files-refresh.py --apply to refresh when convenient (housekeeping).",
+    "Native review remains outstanding for every locale."
+  ],
+  "recommended_next_slice": "app-localization-continue-row-subtitle-routing",
+  "recommended_next_reason": "Next priority queued slice. Continue row subtitles ('Due today' / 'Protocol run' / 'In progress') are visible on every Today screenshot from 2026-05-16 — high impact, narrow scope, Core/Application-located so structural refactor is appropriate.",
+  "repo_clean_status": "dirty_with_this_slice_only_before_commit",
+  "git_mirror_status": "0 0 before commit",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-17T07:59:34Z"
+}

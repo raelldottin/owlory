@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Kötü";
 "readiness.anchor.fine" = "Fena değil";
 "readiness.anchor.great" = "Harika";
+"today.header.greeting.dayComplete" = "Gün tamamlandı";
+"today.header.greeting.inProgress.compact" = "Sürüyor";
+"today.header.greeting.inProgress.regular" = "Gün sürüyor";
+"today.header.greeting.readyWhenYouAre" = "Hazır olduğunda başla";
+"today.header.greeting.todaysPlan" = "Bugünün planı";
+"today.header.greeting.whatsActiveToday" = "Bugün ne aktif?";

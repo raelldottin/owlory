@@ -4226,7 +4226,7 @@
     {
       "slice_id": "app-localization-today-header-greeting-routing",
       "title": "Route TodayView.headerGreeting branches through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 78,
       "domain": "localization",
       "allowed_paths": [
@@ -4253,7 +4253,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Surface-scoped follow-up from app-localization-helper-generated-copy-audit. In-place fix: wrap each return branch of headerGreeting with NSLocalizedString. Add missing keys ('Day in progress', 'In progress') across 19 locales. headerGreeting is already in Features/, so the boundary concern doesn't apply. LLM-drafted translations for all 19 locales. Do not claim native review. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-17. Added 6 new today.header.greeting.* keys across all 19 locales (LLM-drafted): dayComplete, inProgress.compact, inProgress.regular, readyWhenYouAre, todaysPlan, whatsActiveToday. Wrapped each return branch of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) \u2014 the inner Text path is unchanged because the value is now already-localized. In-place wrap; no boundary impact (Features-located). localization-parity 19/345/13. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-readiness-anchors-routing",

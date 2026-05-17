@@ -345,3 +345,9 @@
 "readiness.anchor.poor" = "Kém";
 "readiness.anchor.fine" = "Ổn";
 "readiness.anchor.great" = "Tuyệt";
+"today.header.greeting.dayComplete" = "Hoàn thành ngày";
+"today.header.greeting.inProgress.compact" = "Đang tiến hành";
+"today.header.greeting.inProgress.regular" = "Ngày đang diễn ra";
+"today.header.greeting.readyWhenYouAre" = "Sẵn sàng khi bạn muốn";
+"today.header.greeting.todaysPlan" = "Kế hoạch hôm nay";
+"today.header.greeting.whatsActiveToday" = "Hôm nay có gì đang diễn ra?";
