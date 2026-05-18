@@ -1,0 +1,57 @@
+{
+  "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
+  "title": "Run remaining LTR localized UI HIG gate",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T06:34:37Z",
+  "proof_level": "doc-only",
+  "summary": "Ran the HIG localized UI gate for fr, it, nb, pt, pt-BR, es, vi under the internal-reviewer signoff baseline. Doc-only intake: source-trace inspection of tab labels and primary actions plus a validated multisurface-harness dry-run (49 captures planned, idb ready). Result: fail because no screenshot evidence is preserved for any of the 7 locales. Allocated HIG-FR-001 (major / adaptive-layout / open) for the French Today tab label 'Aujourd'hui' (11 chars vs en 5) — tab-bar truncation risk on smaller iPhone widths. Six other locales have no source-level HIG findings but cannot pass without screenshot evidence. Screenshot capture is deferred to a follow-up slice.",
+  "files_changed": [
+    "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T063437Z-app-localization-remaining-ltr-hig-ui-gate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/063437-app-localization-remaining-ltr-hig-ui-gate.md"
+  ],
+  "gate_outcome": {
+    "result": "fail",
+    "locales_evaluated": ["fr", "it", "nb", "pt", "pt-BR", "es", "vi"],
+    "hig_ui_reviewed_claimed_locales": [],
+    "open_findings": ["HIG-FR-001 (major, adaptive-layout, open)"],
+    "translation_quality_risks_noted_not_hig_defects": [
+      "nb: 'Tren' for Train tab is the noun form (a train), not the verb (to train) — translation-quality concern, native review required"
+    ],
+    "harness_plan_dry_run_status": "planned (49 captures, idb + idb_companion ready)",
+    "actual_capture_run_in_this_slice": false
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-remaining-ltr-hig-ui-gate": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-remaining-ltr-hig-ui-gate/manifest.json": "passed"
+  },
+  "not_claimed": [
+    "any of these 7 LTR locales is hig-ui-reviewed",
+    "any of these 7 LTR locales is native-reviewed",
+    "translation quality for any of these 7 LTR locales",
+    "screenshot-reviewed, device-verified, or testflight-verified for any of these 7 LTR locales"
+  ],
+  "residual_risk": [
+    "HIG-FR-001 is a source-trace inference. Whether the tab label actually truncates depends on iPhone width and Dynamic Type setting; needs screenshot confirmation.",
+    "Six locales (it/nb/pt/pt-BR/es/vi) have no recorded HIG finding only because no screenshots were captured. Live screenshots may surface additional issues.",
+    "Norwegian 'Tren' for Train tab is a translation-quality concern, not a HIG defect; native reviewer still needed.",
+    "The multisurface harness needs label-overrides for nb ('I dag') and vi ('Hôm nay') for the today surface; default catalog does not include those localized labels."
+  ],
+  "downstream_recommendations": [
+    "Schedule a screenshot-capture slice for these 7 locales using automation/smoke/capture_localized_surfaces.py --capture with --label-overrides for nb + vi.",
+    "After capture, append screenshot file references here and update the all-locale HIG evidence matrix per_locale_state for these 7 locales.",
+    "If HIG-FR-001 is confirmed by screenshot, queue a UI-tweak slice for the tab-bar layout (not within a localization slice)."
+  ]
+}

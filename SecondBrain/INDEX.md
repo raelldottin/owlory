@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-remaining-ltr-hig-ui-gate (doc-only; HIG gate for fr/it/nb/pt/pt-BR/es/vi under internal-reviewer signoff baseline; result fail because no preserved screenshots; HIG-FR-001 open for French 'Aujourd'hui' tab-bar truncation risk; harness dry-run validated for 49 captures)](sessions/2026-05-18/063437-app-localization-remaining-ltr-hig-ui-gate.md)
 - [internal-reviewer-signoff-non-german-locales (doc-only/metadata-only; project-owner internal-reviewer signoff recorded in 17 non-German return files; HIG bucket-gate native-review depends_on removed; native_reviewed flags stay false; entries stay needs-layout-check; 4 bucket gates now unblocked)](sessions/2026-05-18/052000-internal-reviewer-signoff-non-german-locales.md)
 - [start-next-slice-clean-stop (no eligible queued slice; 5 HIG bucket-gate/remediation slices queued but all transitively blocked on 17 non-German native-review intake slices)](sessions/2026-05-18/051731-start-next-slice-clean-stop.md)
 - [app-localization-german-hig-ui-regate (doc-only; German HIG gate re-run after HIG-DE-001 source fix landed; HIG-DE-001 moved from blocking_findings to in_progress_findings with source_fix_confirmed=true; gate result still fail because no post-fix screenshot preserved)](sessions/2026-05-18/051232-app-localization-german-hig-ui-regate.md)

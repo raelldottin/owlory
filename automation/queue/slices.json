@@ -5288,7 +5288,7 @@
     {
       "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
       "title": "Run remaining LTR localized UI HIG gate",
-      "status": "queued",
+      "status": "done",
       "priority": 82,
       "domain": "localization",
       "allowed_paths": [

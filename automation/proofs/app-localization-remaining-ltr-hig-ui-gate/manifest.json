@@ -1,0 +1,257 @@
+{
+  "proof_id": "app-localization-remaining-ltr-hig-ui-gate",
+  "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
+  "created_at": "2026-05-18T06:35:00Z",
+  "locales": ["fr", "it", "nb", "pt", "pt-BR", "es", "vi"],
+  "source": "Source-trace inspection of localized .strings resources on 2026-05-18, plus a validated multisurface-harness dry-run plan. No screenshot captures are committed under this directory.",
+  "artifact_persisted": false,
+  "gate_result": "fail",
+  "gate_result_reason": "No preserved screenshot evidence for any of the 7 LTR locales. Source-trace surfaced one major HIG risk (HIG-FR-001: French tab label truncation). Internal-reviewer signoff is recorded for these locales, but the HIG gate requires screenshot evidence for scoped surfaces (Build Info, Today, root tabs, primary empty states, primary actions, date/count/plural, Dynamic Type) before any locale can pass.",
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed_locales": [],
+  "signoff_baseline": {
+    "kind": "internal-reviewer-signoff (not native speaker)",
+    "recorded_at": "2026-05-18",
+    "scope": "Permits HIG bucket-gate slices to run against current LLM-drafted text. Does NOT claim native review, fluent review, translation quality, or screenshot/device/TestFlight proof.",
+    "per_locale_record_path_template": "localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff)"
+  },
+  "scoped_surfaces_required": [
+    "build-info",
+    "today-launch",
+    "root-tabs",
+    "primary-empty-states",
+    "primary-actions",
+    "date-count-plural",
+    "dynamic-type-accessibility"
+  ],
+  "harness_plan": {
+    "tool": "automation/smoke/capture_localized_surfaces.py",
+    "dry_run_status": "planned (49 captures = 7 locales x 7 surfaces; idb + idb_companion ready)",
+    "label_overrides_needed": {
+      "today": {
+        "nb": ["I dag"],
+        "vi": ["Hôm nay"]
+      }
+    },
+    "actual_capture_status": "not run in this slice. Capture is a separate scope (a follow-up screenshot-capture slice) to keep proof artifacts and gate evaluation in distinct lanes."
+  },
+  "source_trace_per_locale": {
+    "fr": {
+      "today_label": "Aujourd'hui",
+      "today_label_length_chars": 11,
+      "vs_english": "11 vs 5 chars (220% longer)",
+      "train_label": "Entraîner",
+      "write_label": "Écrire",
+      "career_label": "Carrière",
+      "home_label": "Maison",
+      "build_info_label": "Infos de version",
+      "save_label": "Enregistrer",
+      "cancel_label": "Annuler",
+      "continue_label": "Continuer",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Today tab label 'Aujourd'hui' is the longest single tab label across all 19 locales and is the most likely tab-bar truncation candidate on smaller iPhone widths. See HIG-FR-001."
+    },
+    "it": {
+      "today_label": "Oggi",
+      "today_label_length_chars": 4,
+      "train_label": "Allenare",
+      "write_label": "Scrivere",
+      "career_label": "Carriera",
+      "home_label": "Casa",
+      "build_info_label": "Informazioni build",
+      "save_label": "Salva",
+      "cancel_label": "Annulla",
+      "continue_label": "Continua",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Build Info detail-row label is longer than English; not a tab label, so truncation risk is lower."
+    },
+    "nb": {
+      "today_label": "I dag",
+      "today_label_length_chars": 5,
+      "train_label": "Tren",
+      "write_label": "Skriv",
+      "career_label": "Karriere",
+      "home_label": "Hjem",
+      "build_info_label": "Build-info",
+      "save_label": "Lagre",
+      "cancel_label": "Avbryt",
+      "continue_label": "Fortsett",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Norwegian 'Tren' is the noun form (a train); the intent in English Owlory is the verb (to train). This is a translation-quality risk, not a HIG risk. Native review is still required to confirm or correct."
+    },
+    "pt": {
+      "today_label": "Hoje",
+      "today_label_length_chars": 4,
+      "train_label": "Treinar",
+      "write_label": "Escrever",
+      "career_label": "Carreira",
+      "home_label": "Casa",
+      "build_info_label": "Info da build",
+      "save_label": "Guardar",
+      "cancel_label": "Cancelar",
+      "continue_label": "Continuar",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "European Portuguese 'Guardar' for Save is correct; 'Salvar' (Brazilian) would be wrong here. pt and pt-BR are reviewed separately."
+    },
+    "pt-BR": {
+      "today_label": "Hoje",
+      "today_label_length_chars": 4,
+      "train_label": "Treinar",
+      "write_label": "Escrever",
+      "career_label": "Carreira",
+      "home_label": "Casa",
+      "build_info_label": "Info da build",
+      "save_label": "Salvar",
+      "cancel_label": "Cancelar",
+      "continue_label": "Continuar",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Brazilian Portuguese 'Salvar' for Save is correct; differs from pt 'Guardar' as expected."
+    },
+    "es": {
+      "today_label": "Hoy",
+      "today_label_length_chars": 3,
+      "train_label": "Entrenar",
+      "write_label": "Escribir",
+      "career_label": "Carrera",
+      "home_label": "Hogar",
+      "build_info_label": "Info de build",
+      "save_label": "Guardar",
+      "cancel_label": "Cancelar",
+      "continue_label": "Continuar",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "All key labels fit within typical tab-bar widths. No source-trace HIG risk identified."
+    },
+    "vi": {
+      "today_label": "Hôm nay",
+      "today_label_length_chars": 7,
+      "train_label": "Tập luyện",
+      "write_label": "Viết",
+      "career_label": "Sự nghiệp",
+      "home_label": "Nhà",
+      "build_info_label": "Thông tin bản dựng",
+      "save_label": "Lưu",
+      "cancel_label": "Hủy",
+      "continue_label": "Tiếp tục",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "'Tập luyện' (9 chars) for Train tab is longer than the other labels; Vietnamese diacritics typically render wider than equivalent character count. Build Info detail-row label is 19 chars (longest across these 7); detail rows accommodate this but verify."
+    }
+  },
+  "open_findings": [
+    {
+      "id": "HIG-FR-001",
+      "locale": "fr",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "French Today tab label 'Aujourd'hui' (11 chars) is significantly longer than the English 'Today' (5 chars) and is the longest Today tab label across all 19 supported locales. Tab-bar truncation likely on smaller iPhone widths (especially iPhone SE / standard iPhone in compact-width contexts).",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings: \"Today\" = \"Aujourd'hui\";",
+        "Comparison: en=5, fr=11, de=5, es=3, it=4, pt=4, vi=7, nb=5 chars."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No French Today tab screenshot is preserved under automation/proofs/.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture French Today tab screenshots on the smallest supported iPhone width (e.g., iPhone SE or iPhone 17 standard portrait) and confirm whether the tab label truncates or shrinks legibly. If truncation is visible, queue a UI tweak slice that adjusts the tab-bar layout, sets a localized abbreviation key, or enables truncationMode/lineLimit.",
+        "Add an accessibility identifier to each TabView item so XCUITests can target tabs without relying on translated labels (would also help capture_localized_surfaces.py recipes)."
+      ],
+      "created_at": "2026-05-18T06:35:00Z",
+      "closed_at_or_null": null
+    }
+  ],
+  "hig_areas_per_locale": {
+    "fr": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-FR-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "it": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "nb": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only (translation-quality risk on 'Tren' for Train tab; not a HIG defect)",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "pt": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "pt-BR": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "es": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "vi": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    }
+  },
+  "missing_evidence_for_pass": [
+    "Build Info screenshot per locale with complete gate fields (version, build, commit short/full, branch, source-clean flags)",
+    "Today screenshot per locale with no visible app-owned English strings",
+    "All five root tabs per locale",
+    "Primary empty states per locale (Today/Train/Write/Career/Home/Patterns/Settings empty-state copy)",
+    "Primary actions per locale (Save, Cancel, Continue, primary CTAs)",
+    "High-risk date/count/plural surfaces per locale",
+    "Dynamic Type pass (standard text size + Larger Accessibility Text)",
+    "Accessibility labels/hints/values for the reviewed surfaces"
+  ],
+  "not_claimed": [
+    "any of these 7 LTR locales is hig-ui-reviewed",
+    "any of these 7 LTR locales is native-reviewed",
+    "translation quality for any of these 7 LTR locales",
+    "screenshot-reviewed, device-verified, or testflight-verified for any of these 7 LTR locales"
+  ],
+  "downstream_recommendations": [
+    "Run automation/smoke/capture_localized_surfaces.py --capture --locales fr it nb pt pt-BR es vi --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today --label-overrides path/to/ltr_label_overrides.json. Confirm at least the today and root-tab surfaces capture cleanly before claiming screenshot-verified.",
+    "After capture, append findings to this gate, update the all-locale HIG evidence matrix per_locale_state for these 7 locales, and update each locale's scoped_surface_status from not-reviewed to passed-scoped / fail / partial.",
+    "If HIG-FR-001 is confirmed by screenshot evidence, queue a UI-tweak slice (likely under Features/, not within a localization slice) to address tab-bar truncation."
+  ]
+}
