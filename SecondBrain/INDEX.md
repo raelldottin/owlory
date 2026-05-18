@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-tab-bar-truncation-fix (regression-tested; REFRAMED to maintained-coverage; 7 new AccessibilityXL XCUITest cases for fr/ja/nl/ru/tr/uk/ar; 15-test DOMAIN=localization suite passes in 91.8s; closes 8 tab-truncation findings via closed-maintained-coverage state)](sessions/2026-05-18/105800-app-localization-tab-bar-truncation-fix.md)
 - [app-localization-multisurface-capture-final-move-fix (backfilled record; harness final-move ran AFTER temp staging dir was deleted by `with` exit, fixed inline 2026-05-18T10:41 and shipped in commit 028a511; surfaced as a named slice after user asked to record the scope deviation)](sessions/2026-05-18/104143-app-localization-hig-multisurface-screenshot-capture.md)
 - [app-localization-hig-multisurface-screenshot-capture (screenshot-verified today surface only; 18 PNGs preserved; HIG-AR-001 closed-fixed; 8 tab-truncation findings downgraded major→minor; iPhone 17 portrait default Dynamic Type; fixed harness bug inline)](sessions/2026-05-18/104143-app-localization-hig-multisurface-screenshot-capture.md)
 - [app-localization-rtl-sf-symbol-fix (build-tested; chevron.right→chevron.forward in TodayView:566 + arrow.right.circle→arrow.forward.circle in WriteView:88,181; HIG-AR-001 + HIG-AR-002 moved to in_progress with source_fix_confirmed=true; xcodebuild exit 0)](sessions/2026-05-18/102720-app-localization-rtl-sf-symbol-fix.md)

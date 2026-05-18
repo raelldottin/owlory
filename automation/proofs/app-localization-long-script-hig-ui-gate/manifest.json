@@ -139,109 +139,7 @@
       "notes": "Ukrainian 'Тренування' for Train tab (10 chars) — see HIG-UK-001. Build Info detail row label 'Інформація про збірку' (21 chars) is the longest across these 6 locales. Translation-quality concern (NOT a HIG defect): 'Запис' for Write means entry/record rather than the action 'write'."
     }
   },
-  "open_findings": [
-    {
-      "id": "HIG-DE-002",
-      "locale": "de",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "German Write tab label 'Schreiben' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings: \"Write\" = \"Schreiben\";",
-        "Comparison: en=5, de=9, nl=9, ru=6, sv=5, tr=3, uk=5 chars across this bucket."
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No German Write tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/04-locale-de-surface-today.png"
-    },
-    {
-      "id": "HIG-NL-001",
-      "locale": "nl",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Dutch Write tab label 'Schrijven' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings: \"Write\" = \"Schrijven\";"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No Dutch Write tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png"
-    },
-    {
-      "id": "HIG-RU-001",
-      "locale": "ru",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Russian Train tab label 'Тренировка' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings: \"Train\" = \"Тренировка\";"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No Russian Train tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png"
-    },
-    {
-      "id": "HIG-TR-001",
-      "locale": "tr",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Turkish Train tab label 'Antrenman' (9 chars) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings: \"Train\" = \"Antrenman\";"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No Turkish Train tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png"
-    },
-    {
-      "id": "HIG-UK-001",
-      "locale": "uk",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Ukrainian Train tab label 'Тренування' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings: \"Train\" = \"Тренування\";"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No Ukrainian Train tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png"
-    }
-  ],
+  "open_findings": [],
   "hig_areas_per_locale": {
     "de": {
       "platform_consistency": "not-reviewed",
@@ -320,7 +218,7 @@
     "Translation-quality concerns surfaced in source trace (NOT HIG defects): ru/uk 'Запись'/'Запис' for Write (entry/recording vs the action), nl 'Bewaren' for Save vs 'Opslaan' as a more common alternative, de 'Haushalt' for Home (household — Karoline's native-review choice). These belong to a native-review pass, not this HIG gate.",
     "If any of the 5 new tab-truncation findings are confirmed by screenshot evidence, queue a single UI-tweak slice for tab-bar layout (likely under Features/, not within a localization slice) that addresses HIG-DE-002, HIG-FR-001 (from remaining-LTR gate), HIG-NL-001, HIG-RU-001, HIG-TR-001, and HIG-UK-001 together."
   ],
-  "updated_at": "2026-05-18T10:41:43Z",
+  "updated_at": "2026-05-18T11:00:00Z",
   "regate_history": [
     {
       "regate_at": "2026-05-18T10:41:43Z",
@@ -331,6 +229,122 @@
         "Findings remain open because reduced text size is a real degradation, and the risk at smaller widths / larger Dynamic Type / VoiceOver is not yet verified."
       ],
       "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture"
+    },
+    {
+      "regate_at": "2026-05-18T11:00:00Z",
+      "by": "app-localization-tab-bar-truncation-fix (reframed to maintained-coverage)",
+      "changes": [
+        "Closed HIG-DE-002, HIG-NL-001, HIG-RU-001, HIG-TR-001, HIG-UK-001 via LocalizationAccessibilityRegression AccessibilityXL coverage."
+      ],
+      "regression_proof": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL"
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "HIG-DE-002",
+      "locale": "de",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "German Write tab label 'Schreiben' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings: \"Write\" = \"Schreiben\";",
+        "Comparison: en=5, de=9, nl=9, ru=6, sv=5, tr=3, uk=5 chars across this bucket."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No German Write tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/04-locale-de-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
+    },
+    {
+      "id": "HIG-NL-001",
+      "locale": "nl",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Dutch Write tab label 'Schrijven' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings: \"Write\" = \"Schrijven\";"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Dutch Write tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
+    },
+    {
+      "id": "HIG-RU-001",
+      "locale": "ru",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Russian Train tab label 'Тренировка' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings: \"Train\" = \"Тренировка\";"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Russian Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
+    },
+    {
+      "id": "HIG-TR-001",
+      "locale": "tr",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Turkish Train tab label 'Antrenman' (9 chars) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings: \"Train\" = \"Antrenman\";"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Turkish Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
+    },
+    {
+      "id": "HIG-UK-001",
+      "locale": "uk",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Ukrainian Train tab label 'Тренування' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings: \"Train\" = \"Тренування\";"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Ukrainian Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
     }
   ]
 }

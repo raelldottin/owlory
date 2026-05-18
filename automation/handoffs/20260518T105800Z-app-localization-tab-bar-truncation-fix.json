@@ -1,0 +1,91 @@
+{
+  "slice_id": "app-localization-tab-bar-truncation-fix",
+  "title": "Fix tab-bar truncation for long localized tab labels",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T11:00:00Z",
+  "proof_level": "regression-tested",
+  "reframed": "Original scope (UI tweak with lineLimit/truncationMode/minimumScaleFactor) was deferred after prior screenshot evidence showed iOS already auto-shrinks the longer tab labels rather than truncating at iPhone 17 portrait default Dynamic Type. New scope, approved by user via AskUserQuestion: extend LocalizationAccessibilityRegression with maintained coverage at AccessibilityXL for the 7 newly-flagged locales (fr, ja, nl, ru, tr, uk, ar). de + en already covered.",
+  "summary": "Added 7 new XCUITest methods to LocalizationAccessibilityRegression. Each launches a fresh-day seeded Owlory in the target locale with UICTContentSizeCategoryAccessibilityXL and asserts the Today dashboard header is reachable plus the root tab bar exposes 5 hittable buttons. All 11 accessibility tests pass on iPhone 17 / iOS 26.5 simulator in 66.8s. The full DOMAIN=localization suite (15 tests: 11 accessibility + 4 layout) passes in 91.8s. No app source or translation changes. Closed 8 tab-truncation findings via maintained-coverage state (HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001).",
+  "files_changed": [
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
+    "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-cjk-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/manifest.json",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T105800Z-app-localization-tab-bar-truncation-fix.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/105800-app-localization-tab-bar-truncation-fix.md"
+  ],
+  "scope_deviation": "owlory_xcode/OwloryUITests/ is not strictly under owlory_xcode/Owlory/ in this slice's allowed_paths, but the reframed scope is XCUITest expansion and matches the required_validations (make ui-regression DOMAIN=localization). The original UI tweak scope (still under owlory_xcode/Owlory/) was deferred because evidence did not justify it. Recorded honestly.",
+  "test_results": {
+    "make ui-regression DOMAIN=localization": "TEST SUCCEEDED (15 tests / 0 failures / 91.8s)",
+    "new_tests_added": [
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextFrench",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextJapanese",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextDutch",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextRussian",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextTurkish",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextUkrainian",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextArabic"
+    ],
+    "previously_existing_tests": [
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextEnglish",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextGerman",
+      "testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish",
+      "testRootTabsRemainAt44ptTouchTargetsUnderEnglish"
+    ]
+  },
+  "findings_closed": [
+    "HIG-AR-003 (state: closed-maintained-coverage)",
+    "HIG-DE-002 (state: closed-maintained-coverage)",
+    "HIG-FR-001 (state: closed-maintained-coverage)",
+    "HIG-JA-001 (state: closed-maintained-coverage)",
+    "HIG-NL-001 (state: closed-maintained-coverage)",
+    "HIG-RU-001 (state: closed-maintained-coverage)",
+    "HIG-TR-001 (state: closed-maintained-coverage)",
+    "HIG-UK-001 (state: closed-maintained-coverage)"
+  ],
+  "matrix_tally_after_slice": {
+    "open_findings": ["HIG-DE-001"],
+    "in_progress_findings": ["HIG-AR-002"],
+    "closed_findings": [
+      "HIG-AR-001",
+      "HIG-AR-003",
+      "HIG-DE-002",
+      "HIG-FR-001",
+      "HIG-JA-001",
+      "HIG-NL-001",
+      "HIG-RU-001",
+      "HIG-TR-001",
+      "HIG-UK-001"
+    ]
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-tab-bar-truncation-fix": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make ui-regression DOMAIN=localization": "TEST SUCCEEDED (15 tests / 0 failures)",
+    "make automation-check": "passed (71 tests)",
+    "xcodebuild build-for-testing": "exit 0 (warnings only, pre-existing)",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any locale is hig-ui-reviewed",
+    "translation quality for any locale",
+    "device or TestFlight proof",
+    "smaller iPhone width verification (iPhone SE etc.)",
+    "VoiceOver listening verification under non-English locales",
+    "screenshot evidence at AccessibilityXL (the regression asserts behavior, doesn't preserve a screenshot)"
+  ],
+  "residual_risk": [
+    "AccessibilityXL regressions assert the shell settles and tabs are hittable but do not measure label readability at the auto-shrunk size. The text may render legibly but smaller for the longer-label tabs; only a VoiceOver / vision-test pass would catch readability concerns.",
+    "Smaller iPhone widths (iPhone SE physical or simulator) are not covered. The current regression targets iPhone 17 only.",
+    "The maintained regression is locale-specific; if a new locale is added later with an even longer tab label, that locale must be added explicitly to LocalizationAccessibilityRegression."
+  ],
+  "downstream_unblocked_slices": []
+}

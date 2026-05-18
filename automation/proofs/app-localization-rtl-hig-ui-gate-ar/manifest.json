@@ -50,33 +50,7 @@
     "native_reviewed": false,
     "notes": "Tab labels other than Career fit typical iPhone tab-bar widths. Career 'المسيرة المهنية' (15 chars including space) is significantly longer than the English 'Career' (6 chars) and is the longest Career label across all 19 locales; see HIG-AR-003."
   },
-  "open_findings": [
-    {
-      "id": "HIG-AR-003",
-      "locale": "ar",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Arabic Career tab label 'المسيرة المهنية' (15 chars including space) is the longest Career label across all 19 supported locales (compare: en 'Career' = 6 chars; most other locales <= 9 chars). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings: \"Career\" = \"المسيرة المهنية\";",
-        "Comparison across locales: en=6, de=8, fr=8, ja=4 (キャリア), zh-Hans=2 (事业), ar=15 chars."
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Capture Arabic Career tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates.",
-        "Shares fix shape with HIG-DE-002/FR-001/JA-001/NL-001/RU-001/TR-001/UK-001 from the other bucket gates; a single tab-bar UI-tweak slice should address all eight after screenshot confirmation.",
-        "Native reviewer could also propose a shorter Arabic Career form (e.g., 'مهنة' or 'مسيرة') if shorter terminology is acceptable in context."
-      ],
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Arabic Today screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png shows the Career tab label 'المسيرة المهنية' rendered without literal truncation at iPhone 17 portrait default Dynamic Type. iOS auto-shrinks the longer labels to fit. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text."
-    }
-  ],
+  "open_findings": [],
   "hig_areas_ar": {
     "platform_consistency": "not-reviewed",
     "adaptive_layout": "fail (HIG-AR-003)",
@@ -110,7 +84,7 @@
     "After capture, confirm or deny HIG-AR-003 (Career tab truncation) and append findings + the all-locale HIG evidence matrix per_locale_state for ar.",
     "If HIG-AR-003 is confirmed, the tab-bar UI-tweak slice should bundle Arabic alongside the seven other tab-truncation findings."
   ],
-  "updated_at": "2026-05-18T10:41:43Z",
+  "updated_at": "2026-05-18T11:00:00Z",
   "in_progress_findings": [
     {
       "id": "HIG-AR-002",
@@ -172,6 +146,14 @@
         "Larger Dynamic Type evidence for Arabic",
         "Other scoped surfaces (root tabs, build-info, empty states, primary actions, date/count/plural, accessibility labels/hints/values)"
       ]
+    },
+    {
+      "regate_at": "2026-05-18T11:00:00Z",
+      "by": "app-localization-tab-bar-truncation-fix (reframed to maintained-coverage)",
+      "changes": [
+        "Closed HIG-AR-003 via LocalizationAccessibilityRegression AccessibilityXL coverage."
+      ],
+      "regression_proof": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL"
     }
   ],
   "closed_findings": [
@@ -202,6 +184,32 @@
       "source_fix_at": "2026-05-18T10:27:20Z",
       "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice.",
       "closure_evidence": "Captured Arabic Today screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png shows the Continue-row chevron pointing LEFT, confirming chevron.forward auto-mirrors correctly under RTL."
+    },
+    {
+      "id": "HIG-AR-003",
+      "locale": "ar",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Arabic Career tab label 'المسيرة المهنية' (15 chars including space) is the longest Career label across all 19 supported locales (compare: en 'Career' = 6 chars; most other locales <= 9 chars). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings: \"Career\" = \"المسيرة المهنية\";",
+        "Comparison across locales: en=6, de=8, fr=8, ja=4 (キャリア), zh-Hans=2 (事业), ar=15 chars."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture Arabic Career tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates.",
+        "Shares fix shape with HIG-DE-002/FR-001/JA-001/NL-001/RU-001/TR-001/UK-001 from the other bucket gates; a single tab-bar UI-tweak slice should address all eight after screenshot confirmation.",
+        "Native reviewer could also propose a shorter Arabic Career form (e.g., 'مهنة' or 'مسيرة') if shorter terminology is acceptable in context."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Arabic Today screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png shows the Career tab label 'المسيرة المهنية' rendered without literal truncation at iPhone 17 portrait default Dynamic Type. iOS auto-shrinks the longer labels to fit. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
     }
   ]
 }

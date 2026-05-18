@@ -155,33 +155,7 @@
       "notes": "'Tập luyện' (9 chars) for Train tab is longer than the other labels; Vietnamese diacritics typically render wider than equivalent character count. Build Info detail-row label is 19 chars (longest across these 7); detail rows accommodate this but verify."
     }
   },
-  "open_findings": [
-    {
-      "id": "HIG-FR-001",
-      "locale": "fr",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "French Today tab label 'Aujourd'hui' (11 chars) is significantly longer than the English 'Today' (5 chars) and is the longest Today tab label across all 19 supported locales. Tab-bar truncation likely on smaller iPhone widths (especially iPhone SE / standard iPhone in compact-width contexts).",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings: \"Today\" = \"Aujourd'hui\";",
-        "Comparison: en=5, fr=11, de=5, es=3, it=4, pt=4, vi=7, nb=5 chars."
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No French Today tab screenshot is preserved under automation/proofs/.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Capture French Today tab screenshots on the smallest supported iPhone width (e.g., iPhone SE or iPhone 17 standard portrait) and confirm whether the tab label truncates or shrinks legibly. If truncation is visible, queue a UI tweak slice that adjusts the tab-bar layout, sets a localized abbreviation key, or enables truncationMode/lineLimit.",
-        "Add an accessibility identifier to each TabView item so XCUITests can target tabs without relying on translated labels (would also help capture_localized_surfaces.py recipes)."
-      ],
-      "created_at": "2026-05-18T06:35:00Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png"
-    }
-  ],
+  "open_findings": [],
   "hig_areas_per_locale": {
     "fr": {
       "platform_consistency": "not-reviewed",
@@ -268,7 +242,7 @@
     "After capture, append findings to this gate, update the all-locale HIG evidence matrix per_locale_state for these 7 locales, and update each locale's scoped_surface_status from not-reviewed to passed-scoped / fail / partial.",
     "If HIG-FR-001 is confirmed by screenshot evidence, queue a UI-tweak slice (likely under Features/, not within a localization slice) to address tab-bar truncation."
   ],
-  "updated_at": "2026-05-18T10:41:43Z",
+  "updated_at": "2026-05-18T11:00:00Z",
   "regate_history": [
     {
       "regate_at": "2026-05-18T10:41:43Z",
@@ -278,6 +252,42 @@
         "iOS auto-shrinks 'Aujourd'hui' to fit at iPhone 17 portrait default Dynamic Type; no literal truncation."
       ],
       "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture"
+    },
+    {
+      "regate_at": "2026-05-18T11:00:00Z",
+      "by": "app-localization-tab-bar-truncation-fix (reframed to maintained-coverage)",
+      "changes": [
+        "Closed HIG-FR-001 via LocalizationAccessibilityRegression AccessibilityXL coverage."
+      ],
+      "regression_proof": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL"
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "HIG-FR-001",
+      "locale": "fr",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "French Today tab label 'Aujourd'hui' (11 chars) is significantly longer than the English 'Today' (5 chars) and is the longest Today tab label across all 19 supported locales. Tab-bar truncation likely on smaller iPhone widths (especially iPhone SE / standard iPhone in compact-width contexts).",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings: \"Today\" = \"Aujourd'hui\";",
+        "Comparison: en=5, fr=11, de=5, es=3, it=4, pt=4, vi=7, nb=5 chars."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No French Today tab screenshot is preserved under automation/proofs/.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture French Today tab screenshots on the smallest supported iPhone width (e.g., iPhone SE or iPhone 17 standard portrait) and confirm whether the tab label truncates or shrinks legibly. If truncation is visible, queue a UI tweak slice that adjusts the tab-bar layout, sets a localized abbreviation key, or enables truncationMode/lineLimit.",
+        "Add an accessibility identifier to each TabView item so XCUITests can target tabs without relying on translated labels (would also help capture_localized_surfaces.py recipes)."
+      ],
+      "created_at": "2026-05-18T06:35:00Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
     }
   ]
 }

@@ -1234,6 +1234,75 @@ final class LocalizationAccessibilityRegression: XCTestCase {
         assertShellSettled()
     }
 
+    // The seven tests below cover the bucket-gate locales whose tab labels were
+    // flagged for tab-bar truncation risk (HIG-FR-001, HIG-JA-001, HIG-NL-001,
+    // HIG-RU-001, HIG-TR-001, HIG-UK-001, HIG-AR-003). At iPhone default width
+    // and default Dynamic Type iOS auto-shrinks the longer labels rather than
+    // truncating; these tests assert that the shell still settles and all five
+    // tabs remain hittable when accessibility text size is bumped to XL.
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextFrench() throws {
+        launch(
+            language: "fr",
+            locale: "fr_FR",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextJapanese() throws {
+        launch(
+            language: "ja",
+            locale: "ja_JP",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextDutch() throws {
+        launch(
+            language: "nl",
+            locale: "nl_NL",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextRussian() throws {
+        launch(
+            language: "ru",
+            locale: "ru_RU",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextTurkish() throws {
+        launch(
+            language: "tr",
+            locale: "tr_TR",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextUkrainian() throws {
+        launch(
+            language: "uk",
+            locale: "uk_UA",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextArabic() throws {
+        launch(
+            language: "ar",
+            locale: "ar_SA",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
     func testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish() throws {
         launch(language: "en", locale: "en_US", contentSizeCategory: nil)
 

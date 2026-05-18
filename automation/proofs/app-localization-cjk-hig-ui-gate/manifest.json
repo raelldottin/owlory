@@ -95,34 +95,7 @@
       "notes": "Traditional Chinese tab labels are uniformly 1-2 traditional ideographs — ideal for tab-bar use. Differs from Simplified Chinese as expected (e.g., '訓練' vs '训练', '事業' vs '事业', '儲存' vs '保存'). No source-trace HIG risk identified."
     }
   },
-  "open_findings": [
-    {
-      "id": "HIG-JA-001",
-      "locale": "ja",
-      "severity": "minor",
-      "area": "adaptive-layout",
-      "state": "open",
-      "summary": "Japanese Train tab label 'トレーニング' (6 katakana characters) is significantly wider than typical CJK 2-character tab labels and wider than the English 'Train' (5 Latin chars; CJK glyphs render roughly 2x Latin width per character, so 6 katakana ~= 12 Latin chars equivalent). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings: \"Train\" = \"トレーニング\";",
-        "Comparison across CJK bucket: ja 'トレーニング'=6ch, ko '훈련'=2ch, zh-Hans '训练'=2ch, zh-Hant '訓練'=2ch."
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings"
-      ],
-      "proof_path_or_chat_observation": "Source-trace inspection only. No Japanese Train tab screenshot is preserved.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Capture Japanese Train tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates or shrinks legibly.",
-        "If truncation is confirmed, native reviewer could swap to kanji alternative '訓練' (2 chars) which would also align with the other CJK locales' lengths.",
-        "Alternatively, address with a tab-bar UI tweak alongside HIG-DE-002/FR-001/NL-001/RU-001/TR-001/UK-001."
-      ],
-      "created_at": "2026-05-18T10:11:19Z",
-      "closed_at_or_null": null,
-      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
-      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png"
-    }
-  ],
+  "open_findings": [],
   "hig_areas_per_locale": {
     "ja": {
       "platform_consistency": "not-reviewed",
@@ -182,7 +155,7 @@
     "After capture, append findings to this gate and update the all-locale HIG evidence matrix per_locale_state for these 4 locales.",
     "HIG-JA-001 shares a fix shape with HIG-FR-001 + HIG-DE-002/NL-001/RU-001/TR-001/UK-001 (tab-bar truncation). After screenshot confirmation, the same single tab-bar UI-tweak slice can address it."
   ],
-  "updated_at": "2026-05-18T10:41:43Z",
+  "updated_at": "2026-05-18T11:00:00Z",
   "regate_history": [
     {
       "regate_at": "2026-05-18T10:41:43Z",
@@ -192,6 +165,43 @@
         "iOS auto-shrinks 'トレーニング' to fit at iPhone 17 portrait default Dynamic Type; no literal truncation."
       ],
       "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture"
+    },
+    {
+      "regate_at": "2026-05-18T11:00:00Z",
+      "by": "app-localization-tab-bar-truncation-fix (reframed to maintained-coverage)",
+      "changes": [
+        "Closed HIG-JA-001 via LocalizationAccessibilityRegression AccessibilityXL coverage."
+      ],
+      "regression_proof": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL"
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "HIG-JA-001",
+      "locale": "ja",
+      "severity": "minor",
+      "area": "adaptive-layout",
+      "state": "closed-maintained-coverage",
+      "summary": "Japanese Train tab label 'トレーニング' (6 katakana characters) is significantly wider than typical CJK 2-character tab labels and wider than the English 'Train' (5 Latin chars; CJK glyphs render roughly 2x Latin width per character, so 6 katakana ~= 12 Latin chars equivalent). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings: \"Train\" = \"トレーニング\";",
+        "Comparison across CJK bucket: ja 'トレーニング'=6ch, ko '훈련'=2ch, zh-Hans '训练'=2ch, zh-Hant '訓練'=2ch."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings"
+      ],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Japanese Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture Japanese Train tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates or shrinks legibly.",
+        "If truncation is confirmed, native reviewer could swap to kanji alternative '訓練' (2 chars) which would also align with the other CJK locales' lengths.",
+        "Alternatively, address with a tab-bar UI tweak alongside HIG-DE-002/FR-001/NL-001/RU-001/TR-001/UK-001."
+      ],
+      "created_at": "2026-05-18T10:11:19Z",
+      "closed_at_or_null": "2026-05-18T11:00:00Z",
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png",
+      "closure_evidence": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL passing under iPhone 17 / iOS 26.5; combined with screenshot evidence showing iOS auto-shrink behaviour, this finding is closed via maintained coverage."
     }
   ]
 }
