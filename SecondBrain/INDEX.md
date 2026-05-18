@@ -2,6 +2,8 @@
 
 ## 2026-05-18
 
+- [blocked-hig-closure-completion-walkthrough (process to unblock final all-locale HIG closure: capture missing scoped proof, close HIG-DE-001/HIG-AR-002, update matrix/docs, run validation)](sessions/2026-05-18/081225-blocked-hig-closure-completion-walkthrough.md)
+- [localization-hig-compliance-status-check (not complete; native/fluent review done, but HIG matrix has 0 claimed locales, HIG-DE-001/HIG-AR-002 pending proof, final closure parked)](sessions/2026-05-18/081144-localization-hig-compliance-status-check.md)
 - [start-next-slice-clean-stop-after-native-review (no eligible queued slice; all native/fluent review intake complete; final HIG closure remains parked on scoped proof conditions)](sessions/2026-05-18/080952-start-next-slice-clean-stop-after-native-review.md)
 - [app-localization-all-locale-native-review (doc-only intake; all 18 non-English locale return files now native/fluent-reviewed, 7,542 native-reviewed entries; HIG UI readiness still not claimed)](sessions/2026-05-18/075551-app-localization-all-locale-native-review.md)
 - [start-next-slice-clean-stop-repeat-4 (no eligible queued slice after fresh fetch; clean-stop still passed; repo clean/mirrored)](sessions/2026-05-18/074443-start-next-slice-clean-stop-repeat-4.md)
