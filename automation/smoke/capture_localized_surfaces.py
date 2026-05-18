@@ -401,34 +401,34 @@ def capture_all(
                 else:
                     failures.append(capture)
 
-    git_commit = read_git_commit_short()
-    result = {
-        "schema_version": 1,
-        "slice_id": "app-localization-hig-multisurface-screenshot-harness",
-        "timestamp": utc_timestamp(),
-        "status": "passed" if not failures else "blocked",
-        "proof_level": "screenshot-verified" if not failures else None,
-        "git_commit_short": git_commit,
-        "target": {"udid": args.udid, "bundle_id": args.bundle_id},
-        "captures": entries,
-        "failures": failures,
-        "non_claims": [
-            "translation quality",
-            "full layout correctness",
-            "device proof",
-            "TestFlight proof",
-            "hig-ui-reviewed",
-        ],
-    }
-    if not failures and entries:
-        output_dir.mkdir(parents=True, exist_ok=True)
-        for entry in entries:
-            staged = Path(entry["_staged_path"])
-            final = output_dir / entry["file"]
-            shutil.move(str(staged), final)
-            del entry["_staged_path"]
-        write_readme(output_dir, args.locales, [s.id for s in surfaces])
-        write_manifest(output_dir, result)
+        git_commit = read_git_commit_short()
+        result = {
+            "schema_version": 1,
+            "slice_id": "app-localization-hig-multisurface-screenshot-harness",
+            "timestamp": utc_timestamp(),
+            "status": "passed" if not failures else "blocked",
+            "proof_level": "screenshot-verified" if not failures else None,
+            "git_commit_short": git_commit,
+            "target": {"udid": args.udid, "bundle_id": args.bundle_id},
+            "captures": entries,
+            "failures": failures,
+            "non_claims": [
+                "translation quality",
+                "full layout correctness",
+                "device proof",
+                "TestFlight proof",
+                "hig-ui-reviewed",
+            ],
+        }
+        if not failures and entries:
+            output_dir.mkdir(parents=True, exist_ok=True)
+            for entry in entries:
+                staged = Path(entry["_staged_path"])
+                final = output_dir / entry["file"]
+                shutil.move(str(staged), final)
+                del entry["_staged_path"]
+            write_readme(output_dir, args.locales, [s.id for s in surfaces])
+            write_manifest(output_dir, result)
     return result
 
 

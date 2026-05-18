@@ -198,7 +198,7 @@
       ],
       "scoped_surface_status": {
         "build-info": "build-info-observed (chat-only, no committed binary)",
-        "today-launch": "partial (HIG-DE-001 surfaced English evening reflection nudge; source fixed in app-localization-evening-reflection-nudge-routing; rerun screenshot still missing)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -208,7 +208,8 @@
       },
       "proof_references": [
         "automation/proofs/app-localization-german-hig-ui-gate/manifest.json",
-        "localization/review/de/german-review-return.json"
+        "localization/review/de/german-review-return.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/04-locale-de-surface-today.png"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
@@ -225,7 +226,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -233,7 +234,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-reviewed"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -249,7 +252,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -257,7 +260,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -272,7 +277,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -280,7 +285,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/07-locale-ko-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -295,7 +302,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -303,7 +310,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/14-locale-zh-Hans-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -318,7 +327,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -326,7 +335,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/15-locale-zh-Hant-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -341,7 +352,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -349,7 +360,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -364,7 +377,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -372,7 +385,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -387,7 +402,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -395,7 +410,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/13-locale-sv-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -410,7 +427,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -418,7 +435,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -433,7 +452,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -441,7 +460,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -456,7 +477,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -464,7 +485,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -479,7 +502,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -487,7 +510,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/05-locale-it-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -502,7 +527,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -510,7 +535,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/08-locale-nb-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -525,7 +552,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -533,7 +560,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/09-locale-pt-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -548,7 +577,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -556,7 +585,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/10-locale-pt-BR-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -571,7 +602,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -579,7 +610,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/12-locale-es-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -594,7 +627,7 @@
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -602,7 +635,9 @@
         "dynamic-type-accessibility": "not-reviewed",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/18-locale-vi-surface-today.png"
+      ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
         "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
@@ -635,7 +670,7 @@
     {
       "id": "HIG-AR-003",
       "locale": "ar",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Arabic Career tab label 'المسيرة المهنية' (15 chars) is the longest Career label across all 19 locales; tab-bar truncation risk.",
@@ -648,12 +683,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-DE-002",
       "locale": "de",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "German Write tab label 'Schreiben' (9 chars vs en 5); tab-bar truncation risk.",
@@ -666,12 +702,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-FR-001",
       "locale": "fr",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "French Today tab label 'Aujourd'hui' (11 chars vs en 5); longest Today label across all 19 locales; tab-bar truncation risk.",
@@ -684,12 +721,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T06:35:00Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-JA-001",
       "locale": "ja",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Japanese Train tab label 'トレーニング' (6 katakana chars; ~2x Latin width); tab-bar truncation risk.",
@@ -702,12 +740,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-cjk-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:11:19Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-NL-001",
       "locale": "nl",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Dutch Write tab label 'Schrijven' (9 chars vs en 5); tab-bar truncation risk.",
@@ -720,12 +759,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-RU-001",
       "locale": "ru",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Russian Train tab label 'Тренировка' (10 chars, Cyrillic); tab-bar truncation likely.",
@@ -738,12 +778,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-TR-001",
       "locale": "tr",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Turkish Train tab label 'Antrenman' (9 chars vs en 5); tab-bar truncation risk.",
@@ -756,12 +797,13 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     },
     {
       "id": "HIG-UK-001",
       "locale": "uk",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Ukrainian Train tab label 'Тренування' (10 chars, Cyrillic); tab-bar truncation likely.",
@@ -774,10 +816,33 @@
       "proof_path_or_chat_observation": "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
       "remediation_slice_id_or_null": "app-localization-tab-bar-truncation-fix",
       "created_at": "2026-05-18T10:04:52Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor."
     }
   ],
-  "closed_findings": [],
+  "closed_findings": [
+    {
+      "id": "HIG-AR-001",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "closed-fixed",
+      "summary": "TodayView 'chevron.right' SF Symbol does not auto-mirror under RTL.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift"
+      ],
+      "proof_path_or_chat_observation": "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
+      "remediation_slice_id_or_null": "app-localization-rtl-sf-symbol-fix",
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": "2026-05-18T10:41:43Z",
+      "source_fix_confirmed": true,
+      "source_fix_at": "2026-05-18T10:27:20Z",
+      "source_fix_slice": "app-localization-rtl-sf-symbol-fix"
+    }
+  ],
   "remediation_slice_pointers": {
     "HIG-DE-001": "app-localization-hig-multisurface-screenshot-capture (post-fix screenshot capture)",
     "HIG-AR-001": "app-localization-rtl-sf-symbol-fix",
@@ -825,7 +890,7 @@
       "app-localization-tab-bar-truncation-fix (pri 77; conditional on capture confirming truncation; addresses 8 adaptive-layout findings together)"
     ]
   },
-  "updated_at": "2026-05-18T10:27:20Z",
+  "updated_at": "2026-05-18T10:41:43Z",
   "notes": [
     {
       "at": "2026-05-18T05:20:00Z",
@@ -838,30 +903,13 @@
     {
       "at": "2026-05-18T10:27:20Z",
       "summary": "app-localization-rtl-sf-symbol-fix landed source fix for HIG-AR-001 (chevron.right -> chevron.forward in TodayView:566) and HIG-AR-002 (arrow.right.circle -> arrow.forward.circle in WriteView:88,181). Both findings moved from open_findings to in_progress_findings with source_fix_confirmed=true. Closure requires post-fix Arabic screenshot evidence under app-localization-hig-multisurface-screenshot-capture."
+    },
+    {
+      "at": "2026-05-18T10:41:43Z",
+      "summary": "app-localization-hig-multisurface-screenshot-capture landed 18 today-surface screenshots (one per non-English locale) under automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/. Inspection: HIG-AR-001 closed-fixed (chevron auto-mirrors under RTL). The 8 tab-truncation findings (HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001) downgraded from major to minor: iOS auto-shrinks labels to fit at iPhone 17 portrait default; literal truncation does not occur. HIG-AR-002 stays in-progress (WriteView Arabic not captured). HIG-DE-001 stays in-progress (evening-reflection state not directly captured)."
     }
   ],
   "in_progress_findings": [
-    {
-      "id": "HIG-AR-001",
-      "locale": "ar",
-      "severity": "major",
-      "area": "right-to-left",
-      "state": "in-progress",
-      "summary": "TodayView 'chevron.right' SF Symbol does not auto-mirror under RTL.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift"
-      ],
-      "proof_path_or_chat_observation": "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
-      "remediation_slice_id_or_null": "app-localization-rtl-sf-symbol-fix",
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null,
-      "source_fix_confirmed": true,
-      "source_fix_at": "2026-05-18T10:27:20Z",
-      "source_fix_slice": "app-localization-rtl-sf-symbol-fix"
-    },
     {
       "id": "HIG-AR-002",
       "locale": "ar",

@@ -73,7 +73,7 @@ The harness does not claim translation quality, full layout correctness, device 
 The queue encodes the path to completion:
 
 1. `app-localization-hig-evidence-matrix` creates the all-locale HIG evidence matrix and finding taxonomy.
-2. `app-localization-hig-multisurface-screenshot-harness` broadens screenshot capture beyond one Today launch screenshot per locale.
+2. `app-localization-hig-multisurface-screenshot-harness` broadens screenshot capture beyond one Today launch screenshot per locale. **Capture ran 2026-05-18**: 18 today-surface screenshots preserved under `automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/`. HIG-AR-001 closed-fixed; 8 tab-truncation findings downgraded to minor (iOS auto-shrinks); HIG-AR-002 + HIG-DE-001 stay in-progress.
 3. `app-localization-hig-dynamic-type-accessibility-harness` adds maintained checks for Dynamic Type, accessibility labels/values/hints, tab reachability, and touch target regressions.
 4. Per-locale native-review slices unblock non-German final claims.
 5. Bucketed HIG gate slices run the evidence review and queue remediation for failures.

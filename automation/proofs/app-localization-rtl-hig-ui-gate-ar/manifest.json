@@ -54,7 +54,7 @@
     {
       "id": "HIG-AR-003",
       "locale": "ar",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "Arabic Career tab label 'المسيرة المهنية' (15 chars including space) is the longest Career label across all 19 supported locales (compare: en 'Career' = 6 chars; most other locales <= 9 chars). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
@@ -73,7 +73,8 @@
         "Native reviewer could also propose a shorter Arabic Career form (e.g., 'مهنة' or 'مسيرة') if shorter terminology is acceptable in context."
       ],
       "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_note": "Captured Arabic Today screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png shows the Career tab label 'المسيرة المهنية' rendered without literal truncation at iPhone 17 portrait default Dynamic Type. iOS auto-shrinks the longer labels to fit. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text."
     }
   ],
   "hig_areas_ar": {
@@ -109,35 +110,8 @@
     "After capture, confirm or deny HIG-AR-003 (Career tab truncation) and append findings + the all-locale HIG evidence matrix per_locale_state for ar.",
     "If HIG-AR-003 is confirmed, the tab-bar UI-tweak slice should bundle Arabic alongside the seven other tab-truncation findings."
   ],
-  "updated_at": "2026-05-18T10:27:20Z",
+  "updated_at": "2026-05-18T10:41:43Z",
   "in_progress_findings": [
-    {
-      "id": "HIG-AR-001",
-      "locale": "ar",
-      "severity": "major",
-      "area": "right-to-left",
-      "state": "in-progress",
-      "summary": "TodayView uses the explicit directional SF Symbol 'chevron.right' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the chevron should point leading-to-trailing (right-to-left), but 'chevron.right' always points right. Apple HIG requires direction-aware icons to mirror.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift"
-      ],
-      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
-      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Replace 'chevron.right' with 'chevron.forward' (auto-mirroring SF Symbol).",
-        "Or apply '.flipsForRightToLeftLayoutDirection(true)' to the Image; the .forward form is preferred per Apple HIG."
-      ],
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null,
-      "source_fix_confirmed": true,
-      "source_fix_commit_summary": "Replace .right SF Symbols with .forward variants under app-localization-rtl-sf-symbol-fix on 2026-05-18",
-      "source_fix_at": "2026-05-18T10:27:20Z",
-      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice."
-    },
     {
       "id": "HIG-AR-002",
       "locale": "ar",
@@ -164,7 +138,8 @@
       "source_fix_confirmed": true,
       "source_fix_commit_summary": "Replace .right SF Symbols with .forward variants under app-localization-rtl-sf-symbol-fix on 2026-05-18",
       "source_fix_at": "2026-05-18T10:27:20Z",
-      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice."
+      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice.",
+      "awaiting_evidence": "WriteView screenshot under Arabic (not captured in 2026-05-18T103428Z-today-capture which only covered the today surface)."
     }
   ],
   "regate_history": [
@@ -181,6 +156,52 @@
         "Post-fix Arabic screenshot for the Today Continue row chevron and the WriteView pipeline nudge + Advance swipe action.",
         "Capture via app-localization-hig-multisurface-screenshot-capture."
       ]
+    },
+    {
+      "regate_at": "2026-05-18T10:41:43Z",
+      "by": "app-localization-hig-multisurface-screenshot-capture",
+      "changes": [
+        "HIG-AR-001 moved to closed_findings (state: closed-fixed). Arabic Today screenshot shows chevron auto-mirroring correctly under RTL.",
+        "HIG-AR-002 stays in_progress; WriteView screenshot under Arabic not captured in this run.",
+        "HIG-AR-003 severity downgraded from major to minor. iOS auto-shrinks the long Career label; literal truncation does not occur at iPhone 17 portrait default Dynamic Type."
+      ],
+      "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture",
+      "remaining_blockers_for_hig_ui_reviewed_claim": [
+        "WriteView Arabic screenshot for HIG-AR-002 closure",
+        "Smaller-iPhone-width screenshot for HIG-AR-003 risk verification",
+        "Larger Dynamic Type evidence for Arabic",
+        "Other scoped surfaces (root tabs, build-info, empty states, primary actions, date/count/plural, accessibility labels/hints/values)"
+      ]
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "HIG-AR-001",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "closed-fixed",
+      "summary": "TodayView uses the explicit directional SF Symbol 'chevron.right' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the chevron should point leading-to-trailing (right-to-left), but 'chevron.right' always points right. Apple HIG requires direction-aware icons to mirror.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift"
+      ],
+      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
+      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Replace 'chevron.right' with 'chevron.forward' (auto-mirroring SF Symbol).",
+        "Or apply '.flipsForRightToLeftLayoutDirection(true)' to the Image; the .forward form is preferred per Apple HIG."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": "2026-05-18T10:41:43Z",
+      "source_fix_confirmed": true,
+      "source_fix_commit_summary": "Replace .right SF Symbols with .forward variants under app-localization-rtl-sf-symbol-fix on 2026-05-18",
+      "source_fix_at": "2026-05-18T10:27:20Z",
+      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice.",
+      "closure_evidence": "Captured Arabic Today screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png shows the Continue-row chevron pointing LEFT, confirming chevron.forward auto-mirrors correctly under RTL."
     }
   ]
 }

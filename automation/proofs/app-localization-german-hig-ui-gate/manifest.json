@@ -2,7 +2,7 @@
   "proof_id": "app-localization-german-hig-ui-gate",
   "slice_id": "app-localization-german-hig-ui-regate",
   "created_at": "2026-05-18T02:29:24Z",
-  "updated_at": "2026-05-18T05:12:32Z",
+  "updated_at": "2026-05-18T10:41:43Z",
   "locale": "de",
   "source": "Chat-observed screenshots provided by Karoline on 2026-05-18 plus local source trace and verified post-fix source state on 2026-05-18.",
   "artifact_persisted": false,
@@ -33,7 +33,9 @@
       "blocker_for_closure": "No rerun screenshot of the German Today surface has been preserved under automation/proofs/. The chat-observed screenshot was captured before the fix; a post-fix capture is required to move HIG-DE-001 to state closed-fixed.",
       "created_at": "2026-05-18T02:29:24Z",
       "source_fix_confirmed_at": "2026-05-18T05:12:32Z",
-      "closed_at": null
+      "closed_at": null,
+      "additional_screenshot_evidence": "Captured German Today launch-surface screenshot at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/04-locale-de-surface-today.png shows zero English copy on the Today dashboard (header 'Heute', greeting 'Was ist heute aktiv?', body 'Stabiler Tag. Vertrauen Sie dem Plan.', Einchecken row, German tab labels). The evening-reflection-nudge state itself fires only late in the day and is not directly captured here. To close HIG-DE-001, a screenshot at evening-reflection trigger time (or a debug fixture forcing the state) is still needed.",
+      "closure_blocker_now": "Evening-reflection-state-specific screenshot; the source fix is verified in the daytime launch surface."
     }
   ],
   "closed_findings": [],
@@ -76,6 +78,15 @@
         "Post-fix German Today screenshot preserved under automation/proofs/ with manifest.json hashes.",
         "Additional scoped HIG surface evidence (root tabs, primary empty states, primary actions, date/count/plural, Dynamic Type pass) captured via app-localization-hig-multisurface-screenshot-harness with --capture and --label-overrides for de."
       ]
+    },
+    {
+      "regate_at": "2026-05-18T10:41:43Z",
+      "by": "app-localization-hig-multisurface-screenshot-capture",
+      "changes": [
+        "Added screenshot evidence for the German Today launch surface (no visible English copy).",
+        "HIG-DE-001 stays in_progress because the evening-reflection state itself fires only late in the day and was not directly captured."
+      ],
+      "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture"
     }
   ]
 }

@@ -1,0 +1,202 @@
+{
+  "captures": [
+    {
+      "bytes": 309036,
+      "file": "01-locale-ar-surface-today.png",
+      "locale": "ar",
+      "navigation_steps_executed": 0,
+      "sha256": "28102af5d7f18ea4f0d1286fbef9b3cb6a6c6519b40014309baa07ff3de8ad86",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 336165,
+      "file": "02-locale-nl-surface-today.png",
+      "locale": "nl",
+      "navigation_steps_executed": 0,
+      "sha256": "0a04b5ca3ed5606b3da4788a410e8170808ba9253f9ede03cf1bd530acad2f27",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 333731,
+      "file": "03-locale-fr-surface-today.png",
+      "locale": "fr",
+      "navigation_steps_executed": 0,
+      "sha256": "f06d1f717c98de1837afdfb62cf74a5f045a222d140b150cc6453f9fb20dbb73",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 321890,
+      "file": "04-locale-de-surface-today.png",
+      "locale": "de",
+      "navigation_steps_executed": 0,
+      "sha256": "cb6750f8adb507c86f3e0f0e9b590c9769ec548984f19c0376724e3c639bbf79",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 325951,
+      "file": "05-locale-it-surface-today.png",
+      "locale": "it",
+      "navigation_steps_executed": 0,
+      "sha256": "a9a5a797493e19ddab861c8a5ad0d8def514fb96fdc6ef73705475668580fa22",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 344152,
+      "file": "06-locale-ja-surface-today.png",
+      "locale": "ja",
+      "navigation_steps_executed": 0,
+      "sha256": "afd864721e10a2b4b7fb8db3ab3f975507ced2a048c0c49728124a7828db1999",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 298855,
+      "file": "07-locale-ko-surface-today.png",
+      "locale": "ko",
+      "navigation_steps_executed": 0,
+      "sha256": "94ad7e80d7c1bf015e05f57de277a35935074e1de0263c406945bb6944067ba2",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 317979,
+      "file": "08-locale-nb-surface-today.png",
+      "locale": "nb",
+      "navigation_steps_executed": 0,
+      "sha256": "c19db4746f72dcbc299a26af62a4f402e6c86757b74a6fb2a7e241b3ad627229",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 327794,
+      "file": "09-locale-pt-surface-today.png",
+      "locale": "pt",
+      "navigation_steps_executed": 0,
+      "sha256": "3a368f009f78bd5e81766356af3485e29ca144abe41c208e6d6e0304ca6fecf8",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 328429,
+      "file": "10-locale-pt-BR-surface-today.png",
+      "locale": "pt-BR",
+      "navigation_steps_executed": 0,
+      "sha256": "8e4667c81e5fd24391e7195029c778fff46ce30143594c1564c18923a4c26f51",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 320697,
+      "file": "11-locale-ru-surface-today.png",
+      "locale": "ru",
+      "navigation_steps_executed": 0,
+      "sha256": "bc3b37bcb1b72687270ffa82589e25fb1f269b9ab6fe40717eef60d5dedcf595",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 320268,
+      "file": "12-locale-es-surface-today.png",
+      "locale": "es",
+      "navigation_steps_executed": 0,
+      "sha256": "7d860b5c853843e71e586dc9239ae041bd43ac447a01c441f82c9525cd70ed8d",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 320975,
+      "file": "13-locale-sv-surface-today.png",
+      "locale": "sv",
+      "navigation_steps_executed": 0,
+      "sha256": "73eedeca431a4b23dfce7366eb078cd0e896eb3387f905d3fec628b485aca27d",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 315895,
+      "file": "14-locale-zh-Hans-surface-today.png",
+      "locale": "zh-Hans",
+      "navigation_steps_executed": 0,
+      "sha256": "2702da944acd0b5091325b5639f97f27fb340f77d181ee1bfde977562898a973",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 323346,
+      "file": "15-locale-zh-Hant-surface-today.png",
+      "locale": "zh-Hant",
+      "navigation_steps_executed": 0,
+      "sha256": "26c4cc08c7f8a57cd565b958d4a8a91d46618900ff513f06e14f85aec80e382b",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 316702,
+      "file": "16-locale-tr-surface-today.png",
+      "locale": "tr",
+      "navigation_steps_executed": 0,
+      "sha256": "ec1d1b203b29b467fd86f9277b0ed21c6e30849af5c9957a48794f23b6a73d42",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 327053,
+      "file": "17-locale-uk-surface-today.png",
+      "locale": "uk",
+      "navigation_steps_executed": 0,
+      "sha256": "9bedd9a4493411daf58b3e168fc0da847cfb36207e95aa5d1d4fac6bb3dd3090",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    },
+    {
+      "bytes": 350646,
+      "file": "18-locale-vi-surface-today.png",
+      "locale": "vi",
+      "navigation_steps_executed": 0,
+      "sha256": "a641895b36d1486b36bcba6c1a432f048f78c53fa2a46331bfc642cba7671c5c",
+      "status": "passed",
+      "surface_id": "today",
+      "surface_label": "Today"
+    }
+  ],
+  "failures": [],
+  "git_commit_short": "0d1d74b",
+  "non_claims": [
+    "translation quality",
+    "full layout correctness",
+    "device proof",
+    "TestFlight proof",
+    "hig-ui-reviewed"
+  ],
+  "proof_level": "screenshot-verified",
+  "schema_version": 1,
+  "slice_id": "app-localization-hig-multisurface-screenshot-harness",
+  "status": "passed",
+  "target": {
+    "bundle_id": "com.raelldottin.owlory",
+    "udid": "E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0"
+  },
+  "timestamp": "2026-05-18T10:41:43Z"
+}

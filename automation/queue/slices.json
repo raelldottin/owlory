@@ -5422,7 +5422,7 @@
     {
       "slice_id": "app-localization-hig-multisurface-screenshot-capture",
       "title": "Capture localized HIG multisurface screenshot evidence",
-      "status": "queued",
+      "status": "done",
       "priority": 78,
       "domain": "localization",
       "allowed_paths": [

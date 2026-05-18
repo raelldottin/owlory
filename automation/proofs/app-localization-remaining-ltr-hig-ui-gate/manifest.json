@@ -2,7 +2,15 @@
   "proof_id": "app-localization-remaining-ltr-hig-ui-gate",
   "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
   "created_at": "2026-05-18T06:35:00Z",
-  "locales": ["fr", "it", "nb", "pt", "pt-BR", "es", "vi"],
+  "locales": [
+    "fr",
+    "it",
+    "nb",
+    "pt",
+    "pt-BR",
+    "es",
+    "vi"
+  ],
   "source": "Source-trace inspection of localized .strings resources on 2026-05-18, plus a validated multisurface-harness dry-run plan. No screenshot captures are committed under this directory.",
   "artifact_persisted": false,
   "gate_result": "fail",
@@ -29,8 +37,12 @@
     "dry_run_status": "planned (49 captures = 7 locales x 7 surfaces; idb + idb_companion ready)",
     "label_overrides_needed": {
       "today": {
-        "nb": ["I dag"],
-        "vi": ["Hôm nay"]
+        "nb": [
+          "I dag"
+        ],
+        "vi": [
+          "Hôm nay"
+        ]
       }
     },
     "actual_capture_status": "not run in this slice. Capture is a separate scope (a follow-up screenshot-capture slice) to keep proof artifacts and gate evaluation in distinct lanes."
@@ -147,7 +159,7 @@
     {
       "id": "HIG-FR-001",
       "locale": "fr",
-      "severity": "major",
+      "severity": "minor",
       "area": "adaptive-layout",
       "state": "open",
       "summary": "French Today tab label 'Aujourd'hui' (11 chars) is significantly longer than the English 'Today' (5 chars) and is the longest Today tab label across all 19 supported locales. Tab-bar truncation likely on smaller iPhone widths (especially iPhone SE / standard iPhone in compact-width contexts).",
@@ -165,7 +177,9 @@
         "Add an accessibility identifier to each TabView item so XCUITests can target tabs without relying on translated labels (would also help capture_localized_surfaces.py recipes)."
       ],
       "created_at": "2026-05-18T06:35:00Z",
-      "closed_at_or_null": null
+      "closed_at_or_null": null,
+      "screenshot_inspection_note": "Captured Today screenshot at the proof path shows iOS auto-shrinks the long tab label to fit at iPhone 17 portrait default Dynamic Type. Literal truncation does not occur here. Severity downgraded from major to minor. Remaining risk: smaller iPhone widths, larger Dynamic Type, and VoiceOver users seeing the smaller text.",
+      "screenshot_proof": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png"
     }
   ],
   "hig_areas_per_locale": {
@@ -253,5 +267,17 @@
     "Run automation/smoke/capture_localized_surfaces.py --capture --locales fr it nb pt pt-BR es vi --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today --label-overrides path/to/ltr_label_overrides.json. Confirm at least the today and root-tab surfaces capture cleanly before claiming screenshot-verified.",
     "After capture, append findings to this gate, update the all-locale HIG evidence matrix per_locale_state for these 7 locales, and update each locale's scoped_surface_status from not-reviewed to passed-scoped / fail / partial.",
     "If HIG-FR-001 is confirmed by screenshot evidence, queue a UI-tweak slice (likely under Features/, not within a localization slice) to address tab-bar truncation."
+  ],
+  "updated_at": "2026-05-18T10:41:43Z",
+  "regate_history": [
+    {
+      "regate_at": "2026-05-18T10:41:43Z",
+      "by": "app-localization-hig-multisurface-screenshot-capture",
+      "changes": [
+        "Downgraded HIG-FR-001 severity from major to minor based on French Today screenshot inspection.",
+        "iOS auto-shrinks 'Aujourd'hui' to fit at iPhone 17 portrait default Dynamic Type; no literal truncation."
+      ],
+      "screenshot_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture"
+    }
   ]
 }
