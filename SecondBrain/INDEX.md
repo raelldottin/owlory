@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-review-drift-check (build-tested; Tools/localization-review-drift-check.py + Makefile target + 10 unit tests + docs; baseline 0 drift across 18 locales; 377 strings + 13 stringsdict keys)](sessions/2026-05-18/190130-app-localization-review-drift-check.md)
 - [queue-five-follow-up-slices (queue-only; 3 queued + 2 blocked follow-up slices: smaller-width accessibility regression, VoiceOver verification, review drift check, device-verified proof, testflight-verified proof)](sessions/2026-05-18/185451-queue-five-follow-up-slices.md)
 - [hig-testflight-not-required-policy (doc-only policy clarification: TestFlight HIG proof is not required for the hig-ui-reviewed claim; automated simulator proof + maintained accessibility regression is the accepted bar; no per-locale state change)](sessions/2026-05-18/173838-hig-testflight-not-required-policy.md)
 - [app-localization-hig-ui-proof-closure (complete repo-managed HIG UI proof and evidence matrix closure after native/fluent review is complete)](sessions/2026-05-18/123806-app-localization-hig-ui-proof-closure.md)

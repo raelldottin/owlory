@@ -5655,7 +5655,7 @@
     {
       "slice_id": "app-localization-review-drift-check",
       "title": "Add automated drift check between source strings and review return files",
-      "status": "queued",
+      "status": "done",
       "priority": 63,
       "domain": "localization",
       "allowed_paths": [

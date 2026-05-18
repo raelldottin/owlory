@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check automation-check pyright
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check localization-review-drift-check automation-check pyright
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -45,6 +45,9 @@ localization-screenshot-idb-check:
 
 localization-multisurface-screenshot-idb-check:
 	python3 automation/smoke/capture_localized_surfaces.py --check-dependencies
+
+localization-review-drift-check:
+	python3 Tools/localization-review-drift-check.py
 
 review-preflight:
 	./Tools/review-preflight.sh

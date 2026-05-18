@@ -1,0 +1,64 @@
+{
+  "slice_id": "app-localization-review-drift-check",
+  "title": "Add automated drift check between source strings and review return files",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T19:01:30Z",
+  "proof_level": "build-tested",
+  "summary": "Added Tools/localization-review-drift-check.py + Makefile target localization-review-drift-check + 10 unit tests under automation/tests/test_localization_review_drift_check.py + doc bullets in validation.md and localization-translation-quality.md. The tool compares each per-locale review return file's strings + stringsdict entries against the current source key sets and reports three drift dimensions: missing-in-return, stale-in-return, changed-english-value. Reporting-only by default; --check exits non-zero on drift; --json emits machine-readable output. Baseline as of 2026-05-18: 0 drift across all 18 non-English locales.",
+  "files_changed": [
+    "Tools/localization-review-drift-check.py (new)",
+    "automation/tests/test_localization_review_drift_check.py (new)",
+    "Makefile (new target + .PHONY)",
+    "docs/workflows/validation.md (bullet under Common Commands)",
+    "docs/workflows/localization-translation-quality.md (new Review Drift Check section)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260518T190130Z-app-localization-review-drift-check.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-18/190130-app-localization-review-drift-check.md (new)"
+  ],
+  "tool_summary": {
+    "drift_dimensions": [
+      "missing_strings_keys (source key added; not yet in return file)",
+      "stale_strings_keys (return file entry for key no longer in source)",
+      "missing_stringsdict_keys",
+      "stale_stringsdict_keys",
+      "changed_english_values (source copy edited after the review was recorded)"
+    ],
+    "default_behavior": "reporting-only, exit 0 even if drift",
+    "check_mode": "--check exits 1 on any drift",
+    "json_mode": "--json emits structured report",
+    "respects_german_legacy_filename": true,
+    "modifies_no_files": true
+  },
+  "baseline": {
+    "as_of": "2026-05-18",
+    "source_strings_keys": 377,
+    "source_stringsdict_keys": 13,
+    "locales_inspected": 18,
+    "locales_with_drift": 0,
+    "total_drift_count": 0
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make localization-review-drift-check": "0 drift across 18 locales",
+    "make automation-check": "passed (81 tests; 10 new for drift check)",
+    "make pyright": "0 errors / 0 warnings",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "the drift check is folded into make automation-check (it stays a separate Makefile target; CI/agents must invoke it explicitly)",
+    "the drift check validates translation quality (it only compares keys + english_value; flag-only, no quality assertion)",
+    "the drift check covers per-plural-row drift for stringsdict (it tracks stringsdict at the top-level key set granularity only; per-plural-category drift would need an extra pass)"
+  ],
+  "residual_risk": [
+    "Per-stringsdict-key plural-category drift (e.g., 'one' or 'other' added/removed) is not detected. The tool tracks top-level stringsdict keys only.",
+    "If a source english_value changes for a stringsdict entry's translated copy, it is not detected — only strings english_value comparisons are made.",
+    "The tool reads stringsdict via plutil (Apple-platform tool). On a non-macOS host, parse_stringsdict_keys returns empty set silently; consider adding a friendlier error if Owlory ever runs the tool outside macOS.",
+    "make localization-review-drift-check is not part of make automation-check. CI/agents must invoke it deliberately. Recommend adding to a release-preflight or future periodic check."
+  ],
+  "downstream_unblocked_slices": []
+}

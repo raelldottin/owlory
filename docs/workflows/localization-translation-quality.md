@@ -159,6 +159,16 @@ The export reads `Localizable.strings` and `Localizable.stringsdict` from all ap
 
 The packet is reviewer input only. It does not claim translation completeness, native review, launch stability, layout correctness, device behavior, or TestFlight behavior.
 
+## Review Drift Check
+
+After native review intake, source strings continue to evolve. Use `make localization-review-drift-check` (or `python3 Tools/localization-review-drift-check.py --check`) to flag drift between current source strings and each per-locale return file. Three drift dimensions per locale:
+
+1. **Missing in return file**: source key added since the review was recorded; needs a new review pass.
+2. **Stale in return file**: review entry exists for a source key that has been removed; the review row is no longer load-bearing.
+3. **Changed `english_value`**: source copy was edited after the review; the existing translation may no longer match.
+
+The tool is reporting-only by default. Pass `--check` for non-zero exit on drift. It does not modify any return file — flagging only.
+
 ## Acceptance Criteria
 
 A future translation replacement slice may claim translation quality only for its scoped locale and keys when all of these are true:
