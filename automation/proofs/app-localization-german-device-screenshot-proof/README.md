@@ -41,13 +41,27 @@ Observed German strings:
 - The observed Today surface is rendering German strings instead of English placeholders for the visible content listed above.
 - The evidence is consistent with the German native-review intake recorded in commit `370743bf8510fbb2187369541a5920b3f5dd7682`.
 
+## Observed TestFlight Build Info
+
+Karoline later provided a second chat screenshot on 2026-05-18 as TestFlight Build Info evidence. The screenshot was not available as a committed binary artifact, but the visible fields showed:
+
+- Version: `0.2.0`
+- Build: `20260517151819`
+- Commit: `f6325f3c28e9`
+- Full commit: `f6325f3c28e9e9263eebbe76a3bbba777ff6e615`
+- Branch: `main`
+
+Local verification confirms commit `f6325f3c28e9e9263eebbe76a3bbba777ff6e615` exists and that its committed Xcode project reports `MARKETING_VERSION = 0.2.0` and `CURRENT_PROJECT_VERSION = 20260517151819`.
+
+This supports only `build-info-observed` provenance for the reported TestFlight app version. It does not raise this proof to `testflight-verified` because the Build Info screenshot file, hash, dimensions, complete gate fields, and paired TestFlight surface artifacts are not committed.
+
 ## What This Does Not Prove
 
-- TestFlight behavior or release-channel provenance.
+- TestFlight behavior beyond the observed Build Info version/build/commit fields.
 - Full German app coverage.
 - Full layout correctness across all German screens, font sizes, device sizes, or data states.
 - A repo-managed screenshot artifact with hashable PNG provenance.
-- Build identity, bundle version, or source cleanliness on Karoline's device.
+- Complete Build Info gate provenance, source cleanliness, or releaseability on Karoline's device.
 
 ## Follow-Up For Stronger Proof
 

@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-native-review-formal-workflow (doc-only; formal native-review intake protocol + template; Karoline Build Info recorded as build-info-observed, not full TestFlight proof)](sessions/2026-05-18/021206-app-localization-native-review-formal-workflow.md)
 - [app-localization-german-device-screenshot-proof-record (doc-only; Karoline's German iPhone Today screenshot observed in chat, binary not repo-managed, no TestFlight/device-verified claim)](sessions/2026-05-18/012138-app-localization-german-device-screenshot-proof-record.md)
 - [app-localization-native-review-intake (build-tested; German native/human review accepted 419/419 entries; other 17 locales remain unreviewed)](sessions/2026-05-18/010852-app-localization-native-review-intake.md)
 

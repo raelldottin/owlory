@@ -14,6 +14,26 @@
     "build_channel": "unknown",
     "build_identity": "unknown"
   },
+  "testflight_build_info_observation": {
+    "source": "Second chat attachment [Image #1] provided by Karoline on 2026-05-18 and reported as TestFlight Build Info evidence.",
+    "artifact_persisted": false,
+    "version": "0.2.0",
+    "build": "20260517151819",
+    "commit": "f6325f3c28e9",
+    "full_commit": "f6325f3c28e9e9263eebbe76a3bbba777ff6e615",
+    "branch": "main",
+    "local_verification": {
+      "commit_exists": true,
+      "marketing_version_at_commit": "0.2.0",
+      "current_project_version_at_commit": "20260517151819"
+    },
+    "proof_classification": "build-info-observed",
+    "not_claimed": [
+      "testflight-verified",
+      "full Build Info gate",
+      "hashable screenshot artifact"
+    ]
+  },
   "observed_strings": [
     "Heute",
     "Sonntag, 17. Mai 2026",
@@ -35,6 +55,7 @@
   "claims_supported": [
     "German device screenshot observed for the Today dashboard / launch surface.",
     "Visible strings on that surface rendered in German.",
+    "Reported TestFlight Build Info fields observed for version 0.2.0, build 20260517151819, commit f6325f3c28e9e9263eebbe76a3bbba777ff6e615, branch main.",
     "Evidence is consistent with the German native/human review intake recorded on 2026-05-18."
   ],
   "not_claimed": [
@@ -43,7 +64,7 @@
     "screenshot-verified",
     "full German layout correctness",
     "full German app coverage",
-    "build identity or source provenance"
+    "complete Build Info/source cleanliness provenance"
   ],
   "related_commit": "370743bf8510fbb2187369541a5920b3f5dd7682"
 }

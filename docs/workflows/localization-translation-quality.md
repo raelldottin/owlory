@@ -18,6 +18,7 @@ Localization is not complete. Treat resource readiness, runtime proof, and trans
 - **Automated LQA + LLM-quality-pass**: implemented on 2026-05-15 and refreshed on 2026-05-18 after return files were brought current with 419 entries per locale. `Tools/localization-lqa.py` runs deterministic checks (format-specifier parity, empty-value, identical-to-English-outside-keep, length-outlier, mojibake-suspect) over each per-locale return-file entry plus an LLM second-pass. Each entry receives an `lqa` block with `status=passed | warning | reverted`. As of 2026-05-18: 7,478 entries pass / 64 warnings / 0 reverts across 18 locales. `lqa.status=passed` is NOT a native-review claim — it only says the entry is internally consistent and the LLM second-pass has no machine-detectable concerns. See `localization/review/LQA.md` for the report and `localization/review/STATUS.md` for the dashboard.
 - **Reviewed translations (native)**: complete for German only. `localization/review/de/german-review-return.json` has `provenance.native_reviewed=true` and 419 `native-reviewed` entries based on user-reported native/human German review on 2026-05-18. The other 17 non-English locales remain unreviewed LLM drafts with `provenance.native_reviewed=false`.
 - **German device screenshot observation**: recorded on 2026-05-18 from Karoline's chat-provided iPhone screenshot. The visible Today dashboard surface shows German text including `Heute`, `Was ist heute aktiv?`, `Stabiler Tag. Vertrauen Sie dem Plan.`, `Einchecken`, `Sitzung hinzufügen`, `Eine Notiz erfassen`, and the German tab labels. This supports device-observed German rendering for that surface only; the binary screenshot is not committed under `automation/proofs/`, so this is not repo-managed `screenshot-verified`, `device-verified`, or `testflight-verified` proof.
+- **German TestFlight Build Info observation**: recorded on 2026-05-18 from Karoline's chat-provided Build Info screenshot, reported as TestFlight evidence. The visible fields show version `0.2.0`, build `20260517151819`, commit `f6325f3c28e9`, full commit `f6325f3c28e9e9263eebbe76a3bbba777ff6e615`, and branch `main`. Local history confirms that commit exists and that its committed Xcode project reports `MARKETING_VERSION = 0.2.0` and `CURRENT_PROJECT_VERSION = 20260517151819`. This is build-info-observed provenance only; without a committed screenshot artifact and complete Build Info gate fields, it is not full `testflight-verified` language-review proof.
 - **Translation quality**: proven only for German within the reviewed return-file scope. LLM-drafts are visible to users in the other 17 non-English locales, but wording, idiom, grammar, gender, formality, and argument order have NOT been validated by native speakers there. Subtle errors remain likely outside German.
 
 English (`en`) remains the source language and key source of truth. The approved non-English locales are: `ar`, `nl`, `fr`, `de`, `it`, `ja`, `ko`, `nb`, `pt`, `pt-BR`, `ru`, `es`, `sv`, `zh-Hans`, `zh-Hant`, `tr`, `uk`, and `vi`.
@@ -34,8 +35,30 @@ Use these labels in handoffs and review notes:
 | `english-placeholder` | Non-English locale value is intentionally copied from English. | No. |
 | `draft-translation` | Candidate translated value exists but has not been reviewed by a native or fluent reviewer. | No. |
 | `native-reviewed` | Native or fluent reviewer accepted the locale values for the scoped keys. | Yes, for reviewed keys only. |
+| `build-info-observed` | Version/build/commit fields were observed on an installed app, but the screenshot or full provenance bundle is incomplete. | No by itself. |
 | `runtime-smoked` | The locale launched in the simulator after translation replacement. | No by itself. |
 | `screenshot-reviewed` | Repo-managed screenshot evidence exists for the translated surface. | No by itself; it proves visual evidence, not language quality. |
+
+## Native Language Review Protocol
+
+Use this protocol before marking any new locale or key as `native-reviewed`. A chat message, a single screenshot, or "looks good" approval is not enough by itself.
+
+1. **Open a scoped review slice**: one locale per slice unless a small language family is explicitly being reviewed by the same qualified reviewer. Record the target locale, expected entry count, review packet paths, and whether the scope is all keys or a named subset.
+2. **Freeze the review baseline**: regenerate the packet with `python3 Tools/localization-review-export.py --output-dir localization/review`, then record `git rev-parse HEAD`, `make build-provenance`, app version, build number, and the target return file. Do not accept review against an unknown source state.
+3. **Gate TestFlight/device provenance first**: for TestFlight review, the reviewer must capture Build Info before reviewing language surfaces. Required fields are version, build, commit or full commit, branch, and any visible source-clean/releaseability fields. The installed build must match committed source. If the screenshot is chat-only, missing the binary artifact, or missing fields, classify it as `build-info-observed` only.
+4. **Send the reviewer packet and glossary**: provide the locale review packet, product terminology list, style notes, and the [native review intake template](../../localization/review/native-review-intake-template.md). Ask the reviewer to mark accepted entries, corrections, terms intentionally kept in English, and any product decisions needed.
+5. **Run a device language pass**: the reviewer should set Owlory's per-app language, force-close and reopen the app, then inspect the agreed surfaces. At minimum for full-locale review, capture Build Info, Today, each root tab, empty states, primary actions, and any high-risk plural/count/date screens. RTL and CJK locales require screenshots for layout-sensitive surfaces.
+6. **Return structured signoff**: the reviewer returns the completed intake template plus corrected values. Personal identity can be an internal reviewer ID, vendor, or role, but the file must state the reviewer basis: native speaker, fluent speaker, vendor, or internal product reviewer.
+7. **Intake the review**: update only accepted scoped entries to `native-reviewed`. Keep unresolved keys as `needs-product-decision`, `needs-layout-check`, `keep-english-term`, or `needs-translation`. Preserve corrected values in the locale resources only after validation.
+8. **Preserve proof artifacts**: store screenshot files under `automation/proofs/` when available, with a manifest containing file names, SHA-256 hashes, dimensions, locale, device/build info, and capture date. If screenshots arrive only in chat, record the observation honestly and do not claim repo-managed screenshot proof.
+9. **Validate and hand off**: run `make architecture`, `make localization-check`, `./Tools/validate.sh localization`, `python3 Tools/localization-review-status.py`, `make automation-check`, and `git diff --check`. The handoff must identify the reviewed locale, entry count, reviewer basis, Build Info result, proof artifacts, and remaining unreviewed locales.
+
+Proof claims are cumulative:
+
+- `native-reviewed` requires completed reviewer signoff for scoped keys.
+- `screenshot-reviewed` requires committed screenshot artifacts.
+- `device-verified` requires device proof with build provenance and preserved artifacts.
+- `testflight-verified` requires TestFlight Build Info that matches committed source plus preserved TestFlight evidence for the reviewed surfaces.
 
 ## Review Workflow
 
@@ -75,6 +98,7 @@ A future translation replacement slice may claim translation quality only for it
 - No approved locale has missing or extra keys.
 - No new locale folder is introduced unless the target locale list is deliberately changed.
 - The handoff identifies which keys changed and which reviewer accepted them.
+- The reviewer returned the native review intake template or an equivalent structured signoff.
 - Placeholders outside the slice remain explicitly classified as placeholders.
 - A locale smoke or screenshot proof is run when the slice changes high-visibility navigation, Today launch surfaces, notification copy, or RTL/CJK text.
 
@@ -174,6 +198,8 @@ Settings > General > Language & Region > Add Language
 ```
 
 Keep the current iPhone language as primary unless the slice is explicitly testing full-device language behavior. Then return to Owlory's per-app language setting, select the target language, close Owlory, and reopen it.
+
+For TestFlight review, open Owlory Build Info first and capture version, build, commit or full commit, branch, and any source-clean/releaseability fields before taking language screenshots. If Build Info does not match committed source, stop the TestFlight proof lane and record the mismatch before reviewing language surfaces.
 
 Use this only for manual/TestFlight review. Automated localization smoke should continue using `python3 automation/smoke/running_app_smoke.py --locale <locale>` and launch arguments, not the Settings app.
 
