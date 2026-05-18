@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-hig-evidence-matrix (doc-only; all-locale HIG evidence matrix + finding taxonomy under automation/proofs/app-localization-hig-ui-matrix/; HIG-DE-001 in-progress, 17 non-German locales blocked-on-native-review, 0 locales claimed hig-ui-reviewed)](sessions/2026-05-18/045000-app-localization-hig-evidence-matrix.md)
 - [app-localization-hig-ui-completion-slicing (doc-only; all-locale Apple HIG completion ladder queued; 17 non-German native-review blockers preserved)](sessions/2026-05-18/003534-app-localization-hig-ui-completion-slicing.md)
 - [start-next-slice-clean-stop (no eligible queued slice available after evening reflection routing; no product changes)](sessions/2026-05-18/002759-start-next-slice-clean-stop.md)
 - [app-localization-evening-reflection-nudge-routing (domain-tested; Today visible reflection nudge now semantic in Store and localized in TodayView; German HIG evidence still pending)](sessions/2026-05-18/042120-app-localization-evening-reflection-nudge-routing.md)

@@ -37,6 +37,10 @@ Use buckets to keep UI review slices bounded by risk:
 
 German is the only native-reviewed non-English locale as of 2026-05-18. All other non-English locales need a native or fluent review intake before a final HIG UI-ready claim can include label/action clarity.
 
+## Evidence Matrix
+
+The all-locale HIG evidence matrix and canonical finding taxonomy live under [`automation/proofs/app-localization-hig-ui-matrix/`](../../automation/proofs/app-localization-hig-ui-matrix/). Per-locale `gate_state`, `scoped_surface_status`, `proof_references`, and `open_findings` are tracked there. New HIG findings allocate the next free `HIG-<LOCALE_UPPER>-<NNN>` ID and append to that matrix.
+
 ## Slice Ladder
 
 The queue encodes the path to completion:

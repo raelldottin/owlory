@@ -1,0 +1,65 @@
+{
+  "slice_id": "app-localization-hig-evidence-matrix",
+  "title": "Create all-locale HIG evidence matrix and finding taxonomy",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T04:50:00Z",
+  "proof_level": "doc-only",
+  "summary": "Created the durable repo-managed HIG evidence matrix at automation/proofs/app-localization-hig-ui-matrix/ with per-locale gate_state, scoped surface coverage, finding taxonomy (HIG-<LOCALE_UPPER>-<NNN>), and downstream slice pointers. HIG-DE-001 recorded as the single open finding (in-progress; source fix shipped, rerun screenshot still missing). 17 non-German locales recorded as blocked-on-native-review. 0 locales claimed hig-ui-reviewed.",
+  "files_changed": [
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "automation/proofs/app-localization-hig-ui-matrix/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T044650Z-app-localization-hig-evidence-matrix.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/045000-app-localization-hig-evidence-matrix.md"
+  ],
+  "matrix_summary": {
+    "supported_locales": 19,
+    "scoped_surfaces": 8,
+    "open_findings": 1,
+    "closed_findings": 0,
+    "hig_ui_reviewed_claim_locales": 0,
+    "blocked_on_native_review_locales": 17,
+    "german_partial_fail_locales": 1,
+    "english_source_locales": 1
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-hig-evidence-matrix": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected app-localization-hig-evidence-matrix before this slice landed)",
+    "python3 -m json.tool automation/queue/slices.json": "passed",
+    "python3 -m json.tool automation/proofs/app-localization-hig-ui-matrix/manifest.json": "passed",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales / 377 keys / 13 plural keys)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "57/57 passed",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any locale is hig-ui-reviewed",
+    "any locale beyond German is native-reviewed",
+    "screenshot-reviewed for non-German locales",
+    "device-verified for any locale",
+    "testflight-verified for any locale",
+    "RTL mirroring for ar has been proven on Owlory surfaces"
+  ],
+  "residual_risk": [
+    "Matrix is a planning index, not a screenshot or device proof.",
+    "HIG-DE-001 is in-progress: source fix landed under app-localization-evening-reflection-nudge-routing, rerun screenshot evidence still missing.",
+    "17 non-German locales remain blocked-on-native-review for HIG gate purposes.",
+    "The matrix must be updated when new HIG gate slices run; it is not auto-generated."
+  ],
+  "downstream_slices": [
+    "app-localization-hig-multisurface-screenshot-harness",
+    "app-localization-hig-dynamic-type-accessibility-harness",
+    "app-localization-hig-gate-source-english",
+    "app-localization-hig-gate-bucket-rtl",
+    "app-localization-hig-gate-bucket-cjk",
+    "app-localization-hig-gate-bucket-long-script",
+    "app-localization-hig-gate-bucket-remaining-ltr",
+    "app-localization-hig-remediation-triage",
+    "app-localization-all-locale-hig-ui-closure"
+  ]
+}

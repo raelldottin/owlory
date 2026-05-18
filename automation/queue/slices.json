@@ -4482,7 +4482,7 @@
     {
       "slice_id": "app-localization-hig-evidence-matrix",
       "title": "Create all-locale HIG evidence matrix and finding taxonomy",
-      "status": "queued",
+      "status": "done",
       "priority": 89,
       "domain": "localization",
       "allowed_paths": [

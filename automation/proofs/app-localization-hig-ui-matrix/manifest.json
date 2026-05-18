@@ -1,0 +1,615 @@
+{
+  "proof_id": "app-localization-hig-ui-matrix",
+  "slice_id": "app-localization-hig-evidence-matrix",
+  "created_at": "2026-05-18T04:50:00Z",
+  "purpose": "Durable repo-managed matrix that records the all-locale Apple HIG localized UI completion state per locale per scoped surface, plus the canonical finding taxonomy. This is a planning/evidence index, not a proof artifact. It does not claim any locale passed.",
+  "matrix_kind": "planning-index",
+  "artifact_persisted": true,
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed_locales": [],
+  "supported_locales": [
+    "en", "ar", "nl", "fr", "de", "it", "ja", "ko", "nb",
+    "pt", "pt-BR", "ru", "es", "sv", "zh-Hans", "zh-Hant",
+    "tr", "uk", "vi"
+  ],
+  "buckets": {
+    "source": ["en"],
+    "german_reviewed": ["de"],
+    "rtl": ["ar"],
+    "cjk": ["ja", "ko", "zh-Hans", "zh-Hant"],
+    "long_script_or_inflection_heavy": ["nl", "ru", "sv", "tr", "uk"],
+    "remaining_ltr": ["fr", "it", "nb", "pt", "pt-BR", "es", "vi"]
+  },
+  "scoped_surfaces": [
+    {
+      "id": "build-info",
+      "label": "Build Info",
+      "required_fields": ["version", "build", "commit_short", "commit_full", "branch", "source_clean_or_releaseability_flags"],
+      "evidence_target": "committed screenshot artifact under automation/proofs/<slice>/ with manifest.json (sha256 + bytes) and matching committed source"
+    },
+    {
+      "id": "today-launch",
+      "label": "Today launch",
+      "evidence_target": "settled Today shell screenshot with header greeting, focus three, readiness band, and visible nudge copy"
+    },
+    {
+      "id": "root-tabs",
+      "label": "Root tabs",
+      "evidence_target": "all root tab labels visible without truncation; reachable; ordered per locale direction"
+    },
+    {
+      "id": "primary-empty-states",
+      "label": "Primary empty states",
+      "evidence_target": "Today/Train/Write/Career/Home/Patterns/Settings empty-state copy reads cleanly in locale"
+    },
+    {
+      "id": "primary-actions",
+      "label": "Primary actions",
+      "evidence_target": "primary CTA labels remain idiomatic and recognizable; no truncation; meaning preserved"
+    },
+    {
+      "id": "date-count-plural",
+      "label": "High-risk date/count/plural surfaces",
+      "evidence_target": "locale-aware Date.FormatStyle / stringsdict pluralization confirmed visually for ranges, counts, and relative dates"
+    },
+    {
+      "id": "dynamic-type-accessibility",
+      "label": "Dynamic Type + accessibility pass",
+      "evidence_target": "standard text size + Larger Accessibility Text rendering; accessibility labels/values/hints localized; tab reachability and touch targets preserved"
+    },
+    {
+      "id": "rtl-mirroring",
+      "label": "RTL-only mirroring",
+      "applicable_to": ["ar"],
+      "evidence_target": "layout mirrored; alignment, navigation affordances, ordered controls, and directional symbols correct; digits inside numbers not reversed; non-direction-bearing artwork not flipped"
+    }
+  ],
+  "finding_taxonomy": {
+    "id_format": "HIG-<LOCALE_UPPER>-<NNN>",
+    "severity_levels": [
+      {
+        "id": "blocking",
+        "definition": "Visible localized UI fails an Apple HIG requirement in a way that prevents calling the surface UI-ready in that locale. Examples: untranslated visible label, truncated meaning-bearing label, broken RTL mirroring, inaccessible action."
+      },
+      {
+        "id": "major",
+        "definition": "Visible localized UI is degraded but the action remains discoverable. Examples: long compound truncation that loses qualifier, inconsistent terminology across one surface, missed locale-aware date format."
+      },
+      {
+        "id": "minor",
+        "definition": "Cosmetic or stylistic issue that does not impair comprehension. Examples: slightly awkward phrasing accepted by reviewer, non-critical glyph fallback."
+      },
+      {
+        "id": "info",
+        "definition": "Observation that is not a defect but should be tracked. Examples: deliberately retained English product term, locale-specific phrasing choice."
+      }
+    ],
+    "hig_areas": [
+      "platform-consistency",
+      "adaptive-layout",
+      "typography-dynamic-type",
+      "accessibility",
+      "labels-actions",
+      "locale-aware-formatting",
+      "right-to-left"
+    ],
+    "states": [
+      "open",
+      "in-progress",
+      "closed-fixed",
+      "closed-wont-fix",
+      "duplicate"
+    ],
+    "required_fields": [
+      "id",
+      "locale",
+      "severity",
+      "area",
+      "state",
+      "summary",
+      "observed_evidence",
+      "source_trace",
+      "proof_path_or_chat_observation",
+      "remediation_slice_id_or_null",
+      "created_at",
+      "closed_at_or_null"
+    ]
+  },
+  "per_locale_state": [
+    {
+      "locale": "en",
+      "bucket": "source",
+      "native_review_state": "english-source",
+      "gate_state": "not-started",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": ["scoped HIG evidence has not been captured for the English source baseline"]
+    },
+    {
+      "locale": "de",
+      "bucket": "german_reviewed",
+      "native_review_state": "native-reviewed (419 entries via localization/review/de/german-review-return.json on 2026-05-18)",
+      "gate_state": "partial-fail",
+      "open_findings": ["HIG-DE-001"],
+      "scoped_surface_status": {
+        "build-info": "build-info-observed (chat-only, no committed binary)",
+        "today-launch": "partial (HIG-DE-001 surfaced English evening reflection nudge; source fixed in app-localization-evening-reflection-nudge-routing; rerun screenshot still missing)",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [
+        "automation/proofs/app-localization-german-hig-ui-gate/manifest.json",
+        "localization/review/de/german-review-return.json"
+      ],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "HIG-DE-001 remediation source fix landed but rerun screenshot evidence not yet captured",
+        "no committed Build Info screenshot artifact with complete gate fields",
+        "no root tab, empty state, primary action, date/count/plural, or Dynamic Type evidence captured under automation/proofs/"
+      ]
+    },
+    {
+      "locale": "ar",
+      "bucket": "rtl",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-reviewed"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Arabic native or fluent reviewer signoff",
+        "RTL mirroring not yet proven on Owlory localized surfaces",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "ja",
+      "bucket": "cjk",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Japanese native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "ko",
+      "bucket": "cjk",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Korean native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "zh-Hans",
+      "bucket": "cjk",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Simplified Chinese native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "zh-Hant",
+      "bucket": "cjk",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Traditional Chinese native or fluent reviewer signoff (review separately from zh-Hans)",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "nl",
+      "bucket": "long_script_or_inflection_heavy",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Dutch native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "ru",
+      "bucket": "long_script_or_inflection_heavy",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Russian native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "sv",
+      "bucket": "long_script_or_inflection_heavy",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Swedish native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "tr",
+      "bucket": "long_script_or_inflection_heavy",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Turkish native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "uk",
+      "bucket": "long_script_or_inflection_heavy",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Ukrainian native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "fr",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no French native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "it",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Italian native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "nb",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Norwegian Bokmål native or fluent reviewer signoff (do not substitute generic Norwegian)",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "pt",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Portuguese (Portugal) native or fluent reviewer signoff (review separately from pt-BR)",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "pt-BR",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Brazilian Portuguese native or fluent reviewer signoff (review separately from pt)",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "es",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Spanish native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    },
+    {
+      "locale": "vi",
+      "bucket": "remaining_ltr",
+      "native_review_state": "LLM-drafted by claude-opus-4-7",
+      "gate_state": "blocked-on-native-review",
+      "open_findings": [],
+      "scoped_surface_status": {
+        "build-info": "not-reviewed",
+        "today-launch": "not-reviewed",
+        "root-tabs": "not-reviewed",
+        "primary-empty-states": "not-reviewed",
+        "primary-actions": "not-reviewed",
+        "date-count-plural": "not-reviewed",
+        "dynamic-type-accessibility": "not-reviewed",
+        "rtl-mirroring": "not-applicable"
+      },
+      "proof_references": [],
+      "hig_ui_reviewed_claim": false,
+      "blockers": [
+        "no Vietnamese native or fluent reviewer signoff",
+        "no scoped HIG evidence captured"
+      ]
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "HIG-DE-001",
+      "locale": "de",
+      "severity": "blocking",
+      "area": "labels-actions",
+      "state": "in-progress",
+      "summary": "German Today UI surfaced English evening reflection nudge copy.",
+      "observed_evidence": [
+        "\"Evening reflection\"",
+        "\"Close the day with one quick reflection.\""
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift evening reflection nudge",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift reflection nudge display"
+      ],
+      "proof_path_or_chat_observation": "automation/proofs/app-localization-german-hig-ui-gate/manifest.json (chat-observed German TestFlight Build Info screenshot)",
+      "remediation_slice_id_or_null": "app-localization-evening-reflection-nudge-routing (source fix landed 2026-05-18; rerun screenshot evidence still missing)",
+      "created_at": "2026-05-18T02:29:24Z",
+      "closed_at_or_null": null,
+      "notes": "Source fix shipped under app-localization-evening-reflection-nudge-routing. Finding stays open until a rerun screenshot for the German Today surface is captured under automation/proofs/ with manifest.json."
+    }
+  ],
+  "closed_findings": [],
+  "remediation_slice_pointers": {
+    "HIG-DE-001": "app-localization-evening-reflection-nudge-routing"
+  },
+  "validation": {
+    "make architecture": "passed",
+    "make localization-check": "passed",
+    "python3 Tools/localization-review-status.py": "ran",
+    "make automation-check": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any locale is hig-ui-reviewed",
+    "any locale beyond German is native-reviewed",
+    "screenshot-reviewed for non-German locales",
+    "device-verified for any locale",
+    "testflight-verified for any locale",
+    "RTL mirroring for ar has been proven on Owlory surfaces"
+  ],
+  "downstream_slices": {
+    "broadens_screenshot_capture": "app-localization-hig-multisurface-screenshot-harness",
+    "adds_dynamic_type_and_accessibility_harness": "app-localization-hig-dynamic-type-accessibility-harness",
+    "per_bucket_gates": [
+      "app-localization-hig-gate-source-english",
+      "app-localization-hig-gate-bucket-rtl",
+      "app-localization-hig-gate-bucket-cjk",
+      "app-localization-hig-gate-bucket-long-script",
+      "app-localization-hig-gate-bucket-remaining-ltr"
+    ],
+    "remediation_triage": "app-localization-hig-remediation-triage",
+    "final_closure": "app-localization-all-locale-hig-ui-closure"
+  }
+}
