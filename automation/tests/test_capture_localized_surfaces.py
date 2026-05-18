@@ -64,6 +64,7 @@ class CaptureLocalizedSurfacesPlanTests(unittest.TestCase):
             bundle_id="com.raelldottin.owlory",
             output_dir="/tmp/proof",
             locales=["en", "de"],
+            seed_fresh_day=False,
         )
 
         plan = harness.build_plan(args, {"status": "ready"}, surfaces)
@@ -80,6 +81,7 @@ class CaptureLocalizedSurfacesNavigationTests(unittest.TestCase):
     def test_wait_step_records_seconds(self):
         result = harness.run_navigation_step(
             "SIM-1",
+            "en",
             harness.NavigationStep(kind="wait", payload={"seconds": 0}),
             elements=[],
             runner=lambda _: self.fail("runner should not be called for wait step"),
@@ -91,6 +93,7 @@ class CaptureLocalizedSurfacesNavigationTests(unittest.TestCase):
     def test_tap_label_blocks_when_label_missing(self):
         result = harness.run_navigation_step(
             "SIM-1",
+            "en",
             harness.NavigationStep(kind="tap_label", payload={"labels": ["Train"]}),
             elements=[{"AXLabel": "Today"}],
             runner=lambda _: self.fail("runner should not be called when label missing"),
@@ -108,6 +111,7 @@ class CaptureLocalizedSurfacesNavigationTests(unittest.TestCase):
 
         result = harness.run_navigation_step(
             "SIM-1",
+            "en",
             harness.NavigationStep(kind="tap_label", payload={"labels": ["Train"]}),
             elements=[
                 {"AXLabel": "Train", "frame": {"x": 100, "y": 800, "width": 60, "height": 40}}
@@ -128,6 +132,7 @@ class CaptureLocalizedSurfacesNavigationTests(unittest.TestCase):
 
         result = harness.run_navigation_step(
             "SIM-1",
+            "en",
             harness.NavigationStep(kind="tap_identifier", payload={"identifier": "tab.train"}),
             elements=[
                 {"AXIdentifier": "tab.train", "frame": {"x": 0, "y": 0, "width": 10, "height": 10}}
@@ -141,6 +146,7 @@ class CaptureLocalizedSurfacesNavigationTests(unittest.TestCase):
     def test_unknown_step_kind_blocks(self):
         result = harness.run_navigation_step(
             "SIM-1",
+            "en",
             harness.NavigationStep(kind="warp", payload={}),
             elements=[],
             runner=lambda _: self.fail("runner should not be called"),

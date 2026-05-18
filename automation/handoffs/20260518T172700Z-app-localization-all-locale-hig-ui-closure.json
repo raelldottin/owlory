@@ -1,0 +1,77 @@
+{
+  "slice_id": "app-localization-all-locale-hig-ui-closure",
+  "status": "done",
+  "summary": "Closed all-locale localized UI HIG readiness for scoped simulator surfaces. Preserved 152 repo-managed screenshots across 19 locales x 8 surfaces, updated the HIG matrix to 19/19 passed-scoped with zero open/in-progress findings, documented proof-level boundaries, and repaired the harness tests after the locale-aware navigation signature change.",
+  "files_touched": [
+    "automation/smoke/capture_localized_surfaces.py",
+    "automation/tests/test_capture_localized_surfaces.py",
+    "owlory_xcode/Owlory/Features/Today/BuildInfoView.swift",
+    "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/",
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/handoffs/20260518T172700Z-app-localization-all-locale-hig-ui-closure.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/123806-app-localization-hig-ui-proof-closure.md"
+  ],
+  "validations_passed": [
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination platform=iOS Simulator,name=iPhone 17,OS=26.5 -derivedDataPath /tmp/owlory-hig-proof-clean-build CODE_SIGNING_ALLOWED=NO",
+    "python3 automation/smoke/capture_localized_surfaces.py --capture --seed-fresh-day --allow-screenshot-only-ax-fallback --allow-simctl-screenshot-fallback --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 --output-dir automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture",
+    "python3 automation/context/build_context.py --slice-id app-localization-all-locale-hig-ui-closure",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "python3 Tools/localization-review-status.py",
+    "make automation-check",
+    "make ui-regression DOMAIN=localization",
+    "make localization-multisurface-screenshot-idb-check",
+    "python3 automation/smoke/capture_localized_surfaces.py --dry-run --seed-fresh-day --allow-screenshot-only-ax-fallback --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 --locales en de ar --surfaces today root-tab-write build-info",
+    "closure proof consistency check: 19 locales, 8 surfaces, 152 captures, 0 failures",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-verified",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "All-locale Apple HIG localized UI closure",
+      "before": "Native/fluent review was complete, but the HIG matrix had no final repo-managed all-locale proof closure and the final closure slice was blocked.",
+      "after": "All 19 supported locales are hig-ui-reviewed for scoped simulator surfaces with matrix gate_state=passed-scoped, zero open findings, zero in-progress findings, and committed screenshot proof references.",
+      "proof": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+        "make ui-regression DOMAIN=localization"
+      ]
+    },
+    {
+      "contract": "Localization proof-level honesty",
+      "before": "Chat-provided German screenshots were recorded as observations only and could not close repo-managed HIG UI proof.",
+      "after": "Repo-managed simulator screenshot proof is preserved; physical-device, TestFlight, and automated AX settled assertions remain explicit non-claims.",
+      "proof": [
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/proofs/app-localization-hig-ui-matrix/manifest.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Physical-device HIG proof is still unclaimed for every locale.",
+    "TestFlight HIG proof is still unclaimed for every locale.",
+    "The 2026-05-18 closure screenshots used screenshot-only AX fallback because idb returned an application-only accessibility tree; maintained XCUITest accessibility regression covers Dynamic Type/touch-target checks separately.",
+    "The German evening-reflection trigger state was not force-captured; closure relies on source/key routing plus post-fix German screenshots for adjacent scoped surfaces.",
+    "Arabic Write directional swipe symbols are source-verified and Arabic Write/root-tab screenshots are preserved; the swipe action itself is not directly screenshot-captured."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No eligible queued slice after closure; run the supervisor again when new work is added.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-18T17:27:00Z"
+}

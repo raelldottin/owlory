@@ -2,11 +2,31 @@
   "proof_id": "app-localization-hig-ui-matrix",
   "slice_id": "app-localization-hig-evidence-matrix",
   "created_at": "2026-05-18T04:50:00Z",
-  "purpose": "Durable repo-managed matrix that records the all-locale Apple HIG localized UI completion state per locale per scoped surface, plus the canonical finding taxonomy. This is a planning/evidence index, not a proof artifact. It does not claim any locale passed.",
+  "purpose": "Durable repo-managed matrix that records the all-locale Apple HIG localized UI completion state per locale per scoped surface, plus the canonical finding taxonomy. As of the 2026-05-18 closure, it records a scoped simulator HIG UI claim for all supported locales and preserves explicit non-claims for physical-device, TestFlight, and automated AX settled proof.",
   "matrix_kind": "planning-index",
   "artifact_persisted": true,
-  "proof_level": "doc-only",
-  "hig_ui_reviewed_claimed_locales": [],
+  "proof_level": "screenshot-verified + maintained-regression + source-verified remediation",
+  "hig_ui_reviewed_claimed_locales": [
+    "en",
+    "ar",
+    "nl",
+    "fr",
+    "de",
+    "it",
+    "ja",
+    "ko",
+    "nb",
+    "pt",
+    "pt-BR",
+    "ru",
+    "es",
+    "sv",
+    "zh-Hans",
+    "zh-Hant",
+    "tr",
+    "uk",
+    "vi"
+  ],
   "supported_locales": [
     "en",
     "ar",
@@ -170,504 +190,574 @@
       "locale": "en",
       "bucket": "source",
       "native_review_state": "english-source",
-      "gate_state": "not-started",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "not-reviewed",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
-      "proof_references": [],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "scoped HIG evidence has not been captured for the English source baseline"
-      ]
+      "proof_references": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/01-locale-en-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/02-locale-en-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/03-locale-en-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/04-locale-en-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/05-locale-en-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/06-locale-en-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/07-locale-en-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/08-locale-en-surface-build-info.png"
+      ],
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "de",
       "bucket": "german_reviewed",
       "native_review_state": "native-reviewed (419 entries via localization/review/de/german-review-return.json on 2026-05-18)",
-      "gate_state": "partial-fail",
-      "open_findings": [
-        "HIG-DE-001"
-      ],
+      "gate_state": "passed-scoped",
+      "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "build-info-observed (chat-only, no committed binary)",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-german-hig-ui-gate/manifest.json",
-        "localization/review/de/german-review-return.json",
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/04-locale-de-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/33-locale-de-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/34-locale-de-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/35-locale-de-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/36-locale-de-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/37-locale-de-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/38-locale-de-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/39-locale-de-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/40-locale-de-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "HIG-DE-001 remediation source fix landed but rerun screenshot evidence not yet captured",
-        "no committed Build Info screenshot artifact with complete gate fields",
-        "no root tab, empty state, primary action, date/count/plural, or Dynamic Type evidence captured under automation/proofs/"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "ar",
       "bucket": "rtl",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ar/ar-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
-        "rtl-mirroring": "not-reviewed"
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
+        "rtl-mirroring": "passed-scoped (Arabic Today/Write/root tab RTL order captured; directional SF Symbol fix confirmed)"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png",
-        "localization/review/ar/ar-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/09-locale-ar-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/10-locale-ar-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/11-locale-ar-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/12-locale-ar-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/13-locale-ar-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/14-locale-ar-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/15-locale-ar-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/16-locale-ar-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "RTL mirroring not yet proven on Owlory localized surfaces",
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "ja",
       "bucket": "cjk",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ja/ja-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png",
-        "localization/review/ja/ja-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/49-locale-ja-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/50-locale-ja-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/51-locale-ja-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/52-locale-ja-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/53-locale-ja-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/54-locale-ja-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/55-locale-ja-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/56-locale-ja-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "ko",
       "bucket": "cjk",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ko/ko-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/07-locale-ko-surface-today.png",
-        "localization/review/ko/ko-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/57-locale-ko-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/58-locale-ko-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/59-locale-ko-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/60-locale-ko-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/61-locale-ko-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/62-locale-ko-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/63-locale-ko-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/64-locale-ko-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "zh-Hans",
       "bucket": "cjk",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/zh-Hans/zh-Hans-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/14-locale-zh-Hans-surface-today.png",
-        "localization/review/zh-Hans/zh-Hans-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/113-locale-zh-Hans-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/114-locale-zh-Hans-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/115-locale-zh-Hans-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/116-locale-zh-Hans-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/117-locale-zh-Hans-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/118-locale-zh-Hans-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/119-locale-zh-Hans-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/120-locale-zh-Hans-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "zh-Hant",
       "bucket": "cjk",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/zh-Hant/zh-Hant-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/15-locale-zh-Hant-surface-today.png",
-        "localization/review/zh-Hant/zh-Hant-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/121-locale-zh-Hant-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/122-locale-zh-Hant-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/123-locale-zh-Hant-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/124-locale-zh-Hant-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/125-locale-zh-Hant-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/126-locale-zh-Hant-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/127-locale-zh-Hant-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/128-locale-zh-Hant-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "nl",
       "bucket": "long_script_or_inflection_heavy",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/nl/nl-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png",
-        "localization/review/nl/nl-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/17-locale-nl-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/18-locale-nl-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/19-locale-nl-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/20-locale-nl-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/21-locale-nl-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/22-locale-nl-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/23-locale-nl-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/24-locale-nl-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "ru",
       "bucket": "long_script_or_inflection_heavy",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ru/ru-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png",
-        "localization/review/ru/ru-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/89-locale-ru-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/90-locale-ru-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/91-locale-ru-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/92-locale-ru-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/93-locale-ru-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/94-locale-ru-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/95-locale-ru-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/96-locale-ru-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "sv",
       "bucket": "long_script_or_inflection_heavy",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/sv/sv-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/13-locale-sv-surface-today.png",
-        "localization/review/sv/sv-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/105-locale-sv-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/106-locale-sv-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/107-locale-sv-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/108-locale-sv-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/109-locale-sv-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/110-locale-sv-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/111-locale-sv-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/112-locale-sv-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "tr",
       "bucket": "long_script_or_inflection_heavy",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/tr/tr-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png",
-        "localization/review/tr/tr-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/129-locale-tr-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/130-locale-tr-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/131-locale-tr-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/132-locale-tr-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/133-locale-tr-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/134-locale-tr-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/135-locale-tr-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/136-locale-tr-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "uk",
       "bucket": "long_script_or_inflection_heavy",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/uk/uk-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png",
-        "localization/review/uk/uk-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/137-locale-uk-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/138-locale-uk-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/139-locale-uk-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/140-locale-uk-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/141-locale-uk-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/142-locale-uk-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/143-locale-uk-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/144-locale-uk-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "fr",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/fr/fr-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png",
-        "localization/review/fr/fr-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/25-locale-fr-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/26-locale-fr-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/27-locale-fr-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/28-locale-fr-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/29-locale-fr-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/30-locale-fr-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/31-locale-fr-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/32-locale-fr-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "it",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/it/it-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/05-locale-it-surface-today.png",
-        "localization/review/it/it-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/41-locale-it-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/42-locale-it-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/43-locale-it-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/44-locale-it-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/45-locale-it-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/46-locale-it-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/47-locale-it-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/48-locale-it-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "nb",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/nb/nb-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/08-locale-nb-surface-today.png",
-        "localization/review/nb/nb-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/65-locale-nb-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/66-locale-nb-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/67-locale-nb-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/68-locale-nb-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/69-locale-nb-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/70-locale-nb-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/71-locale-nb-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/72-locale-nb-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "pt",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/pt/pt-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/09-locale-pt-surface-today.png",
-        "localization/review/pt/pt-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/73-locale-pt-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/74-locale-pt-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/75-locale-pt-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/76-locale-pt-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/77-locale-pt-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/78-locale-pt-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/79-locale-pt-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/80-locale-pt-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "pt-BR",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/pt-BR/pt-BR-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/10-locale-pt-BR-surface-today.png",
-        "localization/review/pt-BR/pt-BR-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/81-locale-pt-BR-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/82-locale-pt-BR-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/83-locale-pt-BR-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/84-locale-pt-BR-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/85-locale-pt-BR-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/86-locale-pt-BR-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/87-locale-pt-BR-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/88-locale-pt-BR-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "es",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/es/es-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/12-locale-es-surface-today.png",
-        "localization/review/es/es-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/100-locale-es-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/101-locale-es-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/102-locale-es-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/103-locale-es-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/104-locale-es-surface-build-info.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/97-locale-es-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/98-locale-es-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/99-locale-es-surface-root-tab-write.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     },
     {
       "locale": "vi",
       "bucket": "remaining_ltr",
       "native_review_state": "native/fluent-reviewed (419 entries via localization/review/vi/vi-review-return.json on 2026-05-18)",
-      "gate_state": "unblocked-pending-screenshot-evidence",
+      "gate_state": "passed-scoped",
       "open_findings": [],
       "scoped_surface_status": {
-        "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
-        "root-tabs": "not-reviewed",
-        "primary-empty-states": "not-reviewed",
-        "primary-actions": "not-reviewed",
-        "date-count-plural": "not-reviewed",
-        "dynamic-type-accessibility": "not-reviewed",
+        "build-info": "passed-scoped (iPhone 17 / iOS 26.5 simulator; clean build a7813a8; screenshot-only AX fallback recorded in manifest)",
+        "today-launch": "passed-scoped (iPhone 17 / iOS 26.5 simulator; fresh-day fixture; screenshot-only AX fallback recorded in manifest)",
+        "root-tabs": "passed-scoped (all five root tabs captured; RTL tab order captured for ar)",
+        "primary-empty-states": "passed-scoped (fresh-day Today plus root-tab empty states captured)",
+        "primary-actions": "passed-scoped (primary Today/root-tab CTAs captured at standard text size)",
+        "date-count-plural": "passed-scoped (locale date surface captured; plural resources also covered by localization-check parity)",
+        "dynamic-type-accessibility": "covered-by-maintained-regression (make ui-regression DOMAIN=localization; LocalizationAccessibilityRegression)",
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/18-locale-vi-surface-today.png",
-        "localization/review/vi/vi-review-return.json"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/145-locale-vi-surface-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/146-locale-vi-surface-root-tab-train.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/147-locale-vi-surface-root-tab-write.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/148-locale-vi-surface-root-tab-career.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/149-locale-vi-surface-root-tab-home.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/150-locale-vi-surface-empty-state-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/151-locale-vi-surface-date-count-plural-today.png",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/152-locale-vi-surface-build-info.png"
       ],
-      "hig_ui_reviewed_claim": false,
-      "blockers": [
-        "no scoped HIG evidence captured"
-      ]
+      "hig_ui_reviewed_claim": true,
+      "blockers": []
     }
   ],
-  "open_findings": [
-    {
-      "id": "HIG-DE-001",
-      "locale": "de",
-      "severity": "blocking",
-      "area": "labels-actions",
-      "state": "in-progress",
-      "summary": "German Today UI surfaced English evening reflection nudge copy.",
-      "observed_evidence": [
-        "\"Evening reflection\"",
-        "\"Close the day with one quick reflection.\""
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Core/Application/TodayStore.swift evening reflection nudge",
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift reflection nudge display"
-      ],
-      "proof_path_or_chat_observation": "automation/proofs/app-localization-german-hig-ui-gate/manifest.json (chat-observed German TestFlight Build Info screenshot)",
-      "remediation_slice_id_or_null": "app-localization-hig-multisurface-screenshot-capture",
-      "created_at": "2026-05-18T02:29:24Z",
-      "closed_at_or_null": null,
-      "notes": "Source fix shipped under app-localization-evening-reflection-nudge-routing. Finding stays open until a rerun screenshot for the German Today surface is captured under automation/proofs/ with manifest.json. (Re-gated 2026-05-18: source_fix_confirmed=true; awaiting post-fix screenshot capture under app-localization-hig-multisurface-screenshot-capture.)"
-    }
-  ],
+  "open_findings": [],
   "closed_findings": [
     {
       "id": "HIG-AR-001",
@@ -849,6 +939,51 @@
       "closed_at_or_null": "2026-05-18T11:00:00Z",
       "screenshot_inspection_2026_05_18": "Captured Today screenshot for this locale. iOS auto-shrinks the longer tab label at iPhone 17 portrait default Dynamic Type; no literal truncation observed. Severity downgraded from major to minor.",
       "closure_evidence": "Maintained regression coverage added: owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression (testFreshDayShellSettlesUnderLargerAccessibilityText<locale>): shell settles + 5 tabs hittable under UICTContentSizeCategoryAccessibilityXL. Test passed under iPhone 17 / iOS 26.5 simulator. Combined with the screenshot-verified evidence at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/ that iOS auto-shrinks the longer tab labels without literal truncation at default Dynamic Type, this closes the finding via maintained coverage. Underlying degradation (reduced text size for the longer-label tabs) is documented honestly and is not a HIG defect that can be 'fixed' without changing the labels themselves."
+    },
+    {
+      "id": "HIG-DE-001",
+      "locale": "de",
+      "severity": "blocking",
+      "area": "labels-actions",
+      "state": "closed-fixed",
+      "summary": "German Today UI surfaced English evening reflection nudge copy.",
+      "observed_evidence": [
+        "\"Evening reflection\"",
+        "\"Close the day with one quick reflection.\""
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift evening reflection nudge",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift reflection nudge display"
+      ],
+      "proof_path_or_chat_observation": "automation/proofs/app-localization-german-hig-ui-gate/manifest.json (chat-observed German TestFlight Build Info screenshot)",
+      "remediation_slice_id_or_null": "app-localization-hig-multisurface-screenshot-capture",
+      "created_at": "2026-05-18T02:29:24Z",
+      "closed_at_or_null": "2026-05-18T17:17:46Z",
+      "notes": "Source fix shipped under app-localization-evening-reflection-nudge-routing. Finding stays open until a rerun screenshot for the German Today surface is captured under automation/proofs/ with manifest.json. (Re-gated 2026-05-18: source_fix_confirmed=true; awaiting post-fix screenshot capture under app-localization-hig-multisurface-screenshot-capture.)",
+      "closure_evidence": "Source fix routes Today reflection nudge display through localized keys notification.prompt.eveningReflection.{title,body} in TodayView. German Localizable.strings contains Abendreflexion / Schließen Sie den Tag mit einer kurzen Reflexion. Clean-build German Today screenshot proof is preserved at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/33-locale-de-surface-today.png with manifest automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json. The capture ran at midday, so it does not force the evening trigger state; closure relies on deterministic source/key routing plus post-fix German Today screenshot evidence."
+    },
+    {
+      "id": "HIG-AR-002",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "closed-fixed",
+      "summary": "WriteView 'arrow.right.circle' SF Symbol (2 call sites) does not auto-mirror under RTL.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:88 Image(systemName: \"arrow.right.circle\")",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:181 Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift"
+      ],
+      "proof_path_or_chat_observation": "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
+      "remediation_slice_id_or_null": "app-localization-rtl-sf-symbol-fix",
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": "2026-05-18T17:17:46Z",
+      "source_fix_confirmed": true,
+      "source_fix_at": "2026-05-18T10:27:20Z",
+      "source_fix_slice": "app-localization-rtl-sf-symbol-fix",
+      "closure_evidence": "Source fix replaced WriteView directional arrow.right.circle call sites with arrow.forward.circle. Clean-build Arabic Write screenshot proof is preserved at automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/11-locale-ar-surface-root-tab-write.png with manifest automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/manifest.json; screenshot uses RTL tab order and records screenshot-only AX fallback. Swipe-action symbol visibility is source-verified rather than directly screenshot-captured."
     }
   ],
   "remediation_slice_pointers": {
@@ -865,20 +1000,25 @@
     "HIG-UK-001": "app-localization-tab-bar-truncation-fix"
   },
   "validation": {
-    "make architecture": "passed",
-    "make localization-check": "passed",
-    "python3 Tools/localization-review-status.py": "ran",
-    "make automation-check": "ran",
-    "python3 automation/supervisor/run_next.py --dry-run": "ran",
-    "git diff --check": "clean"
+    "python3 automation/context/build_context.py --slice-id app-localization-all-locale-hig-ui-closure": "passed 2026-05-18T17:23:23Z; slice status done, allowed proof scope includes closure screenshot harness and test repair",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed 2026-05-18T17:23:23Z; stop: no eligible queued slice found",
+    "make architecture": "passed 2026-05-18T17:23:59Z; architecture-lint passed",
+    "make localization-check": "passed 2026-05-18T17:23:59Z; 19 locales, 377 keys, 13 plural keys",
+    "./Tools/validate.sh localization": "passed 2026-05-18T17:23:59Z; localization parity passed",
+    "python3 Tools/localization-review-status.py": "passed 2026-05-18T17:23:59Z; 18/18 non-English locale return files native-reviewed, 7542 native-reviewed entries",
+    "make automation-check": "passed 2026-05-18T17:24:00Z after updating stale harness tests; pyright 0 errors/0 warnings and 71 Python tests passed",
+    "make ui-regression DOMAIN=localization": "passed 2026-05-18T17:26:19Z; 15 UI tests, 0 failures on iPhone 17 / iOS 26.5",
+    "git diff --check": "passed 2026-05-18T17:27:00Z",
+    "make localization-multisurface-screenshot-idb-check": "passed 2026-05-18T17:27:00Z; idb and idb_companion ready",
+    "python3 automation/smoke/capture_localized_surfaces.py --dry-run --seed-fresh-day --allow-screenshot-only-ax-fallback --udid E6FA3288-2C0E-4CD0-9B6A-441D92B0DCC0 --locales en de ar --surfaces today root-tab-write build-info": "passed 2026-05-18T17:27:00Z; 9 planned captures",
+    "closure proof consistency check": "passed 2026-05-18T17:27:00Z; 19 locales, 8 surfaces, 152 captures, 0 failures",
+    "python3 -m json.tool automation/queue/slices.json": "passed 2026-05-18T17:24:00Z",
+    "python3 -m json.tool automation/proofs/app-localization-hig-ui-matrix/manifest.json": "passed 2026-05-18T17:24:00Z"
   },
   "not_claimed": [
-    "any locale is hig-ui-reviewed",
-    "screenshot-reviewed for non-German locales",
-    "device-verified for any locale",
-    "testflight-verified for any locale",
-    "RTL mirroring for ar has been proven on Owlory surfaces",
-    "all scoped localized UI surfaces are hig-ui-reviewed"
+    "physical-device HIG proof for any locale",
+    "TestFlight HIG proof for any locale",
+    "automated accessibility-tree settled assertions for the 2026-05-18 closure screenshots (idb returned application-only AX tree; screenshots used recorded coordinate fallback)"
   ],
   "downstream_slices": {
     "broadens_screenshot_capture": "app-localization-hig-multisurface-screenshot-harness",
@@ -891,14 +1031,10 @@
       "app-localization-hig-gate-bucket-remaining-ltr"
     ],
     "remediation_triage": "DONE (this slice)",
-    "final_closure": "app-localization-all-locale-hig-ui-closure",
-    "remediation_slices_queued": [
-      "app-localization-rtl-sf-symbol-fix (pri 79; closes HIG-AR-001 + HIG-AR-002 in source)",
-      "app-localization-hig-multisurface-screenshot-capture (pri 78; preserves screenshot evidence for HIG-DE-001 rerun + all 8 tab-truncation findings)",
-      "app-localization-tab-bar-truncation-fix (pri 77; conditional on capture confirming truncation; addresses 8 adaptive-layout findings together)"
-    ]
+    "final_closure": "DONE (app-localization-all-locale-hig-ui-closure)",
+    "remediation_slices_queued": []
   },
-  "updated_at": "2026-05-18T11:44:43Z",
+  "updated_at": "2026-05-18T17:27:00Z",
   "notes": [
     {
       "at": "2026-05-18T05:20:00Z",
@@ -923,30 +1059,26 @@
     {
       "at": "2026-05-18T11:44:43Z",
       "summary": "Project owner reported native/fluent review complete for all localization. The 17 remaining non-German review return files were promoted to provenance.native_reviewed=true with 419/419 native-reviewed entries each. Native review blockers are removed from per-locale HIG matrix state, but HIG UI readiness remains unclaimed pending scoped evidence and closure."
+    },
+    {
+      "at": "2026-05-18T17:17:46Z",
+      "summary": "All-locale localized UI HIG closure proof captured under automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/: 19 locales x 8 scoped surfaces = 152 PNGs, 0 failures, clean build a7813a8. All per-locale gates moved to passed-scoped; HIG-DE-001 and HIG-AR-002 closed with explicit source-plus-screenshot evidence. Device/TestFlight proof remains unclaimed, and the closure screenshots used screenshot-only AX fallback because idb describe-all returned only the application node."
     }
   ],
-  "in_progress_findings": [
-    {
-      "id": "HIG-AR-002",
-      "locale": "ar",
-      "severity": "major",
-      "area": "right-to-left",
-      "state": "in-progress",
-      "summary": "WriteView 'arrow.right.circle' SF Symbol (2 call sites) does not auto-mirror under RTL.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Features/Write/WriteView.swift:88 Image(systemName: \"arrow.right.circle\")",
-        "owlory_xcode/Owlory/Features/Write/WriteView.swift:181 Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")"
-      ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Features/Write/WriteView.swift"
-      ],
-      "proof_path_or_chat_observation": "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
-      "remediation_slice_id_or_null": "app-localization-rtl-sf-symbol-fix",
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null,
-      "source_fix_confirmed": true,
-      "source_fix_at": "2026-05-18T10:27:20Z",
-      "source_fix_slice": "app-localization-rtl-sf-symbol-fix"
-    }
-  ]
+  "in_progress_findings": [],
+  "closure_slice_id": "app-localization-all-locale-hig-ui-closure",
+  "closure_proof_path": "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/",
+  "closure_summary": {
+    "status": "passed-scoped",
+    "closed_at": "2026-05-18T17:30:00Z",
+    "locales": 19,
+    "surfaces_per_locale": 8,
+    "screenshots": 152,
+    "failures": 0,
+    "simulator": "iPhone 17 / iOS 26.5",
+    "git_commit_short_in_capture_manifest": "a7813a8",
+    "settled_assertion_mode": "screenshot-only-ax-fallback",
+    "dynamic_type_accessibility_coverage": "make ui-regression DOMAIN=localization",
+    "validated_at": "2026-05-18T17:27:00Z"
+  }
 }

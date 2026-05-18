@@ -1,6 +1,6 @@
 # Localization HIG UI Completion
 
-Use this plan to finish Apple Human Interface Guidelines adherence for Owlory's localized UI without mixing proof levels or overclaiming translation quality.
+Use this record to preserve Apple Human Interface Guidelines adherence for Owlory's localized UI without mixing proof levels or overclaiming translation quality.
 
 Source references checked on 2026-05-18:
 
@@ -20,7 +20,19 @@ All supported locales can be called localized-UI HIG complete only when every it
 5. Any HIG finding has a queued remediation slice or a completed fix with rerun evidence.
 6. `docs/workflows/localization-translation-quality.md`, review return files, proof manifests, and SecondBrain agree on the claim being made.
 
-Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove physical-device or TestFlight behavior. Native/fluent review is recorded complete for non-English locales, but localized UI still requires scoped HIG evidence before claiming UI readiness.
+Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove physical-device or TestFlight behavior. Native/fluent review is recorded complete for non-English locales. As of 2026-05-18, all 19 supported locales are `hig-ui-reviewed` for the scoped simulator surfaces recorded in the evidence matrix.
+
+## Closure Status
+
+`app-localization-all-locale-hig-ui-closure` closed on 2026-05-18 for scoped simulator HIG UI evidence:
+
+- Repo-managed proof: [`automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/`](../../automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/)
+- Coverage: 19 locales x 8 surfaces = 152 screenshots, all passed.
+- Build: iPhone 17 / iOS 26.5 simulator, clean app build from git commit `a7813a8`.
+- Surfaces: Build Info, Today launch, root tabs, primary empty states/actions, date/count/plural Today sample, and RTL root-tab order for Arabic.
+- Dynamic Type and touch target coverage: maintained through `make ui-regression DOMAIN=localization`.
+
+Not claimed: physical-device HIG proof, TestFlight HIG proof, or automated accessibility-tree settled assertions for the 2026-05-18 screenshots. The simulator returned an application-only AX tree through `idb`, so the capture manifest records screenshot-only AX fallback and deterministic coordinate navigation. HIG-DE-001 is closed by source/key routing plus post-fix German screenshot evidence; the specific evening trigger state was not force-captured. HIG-AR-002 is closed by source verification of `.forward` SF Symbol usage plus Arabic Write/root-tab screenshots.
 
 ## Locale Buckets
 
@@ -28,14 +40,14 @@ Use buckets to keep UI review slices bounded by risk:
 
 | Bucket | Locales | Primary HIG Risk |
 | --- | --- | --- |
-| Source | `en` | Source UI baseline and comparison state |
-| German reviewed | `de` | Long compounds, native-reviewed, HIG-DE-001 source fix landed and in-progress, needs post-fix screenshot capture |
-| RTL | `ar` | Mirroring, text alignment, directional controls, Arabic typography. Gate ran 2026-05-18 (doc-only); HIG-AR-001/AR-002 open for non-mirroring `chevron.right`/`arrow.right.circle` SF Symbols (source-level defects, deterministic SwiftUI rule); HIG-AR-003 open for `Career` tab label truncation risk. |
-| CJK | `ja`, `ko`, `zh-Hans`, `zh-Hant` | Dense labels, line breaking, CJK typography, terminology. Gate ran 2026-05-18 (doc-only); HIG-JA-001 open for Japanese Train katakana tab truncation; ko/zh-Hans/zh-Hant clean at source level; screenshot capture pending. |
-| Long-script / inflection-heavy | `nl`, `ru`, `sv`, `tr`, `uk` (plus `de` as native-reviewed cross-cut) | Long words, grammatical case, truncation. Gate ran 2026-05-18 (doc-only); HIG-DE-002/NL-001/RU-001/TR-001/UK-001 open for Train/Write tab truncation; screenshot capture pending. |
-| Remaining LTR | `fr`, `it`, `nb`, `pt`, `pt-BR`, `es`, `vi` | Button length, plural/date phrasing, region variants. Gate ran 2026-05-18 (doc-only); HIG-FR-001 open for French Today tab truncation risk; screenshot capture pending. |
+| Source | `en` | Passed scoped simulator HIG gate; source UI baseline and comparison state preserved in the closure capture. |
+| German reviewed | `de` | Passed scoped simulator HIG gate; HIG-DE-001 closed after source/key routing and post-fix German screenshot evidence. |
+| RTL | `ar` | Passed scoped simulator HIG gate; RTL root-tab order captured, directional SF Symbol findings closed, and tab-length risk covered by maintained accessibility regression. |
+| CJK | `ja`, `ko`, `zh-Hans`, `zh-Hant` | Passed scoped simulator HIG gate; dense labels and tab-length risks covered by screenshot evidence plus maintained accessibility regression. |
+| Long-script / inflection-heavy | `nl`, `ru`, `sv`, `tr`, `uk` (plus `de` as native-reviewed cross-cut) | Passed scoped simulator HIG gate; long-label risks covered by screenshot evidence plus maintained accessibility regression. |
+| Remaining LTR | `fr`, `it`, `nb`, `pt`, `pt-BR`, `es`, `vi` | Passed scoped simulator HIG gate; button, plural/date, and region-variant surfaces covered by closure screenshots. |
 
-All 18 non-English locales are native/fluent-reviewed as of 2026-05-18. Final HIG UI-ready claims still require scoped screenshot/accessibility evidence, closed findings, and the final closure slice.
+All 18 non-English locales are native/fluent-reviewed as of 2026-05-18. All 19 supported locales have scoped simulator HIG UI closure evidence as of the same date.
 
 ## Evidence Matrix
 
@@ -64,7 +76,7 @@ python3 automation/smoke/capture_localized_surfaces.py \
     --locales en de --surfaces today build-info
 ```
 
-Capture output lands under [`automation/proofs/app-localization-hig-multisurface-screenshot-harness/`](../../automation/proofs/app-localization-hig-multisurface-screenshot-harness/) with a per-capture `manifest.json` (locale, surface, file, bytes, sha256, navigation step count, git commit short, idb target). The directory must be empty before `--capture`. Captures whose settled-state assertion fails are recorded as `blocked`, not silently treated as proof. Add locale-specific settled labels via `--label-overrides` when an English fallback label does not match the localized accessibility label.
+Capture output lands under [`automation/proofs/app-localization-hig-multisurface-screenshot-harness/`](../../automation/proofs/app-localization-hig-multisurface-screenshot-harness/) with a per-capture `manifest.json` (locale, surface, file, bytes, sha256, navigation step count, git commit short, idb target). The directory must be empty before `--capture`. Captures whose settled-state assertion fails are recorded as `blocked`, not silently treated as proof. The 2026-05-18 closure run used localized label lookup, fresh-day seeding, RTL-aware coordinate navigation, and screenshot-only AX fallback because `idb` exposed only the application node for that simulator session.
 
 The harness does not claim translation quality, full layout correctness, device behavior, TestFlight behavior, or `hig-ui-reviewed` for any locale. Per-bucket HIG gate slices consume these proofs and update the evidence matrix.
 
@@ -73,11 +85,11 @@ The harness does not claim translation quality, full layout correctness, device 
 The queue encodes the path to completion:
 
 1. `app-localization-hig-evidence-matrix` creates the all-locale HIG evidence matrix and finding taxonomy.
-2. `app-localization-hig-multisurface-screenshot-harness` broadens screenshot capture beyond one Today launch screenshot per locale. **Capture ran 2026-05-18**: 18 today-surface screenshots preserved under `automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/`. HIG-AR-001 closed-fixed; 8 tab-truncation findings downgraded to minor (iOS auto-shrinks); HIG-AR-002 + HIG-DE-001 stay in-progress.
+2. `app-localization-hig-multisurface-screenshot-harness` broadens screenshot capture beyond one Today launch screenshot per locale. **Initial capture ran 2026-05-18**: 18 today-surface screenshots preserved under `automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/`. **Closure capture ran 2026-05-18**: 152 screenshots preserved under `automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/`.
 3. `app-localization-hig-dynamic-type-accessibility-harness` adds maintained checks for Dynamic Type, accessibility labels/values/hints, tab reachability, and touch target regressions.
 4. Per-locale native-review slices unblock non-German final claims.
 5. Bucketed HIG gate slices run the evidence review and queue remediation for failures.
 6. `app-localization-hig-remediation-triage` turns remaining findings into narrow fix slices. **Completed 2026-05-18**: 11 open findings triaged into 3 remediation slices — `app-localization-rtl-sf-symbol-fix`, `app-localization-hig-multisurface-screenshot-capture`, `app-localization-tab-bar-truncation-fix`.
-7. `app-localization-all-locale-hig-ui-closure` remains blocked until every HIG gate and remediation slice has passed.
+7. `app-localization-all-locale-hig-ui-closure` is done. The matrix has zero open or in-progress findings, all 19 supported locales have `gate_state=passed-scoped`, and proof references point at committed screenshot artifacts.
 
 Do not collapse this ladder into one broad implementation slice. A single all-locale HIG claim is only honest after the native-review, automation, proof, gate, and remediation slices converge.
