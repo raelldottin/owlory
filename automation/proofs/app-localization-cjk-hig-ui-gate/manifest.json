@@ -1,0 +1,176 @@
+{
+  "proof_id": "app-localization-cjk-hig-ui-gate",
+  "slice_id": "app-localization-cjk-hig-ui-gate",
+  "created_at": "2026-05-18T10:11:19Z",
+  "locales": ["ja", "ko", "zh-Hans", "zh-Hant"],
+  "source": "Source-trace inspection of localized .strings resources on 2026-05-18 plus a validated multisurface-harness dry-run plan. No screenshot captures are committed under this directory.",
+  "artifact_persisted": false,
+  "gate_result": "fail",
+  "gate_result_reason": "No preserved screenshot evidence for any of the 4 CJK locales. Source-trace surfaced 1 major HIG risk (HIG-JA-001 for Japanese Train tab katakana label width). Korean, Simplified Chinese, and Traditional Chinese have no source-level HIG findings (compact 2-char tab labels are ideal for tab-bar use) but cannot pass without preserved screenshots for the scoped surfaces. Internal-reviewer signoff is recorded for all 4 locales.",
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed_locales": [],
+  "signoff_baseline": {
+    "kind": "internal-reviewer-signoff (not native speaker)",
+    "recorded_at": "2026-05-18",
+    "scope": "Permits HIG bucket-gate slices to run against the current LLM-drafted text. Does NOT claim native review, fluent review, translation quality, or screenshot/device/TestFlight proof.",
+    "per_locale_record_path_template": "localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff)"
+  },
+  "scoped_surfaces_required": [
+    "build-info",
+    "today-launch",
+    "root-tabs",
+    "primary-empty-states",
+    "primary-actions",
+    "date-count-plural",
+    "dynamic-type-accessibility"
+  ],
+  "harness_plan": {
+    "tool": "automation/smoke/capture_localized_surfaces.py",
+    "dry_run_status": "planned (28 captures = 4 locales x 7 surfaces; idb + idb_companion ready)",
+    "label_overrides_needed": {
+      "today": "All four CJK today labels are in the harness default catalog (ja '今日', ko '오늘', zh-Hans/zh-Hant '今天'); no overrides required for the today surface."
+    },
+    "actual_capture_status": "not run in this slice. Capture is deferred to a separate follow-up screenshot-capture slice."
+  },
+  "source_trace_per_locale": {
+    "ja": {
+      "today_label": "今日",
+      "train_label": "トレーニング",
+      "write_label": "書く",
+      "career_label": "キャリア",
+      "home_label": "ホーム",
+      "build_info_label": "ビルド情報",
+      "save_label": "保存",
+      "cancel_label": "キャンセル",
+      "continue_label": "続ける",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Japanese is the CJK outlier on tab-label width because of katakana loanwords: 'トレーニング' (6 chars), 'キャリア' (4 chars), 'ホーム' (3 chars), 'キャンセル' (5 chars). Each katakana char renders roughly equivalent to one CJK ideograph in width. See HIG-JA-001 for the Train tab risk. Translation-quality note (NOT a HIG defect): a native reviewer could swap the loanwords for kanji alternatives (e.g., '訓練' for Train) if the native-review pass prefers them; the choice is reviewer-led."
+    },
+    "ko": {
+      "today_label": "오늘",
+      "train_label": "훈련",
+      "write_label": "쓰기",
+      "career_label": "경력",
+      "home_label": "홈",
+      "build_info_label": "빌드 정보",
+      "save_label": "저장",
+      "cancel_label": "취소",
+      "continue_label": "계속",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Korean tab labels are uniformly 1-2 Hangul characters — ideal for tab-bar use. No source-trace HIG risk identified. Translation-quality note (NOT a HIG defect): '쓰기' for Write is the noun form (the act of writing); '작성' is an alternative."
+    },
+    "zh-Hans": {
+      "today_label": "今天",
+      "train_label": "训练",
+      "write_label": "写作",
+      "career_label": "事业",
+      "home_label": "家",
+      "build_info_label": "构建信息",
+      "save_label": "保存",
+      "cancel_label": "取消",
+      "continue_label": "继续",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Simplified Chinese tab labels are uniformly 1-2 simplified ideographs — ideal for tab-bar use. Career '事业' uses simplified forms that differ from Traditional Chinese '事業'. No source-trace HIG risk identified."
+    },
+    "zh-Hant": {
+      "today_label": "今天",
+      "train_label": "訓練",
+      "write_label": "寫作",
+      "career_label": "事業",
+      "home_label": "家",
+      "build_info_label": "建置資訊",
+      "save_label": "儲存",
+      "cancel_label": "取消",
+      "continue_label": "繼續",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Traditional Chinese tab labels are uniformly 1-2 traditional ideographs — ideal for tab-bar use. Differs from Simplified Chinese as expected (e.g., '訓練' vs '训练', '事業' vs '事业', '儲存' vs '保存'). No source-trace HIG risk identified."
+    }
+  },
+  "open_findings": [
+    {
+      "id": "HIG-JA-001",
+      "locale": "ja",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Japanese Train tab label 'トレーニング' (6 katakana characters) is significantly wider than typical CJK 2-character tab labels and wider than the English 'Train' (5 Latin chars; CJK glyphs render roughly 2x Latin width per character, so 6 katakana ~= 12 Latin chars equivalent). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings: \"Train\" = \"トレーニング\";",
+        "Comparison across CJK bucket: ja 'トレーニング'=6ch, ko '훈련'=2ch, zh-Hans '训练'=2ch, zh-Hant '訓練'=2ch."
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Japanese Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture Japanese Train tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates or shrinks legibly.",
+        "If truncation is confirmed, native reviewer could swap to kanji alternative '訓練' (2 chars) which would also align with the other CJK locales' lengths.",
+        "Alternatively, address with a tab-bar UI tweak alongside HIG-DE-002/FR-001/NL-001/RU-001/TR-001/UK-001."
+      ],
+      "created_at": "2026-05-18T10:11:19Z",
+      "closed_at_or_null": null
+    }
+  ],
+  "hig_areas_per_locale": {
+    "ja": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-JA-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "ko": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "zh-Hans": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "zh-Hant": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    }
+  },
+  "missing_evidence_for_pass": [
+    "Build Info screenshot per locale with complete gate fields (version, build, commit short/full, branch, source-clean flags)",
+    "Today screenshot per locale with no visible app-owned English strings",
+    "All five root tabs per locale (especially Japanese Train tab for HIG-JA-001 confirmation)",
+    "Primary empty states per locale (Today/Train/Write/Career/Home/Patterns/Settings empty-state copy)",
+    "Primary actions per locale (Save, Cancel, Continue, primary CTAs)",
+    "High-risk date/count/plural surfaces per locale (CJK typography sensitive to character density)",
+    "Dynamic Type pass (standard text size + Larger Accessibility Text)",
+    "Accessibility labels/hints/values for the reviewed surfaces"
+  ],
+  "not_claimed": [
+    "any of these 4 CJK locales is hig-ui-reviewed",
+    "any of these 4 CJK locales is native-reviewed",
+    "translation quality for any of these 4 CJK locales (Japanese loanword choices, Korean noun-vs-verb forms, Simplified vs Traditional differences all need native review)",
+    "screenshot-reviewed, device-verified, or testflight-verified for any of these 4 CJK locales"
+  ],
+  "downstream_recommendations": [
+    "Run automation/smoke/capture_localized_surfaces.py --capture --locales ja ko zh-Hans zh-Hant --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today. No --label-overrides needed for today; all 4 CJK today labels are in the default catalog.",
+    "After capture, append findings to this gate and update the all-locale HIG evidence matrix per_locale_state for these 4 locales.",
+    "HIG-JA-001 shares a fix shape with HIG-FR-001 + HIG-DE-002/NL-001/RU-001/TR-001/UK-001 (tab-bar truncation). After screenshot confirmation, the same single tab-bar UI-tweak slice can address it."
+  ]
+}

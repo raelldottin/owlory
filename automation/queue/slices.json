@@ -5225,7 +5225,7 @@
     {
       "slice_id": "app-localization-cjk-hig-ui-gate",
       "title": "Run CJK localized UI HIG gate",
-      "status": "queued",
+      "status": "done",
       "priority": 84,
       "domain": "localization",
       "allowed_paths": [

@@ -1,0 +1,58 @@
+{
+  "slice_id": "app-localization-cjk-hig-ui-gate",
+  "title": "Run CJK localized UI HIG gate",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T10:11:19Z",
+  "proof_level": "doc-only",
+  "summary": "Ran the HIG localized UI gate for ja, ko, zh-Hans, zh-Hant under the internal-reviewer signoff baseline. Doc-only intake: source-trace inspection + multisurface-harness dry-run validation (28 captures planned, idb ready). Result: fail because no preserved screenshots. Allocated HIG-JA-001 (major / adaptive-layout / open) for Japanese Train tab katakana label 'トレーニング' (6 chars; CJK ~2x Latin width). Korean / Simplified Chinese / Traditional Chinese have uniformly compact 1-2 ideograph tab labels and no source-level HIG risk.",
+  "files_changed": [
+    "automation/proofs/app-localization-cjk-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-cjk-hig-ui-gate/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T101119Z-app-localization-cjk-hig-ui-gate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/101119-app-localization-cjk-hig-ui-gate.md"
+  ],
+  "gate_outcome": {
+    "result": "fail",
+    "locales_evaluated": ["ja", "ko", "zh-Hans", "zh-Hant"],
+    "hig_ui_reviewed_claimed_locales": [],
+    "open_findings_new": ["HIG-JA-001"],
+    "translation_quality_risks_noted_not_hig_defects": [
+      "ja: katakana loanwords (トレーニング, キャリア, ホーム, キャンセル) are valid but native reviewer could prefer kanji alternatives",
+      "ko: '쓰기' for Write is noun form; '작성' is alternative",
+      "Simplified vs Traditional Chinese differences require separate native review (do not bulk-edit one into the other)"
+    ],
+    "harness_plan_dry_run_status": "planned (28 captures, idb + idb_companion ready; no --label-overrides needed)",
+    "actual_capture_run_in_this_slice": false
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-cjk-hig-ui-gate": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-cjk-hig-ui-gate/manifest.json": "passed"
+  },
+  "not_claimed": [
+    "any of these 4 CJK locales is hig-ui-reviewed",
+    "any of these 4 CJK locales is native-reviewed",
+    "translation quality for any of these 4 CJK locales",
+    "screenshot-reviewed, device-verified, or testflight-verified for any of these 4 CJK locales"
+  ],
+  "residual_risk": [
+    "HIG-JA-001 is a source-trace inference. Whether the katakana tab label actually truncates depends on iPhone width + Dynamic Type; needs screenshot confirmation.",
+    "ko/zh-Hans/zh-Hant have no recorded HIG finding only because no screenshots were captured. Live screenshots may surface additional issues (e.g., line-breaking in long count/date phrases).",
+    "Japanese katakana-vs-kanji choice is a native-review decision; HIG gate noted but did not override.",
+    "Eight bucket-gate findings total now share the same tab-bar truncation fix shape (HIG-DE-002/FR-001/JA-001/NL-001/RU-001/TR-001/UK-001 are the seven adaptive-layout findings; HIG-DE-001 is separate)."
+  ],
+  "downstream_recommendations": [
+    "Schedule one screenshot-capture slice that covers all 17 non-English locales now in failing-bucket-gate state and confirms/denies the seven tab-truncation findings + HIG-DE-001's reflection-nudge fix.",
+    "If the seven tab-truncation findings are confirmed by screenshot, queue a single tab-bar layout slice (likely under Features/, not within a localization slice) that addresses all of them together."
+  ]
+}

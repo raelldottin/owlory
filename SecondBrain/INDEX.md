@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-cjk-hig-ui-gate (doc-only; HIG gate for ja/ko/zh-Hans/zh-Hant; result fail; HIG-JA-001 open for Japanese 'トレーニング' Train tab katakana truncation; ko/zh-Hans/zh-Hant clean at source level; 7 tab-truncation findings now total across bucket gates)](sessions/2026-05-18/101119-app-localization-cjk-hig-ui-gate.md)
 - [app-localization-long-script-hig-ui-gate (doc-only; HIG gate for de/nl/ru/sv/tr/uk; result fail; 5 new findings HIG-DE-002/NL-001/RU-001/TR-001/UK-001 for Train/Write tab truncation; HIG-DE-001 carried; sv clean at source level; harness dry-run validated for 42 captures)](sessions/2026-05-18/100452-app-localization-long-script-hig-ui-gate.md)
 - [app-localization-remaining-ltr-hig-ui-gate (doc-only; HIG gate for fr/it/nb/pt/pt-BR/es/vi under internal-reviewer signoff baseline; result fail because no preserved screenshots; HIG-FR-001 open for French 'Aujourd'hui' tab-bar truncation risk; harness dry-run validated for 49 captures)](sessions/2026-05-18/063437-app-localization-remaining-ltr-hig-ui-gate.md)
 - [internal-reviewer-signoff-non-german-locales (doc-only/metadata-only; project-owner internal-reviewer signoff recorded in 17 non-German return files; HIG bucket-gate native-review depends_on removed; native_reviewed flags stay false; entries stay needs-layout-check; 4 bucket gates now unblocked)](sessions/2026-05-18/052000-internal-reviewer-signoff-non-german-locales.md)
