@@ -21,20 +21,20 @@
     "warning": "These values are LLM-drafted and have not been accepted by a native or fluent Japanese / 日本語 reviewer. Do not claim translation quality without further native review."
   },
   "summary": {
-    "review_entry_count": 372,
+    "review_entry_count": 419,
     "status_counts": {
-      "needs-layout-check": 359,
+      "needs-layout-check": 406,
       "keep-english-term": 11,
       "needs-translation": 2
     },
     "lqa_counts": {
-      "passed": 364,
-      "warning": 8,
+      "passed": 409,
+      "warning": 10,
       "reverted": 0
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 330,
+    "strings_entry_count": 377,
     "plural_entry_count": 42
   },
   "resources": [
@@ -9414,6 +9414,1231 @@
       "review_status": "needs-layout-check",
       "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
       "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.low",
+      "english_value": "Low",
+      "reviewed_value": "低",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.okay",
+      "english_value": "Okay",
+      "reviewed_value": "普通",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.high",
+      "english_value": "High",
+      "reviewed_value": "高",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.rough",
+      "english_value": "Rough",
+      "reviewed_value": "悪い",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.steady",
+      "english_value": "Steady",
+      "reviewed_value": "安定",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.good",
+      "english_value": "Good",
+      "reviewed_value": "良い",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.poor",
+      "english_value": "Poor",
+      "reviewed_value": "悪い",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.fine",
+      "english_value": "Fine",
+      "reviewed_value": "まあまあ",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.great",
+      "english_value": "Great",
+      "reviewed_value": "素晴らしい",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.dayComplete",
+      "english_value": "Day complete",
+      "reviewed_value": "1日完了",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.compact",
+      "english_value": "In progress",
+      "reviewed_value": "進行中",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.regular",
+      "english_value": "Day in progress",
+      "reviewed_value": "1日進行中",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.readyWhenYouAre",
+      "english_value": "Ready when you are",
+      "reviewed_value": "準備が整いました",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.todaysPlan",
+      "english_value": "Today's plan",
+      "reviewed_value": "今日の予定",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.whatsActiveToday",
+      "english_value": "What's active today?",
+      "reviewed_value": "今日は何がアクティブですか?",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.focus",
+      "english_value": "Focus",
+      "reviewed_value": "フォーカス",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.dueToday",
+      "english_value": "Due today",
+      "reviewed_value": "今日が期限",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.carriedForward",
+      "english_value": "Carried forward",
+      "reviewed_value": "繰越",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [
+          "length-outlier: reviewed/english ratio 0.13 outside [0.25, 3.0]"
+        ],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.protocolRun",
+      "english_value": "Protocol run",
+      "reviewed_value": "プロトコル実行",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.active",
+      "english_value": "Active",
+      "reviewed_value": "アクティブ",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.inProgress",
+      "english_value": "In progress",
+      "reviewed_value": "進行中",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.domainNudge.focusMissing",
+      "english_value": "%@ hasn't shown up in Focus lately.",
+      "reviewed_value": "%@は最近フォーカスに表示されていません。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.toughSignals",
+      "english_value": "Tough signals today. Focus on one thing that matters and let the rest go.",
+      "reviewed_value": "今日は厳しいサインです。大事なことを1つに絞り、残りは手放しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowReserves",
+      "english_value": "Low reserves today. Keep the plan light — minimum viable wins.",
+      "reviewed_value": "今日は余力が少なめです。計画は軽くして、最小限の勝ちを狙いましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowEnergy",
+      "english_value": "Low energy today. Favor easy wins over deep work.",
+      "reviewed_value": "今日はエネルギーが低めです。深い作業より簡単な達成を優先しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.sleepWasRough",
+      "english_value": "Sleep was rough. You may have less focus than you think.",
+      "reviewed_value": "睡眠が厳しかったようです。思っているより集中力が少ないかもしれません。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.roughMood",
+      "english_value": "Rough mood today. Be honest about what you can carry.",
+      "reviewed_value": "今日は気分が重めです。抱えられる量に正直になりましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.strongSignals",
+      "english_value": "Strong signals today. Good day for deep work or hard problems.",
+      "reviewed_value": "今日は良いサインです。深い作業や難しい問題に向いた日です。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.solidDay",
+      "english_value": "Solid day. You have capacity — use it on what matters most.",
+      "reviewed_value": "堅実な日です。余力があります — いちばん大事なことに使いましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.steadyDay",
+      "english_value": "Steady day. Trust the plan.",
+      "reviewed_value": "安定した日です。計画を信じましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.decentDay",
+      "english_value": "Decent day ahead. Stay focused on your priorities.",
+      "reviewed_value": "まずまずの日になりそうです。優先事項に集中しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.similarReadinessHistory",
+      "english_value": "You finished this %1$@ on %2$@ check-in days.",
+      "reviewed_value": "%2$@のチェックインの日に%1$@これを完了しました。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.recentCompletions",
+      "english_value": "You completed this %@ recently.",
+      "reviewed_value": "最近これを%@完了しました。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.predictedTime",
+      "english_value": "Usually completed around %@.",
+      "reviewed_value": "通常%@頃に完了します。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.lastCompletion",
+      "english_value": "Last done %@.",
+      "reviewed_value": "前回は%@。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.once",
+      "english_value": "once",
+      "reviewed_value": "1回",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.times",
+      "english_value": "%d times",
+      "reviewed_value": "%d回",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.today",
+      "english_value": "today",
+      "reviewed_value": "今日",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.yesterday",
+      "english_value": "yesterday",
+      "reviewed_value": "昨日",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [
+          "length-outlier: reviewed/english ratio 0.22 outside [0.25, 3.0]"
+        ],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.daysAgo",
+      "english_value": "%d days ago",
+      "reviewed_value": "%d日前",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.low",
+      "english_value": "low-readiness",
+      "reviewed_value": "準備度低い",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.steady",
+      "english_value": "steady",
+      "reviewed_value": "安定",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.high",
+      "english_value": "high-readiness",
+      "reviewed_value": "準備度高い",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "write.calibration.pipelineNudge.captureBacklog",
+      "english_value": "You have %d captures waiting. Try developing one into a source note.",
+      "reviewed_value": "%d件のキャプチャが待機しています。1つをソースノートに発展させてみましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.strong",
+      "english_value": "Strong consistency — %d%% of sessions completed or adapted.",
+      "reviewed_value": "高い一貫性 — セッションの%d%%を完了または調整しました。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.solid",
+      "english_value": "Solid rhythm — %d%% follow-through this period.",
+      "reviewed_value": "安定したリズム — この期間のフォロースルーは%d%%です。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.low",
+      "english_value": "Training follow-through at %d%%. Consider fewer, more committed sessions.",
+      "reviewed_value": "トレーニングのフォロースルーは%d%%です。少なめで、より確実に取り組めるセッションを検討しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
+      "review_date": "2026-05-17",
       "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
       "resource_type": "strings",
       "locale": "ja",

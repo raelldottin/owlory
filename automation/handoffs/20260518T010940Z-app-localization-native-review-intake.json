@@ -1,0 +1,91 @@
+{
+  "slice_id": "app-localization-native-review-intake",
+  "status": "done",
+  "summary": "Ingested the user-reported native/human German review pass. Refreshed per-locale return files to current resources, refreshed LQA/dashboard artifacts, marked only German as native-reviewed with 419 accepted entries, preserved prior LLM-draft provenance, updated German resource headers and translation-quality docs, and left all other non-English locales unreviewed.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/010852-app-localization-native-review-intake.md",
+    "automation/handoffs/20260518T010940Z-app-localization-native-review-intake.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-translation-quality.md",
+    "localization/review/LQA.md",
+    "localization/review/STATUS.md",
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/de/README.md",
+    "localization/review/de/german-review-packet.csv",
+    "localization/review/de/german-review-packet.json",
+    "localization/review/de/german-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-native-review-intake",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "./Tools/validate.sh localization",
+    "python3 Tools/localization-review-status.py",
+    "make automation-check",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-native-review-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Per-locale native review tracking",
+      "before": "All 18 non-English locale return files had provenance.native_reviewed=false and German had 372 stale tracked entries, with new app localization keys missing from the return file.",
+      "after": "All 18 return files are refreshed to 419 entries. German has provenance.native_reviewed=true and 419 native-reviewed entries based on the user-reported human/native German review pass. The other 17 locales remain provenance.native_reviewed=false.",
+      "proof": [
+        "python3 Tools/localization-review-status.py",
+        "localization/review/STATUS.md",
+        "localization/review/de/german-review-return.json"
+      ]
+    },
+    {
+      "contract": "German resource provenance headers",
+      "before": "German Localizable.strings and Localizable.stringsdict headers said the values were LLM-drafted and not native-reviewed.",
+      "after": "German resource headers state that values originated as LLM drafts and were accepted by user-reported native/human German review on 2026-05-18.",
+      "proof": [
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+        "make localization-check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "German native review is recorded from the user's project-owner report; the individual reviewer's personal name or vendor identity was not provided.",
+    "No running-app smoke, screenshot proof, device proof, or TestFlight proof was performed in this slice.",
+    "The other 17 non-English locales remain LLM-drafted and not native-reviewed.",
+    "The required build still reports the pre-existing TodayView onChange(of:perform:) iOS 17 deprecation warning; this slice did not touch that path."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Supervisor dry-run after marking this slice done reported: stop: no eligible queued slice found.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-18T01:14:12Z"
+}

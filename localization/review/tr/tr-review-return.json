@@ -21,20 +21,20 @@
     "warning": "These values are LLM-drafted and have not been accepted by a native or fluent Turkish / Türkçe reviewer. Do not claim translation quality without further native review."
   },
   "summary": {
-    "review_entry_count": 372,
+    "review_entry_count": 419,
     "status_counts": {
-      "needs-layout-check": 359,
+      "needs-layout-check": 406,
       "keep-english-term": 11,
       "needs-translation": 2
     },
     "lqa_counts": {
-      "passed": 370,
-      "warning": 2,
+      "passed": 416,
+      "warning": 3,
       "reverted": 0
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 330,
+    "strings_entry_count": 377,
     "plural_entry_count": 42
   },
   "resources": [
@@ -9401,6 +9401,1229 @@
       "review_status": "needs-layout-check",
       "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
       "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.low",
+      "english_value": "Low",
+      "reviewed_value": "Düşük",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.okay",
+      "english_value": "Okay",
+      "reviewed_value": "İyi",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.high",
+      "english_value": "High",
+      "reviewed_value": "Yüksek",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.rough",
+      "english_value": "Rough",
+      "reviewed_value": "Zor",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.steady",
+      "english_value": "Steady",
+      "reviewed_value": "Sabit",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.good",
+      "english_value": "Good",
+      "reviewed_value": "İyi",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.poor",
+      "english_value": "Poor",
+      "reviewed_value": "Kötü",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.fine",
+      "english_value": "Fine",
+      "reviewed_value": "Fena değil",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.great",
+      "english_value": "Great",
+      "reviewed_value": "Harika",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.dayComplete",
+      "english_value": "Day complete",
+      "reviewed_value": "Gün tamamlandı",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.compact",
+      "english_value": "In progress",
+      "reviewed_value": "Sürüyor",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.regular",
+      "english_value": "Day in progress",
+      "reviewed_value": "Gün sürüyor",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.readyWhenYouAre",
+      "english_value": "Ready when you are",
+      "reviewed_value": "Hazır olduğunda başla",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.todaysPlan",
+      "english_value": "Today's plan",
+      "reviewed_value": "Bugünün planı",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.whatsActiveToday",
+      "english_value": "What's active today?",
+      "reviewed_value": "Bugün ne aktif?",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.focus",
+      "english_value": "Focus",
+      "reviewed_value": "Odak",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.dueToday",
+      "english_value": "Due today",
+      "reviewed_value": "Bugün dolan",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.carriedForward",
+      "english_value": "Carried forward",
+      "reviewed_value": "Devredildi",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.protocolRun",
+      "english_value": "Protocol run",
+      "reviewed_value": "Protokol çalıştırması",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.active",
+      "english_value": "Active",
+      "reviewed_value": "Aktif",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.inProgress",
+      "english_value": "In progress",
+      "reviewed_value": "Sürüyor",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.domainNudge.focusMissing",
+      "english_value": "%@ hasn't shown up in Focus lately.",
+      "reviewed_value": "%@ son zamanlarda Odak'ta görünmedi.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.toughSignals",
+      "english_value": "Tough signals today. Focus on one thing that matters and let the rest go.",
+      "reviewed_value": "Bugün sinyaller zor. Önemli olan tek bir şeye odaklanın ve gerisini bırakın.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowReserves",
+      "english_value": "Low reserves today. Keep the plan light — minimum viable wins.",
+      "reviewed_value": "Bugün rezervler düşük. Planı hafif tutun — minimum uygulanabilir kazanımlar.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowEnergy",
+      "english_value": "Low energy today. Favor easy wins over deep work.",
+      "reviewed_value": "Bugün enerji düşük. Derin çalışma yerine kolay kazanımları tercih edin.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.sleepWasRough",
+      "english_value": "Sleep was rough. You may have less focus than you think.",
+      "reviewed_value": "Uyku zordu. Sandığınızdan daha az odağınız olabilir.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.roughMood",
+      "english_value": "Rough mood today. Be honest about what you can carry.",
+      "reviewed_value": "Bugün ruh hali zor. Ne taşıyabileceğiniz konusunda dürüst olun.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.strongSignals",
+      "english_value": "Strong signals today. Good day for deep work or hard problems.",
+      "reviewed_value": "Bugün sinyaller güçlü. Derin çalışma veya zor problemler için iyi bir gün.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.solidDay",
+      "english_value": "Solid day. You have capacity — use it on what matters most.",
+      "reviewed_value": "Sağlam bir gün. Kapasiteniz var — onu en önemli şeye kullanın.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.steadyDay",
+      "english_value": "Steady day. Trust the plan.",
+      "reviewed_value": "İstikrarlı gün. Plana güvenin.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.decentDay",
+      "english_value": "Decent day ahead. Stay focused on your priorities.",
+      "reviewed_value": "Önünüzde makul bir gün var. Önceliklerinize odaklanın.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.similarReadinessHistory",
+      "english_value": "You finished this %1$@ on %2$@ check-in days.",
+      "reviewed_value": "Bunu %2$@ check-in günlerinde %1$@ tamamladınız.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.recentCompletions",
+      "english_value": "You completed this %@ recently.",
+      "reviewed_value": "Bunu son zamanlarda %@ tamamladınız.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.predictedTime",
+      "english_value": "Usually completed around %@.",
+      "reviewed_value": "Genelde %@ civarında tamamlanır.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.lastCompletion",
+      "english_value": "Last done %@.",
+      "reviewed_value": "Son yapılan %@.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.once",
+      "english_value": "once",
+      "reviewed_value": "bir kez",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.times",
+      "english_value": "%d times",
+      "reviewed_value": "%d kez",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.today",
+      "english_value": "today",
+      "reviewed_value": "bugün",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.yesterday",
+      "english_value": "yesterday",
+      "reviewed_value": "dün",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [
+          "length-outlier: reviewed/english ratio 0.33 outside [0.4, 3.0]"
+        ],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.daysAgo",
+      "english_value": "%d days ago",
+      "reviewed_value": "%d gün önce",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.low",
+      "english_value": "low-readiness",
+      "reviewed_value": "düşük hazırlık",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.steady",
+      "english_value": "steady",
+      "reviewed_value": "sabit",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.high",
+      "english_value": "high-readiness",
+      "reviewed_value": "yüksek hazırlık",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "write.calibration.pipelineNudge.captureBacklog",
+      "english_value": "You have %d captures waiting. Try developing one into a source note.",
+      "reviewed_value": "Bekleyen %d yakalaman var. Birini kaynak nota dönüştürmeyi dene.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.strong",
+      "english_value": "Strong consistency — %d%% of sessions completed or adapted.",
+      "reviewed_value": "Güçlü tutarlılık — oturumların %d%% kadarı tamamlandı veya uyarlandı.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.solid",
+      "english_value": "Solid rhythm — %d%% follow-through this period.",
+      "reviewed_value": "Sağlam ritim — bu dönemde %d%% takip.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "tr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.low",
+      "english_value": "Training follow-through at %d%%. Consider fewer, more committed sessions.",
+      "reviewed_value": "Antrenman takibi %d%% düzeyinde. Daha az ama daha bağlı oturumlar düşün.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
+      "review_date": "2026-05-17",
       "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
       "resource_type": "strings",
       "locale": "tr",

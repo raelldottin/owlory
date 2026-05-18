@@ -5,7 +5,7 @@
 - Source locale: `en`
 - Purpose: reviewer input for the first localization intake slice
 
-This packet is review input only. It does not replace app resources, does not claim German translation quality, and does not prove the manual per-app language picker.
+This packet is review input only. It does not replace app resources and does not prove the manual per-app language picker. The accepted German review state is recorded in `german-review-return.json`.
 
 Regenerate the packet against current resources with:
 
@@ -17,17 +17,16 @@ python3 Tools/german-review-packet-regenerate.py
 
 - `german-review-packet.csv` - flat reviewer packet with one row per English source value or plural category.
 - `german-review-packet.json` - structured packet with the same entries and summary metadata.
-- `german-review-return.json` - reviewer return file recording the LLM-drafted German values that were ingested on 2026-05-15 by `claude-opus-4-7` (NOT native-reviewed). See `provenance` block inside that file.
+- `german-review-return.json` - reviewer return file recording the German values accepted by user-reported native/human German review on 2026-05-18. See the `provenance` block inside that file. The previous LLM-draft provenance is preserved under `previous_draft_provenance`.
 
-The German values currently in `de.lproj` are predominantly LLM-drafted German produced by `claude-opus-4-7` on 2026-05-15. They are `draft-translation` quality and have NOT been accepted by a native or fluent German reviewer.
+The German values currently in `de.lproj` originated as LLM-drafted German produced by `claude-opus-4-7` on 2026-05-15 and were accepted by user-reported native/human German review on 2026-05-18. German is the only native-reviewed non-English locale as of this update.
 
 ```text
-review entries: 356
-strings entries: 314
+review entries: 419
+strings entries: 377
 plural entries: 42
-current_status counts:
-  draft-translation: 340  (LLM-drafted German values that differ from English)
-  english-placeholder: 16 (brand / format / loanword entries kept identical to English: OK, URL, Build, Podcast, Video, Check-in, %@, %@ / 5, %d/%d, etc.)
+review_status counts:
+  native-reviewed: 419
 ```
 
 ## Reviewer Return Format
@@ -53,4 +52,4 @@ Plural rows come from `Localizable.stringsdict`. Review the German grammar for e
 
 ## After Review
 
-`app-localization-first-locale-review-intake` was completed on 2026-05-15 by ingesting LLM-drafted German values (recorded in `german-review-return.json` with status `needs-layout-check` / `keep-english-term`). A real native-reviewed intake still requires reviewer-supplied values to return through this packet with `review_status = native-reviewed` and a non-LLM `reviewer` identity. Until that happens, German remains `draft-translation` quality and must not be claimed as `native-reviewed`.
+`app-localization-first-locale-review-intake` was completed on 2026-05-15 by ingesting LLM-drafted German values. `app-localization-native-review-intake` then accepted the current German return file on 2026-05-18 based on user-reported native/human German review. The German return file now has `provenance.native_reviewed=true` and 419 `native-reviewed` entries.

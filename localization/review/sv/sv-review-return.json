@@ -21,20 +21,20 @@
     "warning": "These values are LLM-drafted and have not been accepted by a native or fluent Swedish / Svenska reviewer. Do not claim translation quality without further native review."
   },
   "summary": {
-    "review_entry_count": 372,
+    "review_entry_count": 419,
     "status_counts": {
-      "needs-layout-check": 353,
+      "needs-layout-check": 400,
       "keep-english-term": 17,
       "needs-translation": 2
     },
     "lqa_counts": {
-      "passed": 372,
+      "passed": 419,
       "warning": 0,
       "reverted": 0
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 330,
+    "strings_entry_count": 377,
     "plural_entry_count": 42
   },
   "resources": [
@@ -9392,6 +9392,1227 @@
       "review_status": "needs-layout-check",
       "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
       "review_date": "2026-05-16",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.low",
+      "english_value": "Low",
+      "reviewed_value": "Låg",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.okay",
+      "english_value": "Okay",
+      "reviewed_value": "Ok",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.high",
+      "english_value": "High",
+      "reviewed_value": "Hög",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.rough",
+      "english_value": "Rough",
+      "reviewed_value": "Tufft",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.steady",
+      "english_value": "Steady",
+      "reviewed_value": "Stabilt",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.good",
+      "english_value": "Good",
+      "reviewed_value": "Bra",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.poor",
+      "english_value": "Poor",
+      "reviewed_value": "Dåligt",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.fine",
+      "english_value": "Fine",
+      "reviewed_value": "Helt ok",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "readiness.anchor.great",
+      "english_value": "Great",
+      "reviewed_value": "Utmärkt",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.dayComplete",
+      "english_value": "Day complete",
+      "reviewed_value": "Dagen klar",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.compact",
+      "english_value": "In progress",
+      "reviewed_value": "Pågår",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.inProgress.regular",
+      "english_value": "Day in progress",
+      "reviewed_value": "Dagen pågår",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.readyWhenYouAre",
+      "english_value": "Ready when you are",
+      "reviewed_value": "Redo när du är det",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.todaysPlan",
+      "english_value": "Today's plan",
+      "reviewed_value": "Dagens plan",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.header.greeting.whatsActiveToday",
+      "english_value": "What's active today?",
+      "reviewed_value": "Vad är aktivt idag?",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.focus",
+      "english_value": "Focus",
+      "reviewed_value": "Fokus",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.dueToday",
+      "english_value": "Due today",
+      "reviewed_value": "Idag",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.carriedForward",
+      "english_value": "Carried forward",
+      "reviewed_value": "Överfört",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.protocolRun",
+      "english_value": "Protocol run",
+      "reviewed_value": "Protokollkörning",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.active",
+      "english_value": "Active",
+      "reviewed_value": "Aktiv",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.continue.subtitle.inProgress",
+      "english_value": "In progress",
+      "reviewed_value": "Pågår",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.domainNudge.focusMissing",
+      "english_value": "%@ hasn't shown up in Focus lately.",
+      "reviewed_value": "%@ har inte dykt upp i Fokus på sistone.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.toughSignals",
+      "english_value": "Tough signals today. Focus on one thing that matters and let the rest go.",
+      "reviewed_value": "Tuffa signaler i dag. Fokusera på en sak som betyder något och släpp resten.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowReserves",
+      "english_value": "Low reserves today. Keep the plan light — minimum viable wins.",
+      "reviewed_value": "Låga reserver i dag. Håll planen lätt — minsta genomförbara vinster.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.lowEnergy",
+      "english_value": "Low energy today. Favor easy wins over deep work.",
+      "reviewed_value": "Låg energi i dag. Välj enkla vinster framför djupt arbete.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.sleepWasRough",
+      "english_value": "Sleep was rough. You may have less focus than you think.",
+      "reviewed_value": "Sömnen var tuff. Du kanske har mindre fokus än du tror.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.roughMood",
+      "english_value": "Rough mood today. Be honest about what you can carry.",
+      "reviewed_value": "Tufft humör i dag. Var ärlig med vad du kan bära.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.strongSignals",
+      "english_value": "Strong signals today. Good day for deep work or hard problems.",
+      "reviewed_value": "Starka signaler i dag. Bra dag för djupt arbete eller svåra problem.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.solidDay",
+      "english_value": "Solid day. You have capacity — use it on what matters most.",
+      "reviewed_value": "Solid dag. Du har kapacitet — använd den på det som betyder mest.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.steadyDay",
+      "english_value": "Steady day. Trust the plan.",
+      "reviewed_value": "Stadig dag. Lita på planen.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.readiness.nudge.decentDay",
+      "english_value": "Decent day ahead. Stay focused on your priorities.",
+      "reviewed_value": "Hyfsad dag framför dig. Håll fokus på dina prioriteringar.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.similarReadinessHistory",
+      "english_value": "You finished this %1$@ on %2$@ check-in days.",
+      "reviewed_value": "Du slutförde detta %1$@ på %2$@ incheckningsdagar.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.completion.recentCompletions",
+      "english_value": "You completed this %@ recently.",
+      "reviewed_value": "Du har slutfört detta %@ nyligen.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.predictedTime",
+      "english_value": "Usually completed around %@.",
+      "reviewed_value": "Vanligtvis slutförd runt %@.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.timing.lastCompletion",
+      "english_value": "Last done %@.",
+      "reviewed_value": "Senast %@.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.once",
+      "english_value": "once",
+      "reviewed_value": "en gång",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.countPhrase.times",
+      "english_value": "%d times",
+      "reviewed_value": "%d gånger",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.today",
+      "english_value": "today",
+      "reviewed_value": "idag",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.yesterday",
+      "english_value": "yesterday",
+      "reviewed_value": "igår",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.dayPhrase.daysAgo",
+      "english_value": "%d days ago",
+      "reviewed_value": "för %d dagar sedan",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.low",
+      "english_value": "low-readiness",
+      "reviewed_value": "låg beredskap",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.steady",
+      "english_value": "steady",
+      "reviewed_value": "stabil",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "today.focus.suggestion.band.high",
+      "english_value": "high-readiness",
+      "reviewed_value": "hög beredskap",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "write.calibration.pipelineNudge.captureBacklog",
+      "english_value": "You have %d captures waiting. Try developing one into a source note.",
+      "reviewed_value": "Du har %d fångster som väntar. Försök utveckla en till en källanteckning.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.strong",
+      "english_value": "Strong consistency — %d%% of sessions completed or adapted.",
+      "reviewed_value": "Stark konsekvens — %d%% av passen slutförda eller anpassade.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.solid",
+      "english_value": "Solid rhythm — %d%% follow-through this period.",
+      "reviewed_value": "Stadig rytm — %d%% uppföljning under den här perioden.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "sv",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "train.calibration.consistencySummary.low",
+      "english_value": "Training follow-through at %d%%. Consider fewer, more committed sessions.",
+      "reviewed_value": "Träningsuppföljning på %d%%. Överväg färre, mer åtagna pass.",
+      "review_status": "needs-layout-check",
+      "reviewer": "claude-opus-4-7 (LLM, not native Swedish / Svenska reviewer)",
+      "review_date": "2026-05-17",
       "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
       "resource_type": "strings",
       "locale": "sv",

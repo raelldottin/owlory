@@ -3528,7 +3528,7 @@
     {
       "slice_id": "app-localization-native-review-intake",
       "title": "Ingest native-reviewed values per locale",
-      "status": "blocked",
+      "status": "done",
       "priority": 105,
       "domain": "localization",
       "allowed_paths": [
@@ -3558,7 +3558,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "At least one per-locale review return file has provenance.native_reviewed=true with non-LLM reviewer metadata, OR a reviewer-supplied native-review document is provided alongside the return file. Until human/native-supplied reviewed values arrive, this slice must remain blocked.",
-      "notes": "Blocked entry condition: native-reviewed values exist for at least one locale. As of 2026-05-15, all 18 non-English locales hold LLM-drafted values produced by claude-opus-4-7 and recorded with review_status=needs-layout-check or keep-english-term. Native review is outstanding for every locale. Scope when unblocked: ingest native-reviewed values into the matching de.lproj / fr.lproj / etc. .strings and .stringsdict files, flip the relevant per-locale return file's status entries from needs-layout-check to native-reviewed for accepted rows, preserve keys and plural parity, do not bulk-replace unreviewed rows. Do not claim native review for unreviewed locales. proof_level target: build-tested. The dashboard (Tools/localization-review-status.py) reports per-locale native-reviewed counts; this slice flips them upward by ingesting human-supplied reviewer values, not by re-running LLM translation."
+      "notes": "Completed on 2026-05-18. Entry condition was satisfied by user prompt: native human reviewed locale for German passed. Refreshed per-locale return files to current resources (419 entries each), refreshed LQA/dashboard artifacts, regenerated the German review packet, marked only German native-reviewed (419/419 entries) with user-reported human/native reviewer provenance, and updated German resource headers plus translation-quality docs. Other 17 non-English locales remain LLM-drafted/unreviewed with provenance.native_reviewed=false. proof_level reached: build-tested."
     },
     {
       "slice_id": "app-localization-automated-lqa-and-llm-quality-pass",

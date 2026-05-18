@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-18
+
+- [app-localization-native-review-intake (build-tested; German native/human review accepted 419/419 entries; other 17 locales remain unreviewed)](sessions/2026-05-18/010852-app-localization-native-review-intake.md)
+
 ## 2026-05-17
 
 - [start-next-slice-clean-stop (no eligible queued slice; clean-stop passed; native-review intake remains blocked)](sessions/2026-05-17/151649-start-next-slice-clean-stop.md)
