@@ -1181,7 +1181,7 @@
       ],
       "depends_on": [],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing — Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
+      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing \u2014 Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
     },
     {
       "slice_id": "train-row-status-pill-uniformity",
@@ -1313,7 +1313,7 @@
         "write-promotion-device-verification"
       ],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level — do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
+      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level \u2014 do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
     },
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
@@ -2162,7 +2162,7 @@
         "owlory-ui-test-continue-routing-smoke-batch"
       ],
       "max_files_changed": 10,
-      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action — decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem — confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
+      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action \u2014 decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem \u2014 confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
     },
     {
       "slice_id": "owlory-ui-test-screenshot-proof-pack",
@@ -2357,7 +2357,7 @@
         "owlory-ui-test-testflight-proof"
       ],
       "max_files_changed": 10,
-      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified — that re-attempt is a separate slice that depends_on this audit landing."
+      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified \u2014 that re-attempt is a separate slice that depends_on this audit landing."
     },
     {
       "slice_id": "owlory-release-provenance-stamp-gate-fix",
@@ -3152,7 +3152,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Static-literal extraction is complete, prior dynamic-formatting slices established the WeeklyDigestPresentationFormatting helper, and the user agreed to refactor WeeklyDigestRules from String composition to semantic enums + structured highlight data while keeping its decision-making role intact.",
-      "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility — old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
+      "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility \u2014 old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
     },
     {
       "slice_id": "app-localization-accessibility-interpolation-audit",
@@ -3184,7 +3184,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "All prior named dynamic-formatting buckets (recurrence, readiness, digest insight) are localized; only remaining model-backed accessibility interpolations are unaudited.",
-      "notes": "Completed on 2026-05-14. Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites across the Owlory app target (test target excluded). 12 sites already localized (literal keys matched in en.lproj/Localizable.strings, or routed through existing helpers writeRowAccessibilityHint / continueAccessibilityHint / readinessScaleAccessibilityLabel / trainingStatusAccessibilityLabel). 10 real gaps clustered into four groups: A (Home action labels — Edit/Skip task, Mark/Restore via leadingButtonAccessibilityLabel, Complete/Skip protocol step), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row accessibility — same shape as today.readiness.scale.accessibility), D (BuildInfoView label:value pattern, low priority). 1 system-generated site (TrainView.swift:499 .accessibilityValue('\\(value)') — Apple expects bare numeric). Group A queued as app-localization-home-action-accessibility-formatting. Groups B/C/D documented in localization-string-inventory.md but not queued. Doc-only slice; no Swift source touched. proof_level achieved: doc-only."
+      "notes": "Completed on 2026-05-14. Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites across the Owlory app target (test target excluded). 12 sites already localized (literal keys matched in en.lproj/Localizable.strings, or routed through existing helpers writeRowAccessibilityHint / continueAccessibilityHint / readinessScaleAccessibilityLabel / trainingStatusAccessibilityLabel). 10 real gaps clustered into four groups: A (Home action labels \u2014 Edit/Skip task, Mark/Restore via leadingButtonAccessibilityLabel, Complete/Skip protocol step), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row accessibility \u2014 same shape as today.readiness.scale.accessibility), D (BuildInfoView label:value pattern, low priority). 1 system-generated site (TrainView.swift:499 .accessibilityValue('\\(value)') \u2014 Apple expects bare numeric). Group A queued as app-localization-home-action-accessibility-formatting. Groups B/C/D documented in localization-string-inventory.md but not queued. Doc-only slice; no Swift source touched. proof_level achieved: doc-only."
     },
     {
       "slice_id": "app-localization-home-action-accessibility-formatting",
@@ -3358,7 +3358,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Batch 5 sub-behavior triage selected Home protocol run step progression. The Batch 4 Home archive/restore regression class HomeProtocolRegression already exists in OwloryUITests; this slice extends Lane 2 with a separate test class for run-step interactions, not by adding methods to HomeProtocolRegression.",
-      "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) — not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
+      "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) \u2014 not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
     },
     {
       "slice_id": "owlory-ui-regression-batch-6-surface-triage",
@@ -3388,7 +3388,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "User explicitly selected Patterns UI from the parked candidate list as the next surface to triage. Lane 2 Batches 1-5 are shipped. Patterns UI is a broad surface; the triage must narrow to exactly one sub-behavior.",
-      "notes": "Completed on 2026-05-15. Compared Patterns UI sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection digest summary card, DigestListView → detail routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred: lastWeekSection (mostly numeric, low contract-change pressure), DigestListView routing (lower leverage), Focus Suggestions (deterministic, no recent contract change), pattern-driven nudges (overlaps existing nudge unit tests). Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render). proof_level achieved: doc-only. No XCUITest code touched."
+      "notes": "Completed on 2026-05-15. Compared Patterns UI sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection digest summary card, DigestListView \u2192 detail routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred: lastWeekSection (mostly numeric, low contract-change pressure), DigestListView routing (lower leverage), Focus Suggestions (deterministic, no recent contract change), pattern-driven nudges (overlaps existing nudge unit tests). Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render). proof_level achieved: doc-only. No XCUITest code touched."
     },
     {
       "slice_id": "owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
@@ -4034,7 +4034,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Localizable.strings now contains 16 keys added after the 2026-05-15 ingest (2 Check-in/Check in keys, 8 audio/voice accessibility keys, 6 interpolation format-string keys including 1 reserved-but-unused), so per-locale review return files at 356 entries are stale relative to the current 372 (358 strings + 14 from the lqa context: 314 + 16 - 0 unused tracking). Dashboard and LQA reports show stale counts.",
-      "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings × 18 locales) to bring each per-locale review return file from 356 → 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified — only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales × 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
+      "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings \u00d7 18 locales) to bring each per-locale review return file from 356 \u2192 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified \u2014 only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales \u00d7 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
     },
     {
       "slice_id": "app-localization-helper-generated-copy-audit",
@@ -4225,7 +4225,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17 via structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift — a Sendable, Equatable, Codable, CaseIterable enum with 6 cases (focus, dueToday, carriedForward, protocolRun, active, inProgress). Replaced TodayContinueSourceComposer.Step.reason: String with Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate.subtitleKind, TodayContinueItemAssembler (now passes subtitleKind:), and TodayContinuationRules.ContinueItem (subtitleKind: ContinueSubtitleKind replaces reason: String). TodayView gained continueSubtitleLabel(for:) helper that maps each enum case to String(localized:). Added 6 today.continue.subtitle.* keys × 19 locales (LLM-drafted). Updated 9 test assertions: 4 TodayStoreTests fixtures, 2 TodayContinueSourceComposerTests assertions, 1 TodayContinueItemAssemblerTests assertion, 1 TodayContinuationRulesTests assertion. All tests now assert on the semantic enum, not English strings. project.pbxproj wires A092 (main target) + B097 (test target) referencing A192. localization-parity 19/351/13. proof_level: build-tested + domain-tested."
+      "notes": "Completed on 2026-05-17 via structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift \u2014 a Sendable, Equatable, Codable, CaseIterable enum with 6 cases (focus, dueToday, carriedForward, protocolRun, active, inProgress). Replaced TodayContinueSourceComposer.Step.reason: String with Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate.subtitleKind, TodayContinueItemAssembler (now passes subtitleKind:), and TodayContinuationRules.ContinueItem (subtitleKind: ContinueSubtitleKind replaces reason: String). TodayView gained continueSubtitleLabel(for:) helper that maps each enum case to String(localized:). Added 6 today.continue.subtitle.* keys \u00d7 19 locales (LLM-drafted). Updated 9 test assertions: 4 TodayStoreTests fixtures, 2 TodayContinueSourceComposerTests assertions, 1 TodayContinueItemAssemblerTests assertion, 1 TodayContinuationRulesTests assertion. All tests now assert on the semantic enum, not English strings. project.pbxproj wires A092 (main target) + B097 (test target) referencing A192. localization-parity 19/351/13. proof_level: build-tested + domain-tested."
     },
     {
       "slice_id": "app-localization-today-header-greeting-routing",
@@ -4257,7 +4257,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17. Added 6 new today.header.greeting.* keys across all 19 locales (LLM-drafted): dayComplete, inProgress.compact, inProgress.regular, readyWhenYouAre, todaysPlan, whatsActiveToday. Wrapped each return branch of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) — the inner Text path is unchanged because the value is now already-localized. In-place wrap; no boundary impact (Features-located). localization-parity 19/345/13. proof_level: build-tested."
+      "notes": "Completed on 2026-05-17. Added 6 new today.header.greeting.* keys across all 19 locales (LLM-drafted): dayComplete, inProgress.compact, inProgress.regular, readyWhenYouAre, todaysPlan, whatsActiveToday. Wrapped each return branch of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) \u2014 the inner Text path is unchanged because the value is now already-localized. In-place wrap; no boundary impact (Features-located). localization-parity 19/345/13. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-readiness-anchors-routing",
@@ -4290,7 +4290,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17. Added 9 new keys (readiness.anchor.low/okay/high, .rough/steady/good, .poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 anchor tuple call sites in TodayView (3 check-in rows + 1 PreviousDay) and TrainView (2 readiness disclosures) to use String(localized:). The TrainingReadinessScaleRow/readinessRow body Text(anchors.X) continues to display the already-localized string verbatim — no internal view changes needed. localization-parity now 19/339/13. proof_level: build-tested."
+      "notes": "Completed on 2026-05-17. Added 9 new keys (readiness.anchor.low/okay/high, .rough/steady/good, .poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 anchor tuple call sites in TodayView (3 check-in rows + 1 PreviousDay) and TrainView (2 readiness disclosures) to use String(localized:). The TrainingReadinessScaleRow/readinessRow body Text(anchors.X) continues to display the already-localized string verbatim \u2014 no internal view changes needed. localization-parity now 19/339/13. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-german-device-screenshot-proof-record",
@@ -5456,7 +5456,7 @@
       ],
       "max_files_changed": 60,
       "entry_condition": "RTL SF Symbol fix has landed, and the multisurface screenshot harness is ready.",
-      "notes": "Proof slice. Run automation/smoke/capture_localized_surfaces.py --capture for all 18 non-English locales across the scoped surfaces (today, root tabs, build-info, date-count-plural-today). Required --label-overrides for today.ar (اليوم), today.nb (I dag), today.nl (Vandaag), today.ru (Сегодня), today.sv (Idag), today.tr (Bugün), today.uk (Сьогодні), today.vi (Hôm nay). After capture, append findings to per-locale gates and the all-locale HIG evidence matrix; close HIG-DE-001 if German Today reflection-nudge surface no longer shows English copy; confirm or refute HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001. Do not claim translation quality, device, or TestFlight proof. max_files_changed is high to accommodate up to one screenshot file per (locale, surface) pair plus a manifest. proof_level target: screenshot-verified."
+      "notes": "Proof slice. Run automation/smoke/capture_localized_surfaces.py --capture for all 18 non-English locales across the scoped surfaces (today, root tabs, build-info, date-count-plural-today). Required --label-overrides for today.ar (\u0627\u0644\u064a\u0648\u0645), today.nb (I dag), today.nl (Vandaag), today.ru (\u0421\u0435\u0433\u043e\u0434\u043d\u044f), today.sv (Idag), today.tr (Bug\u00fcn), today.uk (\u0421\u044c\u043e\u0433\u043e\u0434\u043d\u0456), today.vi (H\u00f4m nay). After capture, append findings to per-locale gates and the all-locale HIG evidence matrix; close HIG-DE-001 if German Today reflection-nudge surface no longer shows English copy; confirm or refute HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001. Do not claim translation quality, device, or TestFlight proof. max_files_changed is high to accommodate up to one screenshot file per (locale, surface) pair plus a manifest. proof_level target: screenshot-verified."
     },
     {
       "slice_id": "app-localization-tab-bar-truncation-fix",
@@ -5586,6 +5586,164 @@
       "max_files_changed": 14,
       "entry_condition": "automation-pyright-validation landed pyrightconfig.json with reportArgumentType/reportOptionalSubscript/reportAssignmentType at warning. Tighten back to error after fixing or narrowly suppressing the 23 baseline warnings.",
       "notes": "Cleanup slice. Completed 2026-05-18 in automation/handoffs/20260518T112109Z-automation-pyright-tighten-severities.json. Fixed the remaining pyright baseline warnings by typing None-default helper parameters honestly, replacing SimpleNamespace argparse stand-ins with argparse.Namespace in tests, and narrowing optional supervisor/simulator lookups before subscripting. Flipped reportArgumentType, reportOptionalSubscript, and reportAssignmentType back to error while preserving typeCheckingMode=basic. `make automation-check` now runs `make pyright` before the Python automation tests, and `make pyright` reports 0 errors / 0 warnings as a narrow standalone gate."
+    },
+    {
+      "slice_id": "app-localization-smaller-width-accessibility-regression",
+      "title": "Extend LocalizationAccessibilityRegression to smaller iPhone widths",
+      "status": "queued",
+      "priority": 65,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "Makefile",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-smaller-width-accessibility-regression",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-tab-bar-truncation-fix"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "LocalizationAccessibilityRegression already covers 9 locales at iPhone 17 default; the 2026-05-18 closure capture noted that smaller iPhone widths (iPhone SE / iPhone 16) and additional Dynamic Type categories beyond AccessibilityXL are not verified.",
+      "notes": "Test-coverage slice. Add a smaller-width XCUITest path covering iPhone 16 (or iPhone SE if its simulator is provisioned) for the same 9 locales (en, de, fr, ja, nl, ru, tr, uk, ar) currently covered at AccessibilityXL on iPhone 17. Option A: parameterize the existing class via a destination launch arg + new test methods. Option B: add a separate Makefile destination target. Decide based on Xcode test-plan ergonomics; prefer keeping the maintained DOMAIN=localization filter intact. Do not introduce new product UI changes. proof_level target: regression-tested."
+    },
+    {
+      "slice_id": "app-localization-voiceover-verification",
+      "title": "Verify VoiceOver accessibility under non-English locales",
+      "status": "queued",
+      "priority": 64,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "automation/proofs/app-localization-voiceover-verification/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-voiceover-verification",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-hig-ui-closure"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "HIG closure preserved scoped simulator screenshots but did not record VoiceOver accessibility evidence under non-English locales; the LocalizationAccessibilityRegression class only asserts non-empty labels under English.",
+      "notes": "Test-coverage slice. Either (a) extend LocalizationAccessibilityRegression to assert non-empty accessibility labels on the 5 root tab buttons under each of de/ar/ja/ru \u2014 XCUITest reads the .label property which is what VoiceOver would announce, OR (b) record an explicit doc-only manual VoiceOver review protocol if XCUITest cannot trigger VoiceOver itself. Whichever path lands, preserve evidence under automation/proofs/app-localization-voiceover-verification/ (manifest with locale, tab.label values, capture method). Do not claim native-quality VoiceOver review without an actual VoiceOver-listening human pass. proof_level target: build-tested (label-presence) or doc-only (manual protocol)."
+    },
+    {
+      "slice_id": "app-localization-review-drift-check",
+      "title": "Add automated drift check between source strings and review return files",
+      "status": "queued",
+      "priority": 63,
+      "domain": "localization",
+      "allowed_paths": [
+        "Tools/",
+        "Makefile",
+        "automation/tests/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-native-review-intake"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "All 18 non-English return files now record native/fluent review with 7,542 entries; future source-string additions will silently drift the review packet unless a check flags them.",
+      "notes": "Tooling slice. Add Tools/localization-review-drift-check.py that compares each per-locale return file's `resources` entry set against the current Localizable.strings + Localizable.stringsdict key set. Output: per-locale list of (1) source keys missing from the return file, (2) return file entries no longer in source, and (3) entries whose english_value has changed since the review was recorded. Add a Makefile target localization-review-drift-check. Document in localization-translation-quality.md and validation.md. Add a Python test under automation/tests/. Do not auto-modify return files; flagging only. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-device-verified-locale-proof",
+      "title": "Capture device-verified evidence for at least one locale",
+      "status": "blocked",
+      "priority": 50,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-device-verified-locale-proof/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-device-verified-locale-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make build-provenance",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-hig-ui-closure"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "A physical iPhone is available with Owlory installed at a known build provenance, and a tester (project owner or designated reviewer) is ready to set the device language to the target locale, capture Build Info plus the scoped HIG surfaces, and submit the screenshot files for repo-managed commit.",
+      "notes": "Separate proof-track slice. The HIG UI claim does NOT require device or TestFlight proof per the 2026-05-18 policy (see automation/proofs/app-localization-hig-ui-matrix/manifest.json hig_ui_claim_policy). This slice exists to extend the proof ladder for one or more locales to device-verified: capture Build Info + Today + root tabs + primary actions on a real iPhone in the target locale, preserve under automation/proofs/app-localization-device-verified-locale-proof/<locale>/ with manifest.json (sha256, bytes, device model, iOS version, captured-at, app version, build, commit). Do not claim translation quality. Do not claim hig-ui-reviewed adds new content; this slice extends device-verified specifically. proof_level target: device-verified for the scoped surfaces only."
+    },
+    {
+      "slice_id": "app-localization-testflight-verified-locale-proof",
+      "title": "Capture testflight-verified evidence for at least one locale",
+      "status": "blocked",
+      "priority": 49,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-testflight-verified-locale-proof/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-testflight-verified-locale-proof",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make build-provenance",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-hig-ui-closure"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "A TestFlight build of Owlory is distributed at a known version/build/commit and a tester is ready to install it, capture Build Info matching committed source, then capture scoped HIG surfaces under the target locale on the TestFlight build.",
+      "notes": "Separate proof-track slice. Per the 2026-05-18 policy, TestFlight HIG proof is NOT required for hig-ui-reviewed. This slice exists if and when the project owner wants to extend at least one locale to testflight-verified. Process: tester opens Build Info on the TestFlight build first, captures version/build/commit-short/commit-full/branch/source-clean fields, confirms commit matches committed source. Only then capture scoped HIG surfaces. Preserve under automation/proofs/app-localization-testflight-verified-locale-proof/<locale>/ with manifest.json including all Build Info fields. Do not claim translation quality. Do not claim hig-ui-reviewed adds new content; this slice extends testflight-verified specifically. proof_level target: testflight-verified for the scoped surfaces only."
     }
   ]
 }
