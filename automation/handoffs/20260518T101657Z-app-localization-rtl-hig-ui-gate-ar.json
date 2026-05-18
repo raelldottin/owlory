@@ -1,0 +1,64 @@
+{
+  "slice_id": "app-localization-rtl-hig-ui-gate-ar",
+  "title": "Run Arabic RTL localized UI HIG gate",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T10:16:57Z",
+  "proof_level": "doc-only",
+  "summary": "Ran the Arabic RTL HIG gate under the internal-reviewer signoff baseline. Doc-only intake combined source-trace inspection of Localizable.strings, an app-source RTL audit (chevron / arrow SF Symbols), and a validated multisurface-harness dry-run (7 captures). Result: fail. Allocated 3 open findings: HIG-AR-001 (chevron.right in TodayView:566 does not auto-mirror), HIG-AR-002 (arrow.right.circle in WriteView:88,181 does not auto-mirror), HIG-AR-003 (Arabic Career tab label 15 chars — longest across all 19 locales). HIG-AR-001 and HIG-AR-002 are high-confidence source-level defects based on the deterministic SwiftUI .right/.left vs .forward/.backward auto-mirroring rule.",
+  "files_changed": [
+    "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
+    "automation/proofs/app-localization-rtl-hig-ui-gate-ar/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T101657Z-app-localization-rtl-hig-ui-gate-ar.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/101657-app-localization-rtl-hig-ui-gate-ar.md"
+  ],
+  "gate_outcome": {
+    "result": "fail",
+    "locales_evaluated": ["ar"],
+    "hig_ui_reviewed_claimed_locales": [],
+    "open_findings_new": ["HIG-AR-001", "HIG-AR-002", "HIG-AR-003"],
+    "findings_by_category": {
+      "right-to-left": ["HIG-AR-001", "HIG-AR-002"],
+      "adaptive-layout": ["HIG-AR-003"]
+    },
+    "source_level_defects_not_dependent_on_screenshots": ["HIG-AR-001", "HIG-AR-002"],
+    "harness_plan_dry_run_status": "planned (7 captures, idb + idb_companion ready; --label-overrides needed for today.ar)",
+    "actual_capture_run_in_this_slice": false
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-rtl-hig-ui-gate-ar": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json": "passed"
+  },
+  "not_claimed": [
+    "Arabic is hig-ui-reviewed",
+    "Arabic is native-reviewed",
+    "translation quality for Arabic",
+    "screenshot-reviewed, device-verified, or testflight-verified for Arabic",
+    "RTL mirroring is proven correct on Owlory localized surfaces"
+  ],
+  "residual_risk": [
+    "HIG-AR-001 and HIG-AR-002 are source-level defects with deterministic SwiftUI rule; they should be fixed as a small targeted slice regardless of screenshot evidence.",
+    "HIG-AR-003 is a source-trace inference; needs screenshot confirmation.",
+    "RTL layout mirroring beyond directional icons (alignment, navigation affordances, control ordering, text flow) is NOT verified by this gate. Only directional SF Symbols + tab-label width were inspected.",
+    "Arabic native review is still required for any translation-quality claim."
+  ],
+  "downstream_recommendations": [
+    "Queue a narrow Swift fix slice for HIG-AR-001 + HIG-AR-002: swap 'chevron.right' -> 'chevron.forward' in TodayView:566, and 'arrow.right.circle' -> 'arrow.forward.circle' in WriteView:88,181. Don't bundle with screenshot capture — keep these lanes distinct.",
+    "After the icon fix lands, schedule the Arabic screenshot-capture slice with --label-overrides for today.ar (اليوم).",
+    "If HIG-AR-003 is confirmed by screenshot, bundle Arabic into the tab-bar UI-tweak slice that also addresses HIG-DE-002/FR-001/JA-001/NL-001/RU-001/TR-001/UK-001 (8 truncation findings total now)."
+  ],
+  "queue_state_after_this_slice": {
+    "remaining_queued_bucket_gates": 0,
+    "now_unblocked_remediation": ["app-localization-hig-remediation-triage"]
+  }
+}

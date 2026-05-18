@@ -5194,7 +5194,7 @@
     {
       "slice_id": "app-localization-rtl-hig-ui-gate-ar",
       "title": "Run Arabic RTL localized UI HIG gate",
-      "status": "queued",
+      "status": "done",
       "priority": 85,
       "domain": "localization",
       "allowed_paths": [

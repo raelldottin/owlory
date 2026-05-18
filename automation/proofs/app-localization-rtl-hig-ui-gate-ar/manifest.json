@@ -1,0 +1,151 @@
+{
+  "proof_id": "app-localization-rtl-hig-ui-gate-ar",
+  "slice_id": "app-localization-rtl-hig-ui-gate-ar",
+  "created_at": "2026-05-18T10:16:57Z",
+  "locales": ["ar"],
+  "source": "Source-trace inspection of localized .strings resources, app-source RTL-aware SF Symbol usage, and a validated multisurface-harness dry-run on 2026-05-18. No screenshot captures are committed under this directory.",
+  "artifact_persisted": false,
+  "gate_result": "fail",
+  "gate_result_reason": "Source-trace surfaced 2 high-confidence right-to-left HIG defects in Owlory source code (HIG-AR-001 chevron.right + HIG-AR-002 arrow.right.circle); these are deterministic SwiftUI behaviours that do not need screenshot confirmation to flag, only to measure visible impact. Source-trace also surfaced 1 adaptive-layout finding (HIG-AR-003 Career tab label width). No preserved screenshot evidence exists for any scoped surface.",
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed_locales": [],
+  "signoff_baseline": {
+    "kind": "internal-reviewer-signoff (not native speaker)",
+    "recorded_at": "2026-05-18",
+    "scope": "Permits HIG bucket-gate slices to run against current LLM-drafted text. Does NOT claim native review, fluent review, translation quality, or screenshot/device/TestFlight proof.",
+    "per_locale_record_path": "localization/review/ar/ar-review-return.json (provenance.internal_reviewer_signoff)"
+  },
+  "scoped_surfaces_required": [
+    "build-info",
+    "today-launch",
+    "root-tabs",
+    "primary-empty-states",
+    "primary-actions",
+    "date-count-plural",
+    "dynamic-type-accessibility",
+    "rtl-mirroring"
+  ],
+  "harness_plan": {
+    "tool": "automation/smoke/capture_localized_surfaces.py",
+    "dry_run_status": "planned (7 captures for ar; idb + idb_companion ready)",
+    "label_overrides_needed": {
+      "today": "Arabic today label 'اليوم' is not in the harness default catalog. --label-overrides JSON should set today.ar to include 'اليوم' before --capture."
+    },
+    "actual_capture_status": "not run in this slice. Capture is deferred to a separate follow-up screenshot-capture slice."
+  },
+  "source_trace_arabic_text": {
+    "today_label": "اليوم",
+    "train_label": "تدريب",
+    "write_label": "كتابة",
+    "career_label": "المسيرة المهنية",
+    "career_label_length_chars": 15,
+    "home_label": "المنزل",
+    "build_info_label": "معلومات الإصدار",
+    "save_label": "حفظ",
+    "cancel_label": "إلغاء",
+    "continue_label": "متابعة",
+    "internal_reviewer_signoff": true,
+    "native_reviewed": false,
+    "notes": "Tab labels other than Career fit typical iPhone tab-bar widths. Career 'المسيرة المهنية' (15 chars including space) is significantly longer than the English 'Career' (6 chars) and is the longest Career label across all 19 locales; see HIG-AR-003."
+  },
+  "open_findings": [
+    {
+      "id": "HIG-AR-001",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "open",
+      "summary": "TodayView uses the explicit directional SF Symbol 'chevron.right' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the chevron should point leading-to-trailing (right-to-left), but 'chevron.right' always points right. Apple HIG requires direction-aware icons to mirror.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Features/Today/TodayView.swift"],
+      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
+      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Replace 'chevron.right' with 'chevron.forward' (auto-mirroring SF Symbol).",
+        "Or apply '.flipsForRightToLeftLayoutDirection(true)' to the Image; the .forward form is preferred per Apple HIG."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-AR-002",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "open",
+      "summary": "WriteView uses the explicit directional SF Symbol 'arrow.right.circle' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the arrow should point leading-to-trailing (right-to-left). Apple HIG requires direction-aware action icons to mirror.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:88 Image(systemName: \"arrow.right.circle\")",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:181 Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Features/Write/WriteView.swift"],
+      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
+      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Replace 'arrow.right.circle' with 'arrow.forward.circle' (auto-mirroring SF Symbol).",
+        "Two call sites in WriteView; both should be updated together."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-AR-003",
+      "locale": "ar",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Arabic Career tab label 'المسيرة المهنية' (15 chars including space) is the longest Career label across all 19 supported locales (compare: en 'Career' = 6 chars; most other locales <= 9 chars). Tab-bar truncation likely on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings: \"Career\" = \"المسيرة المهنية\";",
+        "Comparison across locales: en=6, de=8, fr=8, ja=4 (キャリア), zh-Hans=2 (事业), ar=15 chars."
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Capture Arabic Career tab screenshots on iPhone SE / standard iPhone portrait and confirm whether the label truncates.",
+        "Shares fix shape with HIG-DE-002/FR-001/JA-001/NL-001/RU-001/TR-001/UK-001 from the other bucket gates; a single tab-bar UI-tweak slice should address all eight after screenshot confirmation.",
+        "Native reviewer could also propose a shorter Arabic Career form (e.g., 'مهنة' or 'مسيرة') if shorter terminology is acceptable in context."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": null
+    }
+  ],
+  "hig_areas_ar": {
+    "platform_consistency": "not-reviewed",
+    "adaptive_layout": "fail (HIG-AR-003)",
+    "typography_dynamic_type": "not-reviewed",
+    "accessibility": "not-reviewed",
+    "labels_actions": "source-trace-only",
+    "locale_aware_formatting": "not-reviewed",
+    "right_to_left": "fail (HIG-AR-001 + HIG-AR-002)"
+  },
+  "missing_evidence_for_pass": [
+    "Build Info screenshot with complete gate fields (version, build, commit short/full, branch, source-clean flags)",
+    "Today screenshot under Arabic with no visible app-owned English strings",
+    "All five root tabs under Arabic",
+    "Primary empty states under Arabic",
+    "Primary actions under Arabic (especially WriteView advance action — confirm HIG-AR-002 impact)",
+    "High-risk date/count/plural surfaces under Arabic",
+    "Dynamic Type pass (standard text size + Larger Accessibility Text)",
+    "Accessibility labels/hints/values for the reviewed surfaces under Arabic",
+    "RTL-only mirroring evidence: layout mirrored, alignment, navigation affordances, ordered controls, directional symbols not pointing the wrong way, digits inside numbers not reversed, non-direction-bearing artwork not flipped"
+  ],
+  "not_claimed": [
+    "Arabic is hig-ui-reviewed",
+    "Arabic is native-reviewed",
+    "translation quality for Arabic",
+    "screenshot-reviewed, device-verified, or testflight-verified for Arabic",
+    "RTL mirroring is proven correct on Owlory localized surfaces"
+  ],
+  "downstream_recommendations": [
+    "HIG-AR-001 and HIG-AR-002 are source-level defects that should be fixed regardless of screenshot capture. Queue a narrow Swift slice that swaps 'chevron.right' -> 'chevron.forward' in TodayView and the two 'arrow.right.circle' -> 'arrow.forward.circle' in WriteView. This is a small, targeted, RTL-correctness fix.",
+    "After the icon fix lands, run automation/smoke/capture_localized_surfaces.py --capture --locales ar --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today --label-overrides path/to/ar_label_overrides.json. The overrides file must set today.ar to include 'اليوم'.",
+    "After capture, confirm or deny HIG-AR-003 (Career tab truncation) and append findings + the all-locale HIG evidence matrix per_locale_state for ar.",
+    "If HIG-AR-003 is confirmed, the tab-bar UI-tweak slice should bundle Arabic alongside the seven other tab-truncation findings."
+  ]
+}
