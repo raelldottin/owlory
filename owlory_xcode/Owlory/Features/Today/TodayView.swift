@@ -563,7 +563,7 @@ struct TodayView: View {
                     .padding(.vertical, 2)
                     .background(OwloryColor.warning.opacity(0.12), in: Capsule())
             }
-            Image(systemName: "chevron.right")
+            Image(systemName: "chevron.forward")
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(.tertiary)
         }

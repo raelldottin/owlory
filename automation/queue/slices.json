@@ -5389,7 +5389,7 @@
     {
       "slice_id": "app-localization-rtl-sf-symbol-fix",
       "title": "Replace explicit-directional SF Symbols with auto-mirroring variants",
-      "status": "queued",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [

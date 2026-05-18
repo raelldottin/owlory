@@ -2,7 +2,9 @@
   "proof_id": "app-localization-rtl-hig-ui-gate-ar",
   "slice_id": "app-localization-rtl-hig-ui-gate-ar",
   "created_at": "2026-05-18T10:16:57Z",
-  "locales": ["ar"],
+  "locales": [
+    "ar"
+  ],
   "source": "Source-trace inspection of localized .strings resources, app-source RTL-aware SF Symbol usage, and a validated multisurface-harness dry-run on 2026-05-18. No screenshot captures are committed under this directory.",
   "artifact_persisted": false,
   "gate_result": "fail",
@@ -50,49 +52,6 @@
   },
   "open_findings": [
     {
-      "id": "HIG-AR-001",
-      "locale": "ar",
-      "severity": "major",
-      "area": "right-to-left",
-      "state": "open",
-      "summary": "TodayView uses the explicit directional SF Symbol 'chevron.right' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the chevron should point leading-to-trailing (right-to-left), but 'chevron.right' always points right. Apple HIG requires direction-aware icons to mirror.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
-      ],
-      "source_trace": ["owlory_xcode/Owlory/Features/Today/TodayView.swift"],
-      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
-      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Replace 'chevron.right' with 'chevron.forward' (auto-mirroring SF Symbol).",
-        "Or apply '.flipsForRightToLeftLayoutDirection(true)' to the Image; the .forward form is preferred per Apple HIG."
-      ],
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null
-    },
-    {
-      "id": "HIG-AR-002",
-      "locale": "ar",
-      "severity": "major",
-      "area": "right-to-left",
-      "state": "open",
-      "summary": "WriteView uses the explicit directional SF Symbol 'arrow.right.circle' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the arrow should point leading-to-trailing (right-to-left). Apple HIG requires direction-aware action icons to mirror.",
-      "observed_evidence": [
-        "owlory_xcode/Owlory/Features/Write/WriteView.swift:88 Image(systemName: \"arrow.right.circle\")",
-        "owlory_xcode/Owlory/Features/Write/WriteView.swift:181 Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")"
-      ],
-      "source_trace": ["owlory_xcode/Owlory/Features/Write/WriteView.swift"],
-      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
-      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
-      "remediation_slice_id_or_null": null,
-      "remediation_options": [
-        "Replace 'arrow.right.circle' with 'arrow.forward.circle' (auto-mirroring SF Symbol).",
-        "Two call sites in WriteView; both should be updated together."
-      ],
-      "created_at": "2026-05-18T10:16:57Z",
-      "closed_at_or_null": null
-    },
-    {
       "id": "HIG-AR-003",
       "locale": "ar",
       "severity": "major",
@@ -103,7 +62,9 @@
         "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings: \"Career\" = \"المسيرة المهنية\";",
         "Comparison across locales: en=6, de=8, fr=8, ja=4 (キャリア), zh-Hans=2 (事业), ar=15 chars."
       ],
-      "source_trace": ["owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings"],
+      "source_trace": [
+        "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings"
+      ],
       "proof_path_or_chat_observation": "Source-trace inspection only.",
       "remediation_slice_id_or_null": null,
       "remediation_options": [
@@ -147,5 +108,79 @@
     "After the icon fix lands, run automation/smoke/capture_localized_surfaces.py --capture --locales ar --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today --label-overrides path/to/ar_label_overrides.json. The overrides file must set today.ar to include 'اليوم'.",
     "After capture, confirm or deny HIG-AR-003 (Career tab truncation) and append findings + the all-locale HIG evidence matrix per_locale_state for ar.",
     "If HIG-AR-003 is confirmed, the tab-bar UI-tweak slice should bundle Arabic alongside the seven other tab-truncation findings."
+  ],
+  "updated_at": "2026-05-18T10:27:20Z",
+  "in_progress_findings": [
+    {
+      "id": "HIG-AR-001",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "in-progress",
+      "summary": "TodayView uses the explicit directional SF Symbol 'chevron.right' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the chevron should point leading-to-trailing (right-to-left), but 'chevron.right' always points right. Apple HIG requires direction-aware icons to mirror.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:566 Image(systemName: \"chevron.right\")"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift"
+      ],
+      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
+      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Replace 'chevron.right' with 'chevron.forward' (auto-mirroring SF Symbol).",
+        "Or apply '.flipsForRightToLeftLayoutDirection(true)' to the Image; the .forward form is preferred per Apple HIG."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": null,
+      "source_fix_confirmed": true,
+      "source_fix_commit_summary": "Replace .right SF Symbols with .forward variants under app-localization-rtl-sf-symbol-fix on 2026-05-18",
+      "source_fix_at": "2026-05-18T10:27:20Z",
+      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice."
+    },
+    {
+      "id": "HIG-AR-002",
+      "locale": "ar",
+      "severity": "major",
+      "area": "right-to-left",
+      "state": "in-progress",
+      "summary": "WriteView uses the explicit directional SF Symbol 'arrow.right.circle' which does NOT auto-mirror under RTL layout direction. Under Arabic (RTL), the arrow should point leading-to-trailing (right-to-left). Apple HIG requires direction-aware action icons to mirror.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:88 Image(systemName: \"arrow.right.circle\")",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift:181 Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")"
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift"
+      ],
+      "confidence_basis": "Deterministic SwiftUI rule: SF Symbols named .right / .left do not auto-mirror; SF Symbols named .forward / .backward do. This is a source-level defect, not a layout inference.",
+      "proof_path_or_chat_observation": "Source-level evidence only. Visible-impact screenshot under Arabic launch is the confirmation step.",
+      "remediation_slice_id_or_null": null,
+      "remediation_options": [
+        "Replace 'arrow.right.circle' with 'arrow.forward.circle' (auto-mirroring SF Symbol).",
+        "Two call sites in WriteView; both should be updated together."
+      ],
+      "created_at": "2026-05-18T10:16:57Z",
+      "closed_at_or_null": null,
+      "source_fix_confirmed": true,
+      "source_fix_commit_summary": "Replace .right SF Symbols with .forward variants under app-localization-rtl-sf-symbol-fix on 2026-05-18",
+      "source_fix_at": "2026-05-18T10:27:20Z",
+      "blocker_for_closure": "Post-fix Arabic screenshot evidence not yet captured. app-localization-hig-multisurface-screenshot-capture is the next slice."
+    }
+  ],
+  "regate_history": [
+    {
+      "regate_at": "2026-05-18T10:27:20Z",
+      "by": "app-localization-rtl-sf-symbol-fix",
+      "changes": [
+        "Moved HIG-AR-001 and HIG-AR-002 from open_findings to in_progress_findings with source_fix_confirmed=true.",
+        "Source change: chevron.right -> chevron.forward in owlory_xcode/Owlory/Features/Today/TodayView.swift:566.",
+        "Source change: arrow.right.circle -> arrow.forward.circle in owlory_xcode/Owlory/Features/Write/WriteView.swift:88 and :181.",
+        "Build verified: xcodebuild build exit 0 with --derivedDataPath /tmp/owlory-rtl-fix-build."
+      ],
+      "next_required_evidence": [
+        "Post-fix Arabic screenshot for the Today Continue row chevron and the WriteView pipeline nudge + Advance swipe action.",
+        "Capture via app-localization-hig-multisurface-screenshot-capture."
+      ]
+    }
   ]
 }

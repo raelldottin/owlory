@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-rtl-sf-symbol-fix (build-tested; chevron.right→chevron.forward in TodayView:566 + arrow.right.circle→arrow.forward.circle in WriteView:88,181; HIG-AR-001 + HIG-AR-002 moved to in_progress with source_fix_confirmed=true; xcodebuild exit 0)](sessions/2026-05-18/102720-app-localization-rtl-sf-symbol-fix.md)
 - [app-localization-hig-remediation-triage (doc-only; 11 open HIG findings triaged into 3 narrow remediation slices: rtl-sf-symbol-fix pri 79, multisurface-screenshot-capture pri 78, tab-bar-truncation-fix pri 77; matrix updated with per-finding remediation pointers)](sessions/2026-05-18/102227-app-localization-hig-remediation-triage.md)
 - [app-localization-rtl-hig-ui-gate-ar (doc-only; Arabic RTL HIG gate; result fail; 3 new findings — HIG-AR-001 chevron.right TodayView:566 + HIG-AR-002 arrow.right.circle WriteView:88,181 are source-level RTL defects, HIG-AR-003 Career tab truncation; all 4 bucket gates now complete)](sessions/2026-05-18/101657-app-localization-rtl-hig-ui-gate-ar.md)
 - [app-localization-cjk-hig-ui-gate (doc-only; HIG gate for ja/ko/zh-Hans/zh-Hant; result fail; HIG-JA-001 open for Japanese 'トレーニング' Train tab katakana truncation; ko/zh-Hans/zh-Hant clean at source level; 7 tab-truncation findings now total across bucket gates)](sessions/2026-05-18/101119-app-localization-cjk-hig-ui-gate.md)

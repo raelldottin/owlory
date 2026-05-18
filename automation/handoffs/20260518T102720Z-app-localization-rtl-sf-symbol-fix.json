@@ -1,0 +1,67 @@
+{
+  "slice_id": "app-localization-rtl-sf-symbol-fix",
+  "title": "Replace explicit-directional SF Symbols with auto-mirroring variants",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T10:27:20Z",
+  "proof_level": "build-tested",
+  "summary": "Replaced 3 non-auto-mirroring SF Symbol call sites with auto-mirroring variants. chevron.right -> chevron.forward in TodayView:566; arrow.right.circle -> arrow.forward.circle in WriteView:88 and :181. xcodebuild build verified. Moved HIG-AR-001 + HIG-AR-002 from open to in-progress with source_fix_confirmed=true in both the RTL gate manifest and the all-locale HIG matrix. Closure requires post-fix Arabic screenshot evidence under app-localization-hig-multisurface-screenshot-capture.",
+  "files_changed": [
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "automation/proofs/app-localization-rtl-hig-ui-gate-ar/manifest.json",
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T102720Z-app-localization-rtl-sf-symbol-fix.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/102720-app-localization-rtl-sf-symbol-fix.md"
+  ],
+  "source_changes": [
+    {
+      "file": "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+      "line": 566,
+      "before": "Image(systemName: \"chevron.right\")",
+      "after": "Image(systemName: \"chevron.forward\")",
+      "closes_finding": "HIG-AR-001 (source fix; awaiting screenshot rerun for full closure)"
+    },
+    {
+      "file": "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+      "line": 88,
+      "before": "Image(systemName: \"arrow.right.circle\")",
+      "after": "Image(systemName: \"arrow.forward.circle\")",
+      "closes_finding": "HIG-AR-002 (one of 2 sites)"
+    },
+    {
+      "file": "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+      "line": 181,
+      "before": "Label(L(\"Advance\"), systemImage: \"arrow.right.circle\")",
+      "after": "Label(L(\"Advance\"), systemImage: \"arrow.forward.circle\")",
+      "closes_finding": "HIG-AR-002 (second of 2 sites)"
+    }
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-rtl-sf-symbol-fix": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make automation-check": "passed (71 tests)",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-rtl-fix-build CODE_SIGNING_ALLOWED=NO": "exit 0 (warnings only, pre-existing)",
+    "git diff --check": "clean",
+    "python3 -m json.tool on RTL gate + HIG matrix": "both valid"
+  },
+  "not_claimed": [
+    "HIG-AR-001 or HIG-AR-002 is fully closed (requires post-fix screenshot evidence)",
+    "Arabic is hig-ui-reviewed",
+    "Arabic is native-reviewed",
+    "RTL mirroring is proven on Owlory localized surfaces",
+    "screenshot-reviewed for any locale"
+  ],
+  "residual_risk": [
+    "HIG-AR-001 and HIG-AR-002 remain in-progress until a post-fix Arabic screenshot is preserved under automation/proofs/.",
+    "Apple HIG only documents .right/.left vs .forward/.backward for the SF Symbols family; if Owlory later adds new explicit-directional SF Symbols (e.g., from a different glyph family), the same auto-mirror rule still needs to be applied.",
+    "RTL audit covered chevron / arrow only; if other direction-bearing icons exist that I missed in the source grep (e.g., custom drawn glyphs, asset-catalog images, decorative artwork), they are NOT covered by this fix."
+  ],
+  "downstream_unblocked_slices": [
+    "app-localization-hig-multisurface-screenshot-capture (pri 78; can now run with the fixed RTL state captured)"
+  ]
+}

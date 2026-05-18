@@ -85,7 +85,7 @@ struct WriteView: View {
         if let nudge = calibration?.writingNudge {
             Section {
                 HStack(spacing: 10) {
-                    Image(systemName: "arrow.right.circle")
+                    Image(systemName: "arrow.forward.circle")
                         .foregroundStyle(OwloryColor.brandPrimary)
                     Text(writingPipelineNudgeMessage(for: nudge))
                         .font(.subheadline)
@@ -178,7 +178,7 @@ struct WriteView: View {
                         Button {
                             store.advanceStage(id: note.id)
                         } label: {
-                            Label(L("Advance"), systemImage: "arrow.right.circle")
+                            Label(L("Advance"), systemImage: "arrow.forward.circle")
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
