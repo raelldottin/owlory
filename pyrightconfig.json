@@ -14,7 +14,7 @@
   "reportMissingTypeStubs": "none",
   "reportPossiblyUnboundVariable": "error",
   "reportUndefinedVariable": "error",
-  "reportArgumentType": "warning",
-  "reportOptionalSubscript": "warning",
-  "reportAssignmentType": "warning"
+  "reportArgumentType": "error",
+  "reportOptionalSubscript": "error",
+  "reportAssignmentType": "error"
 }

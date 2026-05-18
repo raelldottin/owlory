@@ -17,8 +17,8 @@ export OWLORY_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17,OS=26.5"
 - `make localization-check` - verify approved locale folders, matching `Localizable.strings` and `Localizable.stringsdict` keys, and Xcode variant-group packaging.
 - `make localization-screenshot-idb-check` - report whether the idb screenshot harness can run on this machine, with remediation when `idb` or `idb_companion` is missing.
 - `make review-preflight` - infer touched areas, docs, validation, and review risks for current changes.
-- `make automation-check` - run the Python tests for the automation supervisor and context builder.
-- `make pyright` - run [Pyright](https://github.com/microsoft/pyright) type checks across `automation/` and `Tools/` using the repo's `pyrightconfig.json`. Pyright is a separate gate from `make automation-check`; CI / agents should run both. The configuration uses `typeCheckingMode: "basic"` and downgrades `reportArgumentType`, `reportOptionalSubscript`, and `reportAssignmentType` to **warning** while keeping `reportPossiblyUnboundVariable`, `reportUndefinedVariable`, and `reportMissingImports` at **error**. Baseline as of 2026-05-18: 0 errors / 23 warnings. The warnings cover test-time duck-typing patterns (e.g., `SimpleNamespace` standing in for `argparse.Namespace`; `None` defaults typed as `list[str]`). A follow-up slice (`automation-pyright-tighten-severities`) is queued to upgrade the warning checks back to errors once the test files are cleaned up. Bootstrap: `brew install pyright`, `python3 -m pip install --user pyright`, or `npm install -g pyright`.
+- `make automation-check` - run [Pyright](https://github.com/microsoft/pyright) type checks for `automation/` and `Tools/`, then run the Python tests for the automation supervisor and context builder.
+- `make pyright` - run the Pyright portion of `make automation-check` as a narrow standalone gate. The configuration uses `typeCheckingMode: "basic"` with `reportArgumentType`, `reportOptionalSubscript`, `reportAssignmentType`, `reportPossiblyUnboundVariable`, `reportUndefinedVariable`, and `reportMissingImports` at **error**. Baseline as of 2026-05-18 after `automation-pyright-tighten-severities`: 0 errors / 0 warnings. Bootstrap: `brew install pyright`, `python3 -m pip install --user pyright`, or `npm install -g pyright`.
 - `make build-provenance` - print and validate current Xcode version/build plus Git rollback identity.
 - `make release-preflight` - require clean/mirrored source plus committed build-number provenance before Xcode Archive.
 - `make fast` - architecture checks plus a focused core regression slice.
@@ -136,7 +136,7 @@ Use [Automation Harness](../../automation/README.md) for queue-driven fresh-run 
 Minimum validation shape for `automation/` changes:
 
 - `make architecture`
-- `make automation-check`
+- `make automation-check` (includes `make pyright`)
 - `python3 automation/supervisor/run_next.py --dry-run` from a clean or scope-matching worktree when queue selection, stop policy, or prompt packaging changes
 
 Keep example JSON payloads in sync with the tracked schemas.

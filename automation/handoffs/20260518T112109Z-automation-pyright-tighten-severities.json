@@ -1,0 +1,59 @@
+{
+  "slice_id": "automation-pyright-tighten-severities",
+  "status": "done",
+  "summary": "Cleaned up the Pyright baseline, restored reportArgumentType, reportOptionalSubscript, and reportAssignmentType to error severity, and wired Pyright into the normal automation validation chain by making make automation-check run make pyright before the Python tests. The remaining warning sites were fixed with honest optional parameter types, real argparse.Namespace fixtures in tests, and explicit narrowing for optional supervisor/simulator lookups. Pyright now reports 0 errors / 0 warnings without changing typeCheckingMode.",
+  "files_touched": [
+    "Makefile",
+    "pyrightconfig.json",
+    "automation/smoke/capture_locale_screenshots.py",
+    "automation/smoke/running_app_smoke.py",
+    "automation/tests/test_capture_locale_screenshots.py",
+    "automation/tests/test_capture_localized_surfaces.py",
+    "automation/tests/test_harness.py",
+    "automation/tests/test_running_app_smoke.py",
+    "docs/workflows/validation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T112109Z-automation-pyright-tighten-severities.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/072259-automation-pyright-tighten-severities.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id automation-pyright-tighten-severities",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "automation/handoffs/20260518T112109Z-automation-pyright-tighten-severities.json schema validation",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Python automation Pyright validation gate",
+      "before": "Pyright gate passed with 0 errors / 23 warnings and three diagnostics downgraded to warning.",
+      "after": "Pyright gate passes with 0 errors / 0 warnings, the three diagnostics are restored to error, and make automation-check runs Pyright before Python automation tests.",
+      "proof": [
+        "make automation-check",
+        "make pyright"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "make pyright remains available as a standalone target for narrow type-checking, but make automation-check now runs it by default."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No next slice selected yet; rerun the supervisor after this commit lands.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-18T11:21:09Z"
+}

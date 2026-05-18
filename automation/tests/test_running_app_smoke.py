@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Any
 
 from automation.smoke.running_app_smoke import (
     CommandResult,
@@ -21,11 +22,11 @@ class FakeRunner:
     def __init__(
         self,
         repo_root: Path,
-        schemes: list[str] = None,
-        settings: list[dict] = None,
-        devices: dict = None,
+        schemes: list[str] | None = None,
+        settings: list[dict[str, Any]] | None = None,
+        devices: dict[str, Any] | None = None,
         fail_step: str = "",
-        localized_locales: list[str] = None
+        localized_locales: list[str] | None = None
     ) -> None:
         self.repo_root = repo_root
         self.schemes = schemes if schemes is not None else ["Owlory"]
@@ -80,7 +81,7 @@ class FakeRunner:
             return CommandResult(argv=argv, returncode=0)
         return CommandResult(argv=argv, returncode=99, stderr=f"unexpected command: {argv}")
 
-    def app_settings(self) -> dict:
+    def app_settings(self) -> dict[str, Any]:
         return {
             "target": "Owlory",
             "buildSettings": {
@@ -94,7 +95,7 @@ class FakeRunner:
             }
         }
 
-    def available_devices(self) -> dict:
+    def available_devices(self) -> dict[str, Any]:
         return {
             "devices": {
                 "com.apple.CoreSimulator.SimRuntime.iOS-26-5": [
@@ -138,7 +139,8 @@ class RunningAppSmokeTests(unittest.TestCase):
         runner = FakeRunner(Path("/tmp/owlory-test"))
         simulator = find_simulator(parse_destination(DEFAULT_DESTINATION), runner.available_devices())
 
-        self.assertIsNotNone(simulator)
+        if simulator is None:
+            self.fail("Expected fake runner fixture to include the requested simulator.")
         self.assertEqual("TEST-DEVICE", simulator["udid"])
 
     def test_success_builds_installs_launches_and_screenshots(self) -> None:

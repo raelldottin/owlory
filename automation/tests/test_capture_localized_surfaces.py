@@ -1,8 +1,8 @@
+import argparse
 import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from types import SimpleNamespace
 
 from automation.smoke import capture_localized_surfaces as harness
 from automation.smoke.capture_locale_screenshots import CommandResult
@@ -59,7 +59,7 @@ class CaptureLocalizedSurfacesPlanTests(unittest.TestCase):
     def test_dry_run_plan_enumerates_locale_surface_matrix(self):
         catalog = harness.build_surface_catalog()
         surfaces = [s for s in catalog if s.id in {"today", "root-tab-train"}]
-        args = SimpleNamespace(
+        args = argparse.Namespace(
             udid="SIM-1",
             bundle_id="com.raelldottin.owlory",
             output_dir="/tmp/proof",
@@ -156,7 +156,7 @@ class CaptureLocalizedSurfacesGuardTests(unittest.TestCase):
             output_dir = Path(temp_dir) / "proof"
             output_dir.mkdir()
             (output_dir / "stale.png").write_bytes(b"stale")
-            args = SimpleNamespace(
+            args = argparse.Namespace(
                 output_dir=str(output_dir),
                 locales=["en"],
                 udid="SIM-1",

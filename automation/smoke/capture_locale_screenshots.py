@@ -186,7 +186,7 @@ def build_plan(args: argparse.Namespace, dependency_report: dict[str, Any]) -> d
     }
 
 
-def capture_all(args: argparse.Namespace, runner: CommandRunner = None) -> dict[str, Any]:
+def capture_all(args: argparse.Namespace, runner: CommandRunner | None = None) -> dict[str, Any]:
     if runner is None:
         runner = run_command
 

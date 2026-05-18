@@ -1,5 +1,5 @@
+import argparse
 import unittest
-from types import SimpleNamespace
 from tempfile import TemporaryDirectory
 
 from automation.smoke import capture_locale_screenshots as screenshots
@@ -59,7 +59,7 @@ class CaptureLocaleScreenshotsTests(unittest.TestCase):
     def test_capture_blocks_when_output_dir_is_not_empty(self):
         with TemporaryDirectory() as temp_dir:
             output_dir = f"{temp_dir}/proof"
-            args = SimpleNamespace(
+            args = argparse.Namespace(
                 output_dir=output_dir,
                 locales=["en"],
                 udid="SIM-1",

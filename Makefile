@@ -15,7 +15,7 @@ handoff:
 clean-stop:
 	python3 Tools/clean-stop-check.py
 
-automation-check:
+automation-check: pyright
 	python3 -m unittest discover -s automation/tests -p 'test_*.py'
 
 pyright:

@@ -111,7 +111,7 @@ def main() -> int:
 
 def run_smoke(
     config: SmokeConfig,
-    runner: CommandRunner = None
+    runner: CommandRunner | None = None
 ) -> dict[str, Any]:
     if runner is None:
         runner = default_runner

@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Any
 
 from automation.context.build_context import build_context_bundle
 from automation.supervisor import policy
@@ -24,6 +25,18 @@ class AutomationHarnessTests(unittest.TestCase):
         self.handoff_schema_path = self.repo_root / "automation/schemas/handoff.schema.json"
         self.example_queue_path = self.repo_root / "automation/examples/example-slices.json"
         self.example_handoff_path = self.repo_root / "automation/examples/example-handoff.json"
+
+    def require_slice_record(self, queue_data: dict[str, Any], slice_id: str) -> dict[str, Any]:
+        slice_record = policy.find_slice(queue_data, slice_id)
+        if slice_record is None:
+            self.fail(f"Expected test fixture to contain slice {slice_id!r}.")
+        return slice_record
+
+    def require_selected_slice(self, queue_data: dict[str, Any]) -> dict[str, Any]:
+        slice_record = policy.select_next_slice(queue_data)
+        if slice_record is None:
+            self.fail("Expected test fixture to have an eligible selected slice.")
+        return slice_record
 
     def test_example_queue_matches_schema(self) -> None:
         queue_data = policy.load_json(self.example_queue_path)
@@ -341,7 +354,7 @@ class AutomationHarnessTests(unittest.TestCase):
             ]
         }
 
-        self.assertEqual("b", policy.select_next_slice(queue_data)["slice_id"])
+        self.assertEqual("b", self.require_selected_slice(queue_data)["slice_id"])
 
     def test_scope_check_ignores_supervisor_owned_paths(self) -> None:
         dirty_paths = [
@@ -361,7 +374,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_stops_on_required_validation_failure(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
         handoff["validations_passed"] = [
             "make architecture",
@@ -387,7 +400,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_rejects_unknown_recommended_next_slice(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
         handoff["recommended_next_slice"] = "brand-new-slice"
         handoff["recommended_next_reason"] = "The agent guessed at unqueued work."
@@ -458,7 +471,7 @@ class AutomationHarnessTests(unittest.TestCase):
                 }
             ]
         }
-        slice_record = policy.find_slice(queue_data, "bootstrap")
+        slice_record = self.require_slice_record(queue_data, "bootstrap")
         handoff = {
             "slice_id": "bootstrap",
             "status": "done",
@@ -490,7 +503,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_fails_when_files_touched_leave_scope(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
         handoff["files_touched"] = [
             "owlory_xcode/Owlory/Features/Today/TodayView.swift",
@@ -513,7 +526,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_fails_when_diff_budget_is_exceeded(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
         handoff["files_touched"] = [
             f"owlory_xcode/Owlory/Features/Today/file-{index}.swift"
@@ -538,7 +551,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_fails_when_supervisor_replay_fails(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
         validation_replays = [
             policy.ValidationReplayResult(
@@ -567,7 +580,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_stops_for_review_at_autonomous_limit(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
 
         decision = policy.evaluate_completion(
@@ -587,7 +600,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_completion_decision_continues_when_recommended_next_is_known_and_eligible(self) -> None:
         queue_data = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        slice_record = policy.find_slice(queue_data, "today-nonfocus-add-to-focus")
+        slice_record = self.require_slice_record(queue_data, "today-nonfocus-add-to-focus")
         handoff = policy.load_json(self.example_handoff_path)
 
         decision = policy.evaluate_completion(
@@ -607,7 +620,7 @@ class AutomationHarnessTests(unittest.TestCase):
 
     def test_first_proof_runs_two_adjacent_slices_then_stops_for_review(self) -> None:
         first_queue = self.example_queue_with_slice_status("today-nonfocus-add-to-focus", "in_progress")
-        first_slice = policy.find_slice(first_queue, "today-nonfocus-add-to-focus")
+        first_slice = self.require_slice_record(first_queue, "today-nonfocus-add-to-focus")
         first_handoff = policy.load_json(self.example_handoff_path)
         first_replays = self.successful_replays(
             ["make architecture", "git diff --check"]
@@ -633,7 +646,7 @@ class AutomationHarnessTests(unittest.TestCase):
             "today-continue-ui-regression-coverage",
             "in_progress"
         )
-        second_slice = policy.find_slice(second_queue, "today-continue-ui-regression-coverage")
+        second_slice = self.require_slice_record(second_queue, "today-continue-ui-regression-coverage")
         queue_if_second_done = policy.set_slice_status(
             second_queue,
             "today-continue-ui-regression-coverage",
@@ -641,7 +654,7 @@ class AutomationHarnessTests(unittest.TestCase):
         )
         self.assertEqual(
             "today-continue-copy-proofread",
-            policy.select_next_slice(queue_if_second_done)["slice_id"]
+            self.require_selected_slice(queue_if_second_done)["slice_id"]
         )
 
         second_handoff = {
@@ -773,7 +786,7 @@ class AutomationHarnessTests(unittest.TestCase):
                 handoff_dir / "20260421T153000Z-today-nonfocus-add-to-focus.json"
             )
             queue_data = policy.load_queue(self.example_queue_path, self.queue_schema_path)
-            slice_record = policy.find_slice(queue_data, "today-continue-ui-regression-coverage")
+            slice_record = self.require_slice_record(queue_data, "today-continue-ui-regression-coverage")
             context_bundle = build_context_bundle(
                 repo_root=self.repo_root,
                 queue_path=self.example_queue_path,
@@ -847,7 +860,7 @@ class AutomationHarnessTests(unittest.TestCase):
             report["supervisor_validation_replays"]
         )
 
-    def example_queue_with_slice_status(self, slice_id: str, status: str) -> dict:
+    def example_queue_with_slice_status(self, slice_id: str, status: str) -> dict[str, Any]:
         queue_data = policy.load_queue(self.example_queue_path, self.queue_schema_path)
         cloned = json.loads(json.dumps(queue_data))
         for slice_record in cloned["slices"]:
