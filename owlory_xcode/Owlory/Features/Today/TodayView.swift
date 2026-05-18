@@ -1383,10 +1383,10 @@ struct TodayView: View {
                             .font(.caption)
                             .foregroundStyle(OwloryColor.brandPrimary)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(reflectionNudge.title)
+                            Text(reflectionNudgeTitle(for: reflectionNudge))
                                 .font(.caption.weight(.medium))
                                 .foregroundStyle(.secondary)
-                            Text(reflectionNudge.message)
+                            Text(reflectionNudgeMessage(for: reflectionNudge))
                                 .font(headerSupportingFont)
                                 .foregroundStyle(.secondary)
                         }
@@ -1394,6 +1394,24 @@ struct TodayView: View {
                 }
                 .buttonStyle(.plain)
             }
+        }
+    }
+
+    private func reflectionNudgeTitle(for nudge: TodayStore.EveningReflectionNudge) -> String {
+        switch nudge.kind {
+        case .eveningReflection:
+            return String(localized: "notification.prompt.eveningReflection.title")
+        case .homeWrappedReflection:
+            return String(localized: "notification.prompt.homeWrappedReflection.title")
+        }
+    }
+
+    private func reflectionNudgeMessage(for nudge: TodayStore.EveningReflectionNudge) -> String {
+        switch nudge.kind {
+        case .eveningReflection:
+            return String(localized: "notification.prompt.eveningReflection.body")
+        case .homeWrappedReflection:
+            return String(localized: "notification.prompt.homeWrappedReflection.body")
         }
     }
 

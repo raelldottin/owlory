@@ -197,7 +197,7 @@ final class TodayStoreTests: XCTestCase {
             calendar: makeCalendar()
         )
 
-        XCTAssertEqual(nudge?.title, "Evening reflection")
+        XCTAssertEqual(nudge?.kind, .eveningReflection)
     }
 
     func testEveningReflectionNudgeStaysHiddenBeforeEveningWhenAllHomeTasksCompleted() {
@@ -231,8 +231,7 @@ final class TodayStoreTests: XCTestCase {
             calendar: makeCalendar()
         )
 
-        XCTAssertEqual(nudge?.title, "Home wrapped")
-        XCTAssertEqual(nudge?.message, "All home tasks are done. Close the day with one quick reflection.")
+        XCTAssertEqual(nudge?.kind, .homeWrappedReflection)
     }
 
     func testEveningReflectionNudgeStaysHiddenWhenReflectionExists() {

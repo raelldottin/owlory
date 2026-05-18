@@ -4418,7 +4418,7 @@
     {
       "slice_id": "app-localization-evening-reflection-nudge-routing",
       "title": "Route Today evening reflection nudge through localization",
-      "status": "queued",
+      "status": "done",
       "priority": 88,
       "domain": "localization",
       "allowed_paths": [
@@ -4445,7 +4445,7 @@
       ],
       "max_files_changed": 8,
       "entry_condition": "German HIG localized UI gate found English evening reflection nudge copy in the German Today surface.",
-      "notes": "Fix HIG-DE-001. TodayStore.eveningReflectionNudge currently returns English title/message strings; TodayView displays them verbatim. Refactor to return semantic nudge kind and let TodayView format with localized keys, reusing existing notification.prompt.eveningReflection/homeWrappedReflection strings if appropriate. Update tests to assert semantic data instead of English copy."
+      "notes": "Completed on 2026-05-18. Fixed HIG-DE-001 source path: TodayStore.EveningReflectionNudge now carries semantic Kind only (eveningReflection or homeWrappedReflection), and TodayView formats the visible title/body through existing localized notification.prompt.eveningReflection/homeWrappedReflection keys. Updated TodayStoreTests to assert semantic kind instead of English copy. Does not claim German hig-ui-reviewed; scoped UI evidence still needs to be preserved after the fix."
     }
   ]
 }

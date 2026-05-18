@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-evening-reflection-nudge-routing (domain-tested; Today visible reflection nudge now semantic in Store and localized in TodayView; German HIG evidence still pending)](sessions/2026-05-18/042120-app-localization-evening-reflection-nudge-routing.md)
 - [app-localization-german-hig-ui-gate-intake (doc-only; German HIG gate started and failed on visible English evening-reflection nudge copy; fix slice queued)](sessions/2026-05-18/022906-app-localization-german-hig-ui-gate-intake.md)
 - [app-localization-hig-ui-review-gate (doc-only; every localized UI readiness claim now requires an Apple HIG gate)](sessions/2026-05-18/022159-app-localization-hig-ui-review-gate.md)
 - [app-localization-native-review-formal-workflow (doc-only; formal native-review intake protocol + template; Karoline Build Info recorded as build-info-observed, not full TestFlight proof)](sessions/2026-05-18/021206-app-localization-native-review-formal-workflow.md)

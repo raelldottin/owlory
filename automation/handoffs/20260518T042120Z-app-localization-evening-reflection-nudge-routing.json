@@ -1,0 +1,60 @@
+{
+  "slice_id": "app-localization-evening-reflection-nudge-routing",
+  "status": "done",
+  "summary": "Fixed the HIG-DE-001 source path by removing English presentation copy from the visible Today evening reflection nudge. TodayStore now emits semantic EveningReflectionNudge.Kind values, TodayView formats the visible title/body through existing localized notification.prompt.eveningReflection/homeWrappedReflection keys, and TodayStoreTests assert semantic kind instead of English strings.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/042120-app-localization-evening-reflection-nudge-routing.md",
+    "automation/handoffs/20260518T042120Z-app-localization-evening-reflection-nudge-routing.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-translation-quality.md",
+    "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260518T042120Z-app-localization-evening-reflection-nudge-routing.json",
+    "python3 -c \"import json; from automation.supervisor import policy; doc=json.load(open('automation/handoffs/20260518T042120Z-app-localization-evening-reflection-nudge-routing.json')); schema=json.load(open('automation/schemas/handoff.schema.json')); result=policy.validate_document(doc, schema); print('valid' if result.is_valid else '\\n'.join(result.errors)); raise SystemExit(0 if result.is_valid else 1)\"",
+    "python3 automation/context/build_context.py --slice-id app-localization-evening-reflection-nudge-routing",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make test-domain DOMAIN=today",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "domain-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Visible Today reflection nudge localization",
+      "before": "TodayStore.EveningReflectionNudge carried English title/message strings and TodayView rendered those runtime strings verbatim, causing German Today UI to show English reflection nudge copy.",
+      "after": "TodayStore.EveningReflectionNudge carries semantic Kind only. TodayView formats the visible title and body through existing localized notification.prompt.eveningReflection/homeWrappedReflection keys.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "make test-domain DOMAIN=today"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "German hig-ui-reviewed remains unclaimed until a fresh scoped UI evidence pass is preserved after this fix.",
+    "PromptNotification title/body fixture strings in TodayStore remain English for domain test purposes; ReminderScheduler localizes notification copy by PromptNotification.Kind. This slice only fixed the visible Today nudge path.",
+    "No running-app smoke, screenshot proof, device proof, or TestFlight proof was performed in this slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Supervisor dry-run after marking this slice done reported `stop: no eligible queued slice found.`",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-18T04:26:10Z"
+}

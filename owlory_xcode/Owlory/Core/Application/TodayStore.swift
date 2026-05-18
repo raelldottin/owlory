@@ -263,16 +263,10 @@ final class TodayStore: OwloryObservableObject {
         }
 
         if allHomeTasksCompleted {
-            return EveningReflectionNudge(
-                title: "Home wrapped",
-                message: "All home tasks are done. Close the day with one quick reflection."
-            )
+            return EveningReflectionNudge(kind: .homeWrappedReflection)
         }
 
-        return EveningReflectionNudge(
-            title: "Evening reflection",
-            message: "Close the day with one quick reflection."
-        )
+        return EveningReflectionNudge(kind: .eveningReflection)
     }
 
     nonisolated static func hasCheckIn(_ entry: DailyEntry) -> Bool {
@@ -555,8 +549,12 @@ extension TodayStore {
     }
 
     struct EveningReflectionNudge: Equatable {
-        let title: String
-        let message: String
+        enum Kind: Equatable {
+            case eveningReflection
+            case homeWrappedReflection
+        }
+
+        let kind: Kind
     }
 
     struct PromptNotification: Equatable {
