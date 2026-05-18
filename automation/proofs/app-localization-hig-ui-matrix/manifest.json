@@ -2,7 +2,7 @@
   "proof_id": "app-localization-hig-ui-matrix",
   "slice_id": "app-localization-hig-evidence-matrix",
   "created_at": "2026-05-18T04:50:00Z",
-  "purpose": "Durable repo-managed matrix that records the all-locale Apple HIG localized UI completion state per locale per scoped surface, plus the canonical finding taxonomy. As of the 2026-05-18 closure, it records a scoped simulator HIG UI claim for all supported locales and preserves explicit non-claims for physical-device, TestFlight, and automated AX settled proof.",
+  "purpose": "Durable repo-managed matrix that records the all-locale Apple HIG localized UI completion state per locale per scoped surface, plus the canonical finding taxonomy. As of the 2026-05-18 closure, it records a scoped simulator HIG UI claim for all supported locales and preserves explicit non-claims for physical-device, TestFlight, and automated AX settled proof. Per the 2026-05-18 policy update, TestFlight HIG proof is NOT required to call a locale hig-ui-reviewed; repo-managed simulator screenshot capture plus maintained Dynamic Type / accessibility regression is the accepted bar.",
   "matrix_kind": "planning-index",
   "artifact_persisted": true,
   "proof_level": "screenshot-verified + maintained-regression + source-verified remediation",
@@ -1017,7 +1017,7 @@
   },
   "not_claimed": [
     "physical-device HIG proof for any locale",
-    "TestFlight HIG proof for any locale",
+    "TestFlight HIG proof for any locale (NOT required by the HIG UI claim policy as of 2026-05-18)",
     "automated accessibility-tree settled assertions for the 2026-05-18 closure screenshots (idb returned application-only AX tree; screenshots used recorded coordinate fallback)"
   ],
   "downstream_slices": {
@@ -1063,6 +1063,10 @@
     {
       "at": "2026-05-18T17:17:46Z",
       "summary": "All-locale localized UI HIG closure proof captured under automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T170353Z-closure-capture/: 19 locales x 8 scoped surfaces = 152 PNGs, 0 failures, clean build a7813a8. All per-locale gates moved to passed-scoped; HIG-DE-001 and HIG-AR-002 closed with explicit source-plus-screenshot evidence. Device/TestFlight proof remains unclaimed, and the closure screenshots used screenshot-only AX fallback because idb describe-all returned only the application node."
+    },
+    {
+      "at": "2026-05-18T19:00:00Z",
+      "summary": "Policy clarification recorded: TestFlight HIG proof is not required to call a locale hig-ui-reviewed. Automated proof (screenshot capture + maintained accessibility regression) is the accepted bar. No locale state changes; no findings reopened. The closure already passed under this bar at the 2026-05-18 closure capture."
     }
   ],
   "in_progress_findings": [],
@@ -1080,5 +1084,23 @@
     "settled_assertion_mode": "screenshot-only-ax-fallback",
     "dynamic_type_accessibility_coverage": "make ui-regression DOMAIN=localization",
     "validated_at": "2026-05-18T17:27:00Z"
+  },
+  "hig_ui_claim_policy": {
+    "recorded_at": "2026-05-18",
+    "statement": "TestFlight HIG proof is not required to call a locale `hig-ui-reviewed`. Repo-managed automated proof (multisurface screenshot capture under idb + maintained `make ui-regression DOMAIN=localization`) is the accepted bar.",
+    "acceptable_proof": [
+      "Per-locale scoped surface screenshots committed under automation/proofs/.",
+      "Maintained XCUITest regression covering Dynamic Type AccessibilityXL + 5 hittable tab buttons for the maintained locale set."
+    ],
+    "explicitly_not_required": [
+      "physical-device HIG proof",
+      "TestFlight HIG proof",
+      "automated accessibility-tree settled assertions"
+    ],
+    "separate_proof_tracks_still_meaningful": [
+      "device-verified (separate claim, not part of hig-ui-reviewed)",
+      "testflight-verified (separate claim, not part of hig-ui-reviewed)",
+      "native-reviewed (translation-quality claim, separate from hig-ui-reviewed)"
+    ]
   }
 }

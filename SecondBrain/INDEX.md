@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [hig-testflight-not-required-policy (doc-only policy clarification: TestFlight HIG proof is not required for the hig-ui-reviewed claim; automated simulator proof + maintained accessibility regression is the accepted bar; no per-locale state change)](sessions/2026-05-18/173838-hig-testflight-not-required-policy.md)
 - [app-localization-hig-ui-proof-closure (complete repo-managed HIG UI proof and evidence matrix closure after native/fluent review is complete)](sessions/2026-05-18/123806-app-localization-hig-ui-proof-closure.md)
 - [blocked-hig-closure-completion-walkthrough (process to unblock final all-locale HIG closure: capture missing scoped proof, close HIG-DE-001/HIG-AR-002, update matrix/docs, run validation)](sessions/2026-05-18/081225-blocked-hig-closure-completion-walkthrough.md)
 - [localization-hig-compliance-status-check (not complete; native/fluent review done, but HIG matrix has 0 claimed locales, HIG-DE-001/HIG-AR-002 pending proof, final closure parked)](sessions/2026-05-18/081144-localization-hig-compliance-status-check.md)

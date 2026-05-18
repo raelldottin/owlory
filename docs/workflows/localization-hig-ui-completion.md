@@ -20,7 +20,7 @@ All supported locales can be called localized-UI HIG complete only when every it
 5. Any HIG finding has a queued remediation slice or a completed fix with rerun evidence.
 6. `docs/workflows/localization-translation-quality.md`, review return files, proof manifests, and SecondBrain agree on the claim being made.
 
-Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove physical-device or TestFlight behavior. Native/fluent review is recorded complete for non-English locales. As of 2026-05-18, all 19 supported locales are `hig-ui-reviewed` for the scoped simulator surfaces recorded in the evidence matrix.
+Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove physical-device or TestFlight behavior — but **TestFlight HIG proof is not required to call a locale `hig-ui-reviewed`.** Repo-managed automated proof (multisurface screenshot capture under `idb` + maintained `make ui-regression DOMAIN=localization` Dynamic Type coverage) is the accepted bar for the HIG UI claim. Translation quality, `device-verified`, and `testflight-verified` remain separate proof tracks; they are not implied by the HIG UI claim and they are not preconditions for it. Native/fluent review is recorded complete for non-English locales. As of 2026-05-18, all 19 supported locales are `hig-ui-reviewed` for the scoped simulator surfaces recorded in the evidence matrix.
 
 ## Closure Status
 
@@ -32,7 +32,7 @@ Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove 
 - Surfaces: Build Info, Today launch, root tabs, primary empty states/actions, date/count/plural Today sample, and RTL root-tab order for Arabic.
 - Dynamic Type and touch target coverage: maintained through `make ui-regression DOMAIN=localization`.
 
-Not claimed: physical-device HIG proof, TestFlight HIG proof, or automated accessibility-tree settled assertions for the 2026-05-18 screenshots. The simulator returned an application-only AX tree through `idb`, so the capture manifest records screenshot-only AX fallback and deterministic coordinate navigation. HIG-DE-001 is closed by source/key routing plus post-fix German screenshot evidence; the specific evening trigger state was not force-captured. HIG-AR-002 is closed by source verification of `.forward` SF Symbol usage plus Arabic Write/root-tab screenshots.
+Not claimed (and not required for the `hig-ui-reviewed` bar): physical-device HIG proof, TestFlight HIG proof, or automated accessibility-tree settled assertions for the 2026-05-18 screenshots. The simulator returned an application-only AX tree through `idb`, so the capture manifest records screenshot-only AX fallback and deterministic coordinate navigation. HIG-DE-001 is closed by source/key routing plus post-fix German screenshot evidence; the specific evening trigger state was not force-captured. HIG-AR-002 is closed by source verification of `.forward` SF Symbol usage plus Arabic Write/root-tab screenshots.
 
 ## Locale Buckets
 
