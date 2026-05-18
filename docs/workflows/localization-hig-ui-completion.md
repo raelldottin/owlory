@@ -32,7 +32,7 @@ Use buckets to keep UI review slices bounded by risk:
 | German reviewed | `de` | Long compounds, already native-reviewed, HIG-DE-001 source fix landed and in-progress, needs post-fix screenshot capture |
 | RTL | `ar` | Mirroring, text alignment, directional controls, Arabic typography |
 | CJK | `ja`, `ko`, `zh-Hans`, `zh-Hant` | Dense labels, line breaking, CJK typography, terminology |
-| Long-script / inflection-heavy | `nl`, `ru`, `sv`, `tr`, `uk` | Long words, grammatical case, truncation |
+| Long-script / inflection-heavy | `nl`, `ru`, `sv`, `tr`, `uk` (plus `de` as native-reviewed cross-cut) | Long words, grammatical case, truncation. Gate ran 2026-05-18 (doc-only); HIG-DE-002/NL-001/RU-001/TR-001/UK-001 open for Train/Write tab truncation; screenshot capture pending. |
 | Remaining LTR | `fr`, `it`, `nb`, `pt`, `pt-BR`, `es`, `vi` | Button length, plural/date phrasing, region variants. Gate ran 2026-05-18 (doc-only); HIG-FR-001 open for French Today tab truncation risk; screenshot capture pending. |
 
 German is the only native-reviewed non-English locale as of 2026-05-18. All other non-English locales need a native or fluent review intake before a final HIG UI-ready claim can include label/action clarity.

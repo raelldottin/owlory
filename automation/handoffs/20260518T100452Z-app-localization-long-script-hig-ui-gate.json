@@ -1,0 +1,61 @@
+{
+  "slice_id": "app-localization-long-script-hig-ui-gate",
+  "title": "Run long-script localized UI HIG gate",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T10:04:52Z",
+  "proof_level": "doc-only",
+  "summary": "Ran the HIG localized UI gate for de (native-reviewed), nl, ru, sv, tr, uk under the existing review baselines. Doc-only intake: source-trace inspection of tab labels + primary actions + multisurface-harness dry-run validation (42 captures planned, idb ready). Result: fail because no screenshot evidence is preserved. Allocated 5 new major HIG findings: HIG-DE-002 (de Write 'Schreiben' 9 chars), HIG-NL-001 (nl Write 'Schrijven' 9 chars), HIG-RU-001 (ru Train 'Тренировка' 10 chars, Cyrillic), HIG-TR-001 (tr Train 'Antrenman' 9 chars), HIG-UK-001 (uk Train 'Тренування' 10 chars, Cyrillic). All adaptive-layout / open. Swedish has no source-level HIG risk. Translation-quality notes (NOT HIG defects) for ru/uk Write tab.",
+  "files_changed": [
+    "automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-long-script-hig-ui-gate/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T100452Z-app-localization-long-script-hig-ui-gate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/100452-app-localization-long-script-hig-ui-gate.md"
+  ],
+  "gate_outcome": {
+    "result": "fail",
+    "locales_evaluated": ["de", "nl", "ru", "sv", "tr", "uk"],
+    "hig_ui_reviewed_claimed_locales": [],
+    "open_findings_new": ["HIG-DE-002", "HIG-NL-001", "HIG-RU-001", "HIG-TR-001", "HIG-UK-001"],
+    "open_findings_carried_from_other_gates": ["HIG-DE-001 (tracked in app-localization-german-hig-ui-gate)"],
+    "translation_quality_risks_noted_not_hig_defects": [
+      "ru: 'Запись' for Write means entry/recording rather than the action",
+      "uk: 'Запис' for Write means entry/recording rather than the action",
+      "nl: 'Bewaren' for Save is correct but 'Opslaan' is the more common modern alternative",
+      "de: 'Haushalt' for Home is the household framing — native-review choice, not a defect"
+    ],
+    "harness_plan_dry_run_status": "planned (42 captures, idb + idb_companion ready)",
+    "actual_capture_run_in_this_slice": false
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-long-script-hig-ui-gate": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-long-script-hig-ui-gate/manifest.json": "passed"
+  },
+  "not_claimed": [
+    "any of these 6 locales is hig-ui-reviewed",
+    "any non-German locale in this bucket is native-reviewed",
+    "translation quality for any non-German locale in this bucket",
+    "screenshot-reviewed, device-verified, or testflight-verified for any locale in this bucket"
+  ],
+  "residual_risk": [
+    "The 5 new findings (HIG-DE-002/NL-001/RU-001/TR-001/UK-001) are source-trace inferences. Whether the tab labels actually truncate depends on iPhone width + Dynamic Type; needs screenshot confirmation.",
+    "Swedish has no recorded HIG finding only because no screenshots were captured. Live screenshots may surface additional issues.",
+    "The 5 new findings share fix shape with HIG-FR-001 from the remaining-LTR gate. A single tab-bar layout slice (not per-locale) should address all six after screenshot confirmation.",
+    "The multisurface harness needs --label-overrides for nl/ru/sv/tr/uk for the today surface; default catalog covers de only in this bucket."
+  ],
+  "downstream_recommendations": [
+    "Schedule a screenshot-capture slice covering all 13 locales now in failing-bucket-gate state (fr/it/nb/pt/pt-BR/es/vi from remaining-LTR + de/nl/ru/sv/tr/uk from long-script).",
+    "If tab-truncation findings (HIG-DE-002/FR-001/NL-001/RU-001/TR-001/UK-001) are confirmed by screenshot, queue a single tab-bar UI-tweak slice instead of six.",
+    "Translation-quality concerns surfaced (ru/uk Write semantics, nl Save register) belong in native-review intake slices, not in this HIG gate."
+  ]
+}

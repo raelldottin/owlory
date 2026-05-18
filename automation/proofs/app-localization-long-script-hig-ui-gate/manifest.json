@@ -1,0 +1,286 @@
+{
+  "proof_id": "app-localization-long-script-hig-ui-gate",
+  "slice_id": "app-localization-long-script-hig-ui-gate",
+  "created_at": "2026-05-18T10:04:52Z",
+  "locales": ["de", "nl", "ru", "sv", "tr", "uk"],
+  "source": "Source-trace inspection of localized .strings resources on 2026-05-18 plus a validated multisurface-harness dry-run plan. No screenshot captures are committed under this directory.",
+  "artifact_persisted": false,
+  "gate_result": "fail",
+  "gate_result_reason": "No preserved screenshot evidence for any of the 6 long-script / inflection-heavy locales. Source-trace surfaced 5 new major HIG risks (HIG-DE-002, HIG-NL-001, HIG-RU-001, HIG-TR-001, HIG-UK-001) for Train/Write tab-bar truncation. German also carries the prior HIG-DE-001 (in-progress, source-fix-confirmed) from app-localization-german-hig-ui-regate. Internal-reviewer signoff is recorded for the 5 non-German locales here; German is native-reviewed.",
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed_locales": [],
+  "signoff_baseline": {
+    "de": "native-reviewed (419 entries via localization/review/de/german-review-return.json on 2026-05-18)",
+    "non_german": "internal-reviewer-signoff (not native speaker) recorded 2026-05-18 in each locale's localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff)"
+  },
+  "scoped_surfaces_required": [
+    "build-info",
+    "today-launch",
+    "root-tabs",
+    "primary-empty-states",
+    "primary-actions",
+    "date-count-plural",
+    "dynamic-type-accessibility"
+  ],
+  "harness_plan": {
+    "tool": "automation/smoke/capture_localized_surfaces.py",
+    "dry_run_status": "planned (42 captures = 6 locales x 7 surfaces; idb + idb_companion ready)",
+    "label_overrides_needed": {
+      "today": {
+        "nl": ["Vandaag"],
+        "ru": ["Сегодня"],
+        "sv": ["Idag"],
+        "tr": ["Bugün"],
+        "uk": ["Сьогодні"]
+      }
+    },
+    "actual_capture_status": "not run in this slice. Capture is deferred to a separate follow-up screenshot-capture slice to keep proof artifacts and gate evaluation in distinct lanes."
+  },
+  "source_trace_per_locale": {
+    "de": {
+      "today_label": "Heute",
+      "train_label": "Training",
+      "write_label": "Schreiben",
+      "career_label": "Karriere",
+      "home_label": "Haushalt",
+      "build_info_label": "Build-Info",
+      "save_label": "Speichern",
+      "cancel_label": "Abbrechen",
+      "continue_label": "Weiter",
+      "internal_reviewer_signoff": false,
+      "native_reviewed": true,
+      "notes": "Native-reviewed by Karoline on 2026-05-18. Carries prior HIG-DE-001 (in-progress, source-fix-confirmed) from app-localization-german-hig-ui-regate. New HIG-DE-002 from this gate flags the Write tab label 'Schreiben' (9 chars vs en 5) for truncation risk. 'Haushalt' for Home is a German native-review choice (household domain), not a translation defect."
+    },
+    "nl": {
+      "today_label": "Vandaag",
+      "train_label": "Trainen",
+      "write_label": "Schrijven",
+      "career_label": "Carrière",
+      "home_label": "Thuis",
+      "build_info_label": "Build-info",
+      "save_label": "Bewaren",
+      "cancel_label": "Annuleren",
+      "continue_label": "Doorgaan",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Dutch 'Schrijven' for Write tab (9 chars vs en 5) is at the same length as German 'Schreiben'; see HIG-NL-001."
+    },
+    "ru": {
+      "today_label": "Сегодня",
+      "train_label": "Тренировка",
+      "write_label": "Запись",
+      "career_label": "Карьера",
+      "home_label": "Дом",
+      "build_info_label": "Информация о сборке",
+      "save_label": "Сохранить",
+      "cancel_label": "Отменить",
+      "continue_label": "Продолжить",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Russian 'Тренировка' for Train tab (10 chars) — see HIG-RU-001. Translation-quality concern (NOT a HIG defect): 'Запись' for Write means recording/entry rather than the action 'write'; native reviewer should confirm."
+    },
+    "sv": {
+      "today_label": "Idag",
+      "train_label": "Träna",
+      "write_label": "Skriv",
+      "career_label": "Karriär",
+      "home_label": "Hem",
+      "build_info_label": "Build-info",
+      "save_label": "Spara",
+      "cancel_label": "Avbryt",
+      "continue_label": "Fortsätt",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Swedish tab labels are uniformly short (5 chars max). No source-trace HIG risk identified."
+    },
+    "tr": {
+      "today_label": "Bugün",
+      "train_label": "Antrenman",
+      "write_label": "Yaz",
+      "career_label": "Kariyer",
+      "home_label": "Ev",
+      "build_info_label": "Yapı bilgisi",
+      "save_label": "Kaydet",
+      "cancel_label": "İptal",
+      "continue_label": "Devam",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Turkish 'Antrenman' for Train tab (9 chars vs en 5) — see HIG-TR-001. Turkish is agglutinative so longer compound forms are common; other tab labels are short here."
+    },
+    "uk": {
+      "today_label": "Сьогодні",
+      "train_label": "Тренування",
+      "write_label": "Запис",
+      "career_label": "Кар'єра",
+      "home_label": "Дім",
+      "build_info_label": "Інформація про збірку",
+      "save_label": "Зберегти",
+      "cancel_label": "Скасувати",
+      "continue_label": "Продовжити",
+      "internal_reviewer_signoff": true,
+      "native_reviewed": false,
+      "notes": "Ukrainian 'Тренування' for Train tab (10 chars) — see HIG-UK-001. Build Info detail row label 'Інформація про збірку' (21 chars) is the longest across these 6 locales. Translation-quality concern (NOT a HIG defect): 'Запис' for Write means entry/record rather than the action 'write'."
+    }
+  },
+  "open_findings": [
+    {
+      "id": "HIG-DE-002",
+      "locale": "de",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "German Write tab label 'Schreiben' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings: \"Write\" = \"Schreiben\";",
+        "Comparison: en=5, de=9, nl=9, ru=6, sv=5, tr=3, uk=5 chars across this bucket."
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No German Write tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-NL-001",
+      "locale": "nl",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Dutch Write tab label 'Schrijven' (9 chars) is significantly longer than the English 'Write' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings: \"Write\" = \"Schrijven\";"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Dutch Write tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-RU-001",
+      "locale": "ru",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Russian Train tab label 'Тренировка' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings: \"Train\" = \"Тренировка\";"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Russian Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-TR-001",
+      "locale": "tr",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Turkish Train tab label 'Antrenman' (9 chars) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation risk on smaller iPhone widths and at larger Dynamic Type settings.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings: \"Train\" = \"Antrenman\";"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Turkish Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": null
+    },
+    {
+      "id": "HIG-UK-001",
+      "locale": "uk",
+      "severity": "major",
+      "area": "adaptive-layout",
+      "state": "open",
+      "summary": "Ukrainian Train tab label 'Тренування' (10 chars, Cyrillic) is significantly longer than the English 'Train' (5 chars). Tab-bar truncation likely on smaller iPhone widths; Cyrillic glyphs render wider than equivalent Latin character count.",
+      "observed_evidence": [
+        "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings: \"Train\" = \"Тренування\";"
+      ],
+      "source_trace": ["owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings"],
+      "proof_path_or_chat_observation": "Source-trace inspection only. No Ukrainian Train tab screenshot is preserved.",
+      "remediation_slice_id_or_null": null,
+      "created_at": "2026-05-18T10:04:52Z",
+      "closed_at_or_null": null
+    }
+  ],
+  "hig_areas_per_locale": {
+    "de": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-DE-002)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-fix-confirmed-pending-rerun (carries prior HIG-DE-001 from app-localization-german-hig-ui-gate)",
+      "locale_aware_formatting": "partial",
+      "right_to_left": "not-applicable"
+    },
+    "nl": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-NL-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "ru": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-RU-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only (translation-quality risk on 'Запись' for Write; not a HIG defect)",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "sv": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "not-reviewed",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "tr": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-TR-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    },
+    "uk": {
+      "platform_consistency": "not-reviewed",
+      "adaptive_layout": "fail (HIG-UK-001)",
+      "typography_dynamic_type": "not-reviewed",
+      "accessibility": "not-reviewed",
+      "labels_actions": "source-trace-only (translation-quality risk on 'Запис' for Write; not a HIG defect)",
+      "locale_aware_formatting": "not-reviewed",
+      "right_to_left": "not-applicable"
+    }
+  },
+  "missing_evidence_for_pass": [
+    "Build Info screenshot per locale with complete gate fields (version, build, commit short/full, branch, source-clean flags)",
+    "Today screenshot per locale with no visible app-owned English strings",
+    "All five root tabs per locale (especially Train and Write where source-trace flagged truncation risk)",
+    "Primary empty states per locale (Today/Train/Write/Career/Home/Patterns/Settings empty-state copy)",
+    "Primary actions per locale (Save, Cancel, Continue, primary CTAs)",
+    "High-risk date/count/plural surfaces per locale",
+    "Dynamic Type pass (standard text size + Larger Accessibility Text) — long-script bucket especially needs the AccessibilityXL pass",
+    "Accessibility labels/hints/values for the reviewed surfaces"
+  ],
+  "not_claimed": [
+    "any of these 6 locales is hig-ui-reviewed",
+    "any non-German locale in this bucket is native-reviewed",
+    "translation quality for any non-German locale in this bucket",
+    "screenshot-reviewed, device-verified, or testflight-verified for any locale in this bucket"
+  ],
+  "downstream_recommendations": [
+    "Run automation/smoke/capture_localized_surfaces.py --capture --locales de nl ru sv tr uk --surfaces today root-tab-train root-tab-write root-tab-career root-tab-home build-info date-count-plural-today --label-overrides path/to/long_script_label_overrides.json. The overrides file must cover nl/ru/sv/tr/uk today labels (German 'Heute' is already in the harness default catalog).",
+    "After capture, append findings to this gate, update the all-locale HIG evidence matrix per_locale_state for these 6 locales, and update each locale's scoped_surface_status from not-reviewed to passed-scoped / fail / partial.",
+    "Translation-quality concerns surfaced in source trace (NOT HIG defects): ru/uk 'Запись'/'Запис' for Write (entry/recording vs the action), nl 'Bewaren' for Save vs 'Opslaan' as a more common alternative, de 'Haushalt' for Home (household — Karoline's native-review choice). These belong to a native-review pass, not this HIG gate.",
+    "If any of the 5 new tab-truncation findings are confirmed by screenshot evidence, queue a single UI-tweak slice for tab-bar layout (likely under Features/, not within a localization slice) that addresses HIG-DE-002, HIG-FR-001 (from remaining-LTR gate), HIG-NL-001, HIG-RU-001, HIG-TR-001, and HIG-UK-001 together."
+  ]
+}

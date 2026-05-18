@@ -5256,7 +5256,7 @@
     {
       "slice_id": "app-localization-long-script-hig-ui-gate",
       "title": "Run long-script localized UI HIG gate",
-      "status": "queued",
+      "status": "done",
       "priority": 83,
       "domain": "localization",
       "allowed_paths": [
