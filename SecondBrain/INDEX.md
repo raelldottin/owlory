@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-hig-ui-completion-slicing (doc-only; all-locale Apple HIG completion ladder queued; 17 non-German native-review blockers preserved)](sessions/2026-05-18/003534-app-localization-hig-ui-completion-slicing.md)
 - [start-next-slice-clean-stop (no eligible queued slice available after evening reflection routing; no product changes)](sessions/2026-05-18/002759-start-next-slice-clean-stop.md)
 - [app-localization-evening-reflection-nudge-routing (domain-tested; Today visible reflection nudge now semantic in Store and localized in TodayView; German HIG evidence still pending)](sessions/2026-05-18/042120-app-localization-evening-reflection-nudge-routing.md)
 - [app-localization-german-hig-ui-gate-intake (doc-only; German HIG gate started and failed on visible English evening-reflection nudge copy; fix slice queued)](sessions/2026-05-18/022906-app-localization-german-hig-ui-gate-intake.md)

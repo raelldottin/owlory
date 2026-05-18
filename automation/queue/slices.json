@@ -4446,6 +4446,962 @@
       "max_files_changed": 8,
       "entry_condition": "German HIG localized UI gate found English evening reflection nudge copy in the German Today surface.",
       "notes": "Completed on 2026-05-18. Fixed HIG-DE-001 source path: TodayStore.EveningReflectionNudge now carries semantic Kind only (eveningReflection or homeWrappedReflection), and TodayView formats the visible title/body through existing localized notification.prompt.eveningReflection/homeWrappedReflection keys. Updated TodayStoreTests to assert semantic kind instead of English copy. Does not claim German hig-ui-reviewed; scoped UI evidence still needs to be preserved after the fix."
+    },
+    {
+      "slice_id": "app-localization-hig-ui-completion-slicing",
+      "title": "Create all-locale Apple HIG localized UI completion slices",
+      "status": "done",
+      "priority": 90,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/README.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-ui-completion-slicing",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m json.tool automation/queue/slices.json",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-evening-reflection-nudge-routing"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Project owner requested complete Apple HIG UI adherence across all localizations and all necessary slices for completion.",
+      "notes": "Completed on 2026-05-18. Added docs/workflows/localization-hig-ui-completion.md and queued the completion ladder: evidence matrix, multisurface screenshot harness, Dynamic Type/accessibility harness, bucketed HIG gates, remediation triage, blocked closure, and blocked native-review intake slices for the 17 non-German locales that still lack native/fluent review. Does not claim all-locale hig-ui-reviewed."
+    },
+    {
+      "slice_id": "app-localization-hig-evidence-matrix",
+      "title": "Create all-locale HIG evidence matrix and finding taxonomy",
+      "status": "queued",
+      "priority": 89,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/README.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-evidence-matrix",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m json.tool automation/queue/slices.json",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "All-locale HIG completion requires a durable evidence matrix before proof capture and review gates can be compared consistently.",
+      "notes": "Planning/proof slice. Create a repo-managed matrix for all 19 locales and required surfaces: Build Info, Today launch, root tabs, primary empty states, primary actions, high-risk date/count/plural surfaces, Dynamic Type/accessibility pass, and RTL-only checks. Define finding IDs such as HIG-<locale>-<number>, severity, owner, proof path, remediation slice, and closure state. Do not claim any locale passed."
+    },
+    {
+      "slice_id": "app-localization-hig-multisurface-screenshot-harness",
+      "title": "Expand localized HIG screenshot proof beyond launch surface",
+      "status": "queued",
+      "priority": 88,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/smoke/",
+        "automation/tests/",
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "Makefile",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-multisurface-screenshot-harness",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "make localization-screenshot-idb-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-evidence-matrix"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "The existing all-locale screenshot proof captures only one Today launch screenshot per locale and cannot prove full HIG UI adherence.",
+      "notes": "Automation/proof slice. Extend or add an idb/XCUITest proof harness that can capture named localized surfaces for a locale set: Build Info, Today, each root tab, primary empty states/actions, and high-risk date/count/plural examples. Preserve manifests with locale, surface, device/simulator, commit, dimensions, sha256, and explicit non-claims. If idb/device dependencies are missing, record the blocker and keep the slice honest."
+    },
+    {
+      "slice_id": "app-localization-hig-dynamic-type-accessibility-harness",
+      "title": "Add localized HIG Dynamic Type and accessibility checks",
+      "status": "queued",
+      "priority": 87,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/",
+        "automation/smoke/",
+        "automation/tests/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "Makefile",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-dynamic-type-accessibility-harness",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-multisurface-screenshot-harness"
+      ],
+      "max_files_changed": 14,
+      "entry_condition": "All-locale HIG completion requires evidence for localized accessibility labels/values/hints, tab reachability, Dynamic Type resilience, and touch target regressions.",
+      "notes": "Automation/test slice. Add maintained representative checks for localized accessibility text presence, root tab reachability, Dynamic Type/accessibility text-size launch stability, and touch target regressions without relying on translated labels. Add stable identifiers only where needed. Do not rewrite product UI or translations in this slice."
+    },
+    {
+      "slice_id": "app-localization-native-review-ar",
+      "title": "Intake native review for Arabic localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/ar/",
+        "owlory_xcode/Owlory/Resources/ar.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-ar",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Arabic native/fluent reviewer plus RTL layout reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Arabic currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-nl",
+      "title": "Intake native review for Dutch localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/nl/",
+        "owlory_xcode/Owlory/Resources/nl.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-nl",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Dutch native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Dutch currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-fr",
+      "title": "Intake native review for French localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/fr/",
+        "owlory_xcode/Owlory/Resources/fr.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-fr",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "French native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. French currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-it",
+      "title": "Intake native review for Italian localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/it/",
+        "owlory_xcode/Owlory/Resources/it.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-it",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Italian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Italian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-ja",
+      "title": "Intake native review for Japanese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/ja/",
+        "owlory_xcode/Owlory/Resources/ja.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-ja",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Japanese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Japanese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-ko",
+      "title": "Intake native review for Korean localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/ko/",
+        "owlory_xcode/Owlory/Resources/ko.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-ko",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Korean native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Korean currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-nb",
+      "title": "Intake native review for Norwegian Bokmal localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/nb/",
+        "owlory_xcode/Owlory/Resources/nb.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-nb",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Norwegian Bokmal native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Norwegian Bokmal currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-pt",
+      "title": "Intake native review for Portuguese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/pt/",
+        "owlory_xcode/Owlory/Resources/pt.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-pt",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "European Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-pt-br",
+      "title": "Intake native review for Brazilian Portuguese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/pt-BR/",
+        "owlory_xcode/Owlory/Resources/pt-BR.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-pt-br",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Brazilian Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Brazilian Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-ru",
+      "title": "Intake native review for Russian localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/ru/",
+        "owlory_xcode/Owlory/Resources/ru.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-ru",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Russian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Russian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-es",
+      "title": "Intake native review for Spanish localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/es/",
+        "owlory_xcode/Owlory/Resources/es.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-es",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Spanish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Spanish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-sv",
+      "title": "Intake native review for Swedish localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/sv/",
+        "owlory_xcode/Owlory/Resources/sv.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-sv",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Swedish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Swedish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-zh-hans",
+      "title": "Intake native review for Simplified Chinese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/zh-Hans/",
+        "owlory_xcode/Owlory/Resources/zh-Hans.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-zh-hans",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Simplified Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Simplified Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-zh-hant",
+      "title": "Intake native review for Traditional Chinese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/zh-Hant/",
+        "owlory_xcode/Owlory/Resources/zh-Hant.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-zh-hant",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Traditional Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Traditional Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-tr",
+      "title": "Intake native review for Turkish localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/tr/",
+        "owlory_xcode/Owlory/Resources/tr.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-tr",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Turkish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Turkish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-uk",
+      "title": "Intake native review for Ukrainian localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/uk/",
+        "owlory_xcode/Owlory/Resources/uk.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-uk",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Ukrainian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Ukrainian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-native-review-vi",
+      "title": "Intake native review for Vietnamese localization",
+      "status": "blocked",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "localization/review/vi/",
+        "owlory_xcode/Owlory/Resources/vi.lproj/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/proofs/app-localization-native-review/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-native-review-vi",
+        "python3 Tools/localization-review-export.py --output-dir localization/review",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-completion-slicing"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Vietnamese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
+      "notes": "Blocked human-input slice. Vietnamese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+    },
+    {
+      "slice_id": "app-localization-german-hig-ui-regate",
+      "title": "Rerun German localized UI HIG gate after reflection fix",
+      "status": "queued",
+      "priority": 86,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-german-hig-ui-gate/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-german-hig-ui-regate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-dynamic-type-accessibility-harness",
+        "app-localization-evening-reflection-nudge-routing"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "German is native-reviewed and HIG-DE-001 source routing is fixed, but scoped UI evidence still needs to be preserved after the fix.",
+      "notes": "Proof/review slice. Rerun the German HIG gate using preserved evidence, verify the reflection nudge now localizes, record pass/fail findings, and do not claim device/TestFlight proof unless those artifacts are actually preserved."
+    },
+    {
+      "slice_id": "app-localization-rtl-hig-ui-gate-ar",
+      "title": "Run Arabic RTL localized UI HIG gate",
+      "status": "queued",
+      "priority": 85,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-rtl-hig-ui-gate-ar/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-rtl-hig-ui-gate-ar",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-dynamic-type-accessibility-harness",
+        "app-localization-native-review-ar"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Arabic native review and the HIG automation harnesses are complete.",
+      "notes": "Proof/review slice. Run Arabic HIG gate with RTL-specific checks: mirrored layout, alignment, navigation affordances, ordered controls, directional icons, date/count formatting, accessibility reading order, and screenshot evidence. Queue focused fix slices for failures."
+    },
+    {
+      "slice_id": "app-localization-cjk-hig-ui-gate",
+      "title": "Run CJK localized UI HIG gate",
+      "status": "queued",
+      "priority": 84,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-cjk-hig-ui-gate/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-cjk-hig-ui-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-dynamic-type-accessibility-harness",
+        "app-localization-native-review-ja",
+        "app-localization-native-review-ko",
+        "app-localization-native-review-zh-hans",
+        "app-localization-native-review-zh-hant"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Japanese, Korean, Simplified Chinese, and Traditional Chinese native reviews plus HIG automation harnesses are complete.",
+      "notes": "Proof/review slice. Run CJK HIG gate for ja, ko, zh-Hans, and zh-Hant with focus on typography, compact labels, line wrapping, truncation, tab recognizability, dates/counts, accessibility labels, and screenshot evidence. Queue focused fix slices for failures."
+    },
+    {
+      "slice_id": "app-localization-long-script-hig-ui-gate",
+      "title": "Run long-script localized UI HIG gate",
+      "status": "queued",
+      "priority": 83,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-long-script-hig-ui-gate/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-long-script-hig-ui-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-dynamic-type-accessibility-harness",
+        "app-localization-german-hig-ui-regate",
+        "app-localization-native-review-nl",
+        "app-localization-native-review-ru",
+        "app-localization-native-review-sv",
+        "app-localization-native-review-tr",
+        "app-localization-native-review-uk"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Long-script and inflection-heavy locales have native reviews plus HIG automation harnesses are complete.",
+      "notes": "Proof/review slice. Run HIG gate for de, nl, ru, sv, tr, and uk with focus on long labels, compound words, grammatical case, button/tab truncation, date/count grammar, Dynamic Type, and screenshot evidence. Queue focused fix slices for failures."
+    },
+    {
+      "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
+      "title": "Run remaining LTR localized UI HIG gate",
+      "status": "queued",
+      "priority": 82,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-remaining-ltr-hig-ui-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-dynamic-type-accessibility-harness",
+        "app-localization-native-review-fr",
+        "app-localization-native-review-it",
+        "app-localization-native-review-nb",
+        "app-localization-native-review-pt",
+        "app-localization-native-review-pt-br",
+        "app-localization-native-review-es",
+        "app-localization-native-review-vi"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Remaining LTR locales have native reviews plus HIG automation harnesses are complete.",
+      "notes": "Proof/review slice. Run HIG gate for fr, it, nb, pt, pt-BR, es, and vi with focus on action label clarity, button length, date/count/plural formatting, Dynamic Type, accessibility labels, and screenshot evidence. Queue focused fix slices for failures."
+    },
+    {
+      "slice_id": "app-localization-hig-remediation-triage",
+      "title": "Triage localized HIG findings into focused remediation slices",
+      "status": "queued",
+      "priority": 81,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-remediation-triage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m json.tool automation/queue/slices.json",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-german-hig-ui-regate",
+        "app-localization-rtl-hig-ui-gate-ar",
+        "app-localization-cjk-hig-ui-gate",
+        "app-localization-long-script-hig-ui-gate",
+        "app-localization-remaining-ltr-hig-ui-gate"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "All bucketed HIG gates have run and produced pass/fail findings.",
+      "notes": "Planning/queue slice. Convert every failed HIG finding into a narrow implementation or proof rerun slice with allowed paths, validations, and dependencies. If all gates passed, record that no remediation slices are needed. Do not make UI source changes in this slice."
+    },
+    {
+      "slice_id": "app-localization-all-locale-hig-ui-closure",
+      "title": "Close all-locale localized UI HIG readiness claim",
+      "status": "blocked",
+      "priority": 80,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "localization/review/STATUS.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-all-locale-hig-ui-closure",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "./Tools/validate.sh localization",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-remediation-triage"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Every locale has native/fluent review where required, every HIG gate passed, every remediation slice is done, and proof manifests are preserved.",
+      "recommended_unblocker": "app-localization-hig-remediation-triage",
+      "notes": "Blocked closure slice. This is the only slice allowed to update docs to claim all-locale hig-ui-reviewed, and only after native review, HIG evidence, automation checks, and remediation are complete. Unblock only after the HIG evidence matrix has zero open findings and no queued/blocked remediation slices remain."
     }
   ]
 }
