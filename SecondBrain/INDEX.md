@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [start-next-slice-clean-stop-repeat-2 (no eligible queued slice after fresh fetch; clean-stop still passed; 18 parked localization blockers unchanged)](sessions/2026-05-18/073237-start-next-slice-clean-stop-repeat-2.md)
 - [start-next-slice-clean-stop-repeat (no eligible queued slice; clean-stop still passed after fresh fetch; repo clean/mirrored)](sessions/2026-05-18/073037-start-next-slice-clean-stop-repeat.md)
 - [start-next-slice-clean-stop (no eligible queued slice after Pyright validation chain; clean-stop passed; 18 parked localization review/closure slices retain explicit entry conditions)](sessions/2026-05-18/072930-start-next-slice-clean-stop.md)
 - [automation-pyright-tighten-severities (build-tested; fixed the remaining Pyright warnings; reportArgumentType/reportOptionalSubscript/reportAssignmentType restored to error; make automation-check now runs make pyright; standalone make pyright 0 errors / 0 warnings)](sessions/2026-05-18/072259-automation-pyright-tighten-severities.md)
