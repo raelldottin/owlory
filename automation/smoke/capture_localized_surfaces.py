@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -63,11 +64,29 @@ SUPPORTED_LOCALES = [
     "pt", "pt-BR", "ru", "es", "sv", "zh-Hans", "zh-Hant",
     "tr", "uk", "vi",
 ]
+RTL_LOCALES = {"ar"}
+IPHONE_17_PORTRAIT_TAB_POINTS = {
+    "ltr": {
+        "today": (61, 832),
+        "train": (131, 832),
+        "write": (201, 832),
+        "career": (271, 832),
+        "home": (341, 832),
+    },
+    "rtl": {
+        "home": (61, 832),
+        "career": (131, 832),
+        "write": (201, 832),
+        "train": (271, 832),
+        "today": (341, 832),
+    },
+}
 
 DEFAULT_BUNDLE_ID = "com.raelldottin.owlory"
 DEFAULT_OUTPUT_DIR = Path(
     "automation/proofs/app-localization-hig-multisurface-screenshot-harness"
 )
+RESOURCE_ROOT = _REPO_ROOT / "owlory_xcode/Owlory/Resources"
 
 
 @dataclass(frozen=True)
@@ -91,12 +110,45 @@ class Surface:
         return locale in self.applicable_to_locales
 
 
+def localized_values_for_key(key: str) -> tuple[str, ...]:
+    values = [key]
+    for locale in SUPPORTED_LOCALES:
+        value = localized_string_value(locale, key)
+        if value and value not in values:
+            values.append(value)
+    return tuple(values)
+
+
+def localized_string_value(locale: str, key: str) -> str:
+    path = RESOURCE_ROOT / f"{locale}.lproj/Localizable.strings"
+    if not path.exists():
+        return ""
+    text = path.read_text(encoding="utf-8")
+    escaped_key = key.replace("\\", "\\\\").replace('"', '\\"')
+    pattern = rf'^"{escaped_key}"\s*=\s*"((?:[^"\\]|\\.)*)";\s*$'
+    for match in re.finditer(pattern, text, flags=re.MULTILINE):
+        return (
+            match.group(1)
+            .replace(r"\"", '"')
+            .replace(r"\n", "\n")
+            .replace(r"\\", "\\")
+        )
+    return ""
+
+
 def build_surface_catalog() -> list[Surface]:
     """Default catalog of scoped HIG surfaces the harness can capture.
 
     Surfaces map to the scoped surface list under
     automation/proofs/app-localization-hig-ui-matrix/manifest.json.
     """
+    today_labels = localized_values_for_key("Today")
+    train_labels = localized_values_for_key("Train")
+    write_labels = localized_values_for_key("Write")
+    career_labels = localized_values_for_key("Career")
+    home_labels = localized_values_for_key("Home")
+    build_info_labels = localized_values_for_key("Build Info")
+
     return [
         Surface(
             id="today",
@@ -105,18 +157,15 @@ def build_surface_catalog() -> list[Surface]:
                 "Settled Today launch surface after locale-aware launch and any "
                 "system prompt dismissal."
             ),
-            settled_assertion_labels=(
-                "Today", "Heute", "Aujourd'hui", "Oggi", "Hoy", "Hoje", "Сегодня",
-                "今日", "오늘", "今天",
-            ),
+            settled_assertion_labels=today_labels,
         ),
         Surface(
             id="root-tab-train",
             label="Train tab",
             description="Train root tab visible and settled.",
-            settled_assertion_labels=("Train", "Trainen", "Entraînement", "Allenamento"),
+            settled_assertion_labels=train_labels,
             navigation=(
-                NavigationStep(kind="tap_label", payload={"labels": ["Train"]}),
+                NavigationStep(kind="tap_tab", payload={"tab": "train"}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -124,9 +173,9 @@ def build_surface_catalog() -> list[Surface]:
             id="root-tab-write",
             label="Write tab",
             description="Write root tab visible and settled.",
-            settled_assertion_labels=("Write", "Schrijf", "Écrire", "Scrivi"),
+            settled_assertion_labels=write_labels,
             navigation=(
-                NavigationStep(kind="tap_label", payload={"labels": ["Write"]}),
+                NavigationStep(kind="tap_tab", payload={"tab": "write"}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -134,9 +183,9 @@ def build_surface_catalog() -> list[Surface]:
             id="root-tab-career",
             label="Career tab",
             description="Career root tab visible and settled.",
-            settled_assertion_labels=("Career", "Carrière", "Karriere", "Carriera"),
+            settled_assertion_labels=career_labels,
             navigation=(
-                NavigationStep(kind="tap_label", payload={"labels": ["Career"]}),
+                NavigationStep(kind="tap_tab", payload={"tab": "career"}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -144,24 +193,9 @@ def build_surface_catalog() -> list[Surface]:
             id="root-tab-home",
             label="Home tab",
             description="Home root tab visible and settled.",
-            settled_assertion_labels=("Home", "Zuhause", "Maison", "Casa"),
+            settled_assertion_labels=home_labels,
             navigation=(
-                NavigationStep(kind="tap_label", payload={"labels": ["Home"]}),
-                NavigationStep(kind="wait", payload={"seconds": 1.5}),
-            ),
-        ),
-        Surface(
-            id="build-info",
-            label="Build Info",
-            description=(
-                "Build Info screen with version, build, commit short/full, branch, "
-                "and source-clean fields. Required for full HIG localized UI gates."
-            ),
-            settled_assertion_labels=("Build Info",),
-            navigation=(
-                NavigationStep(kind="tap_label", payload={"labels": ["Settings", "Einstellungen"]}),
-                NavigationStep(kind="wait", payload={"seconds": 1.0}),
-                NavigationStep(kind="tap_label", payload={"labels": ["Build Info"]}),
+                NavigationStep(kind="tap_tab", payload={"tab": "home"}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -172,8 +206,9 @@ def build_surface_catalog() -> list[Surface]:
                 "Today empty-state copy. Requires a launch argument or fixture that "
                 "starts the app with no Focus Three entries."
             ),
-            settled_assertion_labels=("Today", "Heute"),
+            settled_assertion_labels=today_labels,
             navigation=(
+                NavigationStep(kind="tap_tab", payload={"tab": "today"}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -186,8 +221,24 @@ def build_surface_catalog() -> list[Surface]:
                 "Continue subtitle 'X days ago'). Verifies stringsdict + "
                 "Date.FormatStyle render correctly."
             ),
-            settled_assertion_labels=("Today", "Heute"),
+            settled_assertion_labels=today_labels,
             navigation=(
+                NavigationStep(kind="tap_tab", payload={"tab": "today"}),
+                NavigationStep(kind="wait", payload={"seconds": 1.5}),
+            ),
+        ),
+        Surface(
+            id="build-info",
+            label="Build Info",
+            description=(
+                "Build Info screen with version, build, commit short/full, branch, "
+                "and source-clean fields. Required for full HIG localized UI gates."
+            ),
+            settled_assertion_labels=build_info_labels,
+            navigation=(
+                NavigationStep(kind="tap_tab", payload={"tab": "today"}),
+                NavigationStep(kind="wait", payload={"seconds": 1.0}),
+                NavigationStep(kind="tap_build_info_button", payload={}),
                 NavigationStep(kind="wait", payload={"seconds": 1.5}),
             ),
         ),
@@ -236,6 +287,23 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--settle-seconds", type=float, default=4.0)
     parser.add_argument("--min-screenshot-bytes", type=int, default=50_000)
     parser.add_argument("--allow-simctl-screenshot-fallback", action="store_true")
+    parser.add_argument(
+        "--seed-fresh-day",
+        action="store_true",
+        help=(
+            "Relaunch with --owlory-ui-seed-fresh-day so capture starts from "
+            "the deterministic empty Today dashboard fixture."
+        ),
+    )
+    parser.add_argument(
+        "--allow-screenshot-only-ax-fallback",
+        action="store_true",
+        help=(
+            "When idb can tap and capture screenshots but describe-all returns "
+            "only the application node, use iPhone 17 portrait coordinate "
+            "navigation and record settled assertions as screenshot-only proof."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -337,6 +405,7 @@ def build_plan(
             "udid": args.udid,
             "bundle_id": args.bundle_id,
             "output_dir": args.output_dir,
+            "seed_fresh_day": args.seed_fresh_day,
         },
         "locales": list(args.locales),
         "surfaces": [s.id for s in surfaces],
@@ -434,18 +503,23 @@ def capture_all(
 
 def launch_locale(args: argparse.Namespace, locale: str, runner) -> CommandResult:
     runner(idb_command(args.udid, ["terminate", args.bundle_id]))
+    launch_arguments = [
+        "launch",
+        "--foreground-if-running",
+        args.bundle_id,
+        "--owlory-ui-testing",
+    ]
+    if args.seed_fresh_day:
+        launch_arguments.append("--owlory-ui-seed-fresh-day")
+    launch_arguments.extend([
+        "-AppleLanguages",
+        f"({locale})",
+        "-AppleLocale",
+        locale,
+    ])
     return runner(idb_command(
         args.udid,
-        [
-            "launch",
-            "--foreground-if-running",
-            args.bundle_id,
-            "--owlory-ui-testing",
-            "-AppleLanguages",
-            f"({locale})",
-            "-AppleLocale",
-            locale,
-        ],
+        launch_arguments,
     ))
 
 
@@ -462,9 +536,9 @@ def capture_one_surface(
     staged_path = staging_dir / filename
 
     describe = describe_ui(args.udid, runner)
-    if describe["status"] != "passed":
+    if describe["status"] != "passed" and not args.allow_screenshot_only_ax_fallback:
         return _blocked(locale, surface, "describe-ui-failed", details=describe.get("result"))
-    elements = describe["elements"]
+    elements = describe.get("elements", [])
 
     if contains_label(elements, *KNOWN_NOTIFICATION_PROMPT_LABELS):
         dismiss = dismiss_known_prompt(args.udid, elements, runner)
@@ -477,31 +551,35 @@ def capture_one_surface(
         elements = describe["elements"]
 
     for step in surface.navigation:
-        step_result = run_navigation_step(args.udid, step, elements, runner)
+        step_result = run_navigation_step(args.udid, locale, step, elements, runner)
         if step_result["status"] != "passed":
             return _blocked(locale, surface, "navigation-step-failed", details=step_result)
-        if step.kind in {"tap_label", "tap_identifier"}:
+        if step.kind in {"tap_label", "tap_identifier", "tap_tab", "tap_build_info_button"}:
             time.sleep(min(args.settle_seconds, 2.0))
             describe = describe_ui(args.udid, runner)
-            if describe["status"] != "passed":
+            if describe["status"] != "passed" and not args.allow_screenshot_only_ax_fallback:
                 return _blocked(locale, surface, "describe-after-step-failed", details=describe.get("result"))
-            elements = describe["elements"]
+            elements = describe.get("elements", [])
 
     assertion_labels = list(surface.settled_assertion_labels)
     assertion_labels.extend(label_overrides.get(surface.id, []))
+    assertion_mode = "accessibility-tree"
     if assertion_labels and not contains_label(elements, *assertion_labels):
-        return _blocked(
-            locale,
-            surface,
-            "settled-assertion-failed",
-            details={
-                "expected_any_of": assertion_labels,
-                "hint": (
-                    "Provide additional locale-specific labels via --label-overrides "
-                    "or add an accessibility identifier to the surface."
-                ),
-            },
-        )
+        if args.allow_screenshot_only_ax_fallback and accessibility_tree_is_application_only(elements):
+            assertion_mode = "screenshot-only-ax-fallback"
+        else:
+            return _blocked(
+                locale,
+                surface,
+                "settled-assertion-failed",
+                details={
+                    "expected_any_of": assertion_labels,
+                    "hint": (
+                        "Provide additional locale-specific labels via --label-overrides "
+                        "or add an accessibility identifier to the surface."
+                    ),
+                },
+            )
 
     with tempfile.TemporaryDirectory() as inner:
         inner_path = Path(inner) / filename
@@ -531,12 +609,14 @@ def capture_one_surface(
         "bytes": staged_path.stat().st_size,
         "sha256": sha256(staged_path),
         "navigation_steps_executed": len(surface.navigation),
+        "settled_assertion_mode": assertion_mode,
         "_staged_path": str(staged_path),
     }
 
 
 def run_navigation_step(
     udid: str,
+    locale: str,
     step: NavigationStep,
     elements: list[dict[str, Any]],
     runner,
@@ -565,7 +645,36 @@ def run_navigation_step(
         if result.returncode != 0:
             return {"status": "blocked", "kind": "tap_identifier", "result": command_summary(result)}
         return {"status": "passed", "kind": "tap_identifier", "identifier": identifier, "tap": {"x": x, "y": y}}
+    if step.kind == "tap_tab":
+        tab = str(step.payload.get("tab", ""))
+        direction = "rtl" if locale in RTL_LOCALES else "ltr"
+        point = IPHONE_17_PORTRAIT_TAB_POINTS[direction].get(tab)
+        if point is None:
+            return {"status": "blocked", "kind": "tap_tab", "tab": tab, "reason": "unknown-tab"}
+        x, y = point
+        result = runner(idb_command(udid, ["ui", "tap", str(x), str(y)]))
+        if result.returncode != 0:
+            return {"status": "blocked", "kind": "tap_tab", "result": command_summary(result)}
+        return {"status": "passed", "kind": "tap_tab", "tab": tab, "tap": {"x": x, "y": y}, "locale_direction": direction}
+    if step.kind == "tap_build_info_button":
+        x = 38 if locale in RTL_LOCALES else 367
+        y = 84
+        result = runner(idb_command(udid, ["ui", "tap", str(x), str(y)]))
+        if result.returncode != 0:
+            return {"status": "blocked", "kind": "tap_build_info_button", "result": command_summary(result)}
+        return {"status": "passed", "kind": "tap_build_info_button", "tap": {"x": x, "y": y}}
     return {"status": "blocked", "kind": step.kind, "reason": "unknown-step-kind"}
+
+
+def accessibility_tree_is_application_only(elements: list[dict[str, Any]]) -> bool:
+    if not elements:
+        return True
+    if len(elements) != 1:
+        return False
+    element = elements[0]
+    role = element.get("role") or element.get("type")
+    frame = element.get("frame")
+    return role in {"AXApplication", "Application"} and isinstance(frame, dict)
 
 
 def find_button_by_identifier(

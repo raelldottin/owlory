@@ -40,7 +40,7 @@ struct BuildInfoView: View {
                     }
                     if !info.isReleaseable {
                         Label(
-                            "Not releaseable — built from a dirty or unknown commit",
+                            L("Not releaseable — built from a dirty or unknown commit"),
                             systemImage: "exclamationmark.triangle.fill"
                         )
                         .font(.caption)
@@ -66,7 +66,7 @@ struct BuildInfoView: View {
                         copyDiagnosticReport()
                     } label: {
                         Label(
-                            didCopy ? "Copied" : "Copy for bug report",
+                            L(didCopy ? "Copied" : "Copy for bug report"),
                             systemImage: didCopy ? "checkmark.circle.fill" : "doc.on.doc"
                         )
                     }
@@ -89,8 +89,9 @@ struct BuildInfoView: View {
 
     @ViewBuilder
     private func labeled(_ label: String, _ value: String) -> some View {
+        let localizedLabel = String(localized: String.LocalizationValue(label))
         HStack(alignment: .firstTextBaseline) {
-            Text(label)
+            Text(L(label))
                 .foregroundStyle(.secondary)
             Spacer()
             Text(value)
@@ -99,7 +100,7 @@ struct BuildInfoView: View {
                 .textSelection(.enabled)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(label): \(value)")
+        .accessibilityLabel("\(localizedLabel): \(value)")
     }
 
     private func copyDiagnosticReport() {
