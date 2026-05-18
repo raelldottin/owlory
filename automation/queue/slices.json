@@ -4515,7 +4515,7 @@
     {
       "slice_id": "app-localization-hig-multisurface-screenshot-harness",
       "title": "Expand localized HIG screenshot proof beyond launch surface",
-      "status": "queued",
+      "status": "done",
       "priority": 88,
       "domain": "localization",
       "allowed_paths": [

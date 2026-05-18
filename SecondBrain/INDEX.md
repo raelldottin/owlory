@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-hig-multisurface-screenshot-harness (build-tested; new automation/smoke/capture_localized_surfaces.py with 8-surface catalog, 4 modes, 14 new tests; Makefile target + proof dir + docs wired; no --capture run landed)](sessions/2026-05-18/045832-app-localization-hig-multisurface-screenshot-harness.md)
 - [app-localization-hig-evidence-matrix (doc-only; all-locale HIG evidence matrix + finding taxonomy under automation/proofs/app-localization-hig-ui-matrix/; HIG-DE-001 in-progress, 17 non-German locales blocked-on-native-review, 0 locales claimed hig-ui-reviewed)](sessions/2026-05-18/045000-app-localization-hig-evidence-matrix.md)
 - [app-localization-hig-ui-completion-slicing (doc-only; all-locale Apple HIG completion ladder queued; 17 non-German native-review blockers preserved)](sessions/2026-05-18/003534-app-localization-hig-ui-completion-slicing.md)
 - [start-next-slice-clean-stop (no eligible queued slice available after evening reflection routing; no product changes)](sessions/2026-05-18/002759-start-next-slice-clean-stop.md)

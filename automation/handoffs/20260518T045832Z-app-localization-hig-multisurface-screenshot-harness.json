@@ -1,0 +1,71 @@
+{
+  "slice_id": "app-localization-hig-multisurface-screenshot-harness",
+  "title": "Expand localized HIG screenshot proof beyond launch surface",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T04:58:32Z",
+  "proof_level": "build-tested",
+  "summary": "Added automation/smoke/capture_localized_surfaces.py — an idb-first multisurface harness with a default catalog of 8 scoped HIG surfaces (today, root tabs ×4, build-info, empty-state-today, date-count-plural-today). Modes: --check-dependencies, --list-surfaces, --dry-run, --capture. Captures write deterministic NN-locale-<locale>-surface-<surface_id>.png files plus a manifest.json with locale, surface_id, file, bytes, sha256, navigation_steps_executed, git_commit_short, target.udid, and non_claims. Settled-state assertions support locale-specific overrides via --label-overrides; captures whose assertion fails are recorded as blocked, not silently treated as proof. 14 new unit tests cover catalog, args, plan, navigation, and guards. New Makefile target localization-multisurface-screenshot-idb-check mirrors the existing idb dependency check. Proof directory is reserved with a README documenting expected contents and non-claims; no real --capture run has landed.",
+  "files_changed": [
+    "automation/smoke/capture_localized_surfaces.py",
+    "automation/tests/test_capture_localized_surfaces.py",
+    "automation/proofs/app-localization-hig-multisurface-screenshot-harness/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "Makefile",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T045832Z-app-localization-hig-multisurface-screenshot-harness.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/045832-app-localization-hig-multisurface-screenshot-harness.md"
+  ],
+  "harness_summary": {
+    "surfaces_in_default_catalog": 8,
+    "modes": ["--check-dependencies", "--list-surfaces", "--dry-run", "--capture"],
+    "shared_helpers_imported_from_capture_locale_screenshots": [
+      "build_dependency_report",
+      "command_summary",
+      "contains_label",
+      "describe_ui",
+      "dismiss_known_prompt",
+      "find_button",
+      "idb_command",
+      "run_command",
+      "sha256",
+      "KNOWN_NOTIFICATION_PROMPT_LABELS"
+    ],
+    "new_navigation_step_kinds": ["wait", "tap_label", "tap_identifier"]
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-hig-multisurface-screenshot-harness": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales / 377 keys / 13 plural keys)",
+    "make automation-check": "passed (71 tests / 14 new)",
+    "make localization-screenshot-idb-check": "ran (idb + idb_companion ready)",
+    "make localization-multisurface-screenshot-idb-check": "ran (idb + idb_companion ready)",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any locale is hig-ui-reviewed",
+    "screenshot-reviewed for any new (locale, surface) pair (no --capture run has landed)",
+    "device-verified for any locale",
+    "testflight-verified for any locale",
+    "full localized navigation works for every surface across all 19 locales"
+  ],
+  "residual_risk": [
+    "Settled-state assertions in the default catalog use English-plus-a-few-locales fallback labels. Locales without a matching label will block on settled-assertion-failed unless --label-overrides is supplied. This is intentional honesty, not a defect.",
+    "Empty-state-today and date-count-plural-today surfaces currently rely on natural fixture state; capturing reliable proof requires a --owlory-ui-testing launch argument or fixture seeding that is not yet implemented at the app level.",
+    "Build-info navigation taps localized 'Settings' / 'Build Info' labels; for locales where Settings is heavily translated the tap will fail until per-locale label overrides are recorded.",
+    "No actual screenshot bundle exists yet in the proof directory; downstream per-bucket HIG gate slices must run --capture and append proof_references to the all-locale HIG evidence matrix."
+  ],
+  "downstream_slices": [
+    "app-localization-hig-dynamic-type-accessibility-harness",
+    "app-localization-hig-gate-source-english",
+    "app-localization-hig-gate-bucket-rtl",
+    "app-localization-hig-gate-bucket-cjk",
+    "app-localization-hig-gate-bucket-long-script",
+    "app-localization-hig-gate-bucket-remaining-ltr",
+    "app-localization-hig-remediation-triage",
+    "app-localization-all-locale-hig-ui-closure"
+  ]
+}

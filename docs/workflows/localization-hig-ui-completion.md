@@ -41,6 +41,24 @@ German is the only native-reviewed non-English locale as of 2026-05-18. All othe
 
 The all-locale HIG evidence matrix and canonical finding taxonomy live under [`automation/proofs/app-localization-hig-ui-matrix/`](../../automation/proofs/app-localization-hig-ui-matrix/). Per-locale `gate_state`, `scoped_surface_status`, `proof_references`, and `open_findings` are tracked there. New HIG findings allocate the next free `HIG-<LOCALE_UPPER>-<NNN>` ID and append to that matrix.
 
+## Multisurface Screenshot Harness
+
+Use `automation/smoke/capture_localized_surfaces.py` to capture scoped HIG surfaces beyond the single Today launch surface that `capture_locale_screenshots.py` already covers.
+
+```bash
+make localization-multisurface-screenshot-idb-check
+python3 automation/smoke/capture_localized_surfaces.py --list-surfaces
+python3 automation/smoke/capture_localized_surfaces.py \
+    --dry-run --locales en de --surfaces today build-info
+python3 automation/smoke/capture_localized_surfaces.py \
+    --capture --udid <simulator-udid> \
+    --locales en de --surfaces today build-info
+```
+
+Capture output lands under [`automation/proofs/app-localization-hig-multisurface-screenshot-harness/`](../../automation/proofs/app-localization-hig-multisurface-screenshot-harness/) with a per-capture `manifest.json` (locale, surface, file, bytes, sha256, navigation step count, git commit short, idb target). The directory must be empty before `--capture`. Captures whose settled-state assertion fails are recorded as `blocked`, not silently treated as proof. Add locale-specific settled labels via `--label-overrides` when an English fallback label does not match the localized accessibility label.
+
+The harness does not claim translation quality, full layout correctness, device behavior, TestFlight behavior, or `hig-ui-reviewed` for any locale. Per-bucket HIG gate slices consume these proofs and update the evidence matrix.
+
 ## Slice Ladder
 
 The queue encodes the path to completion:

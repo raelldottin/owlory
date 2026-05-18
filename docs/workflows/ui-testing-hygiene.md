@@ -13,6 +13,7 @@ See [UI Regression Plan](ui-regression-plan.md) for the canonical definition of 
 - Batch 7 localization layout has been selected and queued as a representative locale launch-shell regression, but it is not implemented yet. It should prove shell stability under locale launch arguments, not translation quality.
 - Owlory has a narrow TestFlight proof packet for the natural-data Today Continue launch surface plus one Home protocol run route at `automation/proofs/owlory-ui-testflight-proof/20260513T205620Z-provenance-intake/`.
 - Owlory has an idb-first dependency check and capture helper for full-locale screenshot proof: `make localization-screenshot-idb-check` and `python3 automation/smoke/capture_locale_screenshots.py`.
+- Owlory has an idb-first multisurface screenshot harness for scoped HIG surfaces (Build Info, Today, each root tab, primary empty states, date/count/plural): `make localization-multisurface-screenshot-idb-check` and `python3 automation/smoke/capture_localized_surfaces.py`. Output lands under `automation/proofs/app-localization-hig-multisurface-screenshot-harness/` with a per-capture manifest.
 
 Do not treat the current Today, Write, Train, Home protocol, or queued localization-layout regression batches as broad app-wide UI regression coverage.
 
@@ -193,6 +194,17 @@ The helper uses idb for the pieces where `simctl` is too blunt:
 - require an empty proof directory so stale and fresh screenshots are never mixed
 
 `xcodebuild` and `simctl` remain the build/install/running-app smoke foundation. idb is the UI interaction/capture helper for screenshot proof, not a replacement for the existing smoke lane.
+
+For scoped HIG surfaces beyond the Today launch screenshot, use the multisurface harness:
+
+```bash
+make localization-multisurface-screenshot-idb-check
+python3 automation/smoke/capture_localized_surfaces.py --list-surfaces
+python3 automation/smoke/capture_localized_surfaces.py --capture --udid <udid> \
+    --locales en de --surfaces today build-info
+```
+
+The multisurface harness shares the idb dependency check, system-prompt dismissal, and empty-output-directory guard with the launch-surface helper. It adds a configurable surface catalog (`today`, `root-tab-train`, `root-tab-write`, `root-tab-career`, `root-tab-home`, `build-info`, `empty-state-today`, `date-count-plural-today`) and writes a per-capture `manifest.json` with `locale`, `surface_id`, `file`, `bytes`, `sha256`, `navigation_steps_executed`, `git_commit_short`, and explicit non-claims.
 
 ## Maintained Smoke Screenshot Pack
 
