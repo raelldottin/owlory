@@ -1,0 +1,53 @@
+{
+  "proof_id": "app-localization-german-hig-ui-gate",
+  "slice_id": "app-localization-german-hig-ui-gate-intake",
+  "created_at": "2026-05-18T02:29:24Z",
+  "locale": "de",
+  "source": "Chat-observed screenshots provided by Karoline on 2026-05-18 plus local source trace.",
+  "artifact_persisted": false,
+  "gate_result": "fail",
+  "proof_level": "doc-only",
+  "hig_ui_reviewed_claimed": false,
+  "blocking_findings": [
+    {
+      "id": "HIG-DE-001",
+      "severity": "blocking",
+      "area": "labels/actions",
+      "summary": "German Today UI shows English evening reflection nudge copy.",
+      "observed_strings": [
+        "Evening reflection",
+        "Close the day with one quick reflection."
+      ],
+      "source_trace": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift: eveningReflectionNudge(...) returns English title/message strings.",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift displays reflectionNudge.title and reflectionNudge.message as runtime String values."
+      ],
+      "recommended_next_slice": "app-localization-evening-reflection-nudge-routing"
+    }
+  ],
+  "hig_areas": {
+    "platform_consistency": "unknown",
+    "adaptive_layout": "unknown",
+    "typography_dynamic_type": "not-reviewed",
+    "accessibility": "not-reviewed",
+    "labels_actions": "fail",
+    "locale_aware_formatting": "partial",
+    "right_to_left": "not-applicable"
+  },
+  "missing_evidence_for_pass": [
+    "committed Build Info screenshot artifact with complete gate fields",
+    "Today screenshot after evening reflection nudge localization fix",
+    "root tab screenshots",
+    "primary empty state and primary action screenshots",
+    "high-risk date/count/plural screenshots",
+    "standard and Larger Accessibility Text evidence",
+    "accessibility label/hint/value review"
+  ],
+  "not_claimed": [
+    "hig-ui-reviewed",
+    "screenshot-reviewed",
+    "device-verified",
+    "testflight-verified",
+    "full German UI readiness"
+  ]
+}

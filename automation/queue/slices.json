@@ -4384,6 +4384,68 @@
       "max_files_changed": 7,
       "entry_condition": "Project owner requires every localized UI to adhere to Apple Human Interface Guidelines.",
       "notes": "Completed on 2026-05-18. Added an Apple HIG localized UI gate to the localization quality workflow and reviewer intake template, covering platform consistency, adaptive layout, Dynamic Type/accessibility, labels, locale-aware formatting, and RTL behavior. Localized UI readiness claims now require this gate for scoped surfaces."
+    },
+    {
+      "slice_id": "app-localization-german-hig-ui-gate-intake",
+      "title": "Start German Apple HIG localized UI gate",
+      "status": "done",
+      "priority": 87,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-german-hig-ui-gate/",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-german-hig-ui-gate-intake",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-ui-review-gate"
+      ],
+      "max_files_changed": 7,
+      "entry_condition": "German is the only native-reviewed locale and Karoline provided German Today + Build Info screenshots in chat.",
+      "notes": "Completed on 2026-05-18. Started the German localized UI HIG gate from existing chat-observed evidence. Gate result: fail. Blocking finding HIG-DE-001: Karoline's TestFlight Build Info screenshot shows English Today reflection nudge copy in German UI (`Evening reflection`, `Close the day with one quick reflection.`). Do not claim German hig-ui-reviewed until the reflection nudge is localized and scoped UI evidence is preserved."
+    },
+    {
+      "slice_id": "app-localization-evening-reflection-nudge-routing",
+      "title": "Route Today evening reflection nudge through localization",
+      "status": "queued",
+      "priority": 88,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-evening-reflection-nudge-routing",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make test-domain DOMAIN=today",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-german-hig-ui-gate-intake"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "German HIG localized UI gate found English evening reflection nudge copy in the German Today surface.",
+      "notes": "Fix HIG-DE-001. TodayStore.eveningReflectionNudge currently returns English title/message strings; TodayView displays them verbatim. Refactor to return semantic nudge kind and let TodayView format with localized keys, reusing existing notification.prompt.eveningReflection/homeWrappedReflection strings if appropriate. Update tests to assert semantic data instead of English copy."
     }
   ]
 }

@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [app-localization-german-hig-ui-gate-intake (doc-only; German HIG gate started and failed on visible English evening-reflection nudge copy; fix slice queued)](sessions/2026-05-18/022906-app-localization-german-hig-ui-gate-intake.md)
 - [app-localization-hig-ui-review-gate (doc-only; every localized UI readiness claim now requires an Apple HIG gate)](sessions/2026-05-18/022159-app-localization-hig-ui-review-gate.md)
 - [app-localization-native-review-formal-workflow (doc-only; formal native-review intake protocol + template; Karoline Build Info recorded as build-info-observed, not full TestFlight proof)](sessions/2026-05-18/021206-app-localization-native-review-formal-workflow.md)
 - [app-localization-german-device-screenshot-proof-record (doc-only; Karoline's German iPhone Today screenshot observed in chat, binary not repo-managed, no TestFlight/device-verified claim)](sessions/2026-05-18/012138-app-localization-german-device-screenshot-proof-record.md)
