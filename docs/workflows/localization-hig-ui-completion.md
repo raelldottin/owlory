@@ -77,7 +77,7 @@ The queue encodes the path to completion:
 3. `app-localization-hig-dynamic-type-accessibility-harness` adds maintained checks for Dynamic Type, accessibility labels/values/hints, tab reachability, and touch target regressions.
 4. Per-locale native-review slices unblock non-German final claims.
 5. Bucketed HIG gate slices run the evidence review and queue remediation for failures.
-6. `app-localization-hig-remediation-triage` turns remaining findings into narrow fix slices.
+6. `app-localization-hig-remediation-triage` turns remaining findings into narrow fix slices. **Completed 2026-05-18**: 11 open findings triaged into 3 remediation slices — `app-localization-rtl-sf-symbol-fix`, `app-localization-hig-multisurface-screenshot-capture`, `app-localization-tab-bar-truncation-fix`.
 7. `app-localization-all-locale-hig-ui-closure` remains blocked until every HIG gate and remediation slice has passed.
 
 Do not collapse this ladder into one broad implementation slice. A single all-locale HIG claim is only honest after the native-review, automation, proof, gate, and remediation slices converge.

@@ -1,0 +1,78 @@
+{
+  "slice_id": "app-localization-hig-remediation-triage",
+  "title": "Triage localized HIG findings into focused remediation slices",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T10:22:27Z",
+  "proof_level": "doc-only",
+  "summary": "Triaged 11 open HIG findings (1 in-progress + 10 new from bucket gates) into 3 narrow remediation slices. Updated the all-locale HIG evidence matrix with the full open_findings list and per-finding remediation_slice_id pointers.",
+  "files_changed": [
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T102227Z-app-localization-hig-remediation-triage.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/102227-app-localization-hig-remediation-triage.md"
+  ],
+  "open_findings_triaged": {
+    "in_progress": ["HIG-DE-001"],
+    "new_from_bucket_gates": [
+      "HIG-AR-001 (right-to-left)",
+      "HIG-AR-002 (right-to-left)",
+      "HIG-AR-003 (adaptive-layout, tab truncation)",
+      "HIG-DE-002 (adaptive-layout, tab truncation)",
+      "HIG-FR-001 (adaptive-layout, tab truncation)",
+      "HIG-JA-001 (adaptive-layout, tab truncation)",
+      "HIG-NL-001 (adaptive-layout, tab truncation)",
+      "HIG-RU-001 (adaptive-layout, tab truncation)",
+      "HIG-TR-001 (adaptive-layout, tab truncation)",
+      "HIG-UK-001 (adaptive-layout, tab truncation)"
+    ],
+    "total": 11
+  },
+  "remediation_slices_queued": [
+    {
+      "slice_id": "app-localization-rtl-sf-symbol-fix",
+      "priority": 79,
+      "closes_findings": ["HIG-AR-001", "HIG-AR-002"],
+      "proof_level_target": "build-tested"
+    },
+    {
+      "slice_id": "app-localization-hig-multisurface-screenshot-capture",
+      "priority": 78,
+      "closes_findings_subject_to_confirmation": ["HIG-DE-001 (post-fix rerun)", "HIG-AR-003", "HIG-DE-002", "HIG-FR-001", "HIG-JA-001", "HIG-NL-001", "HIG-RU-001", "HIG-TR-001", "HIG-UK-001"],
+      "proof_level_target": "screenshot-verified"
+    },
+    {
+      "slice_id": "app-localization-tab-bar-truncation-fix",
+      "priority": 77,
+      "closes_findings_subject_to_confirmation": ["HIG-AR-003", "HIG-DE-002", "HIG-FR-001", "HIG-JA-001", "HIG-NL-001", "HIG-RU-001", "HIG-TR-001", "HIG-UK-001"],
+      "proof_level_target": "build-tested + ui-regression-tested"
+    }
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-hig-remediation-triage": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "expected dirty-tree warning pre-commit",
+    "python3 -m json.tool automation/queue/slices.json": "passed",
+    "python3 -m json.tool automation/proofs/app-localization-hig-ui-matrix/manifest.json": "passed",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any HIG finding is closed by this slice",
+    "any locale is hig-ui-reviewed",
+    "any UI source changed in this slice"
+  ],
+  "residual_risk": [
+    "HIG-DE-001 remains in-progress until the post-fix German Today screenshot is preserved.",
+    "All 10 newly-allocated findings remain open. The 3 remediation slices are the queued path to close them, not the closure itself.",
+    "The all-locale HIG closure slice (app-localization-all-locale-hig-ui-closure) remains blocked on the 3 new remediation slices plus the prior tab-bar UI tweak's rerun."
+  ],
+  "downstream_unblocked_slices": [
+    "app-localization-rtl-sf-symbol-fix (pri 79; can run now)"
+  ]
+}

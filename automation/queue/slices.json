@@ -5319,7 +5319,7 @@
     {
       "slice_id": "app-localization-hig-remediation-triage",
       "title": "Triage localized HIG findings into focused remediation slices",
-      "status": "queued",
+      "status": "done",
       "priority": 81,
       "domain": "localization",
       "allowed_paths": [
@@ -5385,6 +5385,110 @@
       "entry_condition": "Every locale has native/fluent review where required, every HIG gate passed, every remediation slice is done, and proof manifests are preserved.",
       "recommended_unblocker": "app-localization-hig-remediation-triage",
       "notes": "Blocked closure slice. This is the only slice allowed to update docs to claim all-locale hig-ui-reviewed, and only after native review, HIG evidence, automation checks, and remediation are complete. Unblock only after the HIG evidence matrix has zero open findings and no queued/blocked remediation slices remain."
+    },
+    {
+      "slice_id": "app-localization-rtl-sf-symbol-fix",
+      "title": "Replace explicit-directional SF Symbols with auto-mirroring variants",
+      "status": "queued",
+      "priority": 79,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "automation/proofs/app-localization-rtl-hig-ui-gate-ar/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-rtl-sf-symbol-fix",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-rtl-fix-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-rtl-hig-ui-gate-ar"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "RTL HIG gate has surfaced explicit-directional SF Symbols that fail to auto-mirror under Arabic.",
+      "notes": "Source fix slice for HIG-AR-001 + HIG-AR-002. Replace 'chevron.right' with 'chevron.forward' in owlory_xcode/Owlory/Features/Today/TodayView.swift:566 and 'arrow.right.circle' with 'arrow.forward.circle' in owlory_xcode/Owlory/Features/Write/WriteView.swift:88 and :181. Per Apple HIG: SF Symbols ending in .right/.left do not auto-mirror; .forward/.backward do. Source fix only; the in-progress state of HIG-AR-001/AR-002 moves toward closed-fixed once captured-evidence rerun lands under app-localization-hig-multisurface-screenshot-capture. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-hig-multisurface-screenshot-capture",
+      "title": "Capture localized HIG multisurface screenshot evidence",
+      "status": "queued",
+      "priority": 78,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/",
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "automation/proofs/app-localization-german-hig-ui-gate/",
+        "automation/proofs/app-localization-rtl-hig-ui-gate-ar/",
+        "automation/proofs/app-localization-long-script-hig-ui-gate/",
+        "automation/proofs/app-localization-cjk-hig-ui-gate/",
+        "automation/proofs/app-localization-remaining-ltr-hig-ui-gate/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-multisurface-screenshot-capture",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make localization-multisurface-screenshot-idb-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-rtl-sf-symbol-fix",
+        "app-localization-hig-multisurface-screenshot-harness"
+      ],
+      "max_files_changed": 60,
+      "entry_condition": "RTL SF Symbol fix has landed, and the multisurface screenshot harness is ready.",
+      "notes": "Proof slice. Run automation/smoke/capture_localized_surfaces.py --capture for all 18 non-English locales across the scoped surfaces (today, root tabs, build-info, date-count-plural-today). Required --label-overrides for today.ar (\u0627\u0644\u064a\u0648\u0645), today.nb (I dag), today.nl (Vandaag), today.ru (\u0421\u0435\u0433\u043e\u0434\u043d\u044f), today.sv (Idag), today.tr (Bug\u00fcn), today.uk (\u0421\u044c\u043e\u0433\u043e\u0434\u043d\u0456), today.vi (H\u00f4m nay). After capture, append findings to per-locale gates and the all-locale HIG evidence matrix; close HIG-DE-001 if German Today reflection-nudge surface no longer shows English copy; confirm or refute HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001. Do not claim translation quality, device, or TestFlight proof. max_files_changed is high to accommodate up to one screenshot file per (locale, surface) pair plus a manifest. proof_level target: screenshot-verified."
+    },
+    {
+      "slice_id": "app-localization-tab-bar-truncation-fix",
+      "title": "Fix tab-bar truncation for long localized tab labels",
+      "status": "queued",
+      "priority": 77,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/",
+        "automation/proofs/app-localization-hig-ui-matrix/",
+        "automation/proofs/app-localization-tab-bar-truncation-fix/",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-tab-bar-truncation-fix",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make ui-regression DOMAIN=localization",
+        "make automation-check",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-tab-truncation-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-multisurface-screenshot-capture"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Screenshot evidence has confirmed at least one of HIG-AR-003 / HIG-DE-002 / HIG-FR-001 / HIG-JA-001 / HIG-NL-001 / HIG-RU-001 / HIG-TR-001 / HIG-UK-001 (tab-label truncation).",
+      "notes": "Source fix slice. Address tab-bar truncation for long localized tab labels by tweaking the TabView/tab-bar layout (likely under Features/ or shared UI) using SwiftUI lineLimit/truncationMode, minimumScaleFactor, or accessibility-aware tab labels. Closes HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001 once a post-fix screenshot rerun preserves evidence for each affected locale. Re-run app-localization-hig-multisurface-screenshot-capture (or a targeted variant) after this fix lands to confirm closure. proof_level target: build-tested + ui-regression-tested. Do not bundle Settings/empty-state/etc. layout in this slice."
     }
   ]
 }
