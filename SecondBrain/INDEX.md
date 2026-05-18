@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [internal-reviewer-signoff-non-german-locales (doc-only/metadata-only; project-owner internal-reviewer signoff recorded in 17 non-German return files; HIG bucket-gate native-review depends_on removed; native_reviewed flags stay false; entries stay needs-layout-check; 4 bucket gates now unblocked)](sessions/2026-05-18/052000-internal-reviewer-signoff-non-german-locales.md)
 - [start-next-slice-clean-stop (no eligible queued slice; 5 HIG bucket-gate/remediation slices queued but all transitively blocked on 17 non-German native-review intake slices)](sessions/2026-05-18/051731-start-next-slice-clean-stop.md)
 - [app-localization-german-hig-ui-regate (doc-only; German HIG gate re-run after HIG-DE-001 source fix landed; HIG-DE-001 moved from blocking_findings to in_progress_findings with source_fix_confirmed=true; gate result still fail because no post-fix screenshot preserved)](sessions/2026-05-18/051232-app-localization-german-hig-ui-regate.md)
 - [app-localization-hig-dynamic-type-accessibility-harness (regression-tested; LocalizationAccessibilityRegression XCUITest class with 4 tests covers Dynamic Type AccessibilityXL en/de shell settle, root tab non-empty accessibility labels, ≥44pt tab touch targets; ui-regression DOMAIN=localization now runs 8 tests)](sessions/2026-05-18/050515-app-localization-hig-dynamic-type-accessibility-harness.md)

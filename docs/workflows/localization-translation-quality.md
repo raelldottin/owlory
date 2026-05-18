@@ -43,6 +43,38 @@ Use these labels in handoffs and review notes:
 | `hig-ui-reviewed` | Scoped localized UI surfaces were reviewed against Apple HIG layout, typography, accessibility, labels, and RTL expectations. | Yes, for scoped UI surfaces only. |
 | `runtime-smoked` | The locale launched in the simulator after translation replacement. | No by itself. |
 | `screenshot-reviewed` | Repo-managed screenshot evidence exists for the translated surface. | No by itself; it proves visual evidence, not language quality. |
+| `internal-reviewer-signoff` | Project owner / internal product reviewer (not a native speaker) accepted current LLM-drafted text as the baseline for downstream HIG gating. | **No.** Explicitly does not claim translation quality, native review, or fluent review. |
+
+## Internal-Reviewer Signoff (Non-Native)
+
+This label records the case where the project owner accepts the current LLM-drafted text *as the baseline for downstream HIG bucket-gate work*, without obtaining a native or fluent reviewer signoff. It is honest about what it is and is not.
+
+What an `internal-reviewer-signoff` does allow:
+
+- Running HIG bucket-gate slices against the current localized resources (visible-label checks, layout regression, Dynamic Type, accessibility presence, RTL mirroring, etc.).
+- Removing the `app-localization-native-review-<locale>` slices from the `depends_on` lists of those HIG gates so the queue can progress on HIG/UI evidence without waiting on a native speaker.
+
+What an `internal-reviewer-signoff` does **not** allow:
+
+- Claiming the locale is `native-reviewed` or `hig-ui-reviewed` for label/action clarity.
+- Flipping `provenance.native_reviewed` to `true` in any per-locale return file.
+- Flipping any per-entry `review_status` to `native-reviewed`.
+- Claiming translation quality, idiom, register, grammar, gender, or formality correctness.
+- Closing the `app-localization-native-review-<locale>` slices. They remain parked with `blocked` status and an entry condition that requires a real native/fluent reviewer.
+
+Recording the signoff:
+
+1. Add a `provenance.internal_reviewer_signoff` block to the per-locale return file at `localization/review/<locale>/<locale>-review-return.json`:
+   - `internal_reviewer_signoff: true`
+   - `internal_reviewer_signoff_basis: "internal-reviewer (not native speaker)"`
+   - `internal_reviewer_signoff_by: "<role or identifier>"`
+   - `internal_reviewer_signoff_at: "<YYYY-MM-DD>"`
+   - `internal_reviewer_signoff_scope: "<exactly what this permits, with explicit non-claims>"`
+   - `internal_reviewer_signoff_does_not_change: ["provenance.native_reviewed remains false", ...]`
+2. Update the HIG bucket-gate slices' `depends_on` to drop `app-localization-native-review-<locale>` references and append a note that internal-reviewer signoff is the baseline.
+3. Leave the per-locale `app-localization-native-review-<locale>` slice `blocked` with its entry condition unchanged; append a note pointing at the internal-reviewer signoff record.
+
+A future native or fluent reviewer can still complete the original native-review slice and flip `provenance.native_reviewed` to `true`. Internal-reviewer signoff is additive, not a substitute.
 
 ## Native Language Review Protocol
 

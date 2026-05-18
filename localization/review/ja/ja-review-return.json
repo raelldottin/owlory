@@ -18,7 +18,18 @@
     "review_date": "2026-05-15",
     "method": "LLM batch translation by claude-opus-4-7",
     "native_reviewed": false,
-    "warning": "These values are LLM-drafted and have not been accepted by a native or fluent Japanese / 日本語 reviewer. Do not claim translation quality without further native review."
+    "warning": "These values are LLM-drafted and have not been accepted by a native or fluent Japanese / 日本語 reviewer. Do not claim translation quality without further native review.",
+    "internal_reviewer_signoff": true,
+    "internal_reviewer_signoff_basis": "internal-reviewer (not native speaker)",
+    "internal_reviewer_signoff_by": "project owner (raell.dottin@gmail.com)",
+    "internal_reviewer_signoff_at": "2026-05-18",
+    "internal_reviewer_signoff_scope": "Permits HIG bucket-gate slices to run against the current LLM-drafted text. Does NOT claim native review, fluent review, translation quality, on-device language correctness, or screenshot/device/TestFlight proof.",
+    "internal_reviewer_signoff_does_not_change": [
+      "provenance.native_reviewed remains false",
+      "per-entry review_status remains needs-layout-check / keep-english-term / needs-translation as set by claude-opus-4-7",
+      "per-entry reviewer field remains claude-opus-4-7 (LLM, not native <language> reviewer)",
+      "STATUS.md native-reviewed locale count"
+    ]
   },
   "summary": {
     "review_entry_count": 419,

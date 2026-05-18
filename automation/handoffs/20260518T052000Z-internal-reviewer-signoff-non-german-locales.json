@@ -1,0 +1,63 @@
+{
+  "slice_id": "internal-reviewer-signoff-non-german-locales",
+  "kind": "ad-hoc-cross-cutting-governance-change",
+  "title": "Record internal-reviewer signoff for 17 non-German locales; unblock HIG bucket gates",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T05:20:00Z",
+  "proof_level": "doc-only",
+  "trigger": "User said 'all localization native review is complete'. After flagging that this alone does not meet the formal native-review protocol, user chose option 2: internal-reviewer signoff (no native speakers).",
+  "summary": "Added provenance.internal_reviewer_signoff to 17 non-German return files. Kept provenance.native_reviewed=false and per-entry review_status unchanged. Removed app-localization-native-review-<locale> entries from the 4 HIG bucket-gate slices' depends_on. Added an internal-reviewer-signoff Status Label and a dedicated section to localization-translation-quality.md. Updated HIG evidence matrix per-locale state for the 17 locales (gate_state blocked-on-native-review -> unblocked-pending-screenshot-evidence). Refreshed STATUS.md (no change to native-reviewed count). 17 native-review slices remain blocked, parked with notes pointing at the signoff record.",
+  "files_changed": [
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json",
+    "localization/review/STATUS.md",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/052000-internal-reviewer-signoff-non-german-locales.md",
+    "automation/handoffs/20260518T052000Z-internal-reviewer-signoff-non-german-locales.json"
+  ],
+  "validation": {
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "python3 Tools/localization-review-status.py --write-doc": "refreshed (7478 passed / 64 warning / 0 reverted; 1 native-reviewed locale)",
+    "make automation-check": "passed (71 tests)",
+    "python3 -m json.tool on slices/manifest/return-files": "all valid",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any non-German locale is native-reviewed",
+    "translation quality for any non-German locale",
+    "any locale is hig-ui-reviewed",
+    "screenshot-reviewed / device-verified / testflight-verified for any locale",
+    "the original native-review slices are done (they remain blocked)"
+  ],
+  "residual_risk": [
+    "The 17 locales remain LLM-drafted and NOT native-reviewed. provenance.native_reviewed is still the load-bearing field; external audits should read that, not the new internal_reviewer_signoff flag.",
+    "HIG bucket-gate slices that now run against LLM-drafted text may surface labels-actions findings a native reviewer would have caught earlier.",
+    "Original native-review slices remain blocked and can be unparked at any time by supplying real native or fluent reviewer signoff."
+  ],
+  "downstream_unblocked_slices": [
+    "app-localization-rtl-hig-ui-gate-ar (pri 85)",
+    "app-localization-cjk-hig-ui-gate (pri 84)",
+    "app-localization-long-script-hig-ui-gate (pri 83)",
+    "app-localization-remaining-ltr-hig-ui-gate (pri 82)"
+  ]
+}

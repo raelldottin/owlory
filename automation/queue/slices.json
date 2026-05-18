@@ -4613,7 +4613,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Arabic native/fluent reviewer plus RTL layout reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Arabic currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Arabic currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-nl",
@@ -4647,7 +4647,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Dutch native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Dutch currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Dutch currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-fr",
@@ -4681,7 +4681,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "French native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. French currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. French currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-it",
@@ -4715,7 +4715,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Italian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Italian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Italian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-ja",
@@ -4749,7 +4749,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Japanese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Japanese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Japanese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-ko",
@@ -4783,7 +4783,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Korean native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Korean currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Korean currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-nb",
@@ -4817,7 +4817,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Norwegian Bokmal native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Norwegian Bokmal currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Norwegian Bokmal currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-pt",
@@ -4851,7 +4851,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "European Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-pt-br",
@@ -4885,7 +4885,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Brazilian Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Brazilian Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Brazilian Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-ru",
@@ -4919,7 +4919,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Russian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Russian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Russian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-es",
@@ -4953,7 +4953,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Spanish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Spanish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Spanish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-sv",
@@ -4987,7 +4987,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Swedish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Swedish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Swedish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-zh-hans",
@@ -5021,7 +5021,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Simplified Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Simplified Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Simplified Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-zh-hant",
@@ -5055,7 +5055,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Traditional Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Traditional Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Traditional Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-tr",
@@ -5089,7 +5089,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Turkish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Turkish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Turkish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-uk",
@@ -5123,7 +5123,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Ukrainian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Ukrainian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Ukrainian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-native-review-vi",
@@ -5157,7 +5157,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Vietnamese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Vietnamese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes."
+      "notes": "Blocked human-input slice. Vietnamese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
     },
     {
       "slice_id": "app-localization-german-hig-ui-regate",
@@ -5216,12 +5216,11 @@
         "git diff --check"
       ],
       "depends_on": [
-        "app-localization-hig-dynamic-type-accessibility-harness",
-        "app-localization-native-review-ar"
+        "app-localization-hig-dynamic-type-accessibility-harness"
       ],
       "max_files_changed": 8,
       "entry_condition": "Arabic native review and the HIG automation harnesses are complete.",
-      "notes": "Proof/review slice. Run Arabic HIG gate with RTL-specific checks: mirrored layout, alignment, navigation affordances, ordered controls, directional icons, date/count formatting, accessibility reading order, and screenshot evidence. Queue focused fix slices for failures."
+      "notes": "Proof/review slice. Run Arabic HIG gate with RTL-specific checks: mirrored layout, alignment, navigation affordances, ordered controls, directional icons, date/count formatting, accessibility reading order, and screenshot evidence. Queue focused fix slices for failures. On 2026-05-18 the project owner recorded internal-reviewer signoff per non-German locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). This gate runs against the current LLM-drafted text under that signoff and does NOT claim native review, fluent review, or translation quality. Native-review depends_on entries removed accordingly."
     },
     {
       "slice_id": "app-localization-cjk-hig-ui-gate",
@@ -5248,15 +5247,11 @@
         "git diff --check"
       ],
       "depends_on": [
-        "app-localization-hig-dynamic-type-accessibility-harness",
-        "app-localization-native-review-ja",
-        "app-localization-native-review-ko",
-        "app-localization-native-review-zh-hans",
-        "app-localization-native-review-zh-hant"
+        "app-localization-hig-dynamic-type-accessibility-harness"
       ],
       "max_files_changed": 8,
       "entry_condition": "Japanese, Korean, Simplified Chinese, and Traditional Chinese native reviews plus HIG automation harnesses are complete.",
-      "notes": "Proof/review slice. Run CJK HIG gate for ja, ko, zh-Hans, and zh-Hant with focus on typography, compact labels, line wrapping, truncation, tab recognizability, dates/counts, accessibility labels, and screenshot evidence. Queue focused fix slices for failures."
+      "notes": "Proof/review slice. Run CJK HIG gate for ja, ko, zh-Hans, and zh-Hant with focus on typography, compact labels, line wrapping, truncation, tab recognizability, dates/counts, accessibility labels, and screenshot evidence. Queue focused fix slices for failures. On 2026-05-18 the project owner recorded internal-reviewer signoff per non-German locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). This gate runs against the current LLM-drafted text under that signoff and does NOT claim native review, fluent review, or translation quality. Native-review depends_on entries removed accordingly."
     },
     {
       "slice_id": "app-localization-long-script-hig-ui-gate",
@@ -5284,16 +5279,11 @@
       ],
       "depends_on": [
         "app-localization-hig-dynamic-type-accessibility-harness",
-        "app-localization-german-hig-ui-regate",
-        "app-localization-native-review-nl",
-        "app-localization-native-review-ru",
-        "app-localization-native-review-sv",
-        "app-localization-native-review-tr",
-        "app-localization-native-review-uk"
+        "app-localization-german-hig-ui-regate"
       ],
       "max_files_changed": 8,
       "entry_condition": "Long-script and inflection-heavy locales have native reviews plus HIG automation harnesses are complete.",
-      "notes": "Proof/review slice. Run HIG gate for de, nl, ru, sv, tr, and uk with focus on long labels, compound words, grammatical case, button/tab truncation, date/count grammar, Dynamic Type, and screenshot evidence. Queue focused fix slices for failures."
+      "notes": "Proof/review slice. Run HIG gate for de, nl, ru, sv, tr, and uk with focus on long labels, compound words, grammatical case, button/tab truncation, date/count grammar, Dynamic Type, and screenshot evidence. Queue focused fix slices for failures. On 2026-05-18 the project owner recorded internal-reviewer signoff per non-German locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). This gate runs against the current LLM-drafted text under that signoff and does NOT claim native review, fluent review, or translation quality. Native-review depends_on entries removed accordingly."
     },
     {
       "slice_id": "app-localization-remaining-ltr-hig-ui-gate",
@@ -5320,18 +5310,11 @@
         "git diff --check"
       ],
       "depends_on": [
-        "app-localization-hig-dynamic-type-accessibility-harness",
-        "app-localization-native-review-fr",
-        "app-localization-native-review-it",
-        "app-localization-native-review-nb",
-        "app-localization-native-review-pt",
-        "app-localization-native-review-pt-br",
-        "app-localization-native-review-es",
-        "app-localization-native-review-vi"
+        "app-localization-hig-dynamic-type-accessibility-harness"
       ],
       "max_files_changed": 8,
       "entry_condition": "Remaining LTR locales have native reviews plus HIG automation harnesses are complete.",
-      "notes": "Proof/review slice. Run HIG gate for fr, it, nb, pt, pt-BR, es, and vi with focus on action label clarity, button length, date/count/plural formatting, Dynamic Type, accessibility labels, and screenshot evidence. Queue focused fix slices for failures."
+      "notes": "Proof/review slice. Run HIG gate for fr, it, nb, pt, pt-BR, es, and vi with focus on action label clarity, button length, date/count/plural formatting, Dynamic Type, accessibility labels, and screenshot evidence. Queue focused fix slices for failures. On 2026-05-18 the project owner recorded internal-reviewer signoff per non-German locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). This gate runs against the current LLM-drafted text under that signoff and does NOT claim native review, fluent review, or translation quality. Native-review depends_on entries removed accordingly."
     },
     {
       "slice_id": "app-localization-hig-remediation-triage",
