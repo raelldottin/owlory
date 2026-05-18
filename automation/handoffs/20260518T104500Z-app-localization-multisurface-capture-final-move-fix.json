@@ -1,0 +1,31 @@
+{
+  "slice_id": "app-localization-multisurface-capture-final-move-fix",
+  "title": "Fix capture_localized_surfaces final-move + manifest write ordering",
+  "status": "done",
+  "domain": "automation",
+  "completed_at": "2026-05-18T10:45:00Z",
+  "proof_level": "build-tested + automation-check",
+  "kind": "backfilled-record (work shipped 2026-05-18T10:41:43Z as part of app-localization-hig-multisurface-screenshot-capture commit 028a511; this slice surfaces the scope deviation as a named slice for trail clarity after the user asked for it).",
+  "summary": "automation/smoke/capture_localized_surfaces.py.capture_all placed the final shutil.move from the temp staging dir into output_dir plus the README+manifest writes AFTER the `with tempfile.TemporaryDirectory()` block exited. Python's tempdir teardown deleted the staged screenshots before they could be moved, so --capture failed with FileNotFoundError. Fix: indent the final-move + write_readme + write_manifest block inside the `with` block so the staging dir is still alive during the move.",
+  "files_changed": [
+    "automation/smoke/capture_localized_surfaces.py (block indentation only; lines 423-431 moved inside the with tempfile.TemporaryDirectory() block at line 372)",
+    "automation/queue/slices.json (this slice record)",
+    "automation/handoffs/20260518T104500Z-app-localization-multisurface-capture-final-move-fix.json"
+  ],
+  "shipped_in_commit": "028a511 Capture today-surface HIG screenshots × 18 non-English locales",
+  "validation": {
+    "make architecture": "passed (verified as part of 028a511)",
+    "make automation-check": "passed (71 tests, 14 harness tests still green after the fix)",
+    "harness self-test (actual --capture run)": "18/18 captures landed in the proof directory after the fix",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any new product feature",
+    "any change to harness public API or contract",
+    "any change to harness behavior beyond making --capture actually persist files"
+  ],
+  "residual_risk": [
+    "The fix relies on the existing harness test set (which mocks runner with a callable that never produces real files). The bug was not caught by the unit tests because they verify orchestration shape, not end-to-end file persistence. Future work could add an integration test that uses a faked runner to write minimal PNG bytes and verify files land in the output dir; that's out of scope for this backfill record."
+  ],
+  "context": "User asked to surface the scope deviation noted in the screenshot-capture slice handoff as its own queue entry. The fix itself was already shipped; this slice + handoff exist for audit/trail clarity, not to redo the work."
+}

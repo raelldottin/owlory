@@ -5489,6 +5489,32 @@
       "max_files_changed": 12,
       "entry_condition": "Screenshot evidence has confirmed at least one of HIG-AR-003 / HIG-DE-002 / HIG-FR-001 / HIG-JA-001 / HIG-NL-001 / HIG-RU-001 / HIG-TR-001 / HIG-UK-001 (tab-label truncation).",
       "notes": "Source fix slice. Address tab-bar truncation for long localized tab labels by tweaking the TabView/tab-bar layout (likely under Features/ or shared UI) using SwiftUI lineLimit/truncationMode, minimumScaleFactor, or accessibility-aware tab labels. Closes HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001 once a post-fix screenshot rerun preserves evidence for each affected locale. Re-run app-localization-hig-multisurface-screenshot-capture (or a targeted variant) after this fix lands to confirm closure. proof_level target: build-tested + ui-regression-tested. Do not bundle Settings/empty-state/etc. layout in this slice."
+    },
+    {
+      "slice_id": "app-localization-multisurface-capture-final-move-fix",
+      "title": "Fix capture_localized_surfaces final-move + manifest write ordering",
+      "status": "done",
+      "priority": 100,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/smoke/capture_localized_surfaces.py",
+        "automation/tests/test_capture_localized_surfaces.py",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-hig-multisurface-screenshot-harness"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "capture_localized_surfaces.py needs --capture to actually persist screenshots into the output directory.",
+      "notes": "Bug-fix slice. The original automation/smoke/capture_localized_surfaces.py implementation placed the final `shutil.move` from the temp staging dir into output_dir plus the README+manifest writes AFTER the `with tempfile.TemporaryDirectory()` block exited, so the staged screenshots had already been deleted by Python's tempdir teardown. Fix indented the final-move + write_readme + write_manifest block inside the `with` block so the staging dir is still alive during the move. 14 unit tests in automation/tests/test_capture_localized_surfaces.py still pass. Shipped retroactively as part of commit 028a511 (app-localization-hig-multisurface-screenshot-capture) and recorded here as a separate slice for trail clarity after the user asked to surface the scope deviation as a slice. Status: done. Handoff: automation/handoffs/20260518T104500Z-app-localization-multisurface-capture-final-move-fix.json."
     }
   ]
 }
