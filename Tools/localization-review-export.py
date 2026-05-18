@@ -16,7 +16,7 @@ import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any
+from typing import Any, NoReturn
 
 
 APPROVED_LOCALES = [
@@ -54,7 +54,7 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
-def fail(message: str) -> None:
+def fail(message: str) -> NoReturn:
     print("localization-review-export: failed", file=sys.stderr)
     print(f"- {message}", file=sys.stderr)
     print(

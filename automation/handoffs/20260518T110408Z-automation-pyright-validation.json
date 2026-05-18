@@ -1,0 +1,59 @@
+{
+  "slice_id": "automation-pyright-validation",
+  "title": "Incorporate Pyright into Python validation",
+  "status": "done",
+  "domain": "automation",
+  "completed_at": "2026-05-18T11:04:08Z",
+  "proof_level": "build-tested",
+  "summary": "Wired Pyright into Python validation as a separate make pyright gate covering automation/ and Tools/. Configured for typeCheckingMode='basic' with reportPossiblyUnboundVariable / reportUndefinedVariable / reportMissingImports at error severity; reportArgumentType / reportOptionalSubscript / reportAssignmentType at warning. Fixed one production code issue: Tools/localization-review-export.py.fail typed as -> NoReturn so Pyright knows it never returns, eliminating two reportPossiblyUnboundVariable errors. Baseline: 0 errors / 23 warnings. Queued a follow-up slice (automation-pyright-tighten-severities) to clean up the warnings and re-tighten the three downgraded severities back to error.",
+  "files_changed": [
+    "pyrightconfig.json (new)",
+    "Makefile (new pyright target + .PHONY)",
+    "Tools/localization-review-export.py (typing.NoReturn import + fail return type)",
+    "docs/workflows/validation.md (pyright bullet under Common Commands)",
+    "automation/queue/slices.json (mark this slice done + add automation-pyright-tighten-severities)",
+    "automation/handoffs/20260518T110408Z-automation-pyright-validation.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-18/110408-automation-pyright-validation.md (new)"
+  ],
+  "pyright_config": {
+    "version_used": "1.1.409 (Homebrew)",
+    "include": ["automation", "Tools"],
+    "exclude": ["**/__pycache__", "**/.git", "**/node_modules"],
+    "pythonVersion": "3.12",
+    "typeCheckingMode": "basic",
+    "severity_at_error": ["reportPossiblyUnboundVariable", "reportUndefinedVariable", "reportMissingImports"],
+    "severity_at_warning": ["reportArgumentType", "reportOptionalSubscript", "reportAssignmentType"],
+    "baseline": "0 errors / 23 warnings"
+  },
+  "baseline_warnings_by_file": {
+    "automation/tests/test_harness.py": 13,
+    "automation/tests/test_running_app_smoke.py": 5,
+    "automation/tests/test_capture_localized_surfaces.py": 2,
+    "automation/tests/test_capture_locale_screenshots.py": 1,
+    "automation/smoke/running_app_smoke.py": 1,
+    "automation/smoke/capture_locale_screenshots.py": 1
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id automation-pyright-validation": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "python3 -m json.tool automation/queue/slices.json": "passed",
+    "make architecture": "passed",
+    "make automation-check": "passed (71 tests)",
+    "make pyright": "0 errors / 23 warnings / exit 0",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "all Python code is type-correct (23 warnings remain)",
+    "make pyright is folded into make automation-check (it stays a separate gate)",
+    "no Python type bugs exist (warnings cover real type-correctness concerns; downgraded for an honest baseline)"
+  ],
+  "residual_risk": [
+    "23 baseline warnings, mostly test-time None defaults typed as non-Optional. Real but mostly benign; queued under automation-pyright-tighten-severities for cleanup.",
+    "pyrightconfig.json downgrades three severities. The cleanup follow-up should flip them back to error. Until then, this class of bug only surfaces as a warning.",
+    "make pyright is not part of make automation-check or make verify by default. CI / agents must invoke it explicitly. This is intentional per the slice notes."
+  ],
+  "downstream_unblocked_slices": [
+    "automation-pyright-tighten-severities (pri 70; queued)"
+  ]
+}

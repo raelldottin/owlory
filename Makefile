@@ -1,4 +1,4 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check automation-check
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check automation-check pyright
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -17,6 +17,16 @@ clean-stop:
 
 automation-check:
 	python3 -m unittest discover -s automation/tests -p 'test_*.py'
+
+pyright:
+	@if ! command -v pyright >/dev/null 2>&1; then \
+		echo "pyright not found. Install with one of:"; \
+		echo "  brew install pyright"; \
+		echo "  python3 -m pip install --user pyright"; \
+		echo "  npm install -g pyright"; \
+		exit 1; \
+	fi
+	pyright
 
 drift-report:
 	./Tools/drift-report.sh
