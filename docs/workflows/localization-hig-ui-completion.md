@@ -29,7 +29,7 @@ Use buckets to keep UI review slices bounded by risk:
 | Bucket | Locales | Primary HIG Risk |
 | --- | --- | --- |
 | Source | `en` | Source UI baseline and comparison state |
-| German reviewed | `de` | Long compounds, already native-reviewed, needs rerun after HIG-DE-001 fix |
+| German reviewed | `de` | Long compounds, already native-reviewed, HIG-DE-001 source fix landed and in-progress, needs post-fix screenshot capture |
 | RTL | `ar` | Mirroring, text alignment, directional controls, Arabic typography |
 | CJK | `ja`, `ko`, `zh-Hans`, `zh-Hant` | Dense labels, line breaking, CJK typography, terminology |
 | Long-script / inflection-heavy | `nl`, `ru`, `sv`, `tr`, `uk` | Long words, grammatical case, truncation |

@@ -5162,7 +5162,7 @@
     {
       "slice_id": "app-localization-german-hig-ui-regate",
       "title": "Rerun German localized UI HIG gate after reflection fix",
-      "status": "queued",
+      "status": "done",
       "priority": 86,
       "domain": "localization",
       "allowed_paths": [

@@ -1,0 +1,58 @@
+{
+  "slice_id": "app-localization-german-hig-ui-regate",
+  "title": "Rerun German localized UI HIG gate after reflection fix",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T05:12:32Z",
+  "proof_level": "doc-only",
+  "summary": "Re-ran the German HIG localized UI gate after app-localization-evening-reflection-nudge-routing (commit 1cd9f5e) landed the HIG-DE-001 source fix. Verified post-fix source state: EveningReflectionNudge is now semantic-kind only; TodayView formats via existing notification.prompt.eveningReflection.* / homeWrappedReflection.* localized keys; German .strings values are present. HIG-DE-001 moved from blocking_findings to in_progress_findings with source_fix_confirmed=true. Gate result remains 'fail' because no post-fix screenshot is preserved and the scoped UI evidence set is still incomplete. No device/TestFlight claim made.",
+  "files_changed": [
+    "automation/proofs/app-localization-german-hig-ui-gate/manifest.json",
+    "automation/proofs/app-localization-german-hig-ui-gate/README.md",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/localization-translation-quality.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T051232Z-app-localization-german-hig-ui-regate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/051232-app-localization-german-hig-ui-regate.md"
+  ],
+  "gate_outcome": {
+    "result": "fail",
+    "hig_ui_reviewed_claimed": false,
+    "open_findings": ["HIG-DE-001 (in-progress, source-fix-confirmed)"],
+    "closed_findings": [],
+    "missing_evidence_count": 7,
+    "post_fix_source_trace_recorded": true
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-german-hig-ui-regate": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales / 377 keys / 13 plural keys)",
+    "python3 Tools/localization-review-status.py": "ran (7478 passed / 64 warning / 0 reverted)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-german-hig-ui-gate/manifest.json": "passed"
+  },
+  "not_claimed": [
+    "German is hig-ui-reviewed",
+    "screenshot-reviewed for German post-fix surface",
+    "device-verified for German",
+    "testflight-verified for German",
+    "HIG-DE-001 is closed"
+  ],
+  "residual_risk": [
+    "HIG-DE-001 remains open in state in-progress. Closing it requires capturing a post-fix Today screenshot for German and preserving the binary under automation/proofs/.",
+    "Scoped HIG surface evidence (root tabs, primary empty states, primary actions, date/count/plural, Dynamic Type) is still missing for German.",
+    "The all-locale HIG evidence matrix at automation/proofs/app-localization-hig-ui-matrix/manifest.json still shows HIG-DE-001 with the pre-regate state because that matrix is outside this slice's allowed_paths. A separate slice should refresh the matrix to reflect the source-fix-confirmed state."
+  ],
+  "downstream_slices": [
+    "app-localization-hig-gate-source-english",
+    "app-localization-hig-gate-bucket-rtl",
+    "app-localization-hig-gate-bucket-cjk",
+    "app-localization-hig-gate-bucket-long-script",
+    "app-localization-hig-gate-bucket-remaining-ltr",
+    "app-localization-hig-remediation-triage",
+    "app-localization-all-locale-hig-ui-closure"
+  ]
+}

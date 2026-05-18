@@ -1,42 +1,54 @@
 {
   "proof_id": "app-localization-german-hig-ui-gate",
-  "slice_id": "app-localization-german-hig-ui-gate-intake",
+  "slice_id": "app-localization-german-hig-ui-regate",
   "created_at": "2026-05-18T02:29:24Z",
+  "updated_at": "2026-05-18T05:12:32Z",
   "locale": "de",
-  "source": "Chat-observed screenshots provided by Karoline on 2026-05-18 plus local source trace.",
+  "source": "Chat-observed screenshots provided by Karoline on 2026-05-18 plus local source trace and verified post-fix source state on 2026-05-18.",
   "artifact_persisted": false,
   "gate_result": "fail",
   "proof_level": "doc-only",
   "hig_ui_reviewed_claimed": false,
-  "blocking_findings": [
+  "blocking_findings": [],
+  "in_progress_findings": [
     {
       "id": "HIG-DE-001",
       "severity": "blocking",
       "area": "labels/actions",
-      "summary": "German Today UI shows English evening reflection nudge copy.",
-      "observed_strings": [
+      "state": "in-progress",
+      "source_fix_confirmed": true,
+      "source_fix_commit": "1cd9f5e Localize evening reflection nudge",
+      "remediation_slice_id": "app-localization-evening-reflection-nudge-routing",
+      "summary": "German Today UI surfaced English evening reflection nudge copy ('Evening reflection', 'Close the day with one quick reflection.'). Source fix routes TodayStore.EveningReflectionNudge through semantic kind data and TodayView formats via existing localized notification.prompt.eveningReflection.* and notification.prompt.homeWrappedReflection.* keys.",
+      "observed_strings_pre_fix": [
         "Evening reflection",
         "Close the day with one quick reflection."
       ],
-      "source_trace": [
-        "owlory_xcode/Owlory/Core/Application/TodayStore.swift: eveningReflectionNudge(...) returns English title/message strings.",
-        "owlory_xcode/Owlory/Features/Today/TodayView.swift displays reflectionNudge.title and reflectionNudge.message as runtime String values."
+      "post_fix_source_trace": [
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift:551 EveningReflectionNudge struct now has semantic Kind enum (.eveningReflection, .homeWrappedReflection); no English title/message strings emitted from Application.",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:1400 reflectionNudgeTitle(for:) uses String(localized: \"notification.prompt.eveningReflection.title\") / \"notification.prompt.homeWrappedReflection.title\".",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift:1409 reflectionNudgeMessage(for:) uses the matching .body keys.",
+        "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings:231-234 German values exist for all four keys: 'Abendreflexion', 'Schließen Sie den Tag mit einer kurzen Reflexion.', 'Haushalt abgeschlossen', 'Alle Haushaltsaufgaben sind erledigt. Schließen Sie den Tag mit einer kurzen Reflexion.'."
       ],
-      "recommended_next_slice": "app-localization-evening-reflection-nudge-routing"
+      "blocker_for_closure": "No rerun screenshot of the German Today surface has been preserved under automation/proofs/. The chat-observed screenshot was captured before the fix; a post-fix capture is required to move HIG-DE-001 to state closed-fixed.",
+      "created_at": "2026-05-18T02:29:24Z",
+      "source_fix_confirmed_at": "2026-05-18T05:12:32Z",
+      "closed_at": null
     }
   ],
+  "closed_findings": [],
   "hig_areas": {
     "platform_consistency": "unknown",
     "adaptive_layout": "unknown",
     "typography_dynamic_type": "not-reviewed",
     "accessibility": "not-reviewed",
-    "labels_actions": "fail",
+    "labels_actions": "source-fix-confirmed-pending-rerun",
     "locale_aware_formatting": "partial",
     "right_to_left": "not-applicable"
   },
   "missing_evidence_for_pass": [
     "committed Build Info screenshot artifact with complete gate fields",
-    "Today screenshot after evening reflection nudge localization fix",
+    "post-fix Today screenshot for German showing the reflection nudge in localized copy",
     "root tab screenshots",
     "primary empty state and primary action screenshots",
     "high-risk date/count/plural screenshots",
@@ -49,5 +61,21 @@
     "device-verified",
     "testflight-verified",
     "full German UI readiness"
+  ],
+  "regate_history": [
+    {
+      "regate_at": "2026-05-18T05:12:32Z",
+      "by": "app-localization-german-hig-ui-regate",
+      "changes": [
+        "Moved HIG-DE-001 from blocking_findings to in_progress_findings with source_fix_confirmed=true.",
+        "Updated hig_areas.labels_actions from fail to source-fix-confirmed-pending-rerun.",
+        "Added post_fix_source_trace pointing at the localized routing and the German .strings values.",
+        "Preserved overall gate_result=fail because scoped UI evidence has not been captured after the fix."
+      ],
+      "next_required_evidence": [
+        "Post-fix German Today screenshot preserved under automation/proofs/ with manifest.json hashes.",
+        "Additional scoped HIG surface evidence (root tabs, primary empty states, primary actions, date/count/plural, Dynamic Type pass) captured via app-localization-hig-multisurface-screenshot-harness with --capture and --label-overrides for de."
+      ]
+    }
   ]
 }
