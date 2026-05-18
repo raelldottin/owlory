@@ -1,0 +1,59 @@
+{
+  "proof_id": "app-localization-all-locale-native-fluent-review",
+  "recorded_at": "2026-05-18T11:55:51Z",
+  "source_signal": "Project owner reported in Codex prompt: \"native/fluent review is complete for all localization\".",
+  "scope": "All 18 non-English Owlory locales tracked in localization/review/.",
+  "review_basis": "project-owner-reported native/fluent all-locale review pass",
+  "entries_per_locale": 419,
+  "native_reviewed_locales": [
+    "ar",
+    "nl",
+    "fr",
+    "de",
+    "it",
+    "ja",
+    "ko",
+    "nb",
+    "pt",
+    "pt-BR",
+    "ru",
+    "es",
+    "sv",
+    "zh-Hans",
+    "zh-Hant",
+    "tr",
+    "uk",
+    "vi"
+  ],
+  "updated_return_files": [
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/de/german-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json"
+  ],
+  "claims": [
+    "provenance.native_reviewed=true for all 18 non-English locale return files",
+    "419/419 entries in each locale return file have review_status=native-reviewed",
+    "Native/fluent language review blockers for the 17 previously parked per-locale slices are satisfied"
+  ],
+  "not_claimed": [
+    "all scoped localized UI surfaces are hig-ui-reviewed",
+    "full screenshot-reviewed HIG coverage",
+    "device-verified localization proof",
+    "testflight-verified localization proof"
+  ]
+}

@@ -198,7 +198,7 @@
       ],
       "scoped_surface_status": {
         "build-info": "build-info-observed (chat-only, no committed binary)",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -221,12 +221,12 @@
     {
       "locale": "ar",
       "bucket": "rtl",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ar/ar-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -235,11 +235,11 @@
         "rtl-mirroring": "not-reviewed"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/01-locale-ar-surface-today.png",
+        "localization/review/ar/ar-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "RTL mirroring not yet proven on Owlory localized surfaces",
         "no scoped HIG evidence captured"
       ]
@@ -247,12 +247,12 @@
     {
       "locale": "ja",
       "bucket": "cjk",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ja/ja-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -261,23 +261,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/06-locale-ja-surface-today.png",
+        "localization/review/ja/ja-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "ko",
       "bucket": "cjk",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ko/ko-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -286,23 +286,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/07-locale-ko-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/07-locale-ko-surface-today.png",
+        "localization/review/ko/ko-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "zh-Hans",
       "bucket": "cjk",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/zh-Hans/zh-Hans-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -311,23 +311,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/14-locale-zh-Hans-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/14-locale-zh-Hans-surface-today.png",
+        "localization/review/zh-Hans/zh-Hans-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "zh-Hant",
       "bucket": "cjk",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/zh-Hant/zh-Hant-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -336,23 +336,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/15-locale-zh-Hant-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/15-locale-zh-Hant-surface-today.png",
+        "localization/review/zh-Hant/zh-Hant-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "nl",
       "bucket": "long_script_or_inflection_heavy",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/nl/nl-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -361,23 +361,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/02-locale-nl-surface-today.png",
+        "localization/review/nl/nl-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "ru",
       "bucket": "long_script_or_inflection_heavy",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/ru/ru-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -386,23 +386,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/11-locale-ru-surface-today.png",
+        "localization/review/ru/ru-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "sv",
       "bucket": "long_script_or_inflection_heavy",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/sv/sv-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -411,23 +411,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/13-locale-sv-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/13-locale-sv-surface-today.png",
+        "localization/review/sv/sv-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "tr",
       "bucket": "long_script_or_inflection_heavy",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/tr/tr-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -436,23 +436,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/16-locale-tr-surface-today.png",
+        "localization/review/tr/tr-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "uk",
       "bucket": "long_script_or_inflection_heavy",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/uk/uk-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -461,23 +461,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/17-locale-uk-surface-today.png",
+        "localization/review/uk/uk-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "fr",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/fr/fr-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -486,23 +486,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/03-locale-fr-surface-today.png",
+        "localization/review/fr/fr-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "it",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/it/it-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -511,23 +511,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/05-locale-it-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/05-locale-it-surface-today.png",
+        "localization/review/it/it-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "nb",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/nb/nb-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -536,23 +536,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/08-locale-nb-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/08-locale-nb-surface-today.png",
+        "localization/review/nb/nb-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "pt",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/pt/pt-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -561,23 +561,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/09-locale-pt-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/09-locale-pt-surface-today.png",
+        "localization/review/pt/pt-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "pt-BR",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/pt-BR/pt-BR-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -586,23 +586,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/10-locale-pt-BR-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/10-locale-pt-BR-surface-today.png",
+        "localization/review/pt-BR/pt-BR-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "es",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/es/es-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -611,23 +611,23 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/12-locale-es-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/12-locale-es-surface-today.png",
+        "localization/review/es/es-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     },
     {
       "locale": "vi",
       "bucket": "remaining_ltr",
-      "native_review_state": "LLM-drafted by claude-opus-4-7 (internal-reviewer signoff recorded 2026-05-18; native review still pending)",
+      "native_review_state": "native/fluent-reviewed (419 entries via localization/review/vi/vi-review-return.json on 2026-05-18)",
       "gate_state": "unblocked-pending-screenshot-evidence",
       "open_findings": [],
       "scoped_surface_status": {
         "build-info": "not-reviewed",
-        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; LLM-drafted text)",
+        "today-launch": "passed-scoped (iPhone 17 portrait default Dynamic Type; native/fluent-reviewed text)",
         "root-tabs": "not-reviewed",
         "primary-empty-states": "not-reviewed",
         "primary-actions": "not-reviewed",
@@ -636,11 +636,11 @@
         "rtl-mirroring": "not-applicable"
       },
       "proof_references": [
-        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/18-locale-vi-surface-today.png"
+        "automation/proofs/app-localization-hig-multisurface-screenshot-harness/20260518T103428Z-today-capture/18-locale-vi-surface-today.png",
+        "localization/review/vi/vi-review-return.json"
       ],
       "hig_ui_reviewed_claim": false,
       "blockers": [
-        "internal-reviewer signoff recorded 2026-05-18; native or fluent reviewer signoff still required for any translation-quality or label/action-clarity claim",
         "no scoped HIG evidence captured"
       ]
     }
@@ -874,11 +874,11 @@
   },
   "not_claimed": [
     "any locale is hig-ui-reviewed",
-    "any locale beyond German is native-reviewed",
     "screenshot-reviewed for non-German locales",
     "device-verified for any locale",
     "testflight-verified for any locale",
-    "RTL mirroring for ar has been proven on Owlory surfaces"
+    "RTL mirroring for ar has been proven on Owlory surfaces",
+    "all scoped localized UI surfaces are hig-ui-reviewed"
   ],
   "downstream_slices": {
     "broadens_screenshot_capture": "app-localization-hig-multisurface-screenshot-harness",
@@ -898,7 +898,7 @@
       "app-localization-tab-bar-truncation-fix (pri 77; conditional on capture confirming truncation; addresses 8 adaptive-layout findings together)"
     ]
   },
-  "updated_at": "2026-05-18T11:00:00Z",
+  "updated_at": "2026-05-18T11:44:43Z",
   "notes": [
     {
       "at": "2026-05-18T05:20:00Z",
@@ -919,6 +919,10 @@
     {
       "at": "2026-05-18T11:00:00Z",
       "summary": "app-localization-tab-bar-truncation-fix reframed to maintained-coverage scope (entry condition was not met: literal truncation does not occur at iPhone 17 default Dynamic Type). Added 7 new tests to LocalizationAccessibilityRegression covering fr/ja/nl/ru/tr/uk/ar at UICTContentSizeCategoryAccessibilityXL (de + en already covered). All 11 accessibility tests passed; 15-test localization regression suite green in 91.8s. Closed 8 tab-truncation findings via maintained coverage. No UI tweak applied."
+    },
+    {
+      "at": "2026-05-18T11:44:43Z",
+      "summary": "Project owner reported native/fluent review complete for all localization. The 17 remaining non-German review return files were promoted to provenance.native_reviewed=true with 419/419 native-reviewed entries each. Native review blockers are removed from per-locale HIG matrix state, but HIG UI readiness remains unclaimed pending scoped evidence and closure."
     }
   ],
   "in_progress_findings": [

@@ -1181,7 +1181,7 @@
       ],
       "depends_on": [],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing \u2014 Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
+      "notes": "Triage-only slice: do NOT implement UI behavior or change digest rendering. Decide whether Last Week Insights should remain a truthful count-first summary or gain explicit user actions, and define the smallest actionability model that does not overstate the digest signal. Read today.md weekly digest contract; inspect WeeklyDigestRules and WeeklyDigestCadenceRules along with the patterns-weekly-digest-versioned-stale-refresh and today-weekly-digest-truthful-summary-copy slices; classify three actionability options (1: per-item/domain routing — Focus summary opens Today/history surface, protocol steps opens Home protocol history, Write-related summary opens Write when the signal is actually Write-owned; 2: digest-level next-week actions; 3: pattern-driven prompts); decide which option is contract-aligned now under existing Today/Patterns/Home/Write ownership; recommend bias is option 1 first because option 3 risks implying the app knows more than the digest actually proves. If implementation is warranted, queue a separate implementation slice with narrow allowed paths and explicit proof level. Preserve proof_level=doc-only unless domain tests change. Out of scope: any code change to digest rendering, any new prompt rule in Patterns, any change to Today Continue admission, ML-generated suggestion content."
     },
     {
       "slice_id": "train-row-status-pill-uniformity",
@@ -1313,7 +1313,7 @@
         "write-promotion-device-verification"
       ],
       "max_files_changed": 8,
-      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level \u2014 do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
+      "notes": "Triage-only slice: do not implement any code change. Decide whether Home-owned Standalone Tasks promoted from Write notes (created via Turn into Task) should appear in Today's Continue projection, and under what ownership/routing rules. Read the Today, Write, and Home contracts; inspect TodayContinueSourceComposer/TodayContinuationRules and the existing Continue projection rules; check whether Home tasks are intentionally Home-only or have a missing Today carry-forward path. If intentional, document the reason in docs/product/domains/today.md (or home.md/write.md as appropriate) and close the concern. If a real gap, queue a separate implementation slice with explicit allowed paths, validations, and proof level — do not implement here. proof_level should land at doc-only (decision documented) or domain-tested (existing rule clarified with focused tests run); device-verified is reserved for any follow-up implementation slice. Surfaced by write-promotion-device-verification on commit c35a1d666e76: a Standalone Task created via Turn into Task did not appear in Today's Continue."
     },
     {
       "slice_id": "tools-generate-build-info-worktree-fix",
@@ -2162,7 +2162,7 @@
         "owlory-ui-test-continue-routing-smoke-batch"
       ],
       "max_files_changed": 10,
-      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action \u2014 decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem \u2014 confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
+      "notes": "Close the routing/action gaps the routing matrix triage deferred: (1) .focusItem behavior beyond the Done action — decide whether Defer and Drop swipe actions or focus-to-linked-source tap routing warrant XCUITest coverage now; (2) .carriedFocusItem — confirm whether tapping a carried row routes by origin/linkedRecordID, stays Today-owned, or is action-only, and either add a deterministic XCUITest or explicitly classify it as not-applicable for routing with a documented reason. Update the today.md Continue UI Routing Coverage matrix so every source row reads either `covered` or `N/A by contract` with a one-line reason. No new product behavior; no carry-forward aging reset; no screenshot/device/TestFlight claim. Reuse existing seed fixtures where possible; add new launch arguments only if a behavior truly requires distinct deterministic setup. proof_level should land at running-app-smoke if new tests ship, doc-only if the outcome is a classification update."
     },
     {
       "slice_id": "owlory-ui-test-screenshot-proof-pack",
@@ -2357,7 +2357,7 @@
         "owlory-ui-test-testflight-proof"
       ],
       "max_files_changed": 10,
-      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified \u2014 that re-attempt is a separate slice that depends_on this audit landing."
+      "notes": "Provenance-gate-failure-driven audit. owlory-ui-test-testflight-proof halted at the Build Info gate because the installed TestFlight build (commit a2229f97ae250c2bd48971cf5fa409fd21e37912, build 20260417081911) did not match committed source (commit's pbxproj CURRENT_PROJECT_VERSION = 20260417081904). The slice's captured screenshot does not show GitStatus directly. First action of this audit: have the operator scroll the on-device Build Info sheet of the same TestFlight install and confirm GitStatus. Then identify the source of the build-number drift: (a) archive-time pbxproj mutation that was never committed, (b) post-archive build-number rewrite by App Store Connect or release automation, or (c) stamp script reading a mutated pbxproj while reporting clean. Depending on diagnosis, fix the stamp script (Tools/generate-build-info.sh and/or BuildInfo.swift), the archive workflow (docs/workflows/release.md), or both, so that any future TestFlight build whose Build Info reports a clean GitStatus also has a build number matching committed source. Add a release-runbook step that verifies the gate before TestFlight upload using Tools/verify-build-provenance.sh --require-clean against the archived commit and build number. Preserve audit findings under automation/proofs/owlory-release-provenance-stamp-audit/ with a README explaining what was confirmed, what changed, and how to reproduce the verification. proof_level should land at doc-only if the audit is documentation-only, domain-tested if BuildInfo or the script change ships with focused tests. Out of scope: extending UI testing scope, adding TestFlight fixture modes, or re-attempting testflight-verified — that re-attempt is a separate slice that depends_on this audit landing."
     },
     {
       "slice_id": "owlory-release-provenance-stamp-gate-fix",
@@ -3152,7 +3152,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Static-literal extraction is complete, prior dynamic-formatting slices established the WeeklyDigestPresentationFormatting helper, and the user agreed to refactor WeeklyDigestRules from String composition to semantic enums + structured highlight data while keeping its decision-making role intact.",
-      "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility \u2014 old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
+      "notes": "Completed on 2026-05-14. Refactored WeeklyDigestRules to emit semantic data: generateInsight stores a WeeklyDigest.InsightKind rawValue in keyInsight; bestDayHighlight sets DayHighlight.doneCount and .plannedCount; hardestDayHighlight sets .readinessBand. Extended WeeklyDigest.DayHighlight with optional doneCount/plannedCount/readinessBand fields (default-init, custom Codable with decodeIfPresent for backwards compatibility — old digests on disk continue to read their pre-composed English summary and fall through in the presentation helper). Added WeeklyDigest.InsightKind enum (8 cases) and WeeklyDigest.ReadinessBand enum (low / moderate). Removed the now-unused weekdayName helper from WeeklyDigestRules. Added 11 keys to all 19 locale Localizable.strings (307 keys total, up from 296; 13 plural keys unchanged): weeklyDigest.highlight.bestDay.summary (%@: %d of %d completed), weeklyDigest.highlight.hardestDay.summary.{low,moderate} (%@: low/moderate readiness), and 8 weeklyDigest.insight.* keys (one per InsightKind case). Added WeeklyDigestPresentationFormatting.{bestDayHighlightSummary, hardestDayHighlightSummary, keyInsightLabel} plus a private weekdayName helper in DigestListView.swift. Updated the three DigestDetailView call sites to delegate. Updated WeeklyDigestRulesTests assertions on bestDay.summary contains and keyInsight contains to use structured fields and rawValue equality; the calendar-handling test now asserts DayHighlight.date preservation plus that the two calendars assign different weekday components to the boundary date. Domain rules retain their decision-making role. Validations: make architecture, make localization-check (19 locales, 307 keys, 13 plural keys), make test-domain DOMAIN=patterns (TEST SUCCEEDED), make automation-check (57 tests), xcodebuild build (BUILD SUCCEEDED), git diff --check. proof_level achieved: domain-tested + build-tested."
     },
     {
       "slice_id": "app-localization-accessibility-interpolation-audit",
@@ -3184,7 +3184,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "All prior named dynamic-formatting buckets (recurrence, readiness, digest insight) are localized; only remaining model-backed accessibility interpolations are unaudited.",
-      "notes": "Completed on 2026-05-14. Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites across the Owlory app target (test target excluded). 12 sites already localized (literal keys matched in en.lproj/Localizable.strings, or routed through existing helpers writeRowAccessibilityHint / continueAccessibilityHint / readinessScaleAccessibilityLabel / trainingStatusAccessibilityLabel). 10 real gaps clustered into four groups: A (Home action labels \u2014 Edit/Skip task, Mark/Restore via leadingButtonAccessibilityLabel, Complete/Skip protocol step), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row accessibility \u2014 same shape as today.readiness.scale.accessibility), D (BuildInfoView label:value pattern, low priority). 1 system-generated site (TrainView.swift:499 .accessibilityValue('\\(value)') \u2014 Apple expects bare numeric). Group A queued as app-localization-home-action-accessibility-formatting. Groups B/C/D documented in localization-string-inventory.md but not queued. Doc-only slice; no Swift source touched. proof_level achieved: doc-only."
+      "notes": "Completed on 2026-05-14. Audited 25 .accessibilityLabel/.accessibilityValue/.accessibilityHint call sites across the Owlory app target (test target excluded). 12 sites already localized (literal keys matched in en.lproj/Localizable.strings, or routed through existing helpers writeRowAccessibilityHint / continueAccessibilityHint / readinessScaleAccessibilityLabel / trainingStatusAccessibilityLabel). 10 real gaps clustered into four groups: A (Home action labels — Edit/Skip task, Mark/Restore via leadingButtonAccessibilityLabel, Complete/Skip protocol step), B (VoiceCaptureButton + AudioPlaybackButton state phrases), C (Train readiness scale row accessibility — same shape as today.readiness.scale.accessibility), D (BuildInfoView label:value pattern, low priority). 1 system-generated site (TrainView.swift:499 .accessibilityValue('\\(value)') — Apple expects bare numeric). Group A queued as app-localization-home-action-accessibility-formatting. Groups B/C/D documented in localization-string-inventory.md but not queued. Doc-only slice; no Swift source touched. proof_level achieved: doc-only."
     },
     {
       "slice_id": "app-localization-home-action-accessibility-formatting",
@@ -3358,7 +3358,7 @@
       ],
       "max_files_changed": 20,
       "entry_condition": "Batch 5 sub-behavior triage selected Home protocol run step progression. The Batch 4 Home archive/restore regression class HomeProtocolRegression already exists in OwloryUITests; this slice extends Lane 2 with a separate test class for run-step interactions, not by adding methods to HomeProtocolRegression.",
-      "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) \u2014 not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
+      "notes": "Completed on 2026-05-15. Added OwloryUITests/HomeProtocolRunStepRegression with one test (testSeededProtocolRunStepCompleteTransitionsOutOfPending): seeds an active Home protocol run via the existing --owlory-ui-seed-home-protocol-run-continue-item, opens the active run sheet through the Today Continue row, taps the per-step Complete action, and asserts the Complete button disappears (proving the step transitioned out of pending) while the step title remains visible. Reused the existing single-step seed; did not add a multi-step seed arg. Added accessibility identifiers home.protocolRun.step.<uuid> (with .accessibilityElement(children: .contain) so the inner Complete button stays addressable) and home.protocolRun.step.action.complete.<uuid> to HomeView's ProtocolRunSheet. Did not add identifiers for skip, revert, archive, or schedule. Extended make ui-regression: bare invocation now runs five classes (Today/Write/Train/HomeProtocol/HomeProtocolRunStep); DOMAIN=home runs both Home classes. The new class is separate from HomeProtocolRegression (Batch 4) — not added as a method on the existing class. make ui-regression DOMAIN=home passed in 31.8s (2 tests). Domain unit tests pass. proof_level achieved: running-app-smoke."
     },
     {
       "slice_id": "owlory-ui-regression-batch-6-surface-triage",
@@ -3388,7 +3388,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "User explicitly selected Patterns UI from the parked candidate list as the next surface to triage. Lane 2 Batches 1-5 are shipped. Patterns UI is a broad surface; the triage must narrow to exactly one sub-behavior.",
-      "notes": "Completed on 2026-05-15. Compared Patterns UI sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection digest summary card, DigestListView \u2192 detail routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred: lastWeekSection (mostly numeric, low contract-change pressure), DigestListView routing (lower leverage), Focus Suggestions (deterministic, no recent contract change), pattern-driven nudges (overlaps existing nudge unit tests). Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render). proof_level achieved: doc-only. No XCUITest code touched."
+      "notes": "Completed on 2026-05-15. Compared Patterns UI sub-behaviors: digest detail insight + highlight sentence rendering, Today lastWeekSection digest summary card, DigestListView → detail routing, Focus Suggestions, pattern-driven nudges. Selected digest detail insight + highlight sentence rendering because the 2026-05-14 digest-insight-summary-formatting refactor (WeeklyDigest.InsightKind + structured DayHighlight + WeeklyDigestPresentationFormatting) is an active Patterns UI contract change with no UI regression proof, and the surface is bounded to one DigestDetailView sheet. Other sub-behaviors deferred: lastWeekSection (mostly numeric, low contract-change pressure), DigestListView routing (lower leverage), Focus Suggestions (deterministic, no recent contract change), pattern-driven nudges (overlaps existing nudge unit tests). Decision memo recorded in docs/workflows/ui-regression-plan.md under '### Batch 6 decision'. Queued implementation slice owlory-ui-regression-batch-6-patterns-digest-insight-rendering with explicit scope (seed a WeeklyDigest with InsightKind.strongWeek + structured bestDay/hardestDay, open DigestDetailView, assert localized insight sentence + best/hardest highlight summaries render). proof_level achieved: doc-only. No XCUITest code touched."
     },
     {
       "slice_id": "owlory-ui-regression-batch-6-patterns-digest-insight-rendering",
@@ -4034,7 +4034,7 @@
       ],
       "max_files_changed": 30,
       "entry_condition": "Localizable.strings now contains 16 keys added after the 2026-05-15 ingest (2 Check-in/Check in keys, 8 audio/voice accessibility keys, 6 interpolation format-string keys including 1 reserved-but-unused), so per-locale review return files at 356 entries are stale relative to the current 372 (358 strings + 14 from the lqa context: 314 + 16 - 0 unused tracking). Dashboard and LQA reports show stale counts.",
-      "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings \u00d7 18 locales) to bring each per-locale review return file from 356 \u2192 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified \u2014 only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales \u00d7 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
+      "notes": "Completed on 2026-05-16. Built Tools/localization-return-files-refresh.py. Ran with --apply: added 288 new entries (16 strings × 18 locales) to bring each per-locale review return file from 356 → 372 entries. Status assignments: needs-layout-check or keep-english-term per the same rules as the 2026-05-15 ingest. No existing entries were modified — only appends. Reviewer of record preserved from each file (claude-opus-4-7 LLM). Refreshed Tools/localization-lqa.py --apply --write-md, Tools/localization-review-status.py --write-doc, Tools/german-review-packet-regenerate.py, Tools/localization-review-export.py. STATUS.md / LQA.md / translation-review-export.{csv,json} / german-review-packet.{csv,json} all up-to-date. localization-parity unchanged at 19/330/13. LQA aggregate: 6642 passed / 54 warning / 0 reverted across all 18 locales × 372 entries. No app resource changes. No provenance.native_reviewed flag flipped. proof_level: doc-only."
     },
     {
       "slice_id": "app-localization-helper-generated-copy-audit",
@@ -4225,7 +4225,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17 via structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift \u2014 a Sendable, Equatable, Codable, CaseIterable enum with 6 cases (focus, dueToday, carriedForward, protocolRun, active, inProgress). Replaced TodayContinueSourceComposer.Step.reason: String with Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate.subtitleKind, TodayContinueItemAssembler (now passes subtitleKind:), and TodayContinuationRules.ContinueItem (subtitleKind: ContinueSubtitleKind replaces reason: String). TodayView gained continueSubtitleLabel(for:) helper that maps each enum case to String(localized:). Added 6 today.continue.subtitle.* keys \u00d7 19 locales (LLM-drafted). Updated 9 test assertions: 4 TodayStoreTests fixtures, 2 TodayContinueSourceComposerTests assertions, 1 TodayContinueItemAssemblerTests assertion, 1 TodayContinuationRulesTests assertion. All tests now assert on the semantic enum, not English strings. project.pbxproj wires A092 (main target) + B097 (test target) referencing A192. localization-parity 19/351/13. proof_level: build-tested + domain-tested."
+      "notes": "Completed on 2026-05-17 via structural refactor (not in-place wrap). Added Core/Application/ContinueSubtitleKind.swift — a Sendable, Equatable, Codable, CaseIterable enum with 6 cases (focus, dueToday, carriedForward, protocolRun, active, inProgress). Replaced TodayContinueSourceComposer.Step.reason: String with Step.subtitleKind: ContinueSubtitleKind. Cascaded through Candidate.subtitleKind, TodayContinueItemAssembler (now passes subtitleKind:), and TodayContinuationRules.ContinueItem (subtitleKind: ContinueSubtitleKind replaces reason: String). TodayView gained continueSubtitleLabel(for:) helper that maps each enum case to String(localized:). Added 6 today.continue.subtitle.* keys × 19 locales (LLM-drafted). Updated 9 test assertions: 4 TodayStoreTests fixtures, 2 TodayContinueSourceComposerTests assertions, 1 TodayContinueItemAssemblerTests assertion, 1 TodayContinuationRulesTests assertion. All tests now assert on the semantic enum, not English strings. project.pbxproj wires A092 (main target) + B097 (test target) referencing A192. localization-parity 19/351/13. proof_level: build-tested + domain-tested."
     },
     {
       "slice_id": "app-localization-today-header-greeting-routing",
@@ -4257,7 +4257,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17. Added 6 new today.header.greeting.* keys across all 19 locales (LLM-drafted): dayComplete, inProgress.compact, inProgress.regular, readyWhenYouAre, todaysPlan, whatsActiveToday. Wrapped each return branch of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) \u2014 the inner Text path is unchanged because the value is now already-localized. In-place wrap; no boundary impact (Features-located). localization-parity 19/345/13. proof_level: build-tested."
+      "notes": "Completed on 2026-05-17. Added 6 new today.header.greeting.* keys across all 19 locales (LLM-drafted): dayComplete, inProgress.compact, inProgress.regular, readyWhenYouAre, todaysPlan, whatsActiveToday. Wrapped each return branch of TodayView.headerGreeting in String(localized:). Both standardDashboardHeader (line 1187) and compactHeightDashboardHeader (line 1241) display Text(headerGreeting) — the inner Text path is unchanged because the value is now already-localized. In-place wrap; no boundary impact (Features-located). localization-parity 19/345/13. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-readiness-anchors-routing",
@@ -4290,7 +4290,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "Helper-generated copy audit catalogs this source.",
-      "notes": "Completed on 2026-05-17. Added 9 new keys (readiness.anchor.low/okay/high, .rough/steady/good, .poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 anchor tuple call sites in TodayView (3 check-in rows + 1 PreviousDay) and TrainView (2 readiness disclosures) to use String(localized:). The TrainingReadinessScaleRow/readinessRow body Text(anchors.X) continues to display the already-localized string verbatim \u2014 no internal view changes needed. localization-parity now 19/339/13. proof_level: build-tested."
+      "notes": "Completed on 2026-05-17. Added 9 new keys (readiness.anchor.low/okay/high, .rough/steady/good, .poor/fine/great) across all 19 locales with LLM-drafted translations. Wired 6 anchor tuple call sites in TodayView (3 check-in rows + 1 PreviousDay) and TrainView (2 readiness disclosures) to use String(localized:). The TrainingReadinessScaleRow/readinessRow body Text(anchors.X) continues to display the already-localized string verbatim — no internal view changes needed. localization-parity now 19/339/13. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-german-device-screenshot-proof-record",
@@ -4584,7 +4584,7 @@
     {
       "slice_id": "app-localization-native-review-ar",
       "title": "Intake native review for Arabic localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4613,12 +4613,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Arabic native/fluent reviewer plus RTL layout reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Arabic currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Arabic currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-nl",
       "title": "Intake native review for Dutch localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4647,12 +4647,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Dutch native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Dutch currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Dutch currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-fr",
       "title": "Intake native review for French localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4681,12 +4681,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "French native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. French currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. French currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-it",
       "title": "Intake native review for Italian localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4715,12 +4715,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Italian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Italian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Italian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-ja",
       "title": "Intake native review for Japanese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4749,12 +4749,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Japanese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Japanese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Japanese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-ko",
       "title": "Intake native review for Korean localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4783,12 +4783,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Korean native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Korean currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Korean currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-nb",
       "title": "Intake native review for Norwegian Bokmal localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4817,12 +4817,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Norwegian Bokmal native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Norwegian Bokmal currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Norwegian Bokmal currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-pt",
       "title": "Intake native review for Portuguese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4851,12 +4851,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "European Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-pt-br",
       "title": "Intake native review for Brazilian Portuguese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4885,12 +4885,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Brazilian Portuguese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Brazilian Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Brazilian Portuguese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-ru",
       "title": "Intake native review for Russian localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4919,12 +4919,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Russian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Russian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Russian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-es",
       "title": "Intake native review for Spanish localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4953,12 +4953,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Spanish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Spanish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Spanish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-sv",
       "title": "Intake native review for Swedish localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -4987,12 +4987,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Swedish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Swedish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Swedish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-zh-hans",
       "title": "Intake native review for Simplified Chinese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -5021,12 +5021,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Simplified Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Simplified Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Simplified Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-zh-hant",
       "title": "Intake native review for Traditional Chinese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -5055,12 +5055,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Traditional Chinese native/fluent reviewer input and typography-sensitive screenshots are required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Traditional Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Traditional Chinese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-tr",
       "title": "Intake native review for Turkish localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -5089,12 +5089,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Turkish native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Turkish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Turkish currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-uk",
       "title": "Intake native review for Ukrainian localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -5123,12 +5123,12 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Ukrainian native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Ukrainian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Ukrainian currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-native-review-vi",
       "title": "Intake native review for Vietnamese localization",
-      "status": "blocked",
+      "status": "done",
       "priority": 79,
       "domain": "localization",
       "allowed_paths": [
@@ -5157,7 +5157,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "Vietnamese native/fluent reviewer input is required before final HIG label/action clarity can be claimed.",
-      "notes": "Blocked human-input slice. Vietnamese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false."
+      "notes": "Blocked human-input slice. Vietnamese currently remains LLM-drafted, not native-reviewed. Intake corrected values only from a native/fluent reviewer or vendor, preserve reviewer basis, refresh resources and return file, and do not claim HIG UI readiness until the matching HIG gate passes. On 2026-05-18 the project owner recorded internal-reviewer signoff (not a native speaker) per locale in localization/review/<locale>/<locale>-review-return.json (provenance.internal_reviewer_signoff). HIG bucket-gate slices no longer depend on this native-review intake; this slice remains parked until a true native or fluent reviewer signoff is supplied. provenance.native_reviewed stays false. Completed 2026-05-18 from project-owner-reported native/fluent all-locale review: the matching localization/review/<locale>/<locale>-review-return.json now has provenance.native_reviewed=true and 419/419 native-reviewed entries. This closes native/fluent review intake only; it does not claim hig-ui-reviewed, device, TestFlight, or full scoped screenshot proof."
     },
     {
       "slice_id": "app-localization-german-hig-ui-regate",
@@ -5455,7 +5455,7 @@
       ],
       "max_files_changed": 60,
       "entry_condition": "RTL SF Symbol fix has landed, and the multisurface screenshot harness is ready.",
-      "notes": "Proof slice. Run automation/smoke/capture_localized_surfaces.py --capture for all 18 non-English locales across the scoped surfaces (today, root tabs, build-info, date-count-plural-today). Required --label-overrides for today.ar (\u0627\u0644\u064a\u0648\u0645), today.nb (I dag), today.nl (Vandaag), today.ru (\u0421\u0435\u0433\u043e\u0434\u043d\u044f), today.sv (Idag), today.tr (Bug\u00fcn), today.uk (\u0421\u044c\u043e\u0433\u043e\u0434\u043d\u0456), today.vi (H\u00f4m nay). After capture, append findings to per-locale gates and the all-locale HIG evidence matrix; close HIG-DE-001 if German Today reflection-nudge surface no longer shows English copy; confirm or refute HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001. Do not claim translation quality, device, or TestFlight proof. max_files_changed is high to accommodate up to one screenshot file per (locale, surface) pair plus a manifest. proof_level target: screenshot-verified."
+      "notes": "Proof slice. Run automation/smoke/capture_localized_surfaces.py --capture for all 18 non-English locales across the scoped surfaces (today, root tabs, build-info, date-count-plural-today). Required --label-overrides for today.ar (اليوم), today.nb (I dag), today.nl (Vandaag), today.ru (Сегодня), today.sv (Idag), today.tr (Bugün), today.uk (Сьогодні), today.vi (Hôm nay). After capture, append findings to per-locale gates and the all-locale HIG evidence matrix; close HIG-DE-001 if German Today reflection-nudge surface no longer shows English copy; confirm or refute HIG-AR-003 + HIG-DE-002 + HIG-FR-001 + HIG-JA-001 + HIG-NL-001 + HIG-RU-001 + HIG-TR-001 + HIG-UK-001. Do not claim translation quality, device, or TestFlight proof. max_files_changed is high to accommodate up to one screenshot file per (locale, surface) pair plus a manifest. proof_level target: screenshot-verified."
     },
     {
       "slice_id": "app-localization-tab-bar-truncation-fix",

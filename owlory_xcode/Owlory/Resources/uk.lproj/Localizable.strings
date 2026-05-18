@@ -1,9 +1,10 @@
 /*
  Localizable.strings
  Owlory
- LLM-drafted values produced by claude-opus-4-7 on 2026-05-15.
- Not native-reviewed. See localization/review/uk/uk-review-return.json
- and docs/workflows/localization-translation-quality.md for provenance.
+ Values originated as LLM drafts on 2026-05-15 and were accepted by
+ project-owner-reported native/fluent Ukrainian / Українська review on 2026-05-18.
+ See localization/review/uk/uk-review-return.json and
+ docs/workflows/localization-translation-quality.md for provenance.
 */
 
 "Today" = "Сьогодні";
