@@ -2,6 +2,7 @@
 
 ## 2026-05-18
 
+- [start-next-slice-clean-stop (no eligible queued slice after Pyright validation chain; clean-stop passed; 18 parked localization review/closure slices retain explicit entry conditions)](sessions/2026-05-18/072930-start-next-slice-clean-stop.md)
 - [automation-pyright-tighten-severities (build-tested; fixed the remaining Pyright warnings; reportArgumentType/reportOptionalSubscript/reportAssignmentType restored to error; make automation-check now runs make pyright; standalone make pyright 0 errors / 0 warnings)](sessions/2026-05-18/072259-automation-pyright-tighten-severities.md)
 - [automation-pyright-validation (build-tested; pyrightconfig.json + make pyright gate; production fix in Tools/localization-review-export.py (NoReturn); baseline 0 errors / 23 warnings; cleanup queued as automation-pyright-tighten-severities)](sessions/2026-05-18/110408-automation-pyright-validation.md)
 - [app-localization-tab-bar-truncation-fix (regression-tested; REFRAMED to maintained-coverage; 7 new AccessibilityXL XCUITest cases for fr/ja/nl/ru/tr/uk/ar; 15-test DOMAIN=localization suite passes in 91.8s; closes 8 tab-truncation findings via closed-maintained-coverage state)](sessions/2026-05-18/105800-app-localization-tab-bar-truncation-fix.md)
