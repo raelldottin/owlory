@@ -4353,6 +4353,37 @@
       "max_files_changed": 9,
       "entry_condition": "Karoline provided TestFlight Build Info version evidence and the project owner requested formal native language review steps instead of ad hoc chat intake.",
       "notes": "Completed on 2026-05-18. Formalized the native-review protocol in docs/workflows/localization-translation-quality.md: baseline commit/build, TestFlight Build Info gate, packet review, device screenshots, structured reviewer signoff, return-file intake, validation, and proof claims. Added localization/review/native-review-intake-template.md. Recorded Karoline's observed TestFlight Build Info values (version 0.2.0, build 20260517151819, commit f6325f3c28e9e9263eebbe76a3bbba777ff6e615) as build-info-observed only, not full TestFlight behavior proof."
+    },
+    {
+      "slice_id": "app-localization-hig-ui-review-gate",
+      "title": "Require Apple HIG UI gate for localized interfaces",
+      "status": "done",
+      "priority": 86,
+      "domain": "localization",
+      "allowed_paths": [
+        "docs/README.md",
+        "docs/workflows/localization-translation-quality.md",
+        "localization/review/native-review-intake-template.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/2026-05-18/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-hig-ui-review-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "python3 Tools/localization-review-status.py",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-native-review-formal-workflow"
+      ],
+      "max_files_changed": 7,
+      "entry_condition": "Project owner requires every localized UI to adhere to Apple Human Interface Guidelines.",
+      "notes": "Completed on 2026-05-18. Added an Apple HIG localized UI gate to the localization quality workflow and reviewer intake template, covering platform consistency, adaptive layout, Dynamic Type/accessibility, labels, locale-aware formatting, and RTL behavior. Localized UI readiness claims now require this gate for scoped surfaces."
     }
   ]
 }

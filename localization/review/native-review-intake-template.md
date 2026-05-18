@@ -62,6 +62,32 @@ List each reviewed surface and attach screenshot paths when available.
 | Karriere / Career |  |  |  |
 | Haushalt / Home |  |  |  |
 
+## Apple HIG Localized UI Gate
+
+Use Apple's current Human Interface Guidelines for the scoped locale and surfaces.
+
+- HIG gate result: pass / fail / needs fix / not reviewed
+- HIG docs checked: overview / layout / typography / accessibility / labels / right-to-left
+- Device sizes reviewed:
+- Orientation or size-class coverage:
+- Standard text size result:
+- Larger Accessibility Text result:
+- VoiceOver/accessibility copy result:
+- Locale-aware date/time/number/plural result:
+- RTL result, if applicable:
+- CJK typography/layout result, if applicable:
+- Issues requiring UI/layout fix:
+
+| HIG area | Result | Evidence | Notes |
+| --- | --- | --- | --- |
+| Platform consistency |  |  |  |
+| Adaptive layout |  |  |  |
+| Typography and Dynamic Type |  |  |  |
+| Accessibility |  |  |  |
+| Labels and actions |  |  |  |
+| Locale-aware formatting |  |  |  |
+| Right-to-left behavior |  |  |  |
+
 ## Corrections
 
 | Key | Decision | Corrected value | Notes |

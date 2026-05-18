@@ -1,0 +1,53 @@
+{
+  "slice_id": "app-localization-hig-ui-review-gate",
+  "status": "done",
+  "summary": "Added a formal Apple HIG localized UI gate to the localization review workflow and native review intake template. Future localized UI readiness claims now require scoped review for platform consistency, adaptive layout, typography and Dynamic Type, accessibility, labels and actions, locale-aware formatting, and right-to-left behavior where applicable.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/022159-app-localization-hig-ui-review-gate.md",
+    "automation/handoffs/20260518T022159Z-app-localization-hig-ui-review-gate.json",
+    "automation/queue/slices.json",
+    "docs/README.md",
+    "docs/workflows/localization-translation-quality.md",
+    "localization/review/native-review-intake-template.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-hig-ui-review-gate",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "python3 Tools/localization-review-status.py",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Localized UI readiness claims",
+      "before": "Native language review protocol required device review and screenshots for sensitive locales, but did not make Apple HIG adherence an explicit gate for localized UI readiness claims.",
+      "after": "Every localized UI readiness claim requires an Apple HIG localized UI gate covering platform consistency, adaptive layout, Dynamic Type, accessibility, labels/actions, locale-aware formatting, and RTL behavior where applicable.",
+      "proof": [
+        "docs/workflows/localization-translation-quality.md",
+        "localization/review/native-review-intake-template.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "This slice defines the review gate but does not run UI screenshots or inspect every existing localized screen.",
+    "German remains native-reviewed for language entries, but full localized UI readiness still requires scoped HIG evidence per surface."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Supervisor dry-run after marking this slice done reported: stop: no eligible queued slice found.",
+  "repo_clean_status": "dirty",
+  "git_mirror_status": "not-checked",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-18T02:21:59Z"
+}

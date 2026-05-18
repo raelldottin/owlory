@@ -13,7 +13,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Validation Workflows](workflows/validation.md) lists invokable checks, including the `make clean-stop` completion gate, and when to use them.
 - [Localization String Inventory](workflows/localization-string-inventory.md) classifies source-string extraction status before translation work.
 - [Localization Dynamic Formatting](workflows/localization-dynamic-formatting.md) defines layer ownership for counts, dates, statuses, notifications, and display-label localization.
-- [Localization Translation Quality](workflows/localization-translation-quality.md) defines placeholder status, completion status, formal native-review intake, locale expectations, and acceptance criteria before replacing English placeholders. Localization infrastructure does not imply translation quality.
+- [Localization Translation Quality](workflows/localization-translation-quality.md) defines placeholder status, completion status, formal native-review intake, Apple HIG localized UI review, locale expectations, and acceptance criteria before replacing English placeholders. Localization infrastructure does not imply translation quality.
 - [Localization Review Export](../localization/review/README.md) is the generated reviewer packet for current English source values, plural entries, and placeholder status labels.
 - [Agent Handoff](workflows/agent-handoff.md) explains the continuity command and expected handoff behavior.
 - [Automation Harness](../automation/README.md) explains the queue-driven supervisor for fresh-run slice chaining.
