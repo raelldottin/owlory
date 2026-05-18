@@ -1,0 +1,49 @@
+{
+  "proof_id": "app-localization-german-device-screenshot-proof",
+  "slice_id": "app-localization-german-device-screenshot-proof-record",
+  "created_at": "2026-05-18T01:20:36Z",
+  "source": "Chat attachment [Image #1] provided by Karoline",
+  "artifact_persisted": false,
+  "reason_no_binary_artifact": "The image was provided through chat without a local workspace file path, so no hashable PNG artifact was committed.",
+  "locale": "de",
+  "surface": "Today dashboard / launch surface",
+  "device_context": {
+    "platform": "iPhone",
+    "observed_status_bar_time": "5:38",
+    "observed_content_date": "Sunday, May 17, 2026",
+    "build_channel": "unknown",
+    "build_identity": "unknown"
+  },
+  "observed_strings": [
+    "Heute",
+    "Sonntag, 17. Mai 2026",
+    "Was ist heute aktiv?",
+    "Stabiler Tag. Vertrauen Sie dem Plan.",
+    "Einchecken",
+    "Zum Einchecken tippen",
+    "Training",
+    "Keine Sitzungen heute",
+    "Sitzung hinzufügen",
+    "Schreiben",
+    "Keine aktiven Notizen",
+    "Eine Notiz erfassen",
+    "Karriere",
+    "Noch keine Einträge",
+    "Erfolg erfassen",
+    "Haushalt"
+  ],
+  "claims_supported": [
+    "German device screenshot observed for the Today dashboard / launch surface.",
+    "Visible strings on that surface rendered in German.",
+    "Evidence is consistent with the German native/human review intake recorded on 2026-05-18."
+  ],
+  "not_claimed": [
+    "testflight-verified",
+    "device-verified",
+    "screenshot-verified",
+    "full German layout correctness",
+    "full German app coverage",
+    "build identity or source provenance"
+  ],
+  "related_commit": "370743bf8510fbb2187369541a5920b3f5dd7682"
+}
