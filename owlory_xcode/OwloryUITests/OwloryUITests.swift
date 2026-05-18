@@ -1192,3 +1192,160 @@ final class LocalizationLayoutRegression: XCTestCase {
         }
     }
 }
+
+/// Maintained representative checks that the Owlory tab shell remains usable
+/// when localized text grows under Dynamic Type/Larger Accessibility Text and
+/// that the root tab bar exposes non-empty accessibility labels and reasonable
+/// touch targets across locales.
+///
+/// These checks are explicit non-claims: they prove launch-shell stability
+/// under accessibility text-size launch arguments and tab-bar reachability
+/// across two representative locales (English source + German native-reviewed).
+/// They do NOT prove translation quality, full HIG layout correctness for
+/// other locales, device behavior, or TestFlight behavior. They do NOT claim
+/// `hig-ui-reviewed` for any locale.
+final class LocalizationAccessibilityRegression: XCTestCase {
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextEnglish() throws {
+        launch(
+            language: "en",
+            locale: "en_US",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testFreshDayShellSettlesUnderLargerAccessibilityTextGerman() throws {
+        launch(
+            language: "de",
+            locale: "de_DE",
+            contentSizeCategory: "UICTContentSizeCategoryAccessibilityXL"
+        )
+        assertShellSettled()
+    }
+
+    func testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish() throws {
+        launch(language: "en", locale: "en_US", contentSizeCategory: nil)
+
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(
+            tabBar.waitForExistence(timeout: 15),
+            "Expected the root tab bar to remain present for accessibility-label inspection."
+        )
+
+        let tabButtons = tabBar.buttons
+        let expectedTabCount = 5
+        XCTAssertEqual(
+            tabButtons.count, expectedTabCount,
+            "Expected exactly \(expectedTabCount) tab-bar buttons for accessibility-label inspection."
+        )
+
+        for index in 0..<expectedTabCount {
+            let tabButton = tabButtons.element(boundBy: index)
+            XCTAssertTrue(
+                tabButton.exists,
+                "Expected tab-bar button at index \(index) to exist."
+            )
+            let label = tabButton.label
+            XCTAssertFalse(
+                label.isEmpty,
+                "Expected tab-bar button at index \(index) to expose a non-empty accessibility label; missing labels block VoiceOver users."
+            )
+        }
+    }
+
+    func testRootTabsRemainAt44ptTouchTargetsUnderEnglish() throws {
+        launch(language: "en", locale: "en_US", contentSizeCategory: nil)
+
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(
+            tabBar.waitForExistence(timeout: 15),
+            "Expected the root tab bar to remain present for touch-target inspection."
+        )
+
+        let tabButtons = tabBar.buttons
+        let expectedTabCount = 5
+        XCTAssertEqual(
+            tabButtons.count, expectedTabCount,
+            "Expected exactly \(expectedTabCount) tab-bar buttons for touch-target inspection."
+        )
+
+        let minimumTouchTargetPoints: CGFloat = 44
+        for index in 0..<expectedTabCount {
+            let tabButton = tabButtons.element(boundBy: index)
+            XCTAssertTrue(
+                tabButton.exists,
+                "Expected tab-bar button at index \(index) to exist."
+            )
+            let frame = tabButton.frame
+            XCTAssertGreaterThanOrEqual(
+                frame.width, minimumTouchTargetPoints,
+                "Expected tab-bar button at index \(index) to expose at least \(minimumTouchTargetPoints)pt of hittable width per Apple HIG."
+            )
+            XCTAssertGreaterThanOrEqual(
+                frame.height, minimumTouchTargetPoints,
+                "Expected tab-bar button at index \(index) to expose at least \(minimumTouchTargetPoints)pt of hittable height per Apple HIG."
+            )
+        }
+    }
+
+    private func launch(language: String, locale: String, contentSizeCategory: String?) {
+        var arguments = [
+            "--owlory-ui-testing",
+            "--owlory-ui-seed-fresh-day",
+            "-AppleLanguages",
+            "(\(language))",
+            "-AppleLocale",
+            locale,
+        ]
+        if let contentSizeCategory {
+            arguments.append("-UIPreferredContentSizeCategoryName")
+            arguments.append(contentSizeCategory)
+        }
+        app.launchArguments = arguments
+        app.launch()
+    }
+
+    private func assertShellSettled() {
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 15),
+            "Expected the Today dashboard shell to settle under the seeded fresh-day launch."
+        )
+
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(
+            tabBar.waitForExistence(timeout: 10),
+            "Expected the root tab bar to remain present after settle."
+        )
+
+        let expectedTabCount = 5
+        let tabButtons = tabBar.buttons
+        XCTAssertEqual(
+            tabButtons.count, expectedTabCount,
+            "Expected exactly \(expectedTabCount) tab-bar buttons after settle; the shell must not blank or hide tabs at larger text sizes."
+        )
+
+        for index in 0..<expectedTabCount {
+            let tabButton = tabButtons.element(boundBy: index)
+            XCTAssertTrue(
+                tabButton.exists,
+                "Expected tab-bar button at index \(index) to exist after settle."
+            )
+            XCTAssertTrue(
+                tabButton.isHittable,
+                "Expected tab-bar button at index \(index) to remain hittable after settle."
+            )
+        }
+    }
+}

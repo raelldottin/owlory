@@ -4549,7 +4549,7 @@
     {
       "slice_id": "app-localization-hig-dynamic-type-accessibility-harness",
       "title": "Add localized HIG Dynamic Type and accessibility checks",
-      "status": "queued",
+      "status": "done",
       "priority": 87,
       "domain": "localization",
       "allowed_paths": [

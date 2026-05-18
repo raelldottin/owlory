@@ -1,0 +1,63 @@
+{
+  "slice_id": "app-localization-hig-dynamic-type-accessibility-harness",
+  "title": "Add localized HIG Dynamic Type and accessibility checks",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-18T05:05:15Z",
+  "proof_level": "regression-tested",
+  "summary": "Added LocalizationAccessibilityRegression XCUITest class alongside LocalizationLayoutRegression. 4 representative checks: Today shell settles under UICTContentSizeCategoryAccessibilityXL for en + de; root tab buttons expose non-empty accessibility labels under en; root tab buttons remain at ≥44pt hittable width and height under en (Apple HIG minimum). Wired both classes into Makefile ui-regression DOMAIN=localization. No translations touched, no product UI rewritten.",
+  "files_changed": [
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift",
+    "Makefile",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/ui-testing-hygiene.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260518T050515Z-app-localization-hig-dynamic-type-accessibility-harness.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-18/050515-app-localization-hig-dynamic-type-accessibility-harness.md"
+  ],
+  "new_xcuitest_class": {
+    "name": "LocalizationAccessibilityRegression",
+    "tests": [
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextEnglish",
+      "testFreshDayShellSettlesUnderLargerAccessibilityTextGerman",
+      "testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish",
+      "testRootTabsRemainAt44ptTouchTargetsUnderEnglish"
+    ],
+    "launch_argument_additions": [
+      "-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityXL"
+    ]
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-hig-dynamic-type-accessibility-harness": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales / 377 keys / 13 plural keys)",
+    "make ui-regression DOMAIN=localization": "TEST SUCCEEDED (8 tests / 0 failures / 48s)",
+    "make automation-check": "passed (71 tests)",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "any locale is hig-ui-reviewed",
+    "translation quality at any text size",
+    "full HIG layout correctness for the 17 LLM-drafted locales",
+    "device or TestFlight Dynamic Type behavior",
+    "every accessibility label is idiomatic in every locale (only presence and non-emptiness are asserted)",
+    "touch target compliance for non-tab-bar controls"
+  ],
+  "residual_risk": [
+    "Dynamic Type stability is checked for en and de only. Long-script and CJK locales rely on LocalizationLayoutRegression for shell settle but not yet for accessibility XL text-size stability.",
+    "Accessibility-label presence is asserted only for the 5 root tab bar buttons. Other surfaces (Today rows, Continue items, Train sessions, Write notes) are not yet covered.",
+    "Touch target inspection uses XCUIElement.frame; this matches what Apple HIG documents but does not account for hidden hit regions that SwiftUI may expand beyond the visible frame.",
+    "These regressions run in iOS Simulator only. Physical device Dynamic Type and accessibility behavior is not proven by this slice."
+  ],
+  "downstream_slices": [
+    "app-localization-hig-gate-source-english",
+    "app-localization-hig-gate-bucket-rtl",
+    "app-localization-hig-gate-bucket-cjk",
+    "app-localization-hig-gate-bucket-long-script",
+    "app-localization-hig-gate-bucket-remaining-ltr",
+    "app-localization-hig-remediation-triage",
+    "app-localization-all-locale-hig-ui-closure"
+  ]
+}

@@ -41,6 +41,15 @@ German is the only native-reviewed non-English locale as of 2026-05-18. All othe
 
 The all-locale HIG evidence matrix and canonical finding taxonomy live under [`automation/proofs/app-localization-hig-ui-matrix/`](../../automation/proofs/app-localization-hig-ui-matrix/). Per-locale `gate_state`, `scoped_surface_status`, `proof_references`, and `open_findings` are tracked there. New HIG findings allocate the next free `HIG-<LOCALE_UPPER>-<NNN>` ID and append to that matrix.
 
+## Dynamic Type + Accessibility Regression
+
+Use `make ui-regression DOMAIN=localization` to run the maintained accessibility and layout XCUITest classes:
+
+- `LocalizationLayoutRegression` — Today shell settles and the root tab bar exposes 5 hittable buttons under `en`, `de`, `ar`, `zh-Hans`.
+- `LocalizationAccessibilityRegression` — Today shell settles under `UICTContentSizeCategoryAccessibilityXL` for `en` and `de` (long compounds); root tab buttons expose non-empty accessibility labels; each root tab button has ≥44pt hittable width and height per Apple HIG.
+
+These classes do not prove translation quality, full HIG layout correctness for other locales, device behavior, or TestFlight behavior. They prove launch-shell stability under accessibility text-size launch arguments and tab-bar reachability across two representative locales.
+
 ## Multisurface Screenshot Harness
 
 Use `automation/smoke/capture_localized_surfaces.py` to capture scoped HIG surfaces beyond the single Today launch surface that `capture_locale_screenshots.py` already covers.
