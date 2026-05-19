@@ -2,6 +2,7 @@
 
 ## 2026-05-19
 
+- [app-localization-review-drift-check-gate-promotion (build-tested; drift-check --check folded into make automation-check between pyright and unittest discover; baseline preserved 0 drift; drift now fails the gate)](sessions/2026-05-19/095326-app-localization-review-drift-check-gate-promotion.md)
 - [app-localization-review-drift-check-stringsdict-coverage (build-tested; new parse_stringsdict_entries + per-plural-category tuple drift + stringsdict english_value drift; 7 new tests / 22 drift tests / 93 automation-check total; baseline 0 drift unchanged)](sessions/2026-05-19/094716-app-localization-review-drift-check-stringsdict-coverage.md)
 - [app-localization-stringsdict-xml-conversion (build-tested; 19 stringsdict files converted from NeXTSTEP to XML plist via plutil -convert xml1; plistlib parses every file natively; drift tool verified working without plutil; supersedes app-localization-nextstep-plist-parser)](sessions/2026-05-19/094001-app-localization-stringsdict-xml-conversion.md)
 - [queue-notification-stale-completion-slice (queue-only; user-reported bug — completed train item still fires window-passed notification; slice app-reminders-cancel-pending-on-item-completion queued at pri 90)](sessions/2026-05-19/093633-queue-notification-stale-completion-slice.md)

@@ -1,0 +1,51 @@
+{
+  "slice_id": "app-localization-review-drift-check-gate-promotion",
+  "title": "Promote drift check into make automation-check",
+  "status": "done",
+  "domain": "automation",
+  "completed_at": "2026-05-19T09:53:26Z",
+  "proof_level": "build-tested",
+  "summary": "Folded `python3 Tools/localization-review-drift-check.py --check` into the `make automation-check` recipe so any drift between source strings and per-locale review return files now fails the gate (exit non-zero). The standalone `make localization-review-drift-check` target remains reporting-only for ad-hoc inspection. Order in the gate: pyright → drift-check --check → automation Python tests; the first failure short-circuits subsequent steps.",
+  "files_changed": [
+    "Makefile (automation-check recipe gains drift-check --check before unittest discover)",
+    "docs/workflows/validation.md (automation-check description + standalone drift-check bullet updated)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260519T095326Z-app-localization-review-drift-check-gate-promotion.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-19/095326-app-localization-review-drift-check-gate-promotion.md (new)"
+  ],
+  "gate_semantics": {
+    "make automation-check sequence": [
+      "1. pyright (existing dep)",
+      "2. python3 Tools/localization-review-drift-check.py --check (new — exits non-zero on any drift)",
+      "3. python3 -m unittest discover -s automation/tests -p 'test_*.py' (existing)"
+    ],
+    "any_step_failure_short_circuits": true,
+    "reporting_only_target_preserved": "make localization-review-drift-check (no --check) still works for ad-hoc inspection"
+  },
+  "pre_promotion_check": {
+    "command": "python3 Tools/localization-review-drift-check.py --check",
+    "exit_code": 0,
+    "drift_count": 0,
+    "verified_at": "2026-05-19T09:51Z"
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-gate-promotion": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make automation-check": "passed (drift check 0 drift + 93 unittest)",
+    "make pyright": "0 errors / 0 warnings",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "make automation-check now also runs make ui-regression (it doesn't; ui-regression remains a separate gate)",
+    "the drift gate covers stringsdict format-specifier integrity (intentionally not tracked; metadata changes don't count as translation drift)",
+    "make localization-review-drift-check (reporting-only) is the gate (it isn't; only --check inside automation-check fails on drift)"
+  ],
+  "residual_risk": [
+    "If a future source-string change creates drift, every agent or CI invocation of make automation-check will fail until either (a) the affected return file entries are refreshed (separate review slice) or (b) the source change is reverted. The fail-loud behavior is the intended gate semantics; the residual risk is just that it now imposes a cost on contributors who add new English copy without a paired native-review intake. Document the expectation in localization-translation-quality.md if the cost becomes a friction point.",
+    "The current baseline 0 drift was preserved across the full localization HIG closure. If a contributor's branch sits on stale return files (e.g., they merged in source-string changes from main but the review intake is behind), they would see this gate fail on their branch but not on main."
+  ],
+  "downstream_unblocked_slices": []
+}

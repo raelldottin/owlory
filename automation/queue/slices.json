@@ -5812,7 +5812,7 @@
     {
       "slice_id": "app-localization-review-drift-check-gate-promotion",
       "title": "Promote drift check into make automation-check",
-      "status": "queued",
+      "status": "done",
       "priority": 59,
       "domain": "automation",
       "allowed_paths": [

@@ -16,6 +16,7 @@ clean-stop:
 	python3 Tools/clean-stop-check.py
 
 automation-check: pyright
+	python3 Tools/localization-review-drift-check.py --check
 	python3 -m unittest discover -s automation/tests -p 'test_*.py'
 
 pyright:
