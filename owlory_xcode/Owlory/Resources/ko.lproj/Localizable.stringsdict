@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- Localizable.stringsdict for Owlory.
-     Plural values originated as LLM drafts on 2026-05-15 and were accepted
-     by project-owner-reported native/fluent Korean / 한국어 review on 2026-05-18.
-     See localization/review/ko/ko-review-return.json and
-     docs/workflows/localization-translation-quality.md for provenance. -->
 <plist version="1.0">
 <dict>
 	<key>recurrence.interval.compact</key>

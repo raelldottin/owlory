@@ -2,6 +2,7 @@
 
 ## 2026-05-19
 
+- [app-localization-stringsdict-xml-conversion (build-tested; 19 stringsdict files converted from NeXTSTEP to XML plist via plutil -convert xml1; plistlib parses every file natively; drift tool verified working without plutil; supersedes app-localization-nextstep-plist-parser)](sessions/2026-05-19/094001-app-localization-stringsdict-xml-conversion.md)
 - [queue-notification-stale-completion-slice (queue-only; user-reported bug — completed train item still fires window-passed notification; slice app-reminders-cancel-pending-on-item-completion queued at pri 90)](sessions/2026-05-19/093633-queue-notification-stale-completion-slice.md)
 - [queue-two-stringsdict-portability-slices (queue-only; 1 queued + 1 deferred follow-up slices for the Linux-portability gap: XML conversion as preferred path, NeXTSTEP parser as alternative)](sessions/2026-05-19/085434-queue-two-stringsdict-portability-slices.md)
 - [app-localization-review-drift-check-non-macos-portability (build-tested; plistlib-first / plutil-fallback / explicit StringsdictParseError on both-fail; 5 new tests; baseline unchanged 0 drift)](sessions/2026-05-19/082459-app-localization-review-drift-check-non-macos-portability.md)

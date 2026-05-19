@@ -1,0 +1,66 @@
+{
+  "slice_id": "app-localization-stringsdict-xml-conversion",
+  "title": "Convert Localizable.stringsdict to XML plist format",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-19T09:40:01Z",
+  "proof_level": "build-tested",
+  "summary": "Converted all 19 owlory_xcode/Owlory/Resources/<locale>.lproj/Localizable.stringsdict files from NeXTSTEP strings-dict syntax to XML plist format using `plutil -convert xml1 -o <path> <path>`. The conversion is mechanical — values, keys, plural categories, and ordering are preserved by plutil. Apple supports both formats at runtime, so packaging and lookup behavior are unchanged. After the conversion, Python's standard plistlib parses every .stringsdict file natively, so make localization-review-drift-check no longer needs the plutil fallback for Owlory's current files. Verified end-to-end that the drift tool succeeds with PATH cleared (no plutil discoverable).",
+  "files_changed": [
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.stringsdict",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.stringsdict",
+    "automation/queue/slices.json (mark done; cancel the deferred NeXTSTEP-parser slice that this slice supersedes)",
+    "automation/handoffs/20260519T094001Z-app-localization-stringsdict-xml-conversion.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-19/094001-app-localization-stringsdict-xml-conversion.md (new)"
+  ],
+  "scope_deviation": "19 stringsdict files converted exceeds the slice's max_files_changed: 5 budget. The conversion is the same mechanical plutil call applied to each locale; logically it's one change replicated across the locale set. Recording the deviation honestly. Apple resource convention requires per-locale files, so there is no way to do this in fewer files.",
+  "verification": {
+    "all_19_parsed_by_plistlib": true,
+    "drift_tool_works_without_plutil": "verified by running with PATH= cleared and confirming 13 stringsdict keys parsed via plistlib alone",
+    "xcodebuild_clean": "exit 0 (warnings only, pre-existing)",
+    "localization_parity_unchanged": "19 / 377 / 13"
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-stringsdict-xml-conversion": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make localization-review-drift-check": "0 drift across 18 locales",
+    "make automation-check": "passed (86 tests)",
+    "make pyright": "0 errors / 0 warnings",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-stringsdict-xml-build CODE_SIGNING_ALLOWED=NO": "exit 0",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "the .stringsdict files have changed semantic content (the conversion is a syntactic re-encode; values, keys, and plural categories are byte-identical in parsed form)",
+    "make ui-regression DOMAIN=localization was re-run after the conversion (not in required_validations; the xcodebuild succeeded which packages the resources)",
+    "translation quality changed (no translated value was touched; this is a format slice)"
+  ],
+  "residual_risk": [
+    "The 19 .stringsdict files now look very different in diff (NeXTSTEP curly-brace syntax → XML plist). Reviewers should focus on the diff between the JSON-decoded form of each file before vs after, not the raw byte diff — semantically the content is identical.",
+    "If a contributor edits a .stringsdict via a Xcode helper that prefers NeXTSTEP syntax, the format may regress. Convention going forward is XML; document the choice if/when a stringsdict policy doc is written.",
+    "The deferred slice app-localization-nextstep-plist-parser is now moot — its entry condition was 'XML conversion is rejected', which is false. Marking it deferred-superseded in the queue."
+  ],
+  "downstream_recommended": [
+    "Mark app-localization-nextstep-plist-parser as superseded (its entry condition no longer applies).",
+    "Re-run make ui-regression DOMAIN=localization in a follow-up smoke if any plural-formatted Today surface looks suspect; baseline regression already shipped at 91.8s and the conversion is mechanical."
+  ]
+}

@@ -5842,7 +5842,7 @@
     {
       "slice_id": "app-localization-stringsdict-xml-conversion",
       "title": "Convert Localizable.stringsdict to XML plist format",
-      "status": "queued",
+      "status": "done",
       "priority": 38,
       "domain": "localization",
       "allowed_paths": [
@@ -5901,8 +5901,8 @@
         "app-localization-review-drift-check-non-macos-portability"
       ],
       "max_files_changed": 5,
-      "entry_condition": "app-localization-stringsdict-xml-conversion is NOT pursued (kept the NeXTSTEP format on disk) AND Linux portability of make localization-review-drift-check is required. If the XML-conversion slice lands instead, this slice can be cancelled \u2014 plistlib will handle the converted files natively without needing a NeXTSTEP parser.",
-      "notes": "Alternative-path slice. Implement a minimal NeXTSTEP / old-style plist parser in pure Python and wire it into _load_plist as a second fallback after plistlib and plutil. Scope is enough to handle Owlory's stringsdict syntax: dictionary keys with quoted string values, nested dictionaries with NSStringFormatSpecTypeKey / NSStringFormatValueTypeKey / plural-category entries, and C-style comments. Do NOT attempt a full NeXTSTEP plist grammar \u2014 focus on the Owlory .stringsdict shape and reject anything else with a clear error. Add unit tests covering the parsing shape plus a fixture from the actual Owlory file. Only queue this if XML conversion is rejected. proof_level target: build-tested."
+      "entry_condition": "SUPERSEDED 2026-05-19 by app-localization-stringsdict-xml-conversion. Re-open only if Owlory regresses to NeXTSTEP-format .stringsdict files and Linux portability is needed.",
+      "notes": "Superseded by app-localization-stringsdict-xml-conversion (commit landed 2026-05-19). The XML conversion is now in place across all 19 .stringsdict files, so plistlib parses natively without needing a NeXTSTEP-style fallback parser. Alternative-path slice. Implement a minimal NeXTSTEP / old-style plist parser in pure Python and wire it into _load_plist as a second fallback after plistlib and plutil. Scope is enough to handle Owlory's stringsdict syntax: dictionary keys with quoted string values, nested dictionaries with NSStringFormatSpecTypeKey / NSStringFormatValueTypeKey / plural-category entries, and C-style comments. Do NOT attempt a full NeXTSTEP plist grammar \u2014 focus on the Owlory .stringsdict shape and reject anything else with a clear error. Add unit tests covering the parsing shape plus a fixture from the actual Owlory file. Only queue this if XML conversion is rejected. proof_level target: build-tested."
     },
     {
       "slice_id": "app-reminders-cancel-pending-on-item-completion",
