@@ -58,7 +58,7 @@ The all-locale HIG evidence matrix and canonical finding taxonomy live under [`a
 Use `make ui-regression DOMAIN=localization` to run the maintained accessibility and layout XCUITest classes:
 
 - `LocalizationLayoutRegression` — Today shell settles and the root tab bar exposes 5 hittable buttons under `en`, `de`, `ar`, `zh-Hans`.
-- `LocalizationAccessibilityRegression` — Today shell settles under `UICTContentSizeCategoryAccessibilityXL` for `en`, `de`, `fr`, `ja`, `nl`, `ru`, `tr`, `uk`, `ar` (9 locales total — the 8 locales flagged for tab-bar truncation risk by the bucket gates, plus English source); root tab buttons expose non-empty accessibility labels; each root tab button has ≥44pt hittable width and height per Apple HIG.
+- `LocalizationAccessibilityRegression` — Today shell settles under `UICTContentSizeCategoryAccessibilityXL` for `en`, `de`, `fr`, `ja`, `nl`, `ru`, `tr`, `uk`, `ar` (9 locales total — the 8 locales flagged for tab-bar truncation risk by the bucket gates, plus English source); root tab buttons expose non-empty accessibility labels under `en`, `de`, `ar`, `ja`, `ru` (representative coverage across source / native-reviewed / RTL / CJK / long-Cyrillic, recorded under [`automation/proofs/app-localization-voiceover-verification/`](../../automation/proofs/app-localization-voiceover-verification/)); each root tab button has ≥44pt hittable width and height per Apple HIG.
 
 These classes do not prove translation quality, full HIG layout correctness for other locales, device behavior, or TestFlight behavior. They prove launch-shell stability under accessibility text-size launch arguments and tab-bar reachability across the maintained representative and risk-driven locale set.
 

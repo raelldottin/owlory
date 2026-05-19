@@ -1,0 +1,41 @@
+{
+  "proof_id": "app-localization-voiceover-verification",
+  "slice_id": "app-localization-voiceover-verification",
+  "created_at": "2026-05-19T10:04:14Z",
+  "purpose": "Records the maintained regression coverage that asserts non-empty accessibility labels on the 5 root tab buttons under each of en/de/ar/ja/ru. XCUITest reads XCUIElement.label which is the value VoiceOver announces, so a non-empty assertion guards the announcement contract without requiring a real VoiceOver-listening human pass.",
+  "proof_level": "build-tested (regression-tested via make ui-regression DOMAIN=localization)",
+  "verification_path": "owlory_xcode/OwloryUITests/OwloryUITests.swift LocalizationAccessibilityRegression",
+  "verification_methods": [
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderGerman",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderArabic",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderJapanese",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderRussian"
+  ],
+  "test_run": {
+    "command": "make ui-regression DOMAIN=localization",
+    "destination": "iPhone 17 / iOS 26.5 simulator",
+    "build_commit": "d8fbec4 (pre-this-slice baseline; this slice's regression methods land in the next commit)",
+    "regression_classes_run": ["LocalizationAccessibilityRegression", "LocalizationLayoutRegression"],
+    "tests_executed": 19,
+    "failures": 0,
+    "duration_seconds": 111.9
+  },
+  "claim": "Each of en/de/ar/ja/ru launches Owlory in the target locale, the root tab bar exposes exactly 5 buttons, and every one of those buttons reports a non-empty XCUIElement.label value at the time of launch.",
+  "not_claimed": [
+    "a real VoiceOver-listening human pass occurred (this is XCUITest-only)",
+    "non-tab-bar accessibility labels are covered (Today rows, Continue items, train sessions, write notes, etc.)",
+    "the labels are idiomatic VoiceOver phrasing (only that they are non-empty)",
+    "Dynamic Type at AccessibilityXL is verified for VoiceOver users specifically (the AccessibilityXL shell-settle tests are separate)",
+    "iPadOS or macOS VoiceOver behavior is covered (iPhone 17 simulator only)"
+  ],
+  "covered_locales": ["en", "de", "ar", "ja", "ru"],
+  "uncovered_locales_at_this_proof_level": [
+    "nl", "fr", "it", "ko", "nb", "pt", "pt-BR", "es", "sv", "zh-Hans", "zh-Hant", "tr", "uk", "vi"
+  ],
+  "rationale_for_chosen_locales": "Selected en as source, de as native-reviewed, ar as RTL, ja as CJK katakana-heavy, ru as long Cyrillic. Together they cover the four bucket-gate flavours plus the source baseline. Adding more locales would multiply test runtime; the assertion shape is locale-agnostic so the additional coverage value tapers off after one representative per bucket.",
+  "follow_up_recommendations": [
+    "If a future regression adds non-empty AX-label assertions for non-tab-bar surfaces (Today rows, Continue items), update this manifest with the new method names.",
+    "A real VoiceOver-listening human pass is a separate proof track and should land under a `voiceover-human-listening-pass` slice if and when one is queued; that's NOT a precondition for the hig-ui-reviewed claim per the 2026-05-18 policy."
+  ]
+}

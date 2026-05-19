@@ -1,0 +1,58 @@
+{
+  "slice_id": "app-localization-voiceover-verification",
+  "title": "Verify VoiceOver accessibility under non-English locales",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-19T10:05:07Z",
+  "proof_level": "regression-tested",
+  "summary": "Extended LocalizationAccessibilityRegression with 4 new test methods (de/ar/ja/ru) plus refactored the English-only method to share a private helper. Each test asserts the root tab bar exposes exactly 5 buttons and every button reports a non-empty XCUIElement.label — the value VoiceOver announces. Combined with the existing English test, 5 representative locales now have maintained non-empty AX-label coverage. Preserved a manifest under automation/proofs/app-localization-voiceover-verification/ explaining the scope, what was claimed, and what was NOT claimed (no real VoiceOver-listening human pass; non-tab-bar surfaces uncovered).",
+  "files_changed": [
+    "owlory_xcode/OwloryUITests/OwloryUITests.swift (4 new test methods + 1 private helper)",
+    "automation/proofs/app-localization-voiceover-verification/manifest.json (new)",
+    "docs/workflows/localization-hig-ui-completion.md (LocalizationAccessibilityRegression bullet now lists VoiceOver-coverage locales and points at the new proof)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260519T100507Z-app-localization-voiceover-verification.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-19/100507-app-localization-voiceover-verification.md (new)"
+  ],
+  "new_tests": [
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderGerman",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderArabic",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderJapanese",
+    "testRootTabsExposeNonEmptyAccessibilityLabelsUnderRussian"
+  ],
+  "refactoring": "Existing testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish now delegates to the new private assertRootTabsExposeNonEmptyAccessibilityLabels(language:, locale:) helper so the new locale tests share the assertion logic. No semantic change for the English test.",
+  "locales_covered": ["en", "de", "ar", "ja", "ru"],
+  "rationale_for_chosen_locales": "en = source baseline; de = native-reviewed cross-cut; ar = RTL with translated AX labels; ja = CJK katakana; ru = long Cyrillic. Together they cover the four bucket-gate flavours plus the source. Adding more locales multiplies runtime; assertion shape is locale-agnostic so additional value tapers off after one representative per bucket.",
+  "test_run": {
+    "command": "make ui-regression DOMAIN=localization",
+    "destination": "iPhone 17 / iOS 26.5 simulator",
+    "tests_executed": 19,
+    "failures": 0,
+    "duration_seconds": 111.9,
+    "regression_classes_run": ["LocalizationAccessibilityRegression", "LocalizationLayoutRegression"]
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-voiceover-verification": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make ui-regression DOMAIN=localization": "TEST SUCCEEDED (19 tests / 0 failures / 111.9s)",
+    "make automation-check": "passed (drift no-drift + 93 unittests OK)",
+    "git diff --check": "clean",
+    "python3 -m json.tool automation/proofs/app-localization-voiceover-verification/manifest.json": "valid"
+  },
+  "not_claimed": [
+    "a real VoiceOver-listening human pass occurred (XCUITest reads .label, which is what VoiceOver would announce; the proof is build-level, not listening-pass)",
+    "non-tab-bar accessibility labels are covered (Today rows, Continue items, train sessions, write notes, etc.)",
+    "the labels are idiomatic VoiceOver phrasing (only that they are non-empty)",
+    "AccessibilityXL Dynamic Type + VoiceOver interaction is verified (the AccessibilityXL shell-settle tests are separate)",
+    "the 13 uncovered non-English locales (nl, fr, it, ko, nb, pt, pt-BR, es, sv, zh-Hans, zh-Hant, tr, uk, vi) have non-empty-AX-label regression coverage (they don't here; the assertion shape would generalize trivially if a future slice adds them)"
+  ],
+  "residual_risk": [
+    "iPad and macOS VoiceOver behavior is not covered (iPhone 17 simulator only).",
+    "If a future regression adds an accessibilityLabel override that translates to an empty string in a specific locale, the test would fail only if that locale is one of the 5 covered. Adding more locales to the maintained set is cheap (one test method each) when the need surfaces.",
+    "XCUIElement.label sometimes falls back to the visible-text label rather than an explicit accessibilityLabel(...). The non-empty assertion catches the empty case but does not distinguish 'natural label fallback' from 'explicit override that says the same thing'."
+  ],
+  "downstream_unblocked_slices": []
+}

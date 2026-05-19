@@ -1304,31 +1304,59 @@ final class LocalizationAccessibilityRegression: XCTestCase {
     }
 
     func testRootTabsExposeNonEmptyAccessibilityLabelsUnderEnglish() throws {
-        launch(language: "en", locale: "en_US", contentSizeCategory: nil)
+        try assertRootTabsExposeNonEmptyAccessibilityLabels(language: "en", locale: "en_US")
+    }
+
+    // VoiceOver-coverage tests for non-English locales. XCUITest reads
+    // `XCUIElement.label`, which is the accessibility label VoiceOver announces.
+    // Asserting non-empty labels per locale catches the class of regression where
+    // a translated tab item ends up with an empty `accessibilityLabel(...)`
+    // override, which would block VoiceOver users in that locale.
+    func testRootTabsExposeNonEmptyAccessibilityLabelsUnderGerman() throws {
+        try assertRootTabsExposeNonEmptyAccessibilityLabels(language: "de", locale: "de_DE")
+    }
+
+    func testRootTabsExposeNonEmptyAccessibilityLabelsUnderArabic() throws {
+        try assertRootTabsExposeNonEmptyAccessibilityLabels(language: "ar", locale: "ar_SA")
+    }
+
+    func testRootTabsExposeNonEmptyAccessibilityLabelsUnderJapanese() throws {
+        try assertRootTabsExposeNonEmptyAccessibilityLabels(language: "ja", locale: "ja_JP")
+    }
+
+    func testRootTabsExposeNonEmptyAccessibilityLabelsUnderRussian() throws {
+        try assertRootTabsExposeNonEmptyAccessibilityLabels(language: "ru", locale: "ru_RU")
+    }
+
+    private func assertRootTabsExposeNonEmptyAccessibilityLabels(
+        language: String,
+        locale: String
+    ) throws {
+        launch(language: language, locale: locale, contentSizeCategory: nil)
 
         let tabBar = app.tabBars.firstMatch
         XCTAssertTrue(
             tabBar.waitForExistence(timeout: 15),
-            "Expected the root tab bar to remain present for accessibility-label inspection."
+            "[\(language)] Expected the root tab bar to remain present for accessibility-label inspection."
         )
 
         let tabButtons = tabBar.buttons
         let expectedTabCount = 5
         XCTAssertEqual(
             tabButtons.count, expectedTabCount,
-            "Expected exactly \(expectedTabCount) tab-bar buttons for accessibility-label inspection."
+            "[\(language)] Expected exactly \(expectedTabCount) tab-bar buttons for accessibility-label inspection."
         )
 
         for index in 0..<expectedTabCount {
             let tabButton = tabButtons.element(boundBy: index)
             XCTAssertTrue(
                 tabButton.exists,
-                "Expected tab-bar button at index \(index) to exist."
+                "[\(language)] Expected tab-bar button at index \(index) to exist."
             )
             let label = tabButton.label
             XCTAssertFalse(
                 label.isEmpty,
-                "Expected tab-bar button at index \(index) to expose a non-empty accessibility label; missing labels block VoiceOver users."
+                "[\(language)] Expected tab-bar button at index \(index) to expose a non-empty accessibility label; missing labels block VoiceOver users under this locale."
             )
         }
     }

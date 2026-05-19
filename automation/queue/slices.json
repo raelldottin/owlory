@@ -5623,7 +5623,7 @@
     {
       "slice_id": "app-localization-voiceover-verification",
       "title": "Verify VoiceOver accessibility under non-English locales",
-      "status": "queued",
+      "status": "done",
       "priority": 64,
       "domain": "localization",
       "allowed_paths": [
