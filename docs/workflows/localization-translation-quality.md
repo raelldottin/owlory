@@ -161,11 +161,11 @@ The packet is reviewer input only. It does not claim translation completeness, n
 
 ## Review Drift Check
 
-After native review intake, source strings continue to evolve. Use `make localization-review-drift-check` (or `python3 Tools/localization-review-drift-check.py --check`) to flag drift between current source strings and each per-locale return file. Three drift dimensions per locale:
+After native review intake, source strings continue to evolve. Use `make localization-review-drift-check` (or `python3 Tools/localization-review-drift-check.py --check`) to flag drift between current source strings and each per-locale return file. Drift dimensions per locale, across both `Localizable.strings` and `Localizable.stringsdict`:
 
-1. **Missing in return file**: source key added since the review was recorded; needs a new review pass.
-2. **Stale in return file**: review entry exists for a source key that has been removed; the review row is no longer load-bearing.
-3. **Changed `english_value`**: source copy was edited after the review; the existing translation may no longer match.
+1. **Missing in return file**: source key (or stringsdict `(key, plural_variable, plural_category)` tuple) added since the review was recorded; needs a new review pass.
+2. **Stale in return file**: review entry exists for a source key or stringsdict tuple that has been removed; the review row is no longer load-bearing.
+3. **Changed `english_value`**: source copy was edited after the review; the existing translation may no longer match. Tracked for both strings rows and stringsdict plural tuples.
 
 The tool is reporting-only by default. Pass `--check` for non-zero exit on drift. It does not modify any return file — flagging only.
 

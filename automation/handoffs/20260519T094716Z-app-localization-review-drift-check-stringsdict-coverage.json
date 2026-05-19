@@ -1,0 +1,62 @@
+{
+  "slice_id": "app-localization-review-drift-check-stringsdict-coverage",
+  "title": "Extend drift check to per-plural-category and stringsdict english_value",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-19T09:47:16Z",
+  "proof_level": "build-tested",
+  "summary": "Extended Tools/localization-review-drift-check.py to enumerate (key, plural_variable, plural_category) tuples from Localizable.stringsdict and compare them against the stringsdict-type entries in each per-locale return file. Two new drift dimensions detected: per-plural-category presence (missing/stale tuples) and stringsdict english_value drift. 7 new unit tests; 22 drift tests total (was 15). make automation-check now runs 93 tests (was 86). Baseline unchanged: 0 drift across 18 locales (377 strings keys + 13 stringsdict keys / 42 plural tuples in source).",
+  "files_changed": [
+    "Tools/localization-review-drift-check.py (new parse_stringsdict_entries, STRINGSDICT_METADATA_KEYS, parameter rename source_stringsdict_keys -> source_stringsdict_entries, new fields missing_stringsdict_tuples / stale_stringsdict_tuples / changed_stringsdict_english_values, updated human-print)",
+    "automation/tests/test_localization_review_drift_check.py (7 new tests; updated 4 existing tests for parameter rename)",
+    "docs/workflows/localization-translation-quality.md (Review Drift Check section now lists stringsdict per-plural-category tuple drift alongside strings drift)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260519T094716Z-app-localization-review-drift-check-stringsdict-coverage.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-19/094716-app-localization-review-drift-check-stringsdict-coverage.md (new)"
+  ],
+  "new_capabilities": {
+    "parse_stringsdict_entries": "returns dict[(key, plural_variable, plural_category) -> english_value], skipping NSStringLocalizedFormatKey and NSStringFormat*TypeKey metadata",
+    "analyze_locale_dimensions_added": [
+      "missing_stringsdict_tuples: source tuple not present in return file",
+      "stale_stringsdict_tuples: return file tuple no longer in source",
+      "changed_stringsdict_english_values: source english_value differs from return file's english_value for the same tuple"
+    ],
+    "report_human_output_additions": [
+      "Source counts now show stringsdict_keys + stringsdict_tuples_count",
+      "Per-locale drift list now prints missing/stale plural tuples + changed stringsdict english_value sections"
+    ]
+  },
+  "baseline": {
+    "as_of": "2026-05-19",
+    "source_strings_keys": 377,
+    "source_stringsdict_keys": 13,
+    "source_stringsdict_plural_tuples": 42,
+    "locales_inspected": 18,
+    "locales_with_drift": 0,
+    "total_drift_count": 0
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-stringsdict-coverage": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make localization-review-drift-check": "0 drift across 18 locales",
+    "make automation-check": "passed (93 tests; 7 new)",
+    "make pyright": "0 errors / 0 warnings",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "the new tuple-level tracking covers every CLDR plural category (it tracks whatever categories appear in the source; if a new category like 'zero' is added it will show as missing in the return file, which is the intended drift signal)",
+    "stringsdict NSStringLocalizedFormatKey / NSStringFormat*TypeKey changes are tracked (intentionally skipped — those are non-translatable metadata; tracking them would create noise)",
+    "the gate-promotion slice has been triggered (it remains queued; pri 59)"
+  ],
+  "residual_risk": [
+    "If a stringsdict file's NSStringFormatSpecTypeKey or NSStringFormatValueTypeKey changes, the tool will not flag it. That's a separate concern (format-specifier integrity, not translation drift) and would need a different check.",
+    "If a return file records a stringsdict entry without plural_variable + plural_category fields (older review format), it won't count toward the tuple set and the tool will report it as missing in source. Owlory's current return files all carry the three fields per the all-locale native review intake on 2026-05-18.",
+    "make localization-review-drift-check remains a separate gate, not folded into make automation-check. The gate-promotion slice (app-localization-review-drift-check-gate-promotion, pri 59) tracks that."
+  ],
+  "downstream_unblocked_slices": [
+    "app-localization-review-drift-check-gate-promotion (pri 59) is now eligible — its entry_condition is satisfied (stringsdict coverage in place; baseline still 0 drift)."
+  ]
+}

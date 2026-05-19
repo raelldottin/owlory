@@ -5748,7 +5748,7 @@
     {
       "slice_id": "app-localization-review-drift-check-stringsdict-coverage",
       "title": "Extend drift check to per-plural-category and stringsdict english_value",
-      "status": "queued",
+      "status": "done",
       "priority": 60,
       "domain": "localization",
       "allowed_paths": [

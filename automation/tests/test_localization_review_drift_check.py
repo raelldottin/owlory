@@ -55,7 +55,13 @@ class AnalyzeLocaleTests(unittest.TestCase):
             "resources": [
                 {"key": "Today", "english_value": "Today", "resource_type": "strings"},
                 {"key": "Save", "english_value": "Save", "resource_type": "strings"},
-                {"key": "x.plural", "english_value": "%d items", "resource_type": "stringsdict"},
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "one",
+                    "english_value": "v",
+                    "resource_type": "stringsdict",
+                },
             ]
         }
         with TemporaryDirectory() as temp_dir:
@@ -65,7 +71,7 @@ class AnalyzeLocaleTests(unittest.TestCase):
                 report = drift.analyze_locale(
                     "ar",
                     source_strings={"Today": "Today", "Save": "Save"},
-                    source_stringsdict_keys={"x.plural"},
+                    source_stringsdict_entries={("x.plural", "var", "one"): "v"},
                 )
 
         self.assertEqual(report["status"], "ok")
@@ -84,7 +90,7 @@ class AnalyzeLocaleTests(unittest.TestCase):
                 report = drift.analyze_locale(
                     "fr",
                     source_strings={"Today": "Today", "NewKey": "New copy"},
-                    source_stringsdict_keys=set(),
+                    source_stringsdict_entries={},
                 )
 
         self.assertEqual(report["status"], "drift")
@@ -105,7 +111,7 @@ class AnalyzeLocaleTests(unittest.TestCase):
                 report = drift.analyze_locale(
                     "ja",
                     source_strings={"Today": "Today"},
-                    source_stringsdict_keys=set(),
+                    source_stringsdict_entries={},
                 )
 
         self.assertEqual(report["status"], "drift")
@@ -125,7 +131,7 @@ class AnalyzeLocaleTests(unittest.TestCase):
                 report = drift.analyze_locale(
                     "es",
                     source_strings={"Save": "Save changes"},
-                    source_stringsdict_keys=set(),
+                    source_stringsdict_entries={},
                 )
 
         self.assertEqual(report["status"], "drift")
@@ -200,6 +206,192 @@ class ParseStringsdictKeysTests(unittest.TestCase):
                         drift.parse_stringsdict_keys(path)
 
             self.assertIn("plutil exited 1", str(ctx.exception))
+
+
+class ParseStringsdictEntriesTests(unittest.TestCase):
+    def test_returns_empty_when_file_missing(self):
+        self.assertEqual(drift.parse_stringsdict_entries(Path("/no/such/path")), {})
+
+    def test_enumerates_key_plural_variable_plural_category_tuples(self):
+        payload = {
+            "today.dashboard.train.summary": {
+                "NSStringLocalizedFormatKey": "%#@planned@",
+                "planned": {
+                    "NSStringFormatSpecTypeKey": "NSStringPluralRuleType",
+                    "NSStringFormatValueTypeKey": "d",
+                    "one": "%d planned",
+                    "other": "%d planned",
+                },
+            },
+        }
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            with path.open("wb") as handle:
+                plistlib.dump(payload, handle)
+
+            entries = drift.parse_stringsdict_entries(path)
+
+            self.assertEqual(entries, {
+                ("today.dashboard.train.summary", "planned", "one"): "%d planned",
+                ("today.dashboard.train.summary", "planned", "other"): "%d planned",
+            })
+
+    def test_skips_metadata_keys_inside_plural_dicts(self):
+        payload = {
+            "x.plural": {
+                "var": {
+                    "NSStringFormatSpecTypeKey": "NSStringPluralRuleType",
+                    "NSStringFormatValueTypeKey": "d",
+                    "one": "one item",
+                },
+            },
+        }
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            with path.open("wb") as handle:
+                plistlib.dump(payload, handle)
+
+            entries = drift.parse_stringsdict_entries(path)
+
+            self.assertEqual(entries, {("x.plural", "var", "one"): "one item"})
+
+
+class AnalyzeLocaleStringsdictDriftTests(unittest.TestCase):
+    def test_detects_missing_plural_tuple(self):
+        return_payload = {
+            "resources": [
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "one",
+                    "english_value": "one item",
+                    "resource_type": "stringsdict",
+                },
+            ]
+        }
+        with TemporaryDirectory() as temp_dir:
+            return_path = Path(temp_dir) / "ar-review-return.json"
+            return_path.write_text(json.dumps(return_payload), encoding="utf-8")
+            with mock.patch.object(drift, "return_file_for", return_value=return_path):
+                report = drift.analyze_locale(
+                    "ar",
+                    source_strings={},
+                    source_stringsdict_entries={
+                        ("x.plural", "var", "one"): "one item",
+                        ("x.plural", "var", "other"): "%d items",
+                    },
+                )
+
+        self.assertEqual(report["status"], "drift")
+        self.assertEqual(report["missing_stringsdict_tuples"], [["x.plural", "var", "other"]])
+        self.assertEqual(report["drift_count"], 1)
+
+    def test_detects_stale_plural_tuple(self):
+        return_payload = {
+            "resources": [
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "one",
+                    "english_value": "one item",
+                    "resource_type": "stringsdict",
+                },
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "removed-category",
+                    "english_value": "old",
+                    "resource_type": "stringsdict",
+                },
+            ]
+        }
+        with TemporaryDirectory() as temp_dir:
+            return_path = Path(temp_dir) / "fr-review-return.json"
+            return_path.write_text(json.dumps(return_payload), encoding="utf-8")
+            with mock.patch.object(drift, "return_file_for", return_value=return_path):
+                report = drift.analyze_locale(
+                    "fr",
+                    source_strings={},
+                    source_stringsdict_entries={
+                        ("x.plural", "var", "one"): "one item",
+                    },
+                )
+
+        self.assertEqual(report["status"], "drift")
+        self.assertEqual(
+            report["stale_stringsdict_tuples"],
+            [["x.plural", "var", "removed-category"]],
+        )
+        self.assertEqual(report["drift_count"], 1)
+
+    def test_detects_changed_stringsdict_english_value(self):
+        return_payload = {
+            "resources": [
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "one",
+                    "english_value": "stale english",
+                    "resource_type": "stringsdict",
+                },
+            ]
+        }
+        with TemporaryDirectory() as temp_dir:
+            return_path = Path(temp_dir) / "es-review-return.json"
+            return_path.write_text(json.dumps(return_payload), encoding="utf-8")
+            with mock.patch.object(drift, "return_file_for", return_value=return_path):
+                report = drift.analyze_locale(
+                    "es",
+                    source_strings={},
+                    source_stringsdict_entries={
+                        ("x.plural", "var", "one"): "fresh english",
+                    },
+                )
+
+        self.assertEqual(report["status"], "drift")
+        self.assertEqual(report["changed_stringsdict_english_values"], [{
+            "key": "x.plural",
+            "plural_variable": "var",
+            "plural_category": "one",
+            "source_value": "fresh english",
+            "return_file_value": "stale english",
+        }])
+        self.assertEqual(report["drift_count"], 1)
+
+    def test_no_drift_when_stringsdict_tuples_match(self):
+        return_payload = {
+            "resources": [
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "one",
+                    "english_value": "one item",
+                    "resource_type": "stringsdict",
+                },
+                {
+                    "key": "x.plural",
+                    "plural_variable": "var",
+                    "plural_category": "other",
+                    "english_value": "%d items",
+                    "resource_type": "stringsdict",
+                },
+            ]
+        }
+        with TemporaryDirectory() as temp_dir:
+            return_path = Path(temp_dir) / "ja-review-return.json"
+            return_path.write_text(json.dumps(return_payload), encoding="utf-8")
+            with mock.patch.object(drift, "return_file_for", return_value=return_path):
+                report = drift.analyze_locale(
+                    "ja",
+                    source_strings={},
+                    source_stringsdict_entries={
+                        ("x.plural", "var", "one"): "one item",
+                        ("x.plural", "var", "other"): "%d items",
+                    },
+                )
+
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["drift_count"], 0)
 
 
 class CheckExitCodeTests(unittest.TestCase):
