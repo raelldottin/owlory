@@ -5838,6 +5838,71 @@
       "max_files_changed": 3,
       "entry_condition": "Tools/localization-review-drift-check.py covers strings + stringsdict (top-level + per-plural-category + english_value) and the baseline remains 0 drift across all 18 non-English locales after stringsdict-coverage lands.",
       "notes": "Gate-promotion slice. Add `make localization-review-drift-check --check` (or equivalent --check invocation) as a dependency of `make automation-check`, similar to how `make pyright` is already gated. Document in validation.md. Before flipping the gate, run the tool with --check and confirm exit 0. If exit is non-zero, surface the drift and either refresh the affected return files in a separate slice or defer this gate-promotion slice until drift is resolved. Do NOT silence the gate or relax --check semantics. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-stringsdict-xml-conversion",
+      "title": "Convert Localizable.stringsdict to XML plist format",
+      "status": "queued",
+      "priority": 38,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Resources/",
+        "Tools/",
+        "automation/tests/",
+        "docs/workflows/localization-translation-quality.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-stringsdict-xml-conversion",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make localization-review-drift-check",
+        "make automation-check",
+        "make pyright",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-stringsdict-xml-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-review-drift-check-non-macos-portability"
+      ],
+      "max_files_changed": 5,
+      "entry_condition": "Owlory's Localizable.stringsdict files use NeXTSTEP strings-dict syntax which Python plistlib cannot parse. After app-localization-review-drift-check-non-macos-portability the drift tool tries plistlib first then falls back to plutil, but Owlory's current files still require plutil. Converting all 19 .stringsdict files to XML plist would let plistlib parse them natively and remove the macOS plutil dependency for this lane.",
+      "notes": "Resource-format slice. Convert each owlory_xcode/Owlory/Resources/<locale>.lproj/Localizable.stringsdict from NeXTSTEP strings-dict format to XML plist format. Use plutil -convert xml1 -o <path> <path> to perform the conversion deterministically, then commit the converted files. Verify (a) xcodebuild builds and packages the resources correctly under both formats (Apple supports both at runtime), (b) plistlib.load succeeds on each converted file, (c) make localization-review-drift-check still reports 0 drift, (d) make ui-regression DOMAIN=localization smoke still settles per locale. Do NOT manually edit translated stringsdict values during conversion \u2014 that's a translation slice. Keep the conversion mechanical. proof_level target: build-tested. After this lands, the drift tool will succeed via plistlib alone, no plutil shellout required."
+    },
+    {
+      "slice_id": "app-localization-nextstep-plist-parser",
+      "title": "Add NeXTSTEP-style plist parser as Python fallback for Linux portability",
+      "status": "deferred",
+      "priority": 28,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/",
+        "automation/tests/",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-nextstep-plist-parser",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-review-drift-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-review-drift-check-non-macos-portability"
+      ],
+      "max_files_changed": 5,
+      "entry_condition": "app-localization-stringsdict-xml-conversion is NOT pursued (kept the NeXTSTEP format on disk) AND Linux portability of make localization-review-drift-check is required. If the XML-conversion slice lands instead, this slice can be cancelled \u2014 plistlib will handle the converted files natively without needing a NeXTSTEP parser.",
+      "notes": "Alternative-path slice. Implement a minimal NeXTSTEP / old-style plist parser in pure Python and wire it into _load_plist as a second fallback after plistlib and plutil. Scope is enough to handle Owlory's stringsdict syntax: dictionary keys with quoted string values, nested dictionaries with NSStringFormatSpecTypeKey / NSStringFormatValueTypeKey / plural-category entries, and C-style comments. Do NOT attempt a full NeXTSTEP plist grammar \u2014 focus on the Owlory .stringsdict shape and reject anything else with a clear error. Add unit tests covering the parsing shape plus a fixture from the actual Owlory file. Only queue this if XML conversion is rejected. proof_level target: build-tested."
     }
   ]
 }

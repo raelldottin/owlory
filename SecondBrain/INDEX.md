@@ -2,6 +2,7 @@
 
 ## 2026-05-19
 
+- [queue-two-stringsdict-portability-slices (queue-only; 1 queued + 1 deferred follow-up slices for the Linux-portability gap: XML conversion as preferred path, NeXTSTEP parser as alternative)](sessions/2026-05-19/085434-queue-two-stringsdict-portability-slices.md)
 - [app-localization-review-drift-check-non-macos-portability (build-tested; plistlib-first / plutil-fallback / explicit StringsdictParseError on both-fail; 5 new tests; baseline unchanged 0 drift)](sessions/2026-05-19/082459-app-localization-review-drift-check-non-macos-portability.md)
 - [queue-three-drift-check-gap-slices (queue-only; 3 follow-up slices for the drift-check gaps: stringsdict-coverage pri 60, gate-promotion pri 59, non-macos-portability pri 40)](sessions/2026-05-19/074015-queue-three-drift-check-gap-slices.md)
 
