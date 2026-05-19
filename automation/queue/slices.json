@@ -5903,6 +5903,43 @@
       "max_files_changed": 5,
       "entry_condition": "app-localization-stringsdict-xml-conversion is NOT pursued (kept the NeXTSTEP format on disk) AND Linux portability of make localization-review-drift-check is required. If the XML-conversion slice lands instead, this slice can be cancelled \u2014 plistlib will handle the converted files natively without needing a NeXTSTEP parser.",
       "notes": "Alternative-path slice. Implement a minimal NeXTSTEP / old-style plist parser in pure Python and wire it into _load_plist as a second fallback after plistlib and plutil. Scope is enough to handle Owlory's stringsdict syntax: dictionary keys with quoted string values, nested dictionaries with NSStringFormatSpecTypeKey / NSStringFormatValueTypeKey / plural-category entries, and C-style comments. Do NOT attempt a full NeXTSTEP plist grammar \u2014 focus on the Owlory .stringsdict shape and reject anything else with a clear error. Add unit tests covering the parsing shape plus a fixture from the actual Owlory file. Only queue this if XML conversion is rejected. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-reminders-cancel-pending-on-item-completion",
+      "title": "Cancel pending notifications when an item transitions to completed",
+      "status": "queued",
+      "priority": 90,
+      "domain": "reminders",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+        "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+        "owlory_xcode/Owlory/Core/Application/CompletionHistoryStore.swift",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-reminders-cancel-pending-on-item-completion",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make test-domain DOMAIN=train",
+        "make test-domain DOMAIN=runtime",
+        "make automation-check",
+        "make pyright",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reminders-cancel-build CODE_SIGNING_ALLOWED=NO",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 10,
+      "entry_condition": "User-reported bug: an already-completed train item still triggers a 'window has passed' notification. ReminderScheduler suppresses notifications at schedule-time via completedKeys, but already-pending notifications scheduled before completion are not being cancelled when the item flips to done.",
+      "notes": "Bug-fix slice. (1) Add a domain-level regression test that proves the bug: schedule a window/deadline-passed notification for an item, then complete the item, then assert no pending notification remains for that item's identifier. The test must FAIL before the fix lands. (2) Trace each completion-emitting code path (TrainStore.markCompleted/finish, HomeStore equivalents, TodayStore focus-item completion, plus any indirect completion paths via CompletionHistoryStore) and confirm each one routes through ReminderScheduler.cancelPending(forItem:) (or equivalent). (3) Fix any path that does not currently cancel pending notifications. (4) Verify make test-domain DOMAIN=train and DOMAIN=runtime pass after the fix. Do NOT change notification copy or scheduling logic for as-yet-uncompleted items \u2014 only the cancel-on-complete path. Do NOT remove existing completedKeys suppression at schedule-time; both belt and suspenders are correct. proof_level target: build-tested + domain-tested."
     }
   ]
 }
