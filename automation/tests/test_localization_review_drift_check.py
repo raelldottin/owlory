@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import plistlib
 import sys
 import unittest
 from pathlib import Path
@@ -138,6 +139,67 @@ class AnalyzeLocaleTests(unittest.TestCase):
             report = drift.analyze_locale("xx", {}, set())
 
         self.assertEqual(report["status"], "missing-return-file")
+
+
+class ParseStringsdictKeysTests(unittest.TestCase):
+    def test_returns_empty_set_when_file_missing(self):
+        self.assertEqual(drift.parse_stringsdict_keys(Path("/no/such/path")), set())
+
+    def test_parses_xml_plist_via_plistlib_without_plutil(self):
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            with path.open("wb") as handle:
+                plistlib.dump({"x.plural": {"a": "%d items"}, "y.plural": {"b": 1}}, handle)
+
+            # Confirm plistlib succeeds even when plutil is unavailable.
+            with mock.patch("shutil.which", return_value=None):
+                keys = drift.parse_stringsdict_keys(path)
+
+            self.assertEqual(keys, {"x.plural", "y.plural"})
+
+    def test_raises_when_plistlib_fails_and_plutil_missing(self):
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            path.write_text("not a plist file at all", encoding="utf-8")
+
+            with mock.patch("shutil.which", return_value=None):
+                with self.assertRaises(drift.StringsdictParseError) as ctx:
+                    drift.parse_stringsdict_keys(path)
+
+            self.assertIn("plutil is not on PATH", str(ctx.exception))
+
+    def test_falls_back_to_plutil_when_plistlib_rejects_format(self):
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            path.write_text("not xml or binary plist", encoding="utf-8")
+
+            class FakeResult:
+                returncode = 0
+                stdout = '{"a.key": {}, "b.key": {}}'
+                stderr = ""
+
+            with mock.patch("shutil.which", return_value="/usr/bin/plutil"):
+                with mock.patch("subprocess.run", return_value=FakeResult()):
+                    keys = drift.parse_stringsdict_keys(path)
+
+            self.assertEqual(keys, {"a.key", "b.key"})
+
+    def test_raises_when_plutil_fails(self):
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "Localizable.stringsdict"
+            path.write_text("not a plist", encoding="utf-8")
+
+            class FakeResult:
+                returncode = 1
+                stdout = ""
+                stderr = "plutil: not a valid plist"
+
+            with mock.patch("shutil.which", return_value="/usr/bin/plutil"):
+                with mock.patch("subprocess.run", return_value=FakeResult()):
+                    with self.assertRaises(drift.StringsdictParseError) as ctx:
+                        drift.parse_stringsdict_keys(path)
+
+            self.assertIn("plutil exited 1", str(ctx.exception))
 
 
 class CheckExitCodeTests(unittest.TestCase):

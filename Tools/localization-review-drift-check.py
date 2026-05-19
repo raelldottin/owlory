@@ -21,7 +21,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import plistlib
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -66,22 +68,62 @@ def _unescape(s: str) -> str:
     return s.replace('\\"', '"').replace("\\\\", "\\").replace("\\n", "\n")
 
 
+class StringsdictParseError(RuntimeError):
+    """Raised when a .stringsdict file cannot be parsed by any available backend."""
+
+
 def parse_stringsdict_keys(path: Path) -> set[str]:
-    """Return the set of top-level keys defined in a Localizable.stringsdict file."""
+    """Return the set of top-level keys defined in a Localizable.stringsdict file.
+
+    Tries Python's standard plistlib first (works for XML and binary plist; no shellout).
+    Falls back to macOS plutil for files in the NeXTSTEP strings-dict format that
+    plistlib cannot parse. Raises StringsdictParseError if both backends fail, so
+    drift reports cannot silently treat unparseable stringsdict files as 'no keys'.
+    """
     if not path.exists():
         return set()
+    data = _load_plist(path)
+    if not isinstance(data, dict):
+        raise StringsdictParseError(
+            f"{path} parsed but root is not a dict (got {type(data).__name__})."
+        )
+    return set(data.keys())
+
+
+def _load_plist(path: Path) -> Any:
+    # 1. Python plistlib: handles XML and binary plist formats without shellout.
+    try:
+        with path.open("rb") as handle:
+            return plistlib.load(handle)
+    except plistlib.InvalidFileException:
+        plistlib_error = "plistlib could not parse the file as XML or binary plist"
+    except Exception as exc:  # pragma: no cover - defensive
+        plistlib_error = f"plistlib raised {type(exc).__name__}: {exc}"
+
+    # 2. macOS plutil: handles the older NeXTSTEP strings-dict format too.
+    plutil = shutil.which("plutil")
+    if plutil is None:
+        raise StringsdictParseError(
+            f"{path} could not be parsed: {plistlib_error}, and plutil is not on PATH. "
+            "Either convert the file to XML plist format or install macOS plutil."
+        )
     result = subprocess.run(
-        ["plutil", "-convert", "json", "-o", "-", "--", str(path)],
+        [plutil, "-convert", "json", "-o", "-", "--", str(path)],
         capture_output=True,
         text=True,
         check=False,
     )
     if result.returncode != 0:
-        return set()
-    data = json.loads(result.stdout)
-    if not isinstance(data, dict):
-        return set()
-    return set(data.keys())
+        raise StringsdictParseError(
+            f"{path} could not be parsed: {plistlib_error}, and plutil exited "
+            f"{result.returncode}: {result.stderr.strip()}"
+        )
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise StringsdictParseError(
+            f"{path} could not be parsed: plutil JSON output was invalid: {exc}"
+        ) from exc
 
 
 def load_return_file(path: Path) -> dict[str, Any] | None:

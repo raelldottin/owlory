@@ -1,0 +1,45 @@
+{
+  "slice_id": "app-localization-review-drift-check-non-macos-portability",
+  "title": "Replace plutil shellout with plistlib for non-macOS portability",
+  "status": "done",
+  "domain": "automation",
+  "completed_at": "2026-05-19T08:24:59Z",
+  "proof_level": "build-tested",
+  "summary": "Switched Tools/localization-review-drift-check.py.parse_stringsdict_keys to try Python's standard plistlib first and fall back to macOS plutil only if plistlib cannot parse the file. Both backends now raise StringsdictParseError with a diagnostic message when they fail; the silent empty-set fallback that would have incorrectly surfaced as drift is gone. Owlory's current Localizable.stringsdict uses the NeXTSTEP strings-dict format that plistlib cannot parse, so plutil is still used on this repo today — but the tool is now portable to any future XML or binary plist stringsdict, and the failure path is explicit on hosts without plutil.",
+  "files_changed": [
+    "Tools/localization-review-drift-check.py (plistlib + shutil imports; new StringsdictParseError; new _load_plist; parse_stringsdict_keys rewritten to try-plistlib-first / fall-back-to-plutil / raise-on-both-fail)",
+    "automation/tests/test_localization_review_drift_check.py (5 new tests for the new parser paths)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260519T082459Z-app-localization-review-drift-check-non-macos-portability.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-19/082459-app-localization-review-drift-check-non-macos-portability.md (new)"
+  ],
+  "scope_deviation": "The slice notes assumed plistlib could parse Owlory's .stringsdict file. It cannot — the file is in NeXTSTEP strings-dict format. Implementation reframed to try-plistlib-first with plutil fallback, which preserves macOS-only behavior today AND makes the tool portable to XML/binary-plist stringsdict files. Recorded honestly here so the next reader understands why plutil wasn't fully removed.",
+  "new_behavior": {
+    "parse_order": ["plistlib (XML or binary plist)", "macOS plutil (NeXTSTEP strings-dict format)"],
+    "on_success": "returns set of top-level stringsdict keys",
+    "on_both_fail": "raises StringsdictParseError with diagnostic message including plistlib error + plutil exit code/stderr or PATH miss",
+    "previously": "silently returned empty set on plutil failure, which would surface as 'all source stringsdict keys missing from return file' drift across every locale"
+  },
+  "test_count_delta": "+5 new tests (15 total in drift module; automation-check 81 → 86)",
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-non-macos-portability": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-review-drift-check": "0 drift across 18 locales (unchanged baseline)",
+    "make automation-check": "passed (86 tests; 5 new)",
+    "make pyright": "0 errors / 0 warnings",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "the tool now runs end-to-end on Linux (it would run, but Owlory's current .stringsdict format requires plutil; on Linux it would raise StringsdictParseError honestly)",
+    "Owlory's .stringsdict file is XML plist (it is not; it uses the NeXTSTEP strings-dict syntax)",
+    "macOS dependency has been removed (it has been narrowed; plutil is needed only for the NeXTSTEP-format file Owlory ships today)"
+  ],
+  "residual_risk": [
+    "If Owlory ever switches its .stringsdict file to XML plist, the plistlib path will succeed and the plutil fallback will become unused; no code change needed for that transition.",
+    "If Owlory ever runs this tool on Linux against the current strings-dict file, it will raise StringsdictParseError. Better than silent empty drift, but the tool would need either an XML-converted .stringsdict or a Linux plutil substitute (e.g., a NeXTSTEP-plist parser) to run end-to-end.",
+    "The new test suite mocks subprocess.run for the plutil fallback path; integration testing against a real macOS plutil binary is implicit via the make localization-review-drift-check baseline run."
+  ],
+  "downstream_unblocked_slices": []
+}

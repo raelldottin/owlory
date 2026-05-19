@@ -5781,7 +5781,7 @@
     {
       "slice_id": "app-localization-review-drift-check-non-macos-portability",
       "title": "Replace plutil shellout with plistlib for non-macOS portability",
-      "status": "queued",
+      "status": "done",
       "priority": 40,
       "domain": "automation",
       "allowed_paths": [
