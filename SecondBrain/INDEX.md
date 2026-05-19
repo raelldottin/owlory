@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-19
+
+- [queue-three-drift-check-gap-slices (queue-only; 3 follow-up slices for the drift-check gaps: stringsdict-coverage pri 60, gate-promotion pri 59, non-macos-portability pri 40)](sessions/2026-05-19/074015-queue-three-drift-check-gap-slices.md)
+
 ## 2026-05-18
 
 - [app-localization-review-drift-check (build-tested; Tools/localization-review-drift-check.py + Makefile target + 10 unit tests + docs; baseline 0 drift across 18 locales; 377 strings + 13 stringsdict keys)](sessions/2026-05-18/190130-app-localization-review-drift-check.md)

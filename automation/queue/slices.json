@@ -5744,6 +5744,100 @@
       "max_files_changed": 12,
       "entry_condition": "A TestFlight build of Owlory is distributed at a known version/build/commit and a tester is ready to install it, capture Build Info matching committed source, then capture scoped HIG surfaces under the target locale on the TestFlight build.",
       "notes": "Separate proof-track slice. Per the 2026-05-18 policy, TestFlight HIG proof is NOT required for hig-ui-reviewed. This slice exists if and when the project owner wants to extend at least one locale to testflight-verified. Process: tester opens Build Info on the TestFlight build first, captures version/build/commit-short/commit-full/branch/source-clean fields, confirms commit matches committed source. Only then capture scoped HIG surfaces. Preserve under automation/proofs/app-localization-testflight-verified-locale-proof/<locale>/ with manifest.json including all Build Info fields. Do not claim translation quality. Do not claim hig-ui-reviewed adds new content; this slice extends testflight-verified specifically. proof_level target: testflight-verified for the scoped surfaces only."
+    },
+    {
+      "slice_id": "app-localization-review-drift-check-stringsdict-coverage",
+      "title": "Extend drift check to per-plural-category and stringsdict english_value",
+      "status": "queued",
+      "priority": 60,
+      "domain": "localization",
+      "allowed_paths": [
+        "Tools/",
+        "automation/tests/",
+        "docs/workflows/localization-translation-quality.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-stringsdict-coverage",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make localization-review-drift-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-review-drift-check"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Tools/localization-review-drift-check.py currently tracks only top-level stringsdict keys and only compares english_value for strings rows. Per-plural-category presence (one/other/few/many/zero/two) and stringsdict english_value drift can silently go undetected.",
+      "notes": "Tooling slice. Extend Tools/localization-review-drift-check.py so it: (1) parses Localizable.stringsdict via plutil (or plistlib) deeply enough to enumerate (key, plural_variable, plural_category) tuples, (2) builds a matching set from each return file's stringsdict-type resource entries, (3) reports added/removed tuples per locale, and (4) compares stringsdict english_value across source and return file rows (similar to existing changed_english_values for strings). Update test_localization_review_drift_check.py with fixtures for plural-category drift and stringsdict english_value drift. Update the docs section in localization-translation-quality.md. Do not auto-modify return files. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-review-drift-check-non-macos-portability",
+      "title": "Replace plutil shellout with plistlib for non-macOS portability",
+      "status": "queued",
+      "priority": 40,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/",
+        "automation/tests/",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-non-macos-portability",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-review-drift-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-review-drift-check"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "Tools/localization-review-drift-check.py.parse_stringsdict_keys shells out to macOS plutil and silently returns an empty set on non-macOS hosts, which would incorrectly surface as drift. Owlory runs on macOS today but the tool should be portable so it can run from CI containers or contributor Linux hosts.",
+      "notes": "Portability slice. Switch parse_stringsdict_keys (and any new stringsdict-deep-parse helper from the stringsdict-coverage slice if landed) to use Python's standard plistlib for parsing the .stringsdict XML, instead of shelling out to macOS plutil. Fall back to plutil only if plistlib parsing fails. Raise an explicit error (not silent empty) if both fail so drift reports stay honest. Add unit tests covering plistlib parsing of a minimal stringsdict XML fixture. Do not change the CLI surface or report format. proof_level target: build-tested."
+    },
+    {
+      "slice_id": "app-localization-review-drift-check-gate-promotion",
+      "title": "Promote drift check into make automation-check",
+      "status": "queued",
+      "priority": 59,
+      "domain": "automation",
+      "allowed_paths": [
+        "Makefile",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-review-drift-check-gate-promotion",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-review-drift-check-stringsdict-coverage"
+      ],
+      "max_files_changed": 3,
+      "entry_condition": "Tools/localization-review-drift-check.py covers strings + stringsdict (top-level + per-plural-category + english_value) and the baseline remains 0 drift across all 18 non-English locales after stringsdict-coverage lands.",
+      "notes": "Gate-promotion slice. Add `make localization-review-drift-check --check` (or equivalent --check invocation) as a dependency of `make automation-check`, similar to how `make pyright` is already gated. Document in validation.md. Before flipping the gate, run the tool with --check and confirm exit 0. If exit is non-zero, surface the drift and either refresh the affected return files in a separate slice or defer this gate-promotion slice until drift is resolved. Do NOT silence the gate or relax --check semantics. proof_level target: build-tested."
     }
   ]
 }
