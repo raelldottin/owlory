@@ -1,0 +1,49 @@
+{
+  "slice_id": "app-design-research-robinhood-newsroom-lessons",
+  "status": "done",
+  "summary": "Read all 5 articles in Robinhood's newsroom design category, captured lessons per article, and mapped each lesson to Owlory surfaces with applicability ratings (high/medium/low/not-applicable). Preserved findings under automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json. No source/test/UI changes. Recommended 3 optional follow-up slices: integrated content standards reference, error-message audit, design-vision-metaphor ADR — none committed to in this slice.",
+  "files_touched": [
+    "automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260520T095634Z-app-design-research-robinhood-newsroom-lessons.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/095634-app-design-research-robinhood-newsroom-lessons.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-design-research-robinhood-newsroom-lessons",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "articles_inspected": 5,
+  "highest_value_lessons": [
+    "Article #3 (Integrated Content Standards): integrate content-design guidance into the design system rather than keep it separate. Owlory has DesignSystem + L() + Localizable.strings, but content rules (CTA capitalization, error-message phrasing, header punctuation) live separately.",
+    "Article #5 (Robinhood Retirement): plug-and-play semantic types for non-linear discovery paths validate Owlory's existing ContinueSubtitleKind + FocusSuggestionRules.Reason structural refactors.",
+    "Article #1 (New Visual Identity): 'less is more' + 'purposeful pops' validate Owlory's existing minimal-Today + brandPrimary-accent direction."
+  ],
+  "follow_up_slice_recommendations_in_manifest": 3,
+  "explicit_non_applicables": [
+    "Fintech-specific framing (broker, retirement product, APY, regulatory disclaimers)",
+    "Marketing/campaign creative (TV, 3D, agency partnerships)",
+    "Field research at scale (campus intercepts, lit reviews)",
+    "Real-money UX patterns"
+  ],
+  "not_claimed": [
+    "Robinhood's design system is directly portable to Owlory",
+    "Any of the queued follow-up recommendations should be implemented (project-owner decides)",
+    "All five articles are equally instructive (article #4 'Winding Career Paths' is biographical with minimal design content; rated low/none honestly)"
+  ],
+  "residual_risks": [
+    "WebFetch returned no canonical hrefs from the JavaScript-rendered index page; URLs were resolved via WebSearch site queries. If a future article is added to the category that doesn't surface in Google's site index, this approach would miss it.",
+    "Lessons were extracted via WebFetch's LLM summarization rather than direct reading. The summaries are accurate to the article topics but could miss nuance an in-person reader would catch."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Two slices remain queued (app-history-strip-claude-trailers pri 96 and the recommended follow-ups in this manifest are not yet queued). Project-owner decides whether to queue any of the recommended follow-ups.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T09:56:34Z"
+}

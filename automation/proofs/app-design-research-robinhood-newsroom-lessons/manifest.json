@@ -1,0 +1,183 @@
+{
+  "proof_id": "app-design-research-robinhood-newsroom-lessons",
+  "slice_id": "app-design-research-robinhood-newsroom-lessons",
+  "created_at": "2026-05-20T09:30:00Z",
+  "purpose": "Records the analysis-only research pass over Robinhood's newsroom design category. For each article, captures the lessons Robinhood describes and maps each lesson to Owlory surfaces with explicit applicability ratings plus non-applicable callouts. Does not propose implementation; may queue follow-up slices.",
+  "source_index": "https://robinhood.com/us/en/newsroom/category/design/",
+  "fetch_method": "WebFetch + WebSearch to resolve canonical URLs (the index page is JavaScript-rendered so individual article hrefs are not visible in raw HTML; resolved via site search).",
+  "articles_inspected": 5,
+  "ratings_scale": "high (clear direct applicability), medium (transferable principle but Owlory's context differs), low (marginally relevant), not-applicable (Owlory's context excludes it).",
+  "owlory_context_constraints": [
+    "Owlory is a local-first, single-user iOS life-command-center; no broker, no money flow, no market events.",
+    "No marketing channel; the in-app experience IS the only surface.",
+    "Single-developer team; no agency partner, no parallel creative team.",
+    "Restrained Apple-default motion; uses SwiftUI primitives + DesignSystem helpers and L() for localization.",
+    "19 supported locales; localized content drift is a real concern (drift-check tool exists at Tools/localization-review-drift-check.py)."
+  ],
+  "articles": [
+    {
+      "index": 1,
+      "title": "Introducing a New Visual Identity Reflecting Robinhood's Growth and Vision for the Future",
+      "url": "https://robinhood.com/us/en/newsroom/a-new-visual-identity/",
+      "publish_date": "2024-10-10",
+      "lessons": [
+        "'Less is more' as the guiding ethos — bold and sophisticated without distraction.",
+        "Foundation = black/white/neutrals; accent = a single bright tone (Robin Neon) used as purposeful pops.",
+        "Intentional modular layout system across app, web, email, social.",
+        "Streamlined, distraction-free experience so the user can focus on decisions.",
+        "Avoid imitating competitor patterns."
+      ],
+      "owlory_applicability": [
+        {"surface": "Today", "rating": "high", "rationale": "Already minimal/calm; the 'less is more' lesson validates current direction. Verify no future Today surface adds decorative noise."},
+        {"surface": "Color system (OwloryColor)", "rating": "high", "rationale": "Owlory already uses brandPrimary as purposeful accent over neutrals. Aligns with the 'purposeful pops' pattern."},
+        {"surface": "DesignSystem layout helpers", "rating": "medium", "rationale": "Owlory has SwiftUI helpers but no formal layout-token doc. Could write a tokens.md to formalize spacing/typography/color rules."},
+        {"surface": "Fintech-positioning copy ('home for serious investors')", "rating": "not-applicable", "rationale": "Owlory is a life-command-center; no investor framing."},
+        {"surface": "Anti-imitator positioning", "rating": "not-applicable", "rationale": "No direct competitor pattern to avoid; Owlory's niche is private/local-first life org, not a crowded category."}
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Creative Spark: The Making of Robinhood's Gold Campaign",
+      "url": "https://robinhood.com/us/en/newsroom/the-making-of-robinhoods-gold-campaign/",
+      "publish_date": "2024-02-20",
+      "lessons": [
+        "Reject visual maximalism that causes cognitive overload (rejected the 'editorial poster' explorations).",
+        "Soft mid-tone textures > high-contrast metallics for legibility.",
+        "Animation rhythm: a quick action followed by subtle floating motion.",
+        "3D direction-setting should happen earlier in the process to avoid two teams iterating in parallel and converging late."
+      ],
+      "owlory_applicability": [
+        {"surface": "Marketing/campaign creative", "rating": "not-applicable", "rationale": "Owlory ships in-app only; no TV, no balloons, no 3D campaign work."},
+        {"surface": "TV spot + agency partnership", "rating": "not-applicable", "rationale": "No advertising channel; no agency."},
+        {"surface": "Today dashboard density + Patterns digest", "rating": "medium", "rationale": "The 'avoid maximalism via cognitive overload' lesson maps to dashboard surfaces where stacking more cards/sections is tempting. Reinforces minimalism."},
+        {"surface": "Motion (Continue row, focus item completion)", "rating": "low", "rationale": "Adding decorative motion would contradict article-1's 'less is more.' Owlory's current Apple-default motion is the right baseline. Specific completion micro-feedback (haptic + subtle scale) is already adequate."},
+        {"surface": "Multi-agent slice coordination", "rating": "high", "rationale": "The 'set direction earlier to avoid siloed parallel work' lesson maps directly to project_multi_agent_collisions. The supervisor + slice queue is Owlory's existing answer. Validates current direction."}
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Design Smarter, Not Harder: The Power of Integrated Content Standards",
+      "url": "https://robinhood.com/us/en/newsroom/the-power-of-integrated-content-standards/",
+      "publish_date": "2023-11-28",
+      "lessons": [
+        "Move content standards INTO the design system rather than keep them in a separate doc. Robinhood integrated content guidance into their Bento design system.",
+        "Categorize guidance per component: best practices, mechanics, content length/structure, Do's/Don'ts.",
+        "Component-specific standards: error messages, CTAs, push notifications, alerts, modals.",
+        "Anti-pattern: vague error messages like 'Error code: 1234' — every error should include specific resolution guidance.",
+        "Anti-pattern: inconsistent capitalization (mixed title-case/sentence-case buttons), inconsistent header punctuation.",
+        "Anti-pattern: using the wrong component type for a given content type."
+      ],
+      "owlory_applicability": [
+        {"surface": "Localization workflow + DesignSystem", "rating": "high", "rationale": "Owlory's L() + Localizable.strings is the content layer. Content guidance currently lives in docs/workflows/localization-translation-quality.md, separate from any visual token doc. Integrating CTA copy / error phrasing / header capitalization guidance into a single content+design reference would close this gap."},
+        {"surface": "Error messaging across stores (TrainStore.lastError, WriteStore.lastError, etc.)", "rating": "high", "rationale": "Multiple stores expose lastError as a String; some may be runtime exception messages without resolution guidance. Worth a follow-up audit slice that ensures each error has a localized resolution-guided message."},
+        {"surface": "CTA copy (Save, Cancel, Continue, Check-in, primary actions)", "rating": "high", "rationale": "Owlory has many primary actions; standardizing CTA capitalization and verb choice across surfaces would reduce translation drift across 19 locales."},
+        {"surface": "Header/label capitalization conventions", "rating": "medium", "rationale": "Title-case vs sentence-case across en source could propagate to 19 locales' translations. Worth recording a one-pager convention so future English additions stay consistent."},
+        {"surface": "Drift-check tool (Tools/localization-review-drift-check.py)", "rating": "medium", "rationale": "Already in this spirit — automated content guardrails. Could be paired with a capitalization-consistency check or CTA-vocabulary check as a follow-up."}
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Winding Career Paths: How You Got to Robinhood",
+      "url": "https://robinhood.com/us/en/newsroom/winding-career-paths-how-you-got-to-robinhood/",
+      "publish_date": "2023-09-27",
+      "lessons": [
+        "Article is primarily biographical/recruiting content. Minimal concrete design methodology.",
+        "Generic principles surfaced: human-centered focus, data-informed iteration, ownership mindset, portfolio-driven growth."
+      ],
+      "owlory_applicability": [
+        {"surface": "All", "rating": "low", "rationale": "Bio article rather than design-instructive. Generic principles (human-centered, data-informed) are too broad to drive specific Owlory decisions. No follow-up recommended."}
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Robinhood Retirement through the eyes of Research, Creative and Design",
+      "url": "https://robinhood.com/us/en/newsroom/robinhood-retirement-through-the-eyes-of-research-creative-and-design/",
+      "publish_date": "2023-06-07",
+      "lessons": [
+        "Make complex products 'approachable, digestible and purpose-built' rather than complex/boring.",
+        "Generative research embedded within evaluative sessions for efficiency.",
+        "Visual concept: 'perpetual motion machines' to convey how money behaves when working for you. Typography/messaging/diagrams/charts all reinforce the same metaphor.",
+        "Plug-and-play design systems for non-linear customer discovery paths (in-app vs marketing vs social).",
+        "Daily jam sessions as a cohesive user-centric unit.",
+        "Research-backed messaging when presenting to senior stakeholders.",
+        "Avoid overly complex and boring financial products.",
+        "Don't separate marketing from product experience; blur intentionally."
+      ],
+      "owlory_applicability": [
+        {"surface": "Owlory's overall ethos (life command-center for individuals)", "rating": "high", "rationale": "'Approachable, digestible, purpose-built' validates Owlory's existing direction. Today/Train/Write/Home/Career surfaces are intentionally small-and-clear rather than feature-dense."},
+        {"surface": "Continue row + Today dashboard composition", "rating": "high", "rationale": "Non-linear discovery — a user can arrive at a Train session via Today's Continue row, via the Train tab, or via a focus suggestion. 'Plug-and-play' maps directly to the ContinueSubtitleKind + FocusSuggestionRules.Reason semantic data types already shipping. Validates the existing structural refactor pattern."},
+        {"surface": "Visual narrative concept", "rating": "medium", "rationale": "Robinhood's 'money in motion' is a unifying metaphor. Owlory has implicit narratives ('Today', 'Continue', 'momentum from Patterns digests') but no formal named metaphor. Could optionally write a brief design-vision doc that names the throughline (e.g., 'quiet progress' or 'gentle momentum')."},
+        {"surface": "Multi-agent slice cadence", "rating": "medium", "rationale": "'Daily jam sessions as cohesive user-centric unit' has no direct parallel in Owlory (single developer + agents), but the supervisor/queue model functions as the asynchronous equivalent. Validates existing model."},
+        {"surface": "Marketing-product blur", "rating": "not-applicable", "rationale": "Owlory has no marketing channel; the in-app experience is the only surface. There's nothing to 'blur' across."},
+        {"surface": "Retirement-specific research methods (lit review, campus intercepts)", "rating": "not-applicable", "rationale": "No retirement domain, no field research budget. The 'generative-within-evaluative' efficiency tip is interesting but Owlory's research is single-developer informal observation."}
+      ]
+    }
+  ],
+  "synthesis_by_owlory_surface": {
+    "Today": {
+      "dominant_lessons": ["'Less is more' (#1)", "Approachable + digestible (#5)", "Non-linear discovery via plug-and-play semantic types (#5)"],
+      "validates_current_direction": true,
+      "new_action_items": []
+    },
+    "DesignSystem + L() + Localizable.strings": {
+      "dominant_lessons": ["Integrated content standards (#3)", "Component-specific guidance (#3)"],
+      "validates_current_direction": "partly — DesignSystem and L() exist but there is no single integrated content-and-design reference",
+      "new_action_items": [
+        "Optional follow-up: write a docs/workflows/content-standards.md (or merge into existing localization-translation-quality.md) covering CTA capitalization, error-message phrasing, header punctuation conventions, and component-to-content-type mapping."
+      ]
+    },
+    "Error surfaces (lastError across stores)": {
+      "dominant_lessons": ["Anti-pattern: vague error messages (#3)"],
+      "validates_current_direction": "unknown without an audit",
+      "new_action_items": [
+        "Optional follow-up: inventory Owlory's lastError strings and runtime error surfaces; ensure each provides a localized resolution-guided message rather than a raw exception description."
+      ]
+    },
+    "Visual narrative / motion": {
+      "dominant_lessons": ["Single unifying metaphor (#5)", "Quick action + subtle floating motion (#2)"],
+      "validates_current_direction": "implicitly — Owlory has 'Today', 'Continue', 'momentum from Patterns' but no formally named metaphor",
+      "new_action_items": [
+        "Optional follow-up: short docs/decisions/0001-design-vision-metaphor.md naming the throughline that connects Today/Continue/Patterns/Train consistency. Do NOT add decorative motion that would contradict 'less is more' from #1."
+      ]
+    },
+    "Multi-agent / queue cadence": {
+      "dominant_lessons": ["Set direction earlier to avoid siloed parallel work (#2)", "Daily jam sessions (#5)"],
+      "validates_current_direction": true,
+      "new_action_items": []
+    }
+  },
+  "not_applicable_summary": [
+    "Fintech-specific framing (broker, retirement product, market events) — Owlory has none of these.",
+    "Marketing/campaign creative (TV, 3D, agency partnerships) — Owlory ships in-app only.",
+    "Field research at scale (campus intercepts, retirement lit review) — Owlory has no research budget; informal observation only.",
+    "Real-money UX patterns (APY display, balance hierarchy, regulatory disclaimers) — Owlory does not handle money."
+  ],
+  "follow_up_slice_recommendations": [
+    {
+      "slice_id_candidate": "app-content-standards-integrated-reference",
+      "rationale": "Article #3 is the most actionable. Owlory's content-design layer (L() + Localizable.strings) and visual-design layer (DesignSystem) exist separately. A single integrated reference covering CTA capitalization, error-message phrasing, header punctuation, and component-to-content-type mapping would prevent translation drift and reduce decision overhead for future surfaces.",
+      "estimated_size": "doc-only, 4-6 files (new content-standards.md + cross-links from existing docs)"
+    },
+    {
+      "slice_id_candidate": "app-error-message-audit",
+      "rationale": "Article #3's anti-pattern 'Error code: 1234' style. Audit Owlory's lastError surfaces across TrainStore, WriteStore, HomeStore, CareerStore, TodayStore for vague exception messages without resolution guidance.",
+      "estimated_size": "audit-only, may queue per-store fix slices"
+    },
+    {
+      "slice_id_candidate": "app-design-vision-metaphor-adr",
+      "rationale": "Article #5's 'perpetual motion machines' as unifying metaphor. Owlory has implicit narratives; an ADR that names the throughline (Today/Continue/Patterns/Train consistency) would guide future surfaces. Optional — only if the project-owner wants to formalize.",
+      "estimated_size": "doc-only, 2 files (new ADR + INDEX entry)"
+    }
+  ],
+  "not_claimed": [
+    "Robinhood's design system is directly portable to Owlory (it is not; very different product and team scale).",
+    "Any of the queued follow-up recommendations should be implemented (the project-owner decides which, if any).",
+    "All five articles are equally instructive (article #4 is biographical with minimal design content; honest rating: low/none).",
+    "Robinhood's specific tooling (Bento, Cinema 4D, Figma component variables) maps to Owlory's toolchain (it does not)."
+  ],
+  "validation": {
+    "make architecture": "passed",
+    "make automation-check": "passed (drift no-drift + 93 unittests OK)",
+    "git diff --check": "clean"
+  }
+}

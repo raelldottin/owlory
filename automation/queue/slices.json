@@ -6079,7 +6079,7 @@
     {
       "slice_id": "app-design-research-robinhood-newsroom-lessons",
       "title": "Read Robinhood design newsroom and map applicable lessons to Owlory",
-      "status": "queued",
+      "status": "done",
       "priority": 95,
       "domain": "design",
       "allowed_paths": [
