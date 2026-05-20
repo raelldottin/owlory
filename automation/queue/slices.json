@@ -6075,6 +6075,32 @@
       "max_files_changed": 10,
       "entry_condition": "app-reminders-cancel-pending-on-item-completion landed TrainStore.onItemCompleted + the cancel-delivered enhancement. The same closure-injection pattern needs replicating to HomeStore (tasks + protocol runs) and TodayStore (focus-item Done) so background-completion notifications for those domains also clear cleanly. Until then, only train items get synchronous per-completion cancellation; Home/Today still rely on the bulk reschedule() rebuild.",
       "notes": "Pattern-replication slice. Mirror the TrainStore changes from app-reminders-cancel-pending-on-item-completion (commit c41863a) across:\n\n(1) HomeStore.completeTask (or equivalent task-completion path) firing onItemCompleted with CompletionTimePredictor.key(forHomeTask: task.title) \u2014 see CompletionHistoryStore.swift:45 for the existing keying convention.\n\n(2) HomeStore protocol-run completion firing onItemCompleted with CompletionTimePredictor.key(forProtocolRun: run.protocolTitle) \u2014 see CompletionHistoryStore.swift:67.\n\n(3) TodayStore focus-item Done swipe firing onItemCompleted with the predictor key derived from the FocusItem's source (forHomeTask / forProtocolRun / forTrainingSession depending on origin) \u2014 see TodayContinueSourceComposer.swift:259-275 for the per-source keying.\n\nAdd a domain regression test per path (HomeStore tests + TodayStore tests). Each test must FAIL on current main before the init signature changes land. Wire OwloryApp.swift to pass the same closure pattern (capture scheduler, dispatch via Task { @MainActor in scheduler.cancelReminder(forKey: key) }) into all three stores.\n\nDo NOT change ReminderScheduler \u2014 cancelReminder already removes pending + delivered after c41863a. Do NOT modify the bulk reschedule() flow \u2014 keep belt-and-suspenders.\n\nproof_level target: build-tested + domain-tested.\n\nClosed 2026-05-20: HomeStore task completions and protocol-run completions now emit completion predictor keys through an injected onItemCompleted hook; TodayStore Done transitions emit source-specific completion keys for training sessions, home tasks, and home protocol runs; OwloryApp wires all completion hooks to ReminderScheduler.cancelReminder(forKey:) without changing reschedule()."
+    },
+    {
+      "slice_id": "app-design-research-robinhood-newsroom-lessons",
+      "title": "Read Robinhood design newsroom and map applicable lessons to Owlory",
+      "status": "queued",
+      "priority": 95,
+      "domain": "design",
+      "allowed_paths": [
+        "automation/proofs/app-design-research-robinhood-newsroom-lessons/",
+        "docs/decisions/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-design-research-robinhood-newsroom-lessons",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 6,
+      "entry_condition": "Project owner requested external design research: read Robinhood's newsroom design category (https://robinhood.com/us/en/newsroom/category/design/) and surface UX/visual/interaction lessons that could apply to Owlory.",
+      "notes": "Research / analysis slice. Fetch and read every article currently listed at https://robinhood.com/us/en/newsroom/category/design/ via WebFetch. For each article, capture: title, URL, publish date, core lessons (UX principles, visual hierarchy, interaction patterns, accessibility, motion, data visualization, copywriting voice). Then map each lesson to Owlory surfaces (Today dashboard, Train sessions, Write notes, Career records, Home protocols, Patterns digests) and explicitly mark which lessons DO NOT apply (Robinhood is a fintech with real-money UX; Owlory is a local-first life-command-center with no money flow, no broker, no notifications about market events). Preserve findings under automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json with: article URLs, key insights, applicability rating (high / medium / low / not-applicable) per Owlory surface, and action items if any. Optionally write a short docs/decisions/ ADR if a lesson clearly warrants an architectural or UI decision change. Do NOT claim a redesign or commit to implementation in this slice; this is an analysis-only slice that may queue follow-up implementation slices. proof_level target: doc-only."
     }
   ]
 }
