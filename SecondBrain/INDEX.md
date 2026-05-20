@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [queue-home-today-cancel-followup (queue-only; app-reminders-cancel-pending-on-home-and-today-completion queued at pri 30; mirrors TrainStore commit c41863a for HomeStore tasks/runs + TodayStore focus-item Done)](sessions/2026-05-20/062433-queue-home-today-cancel-followup.md)
 - [app-reminders-cancel-pending-on-item-completion (build-tested + domain-tested; TrainStore now fires onItemCompleted hook at completion; ReminderScheduler.cancelReminder removes delivered too; OwloryApp wires the cancel; 3 new TrainStoreTests; failing-on-main test confirmed before fix)](sessions/2026-05-20/060618-app-reminders-cancel-pending-on-item-completion.md)
 - [queue-smallest-width-slice (queue-only; app-localization-smallest-width-accessibility-regression queued as blocked at pri 67 pending iPhone SE simulator provisioning)](sessions/2026-05-20/055811-queue-smallest-width-slice.md)
 - [app-localization-smaller-width-accessibility-regression (regression-tested; new DOMAIN=localization-smaller-width Makefile case running 19 localization regression tests against iPhone 16 simulator; both 17 and 16 paths preserved)](sessions/2026-05-20/023059-app-localization-smaller-width-accessibility-regression.md)
