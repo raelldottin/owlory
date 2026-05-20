@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [queue-smallest-width-slice (queue-only; app-localization-smallest-width-accessibility-regression queued as blocked at pri 67 pending iPhone SE simulator provisioning)](sessions/2026-05-20/055811-queue-smallest-width-slice.md)
 - [app-localization-smaller-width-accessibility-regression (regression-tested; new DOMAIN=localization-smaller-width Makefile case running 19 localization regression tests against iPhone 16 simulator; both 17 and 16 paths preserved)](sessions/2026-05-20/023059-app-localization-smaller-width-accessibility-regression.md)
 
 ## 2026-05-19

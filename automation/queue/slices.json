@@ -5940,6 +5940,41 @@
       "max_files_changed": 10,
       "entry_condition": "User-reported bug: an already-completed train item still triggers a 'window has passed' notification. ReminderScheduler suppresses notifications at schedule-time via completedKeys, but already-pending notifications scheduled before completion are not being cancelled when the item flips to done.",
       "notes": "Bug-fix slice. (1) Add a domain-level regression test that proves the bug: schedule a window/deadline-passed notification for an item, then complete the item, then assert no pending notification remains for that item's identifier. The test must FAIL before the fix lands. (2) Trace each completion-emitting code path (TrainStore.markCompleted/finish, HomeStore equivalents, TodayStore focus-item completion, plus any indirect completion paths via CompletionHistoryStore) and confirm each one routes through ReminderScheduler.cancelPending(forItem:) (or equivalent). (3) Fix any path that does not currently cancel pending notifications. (4) Verify make test-domain DOMAIN=train and DOMAIN=runtime pass after the fix. Do NOT change notification copy or scheduling logic for as-yet-uncompleted items \u2014 only the cancel-on-complete path. Do NOT remove existing completedKeys suppression at schedule-time; both belt and suspenders are correct. proof_level target: build-tested + domain-tested."
+    },
+    {
+      "slice_id": "app-localization-smallest-width-accessibility-regression",
+      "title": "Add iPhone SE smallest-width localization regression coverage",
+      "status": "blocked",
+      "priority": 67,
+      "domain": "localization",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "Makefile",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-smallest-width-accessibility-regression",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make ui-regression DOMAIN=localization",
+        "make ui-regression DOMAIN=localization-smaller-width",
+        "make ui-regression DOMAIN=localization-smallest-width",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-smaller-width-accessibility-regression"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "An iPhone SE iOS 26.5 simulator (or whichever iOS version Owlory builds against) is provisioned and named 'iPhone SE' on the dev/CI host. As of 2026-05-20 the host has only iPhone 16 / iPhone 17 / iPhone Air sims; iPhone SE is the narrowest commonly-deployed iPhone width and is not provisioned. Run `xcrun simctl create 'iPhone SE' <SE-runtime>` before this slice can run.",
+      "notes": "Test-coverage slice mirroring app-localization-smaller-width-accessibility-regression but targeting iPhone SE instead of iPhone 16. Add a `localization-smallest-width` DOMAIN case to make ui-regression with `DESTINATION=\"platform=iOS Simulator,name=iPhone SE,OS=26.5\"` (adjust OS to whatever the provisioned SE simulator uses). Same -only-testing flags as DOMAIN=localization-smaller-width. iPhone SE is the narrowest currently-shipping iPhone; tab-bar truncation that hides on iPhone 17/16 may surface here. Do not change XCUITest source; this is a destination-only variant. proof_level target: regression-tested."
     }
   ]
 }
