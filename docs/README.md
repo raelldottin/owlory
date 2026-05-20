@@ -15,6 +15,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Localization Dynamic Formatting](workflows/localization-dynamic-formatting.md) defines layer ownership for counts, dates, statuses, notifications, and display-label localization.
 - [Localization Translation Quality](workflows/localization-translation-quality.md) defines placeholder status, completion status, formal native-review intake, Apple HIG localized UI review, locale expectations, and acceptance criteria before replacing English placeholders. Localization infrastructure does not imply translation quality.
 - [Localization HIG UI Completion](workflows/localization-hig-ui-completion.md) defines the all-locale Apple HIG completion contract, locale risk buckets, proof requirements, and queued slice ladder for localized UI readiness.
+- [Content Standards](workflows/content-standards.md) is the integrated content+design reference pairing component choice with copy shape — CTA capitalization, error-message phrasing requirement, header punctuation, component-to-content-type mapping, and L() key-naming cross-reference.
 - [Localization Review Export](../localization/review/README.md) is the generated reviewer packet for current English source values, plural entries, and placeholder status labels.
 - [Agent Handoff](workflows/agent-handoff.md) explains the continuity command and expected handoff behavior.
 - [Automation Harness](../automation/README.md) explains the queue-driven supervisor for fresh-run slice chaining.

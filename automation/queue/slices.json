@@ -6134,7 +6134,7 @@
     {
       "slice_id": "app-content-standards-integrated-reference",
       "title": "Write integrated content + design standards reference",
-      "status": "queued",
+      "status": "done",
       "priority": 70,
       "domain": "design",
       "allowed_paths": [

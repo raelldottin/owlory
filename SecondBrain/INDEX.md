@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-content-standards-integrated-reference (doc-only; new docs/workflows/content-standards.md pairing visible-component choice with copy shape — CTA capitalization, error-phrasing required shape, header punctuation, component-to-content-type mapping, L() key naming cross-ref; named lastError-template gap for the queued audit slice to inventory and fix)](sessions/2026-05-20/101743-app-content-standards-integrated-reference.md)
 - [queue-robinhood-followup-slices (queue-only; appended 3 Robinhood-derived follow-up slices — content-standards-integrated-reference pri 70, error-message-audit pri 75, design-vision-metaphor-adr pri 85)](sessions/2026-05-20/100726-queue-robinhood-followup-slices.md)
 - [app-design-research-robinhood-newsroom-lessons (doc-only; read all 5 Robinhood newsroom design articles; mapped lessons to Owlory surfaces with applicability ratings; 3 optional follow-up slices recommended; integrated content standards article is most actionable)](sessions/2026-05-20/095634-app-design-research-robinhood-newsroom-lessons.md)
 - [queue-claude-trailer-history-rewrite-slice (queue-only; app-history-strip-claude-trailers queued at pri 96 as destructive git-hygiene cleanup of ~84 trailer-bearing commits since 2026-05-03; force-push-with-lease required; risks captured)](sessions/2026-05-20/092517-queue-claude-trailer-history-rewrite-slice.md)

@@ -1,0 +1,49 @@
+{
+  "slice_id": "app-content-standards-integrated-reference",
+  "status": "done",
+  "summary": "Wrote integrated content + design reference at docs/workflows/content-standards.md pairing visible-component choice with copy shape: CTA capitalization (observed Title Case for buttons), error message phrasing (required resolution-guidance shape; current lastError templates flagged as not yet conforming), header / section-label punctuation (no terminal punctuation on labels, periods only on full sentences), and a component-to-content-type mapping table covering Button/Label/Section/Text/.navigationTitle/.alert/.confirmationDialog/.accessibilityLabel/.accessibilityHint/Continue-subtitle/digest-insight. Cross-linked the L() key-naming convention to localization-string-inventory.md rather than duplicating. Added a docs/README.md entry under the localization workflow links. No code, copy, or translation changes — the reference describes observed practice and names gaps for the queued audit slice to handle.",
+  "files_touched": [
+    "docs/workflows/content-standards.md",
+    "docs/README.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260520T101743Z-app-content-standards-integrated-reference.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/101743-app-content-standards-integrated-reference.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-content-standards-integrated-reference",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "files_changed_count": 6,
+  "max_files_changed_cap": 6,
+  "scope_observed_from": [
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings (CTA + punctuation samples)",
+    "owlory_xcode/Owlory/Features/{Career,Write,Home}/*.swift (Button + Section usage)",
+    "owlory_xcode/Owlory/Core/Application/{Career,Home,Pattern}Store.swift (lastError template baseline)"
+  ],
+  "gaps_named_for_follow_up": [
+    "All lastError templates in TrainStore/WriteStore/HomeStore/CareerStore/TodayStore/PatternStore are 'Failed to <verb> <noun>: \\(error.localizedDescription)' shape — not localized, no resolution guidance. app-error-message-audit (queued pri 75) inventories the surfaces; per-store fix slices queued by that audit will replace the templates."
+  ],
+  "not_claimed": [
+    "Existing copy has been rewritten to match the convention (the doc describes observed practice, with one named gap on error templates).",
+    "The error-template gap will be fixed automatically — the audit slice still needs to run and queue per-store fix slices.",
+    "Native-locale conventions match English Title Case (the doc explicitly states locale-specific capitalization rules apply for non-English).",
+    "The component-to-content-type mapping table is exhaustive — it covers the components seen in current Owlory views, not every SwiftUI component."
+  ],
+  "residual_risks": [
+    "If a future component is introduced that does not match an existing row in the mapping table, the convention for it is undefined until the table is extended.",
+    "The 'no terminal punctuation on labels, periods on full sentences' rule is observed but not enforced by any tool. A small inconsistency could land and not be caught until a reviewer notices."
+  ],
+  "recommended_next_slice": "app-error-message-audit",
+  "recommended_next_reason": "Lowest priority among queued slices (pri 75); also the natural follow-up since this reference names the lastError templates as the most visible gap.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T10:17:43Z"
+}
