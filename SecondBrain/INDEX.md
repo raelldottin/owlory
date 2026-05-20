@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [start-next-slice-clean-stop (no eligible queued slice after fresh pull; clean-stop passed; repo clean/mirrored; 4 parked blocked/deferred slices retain explicit entry conditions)](sessions/2026-05-20/064404-start-next-slice-clean-stop.md)
 - [app-reminders-cancel-pending-home-today (build-tested + domain-tested; Home task, Home protocol-run, and Today source-backed focus Done completions now cancel matching pending/delivered reminders via predictor keys)](sessions/2026-05-20/023205-app-reminders-cancel-pending-home-today.md)
 - [queue-home-today-cancel-followup (queue-only; app-reminders-cancel-pending-on-home-and-today-completion queued at pri 30; mirrors TrainStore commit c41863a for HomeStore tasks/runs + TodayStore focus-item Done)](sessions/2026-05-20/062433-queue-home-today-cancel-followup.md)
 - [app-reminders-cancel-pending-on-item-completion (build-tested + domain-tested; TrainStore now fires onItemCompleted hook at completion; ReminderScheduler.cancelReminder removes delivered too; OwloryApp wires the cancel; 3 new TrainStoreTests; failing-on-main test confirmed before fix)](sessions/2026-05-20/060618-app-reminders-cancel-pending-on-item-completion.md)
