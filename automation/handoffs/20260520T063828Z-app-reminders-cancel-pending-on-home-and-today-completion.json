@@ -1,0 +1,59 @@
+{
+  "slice_id": "app-reminders-cancel-pending-on-home-and-today-completion",
+  "status": "done",
+  "summary": "Mirrored the TrainStore per-completion reminder cancellation hook into HomeStore and TodayStore. Home task completions and Home protocol-run completions now emit CompletionTimePredictor keys through onItemCompleted; Today focus items marked Done emit source-specific keys for training sessions, home tasks, and home protocol runs. OwloryApp wires all three stores to ReminderScheduler.cancelReminder(forKey:) while preserving the existing bulk reschedule flow.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/023205-app-reminders-cancel-pending-home-today.md",
+    "automation/handoffs/20260520T063828Z-app-reminders-cancel-pending-on-home-and-today-completion.json",
+    "automation/queue/slices.json",
+    "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+    "owlory_xcode/Owlory/OwloryApp.swift",
+    "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+    "owlory_xcode/OwloryCoreTests/TodayStoreTests.swift"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-reminders-cancel-pending-on-home-and-today-completion",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make test-domain DOMAIN=home",
+    "make test-domain DOMAIN=today",
+    "make test-domain DOMAIN=runtime",
+    "make automation-check",
+    "make pyright",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reminders-cancel-home-today-build CODE_SIGNING_ALLOWED=NO",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Per-item reminder cancellation coverage",
+      "before": "Train completions synchronously cancelled matching reminders; Home task completions, Home protocol-run completions, and Today focus Done transitions relied on the later bulk reschedule cycle.",
+      "after": "Home task completions, Home protocol-run completions, Today source-backed focus Done transitions, and Train completions all route completion predictor keys to ReminderScheduler.cancelReminder(forKey:).",
+      "proof": [
+        "make test-domain DOMAIN=home",
+        "make test-domain DOMAIN=today",
+        "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reminders-cancel-home-today-build CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No known residual risk in the completion-cancellation path. The explicit simulator build still reports the existing TodayView onChange(of:perform:) deprecation warning, which is outside this slice."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Rerun the supervisor after this commit lands to select the next eligible slice.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T06:40:57Z"
+}

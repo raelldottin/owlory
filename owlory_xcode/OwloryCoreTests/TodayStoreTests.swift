@@ -1041,6 +1041,66 @@ final class TodayStoreTests: XCTestCase {
         XCTAssertEqual(loaded?.focusThree.first?.status, .done)
     }
 
+    func testUpdateStatusToDoneCallsOnItemCompletedHookForSourceBackedFocusItems() async {
+        let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
+        let today = makeDate("2026-04-08T10:00:00Z")
+        let trainingID = UUID()
+        let homeTaskID = UUID()
+        let protocolRunID = UUID()
+        let saved = DailyEntry(
+            date: today,
+            focusThree: [
+                FocusItem(
+                    title: "Morning Run",
+                    domain: .training,
+                    status: .planned,
+                    linkedRecordID: trainingID,
+                    origin: FocusItemOrigin(kind: .trainingSession, id: trainingID, createdAt: today)
+                ),
+                FocusItem(
+                    title: "Water plants",
+                    domain: .home,
+                    status: .planned,
+                    linkedRecordID: homeTaskID,
+                    origin: FocusItemOrigin(kind: .homeTask, id: homeTaskID, createdAt: today)
+                ),
+                FocusItem(
+                    title: "Kitchen Reset",
+                    domain: .home,
+                    status: .planned,
+                    linkedRecordID: protocolRunID,
+                    origin: FocusItemOrigin(kind: .homeProtocolRun, id: protocolRunID, createdAt: today)
+                ),
+            ]
+        )
+        try? repository.saveEntry(saved)
+        var recordedKeys: [String] = []
+
+        let store = await MainActor.run {
+            TodayStore(
+                clock: FixedClock(now: today),
+                repository: repository,
+                calendar: makeCalendar(),
+                onItemCompleted: { key in recordedKeys.append(key) }
+            )
+        }
+
+        await MainActor.run {
+            store.updateStatus(for: saved.focusThree[0].id, to: .done)
+            store.updateStatus(for: saved.focusThree[1].id, to: .done)
+            store.updateStatus(for: saved.focusThree[2].id, to: .done)
+        }
+
+        XCTAssertEqual(
+            recordedKeys,
+            [
+                CompletionTimePredictor.key(forTrainingSession: "Morning Run"),
+                CompletionTimePredictor.key(forHomeTask: "Water plants"),
+                CompletionTimePredictor.key(forProtocolRun: "Kitchen Reset"),
+            ]
+        )
+    }
+
     func testMarkLinkedFocusItemsDoneCompletesPlannedSourceBackedItems() async {
         let repository = InMemoryTodayEntryRepository(calendar: makeCalendar())
         let today = makeDate("2026-04-08T10:00:00Z")

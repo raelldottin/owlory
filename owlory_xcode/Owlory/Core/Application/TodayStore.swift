@@ -35,15 +35,18 @@ final class TodayStore: OwloryObservableObject {
     private let calendar: Calendar
     private let repository: any TodayEntryRepository & TodayEntryRangeRepository
     private var dismissedFocusSuggestionKeys: Set<String> = []
+    private let onItemCompleted: ((String) -> Void)?
 
     init(
         clock: Clock,
         repository: any TodayEntryRepository & TodayEntryRangeRepository,
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        onItemCompleted: ((String) -> Void)? = nil
     ) {
         self.clock = clock
         self.repository = repository
         self.calendar = calendar
+        self.onItemCompleted = onItemCompleted
         loadToday()
     }
 
@@ -421,21 +424,29 @@ final class TodayStore: OwloryObservableObject {
     }
 
     func updateStatus(for itemID: UUID, to status: FocusItemStatus) {
+        let completionKey: String?
         switch entryState {
         case .setupIncomplete(var entry):
+            completionKey = itemCompletionKey(for: itemID, to: status, in: entry)
             update(itemID: itemID, status: status, in: &entry)
             entryState = .setupIncomplete(entry)
             persistCurrentEntry()
         case .active(var entry):
+            completionKey = itemCompletionKey(for: itemID, to: status, in: entry)
             update(itemID: itemID, status: status, in: &entry)
             entryState = .active(entry)
             persistCurrentEntry()
         case .reflected(var entry):
+            completionKey = itemCompletionKey(for: itemID, to: status, in: entry)
             update(itemID: itemID, status: status, in: &entry)
             entryState = .reflected(entry)
             persistCurrentEntry()
         default:
-            break
+            completionKey = nil
+        }
+
+        if let completionKey {
+            onItemCompleted?(completionKey)
         }
     }
 
@@ -482,6 +493,35 @@ final class TodayStore: OwloryObservableObject {
 
     private func update(itemID: UUID, status: FocusItemStatus, in entry: inout DailyEntry) {
         entry = DailyPlanningRules.updatingStatus(for: itemID, to: status, in: entry)
+    }
+
+    private func itemCompletionKey(
+        for itemID: UUID,
+        to status: FocusItemStatus,
+        in entry: DailyEntry
+    ) -> String? {
+        guard status == .done,
+              let item = entry.focusThree.first(where: { $0.id == itemID }),
+              item.status != .done else {
+            return nil
+        }
+
+        return itemCompletionKey(for: item)
+    }
+
+    private func itemCompletionKey(for item: FocusItem) -> String? {
+        guard let origin = item.origin else { return nil }
+
+        switch origin.kind {
+        case .trainingSession:
+            return CompletionTimePredictor.key(forTrainingSession: item.title)
+        case .homeTask:
+            return CompletionTimePredictor.key(forHomeTask: item.title)
+        case .homeProtocolRun:
+            return CompletionTimePredictor.key(forProtocolRun: item.title)
+        case .writingNote, .careerRecord:
+            return nil
+        }
     }
 
     private func persistCurrentEntry() {

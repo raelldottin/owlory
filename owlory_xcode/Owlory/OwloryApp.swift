@@ -29,20 +29,23 @@ struct OwloryApp: App {
         )
         _completionHistory = StateObject(wrappedValue: history)
 
+        let scheduler = reminderScheduler
+        let cancelCompletedReminder: (String) -> Void = { key in
+            Task { @MainActor in scheduler.cancelReminder(forKey: key) }
+        }
+
         _todayStore = StateObject(wrappedValue: TodayStore(
             clock: SystemClock(),
-            repository: FileTodayEntryRepository()
+            repository: FileTodayEntryRepository(),
+            onItemCompleted: cancelCompletedReminder
         ))
 
-        let scheduler = reminderScheduler
         _trainStore = StateObject(wrappedValue: TrainStore(
             repository: FileItemListRepository<TrainingSession>(
                 directory: "Train", fileName: "sessions"),
             clock: SystemClock(),
             completionHistory: history,
-            onItemCompleted: { key in
-                Task { @MainActor in scheduler.cancelReminder(forKey: key) }
-            }
+            onItemCompleted: cancelCompletedReminder
         ))
 
         _writeStore = StateObject(wrappedValue: WriteStore(
@@ -63,7 +66,8 @@ struct OwloryApp: App {
             runRepository: FileItemListRepository<ProtocolRun>(
                 directory: "Home", fileName: "runs"),
             clock: SystemClock(),
-            completionHistory: history
+            completionHistory: history,
+            onItemCompleted: cancelCompletedReminder
         ))
 
         _patternStore = StateObject(wrappedValue: PatternStore(

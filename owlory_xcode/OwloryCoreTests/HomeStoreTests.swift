@@ -11,12 +11,16 @@ final class HomeStoreTests: XCTestCase {
         return formatter.date(from: string)!
     }
 
-    private func makeStore(now: Date = Date()) -> HomeStore {
+    private func makeStore(
+        now: Date = Date(),
+        onItemCompleted: ((String) -> Void)? = nil
+    ) -> HomeStore {
         HomeStore(
             taskRepository: InMemoryItemListRepository<HomeTask>(),
             protocolRepository: InMemoryItemListRepository<HouseholdProtocol>(),
             runRepository: InMemoryItemListRepository<ProtocolRun>(),
-            clock: FixedClock(now: now)
+            clock: FixedClock(now: now),
+            onItemCompleted: onItemCompleted
         )
     }
 
@@ -260,6 +264,19 @@ final class HomeStoreTests: XCTestCase {
         XCTAssertFalse(store.tasks[0].isSkipped)
         XCTAssertEqual(store.completedTasks.map(\.title), ["Call plumber"])
         XCTAssertTrue(store.skippedTasks.isEmpty)
+    }
+
+    func testCompletingTaskCallsOnItemCompletedHookWithPredictorKey() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addTask(title: "Water plants")
+        store.toggleComplete(id: store.tasks[0].id)
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forHomeTask: "Water plants")]
+        )
     }
 
     func testRestoreTaskMovesSkippedTaskBackToActive() {
@@ -817,6 +834,21 @@ final class HomeStoreTests: XCTestCase {
         store.skipStep(runID: runID, stepID: store.runs[0].steps[1].id)
         XCTAssertEqual(store.runs[0].status, .completed)
         XCTAssertNotNil(store.runs[0].completedAt)
+    }
+
+    func testCompletingProtocolRunCallsOnItemCompletedHookWithPredictorKey() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addProtocol(title: "Kitchen Reset", steps: ["Clear sink"])
+        let runID = store.startRun(protocolID: store.protocols[0].id)!
+
+        store.completeStep(runID: runID, stepID: store.runs[0].steps[0].id)
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forProtocolRun: "Kitchen Reset")]
+        )
     }
 
     func testCompletingFinishedRunDoesNotAppendDuplicateHistory() throws {

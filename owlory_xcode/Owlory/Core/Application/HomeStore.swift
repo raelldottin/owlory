@@ -88,19 +88,22 @@ final class HomeStore: OwloryObservableObject {
     private let runRepository: any ItemListRepository<ProtocolRun>
     private let clock: Clock
     private weak var completionHistory: CompletionHistoryStore?
+    private let onItemCompleted: ((String) -> Void)?
 
     init(
         taskRepository: any ItemListRepository<HomeTask>,
         protocolRepository: any ItemListRepository<HouseholdProtocol>,
         runRepository: any ItemListRepository<ProtocolRun>,
         clock: Clock,
-        completionHistory: CompletionHistoryStore? = nil
+        completionHistory: CompletionHistoryStore? = nil,
+        onItemCompleted: ((String) -> Void)? = nil
     ) {
         self.taskRepository = taskRepository
         self.protocolRepository = protocolRepository
         self.runRepository = runRepository
         self.clock = clock
         self.completionHistory = completionHistory
+        self.onItemCompleted = onItemCompleted
         load()
     }
 
@@ -173,6 +176,9 @@ final class HomeStore: OwloryObservableObject {
                     completedAt: clock.now
                 )
             }
+            onItemCompleted?(
+                CompletionTimePredictor.key(forHomeTask: tasks[index].title)
+            )
         }
         persistTasks()
     }
@@ -446,6 +452,9 @@ final class HomeStore: OwloryObservableObject {
         completionHistory?.logProtocolRunCompletion(
             protocolTitle: runs[runIndex].protocolTitle,
             completedAt: runs[runIndex].completedAt ?? clock.now
+        )
+        onItemCompleted?(
+            CompletionTimePredictor.key(forProtocolRun: runs[runIndex].protocolTitle)
         )
     }
 
