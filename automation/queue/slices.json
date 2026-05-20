@@ -5590,7 +5590,7 @@
     {
       "slice_id": "app-localization-smaller-width-accessibility-regression",
       "title": "Extend LocalizationAccessibilityRegression to smaller iPhone widths",
-      "status": "queued",
+      "status": "done",
       "priority": 65,
       "domain": "localization",
       "allowed_paths": [

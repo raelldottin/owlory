@@ -1,0 +1,59 @@
+{
+  "slice_id": "app-localization-smaller-width-accessibility-regression",
+  "title": "Extend LocalizationAccessibilityRegression to smaller iPhone widths",
+  "status": "done",
+  "domain": "localization",
+  "completed_at": "2026-05-20T02:30:59Z",
+  "proof_level": "regression-tested",
+  "summary": "Added `DOMAIN=localization-smaller-width` to `make ui-regression`. The new case runs the same two existing localization regression classes (LocalizationLayoutRegression + LocalizationAccessibilityRegression — 19 tests across 9 locales for AccessibilityXL + 5 locales for non-empty AX labels + tab touch targets + layout settle) against an iPhone 16 simulator destination instead of iPhone 17. This is the same logical test suite at a smaller width, which surfaces tab-bar layout regressions that only appear on narrower iPhones. Both iPhone 17 and iPhone 16 paths confirmed passing 19/19 in ~112 seconds each.",
+  "files_changed": [
+    "Makefile (new localization-smaller-width DOMAIN case with DESTINATION override to iPhone 16; usage line updated)",
+    "docs/workflows/validation.md (ui-regression bullet now lists DOMAIN=localization + DOMAIN=localization-smaller-width explicitly)",
+    "docs/workflows/localization-hig-ui-completion.md (Dynamic Type + Accessibility Regression section now points at both DOMAIN values)",
+    "docs/workflows/ui-testing-hygiene.md (DOMAIN bullet rewritten to list the smaller-width variant)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260520T023059Z-app-localization-smaller-width-accessibility-regression.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-20/023059-app-localization-smaller-width-accessibility-regression.md (new)"
+  ],
+  "scope_deviation": "Renamed the local iPhone 16 simulator from 'iPhone 16 iOS 26.5' to 'iPhone 16' via xcrun simctl rename so the Makefile's destination string matches Apple's default device-family naming. That rename touches local simctl state, not the repo. Recorded honestly because future contributors may need to do the same on their machine if their simulator was provisioned with a custom name.",
+  "approach": {
+    "chosen": "Option B (Makefile-level DOMAIN variant). Added `localization-smaller-width)` case to the existing `ui-regression` target. Same `-only-testing` flags as `DOMAIN=localization`; only the `-destination` changes.",
+    "rejected": "Option A (XCUITest parameterization). XCUITest cannot select the destination at test time; that's an xcodebuild invocation concern. Option B is the natural fit.",
+    "preserves": "The maintained `DOMAIN=localization` filter remains intact; the smaller-width variant is additive."
+  },
+  "test_run": {
+    "command_smaller_width": "make ui-regression DOMAIN=localization-smaller-width",
+    "destination_smaller_width": "platform=iOS Simulator,name=iPhone 16,OS=26.5",
+    "tests_executed_smaller_width": 19,
+    "failures_smaller_width": 0,
+    "duration_seconds_smaller_width": 112,
+    "command_baseline": "make ui-regression DOMAIN=localization",
+    "destination_baseline": "platform=iOS Simulator,name=iPhone 17,OS=26.5",
+    "tests_executed_baseline": 19,
+    "failures_baseline": 0,
+    "duration_seconds_baseline": 112
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-localization-smaller-width-accessibility-regression": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make ui-regression DOMAIN=localization": "TEST SUCCEEDED (19 tests / 0 failures / 112s)",
+    "make ui-regression DOMAIN=localization-smaller-width": "TEST SUCCEEDED (19 tests / 0 failures / 112s)",
+    "make automation-check": "passed (drift no-drift + 93 unittests OK)",
+    "git diff --check": "clean"
+  },
+  "not_claimed": [
+    "iPhone SE coverage (the simulator name 'iPhone SE' is not provisioned; iPhone 16 is the smallest currently-available device. iPhone SE is even narrower, so this slice doesn't reach the narrowest commonly-deployed iPhone width.)",
+    "additional Dynamic Type categories beyond AccessibilityXL (the slice covers width; Dynamic Type coverage stays the same 9 locales at AccessibilityXL)",
+    "iPad or landscape orientation",
+    "device-verified or testflight-verified for any locale (simulator-only)"
+  ],
+  "residual_risk": [
+    "iPhone 16 is wider than iPhone SE (current and previous generations). A regression that only manifests on iPhone SE would not be caught by this slice. If iPhone SE coverage is needed, provision an iPhone SE simulator on the dev host and add a `localization-smallest-width` DOMAIN case.",
+    "The DOMAIN=localization-smaller-width case hardcodes 'iPhone 16' as the device name. If a contributor's local simulator is provisioned with a different name (e.g., 'iPhone 16 iOS 26.5' as it was on this host before renaming), the destination match will fail with xcodebuild error 70. Document this naming convention if it becomes a friction point.",
+    "Running both DOMAIN=localization and DOMAIN=localization-smaller-width sequentially takes ~3.5 minutes total. CI cost should be considered before automatically including both in a default gate."
+  ],
+  "downstream_unblocked_slices": []
+}

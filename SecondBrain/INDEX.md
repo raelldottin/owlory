@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-20
+
+- [app-localization-smaller-width-accessibility-regression (regression-tested; new DOMAIN=localization-smaller-width Makefile case running 19 localization regression tests against iPhone 16 simulator; both 17 and 16 paths preserved)](sessions/2026-05-20/023059-app-localization-smaller-width-accessibility-regression.md)
+
 ## 2026-05-19
 
 - [app-localization-voiceover-verification (regression-tested; 4 new XCUITest methods asserting non-empty AX labels on root tabs under de/ar/ja/ru; 15 accessibility tests / 19 total / 111.9s; manifest under automation/proofs/app-localization-voiceover-verification/)](sessions/2026-05-19/100507-app-localization-voiceover-verification.md)

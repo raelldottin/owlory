@@ -55,7 +55,7 @@ The all-locale HIG evidence matrix and canonical finding taxonomy live under [`a
 
 ## Dynamic Type + Accessibility Regression
 
-Use `make ui-regression DOMAIN=localization` to run the maintained accessibility and layout XCUITest classes:
+Use `make ui-regression DOMAIN=localization` to run the maintained accessibility and layout XCUITest classes on iPhone 17, or `make ui-regression DOMAIN=localization-smaller-width` to run the same two classes on iPhone 16 (smaller width):
 
 - `LocalizationLayoutRegression` — Today shell settles and the root tab bar exposes 5 hittable buttons under `en`, `de`, `ar`, `zh-Hans`.
 - `LocalizationAccessibilityRegression` — Today shell settles under `UICTContentSizeCategoryAccessibilityXL` for `en`, `de`, `fr`, `ja`, `nl`, `ru`, `tr`, `uk`, `ar` (9 locales total — the 8 locales flagged for tab-bar truncation risk by the bucket gates, plus English source); root tab buttons expose non-empty accessibility labels under `en`, `de`, `ar`, `ja`, `ru` (representative coverage across source / native-reviewed / RTL / CJK / long-Cyrillic, recorded under [`automation/proofs/app-localization-voiceover-verification/`](../../automation/proofs/app-localization-voiceover-verification/)); each root tab button has ≥44pt hittable width and height per Apple HIG.
