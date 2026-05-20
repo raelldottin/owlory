@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [queue-automate-blocked-slice-unblockers (queue-only; added two queued unblocker slices: external proof blocker reclassification and iPhone SE simulator provisioning; blocked slices now list recommended unblockers)](sessions/2026-05-20/073016-queue-automate-blocked-slice-unblockers.md)
 - [start-next-slice-clean-stop (no eligible queued slice after fresh pull; clean-stop passed; repo clean/mirrored; 4 parked blocked/deferred slices retain explicit entry conditions)](sessions/2026-05-20/064404-start-next-slice-clean-stop.md)
 - [app-reminders-cancel-pending-home-today (build-tested + domain-tested; Home task, Home protocol-run, and Today source-backed focus Done completions now cancel matching pending/delivered reminders via predictor keys)](sessions/2026-05-20/023205-app-reminders-cancel-pending-home-today.md)
 - [queue-home-today-cancel-followup (queue-only; app-reminders-cancel-pending-on-home-and-today-completion queued at pri 30; mirrors TrainStore commit c41863a for HomeStore tasks/runs + TodayStore focus-item Done)](sessions/2026-05-20/062433-queue-home-today-cancel-followup.md)

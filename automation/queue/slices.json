@@ -5713,6 +5713,7 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "A physical iPhone is available with Owlory installed at a known build provenance, and a tester (project owner or designated reviewer) is ready to set the device language to the target locale, capture Build Info plus the scoped HIG surfaces, and submit the screenshot files for repo-managed commit.",
+      "recommended_unblocker": "app-localization-external-proof-blocker-reclassification",
       "notes": "Separate proof-track slice. The HIG UI claim does NOT require device or TestFlight proof per the 2026-05-18 policy (see automation/proofs/app-localization-hig-ui-matrix/manifest.json hig_ui_claim_policy). This slice exists to extend the proof ladder for one or more locales to device-verified: capture Build Info + Today + root tabs + primary actions on a real iPhone in the target locale, preserve under automation/proofs/app-localization-device-verified-locale-proof/<locale>/ with manifest.json (sha256, bytes, device model, iOS version, captured-at, app version, build, commit). Do not claim translation quality. Do not claim hig-ui-reviewed adds new content; this slice extends device-verified specifically. proof_level target: device-verified for the scoped surfaces only."
     },
     {
@@ -5743,7 +5744,71 @@
       ],
       "max_files_changed": 12,
       "entry_condition": "A TestFlight build of Owlory is distributed at a known version/build/commit and a tester is ready to install it, capture Build Info matching committed source, then capture scoped HIG surfaces under the target locale on the TestFlight build.",
+      "recommended_unblocker": "app-localization-external-proof-blocker-reclassification",
       "notes": "Separate proof-track slice. Per the 2026-05-18 policy, TestFlight HIG proof is NOT required for hig-ui-reviewed. This slice exists if and when the project owner wants to extend at least one locale to testflight-verified. Process: tester opens Build Info on the TestFlight build first, captures version/build/commit-short/commit-full/branch/source-clean fields, confirms commit matches committed source. Only then capture scoped HIG surfaces. Preserve under automation/proofs/app-localization-testflight-verified-locale-proof/<locale>/ with manifest.json including all Build Info fields. Do not claim translation quality. Do not claim hig-ui-reviewed adds new content; this slice extends testflight-verified specifically. proof_level target: testflight-verified for the scoped surfaces only."
+    },
+    {
+      "slice_id": "app-localization-external-proof-blocker-reclassification",
+      "title": "Reclassify optional external localization proof blockers",
+      "status": "queued",
+      "priority": 20,
+      "domain": "localization",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-localization-external-proof-blocker-reclassification",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-all-locale-hig-ui-closure"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "The 2026-05-18 localization HIG policy says repo-managed automated simulator proof is sufficient for `hig-ui-reviewed`; physical-device and TestFlight proof are optional proof-ladder extensions and cannot be honestly automated without external hardware or distribution.",
+      "notes": "Queue-policy slice. Remove misleading blocked-work pressure from the optional external localization proof tracks while preserving their proof semantics. Reclassify `app-localization-device-verified-locale-proof` and `app-localization-testflight-verified-locale-proof` to `deferred` manual-extension slices, update their entry conditions to say they re-open only when a human provides physical-device/TestFlight evidence, and keep the HIG matrix policy clear that automated simulator proof remains the accepted bar for `hig-ui-reviewed`. Do not claim `device-verified` or `testflight-verified` from automation. Do not modify app UI or translations. proof_level target: doc-only/build-tested."
+    },
+    {
+      "slice_id": "automation-localization-iphone-se-simulator-provisioning",
+      "title": "Automate iPhone SE simulator provisioning for smallest-width localization regression",
+      "status": "queued",
+      "priority": 21,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/",
+        "Makefile",
+        "docs/workflows/validation.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id automation-localization-iphone-se-simulator-provisioning",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "make provision-localization-smallest-width-simulator-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-localization-smaller-width-accessibility-regression"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "The only remaining automatable blocked localization slice is `app-localization-smallest-width-accessibility-regression`, which needs a deterministic smallest-width simulator destination before its XCUITest regression can run.",
+      "notes": "Tooling/unblocker slice. Add an idempotent simulator-provisioning helper plus Makefile target that inspects available iOS simulator runtimes/device types and provisions a simulator named `iPhone SE` for the latest compatible runtime when the device type exists. Add a check-only mode for CI/validation. On success, update `app-localization-smallest-width-accessibility-regression` from `blocked` to `queued` and revise its entry_condition to reference the checked helper. If this Xcode installation does not expose an iPhone SE simulator device type, do not fake the proof; instead document that limitation and reframe/queue a smallest-available-width regression follow-up. Do not change XCUITest behavior in this slice. proof_level target: build-tested."
     },
     {
       "slice_id": "app-localization-review-drift-check-stringsdict-coverage",
@@ -5974,6 +6039,7 @@
       ],
       "max_files_changed": 6,
       "entry_condition": "An iPhone SE iOS 26.5 simulator (or whichever iOS version Owlory builds against) is provisioned and named 'iPhone SE' on the dev/CI host. As of 2026-05-20 the host has only iPhone 16 / iPhone 17 / iPhone Air sims; iPhone SE is the narrowest commonly-deployed iPhone width and is not provisioned. Run `xcrun simctl create 'iPhone SE' <SE-runtime>` before this slice can run.",
+      "recommended_unblocker": "automation-localization-iphone-se-simulator-provisioning",
       "notes": "Test-coverage slice mirroring app-localization-smaller-width-accessibility-regression but targeting iPhone SE instead of iPhone 16. Add a `localization-smallest-width` DOMAIN case to make ui-regression with `DESTINATION=\"platform=iOS Simulator,name=iPhone SE,OS=26.5\"` (adjust OS to whatever the provisioned SE simulator uses). Same -only-testing flags as DOMAIN=localization-smaller-width. iPhone SE is the narrowest currently-shipping iPhone; tab-bar truncation that hides on iPhone 17/16 may surface here. Do not change XCUITest source; this is a destination-only variant. proof_level target: regression-tested."
     },
     {
