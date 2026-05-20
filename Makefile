@@ -83,7 +83,8 @@ ui-regression:
 		home) ONLY_TESTING="-only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression"; LABEL="Home protocol regression (template archive/restore + run step progression)" ;; \
 		localization) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; LABEL="Localization layout + accessibility regression (en, de, ar, zh-Hans launch-shell + Dynamic Type accessibility XL + tab label/touch-target checks)" ;; \
 		localization-smaller-width) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.5"; LABEL="Localization regression on smaller iPhone width (iPhone 16; same layout + AccessibilityXL + AX-label tests as DOMAIN=localization)" ;; \
-		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home|localization|localization-smaller-width]"; exit 2 ;; \
+		localization-smallest-width) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; DESTINATION="platform=iOS Simulator,name=iPhone SE,OS=26.5"; LABEL="Localization regression on smallest iPhone width (iPhone SE; same layout + AccessibilityXL + AX-label tests as DOMAIN=localization)" ;; \
+		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home|localization|localization-smaller-width|localization-smallest-width]"; exit 2 ;; \
 	esac; \
 	echo "Running Owlory UI regression batch ($$LABEL) on $$DESTINATION"; \
 	xcodebuild test \

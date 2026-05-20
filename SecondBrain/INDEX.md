@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-localization-smallest-width-accessibility-regression (regression-tested; added iPhone SE `DOMAIN=localization-smallest-width` routing for existing localization layout/accessibility XCUITests)](sessions/2026-05-20/085912-app-localization-smallest-width-accessibility-regression.md)
 - [automation-localization-iphone-se-simulator-provisioning (build-tested; added idempotent iPhone SE simulator provision/check helper + Makefile targets; provisioned iPhone SE on iOS 26.5; unblocked smallest-width localization regression)](sessions/2026-05-20/085344-automation-localization-iphone-se-simulator-provisioning.md)
 - [app-localization-external-proof-blocker-reclassification (build-tested; optional device/TestFlight localization proof slices reclassified from blocked to deferred manual-extension tracks; simulator proof remains accepted HIG UI bar)](sessions/2026-05-20/081705-app-localization-external-proof-blocker-reclassification.md)
 - [queue-automate-blocked-slice-unblockers (queue-only; added two queued unblocker slices: external proof blocker reclassification and iPhone SE simulator provisioning; blocked slices now list recommended unblockers)](sessions/2026-05-20/073016-queue-automate-blocked-slice-unblockers.md)

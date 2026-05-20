@@ -1,0 +1,53 @@
+{
+  "slice_id": "app-localization-smallest-width-accessibility-regression",
+  "status": "done",
+  "summary": "Added a destination-only `DOMAIN=localization-smallest-width` route to `make ui-regression` for the existing localization layout and accessibility XCUITest classes. The new domain targets the provisioned iPhone SE simulator on iOS 26.5 and leaves XCUITest source and app UI behavior unchanged.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/085912-app-localization-smallest-width-accessibility-regression.md",
+    "automation/handoffs/20260520T085730Z-app-localization-smallest-width-accessibility-regression.json",
+    "automation/queue/slices.json",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-smallest-width-accessibility-regression",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make ui-regression DOMAIN=localization",
+    "make ui-regression DOMAIN=localization-smaller-width",
+    "make ui-regression DOMAIN=localization-smallest-width",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "regression-tested",
+  "missing_proof_levels": [
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Smallest-width localization regression coverage",
+      "before": "`make ui-regression` had localization destinations for iPhone 17 and iPhone 16, while iPhone SE coverage was queued after simulator provisioning.",
+      "after": "`make ui-regression DOMAIN=localization-smallest-width` runs `LocalizationLayoutRegression` and `LocalizationAccessibilityRegression` on `platform=iOS Simulator,name=iPhone SE,OS=26.5`.",
+      "proof": [
+        "make provision-localization-smallest-width-simulator-check",
+        "make ui-regression DOMAIN=localization-smallest-width",
+        "make ui-regression DOMAIN=localization",
+        "make ui-regression DOMAIN=localization-smaller-width"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Two initial `make ui-regression DOMAIN=localization` attempts failed before any test case started because CoreSimulator reported the iPhone 17 test runner launch as Busy. Explicitly booting the iPhone 17 simulator resolved the harness state, and the rerun passed with 19 selected tests and 0 failures.",
+    "This slice does not add physical-device or TestFlight proof; those remain separate deferred manual-extension tracks."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T09:09:39Z"
+}

@@ -6007,7 +6007,7 @@
     {
       "slice_id": "app-localization-smallest-width-accessibility-regression",
       "title": "Add iPhone SE smallest-width localization regression coverage",
-      "status": "queued",
+      "status": "done",
       "priority": 67,
       "domain": "localization",
       "allowed_paths": [
@@ -6037,7 +6037,7 @@
       ],
       "max_files_changed": 6,
       "entry_condition": "`make provision-localization-smallest-width-simulator-check` passes on the dev/CI host, proving a simulator named `iPhone SE` exists for the latest compatible iOS runtime. As of 2026-05-20 this host has `iPhone SE` on iOS 26.5 provisioned by `make provision-localization-smallest-width-simulator`.",
-      "notes": "Test-coverage slice mirroring app-localization-smaller-width-accessibility-regression but targeting iPhone SE instead of iPhone 16. Add a `localization-smallest-width` DOMAIN case to make ui-regression with `DESTINATION=\"platform=iOS Simulator,name=iPhone SE,OS=26.5\"` (adjust OS to whatever the provisioned SE simulator uses). Same -only-testing flags as DOMAIN=localization-smaller-width. iPhone SE is the narrowest currently-shipping iPhone; tab-bar truncation that hides on iPhone 17/16 may surface here. Do not change XCUITest source; this is a destination-only variant. proof_level target: regression-tested."
+      "notes": "Completed on 2026-05-20. Added `DOMAIN=localization-smallest-width` to `make ui-regression`, targeting `DESTINATION=\"platform=iOS Simulator,name=iPhone SE,OS=26.5\"` with the same `LocalizationLayoutRegression` and `LocalizationAccessibilityRegression` `-only-testing` filters used by `DOMAIN=localization-smaller-width`. This is a destination-only iPhone SE regression variant; no XCUITest source or app UI behavior changed. proof_level: regression-tested."
     },
     {
       "slice_id": "app-reminders-cancel-pending-on-home-and-today-completion",
