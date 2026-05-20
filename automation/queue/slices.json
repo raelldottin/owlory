@@ -6130,6 +6130,93 @@
       "max_files_changed": 4,
       "entry_condition": "Repo is clean and mirrored. As of 2026-05-20 there are 85 commits in `git log --grep='Co-Authored-By: Claude'`; one of those (commit f6ad4f0 'Disable Claude commit/PR attribution') is a false-positive match because its body describes the trailer in descriptive text rather than carrying one. The implementor should filter to commits whose body contains the literal trailer LINE (e.g. `^Co-Authored-By: Claude ` at line start) and rewrite those. Force-pushing to main rewrites every downstream hash from the earliest affected commit (currently 60576b3 from 2026-05-03) through HEAD. No other agent commits should be in flight when this runs.",
       "notes": "Destructive git-hygiene slice. The user explicitly authorized rewriting pushed history to remove Co-Authored-By: Claude trailers in commit f6ad4f0's follow-up message.\n\n## Procedure\n\n1. **Pre-flight (must succeed before any history rewrite):**\n   - `git fetch origin main && git rebase --abort 2>/dev/null` (no in-flight rebase)\n   - `git status --short --untracked-files=all` must be empty\n   - `git rev-list --left-right --count @{u}...HEAD` must be `0\\t0`\n   - `git log --grep='^Co-Authored-By: Claude' --pretty='%h' --extended-regexp` \u2014 record the exact commit list\n   - Confirm no other agents are mid-work (project memory: parallel commits expected). Coordinate with humans if uncertain.\n\n2. **Rewrite:** Prefer `git filter-repo` (modern, supported) over `git filter-branch` (deprecated). Either tool takes a message filter. Pattern to strip (mirror the .githooks/commit-msg sed rules):\n\n   ```\n   /^Generated with .*Claude Code.*$/Id\n   /^Co-authored-by: Claude.*<.*anthropic.*>$/Id\n   /^Co-authored-by: Claude.*<noreply@anthropic\\.com>$/Id\n   ```\n\n   Apply across the range `<earliest-affected-commit-parent>..HEAD`. Currently earliest is 60576b3 (parent: the commit immediately before it).\n\n3. **Verify locally:** After rewrite, `git log --grep='^Co-Authored-By: Claude' --extended-regexp` must return zero hits, AND `git log --since='2026-05-03' --pretty='%h %s' | wc -l` must equal the pre-rewrite count (no commits dropped, only message bodies trimmed). Run `make architecture && make localization-check && make automation-check && make pyright` against the new HEAD as a sanity check.\n\n4. **Force-push:** `git push --force-with-lease=main:<expected-remote-sha> origin main`. The `--force-with-lease` is mandatory; bare `--force` is forbidden. The pre-push provenance hook (Tools/verify-build-provenance.sh) must still pass against the new HEAD.\n\n5. **Document:** Write a handoff JSON listing the old SHA range, the new SHA range, and the count of commits whose messages were modified. Update SecondBrain INDEX + a session note. Older session notes and handoff JSONs that reference old SHAs by name (e.g. 'commit 1cd9f5e Localize evening reflection nudge') will become stale \u2014 DO NOT rewrite those records; they're point-in-time history. Note the drift in the session note instead.\n\n## Risks (do not skip \u2014 read before running)\n\n- Force-push rewrites every commit hash from the rewrite base onward. Anyone with a local clone must `git fetch && git reset --hard origin/main` to resync, or their next push will be rejected.\n- The repo has multi-agent activity (see [[project_multi_agent_collisions]]). Any agent that is mid-slice will lose its work if it cannot rebase its branch onto the new history. Schedule this when the queue is quiet.\n- Past handoff JSONs and SecondBrain session notes embed commit SHAs by value. After rewrite those SHAs no longer exist on origin/main. The records are still valid as historical observations but `git show <old-sha>` will fail for anyone who didn't fetch before the rewrite.\n- The pre-push provenance check (`./Tools/verify-build-provenance.sh`) reads build identity from the working tree. It should pass against the rewritten HEAD because no file contents change \u2014 only commit message bodies. Verify before pushing.\n\n## Out of scope\n\n- Do NOT update any historical handoff/session note's commit SHA references \u2014 they are point-in-time records and rewriting them would falsify the audit trail.\n- Do NOT add a Co-Authored-By trailer in this slice's own commit (the commit-msg hook would strip it anyway).\n- Do NOT touch GitHub PR descriptions; this slice is local-history-only. If PR bodies on GitHub also contain the trailer, that's a separate GitHub web/API edit.\n\nproof_level target: build-tested + git-history-rewritten."
+    },
+    {
+      "slice_id": "app-content-standards-integrated-reference",
+      "title": "Write integrated content + design standards reference",
+      "status": "queued",
+      "priority": 70,
+      "domain": "design",
+      "allowed_paths": [
+        "docs/workflows/",
+        "docs/decisions/",
+        "docs/README.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-content-standards-integrated-reference",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-design-research-robinhood-newsroom-lessons"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Robinhood newsroom research (commit acd6903) identified that Owlory's content layer (L() + Localizable.strings) and visual layer (DesignSystem) live separately, with no single reference that pairs visual component choices with the localized copy that should go in them. Integrating these would reduce decision overhead for future surfaces and translation drift across 19 locales.",
+      "notes": "Doc-only reference slice. Write a new docs/workflows/content-standards.md (or merge into docs/workflows/localization-translation-quality.md if that fits better) covering:\n\n1. CTA capitalization convention for English source (title case vs sentence case) and the per-locale implication for translation.\n2. Error message phrasing convention \u2014 every user-visible error must include specific resolution guidance, not a raw exception or 'Error code: 1234'. Cross-reference Owlory's existing lastError surfaces in TrainStore/WriteStore/HomeStore/CareerStore/TodayStore as the inventory baseline; the planned app-error-message-audit follow-up slice handles the per-store audit.\n3. Header / section-label punctuation convention (whether to terminate with period, em dash, or none).\n4. Component-to-content-type mapping: which Owlory component (Button, Label, Section header, Continue row subtitle, etc.) is the right container for which copy length and content category.\n5. L() key naming convention reminders (already documented in localization-string-inventory.md \u2014 cross-link, do not duplicate).\n\nDo NOT change any existing copy or translations. Do NOT add new localized keys. The slice is an integrated reference, not a content rewrite. Update docs/README.md to link the new reference. Optional: a short docs/decisions/ ADR if a specific capitalization or punctuation decision warrants it.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #3.\n\nproof_level target: doc-only."
+    },
+    {
+      "slice_id": "app-error-message-audit",
+      "title": "Audit lastError + runtime error surfaces for resolution-guided messaging",
+      "status": "queued",
+      "priority": 75,
+      "domain": "design",
+      "allowed_paths": [
+        "automation/proofs/app-error-message-audit/",
+        "docs/workflows/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-error-message-audit",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-design-research-robinhood-newsroom-lessons"
+      ],
+      "max_files_changed": 4,
+      "entry_condition": "Robinhood newsroom research (commit acd6903) flagged that vague error messages ('Error code: 1234' style) are an anti-pattern; every user-visible error should include specific resolution guidance. Owlory exposes lastError on multiple stores (TrainStore, WriteStore, HomeStore, CareerStore, TodayStore) plus assorted runtime error strings, but no audit has inventoried their content.",
+      "notes": "Audit-only slice \u2014 no copy changes in this slice. Inventory all user-visible error surfaces in Owlory:\n\n1. grep for 'lastError' assignments in owlory_xcode/Owlory/Core/Application/*.swift and owlory_xcode/Owlory/Features/**/*.swift.\n2. grep for direct String(localized: ...) or L(...) calls with 'error', 'fail', 'invalid' in the key.\n3. grep for showAlert / alert / .alert(...) / Text(\"Error... patterns that surface error strings to the user.\n4. For each finding, capture: file:line, the error string (literal English source), whether it is localized (uses L() / String(localized:)), and whether it provides specific resolution guidance (yes / partial / no).\n\nPreserve findings under automation/proofs/app-error-message-audit/manifest.json with per-finding entries. Classify each as ok / needs-improvement / vague-no-resolution. Queue follow-up per-store fix slices for the needs-improvement and vague-no-resolution items; do NOT fix copy in this audit slice.\n\nDo NOT change any error message text in this slice. Do NOT add new localization keys. The audit produces a manifest + may queue narrow fix slices.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #3 anti-pattern.\n\nproof_level target: doc-only (audit-only)."
+    },
+    {
+      "slice_id": "app-design-vision-metaphor-adr",
+      "title": "Write design-vision ADR naming the Today / Continue / Patterns / Train throughline",
+      "status": "queued",
+      "priority": 85,
+      "domain": "design",
+      "allowed_paths": [
+        "docs/decisions/",
+        "docs/README.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-design-vision-metaphor-adr",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-design-research-robinhood-newsroom-lessons"
+      ],
+      "max_files_changed": 3,
+      "entry_condition": "Robinhood newsroom research (commit acd6903) noted that Robinhood Retirement used 'perpetual motion machines' as a single unifying visual metaphor that reinforced typography, messaging, diagrams, and charts. Owlory has implicit narratives ('Today', 'Continue', 'momentum from Patterns digests') but no formally named throughline that future surfaces can align to.",
+      "notes": "Doc-only ADR slice. Write a short docs/decisions/0001-design-vision-metaphor.md (or whichever 4-digit number is next free under docs/decisions/) that names the unifying metaphor connecting Today / Continue / Patterns / Train consistency.\n\nThe ADR should NOT prescribe specific UI changes. It should name the throughline (working hypothesis: 'quiet progress' or 'gentle momentum') so future slices can ask 'does this surface reinforce or contradict the named throughline?' Include:\n\n1. Context \u2014 Owlory is a calm life-command-center, not a fintech or notification-heavy product.\n2. Decision \u2014 name the throughline; describe how it shows up in Today (focus three + readiness band), Continue (returning to in-progress work), Patterns (weekly digest as accumulated momentum), Train (consistency over intensity).\n3. Consequences \u2014 future surfaces that introduce decorative motion, dense data, or attention-grabbing notifications would contradict the throughline; surface them for review.\n4. Cross-reference Robinhood research article #5 (Robinhood Retirement) for the analogous 'perpetual motion machines' pattern; explicitly note Owlory's narrative is different (not financial momentum; rather quiet daily consistency).\n\nKeep the ADR short \u2014 under 200 lines. Do NOT change any existing UI, copy, or asset. Do NOT propose specific component changes. Update docs/README.md to link the new ADR if docs/decisions/ has an index there.\n\nThe slice is OPTIONAL per the Robinhood research recommendation. If the project owner decides the throughline is already obvious without an ADR, this slice can be cancelled.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #5 + synthesis section 'Visual narrative / motion'.\n\nproof_level target: doc-only."
     }
   ]
 }
