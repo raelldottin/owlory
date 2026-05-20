@@ -6101,6 +6101,35 @@
       "max_files_changed": 6,
       "entry_condition": "Project owner requested external design research: read Robinhood's newsroom design category (https://robinhood.com/us/en/newsroom/category/design/) and surface UX/visual/interaction lessons that could apply to Owlory.",
       "notes": "Research / analysis slice. Fetch and read every article currently listed at https://robinhood.com/us/en/newsroom/category/design/ via WebFetch. For each article, capture: title, URL, publish date, core lessons (UX principles, visual hierarchy, interaction patterns, accessibility, motion, data visualization, copywriting voice). Then map each lesson to Owlory surfaces (Today dashboard, Train sessions, Write notes, Career records, Home protocols, Patterns digests) and explicitly mark which lessons DO NOT apply (Robinhood is a fintech with real-money UX; Owlory is a local-first life-command-center with no money flow, no broker, no notifications about market events). Preserve findings under automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json with: article URLs, key insights, applicability rating (high / medium / low / not-applicable) per Owlory surface, and action items if any. Optionally write a short docs/decisions/ ADR if a lesson clearly warrants an architectural or UI decision change. Do NOT claim a redesign or commit to implementation in this slice; this is an analysis-only slice that may queue follow-up implementation slices. proof_level target: doc-only."
+    },
+    {
+      "slice_id": "app-history-strip-claude-trailers",
+      "title": "Rewrite pushed history to strip Claude attribution trailers",
+      "status": "queued",
+      "priority": 96,
+      "domain": "git-hygiene",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-history-strip-claude-trailers",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "make pyright",
+        "git fetch origin main",
+        "git status --short --untracked-files=all",
+        "git log --grep='^Co-Authored-By: Claude' --pretty='%h' | wc -l",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 4,
+      "entry_condition": "Repo is clean and mirrored. As of 2026-05-20 there are 85 commits in `git log --grep='Co-Authored-By: Claude'`; one of those (commit f6ad4f0 'Disable Claude commit/PR attribution') is a false-positive match because its body describes the trailer in descriptive text rather than carrying one. The implementor should filter to commits whose body contains the literal trailer LINE (e.g. `^Co-Authored-By: Claude ` at line start) and rewrite those. Force-pushing to main rewrites every downstream hash from the earliest affected commit (currently 60576b3 from 2026-05-03) through HEAD. No other agent commits should be in flight when this runs.",
+      "notes": "Destructive git-hygiene slice. The user explicitly authorized rewriting pushed history to remove Co-Authored-By: Claude trailers in commit f6ad4f0's follow-up message.\n\n## Procedure\n\n1. **Pre-flight (must succeed before any history rewrite):**\n   - `git fetch origin main && git rebase --abort 2>/dev/null` (no in-flight rebase)\n   - `git status --short --untracked-files=all` must be empty\n   - `git rev-list --left-right --count @{u}...HEAD` must be `0\\t0`\n   - `git log --grep='^Co-Authored-By: Claude' --pretty='%h' --extended-regexp` \u2014 record the exact commit list\n   - Confirm no other agents are mid-work (project memory: parallel commits expected). Coordinate with humans if uncertain.\n\n2. **Rewrite:** Prefer `git filter-repo` (modern, supported) over `git filter-branch` (deprecated). Either tool takes a message filter. Pattern to strip (mirror the .githooks/commit-msg sed rules):\n\n   ```\n   /^Generated with .*Claude Code.*$/Id\n   /^Co-authored-by: Claude.*<.*anthropic.*>$/Id\n   /^Co-authored-by: Claude.*<noreply@anthropic\\.com>$/Id\n   ```\n\n   Apply across the range `<earliest-affected-commit-parent>..HEAD`. Currently earliest is 60576b3 (parent: the commit immediately before it).\n\n3. **Verify locally:** After rewrite, `git log --grep='^Co-Authored-By: Claude' --extended-regexp` must return zero hits, AND `git log --since='2026-05-03' --pretty='%h %s' | wc -l` must equal the pre-rewrite count (no commits dropped, only message bodies trimmed). Run `make architecture && make localization-check && make automation-check && make pyright` against the new HEAD as a sanity check.\n\n4. **Force-push:** `git push --force-with-lease=main:<expected-remote-sha> origin main`. The `--force-with-lease` is mandatory; bare `--force` is forbidden. The pre-push provenance hook (Tools/verify-build-provenance.sh) must still pass against the new HEAD.\n\n5. **Document:** Write a handoff JSON listing the old SHA range, the new SHA range, and the count of commits whose messages were modified. Update SecondBrain INDEX + a session note. Older session notes and handoff JSONs that reference old SHAs by name (e.g. 'commit 1cd9f5e Localize evening reflection nudge') will become stale \u2014 DO NOT rewrite those records; they're point-in-time history. Note the drift in the session note instead.\n\n## Risks (do not skip \u2014 read before running)\n\n- Force-push rewrites every commit hash from the rewrite base onward. Anyone with a local clone must `git fetch && git reset --hard origin/main` to resync, or their next push will be rejected.\n- The repo has multi-agent activity (see [[project_multi_agent_collisions]]). Any agent that is mid-slice will lose its work if it cannot rebase its branch onto the new history. Schedule this when the queue is quiet.\n- Past handoff JSONs and SecondBrain session notes embed commit SHAs by value. After rewrite those SHAs no longer exist on origin/main. The records are still valid as historical observations but `git show <old-sha>` will fail for anyone who didn't fetch before the rewrite.\n- The pre-push provenance check (`./Tools/verify-build-provenance.sh`) reads build identity from the working tree. It should pass against the rewritten HEAD because no file contents change \u2014 only commit message bodies. Verify before pushing.\n\n## Out of scope\n\n- Do NOT update any historical handoff/session note's commit SHA references \u2014 they are point-in-time records and rewriting them would falsify the audit trail.\n- Do NOT add a Co-Authored-By trailer in this slice's own commit (the commit-msg hook would strip it anyway).\n- Do NOT touch GitHub PR descriptions; this slice is local-history-only. If PR bodies on GitHub also contain the trailer, that's a separate GitHub web/API edit.\n\nproof_level target: build-tested + git-history-rewritten."
     }
   ]
 }

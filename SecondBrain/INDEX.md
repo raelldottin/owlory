@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [queue-claude-trailer-history-rewrite-slice (queue-only; app-history-strip-claude-trailers queued at pri 96 as destructive git-hygiene cleanup of ~84 trailer-bearing commits since 2026-05-03; force-push-with-lease required; risks captured)](sessions/2026-05-20/092517-queue-claude-trailer-history-rewrite-slice.md)
 - [queue-robinhood-design-research-slice (queue-only; app-design-research-robinhood-newsroom-lessons queued at pri 95 to read robinhood.com newsroom design category and map applicable lessons to Owlory surfaces; analysis-only with explicit non-implementation scope)](sessions/2026-05-20/091519-queue-robinhood-design-research-slice.md)
 - [app-localization-smallest-width-accessibility-regression (regression-tested; added iPhone SE `DOMAIN=localization-smallest-width` routing for existing localization layout/accessibility XCUITests)](sessions/2026-05-20/085912-app-localization-smallest-width-accessibility-regression.md)
 - [automation-localization-iphone-se-simulator-provisioning (build-tested; added idempotent iPhone SE simulator provision/check helper + Makefile targets; provisioned iPhone SE on iOS 26.5; unblocked smallest-width localization regression)](sessions/2026-05-20/085344-automation-localization-iphone-se-simulator-provisioning.md)
