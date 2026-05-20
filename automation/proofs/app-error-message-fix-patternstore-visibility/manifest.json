@@ -1,0 +1,51 @@
+{
+  "slice_id": "app-error-message-fix-patternstore-visibility",
+  "status": "done",
+  "completed_at": "2026-05-20T14:38:52Z",
+  "proof_level": "refactor + automation-tested",
+  "audit_findings_closed": [
+    "F10 PatternStore refresh failure set unsurfaced lastError",
+    "F11 PatternStore digest generation failure set unsurfaced lastError"
+  ],
+  "decision": {
+    "chosen_option": "c",
+    "description": "Remove PatternStore.lastError as dead UI state and keep failures diagnostic-only.",
+    "rationale": [
+      "PatternStore.refresh is triggered from app appearance and foreground lifecycle, not a direct user action.",
+      "Pattern snapshot and digest data are optional insight surfaces; failing to refresh them should not interrupt the main Today workflow.",
+      "An alert would be noisy because it could fire during app lifecycle refresh.",
+      "An inline digest-list row would not help when no latest digest exists and the digest list is not reachable from Today.",
+      "The previous lastError was not read anywhere, so it created a false impression of user-visible error handling."
+    ]
+  },
+  "code_changes": [
+    "Removed PatternStore.lastError from Combine and non-Combine declarations.",
+    "Removed success-path lastError clearing.",
+    "Changed refresh failure handling to PerformanceTelemetry.notice(\"PatternStore refresh failed: ...\", category: .patterns).",
+    "Changed digest generation failure handling to PerformanceTelemetry.notice(\"PatternStore digest generation failed: ...\", category: .patterns)."
+  ],
+  "user_visible_copy": {
+    "introduced": false,
+    "resource_updates_required": false,
+    "review_return_updates_required": false,
+    "reason": "The chosen model is a refactor/dead-state removal, not a localized user-facing copy surface."
+  },
+  "scope_boundaries": [
+    "Did not change PatternEngine, WeeklyDigestRules, or digest generation behavior.",
+    "Did not add an alert or inline status row.",
+    "Did not touch localization resources or review return files.",
+    "Did not alter Today or digest navigation UI."
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-patternstore-visibility": "passed",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected app-error-message-fix-patternstore-visibility",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; localization-review-drift-check 0 drift; 93 automation tests)",
+    "git diff --check": "passed",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' -derivedDataPath /tmp/owlory-patternstore-build": "passed"
+  },
+  "next_slices": [
+    "app-error-message-fix-designsystem-accessibility"
+  ]
+}

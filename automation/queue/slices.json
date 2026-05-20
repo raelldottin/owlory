@@ -6288,7 +6288,7 @@
     {
       "slice_id": "app-error-message-fix-patternstore-visibility",
       "title": "Resolve PatternStore silent-failure: surface or remove lastError",
-      "status": "queued",
+      "status": "done",
       "priority": 80,
       "domain": "design",
       "allowed_paths": [
@@ -6317,7 +6317,7 @@
       ],
       "max_files_changed": 8,
       "entry_condition": "app-error-message-audit findings F10/F11 show PatternStore.lastError is set on failure but no view surfaces it. The user sees stale pattern data with no indication that computation failed.",
-      "notes": "Decide the right visibility model for PatternStore failures. Options:\n(a) Add an alert binding in Today's digest list / digest detail. Risk: noisy if pattern computation fails routinely.\n(b) Inline status row in the digest list ('Couldn't generate digest. Pull to retry.'). Less intrusive than an alert.\n(c) Remove PatternStore.lastError as dead code. Defensible if pattern failures are always transient and resolved by next refresh.\n\nPick one in this slice. Capture rationale in automation/proofs/app-error-message-fix-patternstore-visibility/manifest.json and (optionally) a short ADR under docs/decisions/. The choice is a UX decision, not a copy fix; the audit explicitly leaves this open.\n\nIf option (b) is chosen, copy must follow docs/workflows/content-standards.md section 2 (localized, resolution-guided, sentence case + period). If option (c), no copy work needed \u2014 only the dead-code removal.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F10, F11.\n\nproof_level target: localized-copy OR refactor."
+      "notes": "Decide the right visibility model for PatternStore failures. Options:\n(a) Add an alert binding in Today's digest list / digest detail. Risk: noisy if pattern computation fails routinely.\n(b) Inline status row in the digest list ('Couldn't generate digest. Pull to retry.'). Less intrusive than an alert.\n(c) Remove PatternStore.lastError as dead code. Defensible if pattern failures are always transient and resolved by next refresh.\n\nPick one in this slice. Capture rationale in automation/proofs/app-error-message-fix-patternstore-visibility/manifest.json and (optionally) a short ADR under docs/decisions/. The choice is a UX decision, not a copy fix; the audit explicitly leaves this open.\n\nIf option (b) is chosen, copy must follow docs/workflows/content-standards.md section 2 (localized, resolution-guided, sentence case + period). If option (c), no copy work needed \u2014 only the dead-code removal.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F10, F11.\n\nproof_level target: localized-copy OR refactor.\n\nCompleted on 2026-05-20 with option (c): removed PatternStore.lastError as dead UI state and converted the two catch blocks to diagnostic PerformanceTelemetry.notice calls. Rationale: PatternStore.refresh runs from app/foreground lifecycle rather than direct user intent, pattern/digest data is optional insight data, and surfacing an alert or inline warning would either be noisy or unreachable when no latest digest exists. No user-visible copy was introduced, so no resource/review-return fan-out was needed. proof_level achieved: refactor + automation-tested."
     },
     {
       "slice_id": "app-error-message-fix-designsystem-accessibility",

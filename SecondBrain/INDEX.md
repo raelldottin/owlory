@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-error-message-fix-patternstore-visibility (refactor + automation-tested; removed dead PatternStore.lastError and kept lifecycle-triggered pattern/digest failures as diagnostic telemetry, with no new user-visible copy)](sessions/2026-05-20/143852-app-error-message-fix-patternstore-visibility.md)
 - [app-error-message-fix-writestore-domain-message (localized-copy + automation-tested; WriteStore source-note invalid-stage fallback now uses String(localized:) with valid-stage guidance; key added across 19 locales; 18 return files mark new row as automated draft pending native/fluent review)](sessions/2026-05-20/115616-app-error-message-fix-writestore-domain-message.md)
 - [app-error-message-fix-store-templates (localized-copy + automation-tested; 8 store-template lastError bodies now route through String(localized:) keys; 8 keys added across 19 locales; 18 return files mark new rows as automated drafts pending native/fluent review)](sessions/2026-05-20/114754-app-error-message-fix-store-templates.md)
 - [app-error-message-audit (doc-only; inventoried 16 error-message surfaces, 13 user-visible; queued 4 focused fix slices for store templates, WriteStore stage guidance, PatternStore visibility, and DesignSystem accessibility error labels)](sessions/2026-05-20/102151-app-error-message-audit.md)

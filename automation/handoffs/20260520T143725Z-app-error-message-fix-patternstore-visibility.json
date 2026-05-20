@@ -1,0 +1,54 @@
+{
+  "slice_id": "app-error-message-fix-patternstore-visibility",
+  "title": "Resolve PatternStore silent-failure: surface or remove lastError",
+  "status": "done",
+  "completed_at": "2026-05-20T14:38:52Z",
+  "proof_level": "refactor + automation-tested",
+  "summary": "Resolved PatternStore's silent failure state by removing the unsurfaced lastError property and logging refresh/digest-generation failures through PerformanceTelemetry.notice. No user-visible copy was added because PatternStore refresh runs from lifecycle hooks and pattern/digest data is optional.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+    "automation/proofs/app-error-message-fix-patternstore-visibility/manifest.json",
+    "automation/handoffs/20260520T143725Z-app-error-message-fix-patternstore-visibility.json",
+    "automation/queue/slices.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/143852-app-error-message-fix-patternstore-visibility.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-patternstore-visibility",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' -derivedDataPath /tmp/owlory-patternstore-build"
+  ],
+  "validations_failed": [],
+  "validation_pending": [],
+  "contract_status_changes": [
+    {
+      "contract": "PatternStore error visibility",
+      "before": "PatternStore set lastError strings that no view observed, so failures looked handled in application state but were effectively dead UI state.",
+      "after": "PatternStore no longer exposes dead lastError state; refresh and digest-generation failures are diagnostic-only telemetry notices.",
+      "proof": [
+        "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+        "automation/proofs/app-error-message-fix-patternstore-visibility/manifest.json"
+      ]
+    }
+  ],
+  "not_claimed": [
+    "Localized user-facing PatternStore error copy.",
+    "Running-app smoke proof.",
+    "A new retry affordance for digest generation.",
+    "Changes to PatternEngine or WeeklyDigestRules behavior."
+  ],
+  "residual_risks": [
+    "Users still do not receive a visible error when optional pattern data fails to refresh. This is intentional for this slice because the failure is lifecycle-triggered and not clearly user-actionable.",
+    "Telemetry-only diagnostics depend on OSLog availability."
+  ],
+  "recommended_next_slice": "app-error-message-fix-designsystem-accessibility",
+  "recommended_next_reason": "It is the remaining queued follow-up from the error-message audit.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T14:38:52Z"
+}

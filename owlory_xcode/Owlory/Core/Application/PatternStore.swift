@@ -9,11 +9,9 @@ final class PatternStore: OwloryObservableObject {
     #if canImport(Combine)
         @Published private(set) var weeklySnapshot: PatternSnapshot?
         @Published private(set) var latestDigest: WeeklyDigest?
-        @Published var lastError: String?
     #else
         private(set) var weeklySnapshot: PatternSnapshot?
         private(set) var latestDigest: WeeklyDigest?
-        var lastError: String?
     #endif
 
     private let entryRepository: any TodayEntryRangeRepository
@@ -71,12 +69,14 @@ final class PatternStore: OwloryObservableObject {
 
                 try snapshotRepository.saveSnapshot(snapshot)
                 weeklySnapshot = snapshot
-                lastError = nil
 
                 // Generate weekly digest on Monday for previous Mon-Sun
                 generateDigestIfNeeded()
             } catch {
-                lastError = "Failed to compute patterns: \(error.localizedDescription)"
+                PerformanceTelemetry.notice(
+                    "PatternStore refresh failed: \(error.localizedDescription)",
+                    category: .patterns
+                )
             }
         }
     }
@@ -122,7 +122,10 @@ final class PatternStore: OwloryObservableObject {
                     latestDigest = latestDigest(in: existingDigests)
                 }
             } catch {
-                lastError = "Failed to generate digest: \(error.localizedDescription)"
+                PerformanceTelemetry.notice(
+                    "PatternStore digest generation failed: \(error.localizedDescription)",
+                    category: .patterns
+                )
             }
         }
     }
