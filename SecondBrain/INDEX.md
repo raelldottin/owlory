@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-error-message-audit (doc-only; inventoried 16 error-message surfaces, 13 user-visible; queued 4 focused fix slices for store templates, WriteStore stage guidance, PatternStore visibility, and DesignSystem accessibility error labels)](sessions/2026-05-20/102151-app-error-message-audit.md)
 - [app-content-standards-integrated-reference (doc-only; new docs/workflows/content-standards.md pairing visible-component choice with copy shape — CTA capitalization, error-phrasing required shape, header punctuation, component-to-content-type mapping, L() key naming cross-ref; named lastError-template gap for the queued audit slice to inventory and fix)](sessions/2026-05-20/101743-app-content-standards-integrated-reference.md)
 - [queue-robinhood-followup-slices (queue-only; appended 3 Robinhood-derived follow-up slices — content-standards-integrated-reference pri 70, error-message-audit pri 75, design-vision-metaphor-adr pri 85)](sessions/2026-05-20/100726-queue-robinhood-followup-slices.md)
 - [app-design-research-robinhood-newsroom-lessons (doc-only; read all 5 Robinhood newsroom design articles; mapped lessons to Owlory surfaces with applicability ratings; 3 optional follow-up slices recommended; integrated content standards article is most actionable)](sessions/2026-05-20/095634-app-design-research-robinhood-newsroom-lessons.md)

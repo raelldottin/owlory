@@ -1,0 +1,245 @@
+{
+  "slice_id": "app-error-message-audit",
+  "audit_timestamp": "2026-05-20T10:21:51Z",
+  "scope": "Inventory of user-visible error message surfaces. Audit-only; no copy changes in this slice.",
+  "method": [
+    "grep 'lastError\\s*=' across owlory_xcode/Owlory/Core/Application/*.swift and owlory_xcode/Owlory/Features/**/*.swift, excluding nil-clear assignments.",
+    "grep '.alert(' across Features views with /error|fail|couldn/ filter.",
+    "grep 'L(\"...error|fail|invalid|Couldn' and NSLocalizedString variants for the same keys across the app and DesignSystem.",
+    "grep Text(.*lastError to locate alert message bindings.",
+    "grep 'accessibilityLabel|accessibilityHint|accessibilityValue' with /error/ filter to catch spoken error surfaces.",
+    "grep 'PerformanceTelemetry|Logger' with error context to confirm log-only versus user-visible split."
+  ],
+  "classification_legend": {
+    "ok": "Localized AND provides specific resolution guidance.",
+    "needs-improvement": "Localized but resolution guidance is partial OR resolution-guided but not localized.",
+    "vague-no-resolution": "Neither localized nor resolution-guided; raw exception text reaches the user.",
+    "non-ui-out-of-scope": "Diagnostic logging only; never surfaces to a user-visible component."
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "file": "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+      "line": 158,
+      "text": "Failed to save sessions: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Train/TrainView.swift:45 (.alert 'Couldn't Update Session' body)",
+      "note": "Bound to .alert body via Text(store.lastError ?? \"\")."
+    },
+    {
+      "id": "F02",
+      "file": "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+      "line": 85,
+      "text": "This note can't be turned into a source note from its current stage.",
+      "localized": false,
+      "resolution_guidance": "partial",
+      "classification": "needs-improvement",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Write/WriteView.swift:60 (.alert 'Couldn't Update Write' body)",
+      "note": "Domain-specific message rather than the uniform template. Tells the user what is wrong but not what to do next. A reasonable upgrade is to add a resolution clue (e.g., 'Move it to capture stage first.')."
+    },
+    {
+      "id": "F03",
+      "file": "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+      "line": 110,
+      "text": "Failed to save notes: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Write/WriteView.swift:60 (.alert 'Couldn't Update Write' body)"
+    },
+    {
+      "id": "F04",
+      "file": "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+      "line": 470,
+      "text": "Failed to save runs: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Home/HomeView.swift:97 (.alert 'Couldn't Update Home' body)"
+    },
+    {
+      "id": "F05",
+      "file": "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+      "line": 489,
+      "text": "Failed to save tasks: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Home/HomeView.swift:97 (.alert 'Couldn't Update Home' body)"
+    },
+    {
+      "id": "F06",
+      "file": "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+      "line": 498,
+      "text": "Failed to save protocols: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Home/HomeView.swift:97 (.alert 'Couldn't Update Home' body)"
+    },
+    {
+      "id": "F07",
+      "file": "owlory_xcode/Owlory/Core/Application/CareerStore.swift",
+      "line": 61,
+      "text": "Failed to save records: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Career/CareerView.swift:34 (.alert 'Couldn't Update Career' body)"
+    },
+    {
+      "id": "F08",
+      "file": "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+      "line": 85,
+      "text": "Failed to load previous days: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Today/TodayView.swift:66 (.alert 'Couldn't Update Today' body)"
+    },
+    {
+      "id": "F09",
+      "file": "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+      "line": 534,
+      "text": "Failed to save today's entry: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "owlory_xcode/Owlory/Features/Today/TodayView.swift:66 (.alert 'Couldn't Update Today' body)"
+    },
+    {
+      "id": "F10",
+      "file": "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+      "line": 79,
+      "text": "Failed to compute patterns: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "(none — no alert binds to PatternStore.lastError)",
+      "note": "PatternStore.lastError is set on failure but no view surfaces it. The user sees stale pattern data with no indication that computation failed. Visibility decision (show + add alert, or remove dead lastError) belongs to the follow-up slice."
+    },
+    {
+      "id": "F11",
+      "file": "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+      "line": 125,
+      "text": "Failed to generate digest: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "vague-no-resolution",
+      "surfaces_at": "(none — no alert binds to PatternStore.lastError)",
+      "note": "Same silent-failure shape as F10."
+    },
+    {
+      "id": "F12",
+      "file": "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+      "key": "audio.playback.accessibility.error",
+      "text": "Playback error: %@",
+      "localized": true,
+      "resolution_guidance": "no",
+      "classification": "needs-improvement",
+      "surfaces_at": "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift:44-50 (.accessibilityLabel)",
+      "note": "Localized via NSLocalizedString + String.localizedStringWithFormat with %@, but %@ interpolates raw underlying-error text. No resolution clue."
+    },
+    {
+      "id": "F13",
+      "file": "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+      "key": "voice.capture.accessibility.error",
+      "text": "Error: %@",
+      "localized": true,
+      "resolution_guidance": "no",
+      "classification": "needs-improvement",
+      "surfaces_at": "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift accessibilityText",
+      "note": "Localized but %@ surfaces raw exception text. 'Error: ' prefix alone is not a resolution guide."
+    },
+    {
+      "id": "F14",
+      "file": "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+      "line": 50,
+      "text": "Notification authorization failed: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "non-ui-out-of-scope",
+      "surfaces_at": "(none — PerformanceTelemetry.notice diagnostic logging)",
+      "note": "Diagnostic logging only; not surfaced to the user. The user-visible authorization concern is a separate UX question (whether the app should prompt to open Settings) — out of scope for this audit."
+    },
+    {
+      "id": "F15",
+      "file": "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift",
+      "line": 126,
+      "text": "Failed to schedule reminder for \\(reminder.identifier): \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "non-ui-out-of-scope",
+      "surfaces_at": "(none — PerformanceTelemetry.notice diagnostic logging)"
+    },
+    {
+      "id": "F16",
+      "file": "owlory_xcode/Owlory/Core/Application/CompletionHistoryStore.swift",
+      "line": 122,
+      "text": "CompletionHistoryStore save failed: \\(error.localizedDescription)",
+      "localized": false,
+      "resolution_guidance": "no",
+      "classification": "non-ui-out-of-scope",
+      "surfaces_at": "(none — PerformanceTelemetry.notice diagnostic logging)"
+    }
+  ],
+  "summary": {
+    "total_findings": 16,
+    "ok": 0,
+    "needs_improvement": 3,
+    "vague_no_resolution": 10,
+    "non_ui_out_of_scope": 3,
+    "user_visible_findings": 13,
+    "alert_surfaces": 5,
+    "stores_with_user_visible_error_state": 5,
+    "stores_with_silent_error_state": 1
+  },
+  "uniform_template_pattern": {
+    "shape": "Failed to <verb> <noun>: \\(error.localizedDescription)",
+    "occurrences": 10,
+    "files": [
+      "TrainStore.swift",
+      "WriteStore.swift (line 110)",
+      "HomeStore.swift (3 sites)",
+      "CareerStore.swift",
+      "TodayStore.swift (2 sites)",
+      "PatternStore.swift (2 sites; silent)"
+    ],
+    "shared_remediation": "Replace with localized key under <domain>.error.<situation> namespace, sentence case + period, names the user-actionable next step (e.g., 'Free up storage and try again.', 'Restart Owlory if the issue persists.')."
+  },
+  "follow_up_slices_queued": [
+    {
+      "slice_id": "app-error-message-fix-store-templates",
+      "priority": 78,
+      "scope": "Replace the 8 user-visible store-template lastError assignments (TrainStore x1, WriteStore:110 x1, HomeStore x3, CareerStore x1, TodayStore x2) with localized, resolution-guided messages. Does NOT change PatternStore (separate slice F10/F11) or WriteStore:85 (separate slice F02)."
+    },
+    {
+      "slice_id": "app-error-message-fix-writestore-domain-message",
+      "priority": 79,
+      "scope": "WriteStore line 85: 'This note can't be turned into a source note from its current stage.' Replace with localized variant that adds a resolution clue (which stage the user needs the note to be in)."
+    },
+    {
+      "slice_id": "app-error-message-fix-patternstore-visibility",
+      "priority": 80,
+      "scope": "PatternStore lastError is set on failure but no view surfaces it. Decide: (a) add an alert binding so the user knows pattern/digest computation failed, (b) make the failure visible inline (e.g., insight row showing 'Couldn't generate digest'), or (c) remove the lastError property as dead code. Constraint: do not introduce an alert if the failures are recoverable on next refresh (which they typically are for pattern computation)."
+    },
+    {
+      "slice_id": "app-error-message-fix-designsystem-accessibility",
+      "priority": 81,
+      "scope": "Replace raw %@ interpolation in audio.playback.accessibility.error and voice.capture.accessibility.error with resolution-guided text. The raw error description is rarely useful to a screen-reader user; specific guidance like 'Recording failed. Tap to try again.' is more accessible."
+    }
+  ],
+  "explicit_non_audit_findings": [
+    "PatternStore has a silent-failure shape (F10/F11) where errors are set but never shown. This is a product gap, not a copy gap — the visibility decision belongs to the follow-up slice, not the audit.",
+    "WriteStore:85 (F02) is the only finding that already has any user-actionable framing in its English source. All other lastError templates are equally vague."
+  ],
+  "not_claimed": [
+    "All error surfaces in Owlory have been inventoried — the audit covered lastError assignments, .alert bindings, accessibility error labels, and PerformanceTelemetry logs. It did not exhaustively grep every accessibilityValue, every Text(...), every conditional within feature views. Surfaces that don't match the standard patterns may exist.",
+    "Any of the queued follow-up fix slices will be run automatically. Project-owner / supervisor decides.",
+    "The non-UI PerformanceTelemetry sites need no further treatment. They are out-of-scope for THIS audit, but a separate diagnostic-logging quality review could decide whether to add structured error metadata or move sensitive bits out of logs.",
+    "Localizing the existing 'Couldn't Update X' alert titles is needed — those are already localized via direct-literal SwiftUI behavior (the literal IS the key, and all 5 keys exist in Localizable.strings). The titles are fine; only the bodies (driven by lastError) need work."
+  ],
+  "proof_level": "doc-only"
+}

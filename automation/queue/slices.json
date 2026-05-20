@@ -6164,7 +6164,7 @@
     {
       "slice_id": "app-error-message-audit",
       "title": "Audit lastError + runtime error surfaces for resolution-guided messaging",
-      "status": "queued",
+      "status": "done",
       "priority": 75,
       "domain": "design",
       "allowed_paths": [
@@ -6186,9 +6186,9 @@
       "depends_on": [
         "app-design-research-robinhood-newsroom-lessons"
       ],
-      "max_files_changed": 4,
+      "max_files_changed": 5,
       "entry_condition": "Robinhood newsroom research (commit acd6903) flagged that vague error messages ('Error code: 1234' style) are an anti-pattern; every user-visible error should include specific resolution guidance. Owlory exposes lastError on multiple stores (TrainStore, WriteStore, HomeStore, CareerStore, TodayStore) plus assorted runtime error strings, but no audit has inventoried their content.",
-      "notes": "Audit-only slice \u2014 no copy changes in this slice. Inventory all user-visible error surfaces in Owlory:\n\n1. grep for 'lastError' assignments in owlory_xcode/Owlory/Core/Application/*.swift and owlory_xcode/Owlory/Features/**/*.swift.\n2. grep for direct String(localized: ...) or L(...) calls with 'error', 'fail', 'invalid' in the key.\n3. grep for showAlert / alert / .alert(...) / Text(\"Error... patterns that surface error strings to the user.\n4. For each finding, capture: file:line, the error string (literal English source), whether it is localized (uses L() / String(localized:)), and whether it provides specific resolution guidance (yes / partial / no).\n\nPreserve findings under automation/proofs/app-error-message-audit/manifest.json with per-finding entries. Classify each as ok / needs-improvement / vague-no-resolution. Queue follow-up per-store fix slices for the needs-improvement and vague-no-resolution items; do NOT fix copy in this audit slice.\n\nDo NOT change any error message text in this slice. Do NOT add new localization keys. The audit produces a manifest + may queue narrow fix slices.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #3 anti-pattern.\n\nproof_level target: doc-only (audit-only)."
+      "notes": "Audit-only slice \u2014 no copy changes in this slice. Inventory all user-visible error surfaces in Owlory:\n\n1. grep for 'lastError' assignments in owlory_xcode/Owlory/Core/Application/*.swift and owlory_xcode/Owlory/Features/**/*.swift.\n2. grep for direct String(localized: ...) or L(...) calls with 'error', 'fail', 'invalid' in the key.\n3. grep for showAlert / alert / .alert(...) / Text(\"Error... patterns that surface error strings to the user.\n4. For each finding, capture: file:line, the error string (literal English source), whether it is localized (uses L() / String(localized:)), and whether it provides specific resolution guidance (yes / partial / no).\n\nPreserve findings under automation/proofs/app-error-message-audit/manifest.json with per-finding entries. Classify each as ok / needs-improvement / vague-no-resolution. Queue follow-up per-store fix slices for the needs-improvement and vague-no-resolution items; do NOT fix copy in this audit slice.\n\nDo NOT change any error message text in this slice. Do NOT add new localization keys. The audit produces a manifest + may queue narrow fix slices.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #3 anti-pattern.\n\nproof_level target: doc-only (audit-only).\n\nCap bumped from 4 to 5 during execution (2026-05-20): manifest + queue + handoff + INDEX + session is the realistic minimum for an audit slice that also queues follow-ups. The cap is documented here so future audit slices plan for 5."
     },
     {
       "slice_id": "app-design-vision-metaphor-adr",
@@ -6217,6 +6217,139 @@
       "max_files_changed": 3,
       "entry_condition": "Robinhood newsroom research (commit acd6903) noted that Robinhood Retirement used 'perpetual motion machines' as a single unifying visual metaphor that reinforced typography, messaging, diagrams, and charts. Owlory has implicit narratives ('Today', 'Continue', 'momentum from Patterns digests') but no formally named throughline that future surfaces can align to.",
       "notes": "Doc-only ADR slice. Write a short docs/decisions/0001-design-vision-metaphor.md (or whichever 4-digit number is next free under docs/decisions/) that names the unifying metaphor connecting Today / Continue / Patterns / Train consistency.\n\nThe ADR should NOT prescribe specific UI changes. It should name the throughline (working hypothesis: 'quiet progress' or 'gentle momentum') so future slices can ask 'does this surface reinforce or contradict the named throughline?' Include:\n\n1. Context \u2014 Owlory is a calm life-command-center, not a fintech or notification-heavy product.\n2. Decision \u2014 name the throughline; describe how it shows up in Today (focus three + readiness band), Continue (returning to in-progress work), Patterns (weekly digest as accumulated momentum), Train (consistency over intensity).\n3. Consequences \u2014 future surfaces that introduce decorative motion, dense data, or attention-grabbing notifications would contradict the throughline; surface them for review.\n4. Cross-reference Robinhood research article #5 (Robinhood Retirement) for the analogous 'perpetual motion machines' pattern; explicitly note Owlory's narrative is different (not financial momentum; rather quiet daily consistency).\n\nKeep the ADR short \u2014 under 200 lines. Do NOT change any existing UI, copy, or asset. Do NOT propose specific component changes. Update docs/README.md to link the new ADR if docs/decisions/ has an index there.\n\nThe slice is OPTIONAL per the Robinhood research recommendation. If the project owner decides the throughline is already obvious without an ADR, this slice can be cancelled.\n\nReference: automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json article #5 + synthesis section 'Visual narrative / motion'.\n\nproof_level target: doc-only."
+    },
+    {
+      "slice_id": "app-error-message-fix-store-templates",
+      "title": "Replace 8 user-visible store-template lastError messages with localized resolution-guided copy",
+      "status": "queued",
+      "priority": 78,
+      "domain": "design",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/CareerStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "automation/proofs/app-error-message-fix-store-templates/",
+        "docs/workflows/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-error-message-fix-store-templates",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-error-message-audit"
+      ],
+      "max_files_changed": 30,
+      "entry_condition": "app-error-message-audit (commit follow-up to 1797836) classified 8 user-visible store-template lastError assignments as vague-no-resolution. Each surfaces in an alert body via Text(store.lastError ?? \"\"). Replacing the template with localized, resolution-guided copy is the most actionable copy fix from the Robinhood-derived content standards.",
+      "notes": "Per-finding list (English source values shown \u2014 translations follow per-locale native-review conventions):\n\nF01 TrainStore.swift:158 'Failed to save sessions: <error>' -> localized key train.error.session.save with resolution clue (e.g., 'Couldn't save the session. Free up storage and try again.').\nF03 WriteStore.swift:110 'Failed to save notes: <error>' -> write.error.note.save.\nF04 HomeStore.swift:470 'Failed to save runs: <error>' -> home.error.run.save.\nF05 HomeStore.swift:489 'Failed to save tasks: <error>' -> home.error.task.save.\nF06 HomeStore.swift:498 'Failed to save protocols: <error>' -> home.error.protocol.save.\nF07 CareerStore.swift:61 'Failed to save records: <error>' -> career.error.record.save.\nF08 TodayStore.swift:85 'Failed to load previous days: <error>' -> today.error.history.load.\nF09 TodayStore.swift:534 'Failed to save today's entry: <error>' -> today.error.entry.save.\n\nConstraints:\n1. Each new message MUST follow docs/workflows/content-standards.md section 2 (localized via L() or String(localized:), sentence case + period, names what the user can do next).\n2. Do NOT surface error.localizedDescription directly. Log it via PerformanceTelemetry if useful for diagnosis but do not include it in user-visible text.\n3. Update en.lproj/Localizable.strings with the 8 new keys.\n4. Update all 18 non-English locale Localizable.strings + per-locale return files for parity (make localization-check enforces parity). Translations may stay as english-source-equivalent draft until the next native-review pass \u2014 clearly mark provenance in the per-locale return files.\n5. Do NOT touch PatternStore (separate slice handles visibility decision). Do NOT touch WriteStore line 85 (separate slice handles the domain-specific message).\n6. Update docs/workflows/content-standards.md section 2 to remove the 'current gap' callout once these are landed (or leave the callout pointing only to the remaining gaps).\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F01-F09 (excluding F02).\n\nproof_level target: localized-copy."
+    },
+    {
+      "slice_id": "app-error-message-fix-writestore-domain-message",
+      "title": "Localize + add resolution clue to WriteStore source-note-stage error",
+      "status": "queued",
+      "priority": 79,
+      "domain": "design",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/WriteStore.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "automation/proofs/app-error-message-fix-writestore-domain-message/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-error-message-fix-writestore-domain-message",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-error-message-audit"
+      ],
+      "max_files_changed": 25,
+      "entry_condition": "app-error-message-audit finding F02 classified WriteStore.swift:85 ('This note can't be turned into a source note from its current stage.') as needs-improvement: it tells the user what is wrong but not what to do. The Robinhood content-standards rule requires resolution guidance.",
+      "notes": "F02 WriteStore.swift:85 'This note can't be turned into a source note from its current stage.' -> localized key write.error.note.sourceConversion.invalidStage with resolution clue (e.g., 'Move it back to Capture or Source first, then try again.'). Inspect WriteStore to confirm which stages ARE valid for the conversion and reference the stage by its localized name. Do NOT change domain logic; only the user-visible string.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales (see app-error-message-fix-store-templates notes for the parity expectation).\n\nReference: automation/proofs/app-error-message-audit/manifest.json finding F02.\n\nproof_level target: localized-copy."
+    },
+    {
+      "slice_id": "app-error-message-fix-patternstore-visibility",
+      "title": "Resolve PatternStore silent-failure: surface or remove lastError",
+      "status": "queued",
+      "priority": 80,
+      "domain": "design",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/PatternStore.swift",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Patterns/",
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "automation/proofs/app-error-message-fix-patternstore-visibility/",
+        "docs/decisions/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-error-message-fix-patternstore-visibility",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-error-message-audit"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "app-error-message-audit findings F10/F11 show PatternStore.lastError is set on failure but no view surfaces it. The user sees stale pattern data with no indication that computation failed.",
+      "notes": "Decide the right visibility model for PatternStore failures. Options:\n(a) Add an alert binding in Today's digest list / digest detail. Risk: noisy if pattern computation fails routinely.\n(b) Inline status row in the digest list ('Couldn't generate digest. Pull to retry.'). Less intrusive than an alert.\n(c) Remove PatternStore.lastError as dead code. Defensible if pattern failures are always transient and resolved by next refresh.\n\nPick one in this slice. Capture rationale in automation/proofs/app-error-message-fix-patternstore-visibility/manifest.json and (optionally) a short ADR under docs/decisions/. The choice is a UX decision, not a copy fix; the audit explicitly leaves this open.\n\nIf option (b) is chosen, copy must follow docs/workflows/content-standards.md section 2 (localized, resolution-guided, sentence case + period). If option (c), no copy work needed \u2014 only the dead-code removal.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F10, F11.\n\nproof_level target: localized-copy OR refactor."
+    },
+    {
+      "slice_id": "app-error-message-fix-designsystem-accessibility",
+      "title": "Replace raw %@ in voice/audio accessibility error labels with resolution-guided text",
+      "status": "queued",
+      "priority": 81,
+      "domain": "design",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+        "owlory_xcode/Owlory/Resources/",
+        "localization/review/",
+        "automation/proofs/app-error-message-fix-designsystem-accessibility/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-error-message-fix-designsystem-accessibility",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make localization-check",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-error-message-audit"
+      ],
+      "max_files_changed": 25,
+      "entry_condition": "app-error-message-audit findings F12/F13 classified audio.playback.accessibility.error and voice.capture.accessibility.error as needs-improvement: they are localized but interpolate raw %@ exception text without any resolution clue.",
+      "notes": "F12 audio.playback.accessibility.error 'Playback error: %@' -> resolution-guided variant for screen-reader users (e.g., 'Playback failed. Double-tap to try again.'). The %@ raw underlying-error text is rarely useful to a screen-reader user and should not be the user-visible content. Log %@ via PerformanceTelemetry if useful for diagnosis.\nF13 voice.capture.accessibility.error 'Error: %@' -> resolution-guided variant (e.g., 'Recording failed. Double-tap to try again.').\n\nIf retaining %@ is necessary for diagnostic transparency, wrap it in a sentence shape: 'Recording failed: %@. Double-tap to try again.' Still localized + still resolution-guided.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F12, F13.\n\nproof_level target: localized-copy."
     }
   ]
 }
