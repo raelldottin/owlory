@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "一致性很强 — %d%% 的训练已完成或调整。";
 "train.calibration.consistencySummary.solid" = "节奏稳定 — 本周期跟进率为 %d%%。";
 "train.calibration.consistencySummary.low" = "训练跟进率为 %d%%。考虑减少数量，安排更有承诺的训练。";
+
+/* Error message templates */
+"train.error.session.save" = "无法保存训练会话。请释放存储空间，然后重试。";
+"write.error.note.save" = "无法保存笔记。请释放存储空间，然后重试。";
+"home.error.run.save" = "无法保存协议运行。请释放存储空间，然后重试。";
+"home.error.task.save" = "无法保存任务。请释放存储空间，然后重试。";
+"home.error.protocol.save" = "无法保存协议。请释放存储空间，然后重试。";
+"career.error.record.save" = "无法保存事业记录。请释放存储空间，然后重试。";
+"today.error.history.load" = "无法加载前几天。请关闭并重新打开 Owlory，然后重试。";
+"today.error.entry.save" = "无法保存今天的条目。请释放存储空间，然后重试。";

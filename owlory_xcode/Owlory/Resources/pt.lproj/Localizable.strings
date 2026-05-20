@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Consistência forte — %d%% das sessões concluídas ou adaptadas.";
 "train.calibration.consistencySummary.solid" = "Ritmo sólido — %d%% de seguimento neste período.";
 "train.calibration.consistencySummary.low" = "Seguimento do treino em %d%%. Considere menos sessões, mas mais comprometidas.";
+
+/* Error message templates */
+"train.error.session.save" = "Não foi possível guardar a sessão. Liberte espaço de armazenamento e tente novamente.";
+"write.error.note.save" = "Não foi possível guardar a nota. Liberte espaço de armazenamento e tente novamente.";
+"home.error.run.save" = "Não foi possível guardar a execução do protocolo. Liberte espaço de armazenamento e tente novamente.";
+"home.error.task.save" = "Não foi possível guardar a tarefa. Liberte espaço de armazenamento e tente novamente.";
+"home.error.protocol.save" = "Não foi possível guardar o protocolo. Liberte espaço de armazenamento e tente novamente.";
+"career.error.record.save" = "Não foi possível guardar o registo de carreira. Liberte espaço de armazenamento e tente novamente.";
+"today.error.history.load" = "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory e tente novamente.";
+"today.error.entry.save" = "Não foi possível guardar a entrada de hoje. Liberte espaço de armazenamento e tente novamente.";

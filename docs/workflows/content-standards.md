@@ -66,14 +66,13 @@ The Robinhood newsroom design research (commit `acd6903`, article #3)
 flagged vague error messages as an anti-pattern; this rule encodes that
 guidance.
 
-**Current gap (not fixed in this slice):** the `lastError: String?`
-properties on `TrainStore`, `WriteStore`, `HomeStore`, `CareerStore`,
-`TodayStore`, and `PatternStore` follow a uniform
-"Failed to <verb> <noun>: \(error.localizedDescription)" template. None are
-routed through `L()`, and none provide resolution guidance. The
-`app-error-message-audit` queued slice inventories the surfaces; per-store
-fix slices (queued separately by that audit) replace the templates with
-localized, resolution-guided copy.
+**Current remaining gap:** the `app-error-message-fix-store-templates`
+slice moved the save/load `lastError: String?` templates in `TrainStore`,
+`WriteStore`, `HomeStore`, `CareerStore`, and `TodayStore` to localized,
+resolution-guided keys. Remaining audited gaps are tracked separately:
+`WriteStore` still has a domain-specific stage-conversion message, and
+`PatternStore` still needs a visibility decision before its failure strings
+can be handled correctly.
 
 **Required shape when introducing a new user-visible error:**
 

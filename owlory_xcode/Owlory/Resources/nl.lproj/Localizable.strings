@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Sterke consistentie — %d%% van de sessies voltooid of aangepast.";
 "train.calibration.consistencySummary.solid" = "Solide ritme — %d%% opvolging in deze periode.";
 "train.calibration.consistencySummary.low" = "Trainingsopvolging op %d%%. Overweeg minder, maar meer toegewijde sessies.";
+
+/* Error message templates */
+"train.error.session.save" = "Kan de sessie niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"write.error.note.save" = "Kan de notitie niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"home.error.run.save" = "Kan de protocoluitvoering niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"home.error.task.save" = "Kan de taak niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"home.error.protocol.save" = "Kan het protocol niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"career.error.record.save" = "Kan de carrièrevermelding niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"today.error.history.load" = "Kan vorige dagen niet laden. Sluit Owlory en open het opnieuw. Probeer het daarna opnieuw.";
+"today.error.entry.save" = "Kan de invoer van vandaag niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";

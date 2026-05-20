@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "高い一貫性 — セッションの%d%%を完了または調整しました。";
 "train.calibration.consistencySummary.solid" = "安定したリズム — この期間のフォロースルーは%d%%です。";
 "train.calibration.consistencySummary.low" = "トレーニングのフォロースルーは%d%%です。少なめで、より確実に取り組めるセッションを検討しましょう。";
+
+/* Error message templates */
+"train.error.session.save" = "セッションを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"write.error.note.save" = "ノートを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"home.error.run.save" = "プロトコル実行を保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"home.error.task.save" = "タスクを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"home.error.protocol.save" = "プロトコルを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"career.error.record.save" = "キャリア記録を保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"today.error.history.load" = "過去の日を読み込めませんでした。Owloryを閉じて開き直し、もう一度お試しください。";
+"today.error.entry.save" = "今日のエントリーを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";

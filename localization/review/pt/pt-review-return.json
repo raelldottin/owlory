@@ -18,7 +18,7 @@
     "review_date": "2026-05-18",
     "method": "Human native/fluent all-locale review pass reported by project owner in Codex prompt: \"native/fluent review is complete for all localization\".",
     "native_reviewed": true,
-    "accepted_scope": "All Portuguese / Português Localizable.strings and Localizable.stringsdict entries present in this return file after refresh to current resources.",
+    "accepted_scope": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 8 app-error-message-fix-store-templates additions are automated drafts and are not claimed native/fluent-reviewed.",
     "source_signal": "User prompt in Codex conversation on 2026-05-18: native/fluent review is complete for all localization.",
     "previous_draft_provenance": {
       "reviewer": "claude-opus-4-7 (LLM, not native Portuguese / Português reviewer)",
@@ -37,21 +37,38 @@
         "per-entry reviewer field remains claude-opus-4-7 (LLM, not native <language> reviewer)",
         "STATUS.md native-reviewed locale count"
       ]
+    },
+    "post_packet_additions": {
+      "slice_id": "app-error-message-fix-store-templates",
+      "date": "2026-05-20",
+      "keys": [
+        "train.error.session.save",
+        "write.error.note.save",
+        "home.error.run.save",
+        "home.error.task.save",
+        "home.error.protocol.save",
+        "career.error.record.save",
+        "today.error.history.load",
+        "today.error.entry.save"
+      ],
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "native_reviewed": false
     }
   },
   "summary": {
-    "review_entry_count": 419,
+    "review_entry_count": 427,
     "status_counts": {
-      "native-reviewed": 419
+      "native-reviewed": 419,
+      "needs-layout-check": 8
     },
     "lqa_counts": {
       "passed": 419,
-      "warning": 0,
-      "reverted": 0
+      "warning": 8
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 377,
+    "strings_entry_count": 385,
     "plural_entry_count": 42,
     "native_review": {
       "locale": "pt",
@@ -59,7 +76,9 @@
       "reviewer": "Native/fluent Portuguese / Português reviewer (reported by project owner)",
       "review_date": "2026-05-18",
       "accepted_entries": 419,
-      "basis": "project-owner-reported native/fluent all-locale review pass"
+      "basis": "project-owner-reported native/fluent all-locale review pass",
+      "pending_post_packet_entries": 8,
+      "scope_note": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 8 app-error-message-fix-store-templates additions are automated drafts and are not claimed native/fluent-reviewed."
     }
   },
   "resources": [
@@ -14425,6 +14444,278 @@
         "prior_review_status": "needs-layout-check",
         "prior_reviewer": "claude-opus-4-7 (LLM, not native Portuguese / Português reviewer)",
         "prior_review_date": "2026-05-17"
+      }
+    },
+    {
+      "key": "train.error.session.save",
+      "english_value": "Couldn't save the session. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar a sessão. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "write.error.note.save",
+      "english_value": "Couldn't save the note. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar a nota. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "home.error.run.save",
+      "english_value": "Couldn't save the protocol run. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar a execução do protocolo. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "home.error.task.save",
+      "english_value": "Couldn't save the task. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar a tarefa. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "home.error.protocol.save",
+      "english_value": "Couldn't save the protocol. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar o protocolo. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "career.error.record.save",
+      "english_value": "Couldn't save the career record. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar o registo de carreira. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "today.error.history.load",
+      "english_value": "Couldn't load previous days. Close and reopen Owlory, then try again.",
+      "reviewed_value": "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "today.error.entry.save",
+      "english_value": "Couldn't save today's entry. Free up storage and try again.",
+      "reviewed_value": "Não foi possível guardar a entrada de hoje. Liberte espaço de armazenamento e tente novamente.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "pt",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
       }
     }
   ]

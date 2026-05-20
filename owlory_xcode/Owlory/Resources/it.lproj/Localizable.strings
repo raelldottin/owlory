@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Grande costanza — %d%% delle sessioni completate o adattate.";
 "train.calibration.consistencySummary.solid" = "Ritmo solido — %d%% di continuità in questo periodo.";
 "train.calibration.consistencySummary.low" = "Continuità dell'allenamento al %d%%. Valuta meno sessioni, ma più impegnate.";
+
+/* Error message templates */
+"train.error.session.save" = "Impossibile salvare la sessione. Libera spazio di archiviazione e riprova.";
+"write.error.note.save" = "Impossibile salvare la nota. Libera spazio di archiviazione e riprova.";
+"home.error.run.save" = "Impossibile salvare l’esecuzione del protocollo. Libera spazio di archiviazione e riprova.";
+"home.error.task.save" = "Impossibile salvare l’attività. Libera spazio di archiviazione e riprova.";
+"home.error.protocol.save" = "Impossibile salvare il protocollo. Libera spazio di archiviazione e riprova.";
+"career.error.record.save" = "Impossibile salvare il record di carriera. Libera spazio di archiviazione e riprova.";
+"today.error.history.load" = "Impossibile caricare i giorni precedenti. Chiudi e riapri Owlory, quindi riprova.";
+"today.error.entry.save" = "Impossibile salvare la voce di oggi. Libera spazio di archiviazione e riprova.";

@@ -155,7 +155,7 @@ final class TrainStore: OwloryObservableObject {
             try repository.saveAll(sessions)
             lastError = nil
         } catch {
-            lastError = "Failed to save sessions: \(error.localizedDescription)"
+            lastError = String(localized: "train.error.session.save")
         }
     }
 }

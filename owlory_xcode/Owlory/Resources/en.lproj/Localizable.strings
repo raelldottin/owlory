@@ -385,3 +385,13 @@
 "train.calibration.consistencySummary.strong" = "Strong consistency — %d%% of sessions completed or adapted.";
 "train.calibration.consistencySummary.solid" = "Solid rhythm — %d%% follow-through this period.";
 "train.calibration.consistencySummary.low" = "Training follow-through at %d%%. Consider fewer, more committed sessions.";
+
+/* Error message templates */
+"train.error.session.save" = "Couldn't save the session. Free up storage and try again.";
+"write.error.note.save" = "Couldn't save the note. Free up storage and try again.";
+"home.error.run.save" = "Couldn't save the protocol run. Free up storage and try again.";
+"home.error.task.save" = "Couldn't save the task. Free up storage and try again.";
+"home.error.protocol.save" = "Couldn't save the protocol. Free up storage and try again.";
+"career.error.record.save" = "Couldn't save the career record. Free up storage and try again.";
+"today.error.history.load" = "Couldn't load previous days. Close and reopen Owlory, then try again.";
+"today.error.entry.save" = "Couldn't save today's entry. Free up storage and try again.";

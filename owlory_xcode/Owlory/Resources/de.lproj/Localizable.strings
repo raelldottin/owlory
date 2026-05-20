@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Starke Konstanz — %d%% der Sitzungen abgeschlossen oder angepasst.";
 "train.calibration.consistencySummary.solid" = "Solider Rhythmus — %d%% Durchziehen in diesem Zeitraum.";
 "train.calibration.consistencySummary.low" = "Trainings-Dranbleiben bei %d%%. Erwäge weniger, dafür verbindlichere Sitzungen.";
+
+/* Error message templates */
+"train.error.session.save" = "Die Sitzung konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"write.error.note.save" = "Die Notiz konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"home.error.run.save" = "Der Protokolldurchlauf konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"home.error.task.save" = "Die Aufgabe konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"home.error.protocol.save" = "Das Protokoll konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"career.error.record.save" = "Der Karriere-Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"today.error.history.load" = "Vorherige Tage konnten nicht geladen werden. Schließen Sie Owlory, öffnen Sie es erneut und versuchen Sie es noch einmal.";
+"today.error.entry.save" = "Der heutige Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";

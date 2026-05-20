@@ -467,7 +467,7 @@ final class HomeStore: OwloryObservableObject {
             try runRepository.saveAll(runs)
             lastError = nil
         } catch {
-            lastError = "Failed to save runs: \(error.localizedDescription)"
+            lastError = String(localized: "home.error.run.save")
         }
     }
 
@@ -486,7 +486,7 @@ final class HomeStore: OwloryObservableObject {
             try taskRepository.saveAll(tasks)
             lastError = nil
         } catch {
-            lastError = "Failed to save tasks: \(error.localizedDescription)"
+            lastError = String(localized: "home.error.task.save")
         }
     }
 
@@ -495,7 +495,7 @@ final class HomeStore: OwloryObservableObject {
             try protocolRepository.saveAll(protocols)
             lastError = nil
         } catch {
-            lastError = "Failed to save protocols: \(error.localizedDescription)"
+            lastError = String(localized: "home.error.protocol.save")
         }
     }
 

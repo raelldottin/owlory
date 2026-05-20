@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Güçlü tutarlılık — oturumların %d%% kadarı tamamlandı veya uyarlandı.";
 "train.calibration.consistencySummary.solid" = "Sağlam ritim — bu dönemde %d%% takip.";
 "train.calibration.consistencySummary.low" = "Antrenman takibi %d%% düzeyinde. Daha az ama daha bağlı oturumlar düşün.";
+
+/* Error message templates */
+"train.error.session.save" = "Oturum kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"write.error.note.save" = "Not kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"home.error.run.save" = "Protokol çalıştırması kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"home.error.task.save" = "Görev kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"home.error.protocol.save" = "Protokol kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"career.error.record.save" = "Kariyer kaydı kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"today.error.history.load" = "Önceki günler yüklenemedi. Owlory’yi kapatıp yeniden açın, ardından tekrar deneyin.";
+"today.error.entry.save" = "Bugünkü giriş kaydedilemedi. Depolama alanı açıp tekrar deneyin.";

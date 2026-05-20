@@ -107,7 +107,7 @@ final class WriteStore: OwloryObservableObject {
             try repository.saveAll(notes)
             lastError = nil
         } catch {
-            lastError = "Failed to save notes: \(error.localizedDescription)"
+            lastError = String(localized: "write.error.note.save")
         }
     }
 }

@@ -82,7 +82,7 @@ final class TodayStore: OwloryObservableObject {
                 .sorted { $0.date > $1.date }
             lastError = nil
         } catch {
-            lastError = "Failed to load previous days: \(error.localizedDescription)"
+            lastError = String(localized: "today.error.history.load")
         }
     }
 
@@ -531,7 +531,7 @@ final class TodayStore: OwloryObservableObject {
             loadRecentEntries()
             lastError = nil
         } catch {
-            lastError = "Failed to save today's entry: \(error.localizedDescription)"
+            lastError = String(localized: "today.error.entry.save")
         }
     }
 

@@ -1,0 +1,89 @@
+{
+  "slice_id": "app-error-message-fix-store-templates",
+  "status": "done",
+  "completed_at": "2026-05-20T11:47:54Z",
+  "proof_level": "localized-copy + automation-tested",
+  "summary": "Replaced eight audited user-visible store-template lastError bodies with localized, resolution-guided keys and removed direct error.localizedDescription interpolation from those surfaces.",
+  "source_findings_closed": [
+    "F01 TrainStore persist session save failure",
+    "F03 WriteStore persist note save failure",
+    "F04 HomeStore run save failure",
+    "F05 HomeStore task save failure",
+    "F06 HomeStore protocol save failure",
+    "F07 CareerStore record save failure",
+    "F08 TodayStore previous-day load failure",
+    "F09 TodayStore current-entry save failure"
+  ],
+  "localized_keys": {
+    "train.error.session.save": "Couldn't save the session. Free up storage and try again.",
+    "write.error.note.save": "Couldn't save the note. Free up storage and try again.",
+    "home.error.run.save": "Couldn't save the protocol run. Free up storage and try again.",
+    "home.error.task.save": "Couldn't save the task. Free up storage and try again.",
+    "home.error.protocol.save": "Couldn't save the protocol. Free up storage and try again.",
+    "career.error.record.save": "Couldn't save the career record. Free up storage and try again.",
+    "today.error.history.load": "Couldn't load previous days. Close and reopen Owlory, then try again.",
+    "today.error.entry.save": "Couldn't save today's entry. Free up storage and try again."
+  },
+  "store_changes": [
+    "TrainStore.persist now sets String(localized: \"train.error.session.save\") on save failure.",
+    "WriteStore.persist now sets String(localized: \"write.error.note.save\") on save failure.",
+    "HomeStore.persistRuns, persistTasks, and persistProtocols now use home.error.* localized keys.",
+    "CareerStore.persist now sets String(localized: \"career.error.record.save\") on save failure.",
+    "TodayStore.loadRecentEntries and persistCurrentEntry now use today.error.* localized keys."
+  ],
+  "locale_coverage": {
+    "resource_locales_updated": [
+      "ar",
+      "de",
+      "en",
+      "es",
+      "fr",
+      "it",
+      "ja",
+      "ko",
+      "nb",
+      "nl",
+      "pt",
+      "pt-BR",
+      "ru",
+      "sv",
+      "tr",
+      "uk",
+      "vi",
+      "zh-Hans",
+      "zh-Hant"
+    ],
+    "strings_key_count_after": 385,
+    "stringsdict_key_count_after": 13,
+    "non_english_review_files_updated": 18,
+    "new_review_status": "needs-layout-check",
+    "new_review_provenance": "Codex automated draft (not native/fluent reviewer)",
+    "native_review_claim_for_new_keys": "Not claimed. Each new review row has native_review.accepted=false and pending_native_review=true.",
+    "prior_native_review_scope_preserved": "The prior project-owner-reported native/fluent review remains scoped to the 419 entries present before 2026-05-20; each return file records 8 pending post-packet additions."
+  },
+  "content_standard_update": "docs/workflows/content-standards.md now records these five store-template fixes as complete and leaves only the separate WriteStore stage-conversion message and PatternStore visibility decision as remaining audited gaps.",
+  "diff_budget": {
+    "original_max_files_changed": 30,
+    "documented_max_files_changed": 50,
+    "reason": "The slice required 8 keys across 19 Localizable.strings files plus 18 per-locale review return files. The queue cap was expanded rather than leaving locale parity or provenance incomplete."
+  },
+  "scope_boundaries": [
+    "Did not touch PatternStore failure visibility or copy.",
+    "Did not touch WriteStore source-note-stage conversion behavior or message.",
+    "Did not change readiness, scoring, persistence, or alert presentation logic.",
+    "Did not claim native/fluent review for the eight new non-English strings."
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-store-templates": "passed; selected slice context rebuilt with max_files_changed=50",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected app-error-message-fix-store-templates",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 385 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; localization-review-drift-check 0 drift; 93 automation tests)",
+    "git diff --check": "passed"
+  },
+  "next_slices": [
+    "app-error-message-fix-writestore-domain-message",
+    "app-error-message-fix-patternstore-visibility",
+    "app-error-message-fix-designsystem-accessibility"
+  ]
+}

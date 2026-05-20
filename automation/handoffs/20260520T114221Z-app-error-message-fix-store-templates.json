@@ -1,0 +1,54 @@
+{
+  "slice_id": "app-error-message-fix-store-templates",
+  "title": "Replace 8 user-visible store-template lastError messages with localized resolution-guided copy",
+  "status": "done",
+  "completed_at": "2026-05-20T11:47:54Z",
+  "proof_level": "localized-copy + automation-tested",
+  "summary": "The eight audited store-template lastError bodies no longer expose raw error.localizedDescription or English-only template copy. TrainStore, WriteStore.persist, HomeStore run/task/protocol persistence, CareerStore, and TodayStore load/save now use String(localized:) keys with resolution guidance.",
+  "changed_files_summary": [
+    "5 Core/Application store files updated to use localized error keys.",
+    "19 Localizable.strings files updated with 8 app error keys.",
+    "18 non-English review return files updated with matching post-packet rows and provenance.",
+    "docs/workflows/content-standards.md updated to narrow the remaining error-copy gap.",
+    "automation/queue/slices.json marked this slice done and expanded max_files_changed from 30 to 50 for required locale fan-out.",
+    "automation/proofs/app-error-message-fix-store-templates/manifest.json records proof and scope.",
+    "SecondBrain updated for continuity."
+  ],
+  "localized_keys": [
+    "train.error.session.save",
+    "write.error.note.save",
+    "home.error.run.save",
+    "home.error.task.save",
+    "home.error.protocol.save",
+    "career.error.record.save",
+    "today.error.history.load",
+    "today.error.entry.save"
+  ],
+  "review_return_policy": {
+    "new_non_english_rows": 144,
+    "status": "needs-layout-check",
+    "reviewer": "Codex automated draft (not native/fluent reviewer)",
+    "native_review_claim": "not claimed for the new rows",
+    "prior_review_scope": "419 entries per locale remain covered by the project-owner-reported 2026-05-18 native/fluent review pass; the 8 new rows per locale are explicit post-packet additions."
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-store-templates": "passed",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected this slice",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 385 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; drift 0; 93 tests)",
+    "git diff --check": "passed"
+  },
+  "not_claimed": [
+    "Native/fluent review for the eight new non-English strings.",
+    "PatternStore failure visibility or copy resolution.",
+    "WriteStore source-note-stage conversion message resolution.",
+    "DesignSystem audio/voice accessibility error-label resolution.",
+    "Any change to store persistence, readiness, scoring, or alert behavior."
+  ],
+  "residual_risk": [
+    "The new non-English values are automated drafts. They are localized in-app and structurally tracked, but they still need native/fluent acceptance before being counted in the native-reviewed scope.",
+    "String(localized:) fallback behavior depends on the app bundle containing the updated Localizable.strings files; localization-check proves key parity and Xcode packaging, not a running-device lookup."
+  ],
+  "next_best_slice": "app-error-message-fix-writestore-domain-message"
+}

@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Forte régularité — %d%% des séances terminées ou adaptées.";
 "train.calibration.consistencySummary.solid" = "Rythme solide — %d%% de suivi sur cette période.";
 "train.calibration.consistencySummary.low" = "Suivi de l'entraînement à %d%%. Envisagez des séances moins nombreuses, mais plus engagées.";
+
+/* Error message templates */
+"train.error.session.save" = "Impossible d’enregistrer la séance. Libérez de l’espace de stockage, puis réessayez.";
+"write.error.note.save" = "Impossible d’enregistrer la note. Libérez de l’espace de stockage, puis réessayez.";
+"home.error.run.save" = "Impossible d’enregistrer l’exécution du protocole. Libérez de l’espace de stockage, puis réessayez.";
+"home.error.task.save" = "Impossible d’enregistrer la tâche. Libérez de l’espace de stockage, puis réessayez.";
+"home.error.protocol.save" = "Impossible d’enregistrer le protocole. Libérez de l’espace de stockage, puis réessayez.";
+"career.error.record.save" = "Impossible d’enregistrer l’entrée de carrière. Libérez de l’espace de stockage, puis réessayez.";
+"today.error.history.load" = "Impossible de charger les jours précédents. Fermez puis rouvrez Owlory, puis réessayez.";
+"today.error.entry.save" = "Impossible d’enregistrer l’entrée d’aujourd’hui. Libérez de l’espace de stockage, puis réessayez.";

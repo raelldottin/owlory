@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Sterk kontinuitet — %d%% av øktene er fullført eller tilpasset.";
 "train.calibration.consistencySummary.solid" = "Solid rytme — %d%% oppfølging i denne perioden.";
 "train.calibration.consistencySummary.low" = "Treningsoppfølging på %d%%. Vurder færre, mer forpliktende økter.";
+
+/* Error message templates */
+"train.error.session.save" = "Kunne ikke lagre økten. Frigjør lagringsplass og prøv igjen.";
+"write.error.note.save" = "Kunne ikke lagre notatet. Frigjør lagringsplass og prøv igjen.";
+"home.error.run.save" = "Kunne ikke lagre protokollkjøringen. Frigjør lagringsplass og prøv igjen.";
+"home.error.task.save" = "Kunne ikke lagre oppgaven. Frigjør lagringsplass og prøv igjen.";
+"home.error.protocol.save" = "Kunne ikke lagre protokollen. Frigjør lagringsplass og prøv igjen.";
+"career.error.record.save" = "Kunne ikke lagre karriereoppføringen. Frigjør lagringsplass og prøv igjen.";
+"today.error.history.load" = "Kunne ikke laste inn tidligere dager. Lukk og åpne Owlory på nytt, og prøv igjen.";
+"today.error.entry.save" = "Kunne ikke lagre dagens oppføring. Frigjør lagringsplass og prøv igjen.";

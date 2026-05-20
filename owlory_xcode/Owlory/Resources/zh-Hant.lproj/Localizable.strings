@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "一致性很強 — %d%% 的訓練已完成或調整。";
 "train.calibration.consistencySummary.solid" = "節奏穩定 — 本週期跟進率為 %d%%。";
 "train.calibration.consistencySummary.low" = "訓練跟進率為 %d%%。考慮減少數量，安排更有承諾的訓練。";
+
+/* Error message templates */
+"train.error.session.save" = "無法儲存訓練工作階段。請釋放儲存空間，然後再試一次。";
+"write.error.note.save" = "無法儲存備忘錄。請釋放儲存空間，然後再試一次。";
+"home.error.run.save" = "無法儲存協定執行。請釋放儲存空間，然後再試一次。";
+"home.error.task.save" = "無法儲存任務。請釋放儲存空間，然後再試一次。";
+"home.error.protocol.save" = "無法儲存協定。請釋放儲存空間，然後再試一次。";
+"career.error.record.save" = "無法儲存事業記錄。請釋放儲存空間，然後再試一次。";
+"today.error.history.load" = "無法載入前幾天。請關閉並重新開啟 Owlory，然後再試一次。";
+"today.error.entry.save" = "無法儲存今天的項目。請釋放儲存空間，然後再試一次。";

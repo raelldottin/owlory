@@ -58,7 +58,7 @@ final class CareerStore: OwloryObservableObject {
             try repository.saveAll(records)
             lastError = nil
         } catch {
-            lastError = "Failed to save records: \(error.localizedDescription)"
+            lastError = String(localized: "career.error.record.save")
         }
     }
 }

@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "Tính nhất quán mạnh — %d%% phiên đã hoàn tất hoặc được điều chỉnh.";
 "train.calibration.consistencySummary.solid" = "Nhịp ổn định — %d%% mức theo sát trong giai đoạn này.";
 "train.calibration.consistencySummary.low" = "Mức theo sát luyện tập là %d%%. Cân nhắc ít phiên hơn nhưng cam kết hơn.";
+
+/* Error message templates */
+"train.error.session.save" = "Không thể lưu buổi tập. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"write.error.note.save" = "Không thể lưu ghi chú. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"home.error.run.save" = "Không thể lưu lượt chạy quy trình. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"home.error.task.save" = "Không thể lưu tác vụ. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"home.error.protocol.save" = "Không thể lưu quy trình. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"career.error.record.save" = "Không thể lưu hồ sơ sự nghiệp. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
+"today.error.history.load" = "Không thể tải các ngày trước. Hãy đóng rồi mở lại Owlory, sau đó thử lại.";
+"today.error.entry.save" = "Không thể lưu mục hôm nay. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";

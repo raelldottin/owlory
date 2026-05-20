@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "강한 일관성 — 세션의 %d%%를 완료했거나 조정했습니다.";
 "train.calibration.consistencySummary.solid" = "탄탄한 리듬 — 이 기간의 실행률은 %d%%입니다.";
 "train.calibration.consistencySummary.low" = "훈련 실행률은 %d%%입니다. 더 적고 더 확실히 지킬 수 있는 세션을 고려하세요.";
+
+/* Error message templates */
+"train.error.session.save" = "세션을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"write.error.note.save" = "노트를 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"home.error.run.save" = "프로토콜 실행을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"home.error.task.save" = "작업을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"home.error.protocol.save" = "프로토콜을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"career.error.record.save" = "커리어 기록을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";
+"today.error.history.load" = "이전 날짜를 불러올 수 없습니다. Owlory를 닫았다가 다시 연 다음 다시 시도하세요.";
+"today.error.entry.save" = "오늘 항목을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.";

@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-error-message-fix-store-templates (localized-copy + automation-tested; 8 store-template lastError bodies now route through String(localized:) keys; 8 keys added across 19 locales; 18 return files mark new rows as automated drafts pending native/fluent review)](sessions/2026-05-20/114754-app-error-message-fix-store-templates.md)
 - [app-error-message-audit (doc-only; inventoried 16 error-message surfaces, 13 user-visible; queued 4 focused fix slices for store templates, WriteStore stage guidance, PatternStore visibility, and DesignSystem accessibility error labels)](sessions/2026-05-20/102151-app-error-message-audit.md)
 - [app-content-standards-integrated-reference (doc-only; new docs/workflows/content-standards.md pairing visible-component choice with copy shape — CTA capitalization, error-phrasing required shape, header punctuation, component-to-content-type mapping, L() key naming cross-ref; named lastError-template gap for the queued audit slice to inventory and fix)](sessions/2026-05-20/101743-app-content-standards-integrated-reference.md)
 - [queue-robinhood-followup-slices (queue-only; appended 3 Robinhood-derived follow-up slices — content-standards-integrated-reference pri 70, error-message-audit pri 75, design-vision-metaphor-adr pri 85)](sessions/2026-05-20/100726-queue-robinhood-followup-slices.md)

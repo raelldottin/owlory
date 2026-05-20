@@ -384,3 +384,13 @@
 "train.calibration.consistencySummary.strong" = "ثبات قوي — اكتملت أو عُدلت %d%% من الجلسات.";
 "train.calibration.consistencySummary.solid" = "إيقاع جيد — متابعة بنسبة %d%% في هذه الفترة.";
 "train.calibration.consistencySummary.low" = "متابعة التدريب عند %d%%. فكّر في جلسات أقل وأكثر التزاماً.";
+
+/* Error message templates */
+"train.error.session.save" = "تعذر حفظ الجلسة. حرّر مساحة تخزين وحاول مرة أخرى.";
+"write.error.note.save" = "تعذر حفظ الملاحظة. حرّر مساحة تخزين وحاول مرة أخرى.";
+"home.error.run.save" = "تعذر حفظ تشغيل البروتوكول. حرّر مساحة تخزين وحاول مرة أخرى.";
+"home.error.task.save" = "تعذر حفظ المهمة. حرّر مساحة تخزين وحاول مرة أخرى.";
+"home.error.protocol.save" = "تعذر حفظ البروتوكول. حرّر مساحة تخزين وحاول مرة أخرى.";
+"career.error.record.save" = "تعذر حفظ سجل المسار المهني. حرّر مساحة تخزين وحاول مرة أخرى.";
+"today.error.history.load" = "تعذر تحميل الأيام السابقة. أغلق Owlory وأعد فتحه، ثم حاول مرة أخرى.";
+"today.error.entry.save" = "تعذر حفظ إدخال اليوم. حرّر مساحة تخزين وحاول مرة أخرى.";
