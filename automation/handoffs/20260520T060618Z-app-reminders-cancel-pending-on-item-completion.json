@@ -1,0 +1,63 @@
+{
+  "slice_id": "app-reminders-cancel-pending-on-item-completion",
+  "title": "Cancel pending notifications when an item transitions to completed",
+  "status": "done",
+  "domain": "reminders",
+  "completed_at": "2026-05-20T06:06:18Z",
+  "proof_level": "build-tested + domain-tested",
+  "summary": "Added a synchronous `onItemCompleted: ((String) -> Void)?` hook to TrainStore that fires the predictor key when a session flips to .completed or .modified. Wired the hook in OwloryApp.swift to call ReminderScheduler.cancelReminder(forKey:) at the moment of completion. Enhanced cancelReminder to also remove already-delivered notifications so stale 'window has passed' banners don't linger when the user completes after delivery. Added 3 domain regression tests; one (testCompletingSessionCallsOnItemCompletedHookWithPredictorKey) was confirmed to FAIL on current main before the TrainStore signature change landed (error: extra argument 'onItemCompleted' in call). Now passes.",
+  "files_changed": [
+    "owlory_xcode/Owlory/Core/Application/TrainStore.swift (new onItemCompleted init param + fire-on-completion in updateSession)",
+    "owlory_xcode/Owlory/Core/Application/ReminderScheduler.swift (cancelReminder now also removes delivered notifications)",
+    "owlory_xcode/Owlory/OwloryApp.swift (passes a closure to TrainStore that calls reminderScheduler.cancelReminder; bridged via @MainActor Task)",
+    "owlory_xcode/OwloryCoreTests/TrainStoreTests.swift (3 new regression tests)",
+    "automation/queue/slices.json (mark done)",
+    "automation/handoffs/20260520T060618Z-app-reminders-cancel-pending-on-item-completion.json (new)",
+    "SecondBrain/INDEX.md (entry)",
+    "SecondBrain/sessions/2026-05-20/060618-app-reminders-cancel-pending-on-item-completion.md (new)"
+  ],
+  "bug_shape": {
+    "user_report": "an train item would be completed but a notification will appear stating the window has passed.",
+    "root_cause": "ReminderScheduler.cancelReminder(forKey:) existed but was never called from any store. Completion-aware suppression only ran via the bulk reschedule() rebuild path, which depends on RootTabView.refreshRuntimeArtifacts() firing — which depends on SwiftUI's .onChange of reminderRefreshKey, which doesn't fire reliably when the app is backgrounded or when the notification has already been delivered. Result: a session marked completed in the View flips trainStore.sessions[i].status, the bulk reschedule eventually runs and removes the pending request, but by then the OS may have already delivered the notification, and removePendingNotificationRequests doesn't touch delivered ones.",
+    "fix_shape": [
+      "(1) TrainStore now fires a synchronous onItemCompleted callback at completion time with the CompletionTimePredictor key. This guarantees per-item cancellation happens immediately on the same MainActor turn as the status flip, not on a downstream View observer.",
+      "(2) ReminderScheduler.cancelReminder now removes BOTH pending and delivered notifications, so a stale window-passed banner that arrived just before completion is cleared from Notification Center too.",
+      "(3) Existing bulk reschedule() suppression preserved as belt-and-suspenders."
+    ]
+  },
+  "scope_limit": {
+    "covered": ["TrainStore.updateSession completion / modification path"],
+    "not_covered_in_this_slice": [
+      "HomeStore task completion (no user-reported notification bug yet; the bulk reschedule path still covers the View-foregrounded case)",
+      "HomeStore protocol run completion (same)",
+      "TodayStore focus-item completion (same; the Focus Three Done swipe path)"
+    ],
+    "rationale": "User-reported bug names train items specifically; the fix is shaped to address that path with a tight, testable change. The same closure-injection pattern generalizes to the other stores trivially. Recommended follow-up slice: app-reminders-cancel-pending-on-home-and-today-completion."
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-reminders-cancel-pending-on-item-completion": "ran",
+    "python3 automation/supervisor/run_next.py --dry-run": "ran (selected this slice pre-commit)",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 / 377 / 13)",
+    "make test-domain DOMAIN=train": "TEST SUCCEEDED (includes the 3 new regression tests)",
+    "make test-domain DOMAIN=runtime": "TEST SUCCEEDED",
+    "make automation-check": "passed (drift no-drift + 93 unittests OK)",
+    "make pyright": "0 errors / 0 warnings",
+    "xcodebuild build -quiet -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath /tmp/owlory-reminders-cancel-build CODE_SIGNING_ALLOWED=NO": "exit 0 (warnings only, pre-existing)",
+    "git diff --check": "clean",
+    "regression-test-failed-before-fix": "Verified: TrainStoreTests.testCompletingSessionCallsOnItemCompletedHookWithPredictorKey fails with 'extra argument onItemCompleted in call' before TrainStore gains the init param; passes after."
+  },
+  "not_claimed": [
+    "HomeStore or TodayStore completion paths also cancel reminders (they don't in this slice; queued follow-up)",
+    "delivered notifications are removed for non-train items (the cancelReminder API now removes delivered for any key, but only TrainStore wires it currently)",
+    "background-fetch-time completion (the closure fires only on MainActor; background completion paths are not in scope)",
+    "lock-screen / Siri / widget completion (those paths bypass the View; if they call TrainStore directly the hook fires too, but indirect paths via shared persistence haven't been audited)"
+  ],
+  "residual_risk": [
+    "If a future code path mutates session.status to .completed or .modified without going through TrainStore.updateSession, the hook won't fire. The current code only mutates status via updateSession; if a path bypasses it (e.g., direct repository write), add a regression test that catches that.",
+    "The closure runs synchronously on MainActor at completion time. If reminderScheduler is replaced or invalidated at runtime, the captured `scheduler` reference in OwloryApp could outlive the legitimate window. The closure captures the long-lived OwloryApp-scope scheduler so this is not currently a hazard, but future refactors should keep that lifetime in mind."
+  ],
+  "downstream_recommended": [
+    "app-reminders-cancel-pending-on-home-and-today-completion: apply the same onItemCompleted callback pattern to HomeStore (task and protocol run completion) and TodayStore (focus-item Done swipe)."
+  ]
+}

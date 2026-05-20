@@ -342,4 +342,74 @@ final class TrainStoreTests: XCTestCase {
         XCTAssertEqual(store2.sessions[0].status, .skipped)
     }
 
+    // MARK: - Completion fires reminder cancellation
+    //
+    // Regression for the user-reported bug where a completed train item still
+    // received a "window has passed" notification because nothing cancelled
+    // the pending reminder synchronously at completion time. The schedule-time
+    // suppression in ReminderScheduler.reschedule() only protects against
+    // bulk re-schedules; per-item completion needs its own cancel hook.
+
+    func testCompletingSessionCallsOnItemCompletedHookWithPredictorKey() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updateSession(id: id, actualActivity: "Ran 5K", status: .completed, reflection: "")
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forTrainingSession: "Morning Run")],
+            "Expected the onItemCompleted hook to fire exactly once with the predictor key for the planned activity when the session flips to .completed."
+        )
+    }
+
+    func testModifyingSessionAlsoCallsOnItemCompletedHook() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updateSession(id: id, actualActivity: "Ran 3K", status: .modified, reflection: "")
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forTrainingSession: "Morning Run")],
+            "Modified status is treated as a completion for predictor / reminder purposes and must fire the cancel hook too."
+        )
+    }
+
+    func testNonCompletionStatusDoesNotCallOnItemCompletedHook() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updateSession(id: id, actualActivity: "", status: .skipped, reflection: "")
+
+        XCTAssertTrue(
+            recordedKeys.isEmpty,
+            "Only .completed and .modified should fire the cancellation hook; .skipped is neither completion nor modification."
+        )
+    }
+
 }

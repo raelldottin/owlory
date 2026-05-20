@@ -16,15 +16,18 @@ final class TrainStore: OwloryObservableObject {
     private let repository: any ItemListRepository<TrainingSession>
     private let clock: Clock
     private weak var completionHistory: CompletionHistoryStore?
+    private let onItemCompleted: ((String) -> Void)?
 
     init(
         repository: any ItemListRepository<TrainingSession>,
         clock: Clock,
-        completionHistory: CompletionHistoryStore? = nil
+        completionHistory: CompletionHistoryStore? = nil,
+        onItemCompleted: ((String) -> Void)? = nil
     ) {
         self.repository = repository
         self.clock = clock
         self.completionHistory = completionHistory
+        self.onItemCompleted = onItemCompleted
         load()
     }
 
@@ -73,6 +76,9 @@ final class TrainStore: OwloryObservableObject {
             completionHistory?.logTrainingCompletion(
                 activity: sessions[index].plannedActivity,
                 completedAt: clock.now
+            )
+            onItemCompleted?(
+                CompletionTimePredictor.key(forTrainingSession: sessions[index].plannedActivity)
             )
         }
         persist()

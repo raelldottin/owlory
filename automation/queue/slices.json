@@ -5907,7 +5907,7 @@
     {
       "slice_id": "app-reminders-cancel-pending-on-item-completion",
       "title": "Cancel pending notifications when an item transitions to completed",
-      "status": "queued",
+      "status": "done",
       "priority": 90,
       "domain": "reminders",
       "allowed_paths": [

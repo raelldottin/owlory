@@ -34,11 +34,15 @@ struct OwloryApp: App {
             repository: FileTodayEntryRepository()
         ))
 
+        let scheduler = reminderScheduler
         _trainStore = StateObject(wrappedValue: TrainStore(
             repository: FileItemListRepository<TrainingSession>(
                 directory: "Train", fileName: "sessions"),
             clock: SystemClock(),
-            completionHistory: history
+            completionHistory: history,
+            onItemCompleted: { key in
+                Task { @MainActor in scheduler.cancelReminder(forKey: key) }
+            }
         ))
 
         _writeStore = StateObject(wrappedValue: WriteStore(

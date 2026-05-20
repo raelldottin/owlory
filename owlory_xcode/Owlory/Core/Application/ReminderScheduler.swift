@@ -143,10 +143,13 @@ final class ReminderScheduler {
     }
 
     /// Cancel a specific item's pending notification (e.g., when completed).
+    /// Also removes the delivered notification if iOS has already presented it,
+    /// so a completed item never leaves a stale "window has passed" banner in
+    /// Notification Center.
     func cancelReminder(forKey key: String) {
-        center.removePendingNotificationRequests(
-            withIdentifiers: [notificationIdentifier(for: key)]
-        )
+        let identifier = notificationIdentifier(for: key)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
     }
 
     func plannedNotifications(
