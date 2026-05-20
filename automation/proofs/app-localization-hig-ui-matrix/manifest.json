@@ -1087,7 +1087,8 @@
   },
   "hig_ui_claim_policy": {
     "recorded_at": "2026-05-18",
-    "statement": "TestFlight HIG proof is not required to call a locale `hig-ui-reviewed`. Repo-managed automated proof (multisurface screenshot capture under idb + maintained `make ui-regression DOMAIN=localization`) is the accepted bar.",
+    "updated_at": "2026-05-20",
+    "statement": "TestFlight HIG proof is not required to call a locale `hig-ui-reviewed`. Repo-managed automated proof (multisurface screenshot capture under idb + maintained `make ui-regression DOMAIN=localization`) is the accepted bar. Optional device/TestFlight localization proof tracks are deferred manual extensions and are reopened only when human-provided external evidence exists.",
     "acceptable_proof": [
       "Per-locale scoped surface screenshots committed under automation/proofs/.",
       "Maintained XCUITest regression covering Dynamic Type AccessibilityXL + 5 hittable tab buttons for the maintained locale set."
@@ -1101,6 +1102,10 @@
       "device-verified (separate claim, not part of hig-ui-reviewed)",
       "testflight-verified (separate claim, not part of hig-ui-reviewed)",
       "native-reviewed (translation-quality claim, separate from hig-ui-reviewed)"
+    ],
+    "deferred_manual_extension_tracks": [
+      "app-localization-device-verified-locale-proof",
+      "app-localization-testflight-verified-locale-proof"
     ]
   }
 }

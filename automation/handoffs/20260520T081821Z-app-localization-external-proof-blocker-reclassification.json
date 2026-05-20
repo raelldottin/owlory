@@ -1,0 +1,54 @@
+{
+  "slice_id": "app-localization-external-proof-blocker-reclassification",
+  "status": "done",
+  "summary": "Reclassified the optional physical-device and TestFlight localization proof tracks from blocked work to deferred manual-extension slices. Their entry conditions now require human-provided external evidence with build provenance before reopening, while docs and the HIG matrix manifest explicitly preserve the existing policy that repo-managed simulator proof is sufficient for the `hig-ui-reviewed` claim and cannot be upgraded to `device-verified` or `testflight-verified`.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/081705-app-localization-external-proof-blocker-reclassification.md",
+    "automation/handoffs/20260520T081821Z-app-localization-external-proof-blocker-reclassification.json",
+    "automation/proofs/app-localization-hig-ui-matrix/manifest.json",
+    "automation/queue/slices.json",
+    "docs/workflows/localization-hig-ui-completion.md",
+    "docs/workflows/ui-testing-hygiene.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-localization-external-proof-blocker-reclassification",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "make pyright",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Localization external proof-track classification",
+      "before": "Optional physical-device and TestFlight localization proof slices appeared as blocked work, even though the HIG UI claim policy already accepted repo-managed simulator proof for `hig-ui-reviewed`.",
+      "after": "The optional external proof slices are deferred manual-extension tracks and re-open only when human-provided device/TestFlight evidence exists; automated simulator proof remains the accepted HIG UI bar and does not imply device/testflight proof.",
+      "proof": [
+        "automation/queue/slices.json",
+        "docs/workflows/localization-hig-ui-completion.md",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/proofs/app-localization-hig-ui-matrix/manifest.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Physical-device and TestFlight localization proof remain unclaimed by design; they require external human-provided evidence before reopening."
+  ],
+  "recommended_next_slice": "automation-localization-iphone-se-simulator-provisioning",
+  "recommended_next_reason": "After external proof tracks are deferred, the remaining automatable localization unblocker is deterministic iPhone SE simulator provisioning for the smallest-width regression slice.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T08:18:21Z"
+}

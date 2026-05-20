@@ -27,7 +27,7 @@ Keep these separate:
 - `device-verified`: the flow was repeated on a physical device with build provenance.
 - `testflight-verified`: the flow was repeated from the TestFlight build identity being claimed.
 
-One lane does not imply another. A smoke screenshot is not a reviewed screenshot-proof artifact by itself.
+One lane does not imply another. A smoke screenshot is not a reviewed screenshot-proof artifact by itself. Simulator automation cannot claim `device-verified` or `testflight-verified`; those proof levels require human-provided physical-device or TestFlight evidence with build provenance.
 
 ## Deterministic UI Test Rules
 

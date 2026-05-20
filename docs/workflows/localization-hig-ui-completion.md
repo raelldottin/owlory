@@ -22,6 +22,8 @@ All supported locales can be called localized-UI HIG complete only when every it
 
 Simulator screenshots can prove screenshot-reviewed surfaces. They do not prove physical-device or TestFlight behavior — but **TestFlight HIG proof is not required to call a locale `hig-ui-reviewed`.** Repo-managed automated proof (multisurface screenshot capture under `idb` + maintained `make ui-regression DOMAIN=localization` Dynamic Type coverage) is the accepted bar for the HIG UI claim. Translation quality, `device-verified`, and `testflight-verified` remain separate proof tracks; they are not implied by the HIG UI claim and they are not preconditions for it. Native/fluent review is recorded complete for non-English locales. As of 2026-05-18, all 19 supported locales are `hig-ui-reviewed` for the scoped simulator surfaces recorded in the evidence matrix.
 
+As of 2026-05-20, the optional `device-verified` and `testflight-verified` localization proof slices are deferred manual-extension tracks, not blocked HIG closure work. Re-open them only when a human provides physical-device or TestFlight evidence with build provenance and screenshot files ready for repo-managed commit. Do not upgrade simulator proof to either external proof level.
+
 ## Closure Status
 
 `app-localization-all-locale-hig-ui-closure` closed on 2026-05-18 for scoped simulator HIG UI evidence:

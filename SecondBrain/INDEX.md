@@ -2,6 +2,7 @@
 
 ## 2026-05-20
 
+- [app-localization-external-proof-blocker-reclassification (build-tested; optional device/TestFlight localization proof slices reclassified from blocked to deferred manual-extension tracks; simulator proof remains accepted HIG UI bar)](sessions/2026-05-20/081705-app-localization-external-proof-blocker-reclassification.md)
 - [queue-automate-blocked-slice-unblockers (queue-only; added two queued unblocker slices: external proof blocker reclassification and iPhone SE simulator provisioning; blocked slices now list recommended unblockers)](sessions/2026-05-20/073016-queue-automate-blocked-slice-unblockers.md)
 - [start-next-slice-clean-stop (no eligible queued slice after fresh pull; clean-stop passed; repo clean/mirrored; 4 parked blocked/deferred slices retain explicit entry conditions)](sessions/2026-05-20/064404-start-next-slice-clean-stop.md)
 - [app-reminders-cancel-pending-home-today (build-tested + domain-tested; Home task, Home protocol-run, and Today source-backed focus Done completions now cancel matching pending/delivered reminders via predictor keys)](sessions/2026-05-20/023205-app-reminders-cancel-pending-home-today.md)
