@@ -1,0 +1,74 @@
+{
+  "slice_id": "app-error-message-fix-designsystem-accessibility",
+  "status": "done",
+  "completed_at": "2026-05-20T14:50:05Z",
+  "proof_level": "localized-copy + build-tested + automation-tested",
+  "audit_findings_closed": [
+    "F12 audio.playback.accessibility.error interpolated raw %@ diagnostic copy and lacked resolution guidance.",
+    "F13 voice.capture.accessibility.error interpolated raw %@ diagnostic copy and lacked resolution guidance."
+  ],
+  "code_changes": [
+    "AudioPlaybackButton accessibility error label now uses a fixed localized recovery label instead of formatting the raw AudioPlayerService.State.error payload.",
+    "VoiceCaptureButton accessibility error label now uses a fixed localized recovery label instead of formatting the raw AudioCaptureService.State.error payload.",
+    "VoiceCaptureButton now treats .error like .idle for tap handling so the spoken retry guidance maps to a real retry path."
+  ],
+  "localized_copy": {
+    "keys_updated": {
+      "audio.playback.accessibility.error": "Playback failed. Double-tap to try again.",
+      "voice.capture.accessibility.error": "Recording failed. Double-tap to try again."
+    },
+    "locales_updated": [
+      "en",
+      "ar",
+      "de",
+      "es",
+      "fr",
+      "it",
+      "ja",
+      "ko",
+      "nb",
+      "nl",
+      "pt-BR",
+      "pt",
+      "ru",
+      "sv",
+      "tr",
+      "uk",
+      "vi",
+      "zh-Hans",
+      "zh-Hant"
+    ],
+    "format_specifiers_removed": true,
+    "hig_resolution_guidance": "Both spoken labels name the failed action and provide the available recovery action."
+  },
+  "review_provenance": {
+    "review_return_files_updated": 18,
+    "changed_source_rows_per_locale": 2,
+    "status": "The two changed rows are marked needs-layout-check / automated draft because their English source changed after the reported 2026-05-18 native/fluent review pass.",
+    "native_review_claim": "No new native/fluent acceptance is claimed for the two updated rows. Existing native/fluent acceptance remains claimed for unchanged rows.",
+    "summary_after_update": {
+      "accepted_entries_per_locale": 417,
+      "pending_post_packet_entries_per_locale": 9,
+      "pending_source_update_entries_per_locale": 2
+    }
+  },
+  "scope_boundaries": [
+    "Did not change AudioCaptureService or AudioPlayerService diagnostic state payloads.",
+    "Did not change visual button styling or app layout.",
+    "Did not rewrite historical review packet/export artifacts; stale source text remains there as prior review history, while live resources and return files are updated.",
+    "Did not claim native/fluent review for the two changed source rows."
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-designsystem-accessibility": "passed",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected app-error-message-fix-designsystem-accessibility",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; localization review drift 0; 93 automation tests)",
+    "git diff --check": "passed",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' -derivedDataPath /tmp/owlory-designsystem-accessibility-build": "passed; one pre-existing TodayView onChange deprecation warning remains unrelated",
+    "review-return source update proof": "passed; both updated keys have no %@ and are marked pending native/fluent acceptance in all 18 return files"
+  },
+  "next_slices": [
+    "app-design-vision-metaphor-adr"
+  ]
+}

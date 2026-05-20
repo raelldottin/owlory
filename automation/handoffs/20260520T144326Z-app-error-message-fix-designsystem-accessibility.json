@@ -1,0 +1,103 @@
+{
+  "slice_id": "app-error-message-fix-designsystem-accessibility",
+  "title": "Replace raw %@ in voice/audio accessibility error labels with resolution-guided text",
+  "status": "done",
+  "completed_at": "2026-05-20T14:50:05Z",
+  "proof_level": "localized-copy + build-tested + automation-tested",
+  "summary": "Removed raw diagnostic interpolation from the audio playback and voice capture accessibility error labels, replaced them with localized recovery guidance across all 19 app locales, and updated all 18 locale review returns to mark the changed source rows as automated drafts pending native/fluent re-acceptance. Voice capture error taps now retry through the same path as idle so the spoken guidance is truthful.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+    "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "localization/review/ar/ar-review-return.json",
+    "localization/review/de/german-review-return.json",
+    "localization/review/es/es-review-return.json",
+    "localization/review/fr/fr-review-return.json",
+    "localization/review/it/it-review-return.json",
+    "localization/review/ja/ja-review-return.json",
+    "localization/review/ko/ko-review-return.json",
+    "localization/review/nb/nb-review-return.json",
+    "localization/review/nl/nl-review-return.json",
+    "localization/review/pt-BR/pt-BR-review-return.json",
+    "localization/review/pt/pt-review-return.json",
+    "localization/review/ru/ru-review-return.json",
+    "localization/review/sv/sv-review-return.json",
+    "localization/review/tr/tr-review-return.json",
+    "localization/review/uk/uk-review-return.json",
+    "localization/review/vi/vi-review-return.json",
+    "localization/review/zh-Hans/zh-Hans-review-return.json",
+    "localization/review/zh-Hant/zh-Hant-review-return.json",
+    "automation/proofs/app-error-message-fix-designsystem-accessibility/manifest.json",
+    "automation/handoffs/20260520T144326Z-app-error-message-fix-designsystem-accessibility.json",
+    "automation/queue/slices.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/145005-app-error-message-fix-designsystem-accessibility.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-designsystem-accessibility",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "git diff --check",
+    "xcodebuild build -project owlory_xcode/Owlory.xcodeproj -scheme Owlory -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' -derivedDataPath /tmp/owlory-designsystem-accessibility-build"
+  ],
+  "validations_failed": [],
+  "validation_pending": [],
+  "contract_status_changes": [
+    {
+      "contract": "DesignSystem accessibility error speech",
+      "before": "AudioPlaybackButton and VoiceCaptureButton spoke localized labels that embedded raw %@ diagnostic messages without recovery guidance.",
+      "after": "Both controls speak fixed localized labels that name the failed action and tell the user they can double-tap to retry; raw diagnostic payloads remain internal state only.",
+      "proof": [
+        "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "automation/proofs/app-error-message-fix-designsystem-accessibility/manifest.json"
+      ]
+    },
+    {
+      "contract": "Localization review provenance after source-copy changes",
+      "before": "The two accessibility error rows were native-reviewed for their old English source strings.",
+      "after": "The updated rows are marked needs-layout-check / automated draft in each non-English review return, with native/fluent acceptance preserved only for unchanged rows.",
+      "proof": [
+        "localization/review/de/german-review-return.json",
+        "localization/review/ar/ar-review-return.json",
+        "automation/proofs/app-error-message-fix-designsystem-accessibility/manifest.json"
+      ]
+    }
+  ],
+  "not_claimed": [
+    "Native/fluent acceptance for the two updated accessibility error rows.",
+    "Running-app VoiceOver smoke proof.",
+    "Changes to historical review packet/export artifacts.",
+    "Changes to audio recording or playback service diagnostics."
+  ],
+  "residual_risks": [
+    "The two updated localized rows are automated drafts pending native/fluent acceptance, while the rest of the matrix remains under the prior reported native/fluent review claim.",
+    "The build still reports an unrelated pre-existing TodayView onChange deprecation warning."
+  ],
+  "recommended_next_slice": "app-design-vision-metaphor-adr",
+  "recommended_next_reason": "It is the next adjacent queued slice shown by the context builder after the error-message follow-up chain.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T14:50:05Z"
+}

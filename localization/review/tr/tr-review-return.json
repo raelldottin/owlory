@@ -18,7 +18,7 @@
     "review_date": "2026-05-18",
     "method": "Human native/fluent all-locale review pass reported by project owner in Codex prompt: \"native/fluent review is complete for all localization\".",
     "native_reviewed": true,
-    "accepted_scope": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 9 post-2026-05-20 additions are automated drafts and are not claimed native/fluent-reviewed.",
+    "accepted_scope": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 9 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
     "source_signal": "User prompt in Codex conversation on 2026-05-18: native/fluent review is complete for all localization.",
     "previous_draft_provenance": {
       "reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
@@ -98,17 +98,48 @@
         "reviewer": "Codex automated draft (not native/fluent reviewer)",
         "native_reviewed": false
       }
+    ],
+    "post_review_source_updates": {
+      "total_pending_entries": 2,
+      "slices": [
+        {
+          "slice_id": "app-error-message-fix-designsystem-accessibility",
+          "date": "2026-05-20",
+          "keys": [
+            "audio.playback.accessibility.error",
+            "voice.capture.accessibility.error"
+          ],
+          "review_status": "needs-layout-check",
+          "reviewer": "Codex automated draft (not native/fluent reviewer)",
+          "native_reviewed": false,
+          "reason": "English source copy changed after reported 2026-05-18 native/fluent review to remove raw diagnostic interpolation from accessibility speech and add HIG-style recovery guidance."
+        }
+      ]
+    },
+    "post_review_source_update_history": [
+      {
+        "slice_id": "app-error-message-fix-designsystem-accessibility",
+        "date": "2026-05-20",
+        "keys": [
+          "audio.playback.accessibility.error",
+          "voice.capture.accessibility.error"
+        ],
+        "review_status": "needs-layout-check",
+        "reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "native_reviewed": false,
+        "reason": "English source copy changed after reported 2026-05-18 native/fluent review to remove raw diagnostic interpolation from accessibility speech and add HIG-style recovery guidance."
+      }
     ]
   },
   "summary": {
     "review_entry_count": 428,
     "status_counts": {
-      "native-reviewed": 419,
-      "needs-layout-check": 9
+      "native-reviewed": 417,
+      "needs-layout-check": 11
     },
     "lqa_counts": {
-      "passed": 416,
-      "warning": 12
+      "passed": 414,
+      "warning": 14
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
@@ -119,10 +150,11 @@
       "accepted": true,
       "reviewer": "Native/fluent Turkish / Türkçe reviewer (reported by project owner)",
       "review_date": "2026-05-18",
-      "accepted_entries": 419,
+      "accepted_entries": 417,
       "basis": "project-owner-reported native/fluent all-locale review pass",
       "pending_post_packet_entries": 9,
-      "scope_note": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 9 post-2026-05-20 additions are automated drafts and are not claimed native/fluent-reviewed."
+      "scope_note": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 9 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
+      "pending_source_update_entries": 2
     }
   },
   "resources": [
@@ -12438,38 +12470,44 @@
     },
     {
       "key": "audio.playback.accessibility.error",
-      "english_value": "Playback error: %@",
-      "reviewed_value": "Oynatma hatası: %@",
-      "review_status": "native-reviewed",
-      "reviewer": "Native/fluent Turkish / Türkçe reviewer (reported by project owner)",
-      "review_date": "2026-05-18",
-      "reviewer_notes": "Accepted by project-owner-reported native/fluent all-locale review pass. Previous status: needs-layout-check; previous reviewer: claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer).",
+      "english_value": "Playback failed. Double-tap to try again.",
+      "reviewed_value": "Oynatma başarısız oldu. Tekrar denemek için çift dokunun.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "English source changed after the project-owner-reported 2026-05-18 native/fluent review pass; previous native/fluent acceptance no longer applies to this key. Automated draft pending native/fluent acceptance for this locale.",
       "resource_type": "strings",
       "locale": "tr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "length-outlier",
-          "mojibake-suspect"
+          "hig-resolution-guidance"
         ],
-        "issues": [],
-        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-        "second_pass_date": "2026-05-15",
-        "auto_fix_action": null
+        "issues": [
+          "English source changed after reported native/fluent review; automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": "Removed raw diagnostic interpolation from accessibility speech and added retry guidance."
       },
       "native_review": {
-        "accepted": true,
-        "reviewer": "Native/fluent Turkish / Türkçe reviewer (reported by project owner)",
-        "review_date": "2026-05-18",
-        "basis": "project-owner-reported native/fluent all-locale review pass",
-        "prior_review_status": "needs-layout-check",
-        "prior_reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
-        "prior_review_date": "2026-05-16"
-      }
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "English source changed after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this updated key.",
+        "pending_native_review": true,
+        "prior_native_review": {
+          "accepted": true,
+          "reviewer": "Native/fluent reviewer reported by project owner",
+          "review_date": "2026-05-18"
+        }
+      },
+      "post_review_source_update": true,
+      "source_update_slice_id": "app-error-message-fix-designsystem-accessibility"
     },
     {
       "key": "voice.capture.accessibility.start",
@@ -12613,38 +12651,44 @@
     },
     {
       "key": "voice.capture.accessibility.error",
-      "english_value": "Error: %@",
-      "reviewed_value": "Hata: %@",
-      "review_status": "native-reviewed",
-      "reviewer": "Native/fluent Turkish / Türkçe reviewer (reported by project owner)",
-      "review_date": "2026-05-18",
-      "reviewer_notes": "Accepted by project-owner-reported native/fluent all-locale review pass. Previous status: needs-layout-check; previous reviewer: claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer).",
+      "english_value": "Recording failed. Double-tap to try again.",
+      "reviewed_value": "Kayıt başarısız oldu. Tekrar denemek için çift dokunun.",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "English source changed after the project-owner-reported 2026-05-18 native/fluent review pass; previous native/fluent acceptance no longer applies to this key. Automated draft pending native/fluent acceptance for this locale.",
       "resource_type": "strings",
       "locale": "tr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "length-outlier",
-          "mojibake-suspect"
+          "hig-resolution-guidance"
         ],
-        "issues": [],
-        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-        "second_pass_date": "2026-05-15",
-        "auto_fix_action": null
+        "issues": [
+          "English source changed after reported native/fluent review; automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": "Removed raw diagnostic interpolation from accessibility speech and added retry guidance."
       },
       "native_review": {
-        "accepted": true,
-        "reviewer": "Native/fluent Turkish / Türkçe reviewer (reported by project owner)",
-        "review_date": "2026-05-18",
-        "basis": "project-owner-reported native/fluent all-locale review pass",
-        "prior_review_status": "needs-layout-check",
-        "prior_reviewer": "claude-opus-4-7 (LLM, not native Turkish / Türkçe reviewer)",
-        "prior_review_date": "2026-05-16"
-      }
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "English source changed after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this updated key.",
+        "pending_native_review": true,
+        "prior_native_review": {
+          "accepted": true,
+          "reviewer": "Native/fluent reviewer reported by project owner",
+          "review_date": "2026-05-18"
+        }
+      },
+      "post_review_source_update": true,
+      "source_update_slice_id": "app-error-message-fix-designsystem-accessibility"
     },
     {
       "key": "today.preview.next",

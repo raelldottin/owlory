@@ -325,12 +325,12 @@
 "Check in" = "Check-in";
 "audio.playback.accessibility.play" = "Kaydı oynat";
 "audio.playback.accessibility.stop" = "Oynatmayı durdur";
-"audio.playback.accessibility.error" = "Oynatma hatası: %@";
+"audio.playback.accessibility.error" = "Oynatma başarısız oldu. Tekrar denemek için çift dokunun.";
 "voice.capture.accessibility.start" = "Sesi yakalamayı başlat";
 "voice.capture.accessibility.stop" = "Kaydı durdur";
 "voice.capture.accessibility.transcribing" = "Transkript ediliyor";
 "voice.capture.accessibility.finished" = "Ses yakalama tamamlandı";
-"voice.capture.accessibility.error" = "Hata: %@";
+"voice.capture.accessibility.error" = "Kayıt başarısız oldu. Tekrar denemek için çift dokunun.";
 "today.preview.next" = "Sıradaki: %@";
 "today.preview.home.activeProtocol" = "Aktif protokol: %@";
 "today.preview.home.nextTask" = "Sıradaki görev: %@";

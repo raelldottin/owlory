@@ -325,12 +325,12 @@
 "Check in" = "Checka in";
 "audio.playback.accessibility.play" = "Spela upp inspelning";
 "audio.playback.accessibility.stop" = "Stoppa uppspelning";
-"audio.playback.accessibility.error" = "Uppspelningsfel: %@";
+"audio.playback.accessibility.error" = "Uppspelningen misslyckades. Dubbeltryck för att försöka igen.";
 "voice.capture.accessibility.start" = "Starta röstinspelning";
 "voice.capture.accessibility.stop" = "Stoppa inspelning";
 "voice.capture.accessibility.transcribing" = "Transkriberar";
 "voice.capture.accessibility.finished" = "Röstinspelning klar";
-"voice.capture.accessibility.error" = "Fel: %@";
+"voice.capture.accessibility.error" = "Inspelningen misslyckades. Dubbeltryck för att försöka igen.";
 "today.preview.next" = "Nästa: %@";
 "today.preview.home.activeProtocol" = "Aktivt protokoll: %@";
 "today.preview.home.nextTask" = "Nästa uppgift: %@";

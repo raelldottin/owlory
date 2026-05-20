@@ -89,13 +89,10 @@ struct VoiceCaptureButton: View {
                 "voice.capture.accessibility.finished",
                 comment: "Voice capture button accessibility label after capture completes."
             )
-        case .error(let msg):
-            return String.localizedStringWithFormat(
-                NSLocalizedString(
-                    "voice.capture.accessibility.error",
-                    comment: "Voice capture button accessibility label after capture failed; %@ is the error message."
-                ),
-                msg
+        case .error:
+            return NSLocalizedString(
+                "voice.capture.accessibility.error",
+                comment: "Voice capture button accessibility label after capture failed."
             )
         }
     }
@@ -103,7 +100,7 @@ struct VoiceCaptureButton: View {
     private func handleTap() {
         Task {
             switch service.state {
-            case .idle:
+            case .idle, .error:
                 let granted = await service.requestPermissions()
                 guard granted else { return }
                 do {

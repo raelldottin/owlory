@@ -325,12 +325,12 @@
 "Check in" = "Чек-ін";
 "audio.playback.accessibility.play" = "Відтворити запис";
 "audio.playback.accessibility.stop" = "Зупинити відтворення";
-"audio.playback.accessibility.error" = "Помилка відтворення: %@";
+"audio.playback.accessibility.error" = "Не вдалося відтворити. Двічі торкніться, щоб повторити спробу.";
 "voice.capture.accessibility.start" = "Почати запис голосу";
 "voice.capture.accessibility.stop" = "Зупинити запис";
 "voice.capture.accessibility.transcribing" = "Триває транскрипція";
 "voice.capture.accessibility.finished" = "Запис голосу завершено";
-"voice.capture.accessibility.error" = "Помилка: %@";
+"voice.capture.accessibility.error" = "Не вдалося записати. Двічі торкніться, щоб повторити спробу.";
 "today.preview.next" = "Далі: %@";
 "today.preview.home.activeProtocol" = "Активний протокол: %@";
 "today.preview.home.nextTask" = "Наступне завдання: %@";

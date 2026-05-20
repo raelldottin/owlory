@@ -325,12 +325,12 @@
 "Check in" = "تسجيل دخول";
 "audio.playback.accessibility.play" = "تشغيل التسجيل";
 "audio.playback.accessibility.stop" = "إيقاف التشغيل";
-"audio.playback.accessibility.error" = "خطأ في التشغيل: %@";
+"audio.playback.accessibility.error" = "تعذر التشغيل. اضغط مرتين للمحاولة مرة أخرى.";
 "voice.capture.accessibility.start" = "بدء التقاط الصوت";
 "voice.capture.accessibility.stop" = "إيقاف التسجيل";
 "voice.capture.accessibility.transcribing" = "جارٍ النسخ";
 "voice.capture.accessibility.finished" = "اكتمل التقاط الصوت";
-"voice.capture.accessibility.error" = "خطأ: %@";
+"voice.capture.accessibility.error" = "تعذر التسجيل. اضغط مرتين للمحاولة مرة أخرى.";
 "today.preview.next" = "التالي: %@";
 "today.preview.home.activeProtocol" = "البروتوكول النشط: %@";
 "today.preview.home.nextTask" = "المهمة التالية: %@";

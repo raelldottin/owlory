@@ -325,12 +325,12 @@
 "Check in" = "Einchecken";
 "audio.playback.accessibility.play" = "Aufnahme abspielen";
 "audio.playback.accessibility.stop" = "Wiedergabe stoppen";
-"audio.playback.accessibility.error" = "Wiedergabefehler: %@";
+"audio.playback.accessibility.error" = "Wiedergabe fehlgeschlagen. Doppeltippen Sie, um es erneut zu versuchen.";
 "voice.capture.accessibility.start" = "Sprachaufnahme starten";
 "voice.capture.accessibility.stop" = "Aufnahme stoppen";
 "voice.capture.accessibility.transcribing" = "Wird transkribiert";
 "voice.capture.accessibility.finished" = "Sprachaufnahme abgeschlossen";
-"voice.capture.accessibility.error" = "Fehler: %@";
+"voice.capture.accessibility.error" = "Aufnahme fehlgeschlagen. Doppeltippen Sie, um es erneut zu versuchen.";
 "today.preview.next" = "Als Nächstes: %@";
 "today.preview.home.activeProtocol" = "Aktives Protokoll: %@";
 "today.preview.home.nextTask" = "Nächste Aufgabe: %@";

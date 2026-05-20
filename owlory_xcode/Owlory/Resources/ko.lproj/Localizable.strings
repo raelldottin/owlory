@@ -325,12 +325,12 @@
 "Check in" = "체크인";
 "audio.playback.accessibility.play" = "녹음 재생";
 "audio.playback.accessibility.stop" = "재생 중지";
-"audio.playback.accessibility.error" = "재생 오류: %@";
+"audio.playback.accessibility.error" = "재생에 실패했습니다. 다시 시도하려면 두 번 탭하세요.";
 "voice.capture.accessibility.start" = "음성 캡처 시작";
 "voice.capture.accessibility.stop" = "녹음 중지";
 "voice.capture.accessibility.transcribing" = "텍스트 변환 중";
 "voice.capture.accessibility.finished" = "음성 캡처 완료";
-"voice.capture.accessibility.error" = "오류: %@";
+"voice.capture.accessibility.error" = "녹음에 실패했습니다. 다시 시도하려면 두 번 탭하세요.";
 "today.preview.next" = "다음: %@";
 "today.preview.home.activeProtocol" = "활성 프로토콜: %@";
 "today.preview.home.nextTask" = "다음 작업: %@";

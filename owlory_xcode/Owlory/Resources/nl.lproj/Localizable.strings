@@ -325,12 +325,12 @@
 "Check in" = "Inchecken";
 "audio.playback.accessibility.play" = "Opname afspelen";
 "audio.playback.accessibility.stop" = "Afspelen stoppen";
-"audio.playback.accessibility.error" = "Afspeelfout: %@";
+"audio.playback.accessibility.error" = "Afspelen is mislukt. Tik dubbel om het opnieuw te proberen.";
 "voice.capture.accessibility.start" = "Spraakopname starten";
 "voice.capture.accessibility.stop" = "Opname stoppen";
 "voice.capture.accessibility.transcribing" = "Aan het transcriberen";
 "voice.capture.accessibility.finished" = "Spraakopname voltooid";
-"voice.capture.accessibility.error" = "Fout: %@";
+"voice.capture.accessibility.error" = "Opnemen is mislukt. Tik dubbel om het opnieuw te proberen.";
 "today.preview.next" = "Volgende: %@";
 "today.preview.home.activeProtocol" = "Actief protocol: %@";
 "today.preview.home.nextTask" = "Volgende taak: %@";

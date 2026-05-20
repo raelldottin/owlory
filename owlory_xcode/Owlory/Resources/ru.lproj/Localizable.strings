@@ -325,12 +325,12 @@
 "Check in" = "Чек-ин";
 "audio.playback.accessibility.play" = "Воспроизвести запись";
 "audio.playback.accessibility.stop" = "Остановить воспроизведение";
-"audio.playback.accessibility.error" = "Ошибка воспроизведения: %@";
+"audio.playback.accessibility.error" = "Не удалось воспроизвести. Дважды коснитесь, чтобы повторить попытку.";
 "voice.capture.accessibility.start" = "Начать запись голоса";
 "voice.capture.accessibility.stop" = "Остановить запись";
 "voice.capture.accessibility.transcribing" = "Идёт транскрипция";
 "voice.capture.accessibility.finished" = "Запись голоса завершена";
-"voice.capture.accessibility.error" = "Ошибка: %@";
+"voice.capture.accessibility.error" = "Не удалось записать. Дважды коснитесь, чтобы повторить попытку.";
 "today.preview.next" = "Далее: %@";
 "today.preview.home.activeProtocol" = "Активный протокол: %@";
 "today.preview.home.nextTask" = "Следующая задача: %@";

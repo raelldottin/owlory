@@ -325,12 +325,12 @@
 "Check in" = "チェックイン";
 "audio.playback.accessibility.play" = "録音を再生";
 "audio.playback.accessibility.stop" = "再生を停止";
-"audio.playback.accessibility.error" = "再生エラー: %@";
+"audio.playback.accessibility.error" = "再生できませんでした。もう一度試すにはダブルタップしてください。";
 "voice.capture.accessibility.start" = "音声取り込みを開始";
 "voice.capture.accessibility.stop" = "録音を停止";
 "voice.capture.accessibility.transcribing" = "文字起こし中";
 "voice.capture.accessibility.finished" = "音声取り込み完了";
-"voice.capture.accessibility.error" = "エラー: %@";
+"voice.capture.accessibility.error" = "録音できませんでした。もう一度試すにはダブルタップしてください。";
 "today.preview.next" = "次へ: %@";
 "today.preview.home.activeProtocol" = "アクティブなプロトコル: %@";
 "today.preview.home.nextTask" = "次のタスク: %@";

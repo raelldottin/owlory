@@ -325,12 +325,12 @@
 "Check in" = "Sjekk inn";
 "audio.playback.accessibility.play" = "Spill opptak";
 "audio.playback.accessibility.stop" = "Stopp avspilling";
-"audio.playback.accessibility.error" = "Avspillingsfeil: %@";
+"audio.playback.accessibility.error" = "Avspillingen mislyktes. Dobbelttrykk for å prøve igjen.";
 "voice.capture.accessibility.start" = "Start stemmeopptak";
 "voice.capture.accessibility.stop" = "Stopp opptak";
 "voice.capture.accessibility.transcribing" = "Transkriberer";
 "voice.capture.accessibility.finished" = "Stemmeopptak fullført";
-"voice.capture.accessibility.error" = "Feil: %@";
+"voice.capture.accessibility.error" = "Opptaket mislyktes. Dobbelttrykk for å prøve igjen.";
 "today.preview.next" = "Neste: %@";
 "today.preview.home.activeProtocol" = "Aktiv protokoll: %@";
 "today.preview.home.nextTask" = "Neste oppgave: %@";

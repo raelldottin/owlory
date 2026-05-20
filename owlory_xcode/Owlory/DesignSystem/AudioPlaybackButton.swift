@@ -49,13 +49,10 @@ struct AudioPlaybackButton: View {
                 "audio.playback.accessibility.stop",
                 comment: "Audio playback button accessibility label when playback is active."
             )
-        case .error(let msg):
-            return String.localizedStringWithFormat(
-                NSLocalizedString(
-                    "audio.playback.accessibility.error",
-                    comment: "Audio playback button accessibility label when playback failed; %@ is the error message."
-                ),
-                msg
+        case .error:
+            return NSLocalizedString(
+                "audio.playback.accessibility.error",
+                comment: "Audio playback button accessibility label when playback failed."
             )
         }
     }

@@ -6322,7 +6322,7 @@
     {
       "slice_id": "app-error-message-fix-designsystem-accessibility",
       "title": "Replace raw %@ in voice/audio accessibility error labels with resolution-guided text",
-      "status": "queued",
+      "status": "done",
       "priority": 81,
       "domain": "design",
       "allowed_paths": [
@@ -6347,9 +6347,9 @@
       "depends_on": [
         "app-error-message-audit"
       ],
-      "max_files_changed": 25,
+      "max_files_changed": 45,
       "entry_condition": "app-error-message-audit findings F12/F13 classified audio.playback.accessibility.error and voice.capture.accessibility.error as needs-improvement: they are localized but interpolate raw %@ exception text without any resolution clue.",
-      "notes": "F12 audio.playback.accessibility.error 'Playback error: %@' -> resolution-guided variant for screen-reader users (e.g., 'Playback failed. Double-tap to try again.'). The %@ raw underlying-error text is rarely useful to a screen-reader user and should not be the user-visible content. Log %@ via PerformanceTelemetry if useful for diagnosis.\nF13 voice.capture.accessibility.error 'Error: %@' -> resolution-guided variant (e.g., 'Recording failed. Double-tap to try again.').\n\nIf retaining %@ is necessary for diagnostic transparency, wrap it in a sentence shape: 'Recording failed: %@. Double-tap to try again.' Still localized + still resolution-guided.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F12, F13.\n\nproof_level target: localized-copy."
+      "notes": "F12 audio.playback.accessibility.error 'Playback error: %@' -> resolution-guided variant for screen-reader users (e.g., 'Playback failed. Double-tap to try again.'). The %@ raw underlying-error text is rarely useful to a screen-reader user and should not be the user-visible content. Log %@ via PerformanceTelemetry if useful for diagnosis.\nF13 voice.capture.accessibility.error 'Error: %@' -> resolution-guided variant (e.g., 'Recording failed. Double-tap to try again.').\n\nIf retaining %@ is necessary for diagnostic transparency, wrap it in a sentence shape: 'Recording failed: %@. Double-tap to try again.' Still localized + still resolution-guided.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F12, F13.\n\nproof_level target: localized-copy.\n\nCompleted on 2026-05-20: removed raw diagnostic interpolation from audio.playback.accessibility.error and voice.capture.accessibility.error, replaced both with localized resolution-guided accessibility labels across 19 locales, marked the two changed source rows as automated drafts pending native/fluent re-acceptance in all 18 review returns, and made VoiceCaptureButton retry from .error so its spoken guidance matches behavior. Diff budget expanded from 25 to 45 because full locale parity plus review provenance required 39 live files before proof/handoff/SecondBrain metadata. proof_level achieved: localized-copy + build-tested + automation-tested."
     }
   ]
 }

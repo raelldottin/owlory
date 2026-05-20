@@ -325,12 +325,12 @@
 "Check in" = "Check-in";
 "audio.playback.accessibility.play" = "Phát bản ghi";
 "audio.playback.accessibility.stop" = "Dừng phát";
-"audio.playback.accessibility.error" = "Lỗi phát: %@";
+"audio.playback.accessibility.error" = "Phát lại không thành công. Nhấn đúp để thử lại.";
 "voice.capture.accessibility.start" = "Bắt đầu ghi âm";
 "voice.capture.accessibility.stop" = "Dừng ghi âm";
 "voice.capture.accessibility.transcribing" = "Đang phiên âm";
 "voice.capture.accessibility.finished" = "Đã ghi xong";
-"voice.capture.accessibility.error" = "Lỗi: %@";
+"voice.capture.accessibility.error" = "Ghi âm không thành công. Nhấn đúp để thử lại.";
 "today.preview.next" = "Tiếp theo: %@";
 "today.preview.home.activeProtocol" = "Quy trình đang hoạt động: %@";
 "today.preview.home.nextTask" = "Nhiệm vụ tiếp theo: %@";
