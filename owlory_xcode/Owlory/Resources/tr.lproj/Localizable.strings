@@ -394,3 +394,4 @@
 "career.error.record.save" = "Kariyer kaydı kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
 "today.error.history.load" = "Önceki günler yüklenemedi. Owlory’yi kapatıp yeniden açın, ardından tekrar deneyin.";
 "today.error.entry.save" = "Bugünkü giriş kaydedilemedi. Depolama alanı açıp tekrar deneyin.";
+"write.error.note.sourceConversion.invalidStage" = "Notu önce Yakalama, Kalıcı not veya Arşivlendi aşamasına taşıyın, ardından tekrar deneyin.";

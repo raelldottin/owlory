@@ -394,3 +394,4 @@
 "career.error.record.save" = "Kunne ikke lagre karriereoppføringen. Frigjør lagringsplass og prøv igjen.";
 "today.error.history.load" = "Kunne ikke laste inn tidligere dager. Lukk og åpne Owlory på nytt, og prøv igjen.";
 "today.error.entry.save" = "Kunne ikke lagre dagens oppføring. Frigjør lagringsplass og prøv igjen.";
+"write.error.note.sourceConversion.invalidStage" = "Flytt notatet til Fangst, Permanent notat eller Arkivert først, og prøv igjen.";

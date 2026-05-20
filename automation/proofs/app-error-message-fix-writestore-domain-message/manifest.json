@@ -1,0 +1,75 @@
+{
+  "slice_id": "app-error-message-fix-writestore-domain-message",
+  "status": "done",
+  "completed_at": "2026-05-20T11:56:16Z",
+  "proof_level": "localized-copy + automation-tested",
+  "summary": "Replaced the WriteStore source-note invalid-stage fallback with localized, resolution-guided copy that names the valid stages for conversion.",
+  "source_finding_closed": "F02 WriteStore.swift:85",
+  "domain_rule_checked": {
+    "file": "owlory_xcode/Owlory/Core/Domain/WritingStageRules.swift",
+    "valid_source_conversion_stages": [
+      "Capture",
+      "Permanent Note",
+      "Archived"
+    ],
+    "behavior_changed": false
+  },
+  "localized_key": {
+    "key": "write.error.note.sourceConversion.invalidStage",
+    "english_value": "Move the note to Capture, Permanent Note, or Archived first, then try again."
+  },
+  "store_change": "WriteStore.turnIntoSourceNote now sets String(localized: \"write.error.note.sourceConversion.invalidStage\") when transition to Source Note is invalid.",
+  "locale_coverage": {
+    "resource_locales_updated": [
+      "ar",
+      "de",
+      "en",
+      "es",
+      "fr",
+      "it",
+      "ja",
+      "ko",
+      "nb",
+      "nl",
+      "pt",
+      "pt-BR",
+      "ru",
+      "sv",
+      "tr",
+      "uk",
+      "vi",
+      "zh-Hans",
+      "zh-Hant"
+    ],
+    "strings_key_count_after": 386,
+    "stringsdict_key_count_after": 13,
+    "non_english_review_files_updated": 18,
+    "new_review_status": "needs-layout-check",
+    "new_review_provenance": "Codex automated draft (not native/fluent reviewer)",
+    "native_review_claim_for_new_key": "Not claimed. Each new review row has native_review.accepted=false and pending_native_review=true.",
+    "prior_native_review_scope_preserved": "The prior project-owner-reported native/fluent review remains scoped to the 419 entries present before 2026-05-20; each return file now records 9 pending post-packet additions across the two error-message fix slices."
+  },
+  "diff_budget": {
+    "original_max_files_changed": 25,
+    "documented_max_files_changed": 45,
+    "reason": "The slice required one key across 19 Localizable.strings files plus 18 per-locale review return files. The queue cap was expanded rather than leaving locale parity or provenance incomplete."
+  },
+  "scope_boundaries": [
+    "Did not change WritingStageRules or any source-note transition behavior.",
+    "Did not touch PatternStore failure visibility or copy.",
+    "Did not touch DesignSystem audio/voice accessibility error labels.",
+    "Did not claim native/fluent review for the new non-English strings."
+  ],
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-writestore-domain-message": "passed",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected app-error-message-fix-writestore-domain-message",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; localization-review-drift-check 0 drift; 93 automation tests)",
+    "git diff --check": "passed"
+  },
+  "next_slices": [
+    "app-error-message-fix-patternstore-visibility",
+    "app-error-message-fix-designsystem-accessibility"
+  ]
+}

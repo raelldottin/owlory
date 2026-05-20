@@ -1,0 +1,47 @@
+{
+  "slice_id": "app-error-message-fix-writestore-domain-message",
+  "title": "Localize + add resolution clue to WriteStore source-note-stage error",
+  "status": "done",
+  "completed_at": "2026-05-20T11:56:16Z",
+  "proof_level": "localized-copy + automation-tested",
+  "summary": "WriteStore's source-note invalid-stage fallback now uses a localized key with resolution guidance. The copy tells the user to move the note to Capture, Permanent Note, or Archived before trying again, matching the existing WritingStageRules transition graph.",
+  "changed_files_summary": [
+    "WriteStore.swift routes the invalid-stage fallback through String(localized:).",
+    "19 Localizable.strings files add write.error.note.sourceConversion.invalidStage.",
+    "18 non-English review return files add the key as an automated draft pending native/fluent acceptance.",
+    "automation/queue/slices.json marks this slice done and expands the file budget for required locale fan-out.",
+    "automation/proofs/app-error-message-fix-writestore-domain-message/manifest.json records proof and scope.",
+    "SecondBrain updated for continuity."
+  ],
+  "localized_key": "write.error.note.sourceConversion.invalidStage",
+  "review_return_policy": {
+    "new_non_english_rows": 18,
+    "status": "needs-layout-check",
+    "reviewer": "Codex automated draft (not native/fluent reviewer)",
+    "native_review_claim": "not claimed for the new rows",
+    "prior_review_scope": "419 entries per locale remain covered by the project-owner-reported 2026-05-18 native/fluent review pass; 9 post-packet additions per locale are now explicitly pending native/fluent review."
+  },
+  "validation": {
+    "python3 automation/context/build_context.py --slice-id app-error-message-fix-writestore-domain-message": "passed",
+    "python3 automation/supervisor/run_next.py --dry-run": "passed pre-implementation; selected this slice",
+    "make architecture": "passed",
+    "make localization-check": "passed (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check": "passed (pyright 0 errors / 0 warnings; localization-review-drift-check 0 drift; 93 automation tests)",
+    "git diff --check": "passed"
+  },
+  "not_claimed": [
+    "Native/fluent review for the new non-English strings.",
+    "PatternStore failure visibility or copy resolution.",
+    "DesignSystem audio/voice accessibility error-label resolution.",
+    "Any change to WritingStageRules transition behavior."
+  ],
+  "residual_risk": [
+    "The new non-English values are automated drafts. They are localized in-app and structurally tracked, but still need native/fluent acceptance before being counted in the native-reviewed scope."
+  ],
+  "recommended_next_slice": "app-error-message-fix-patternstore-visibility",
+  "recommended_next_reason": "It is the next queued error-message audit follow-up after this WriteStore copy fix.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T11:56:16Z"
+}

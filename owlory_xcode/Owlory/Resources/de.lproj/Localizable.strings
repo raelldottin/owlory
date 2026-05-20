@@ -394,3 +394,4 @@
 "career.error.record.save" = "Der Karriere-Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
 "today.error.history.load" = "Vorherige Tage konnten nicht geladen werden. Schließen Sie Owlory, öffnen Sie es erneut und versuchen Sie es noch einmal.";
 "today.error.entry.save" = "Der heutige Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.";
+"write.error.note.sourceConversion.invalidStage" = "Verschieben Sie die Notiz zuerst zu „Erfassung“, „Dauerhafte Notiz“ oder „Archiviert“ und versuchen Sie es erneut.";

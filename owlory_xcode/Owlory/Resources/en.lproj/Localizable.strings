@@ -395,3 +395,4 @@
 "career.error.record.save" = "Couldn't save the career record. Free up storage and try again.";
 "today.error.history.load" = "Couldn't load previous days. Close and reopen Owlory, then try again.";
 "today.error.entry.save" = "Couldn't save today's entry. Free up storage and try again.";
+"write.error.note.sourceConversion.invalidStage" = "Move the note to Capture, Permanent Note, or Archived first, then try again.";

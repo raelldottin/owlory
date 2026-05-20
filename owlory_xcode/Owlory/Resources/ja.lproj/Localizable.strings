@@ -394,3 +394,4 @@
 "career.error.record.save" = "キャリア記録を保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
 "today.error.history.load" = "過去の日を読み込めませんでした。Owloryを閉じて開き直し、もう一度お試しください。";
 "today.error.entry.save" = "今日のエントリーを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
+"write.error.note.sourceConversion.invalidStage" = "まずノートを「取り込み」、「恒常メモ」、または「アーカイブ済み」に移動してから、もう一度お試しください。";

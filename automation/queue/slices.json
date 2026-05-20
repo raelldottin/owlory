@@ -6257,7 +6257,7 @@
     {
       "slice_id": "app-error-message-fix-writestore-domain-message",
       "title": "Localize + add resolution clue to WriteStore source-note-stage error",
-      "status": "queued",
+      "status": "done",
       "priority": 79,
       "domain": "design",
       "allowed_paths": [
@@ -6281,9 +6281,9 @@
       "depends_on": [
         "app-error-message-audit"
       ],
-      "max_files_changed": 25,
+      "max_files_changed": 45,
       "entry_condition": "app-error-message-audit finding F02 classified WriteStore.swift:85 ('This note can't be turned into a source note from its current stage.') as needs-improvement: it tells the user what is wrong but not what to do. The Robinhood content-standards rule requires resolution guidance.",
-      "notes": "F02 WriteStore.swift:85 'This note can't be turned into a source note from its current stage.' -> localized key write.error.note.sourceConversion.invalidStage with resolution clue (e.g., 'Move it back to Capture or Source first, then try again.'). Inspect WriteStore to confirm which stages ARE valid for the conversion and reference the stage by its localized name. Do NOT change domain logic; only the user-visible string.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales (see app-error-message-fix-store-templates notes for the parity expectation).\n\nReference: automation/proofs/app-error-message-audit/manifest.json finding F02.\n\nproof_level target: localized-copy."
+      "notes": "F02 WriteStore.swift:85 'This note can't be turned into a source note from its current stage.' -> localized key write.error.note.sourceConversion.invalidStage with resolution clue (e.g., 'Move it back to Capture or Source first, then try again.'). Inspect WriteStore to confirm which stages ARE valid for the conversion and reference the stage by its localized name. Do NOT change domain logic; only the user-visible string.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales (see app-error-message-fix-store-templates notes for the parity expectation).\n\nReference: automation/proofs/app-error-message-audit/manifest.json finding F02.\n\nproof_level target: localized-copy.\n\nCompleted on 2026-05-20. Confirmed WritingStageRules allows source conversion from Capture, Permanent Note, or Archived; WriteStore now routes the invalid-stage fallback through `String(localized: \"write.error.note.sourceConversion.invalidStage\")` with resolution-guided copy naming those stages. Added the key to all 19 Localizable.strings files and all 18 non-English review return files as `needs-layout-check` automated drafts with native_review.accepted=false. Expanded `max_files_changed` from 25 to 45 because the slice explicitly required all resource and review-return files for parity/provenance. proof_level achieved: localized-copy + automation-tested."
     },
     {
       "slice_id": "app-error-message-fix-patternstore-visibility",

@@ -394,3 +394,4 @@
 "career.error.record.save" = "Não foi possível salvar o registro de carreira. Libere espaço de armazenamento e tente novamente.";
 "today.error.history.load" = "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory, depois tente novamente.";
 "today.error.entry.save" = "Não foi possível salvar a entrada de hoje. Libere espaço de armazenamento e tente novamente.";
+"write.error.note.sourceConversion.invalidStage" = "Mova a nota para Captura, Nota permanente ou Arquivado primeiro e tente novamente.";

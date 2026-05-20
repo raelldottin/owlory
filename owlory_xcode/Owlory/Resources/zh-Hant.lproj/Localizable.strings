@@ -394,3 +394,4 @@
 "career.error.record.save" = "無法儲存事業記錄。請釋放儲存空間，然後再試一次。";
 "today.error.history.load" = "無法載入前幾天。請關閉並重新開啟 Owlory，然後再試一次。";
 "today.error.entry.save" = "無法儲存今天的項目。請釋放儲存空間，然後再試一次。";
+"write.error.note.sourceConversion.invalidStage" = "請先將備忘錄移到「擷取」、「永久備忘錄」或「已封存」，然後再試一次。";

@@ -82,7 +82,7 @@ final class WriteStore: OwloryObservableObject {
 
         if updated.stage != .source {
             guard let transitioned = try? WritingStageRules.transition(updated, to: .source) else {
-                lastError = "This note can't be turned into a source note from its current stage."
+                lastError = String(localized: "write.error.note.sourceConversion.invalidStage")
                 return false
             }
             updated = transitioned

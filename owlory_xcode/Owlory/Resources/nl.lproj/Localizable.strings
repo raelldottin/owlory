@@ -394,3 +394,4 @@
 "career.error.record.save" = "Kan de carrièrevermelding niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
 "today.error.history.load" = "Kan vorige dagen niet laden. Sluit Owlory en open het opnieuw. Probeer het daarna opnieuw.";
 "today.error.entry.save" = "Kan de invoer van vandaag niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.";
+"write.error.note.sourceConversion.invalidStage" = "Verplaats de notitie eerst naar Vastleggen, Permanente notitie of Gearchiveerd en probeer het opnieuw.";

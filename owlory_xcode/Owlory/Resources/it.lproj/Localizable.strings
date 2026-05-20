@@ -394,3 +394,4 @@
 "career.error.record.save" = "Impossibile salvare il record di carriera. Libera spazio di archiviazione e riprova.";
 "today.error.history.load" = "Impossibile caricare i giorni precedenti. Chiudi e riapri Owlory, quindi riprova.";
 "today.error.entry.save" = "Impossibile salvare la voce di oggi. Libera spazio di archiviazione e riprova.";
+"write.error.note.sourceConversion.invalidStage" = "Sposta prima la nota in Acquisizione, Nota permanente o Archiviato, poi riprova.";

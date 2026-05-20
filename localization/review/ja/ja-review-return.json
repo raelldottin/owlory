@@ -18,7 +18,7 @@
     "review_date": "2026-05-18",
     "method": "Human native/fluent all-locale review pass reported by project owner in Codex prompt: \"native/fluent review is complete for all localization\".",
     "native_reviewed": true,
-    "accepted_scope": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 8 app-error-message-fix-store-templates additions are automated drafts and are not claimed native/fluent-reviewed.",
+    "accepted_scope": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 9 post-2026-05-20 additions are automated drafts and are not claimed native/fluent-reviewed.",
     "source_signal": "User prompt in Codex conversation on 2026-05-18: native/fluent review is complete for all localization.",
     "previous_draft_provenance": {
       "reviewer": "claude-opus-4-7 (LLM, not native Japanese / 日本語 reviewer)",
@@ -39,36 +39,80 @@
       ]
     },
     "post_packet_additions": {
-      "slice_id": "app-error-message-fix-store-templates",
-      "date": "2026-05-20",
-      "keys": [
-        "train.error.session.save",
-        "write.error.note.save",
-        "home.error.run.save",
-        "home.error.task.save",
-        "home.error.protocol.save",
-        "career.error.record.save",
-        "today.error.history.load",
-        "today.error.entry.save"
-      ],
-      "review_status": "needs-layout-check",
-      "reviewer": "Codex automated draft (not native/fluent reviewer)",
-      "native_reviewed": false
-    }
+      "total_pending_entries": 9,
+      "slices": [
+        {
+          "slice_id": "app-error-message-fix-store-templates",
+          "date": "2026-05-20",
+          "keys": [
+            "train.error.session.save",
+            "write.error.note.save",
+            "home.error.run.save",
+            "home.error.task.save",
+            "home.error.protocol.save",
+            "career.error.record.save",
+            "today.error.history.load",
+            "today.error.entry.save"
+          ],
+          "review_status": "needs-layout-check",
+          "reviewer": "Codex automated draft (not native/fluent reviewer)",
+          "native_reviewed": false
+        },
+        {
+          "slice_id": "app-error-message-fix-writestore-domain-message",
+          "date": "2026-05-20",
+          "keys": [
+            "write.error.note.sourceConversion.invalidStage"
+          ],
+          "review_status": "needs-layout-check",
+          "reviewer": "Codex automated draft (not native/fluent reviewer)",
+          "native_reviewed": false
+        }
+      ]
+    },
+    "post_packet_addition_history": [
+      {
+        "slice_id": "app-error-message-fix-store-templates",
+        "date": "2026-05-20",
+        "keys": [
+          "train.error.session.save",
+          "write.error.note.save",
+          "home.error.run.save",
+          "home.error.task.save",
+          "home.error.protocol.save",
+          "career.error.record.save",
+          "today.error.history.load",
+          "today.error.entry.save"
+        ],
+        "review_status": "needs-layout-check",
+        "reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "native_reviewed": false
+      },
+      {
+        "slice_id": "app-error-message-fix-writestore-domain-message",
+        "date": "2026-05-20",
+        "keys": [
+          "write.error.note.sourceConversion.invalidStage"
+        ],
+        "review_status": "needs-layout-check",
+        "reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "native_reviewed": false
+      }
+    ]
   },
   "summary": {
-    "review_entry_count": 427,
+    "review_entry_count": 428,
     "status_counts": {
       "native-reviewed": 419,
-      "needs-layout-check": 8
+      "needs-layout-check": 9
     },
     "lqa_counts": {
       "passed": 409,
-      "warning": 18
+      "warning": 19
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 385,
+    "strings_entry_count": 386,
     "plural_entry_count": 42,
     "native_review": {
       "locale": "ja",
@@ -77,8 +121,8 @@
       "review_date": "2026-05-18",
       "accepted_entries": 419,
       "basis": "project-owner-reported native/fluent all-locale review pass",
-      "pending_post_packet_entries": 8,
-      "scope_note": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 8 app-error-message-fix-store-templates additions are automated drafts and are not claimed native/fluent-reviewed."
+      "pending_post_packet_entries": 9,
+      "scope_note": "Project-owner-reported native/fluent review covers the 419 entries present before 2026-05-20. The 9 post-2026-05-20 additions are automated drafts and are not claimed native/fluent-reviewed."
     }
   },
   "resources": [
@@ -14719,6 +14763,40 @@
       "reviewer": "Codex automated draft (not native/fluent reviewer)",
       "review_date": "2026-05-20",
       "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "warning",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "hig-resolution-guidance"
+        ],
+        "issues": [
+          "Automated localized draft pending native/fluent acceptance."
+        ],
+        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "second_pass_date": "2026-05-20",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "write.error.note.sourceConversion.invalidStage",
+      "english_value": "Move the note to Capture, Permanent Note, or Archived first, then try again.",
+      "reviewed_value": "まずノートを「取り込み」、「恒常メモ」、または「アーカイブ済み」に移動してから、もう一度お試しください。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-20",
+      "reviewer_notes": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; automated draft pending native/fluent acceptance for this locale. Source-stage rule allows conversion from Capture, Permanent Note, or Archived.",
       "resource_type": "strings",
       "locale": "ja",
       "post_packet_addition": true,

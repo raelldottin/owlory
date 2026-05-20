@@ -394,3 +394,4 @@
 "career.error.record.save" = "Det gick inte att spara karriärposten. Frigör lagringsutrymme och försök igen.";
 "today.error.history.load" = "Det gick inte att läsa in tidigare dagar. Stäng och öppna Owlory igen och försök igen.";
 "today.error.entry.save" = "Det gick inte att spara dagens inlägg. Frigör lagringsutrymme och försök igen.";
+"write.error.note.sourceConversion.invalidStage" = "Flytta först anteckningen till Fångst, Permanent anteckning eller Arkiverad och försök igen.";

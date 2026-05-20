@@ -394,3 +394,4 @@
 "career.error.record.save" = "Impossible d’enregistrer l’entrée de carrière. Libérez de l’espace de stockage, puis réessayez.";
 "today.error.history.load" = "Impossible de charger les jours précédents. Fermez puis rouvrez Owlory, puis réessayez.";
 "today.error.entry.save" = "Impossible d’enregistrer l’entrée d’aujourd’hui. Libérez de l’espace de stockage, puis réessayez.";
+"write.error.note.sourceConversion.invalidStage" = "Déplacez d’abord la note vers Capture, Note permanente ou Archivé, puis réessayez.";
