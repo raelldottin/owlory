@@ -18,8 +18,12 @@ xcuserdata/
 # Local SwiftPM build output
 .build/
 
-# Claude Code local state
-.claude/
+# Claude Code local state (allow the shared settings.json so attribution
+# overrides are committed; everything else under .claude/ stays local).
+# Note: ignore contents (.claude/*) rather than the directory itself
+# (.claude/) so the !.claude/settings.json negation can re-include the file.
+.claude/*
+!.claude/settings.json
 
 # Local backup archives
 *.tar.gz

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+msg_file="$1"
+tmp_file="$(mktemp)"
+
+sed -E \
+  -e '/^Generated with .*Claude Code.*$/Id' \
+  -e '/^Co-authored-by: Claude.*<.*anthropic.*>$/Id' \
+  -e '/^Co-authored-by: Claude.*<noreply@anthropic\.com>$/Id' \
+  "$msg_file" > "$tmp_file"
+
+cat "$tmp_file" > "$msg_file"
+rm -f "$tmp_file"
