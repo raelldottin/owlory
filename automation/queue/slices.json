@@ -5779,7 +5779,7 @@
     {
       "slice_id": "automation-localization-iphone-se-simulator-provisioning",
       "title": "Automate iPhone SE simulator provisioning for smallest-width localization regression",
-      "status": "queued",
+      "status": "done",
       "priority": 21,
       "domain": "automation",
       "allowed_paths": [
@@ -5806,7 +5806,7 @@
       ],
       "max_files_changed": 8,
       "entry_condition": "The only remaining automatable blocked localization slice is `app-localization-smallest-width-accessibility-regression`, which needs a deterministic smallest-width simulator destination before its XCUITest regression can run.",
-      "notes": "Tooling/unblocker slice. Add an idempotent simulator-provisioning helper plus Makefile target that inspects available iOS simulator runtimes/device types and provisions a simulator named `iPhone SE` for the latest compatible runtime when the device type exists. Add a check-only mode for CI/validation. On success, update `app-localization-smallest-width-accessibility-regression` from `blocked` to `queued` and revise its entry_condition to reference the checked helper. If this Xcode installation does not expose an iPhone SE simulator device type, do not fake the proof; instead document that limitation and reframe/queue a smallest-available-width regression follow-up. Do not change XCUITest behavior in this slice. proof_level target: build-tested."
+      "notes": "Completed on 2026-05-20. Added `Tools/provision-localization-smallest-width-simulator.py` plus Makefile targets `provision-localization-smallest-width-simulator` and `provision-localization-smallest-width-simulator-check`. The helper selects the latest available iOS runtime that supports an iPhone SE device type, provisions a simulator named `iPhone SE` when missing, and provides a read-only check mode for validation. On this host it created `iPhone SE` on iOS 26.5 using `iPhone SE (3rd generation)`, and the check target reports destination `platform=iOS Simulator,name=iPhone SE,OS=26.5`. Updated docs and unblocked `app-localization-smallest-width-accessibility-regression` by moving it to queued. Did not change XCUITest behavior. proof_level: build-tested."
     },
     {
       "slice_id": "app-localization-review-drift-check-stringsdict-coverage",
@@ -6007,7 +6007,7 @@
     {
       "slice_id": "app-localization-smallest-width-accessibility-regression",
       "title": "Add iPhone SE smallest-width localization regression coverage",
-      "status": "blocked",
+      "status": "queued",
       "priority": 67,
       "domain": "localization",
       "allowed_paths": [
@@ -6036,8 +6036,7 @@
         "app-localization-smaller-width-accessibility-regression"
       ],
       "max_files_changed": 6,
-      "entry_condition": "An iPhone SE iOS 26.5 simulator (or whichever iOS version Owlory builds against) is provisioned and named 'iPhone SE' on the dev/CI host. As of 2026-05-20 the host has only iPhone 16 / iPhone 17 / iPhone Air sims; iPhone SE is the narrowest commonly-deployed iPhone width and is not provisioned. Run `xcrun simctl create 'iPhone SE' <SE-runtime>` before this slice can run.",
-      "recommended_unblocker": "automation-localization-iphone-se-simulator-provisioning",
+      "entry_condition": "`make provision-localization-smallest-width-simulator-check` passes on the dev/CI host, proving a simulator named `iPhone SE` exists for the latest compatible iOS runtime. As of 2026-05-20 this host has `iPhone SE` on iOS 26.5 provisioned by `make provision-localization-smallest-width-simulator`.",
       "notes": "Test-coverage slice mirroring app-localization-smaller-width-accessibility-regression but targeting iPhone SE instead of iPhone 16. Add a `localization-smallest-width` DOMAIN case to make ui-regression with `DESTINATION=\"platform=iOS Simulator,name=iPhone SE,OS=26.5\"` (adjust OS to whatever the provisioned SE simulator uses). Same -only-testing flags as DOMAIN=localization-smaller-width. iPhone SE is the narrowest currently-shipping iPhone; tab-bar truncation that hides on iPhone 17/16 may surface here. Do not change XCUITest source; this is a destination-only variant. proof_level target: regression-tested."
     },
     {

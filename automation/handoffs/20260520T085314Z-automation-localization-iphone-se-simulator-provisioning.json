@@ -1,0 +1,54 @@
+{
+  "slice_id": "automation-localization-iphone-se-simulator-provisioning",
+  "status": "done",
+  "summary": "Added an idempotent iPhone SE simulator provisioning helper and Makefile targets for the smallest-width localization regression prerequisite. The helper chooses the latest available iOS runtime that supports an iPhone SE device type, creates a simulator named `iPhone SE` when missing, and provides a read-only check target for validation. This host now has `iPhone SE` provisioned on iOS 26.5, so the smallest-width localization regression slice is queued.",
+  "files_touched": [
+    "Makefile",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-20/085344-automation-localization-iphone-se-simulator-provisioning.md",
+    "Tools/provision-localization-smallest-width-simulator.py",
+    "automation/handoffs/20260520T085314Z-automation-localization-iphone-se-simulator-provisioning.json",
+    "automation/queue/slices.json",
+    "docs/workflows/ui-testing-hygiene.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id automation-localization-iphone-se-simulator-provisioning",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "make provision-localization-smallest-width-simulator-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "missing_proof_levels": [
+    "running-app-smoke",
+    "flow-verified",
+    "screenshot-verified",
+    "device-verified",
+    "testflight-verified"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Smallest-width localization regression prerequisite",
+      "before": "`app-localization-smallest-width-accessibility-regression` was blocked because the dev/CI host had no simulator named `iPhone SE`.",
+      "after": "The repo has a repeatable provision/check helper, this host has `iPhone SE` on iOS 26.5, and the smallest-width localization regression slice is queued.",
+      "proof": [
+        "make provision-localization-smallest-width-simulator",
+        "make provision-localization-smallest-width-simulator-check",
+        "automation/queue/slices.json"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The next slice still needs to add and run `make ui-regression DOMAIN=localization-smallest-width`; this slice only provisioned and checked the simulator prerequisite."
+  ],
+  "recommended_next_slice": "app-localization-smallest-width-accessibility-regression",
+  "recommended_next_reason": "The iPhone SE simulator prerequisite is now satisfied and the blocked smallest-width regression slice has been moved to queued.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-20T08:53:14Z"
+}
