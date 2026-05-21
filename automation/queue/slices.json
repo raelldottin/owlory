@@ -6354,7 +6354,7 @@
     {
       "slice_id": "release-versioning-policy-doc",
       "title": "Document long-term app versioning policy for Bundle Short Version",
-      "status": "queued",
+      "status": "done",
       "priority": 76,
       "domain": "release",
       "allowed_paths": [
@@ -6376,7 +6376,7 @@
       "depends_on": [],
       "max_files_changed": 7,
       "entry_condition": "User asked for the long-term plan for the app Bundle Version Short String and how an enterprise app would manage it. The current release workflow has tooling, but no explicit policy for when MARKETING_VERSION changes versus when CURRENT_PROJECT_VERSION changes.",
-      "notes": "Documentation-only slice. Add a durable policy to docs/workflows/release.md for CFBundleShortVersionString / Xcode MARKETING_VERSION as the user-visible SemVer-style release version and CFBundleVersion / CURRENT_PROJECT_VERSION as the monotonically increasing build identity. Cover pre-1.0 behavior, major/minor/patch bump intent, why ordinary implementation slices must not bump MARKETING_VERSION, why rollback builds should usually bump only CURRENT_PROJECT_VERSION, tag/changelog expectations, and enterprise-style traceability across GitHub, Xcode, TestFlight/App Store Connect, MDM/support, and Build Info. Update validation/app-runtime docs only if they need cross-links. Do not change scripts or app behavior in this slice. proof_level target: doc-only."
+      "notes": "Documentation-only slice. Add a durable policy to docs/workflows/release.md for CFBundleShortVersionString / Xcode MARKETING_VERSION as the user-visible SemVer-style release version and CFBundleVersion / CURRENT_PROJECT_VERSION as the monotonically increasing build identity. Cover pre-1.0 behavior, major/minor/patch bump intent, why ordinary implementation slices must not bump MARKETING_VERSION, why rollback builds should usually bump only CURRENT_PROJECT_VERSION, tag/changelog expectations, and enterprise-style traceability across GitHub, Xcode, TestFlight/App Store Connect, MDM/support, and Build Info. Update validation/app-runtime docs only if they need cross-links. Do not change scripts or app behavior in this slice. proof_level target: doc-only.\n\nCompleted on 2026-05-21: added docs/workflows/release.md#app-version-policy defining MARKETING_VERSION / CFBundleShortVersionString as the intentional user-visible release version and CURRENT_PROJECT_VERSION / CFBundleVersion as per-build identity. The policy covers pre-1.0 bump rules, post-1.0 major/minor/patch intent, no version bumps for ordinary implementation slices, UTC timestamp build numbers, TestFlight rollback handling, App Store production issue handling, tag/changelog expectations, and enterprise-style traceability across Build Info, GitHub, App Store Connect/TestFlight, MDM rollout notes, and support tickets. Updated docs/product/domains/app-runtime.md to point at the policy and name the remaining MARKETING_VERSION committed-HEAD enforcement gap. No scripts, project version values, app code, or build numbers changed. proof_level achieved: doc-only + automation-tested."
     },
     {
       "slice_id": "release-marketing-version-provenance-gate",

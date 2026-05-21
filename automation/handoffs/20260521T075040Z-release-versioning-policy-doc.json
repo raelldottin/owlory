@@ -1,0 +1,62 @@
+{
+  "slice_id": "release-versioning-policy-doc",
+  "status": "done",
+  "summary": "Documented Owlory's long-term app version policy: MARKETING_VERSION / CFBundleShortVersionString is the intentional user-visible release version, while CURRENT_PROJECT_VERSION / CFBundleVersion is the per-build identity. The release workflow now covers pre-1.0 and post-1.0 bump intent, ordinary-slice no-bump rules, UTC timestamp build numbers, rollback behavior, tag/changelog expectations, and enterprise traceability across Build Info, GitHub, App Store Connect/TestFlight, MDM rollout notes, and support tickets.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/035040-release-versioning-policy-doc.md",
+    "automation/handoffs/20260521T075040Z-release-versioning-policy-doc.json",
+    "automation/queue/slices.json",
+    "docs/product/domains/app-runtime.md",
+    "docs/workflows/release.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main && git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id release-versioning-policy-doc",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only + automation-tested",
+  "missing_proof_levels": [
+    "No app behavior, script behavior, archive behavior, App Store Connect behavior, TestFlight behavior, or MDM rollout behavior was changed or claimed.",
+    "MARKETING_VERSION committed-HEAD enforcement remains queued in release-marketing-version-provenance-gate."
+  ],
+  "external_sources": [
+    "https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleshortversionstring",
+    "https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleversion",
+    "https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds",
+    "https://developer.apple.com/help/app-store-connect/update-your-app/create-a-new-version"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "App version policy",
+      "before": "Release workflow documented the scripts and gates but did not state when MARKETING_VERSION should change versus when only CURRENT_PROJECT_VERSION should change.",
+      "after": "docs/workflows/release.md now defines MARKETING_VERSION as the intentional user-visible release version and CURRENT_PROJECT_VERSION as build identity, with bump rules, rollback rules, and enterprise traceability expectations.",
+      "proof": [
+        "docs/workflows/release.md#app-version-policy"
+      ]
+    },
+    {
+      "contract": "App Runtime release identity status",
+      "before": "The app-runtime domain doc still described release mirroring as needing broad automation enforcement even though build-number preflight exists.",
+      "after": "The app-runtime domain doc now names build provenance and archive preflight as implemented, while explicitly preserving the remaining MARKETING_VERSION committed-HEAD enforcement gap.",
+      "proof": [
+        "docs/product/domains/app-runtime.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The policy is documentation-only until the queued MARKETING_VERSION provenance gate and bump-version policy guard slices land.",
+    "The policy relies on the current release scripts' timestamp build-number convention; the implementation guard slice should add focused tests around that convention."
+  ],
+  "recommended_next_slice": "release-marketing-version-provenance-gate",
+  "recommended_next_reason": "The version policy has landed, satisfying the entry condition for the next highest-priority release implementation slice.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T07:50:40Z"
+}

@@ -8,6 +8,48 @@
 - Xcode `Stamp Build Info` phases run `./Tools/generate-build-info.sh` during app and widget builds so the bundle records Git commit, branch, tag/describe output, GitStatus, build date, configuration, and build-number source.
 - `BuildInfo` reads the stamped bundle metadata at runtime. The Build Info sheet is the user-facing support breadcrumb for TestFlight diagnostics.
 
+## App Version Policy
+
+Apple exposes two related but separate bundle identities:
+
+- `MARKETING_VERSION` becomes [`CFBundleShortVersionString`](https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleshortversionstring), the user-visible app version.
+- `CURRENT_PROJECT_VERSION` becomes [`CFBundleVersion`](https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleversion), the build string for one concrete build iteration.
+
+App Store Connect associates an uploaded build with an app and version record using the bundle ID and version number in the app bundle, then uses the build string to identify the concrete build.
+
+Owlory treats `MARKETING_VERSION` as a SemVer-shaped public release version in the required `major.minor.patch` form. It is not a counter for every implementation slice. Change it only when preparing a release candidate, creating a new App Store Connect version record, or deliberately changing the external support identity for a distributed build.
+
+While Owlory is pre-1.0, use this policy:
+
+- `0.minor.0`: user-visible capability, workflow, domain, or data-model expansion that changes what testers need to understand.
+- `0.minor.patch`: maintenance work inside the same release line, including bug fixes, copy/localization fixes, validation hardening, HIG/UI polish, or release-workflow corrections.
+- `1.0.0`: first stable product release after the owner deliberately declares the release posture stable. Do not arrive at `1.0.0` through routine slice accumulation.
+
+After 1.0, keep the same shape:
+
+- `major`: product contract reset, large migration, or support-breaking change.
+- `minor`: new user-facing capability or meaningful workflow expansion.
+- `patch`: fix, polish, localization, validation, or release-infrastructure correction with no new public capability.
+
+Ordinary implementation, localization, HIG, automation, and documentation slices must not bump `MARKETING_VERSION`. Those changes become part of the next intentional release version when a release slice runs `./Tools/bump-version.sh <major|minor|patch>`, reviews `CHANGELOG.md`, commits the release metadata, tags `vX.Y.Z`, and pushes the tag.
+
+`CURRENT_PROJECT_VERSION` is the build identity. Owlory uses a UTC timestamp build number so each archive can be traced and sorted without needing a separate build counter. Bump it for every TestFlight/App Store archive candidate and every rollback candidate. Multiple builds can share one `MARKETING_VERSION`, but a distributed build number must never be reused for a different source state. Keep the numeric timestamp within App Store Connect's 18-character build-number limit.
+
+Rollback policy:
+
+- TestFlight rollback: check out the known-good source, run `./Tools/set-build-number.sh --auto`, commit and push the new build number, then run the release gates before archiving. Do not change `MARKETING_VERSION` unless the rollback is intentionally marketed as a new release version.
+- App Store production issue: Apple does not provide a true "revert to prior version" path for a released version. Ship a new version/build from the appropriate source state and document it in the changelog.
+
+Enterprise-style management treats this as a governance trail, not a local Xcode habit. A support or release reviewer should be able to start from any of these records and recover the rest:
+
+- installed app Build Info: version, build, full commit, branch, GitStatus, and rollback checkout
+- GitHub commit/tag: `vX.Y.Z`, changelog entry, and committed Xcode version/build metadata
+- App Store Connect/TestFlight: bundle ID, version number, build string, upload status, and selected release build
+- MDM or internal rollout note: version/build, deployment cohort, release date, and rollback candidate
+- support ticket: screenshot or text copy of the Build Info sheet, not a hand-entered guess
+
+For Owlory, the source of truth remains committed GitHub history plus committed Xcode build settings. Do not accept local-only Xcode edits, unpublished commits, untagged release candidates, or dirty Build Info as release truth.
+
 ## Version Control Contract
 
 Implementation status: `Implemented` for local provenance checks, pre-push refusal, and archive-readiness preflight.
