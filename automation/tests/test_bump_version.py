@@ -152,6 +152,39 @@ class ReleaseVersionScriptTests(unittest.TestCase):
         self.assertEqual(before_pbxproj, self.pbxproj.read_text(encoding="utf-8"))
         self.assertEqual(before_changelog, self.changelog.read_text(encoding="utf-8"))
 
+    def test_bump_version_requires_changelog_before_mutating_project(self) -> None:
+        self._seed_project()
+        before_pbxproj = self.pbxproj.read_text(encoding="utf-8")
+        self.changelog.unlink()
+
+        result = self._run(self.bump_version, "patch")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("CHANGELOG.md not found", result.stderr)
+        self.assertIn("refusing to update MARKETING_VERSION", result.stderr)
+        self.assertEqual(before_pbxproj, self.pbxproj.read_text(encoding="utf-8"))
+        self.assertFalse(self.changelog.exists())
+
+    def test_bump_version_requires_unreleased_changelog_section_before_mutating_project(self) -> None:
+        self._seed_project()
+        before_pbxproj = self.pbxproj.read_text(encoding="utf-8")
+        malformed_changelog = (
+            "# Changelog\n"
+            "\n"
+            "## [0.2.3] - 2026-01-01\n"
+            "\n"
+            "- Previous release.\n"
+        )
+        self.changelog.write_text(malformed_changelog, encoding="utf-8")
+
+        result = self._run(self.bump_version, "patch")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("must contain a '## [Unreleased]' section", result.stderr)
+        self.assertIn("refusing to update MARKETING_VERSION", result.stderr)
+        self.assertEqual(before_pbxproj, self.pbxproj.read_text(encoding="utf-8"))
+        self.assertEqual(malformed_changelog, self.changelog.read_text(encoding="utf-8"))
+
     def test_set_build_number_updates_all_configs_without_changing_marketing_version(self) -> None:
         self._seed_project(marketing_version="0.4.0", build_number="20260101000000")
 

@@ -1,0 +1,60 @@
+{
+  "slice_id": "release-changelog-required-gate",
+  "status": "done",
+  "summary": "Hardened Tools/bump-version.sh so missing CHANGELOG.md or a missing ## [Unreleased] section fails before MARKETING_VERSION or CURRENT_PROJECT_VERSION can be mutated. Added isolated temp-repo tests proving both failure modes leave project metadata unchanged and preserved valid changelog promotion behavior.",
+  "files_touched": [
+    "Tools/bump-version.sh",
+    "automation/tests/test_bump_version.py",
+    "docs/workflows/release.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T112142Z-release-changelog-required-gate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/071142-release-changelog-required-gate.md"
+  ],
+  "validations_passed": [
+    "git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id release-changelog-required-gate",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_bump_version",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T112142Z-release-changelog-required-gate.json",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "automation-tested",
+  "missing_proof_levels": [
+    "No app build or runtime validation was required; this slice changes release tooling, tests, and release workflow docs only."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release changelog gate",
+      "before": "Tools/bump-version.sh warned and skipped changelog promotion when CHANGELOG.md was missing, after already mutating project version metadata.",
+      "after": "Tools/bump-version.sh exits before metadata mutation unless CHANGELOG.md exists and contains ## [Unreleased].",
+      "proof": [
+        "Tools/bump-version.sh",
+        "python3 -m unittest automation.tests.test_bump_version"
+      ]
+    },
+    {
+      "contract": "Bump-version non-mutation on invalid release-note state",
+      "before": "There was no focused regression coverage proving missing changelog state leaves MARKETING_VERSION and CURRENT_PROJECT_VERSION unchanged.",
+      "after": "Temp-repo tests prove missing CHANGELOG.md and missing ## [Unreleased] both fail without changing project metadata.",
+      "proof": [
+        "automation/tests/test_bump_version.py",
+        "python3 -m unittest automation.tests.test_bump_version"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "No known residual risk for this release tooling gate."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent queued release slices remain after this gate; run the supervisor or clean-stop to confirm global queue state.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T11:21:42Z"
+}

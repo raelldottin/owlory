@@ -36,6 +36,18 @@ if [ ! -f "$PBXPROJ" ]; then
   exit 1
 fi
 
+if [ ! -f "$CHANGELOG" ]; then
+  echo "error: CHANGELOG.md not found at $CHANGELOG" >&2
+  echo "error: refusing to update MARKETING_VERSION or CURRENT_PROJECT_VERSION without changelog release notes." >&2
+  exit 1
+fi
+
+if ! grep -q '^## \[Unreleased\]' "$CHANGELOG"; then
+  echo "error: CHANGELOG.md must contain a '## [Unreleased]' section before bumping MARKETING_VERSION." >&2
+  echo "error: refusing to update MARKETING_VERSION or CURRENT_PROJECT_VERSION without a promotable changelog section." >&2
+  exit 1
+fi
+
 CURRENT="$(grep -m1 -E 'MARKETING_VERSION = [0-9]+\.[0-9]+\.[0-9]+;' "$PBXPROJ" | sed -E 's/.*MARKETING_VERSION = ([0-9]+\.[0-9]+\.[0-9]+);.*/\1/')"
 if [ -z "$CURRENT" ]; then
   echo "error: could not parse current MARKETING_VERSION from pbxproj" >&2
@@ -63,24 +75,20 @@ echo "Bumping MARKETING_VERSION: $CURRENT -> $NEW"
 
 "$REPO_ROOT/Tools/set-build-number.sh" --auto
 
-if [ -f "$CHANGELOG" ]; then
-  echo "Promoting [Unreleased] -> [$NEW] in CHANGELOG.md"
-  TMP="$(mktemp)"
-  /usr/bin/awk -v new="$NEW" -v today="$TODAY" '
-    BEGIN { promoted = 0 }
-    /^## \[Unreleased\]/ && !promoted {
-      print "## [Unreleased]"
-      print ""
-      print "## [" new "] - " today
-      promoted = 1
-      next
-    }
-    { print }
-  ' "$CHANGELOG" > "$TMP"
-  mv "$TMP" "$CHANGELOG"
-else
-  echo "warning: CHANGELOG.md not found at $CHANGELOG — skipping changelog update."
-fi
+echo "Promoting [Unreleased] -> [$NEW] in CHANGELOG.md"
+TMP="$(mktemp)"
+/usr/bin/awk -v new="$NEW" -v today="$TODAY" '
+  BEGIN { promoted = 0 }
+  /^## \[Unreleased\]/ && !promoted {
+    print "## [Unreleased]"
+    print ""
+    print "## [" new "] - " today
+    promoted = 1
+    next
+  }
+  { print }
+' "$CHANGELOG" > "$TMP"
+mv "$TMP" "$CHANGELOG"
 
 echo ""
 echo "Done. Next steps:"

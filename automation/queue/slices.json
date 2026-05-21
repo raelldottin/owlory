@@ -6505,7 +6505,7 @@
     {
       "slice_id": "release-changelog-required-gate",
       "title": "Require changelog presence before bump-version release metadata changes",
-      "status": "queued",
+      "status": "done",
       "priority": 72,
       "domain": "release",
       "allowed_paths": [
@@ -6530,7 +6530,7 @@
       ],
       "max_files_changed": 7,
       "entry_condition": "CHANGELOG.md exists with an [Unreleased] section. The release process should no longer allow bump-version to silently skip changelog promotion.",
-      "notes": "Implementation slice. Change Tools/bump-version.sh so a missing CHANGELOG.md or missing [Unreleased] heading fails before mutating project.pbxproj, rather than warning and continuing. Add/adjust focused tests in automation/tests/test_bump_version.py proving missing changelog and missing [Unreleased] fail without changing MARKETING_VERSION or CURRENT_PROJECT_VERSION, while valid changelog promotion still passes. Do not bump real MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: automation-tested."
+      "notes": "Implementation slice. Change Tools/bump-version.sh so a missing CHANGELOG.md or missing [Unreleased] heading fails before mutating project.pbxproj, rather than warning and continuing. Add/adjust focused tests in automation/tests/test_bump_version.py proving missing changelog and missing [Unreleased] fail without changing MARKETING_VERSION or CURRENT_PROJECT_VERSION, while valid changelog promotion still passes. Do not bump real MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: Tools/bump-version.sh now validates that CHANGELOG.md exists and contains a ## [Unreleased] section before reading and mutating MARKETING_VERSION or CURRENT_PROJECT_VERSION. Added isolated temp-repo regression tests proving missing changelog and missing [Unreleased] both fail without changing project metadata, while existing valid bump/promotion behavior still passes. Updated release workflow docs to name the hard pre-mutation changelog gate. No real MARKETING_VERSION or CURRENT_PROJECT_VERSION values changed. proof_level achieved: automation-tested."
     }
   ]
 }

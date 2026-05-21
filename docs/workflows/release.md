@@ -66,6 +66,8 @@ Use the stable `[Unreleased]` categories:
 
 Before any `MARKETING_VERSION` bump, review `[Unreleased]`, remove entries that are not release-facing, and make sure each remaining entry can be explained from committed source, handoff evidence, or validation output.
 
+`./Tools/bump-version.sh` refuses to update `MARKETING_VERSION` or `CURRENT_PROJECT_VERSION` unless `CHANGELOG.md` exists and contains a `## [Unreleased]` section that can be promoted.
+
 ## Version Control Contract
 
 Implementation status: `Implemented` for local provenance checks, pre-push refusal, and archive-readiness preflight.
