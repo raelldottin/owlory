@@ -1,0 +1,51 @@
+{
+  "slice_id": "release-bump-version-policy-guard",
+  "status": "done",
+  "summary": "Added isolated automation coverage for the release version bump tooling. The new tests execute the real bump-version and set-build-number scripts against temporary project fixtures, proving major/minor/patch semantics, synchronized MARKETING_VERSION replacement, timestamp build-number generation, CHANGELOG promotion, and invalid-input non-mutation without touching the real app version or build number.",
+  "files_touched": [
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/065050-release-bump-version-policy-guard.md",
+    "automation/handoffs/20260521T105050Z-release-bump-version-policy-guard.json",
+    "automation/queue/slices.json",
+    "automation/tests/test_bump_version.py"
+  ],
+  "validations_passed": [
+    "git fetch origin main && git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id release-bump-version-policy-guard",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_bump_version",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T105050Z-release-bump-version-policy-guard.json",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "automation-tested",
+  "missing_proof_levels": [
+    "No app behavior, release archive, TestFlight install, App Store Connect, MDM rollout, or real project version/build bump was changed or claimed."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release bump-version policy guard",
+      "before": "bump-version and set-build-number had no focused automation tests proving the documented MARKETING_VERSION and CURRENT_PROJECT_VERSION policy in isolated fixtures.",
+      "after": "automation/tests/test_bump_version.py executes the real scripts in temp fixtures and proves policy behavior without mutating real release metadata.",
+      "proof": [
+        "automation/tests/test_bump_version.py",
+        "python3 -m unittest automation.tests.test_bump_version",
+        "make automation-check"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The tests run the shell scripts in a temporary fixture; they intentionally do not perform a real Owlory release bump, archive, TestFlight upload, or App Store Connect version creation.",
+    "The real repository still has no top-level CHANGELOG.md file in this checkout; CHANGELOG promotion is proven against the fixture file created by the test."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent queued release slice remains after this one; run the supervisor/clean-stop gate to choose any broader next work.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T10:50:50Z"
+}

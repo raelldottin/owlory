@@ -6416,7 +6416,7 @@
     {
       "slice_id": "release-bump-version-policy-guard",
       "title": "Harden bump-version tooling around the documented release policy",
-      "status": "queued",
+      "status": "done",
       "priority": 75,
       "domain": "release",
       "allowed_paths": [
@@ -6443,7 +6443,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "release-versioning-policy-doc has landed and describes the intended major/minor/patch and rollback-build behavior for MARKETING_VERSION and CURRENT_PROJECT_VERSION.",
-      "notes": "Implementation slice. Add focused automation coverage for Tools/bump-version.sh and the surrounding build-number helpers so the documented policy is executable: only major/minor/patch are accepted, MARKETING_VERSION changes according to the documented rule, CURRENT_PROJECT_VERSION is refreshed to a numeric timestamp build number within App Store Connect's 18-character limit, and CHANGELOG.md receives the expected release heading without hand-edited metadata. If the tests expose script ambiguity, make the smallest script change that aligns with the policy. Do not introduce automatic version bumps in normal implementation slices and do not change the current 0.2.0 project version unless the test fixture is isolated. proof_level target: automation-tested."
+      "notes": "Implementation slice. Add focused automation coverage for Tools/bump-version.sh and the surrounding build-number helpers so the documented policy is executable: only major/minor/patch are accepted, MARKETING_VERSION changes according to the documented rule, CURRENT_PROJECT_VERSION is refreshed to a numeric timestamp build number within App Store Connect's 18-character limit, and CHANGELOG.md receives the expected release heading without hand-edited metadata. If the tests expose script ambiguity, make the smallest script change that aligns with the policy. Do not introduce automatic version bumps in normal implementation slices and do not change the current 0.2.0 project version unless the test fixture is isolated. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: added automation/tests/test_bump_version.py with isolated temp-repo fixtures that copy and execute the real Tools/bump-version.sh and Tools/set-build-number.sh. Coverage proves major/minor/patch bump semantics from 0.2.3, synchronized MARKETING_VERSION replacement across configs, UTC timestamp CURRENT_PROJECT_VERSION generation with 14 numeric digits and <=18 chars, CHANGELOG.md promotion to the new release heading, invalid bump rejection without mutation, explicit set-build-number updates without changing MARKETING_VERSION, and invalid/too-long build-number rejection without mutation. No script change was needed; the existing tooling already satisfied the documented policy under these fixtures. No project version values, build numbers, real CHANGELOG, app code, or docs changed. proof_level achieved: automation-tested."
     }
   ]
 }
