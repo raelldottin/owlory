@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [release-changelog-current-cycle-backfill (doc-only; populated CHANGELOG.md [Unreleased] with curated current-cycle release notes for localization, HIG/accessibility proof, reminder cancellation, error-copy cleanup, release provenance, and validation gates)](sessions/2026-05-21/071850-release-changelog-current-cycle-backfill.md)
 - [release-changelog-foundation (doc-only + automation-tested; added top-level CHANGELOG.md with [Unreleased] release-note categories, release.md changelog policy, and aligned bump-version fixture)](sessions/2026-05-21/071355-release-changelog-foundation.md)
 - [queue-release-changelog-slices (queue-only; added changelog foundation, current-cycle backfill, and required-gate slices so marketing-version release notes become curated repo state)](sessions/2026-05-21/070709-queue-release-changelog-slices.md)
 - [release-bump-version-policy-guard (automation-tested; added isolated tests executing real bump-version/set-build-number scripts against temp fixtures for semver bumps, timestamp build numbers, changelog promotion, and invalid-input non-mutation)](sessions/2026-05-21/065050-release-bump-version-policy-guard.md)

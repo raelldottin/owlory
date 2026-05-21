@@ -6479,7 +6479,7 @@
     {
       "slice_id": "release-changelog-current-cycle-backfill",
       "title": "Curate current-cycle Unreleased notes from completed release-relevant slices",
-      "status": "queued",
+      "status": "done",
       "priority": 71,
       "domain": "release",
       "allowed_paths": [
@@ -6500,7 +6500,7 @@
       ],
       "max_files_changed": 6,
       "entry_condition": "CHANGELOG.md exists with an [Unreleased] section from release-changelog-foundation.",
-      "notes": "Documentation curation slice. Read recent SecondBrain entries/handoffs since the current 0.2.0 release line and curate only user/support/release-significant changes into CHANGELOG.md [Unreleased]. Group by the categories established in release-changelog-foundation. Do not list every implementation slice, internal harness detail, or proof artifact; summarize outcomes a tester or support reviewer would care about. Preserve a clear boundary that SecondBrain remains operational history while CHANGELOG.md is marketing-version release notes. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: doc-only."
+      "notes": "Documentation curation slice. Read recent SecondBrain entries/handoffs since the current 0.2.0 release line and curate only user/support/release-significant changes into CHANGELOG.md [Unreleased]. Group by the categories established in release-changelog-foundation. Do not list every implementation slice, internal harness detail, or proof artifact; summarize outcomes a tester or support reviewer would care about. Preserve a clear boundary that SecondBrain remains operational history while CHANGELOG.md is marketing-version release notes. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: doc-only.\n\nCompleted on 2026-05-21: populated CHANGELOG.md [Unreleased] with curated current-cycle release notes grouped under Added, Changed, Fixed, Localization, and Release And Validation. The notes summarize tester/support-visible outcomes from localization routing, HIG/accessibility proof workflows, reminder cancellation fixes, error-copy cleanup, release provenance, and validation gates without listing every internal slice or proof artifact. No MARKETING_VERSION or CURRENT_PROJECT_VERSION values changed. proof_level achieved: doc-only."
     },
     {
       "slice_id": "release-changelog-required-gate",
