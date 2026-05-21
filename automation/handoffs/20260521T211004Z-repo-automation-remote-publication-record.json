@@ -1,0 +1,81 @@
+{
+  "slice_id": "repo-automation-remote-publication-record",
+  "status": "done",
+  "summary": "Recorded the published HTTPS remote for /Users/raelldottin/Documents/Personal/repo-automation. The external repo origin is https://github.com/raelldottin/repo-automation.git, main tracks origin/main, and HEAD 15351f7c702223062b95cfbf7f4f6515c9e23941 is mirrored with upstream at 0 0.",
+  "files_touched": [
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T211004Z-repo-automation-remote-publication-record.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/171004-repo-automation-remote-publication-record.md"
+  ],
+  "validations_passed": [
+    "gh auth status -h github.com",
+    "gh repo view raelldottin/repo-automation --json nameWithOwner,sshUrl,url",
+    "gh auth setup-git -h github.com",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation remote set-url origin https://github.com/raelldottin/repo-automation.git",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation push -u origin main",
+    "Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation commit -m \"Record repo automation remote\"",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation push origin main",
+    "Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation commit -m \"Stabilize remote status docs\"",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation push origin main",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation remote -v",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation status --short --branch",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-list --left-right --count HEAD...@{u}",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD",
+    "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T211004Z-repo-automation-remote-publication-record.json",
+    "make architecture",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation push -u origin main failed against git@github.com:raelldottin/repo-automation.git because GitHub SSH public-key authentication is not configured on this machine.",
+    "ssh -T git@github.com failed with Permission denied (publickey)."
+  ],
+  "proof_level": "remote-published",
+  "missing_proof_levels": [
+    "Automatic update hooks are not wired yet; repo-automation-auto-update-gate owns that.",
+    "Consumer adoption proof remains queued in repo-automation-consumer-adoption-smoke."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "External repo remote",
+      "before": "The bootstrapped external repository had no remote configured.",
+      "after": "origin fetch/push is https://github.com/raelldottin/repo-automation.git and main tracks origin/main.",
+      "proof": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation remote -v",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation status --short --branch"
+      ]
+    },
+    {
+      "contract": "External mirror state",
+      "before": "The external repository was local-only at ed52956174cdb0add2f7a9574572079a3ad08af6.",
+      "after": "The synced remote-status documentation is committed as 15351f7c702223062b95cfbf7f4f6515c9e23941, pushed to origin/main, and mirrored with upstream at 0 0.",
+      "proof": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-list --left-right --count HEAD...@{u}",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The external repo is current now, but future Owlory reusable automation changes are not automatically synced until repo-automation-auto-update-gate lands.",
+    "SSH publication will continue to fail on this machine until a GitHub SSH key is configured; HTTPS publication is the documented working path."
+  ],
+  "recommended_next_slice": "repo-automation-auto-update-gate",
+  "recommended_next_reason": "The external repo is bootstrapped, published, and mirrored, so the next adjacent step is wiring currentness checks or automatic local sync into Owlory's validation/push path.",
+  "external_repo": {
+    "path": "/Users/raelldottin/Documents/Personal/repo-automation",
+    "remote": "https://github.com/raelldottin/repo-automation.git",
+    "branch": "main",
+    "head": "15351f7c702223062b95cfbf7f4f6515c9e23941",
+    "mirror_status": "0 0",
+    "sync_status": "target is current"
+  },
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T21:10:04Z"
+}

@@ -6639,6 +6639,36 @@
       "notes": "Bootstrap slice. Initialize /Users/raelldottin/Documents/Personal/repo-automation as a Git repository if it is not already one, then run the tested sync tool to populate the reusable automation distribution. Add a README and bootstrap metadata through the sync manifest rather than ad hoc writes where possible. Commit the external repo if appropriate locally, but do not push to any remote unless a remote already exists and the user has explicitly configured it. Record exact external repo status, commit hash if created, and sync proof in the Owlory handoff. Keep Owlory repo changes limited to documentation/handoff/queue updates. proof_level target: external-bootstrap-tested.\n\nCompleted on 2026-05-21: initialized /Users/raelldottin/Documents/Personal/repo-automation as its own nested Git repository on main because Git previously resolved to the parent Personal workspace. Ran Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation, which populated 17 manifest-owned reusable automation files, then verified Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation passed with result: target is current. Committed the external repository locally as 6ab871bbf957df24e648b02ef002c0efa2d7c609 (Bootstrap reusable repo automation), then synced and committed the Owlory bootstrap-status doc update as ed52956174cdb0add2f7a9574572079a3ad08af6 (Record bootstrap status). No remote is configured, so no external push was attempted. Owlory repo changes were limited to docs, queue, handoff, and SecondBrain. proof_level achieved: external-bootstrap-tested."
     },
     {
+      "slice_id": "repo-automation-remote-publication-record",
+      "title": "Record and verify the published repo-automation remote",
+      "status": "done",
+      "priority": 86,
+      "domain": "automation",
+      "allowed_paths": [
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation remote -v",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation status --short --branch",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-list --left-right --count HEAD...@{u}",
+        "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+        "python3 -m json.tool automation/queue/slices.json",
+        "python3 -m json.tool automation/handoffs/20260521T211004Z-repo-automation-remote-publication-record.json",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-external-repo-bootstrap"
+      ],
+      "max_files_changed": 5,
+      "entry_condition": "User provided the GitHub remote https://github.com/raelldottin/repo-automation for the external reusable automation repository.",
+      "notes": "Record slice. Configure and verify the external repo-automation remote after bootstrap without changing harness code; sync the manifest-owned workflow documentation so the external repo records its own published remote. The SSH remote git@github.com:raelldottin/repo-automation.git was first attempted and failed because this machine lacks GitHub SSH public-key authentication. GitHub CLI authentication was already valid for HTTPS Git operations, so origin was set to https://github.com/raelldottin/repo-automation.git and external main was pushed/tracked there. Completed on 2026-05-21: external repo origin fetch/push is https://github.com/raelldottin/repo-automation.git, main tracks origin/main, rev-list HEAD...@{u} is 0 0, final external HEAD is 15351f7c702223062b95cfbf7f4f6515c9e23941 after committing synced remote-status documentation and removing a self-referential exact-HEAD value from the manifest-owned workflow doc, and Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation passes with result: target is current. Owlory repo changes were limited to docs, queue, handoff, and SecondBrain. proof_level achieved: remote-published."
+    },
+    {
       "slice_id": "repo-automation-auto-update-gate",
       "title": "Wire automatic updates from Owlory automation changes to repo-automation",
       "status": "queued",

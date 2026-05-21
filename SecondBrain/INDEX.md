@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [repo-automation-remote-publication-record (remote-published; configured HTTPS origin for external repo-automation, pushed main to GitHub, and verified external mirror 0 0)](sessions/2026-05-21/171004-repo-automation-remote-publication-record.md)
 - [repo-automation-external-repo-bootstrap (external-bootstrap-tested; initialized external repo-automation as its own Git repo, synced 17 manifest-owned files, final external HEAD ed52956, and verified real-target check passes)](sessions/2026-05-21/170029-repo-automation-external-repo-bootstrap.md)
 - [repo-automation-sync-tooling (automation-tested; added manifest-driven repo-automation sync/check tool, reusable manifest, temp-target tests, and validation docs without mutating the real external folder)](sessions/2026-05-21/162935-repo-automation-sync-tooling.md)
 - [repo-automation-reuse-contract-inventory (doc-only; defined reusable automation target, one-way sync direction, manifest contract, exclusions, automatic update boundary, and consumer repo contract)](sessions/2026-05-21/161422-repo-automation-reuse-contract-inventory.md)
