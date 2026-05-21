@@ -6382,7 +6382,7 @@
       "slice_id": "release-marketing-version-provenance-gate",
       "title": "Require MARKETING_VERSION to match committed HEAD in release provenance",
       "status": "queued",
-      "priority": 75,
+      "priority": 74,
       "domain": "release",
       "allowed_paths": [
         "Tools/verify-build-provenance.sh",
@@ -6416,7 +6416,7 @@
       "slice_id": "release-bump-version-policy-guard",
       "title": "Harden bump-version tooling around the documented release policy",
       "status": "queued",
-      "priority": 74,
+      "priority": 75,
       "domain": "release",
       "allowed_paths": [
         "Tools/bump-version.sh",
