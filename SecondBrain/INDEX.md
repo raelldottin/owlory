@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-21
+
+- [app-design-vision-metaphor-adr (doc-only; added ADR 0002 naming Owlory's design throughline as quiet daily momentum across Today, Continue, Patterns, and Train)](sessions/2026-05-21/041431-app-design-vision-metaphor-adr.md)
+
 ## 2026-05-20
 
 - [app-error-message-fix-designsystem-accessibility (localized-copy + build-tested + automation-tested; removed raw %@ from audio/voice accessibility error speech, added retry guidance across 19 locales, marked two changed source rows pending native/fluent re-acceptance, and made voice error taps retry)](sessions/2026-05-20/145005-app-error-message-fix-designsystem-accessibility.md)

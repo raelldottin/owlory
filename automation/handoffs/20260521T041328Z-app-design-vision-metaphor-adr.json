@@ -1,0 +1,50 @@
+{
+  "slice_id": "app-design-vision-metaphor-adr",
+  "title": "Write design-vision ADR naming the Today / Continue / Patterns / Train throughline",
+  "status": "done",
+  "completed_at": "2026-05-21T04:14:31Z",
+  "proof_level": "doc-only",
+  "summary": "Added docs/decisions/0002-design-vision-metaphor.md naming Owlory's design throughline as quiet daily momentum. The ADR connects Today, Continue, Patterns, and Train around calm daily consistency, references the Robinhood Retirement metaphor lesson as an analogy, and explicitly avoids prescribing UI, copy, asset, or motion changes.",
+  "files_touched": [
+    "docs/decisions/0002-design-vision-metaphor.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T041328Z-app-design-vision-metaphor-adr.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/041431-app-design-vision-metaphor-adr.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-design-vision-metaphor-adr",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make automation-check",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "validation_pending": [],
+  "contract_status_changes": [
+    {
+      "contract": "Design vision review lens",
+      "before": "Owlory had implicit narratives around Today, Continue, Patterns, and Train, but no named throughline for future design review.",
+      "after": "ADR 0002 names the throughline as quiet daily momentum and defines it as a review lens for future surfaces without prescribing concrete UI changes.",
+      "proof": [
+        "docs/decisions/0002-design-vision-metaphor.md",
+        "automation/proofs/app-design-research-robinhood-newsroom-lessons/manifest.json"
+      ]
+    }
+  ],
+  "not_claimed": [
+    "No UI, source, test, localization, copy, motion, or asset changes.",
+    "No specific component redesigns.",
+    "No claim that Robinhood's financial metaphor applies directly to Owlory."
+  ],
+  "residual_risks": [
+    "The phrase quiet daily momentum is now accepted as a review lens, but future product slices still need to decide concrete UI behavior case by case.",
+    "No docs/README.md edit was made because docs/decisions has no separate index and the docs map already links the decisions directory."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent queued slices were shown by the supervisor context for this slice.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T04:14:31Z"
+}
