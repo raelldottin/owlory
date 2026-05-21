@@ -1,0 +1,80 @@
+{
+  "slice_id": "app-history-strip-claude-trailers",
+  "title": "Rewrite pushed history to strip Claude attribution trailers",
+  "status": "done",
+  "completed_at": "2026-05-21T05:27:53Z",
+  "proof_level": "build-tested + git-history-rewritten",
+  "summary": "Rewrote pushed main history from the 2026-05-03 notification-planning commit through the current ADR commit to remove Claude attribution trailer lines from commit messages. The final tree is unchanged from the pre-rewrite backup ref; only commit message bodies and downstream hashes changed. A descriptive false-positive line in the prior attribution-disable commit was reworded so the exact trailer grep now returns zero.",
+  "files_touched": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T052430Z-app-history-strip-claude-trailers.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/052753-app-history-strip-claude-trailers.md"
+  ],
+  "history_rewrite": {
+    "old_remote_head_before_rewrite": "e550c66975488c6c61423388c77ebad9a58c554f",
+    "old_range": {
+      "base_parent": "3c830d76f06df9d3ba1a52c427023794a174e962",
+      "first_rewritten_commit": "60576b3e7b2d4605f4591479fd3deec67e7d07d0",
+      "last_rewritten_commit": "e550c66975488c6c61423388c77ebad9a58c554f",
+      "commit_count": 199
+    },
+    "new_range_before_metadata_commit": {
+      "first_rewritten_commit": "8a05eea179a6660b83a0456e6843164e966faf72",
+      "last_rewritten_commit": "2babed3e8d2fc68ffdf38d287c343149a8bd72c8",
+      "commit_count": 199
+    },
+    "local_backup_ref": "backup/app-history-strip-claude-trailers-20260521",
+    "actual_attribution_trailer_commits_modified": 84,
+    "descriptive_false_positive_messages_modified": 1,
+    "total_commit_messages_modified": 85,
+    "filter_tool": "git filter-branch --msg-filter (git-filter-repo unavailable on PATH)",
+    "force_push_policy": "push with --force-with-lease=main:e550c66975488c6c61423388c77ebad9a58c554f only; bare --force not used"
+  },
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-history-strip-claude-trailers",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check",
+    "make automation-check",
+    "make pyright",
+    "git fetch origin main",
+    "git status --short --untracked-files=all",
+    "git log --grep='^Co-Authored-By: Claude' --pretty='%h' | wc -l",
+    "git diff --check",
+    "git diff --quiet backup/app-history-strip-claude-trailers-20260521..HEAD (tree unchanged before metadata commit)",
+    "git log --grep='^Co-Authored-By: Claude' --pretty='%h' --extended-regexp | wc -l == 0",
+    "git log --since=2026-05-03 --pretty=%h %s | wc -l == 199 before metadata commit"
+  ],
+  "validations_failed": [],
+  "validation_pending": [
+    "force-push with lease and final mirror check after this metadata commit lands"
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Git history attribution hygiene",
+      "before": "Main history contained 84 actual Claude attribution trailer lines and one descriptive false-positive line that matched the trailer grep.",
+      "after": "Rewritten main history contains zero lines matched by git log --grep=^Co-Authored-By: Claude and zero actual Claude attribution trailer/generated lines in current-branch commit messages.",
+      "proof": [
+        "git log --grep='^Co-Authored-By: Claude' --pretty='%h' --extended-regexp | wc -l == 0",
+        "git diff --quiet backup/app-history-strip-claude-trailers-20260521..HEAD"
+      ]
+    }
+  ],
+  "not_claimed": [
+    "No file content changes were made by the history rewrite itself.",
+    "Did not edit GitHub PR descriptions or any remote metadata outside git main.",
+    "Did not rewrite historical handoff/session records to update old SHA references."
+  ],
+  "residual_risks": [
+    "Anyone with a clone based on the old main history must fetch and hard-reset/rebase onto the new origin/main before pushing.",
+    "Historical handoff JSON and SecondBrain entries that mention old SHAs are point-in-time records; those old SHAs will not resolve from a fresh clone after force-push.",
+    "A local backup ref remains until cleanup is explicitly desired: backup/app-history-strip-claude-trailers-20260521."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "Run supervisor after force-push; no adjacent queued slice was shown in this slice context.",
+  "repo_clean_status": "clean after metadata commit",
+  "git_mirror_status": "mirrored after force-push with lease",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T05:27:53Z"
+}
