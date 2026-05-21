@@ -1,0 +1,87 @@
+{
+  "slice_id": "repo-automation-consumer-error-messages",
+  "status": "done",
+  "summary": "Replaced raw FileNotFoundError + CalledProcessError tracebacks in the reusable supervisor with a single ConfigError exception class plus targeted catch-and-rephrase in policy.load_json, policy.load_queue, and policy.git_dirty_paths. CLI entry points run_next.py and build_context.py now catch ConfigError at the entry function and print a two-line 'stop: <reason>' + 'hint: <fix>' message on stderr with exit code 2 instead of a Python traceback. The consumer-adoption smoke assertions were updated to lock in the new shape (assert 'queue file not found' + path + example-slices.json hint for missing queue; assert 'not a Git repository' + 'git init -b main' hint for non-Git directory; assert no 'Traceback' substring in any consumer-facing failure). Docs updated to describe the friendly shape with the exact text a consumer sees. No source schema or contract changes.",
+  "files_touched": [
+    "automation/supervisor/policy.py",
+    "automation/supervisor/run_next.py",
+    "automation/context/build_context.py",
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T235630Z-repo-automation-consumer-error-messages.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/235630-repo-automation-consumer-error-messages.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-consumer-error-messages",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T235630Z-repo-automation-consumer-error-messages.json",
+    "manual probe: bootstrap temp consumer, supervisor + context with no queue + non-Git dir both print friendly two-line stop+hint messages"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 9,
+  "max_files_changed_cap": 10,
+  "scope_observed_from": [
+    "automation/supervisor/policy.py (load_json, load_queue, git_dirty_paths raise paths)",
+    "automation/supervisor/run_next.py (main entry + dirty-tree check)",
+    "automation/context/build_context.py (main entry + queue load)",
+    "automation/tests/test_repo_automation_sync.py RepoAutomationConsumerAdoptionSmokeTests (assertions on consumer-facing output)"
+  ],
+  "consumer_failure_modes_improved": [
+    {
+      "condition": "Missing automation/queue/slices.json",
+      "before": "FileNotFoundError traceback exposing python pathlib internals.",
+      "after": "stop: queue file not found: <abs path>\\nhint: copy automation/examples/example-slices.json to that path and edit it for this repository's slices.",
+      "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_without_queue_file, test_consumer_context_builder_fails_with_friendly_message_without_queue_file"
+    },
+    {
+      "condition": "Consumer directory is not a Git repository",
+      "before": "subprocess.CalledProcessError traceback for 'git diff --name-only --relative'.",
+      "after": "stop: not a Git repository: <abs path>\\nhint: run 'git init -b main' in this directory, commit the bootstrap, then re-run.",
+      "asserted_by": "test_consumer_supervisor_surfaces_friendly_message_outside_git_repo"
+    },
+    {
+      "condition": "Git executable not on PATH",
+      "before": "FileNotFoundError from subprocess.run with the system errno noise.",
+      "after": "stop: git executable not found on PATH: <err>\\nhint: install Git, or ensure git is on PATH for this process.",
+      "asserted_by": "Not directly asserted in this slice (would require a test that scrubs PATH). The code path exists and uses the same ConfigError mechanism as the other two; a follow-up could add the assertion."
+    },
+    {
+      "condition": "Invalid JSON in queue file",
+      "before": "json.JSONDecodeError traceback.",
+      "after": "stop: invalid JSON in <path>: <jsonerr>",
+      "asserted_by": "Not directly asserted in this slice. The code path uses the same ConfigError mechanism; a follow-up could add a test that writes a malformed slices.json and runs the supervisor."
+    }
+  ],
+  "gaps_named_for_follow_up": [
+    "git-not-on-PATH and malformed-JSON failure paths use the same ConfigError mechanism but are not asserted by tests; a follow-up smoke-test slice could lock those in too.",
+    "policy.load_handoff and other load_json call sites now also raise ConfigError on missing/invalid input. run_next.py catches ValueError for invalid handoff payloads (the existing code path) but only catches ConfigError at the top-level entry function; missing handoff files will print the friendly stop+hint and exit 2, which is the correct behavior but should be confirmed by a future smoke test.",
+    "Consumer adoption beyond the smoke level (real third-party migration, prompt overrides, Makefile/hooks/CI portability) remains unimplemented."
+  ],
+  "not_claimed": [
+    "All possible failure paths in the reusable supervisor now emit friendly stop+hint messages. Only the three highest-visibility paths (missing queue, missing git repo, plus the JSON load wrappers feeding them) were touched. A schema validation failure (ValueError in load_queue) still surfaces with the existing 'Invalid queue file:' prefix, which was already friendly.",
+    "A real third-party repository has consumed the reusable package end-to-end.",
+    "The Makefile, hooks, prompts, or CI integration have been proven portable to a real consumer.",
+    "The two not-asserted code paths (git-not-on-PATH, malformed JSON) have been smoke-tested; they were implemented but the proof for those is limited to manual probing."
+  ],
+  "residual_risks": [
+    "If a future contributor adds a new policy.load_* call site that raises FileNotFoundError directly without going through load_json, the friendly-message contract will not apply there. The ConfigError mechanism is the contract; new code paths need to opt into it explicitly.",
+    "The exact stop+hint message text is asserted as a substring match in the smoke tests. Editing the hint text in policy.py will require updating the matching test assertions. The asserted substrings ('queue file not found', 'example-slices.json', 'not a Git repository', \"git init -b main\") are deliberately stable phrasings.",
+    "If the consumer's REPO_ROOT resolution ever changes (e.g., a future supervisor edit that reads cwd instead of the script-relative path), the asserted absolute path in the failure messages would also change shape."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty after this slice. Natural follow-up boundaries (not queued): a real third-party repo migration when a target is named, prompt-fragment override portability proof, consumer Makefile / hooks / CI smoke, or smoke coverage for the two not-asserted ConfigError paths.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T23:56:30Z"
+}

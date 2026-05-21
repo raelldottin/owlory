@@ -404,7 +404,7 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
             msg="repo-automation-sync.sh must remain executable in consumer",
         )
 
-    def test_consumer_supervisor_fails_loudly_without_queue_file(self) -> None:
+    def test_consumer_supervisor_fails_with_friendly_message_without_queue_file(self) -> None:
         self.bootstrap_consumer()
         self.init_consumer_git()
 
@@ -417,10 +417,12 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
 
         self.assertNotEqual(0, result.returncode)
         combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("queue file not found", combined)
         self.assertIn("automation/queue/slices.json", combined)
-        self.assertIn("FileNotFoundError", combined)
+        self.assertIn("example-slices.json", combined)
 
-    def test_consumer_context_builder_fails_loudly_without_queue_file(self) -> None:
+    def test_consumer_context_builder_fails_with_friendly_message_without_queue_file(self) -> None:
         self.bootstrap_consumer()
         self.init_consumer_git()
 
@@ -438,6 +440,8 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
 
         self.assertNotEqual(0, result.returncode)
         combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("queue file not found", combined)
         self.assertIn("automation/queue/slices.json", combined)
 
     def test_consumer_supervisor_dry_run_works_with_example_queue(self) -> None:
@@ -468,7 +472,7 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
             msg="dry-run handoff path should resolve under the consumer repo, not Owlory",
         )
 
-    def test_consumer_supervisor_requires_git_repo(self) -> None:
+    def test_consumer_supervisor_surfaces_friendly_message_outside_git_repo(self) -> None:
         self.bootstrap_consumer()
         self.seed_example_queue()
 
@@ -481,10 +485,9 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
 
         self.assertNotEqual(0, result.returncode)
         combined = result.stdout + result.stderr
-        self.assertTrue(
-            "git" in combined.lower(),
-            msg=f"expected supervisor to surface git failure, got: {combined[:400]}",
-        )
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("not a Git repository", combined)
+        self.assertIn("git init -b main", combined)
 
     def test_consumer_auto_update_round_trip_after_git_init(self) -> None:
         self.bootstrap_consumer()

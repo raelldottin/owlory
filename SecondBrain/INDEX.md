@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [repo-automation-consumer-error-messages (consumer-smoke-tested; added policy.ConfigError + targeted catches in load_json/load_queue/git_dirty_paths, wrapped run_next.py + build_context.py CLI entries to print two-line stop+hint messages instead of tracebacks, updated smoke assertions to lock in the friendly shape, refreshed docs)](sessions/2026-05-21/235630-repo-automation-consumer-error-messages.md)
 - [repo-automation-consumer-adoption-smoke (consumer-smoke-tested; added 6 RepoAutomationConsumerAdoptionSmokeTests covering bootstrap subset, supervisor + context-builder failure modes, git-required surfacing, example-queue dry-run handoff scoping, and auto-update round-trip; documented consumer setup sequence + manual steps + smoke-test boundaries)](sessions/2026-05-21/213914-repo-automation-consumer-adoption-smoke.md)
 - [repo-automation-readme-about-refresh (external-maintenance; added root README, updated GitHub About description/homepage/topics, external HEAD 0735246)](sessions/2026-05-21/172519-repo-automation-readme-about-refresh.md)
 - [repo-automation-auto-update-gate (automation-tested + hook-tested; added safe --auto-update mode, Make targets, pre-push manifest-change detection, dirty-target refusal tests, and synced external repo HEAD 7eb3bef)](sessions/2026-05-21/171939-repo-automation-auto-update-gate.md)

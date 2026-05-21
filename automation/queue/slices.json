@@ -6734,6 +6734,39 @@
       "max_files_changed": 8,
       "entry_condition": "Automatic update gate is wired and /Users/raelldottin/Documents/Personal/repo-automation is current with Owlory reusable automation.",
       "notes": "Adoption proof slice. Add a dry-run or temp-repo smoke test showing a non-Owlory repository can consume the reusable automation package without Owlory app-specific paths. The proof should exercise bootstrap instructions, required local config, supervisor/context commands where practical, and failure messaging for missing repo-specific configuration. Document remaining manual steps for real repositories. Do not migrate another real repo unless the user explicitly names it. proof_level target: consumer-smoke-tested."
+    },
+    {
+      "slice_id": "repo-automation-consumer-error-messages",
+      "title": "Replace raw tracebacks with friendly consumer-facing errors",
+      "status": "done",
+      "priority": 84,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/supervisor/policy.py",
+        "automation/supervisor/run_next.py",
+        "automation/context/build_context.py",
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-consumer-error-messages",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-consumer-adoption-smoke"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Consumer-adoption smoke proof is committed and the queue is empty of higher-priority work.",
+      "notes": "Add ConfigError in automation/supervisor/policy.py. Wrap load_json (catch FileNotFoundError + JSONDecodeError), load_queue (named hint for missing queue file pointing at automation/examples/example-slices.json), and git_dirty_paths (catch CalledProcessError + FileNotFoundError; hint git init -b main + commit bootstrap). Wrap main() in run_next.py and build_context.py to catch ConfigError, print to stderr, return 2. Update RepoAutomationConsumerAdoptionSmokeTests assertions: replace 'FileNotFoundError' substring with the new message text, and update test_consumer_supervisor_requires_git_repo to match the new hint. Update docs/workflows/repo-automation.md known-failure-modes section to describe the friendly shape. Cap=10."
     }
   ]
 }
