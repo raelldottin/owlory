@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [queue-release-versioning-implementation-slices (queue-only; added 3 release implementation slices: policy doc pri 76, MARKETING_VERSION provenance gate pri 75, bump-version policy guard pri 74)](sessions/2026-05-21/034443-queue-release-versioning-implementation-slices.md)
 - [app-history-strip-claude-trailers (build-tested + git-history-rewritten; rewrote pushed main history from old 60576b3..e550c66, removed 84 actual Claude attribution trailers, reworded one grep false-positive commit message, and preserved file tree equivalence)](sessions/2026-05-21/052753-app-history-strip-claude-trailers.md)
 - [app-design-vision-metaphor-adr (doc-only; added ADR 0002 naming Owlory's design throughline as quiet daily momentum across Today, Continue, Patterns, and Train)](sessions/2026-05-21/041431-app-design-vision-metaphor-adr.md)
 

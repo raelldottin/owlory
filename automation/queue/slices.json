@@ -6350,6 +6350,99 @@
       "max_files_changed": 45,
       "entry_condition": "app-error-message-audit findings F12/F13 classified audio.playback.accessibility.error and voice.capture.accessibility.error as needs-improvement: they are localized but interpolate raw %@ exception text without any resolution clue.",
       "notes": "F12 audio.playback.accessibility.error 'Playback error: %@' -> resolution-guided variant for screen-reader users (e.g., 'Playback failed. Double-tap to try again.'). The %@ raw underlying-error text is rarely useful to a screen-reader user and should not be the user-visible content. Log %@ via PerformanceTelemetry if useful for diagnosis.\nF13 voice.capture.accessibility.error 'Error: %@' -> resolution-guided variant (e.g., 'Recording failed. Double-tap to try again.').\n\nIf retaining %@ is necessary for diagnostic transparency, wrap it in a sentence shape: 'Recording failed: %@. Double-tap to try again.' Still localized + still resolution-guided.\n\nUpdate en.lproj/Localizable.strings + parity across 18 non-English locales.\n\nReference: automation/proofs/app-error-message-audit/manifest.json findings F12, F13.\n\nproof_level target: localized-copy.\n\nCompleted on 2026-05-20: removed raw diagnostic interpolation from audio.playback.accessibility.error and voice.capture.accessibility.error, replaced both with localized resolution-guided accessibility labels across 19 locales, marked the two changed source rows as automated drafts pending native/fluent re-acceptance in all 18 review returns, and made VoiceCaptureButton retry from .error so its spoken guidance matches behavior. Diff budget expanded from 25 to 45 because full locale parity plus review provenance required 39 live files before proof/handoff/SecondBrain metadata. proof_level achieved: localized-copy + build-tested + automation-tested."
+    },
+    {
+      "slice_id": "release-versioning-policy-doc",
+      "title": "Document long-term app versioning policy for Bundle Short Version",
+      "status": "queued",
+      "priority": 76,
+      "domain": "release",
+      "allowed_paths": [
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "docs/product/domains/app-runtime.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-versioning-policy-doc",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 7,
+      "entry_condition": "User asked for the long-term plan for the app Bundle Version Short String and how an enterprise app would manage it. The current release workflow has tooling, but no explicit policy for when MARKETING_VERSION changes versus when CURRENT_PROJECT_VERSION changes.",
+      "notes": "Documentation-only slice. Add a durable policy to docs/workflows/release.md for CFBundleShortVersionString / Xcode MARKETING_VERSION as the user-visible SemVer-style release version and CFBundleVersion / CURRENT_PROJECT_VERSION as the monotonically increasing build identity. Cover pre-1.0 behavior, major/minor/patch bump intent, why ordinary implementation slices must not bump MARKETING_VERSION, why rollback builds should usually bump only CURRENT_PROJECT_VERSION, tag/changelog expectations, and enterprise-style traceability across GitHub, Xcode, TestFlight/App Store Connect, MDM/support, and Build Info. Update validation/app-runtime docs only if they need cross-links. Do not change scripts or app behavior in this slice. proof_level target: doc-only."
+    },
+    {
+      "slice_id": "release-marketing-version-provenance-gate",
+      "title": "Require MARKETING_VERSION to match committed HEAD in release provenance",
+      "status": "queued",
+      "priority": 75,
+      "domain": "release",
+      "allowed_paths": [
+        "Tools/verify-build-provenance.sh",
+        "Tools/release-preflight.sh",
+        ".githooks/pre-push",
+        "automation/tests/test_verify_build_provenance.py",
+        "automation/tests/test_release_preflight.py",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-marketing-version-provenance-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "./Tools/verify-build-provenance.sh",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-versioning-policy-doc"
+      ],
+      "max_files_changed": 11,
+      "entry_condition": "release-versioning-policy-doc has landed and defines MARKETING_VERSION as a committed release identity, not an ad hoc local Xcode edit.",
+      "notes": "Implementation slice. Extend Tools/verify-build-provenance.sh so --require-clean fails when on-disk MARKETING_VERSION differs from the committed HEAD project.pbxproj value, symmetric with the existing CURRENT_PROJECT_VERSION committed-build gate. In informational mode, print whether the committed marketing version matches HEAD without failing. Update focused automation tests to cover matching, dirty/uncommitted marketing-version drift under --require-clean, and advisory output without --require-clean. Update release/preflight docs and hook messaging only as needed. Preserve current build-number behavior and do not bump app version/build metadata. proof_level target: automation-tested."
+    },
+    {
+      "slice_id": "release-bump-version-policy-guard",
+      "title": "Harden bump-version tooling around the documented release policy",
+      "status": "queued",
+      "priority": 74,
+      "domain": "release",
+      "allowed_paths": [
+        "Tools/bump-version.sh",
+        "Tools/set-build-number.sh",
+        "automation/tests/",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-bump-version-policy-guard",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-versioning-policy-doc"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "release-versioning-policy-doc has landed and describes the intended major/minor/patch and rollback-build behavior for MARKETING_VERSION and CURRENT_PROJECT_VERSION.",
+      "notes": "Implementation slice. Add focused automation coverage for Tools/bump-version.sh and the surrounding build-number helpers so the documented policy is executable: only major/minor/patch are accepted, MARKETING_VERSION changes according to the documented rule, CURRENT_PROJECT_VERSION is refreshed to a numeric timestamp build number within App Store Connect's 18-character limit, and CHANGELOG.md receives the expected release heading without hand-edited metadata. If the tests expose script ambiguity, make the smallest script change that aligns with the policy. Do not introduce automatic version bumps in normal implementation slices and do not change the current 0.2.0 project version unless the test fixture is isolated. proof_level target: automation-tested."
     }
   ]
 }

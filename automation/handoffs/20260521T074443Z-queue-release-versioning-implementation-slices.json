@@ -1,0 +1,71 @@
+{
+  "slice_id": "queue-release-versioning-implementation-slices",
+  "timestamp": "2026-05-21T07:44:43Z",
+  "summary": "Queued three release-versioning implementation slices after the user asked for implementation work following the long-term CFBundleShortVersionString / enterprise versioning plan.",
+  "changed_files": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T074443Z-queue-release-versioning-implementation-slices.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/034443-queue-release-versioning-implementation-slices.md"
+  ],
+  "queued_slices": [
+    {
+      "slice_id": "release-versioning-policy-doc",
+      "priority": 76,
+      "status": "queued",
+      "depends_on": [],
+      "intent": "Document durable MARKETING_VERSION / CURRENT_PROJECT_VERSION policy, including pre-1.0 behavior, release bump rules, rollback build behavior, tags, changelog, and enterprise traceability."
+    },
+    {
+      "slice_id": "release-marketing-version-provenance-gate",
+      "priority": 75,
+      "status": "queued",
+      "depends_on": [
+        "release-versioning-policy-doc"
+      ],
+      "intent": "Extend build provenance so --require-clean fails when MARKETING_VERSION differs from the committed HEAD project file, with focused tests and release-doc updates."
+    },
+    {
+      "slice_id": "release-bump-version-policy-guard",
+      "priority": 74,
+      "status": "queued",
+      "depends_on": [
+        "release-versioning-policy-doc"
+      ],
+      "intent": "Add focused coverage and minimal tooling changes so bump-version behavior follows the documented release policy without mutating the real project version during tests."
+    }
+  ],
+  "scope_boundary": [
+    "Queue-only change.",
+    "No app behavior changes.",
+    "No version or build number bump.",
+    "No release archive or TestFlight proof claim."
+  ],
+  "validations": [
+    {
+      "command": "python3 -m json.tool automation/queue/slices.json",
+      "result": "passed"
+    },
+    {
+      "command": "python3 -m json.tool automation/handoffs/20260521T074443Z-queue-release-versioning-implementation-slices.json",
+      "result": "passed"
+    },
+    {
+      "command": "python3 automation/supervisor/run_next.py --dry-run",
+      "result": "passed; selected release-versioning-policy-doc"
+    },
+    {
+      "command": "make architecture",
+      "result": "passed"
+    },
+    {
+      "command": "make automation-check",
+      "result": "passed; pyright 0 errors/0 warnings and 93 automation tests passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "recommended_next_slice": "release-versioning-policy-doc"
+}
