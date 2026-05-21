@@ -6444,6 +6444,93 @@
       "max_files_changed": 10,
       "entry_condition": "release-versioning-policy-doc has landed and describes the intended major/minor/patch and rollback-build behavior for MARKETING_VERSION and CURRENT_PROJECT_VERSION.",
       "notes": "Implementation slice. Add focused automation coverage for Tools/bump-version.sh and the surrounding build-number helpers so the documented policy is executable: only major/minor/patch are accepted, MARKETING_VERSION changes according to the documented rule, CURRENT_PROJECT_VERSION is refreshed to a numeric timestamp build number within App Store Connect's 18-character limit, and CHANGELOG.md receives the expected release heading without hand-edited metadata. If the tests expose script ambiguity, make the smallest script change that aligns with the policy. Do not introduce automatic version bumps in normal implementation slices and do not change the current 0.2.0 project version unless the test fixture is isolated. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: added automation/tests/test_bump_version.py with isolated temp-repo fixtures that copy and execute the real Tools/bump-version.sh and Tools/set-build-number.sh. Coverage proves major/minor/patch bump semantics from 0.2.3, synchronized MARKETING_VERSION replacement across configs, UTC timestamp CURRENT_PROJECT_VERSION generation with 14 numeric digits and <=18 chars, CHANGELOG.md promotion to the new release heading, invalid bump rejection without mutation, explicit set-build-number updates without changing MARKETING_VERSION, and invalid/too-long build-number rejection without mutation. No script change was needed; the existing tooling already satisfied the documented policy under these fixtures. No project version values, build numbers, real CHANGELOG, app code, or docs changed. proof_level achieved: automation-tested."
+    },
+    {
+      "slice_id": "release-changelog-foundation",
+      "title": "Add repository CHANGELOG.md foundation for marketing-version release notes",
+      "status": "queued",
+      "priority": 70,
+      "domain": "release",
+      "allowed_paths": [
+        "CHANGELOG.md",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md",
+        "automation/tests/test_bump_version.py",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-changelog-foundation",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-bump-version-policy-guard"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "The release workflow and bump-version script expect a top-level CHANGELOG.md, but the repository currently has no CHANGELOG.md. Release history exists in SecondBrain and handoffs, but not as a curated marketing-version changelog.",
+      "notes": "Implementation slice. Add a top-level CHANGELOG.md with a stable [Unreleased] section and a concise category shape suitable for App Store/TestFlight/support release notes. Keep it curated, not a dump of SecondBrain or every slice. Update docs/workflows/release.md to require maintaining [Unreleased] during release-relevant work and reviewing it before each MARKETING_VERSION bump. If the existing bump-version fixture test should reference the real changelog shape, adjust only that focused test. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. Do not backfill the current cycle in this slice beyond placeholder headings; that is the next slice. proof_level target: doc-only + automation-tested."
+    },
+    {
+      "slice_id": "release-changelog-current-cycle-backfill",
+      "title": "Curate current-cycle Unreleased notes from completed release-relevant slices",
+      "status": "queued",
+      "priority": 71,
+      "domain": "release",
+      "allowed_paths": [
+        "CHANGELOG.md",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/",
+        "automation/queue/slices.json",
+        "automation/handoffs/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-changelog-current-cycle-backfill",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-changelog-foundation"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "CHANGELOG.md exists with an [Unreleased] section from release-changelog-foundation.",
+      "notes": "Documentation curation slice. Read recent SecondBrain entries/handoffs since the current 0.2.0 release line and curate only user/support/release-significant changes into CHANGELOG.md [Unreleased]. Group by the categories established in release-changelog-foundation. Do not list every implementation slice, internal harness detail, or proof artifact; summarize outcomes a tester or support reviewer would care about. Preserve a clear boundary that SecondBrain remains operational history while CHANGELOG.md is marketing-version release notes. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: doc-only."
+    },
+    {
+      "slice_id": "release-changelog-required-gate",
+      "title": "Require changelog presence before bump-version release metadata changes",
+      "status": "queued",
+      "priority": 72,
+      "domain": "release",
+      "allowed_paths": [
+        "Tools/bump-version.sh",
+        "automation/tests/test_bump_version.py",
+        "docs/workflows/release.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id release-changelog-required-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "release-changelog-foundation"
+      ],
+      "max_files_changed": 7,
+      "entry_condition": "CHANGELOG.md exists with an [Unreleased] section. The release process should no longer allow bump-version to silently skip changelog promotion.",
+      "notes": "Implementation slice. Change Tools/bump-version.sh so a missing CHANGELOG.md or missing [Unreleased] heading fails before mutating project.pbxproj, rather than warning and continuing. Add/adjust focused tests in automation/tests/test_bump_version.py proving missing changelog and missing [Unreleased] fail without changing MARKETING_VERSION or CURRENT_PROJECT_VERSION, while valid changelog promotion still passes. Do not bump real MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: automation-tested."
     }
   ]
 }

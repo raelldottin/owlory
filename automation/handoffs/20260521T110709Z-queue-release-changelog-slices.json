@@ -1,0 +1,70 @@
+{
+  "slice_id": "queue-release-changelog-slices",
+  "timestamp": "2026-05-21T11:07:09Z",
+  "summary": "Queued the next clean release-versioning step: establish a repository CHANGELOG.md, curate current-cycle unreleased notes, and then harden bump-version so future release bumps cannot skip changelog promotion.",
+  "changed_files": [
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T110709Z-queue-release-changelog-slices.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/070709-queue-release-changelog-slices.md"
+  ],
+  "queued_slices": [
+    {
+      "slice_id": "release-changelog-foundation",
+      "priority": 70,
+      "status": "queued",
+      "depends_on": [
+        "release-bump-version-policy-guard"
+      ],
+      "intent": "Create top-level CHANGELOG.md with a stable [Unreleased] section and update release docs to define curated release-note ownership."
+    },
+    {
+      "slice_id": "release-changelog-current-cycle-backfill",
+      "priority": 71,
+      "status": "queued",
+      "depends_on": [
+        "release-changelog-foundation"
+      ],
+      "intent": "Curate current-cycle [Unreleased] notes from SecondBrain/handoffs, keeping changelog content release-facing rather than operational."
+    },
+    {
+      "slice_id": "release-changelog-required-gate",
+      "priority": 72,
+      "status": "queued",
+      "depends_on": [
+        "release-changelog-foundation"
+      ],
+      "intent": "Make bump-version fail before mutation when CHANGELOG.md or [Unreleased] is missing, with focused tests proving non-mutation."
+    }
+  ],
+  "scope_boundary": [
+    "Queue-only change.",
+    "No CHANGELOG.md created in this slice.",
+    "No release notes curated in this slice.",
+    "No bump-version script behavior changed in this slice.",
+    "No MARKETING_VERSION or CURRENT_PROJECT_VERSION changed."
+  ],
+  "validations": [
+    {
+      "command": "python3 -m json.tool automation/queue/slices.json",
+      "result": "passed"
+    },
+    {
+      "command": "python3 -m json.tool automation/handoffs/20260521T110709Z-queue-release-changelog-slices.json",
+      "result": "passed"
+    },
+    {
+      "command": "python3 automation/supervisor/run_next.py --dry-run",
+      "result": "passed; selected release-changelog-foundation"
+    },
+    {
+      "command": "make architecture",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "recommended_next_slice": "release-changelog-foundation"
+}
