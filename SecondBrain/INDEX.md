@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [repo-automation-readme-about-refresh (external-maintenance; added root README, updated GitHub About description/homepage/topics, external HEAD 0735246)](sessions/2026-05-21/172519-repo-automation-readme-about-refresh.md)
 - [repo-automation-auto-update-gate (automation-tested + hook-tested; added safe --auto-update mode, Make targets, pre-push manifest-change detection, dirty-target refusal tests, and synced external repo HEAD 7eb3bef)](sessions/2026-05-21/171939-repo-automation-auto-update-gate.md)
 - [repo-automation-remote-publication-record (remote-published; configured HTTPS origin for external repo-automation, pushed main to GitHub, and verified external mirror 0 0)](sessions/2026-05-21/171004-repo-automation-remote-publication-record.md)
 - [repo-automation-external-repo-bootstrap (external-bootstrap-tested; initialized external repo-automation as its own Git repo, synced 17 manifest-owned files, final external HEAD ed52956, and verified real-target check passes)](sessions/2026-05-21/170029-repo-automation-external-repo-bootstrap.md)
