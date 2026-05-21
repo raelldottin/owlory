@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [repo-automation-auto-update-gate (automation-tested + hook-tested; added safe --auto-update mode, Make targets, pre-push manifest-change detection, dirty-target refusal tests, and synced external repo HEAD 7eb3bef)](sessions/2026-05-21/171939-repo-automation-auto-update-gate.md)
 - [repo-automation-remote-publication-record (remote-published; configured HTTPS origin for external repo-automation, pushed main to GitHub, and verified external mirror 0 0)](sessions/2026-05-21/171004-repo-automation-remote-publication-record.md)
 - [repo-automation-external-repo-bootstrap (external-bootstrap-tested; initialized external repo-automation as its own Git repo, synced 17 manifest-owned files, final external HEAD ed52956, and verified real-target check passes)](sessions/2026-05-21/170029-repo-automation-external-repo-bootstrap.md)
 - [repo-automation-sync-tooling (automation-tested; added manifest-driven repo-automation sync/check tool, reusable manifest, temp-target tests, and validation docs without mutating the real external folder)](sessions/2026-05-21/162935-repo-automation-sync-tooling.md)

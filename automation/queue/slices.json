@@ -6671,7 +6671,7 @@
     {
       "slice_id": "repo-automation-auto-update-gate",
       "title": "Wire automatic updates from Owlory automation changes to repo-automation",
-      "status": "queued",
+      "status": "done",
       "priority": 86,
       "domain": "automation",
       "allowed_paths": [
@@ -6701,7 +6701,7 @@
       ],
       "max_files_changed": 10,
       "entry_condition": "The external repo-automation folder has been bootstrapped and the sync tool can prove it is current with Owlory's reusable automation manifest.",
-      "notes": "Implementation slice. Make updates automatic for normal Owlory development by wiring the sync tool into the local validation/push path. Prefer a Makefile target plus pre-push hook integration that runs the sync in deterministic mode when reusable automation changes are present, then verifies the external repo-automation folder is current. The hook must fail loudly if the external target is missing, dirty in an unsafe way, or cannot be updated. Avoid silently committing or pushing the external repo unless that behavior is explicitly documented and gated. Update tests/docs for the hook/check semantics. proof_level target: automation-tested + hook-tested."
+      "notes": "Implementation slice. Make updates automatic for normal Owlory development by wiring the sync tool into the local validation/push path. Prefer a Makefile target plus pre-push hook integration that runs the sync in deterministic mode when reusable automation changes are present, then verifies the external repo-automation folder is current. The hook must fail loudly if the external target is missing, dirty in an unsafe way, or cannot be updated. Avoid silently committing or pushing the external repo unless that behavior is explicitly documented and gated. Update tests/docs for the hook/check semantics. proof_level target: automation-tested + hook-tested.\n\nCompleted on 2026-05-21: added Tools/repo-automation-sync.sh --auto-update, which requires the external target to exist, be a Git repository, and be clean before syncing, then verifies check-mode passes. Added make repo-automation-check and make repo-automation-update. Wired .githooks/pre-push to detect pending changes to manifest-owned reusable automation sources and run make repo-automation-update only for those pushes. Added unit coverage for missing target, non-Git target, dirty target refusal, and clean Git target auto-update success. Synced manifest-owned changes to /Users/raelldottin/Documents/Personal/repo-automation and explicitly committed/pushed external HEAD 7eb3beff41aad923122b8674cf0129ac48c0bf91. External Git commit/push behavior remains explicit operator action, not hook behavior. proof_level achieved: automation-tested + hook-tested."
     },
     {
       "slice_id": "repo-automation-consumer-adoption-smoke",

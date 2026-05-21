@@ -91,6 +91,15 @@ class RepoAutomationSyncTests(unittest.TestCase):
             text=True,
         )
 
+    def init_target_git_repo(self) -> None:
+        init = subprocess.run(
+            ["git", "init", "-b", "main"],
+            cwd=self.target,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, init.returncode, msg=init.stderr)
+
     def test_sync_copies_entries_and_preserves_executable_mode(self) -> None:
         self.write_source("docs/readme.md", "hello\n")
         self.write_source("Tools/run.sh", "#!/bin/sh\nexit 0\n", mode=0o755)
@@ -207,6 +216,51 @@ class RepoAutomationSyncTests(unittest.TestCase):
         self.assertNotEqual(0, result.returncode)
         self.assertIn("missing target:", result.stdout)
         self.assertFalse(self.target.exists())
+
+    def test_auto_update_fails_when_target_is_missing(self) -> None:
+        self.write_source("a.txt", "source\n")
+        self.write_manifest([self.entry("a.txt", "a.txt")])
+        shutil.rmtree(self.target)
+
+        result = self.run_tool("--auto-update")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("auto-update refused", result.stdout)
+        self.assertFalse(self.target.exists())
+
+    def test_auto_update_fails_when_target_is_not_git_repo(self) -> None:
+        self.write_source("a.txt", "source\n")
+        self.write_manifest([self.entry("a.txt", "a.txt")])
+
+        result = self.run_tool("--auto-update")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("auto-update target is not a Git repository", result.stderr)
+        self.assertFalse((self.target / "a.txt").exists())
+
+    def test_auto_update_fails_when_target_has_local_dirt(self) -> None:
+        self.init_target_git_repo()
+        self.write_source("a.txt", "source\n")
+        self.write_target("a.txt", "local edit\n")
+        self.write_manifest([self.entry("a.txt", "a.txt")])
+
+        result = self.run_tool("--auto-update")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("refusing auto-update because target has local dirt", result.stderr)
+        self.assertEqual("local edit\n", (self.target / "a.txt").read_text(encoding="utf-8"))
+
+    def test_auto_update_syncs_clean_git_target_and_verifies_current(self) -> None:
+        self.init_target_git_repo()
+        self.write_source("a.txt", "source\n")
+        self.write_manifest([self.entry("a.txt", "a.txt")])
+
+        result = self.run_tool("--auto-update")
+
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+        self.assertEqual("source\n", (self.target / "a.txt").read_text(encoding="utf-8"))
+        self.assertIn("result: synced 1 change(s)", result.stdout)
+        self.assertIn("result: target is current", result.stdout)
 
 
 if __name__ == "__main__":

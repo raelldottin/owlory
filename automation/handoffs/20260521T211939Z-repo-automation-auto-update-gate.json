@@ -1,0 +1,94 @@
+{
+  "slice_id": "repo-automation-auto-update-gate",
+  "status": "done",
+  "summary": "Wired safe automatic repo-automation updates into Owlory's local validation and pre-push path. Added --auto-update safety checks, Make targets, pre-push manifest-change detection, docs, and unit tests. Synced the manifest-owned changes into the external repo and explicitly pushed external HEAD 7eb3beff41aad923122b8674cf0129ac48c0bf91.",
+  "files_touched": [
+    ".githooks/pre-push",
+    "Makefile",
+    "Tools/repo-automation-sync.sh",
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "docs/workflows/validation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T211939Z-repo-automation-auto-update-gate.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/171939-repo-automation-auto-update-gate.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main && git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-auto-update-gate",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "bash -n Tools/repo-automation-sync.sh .githooks/pre-push",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make repo-automation-update",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation commit -m \"Add automatic update gate\"",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation push origin main",
+    "make repo-automation-check",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation status --short --branch",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-list --left-right --count HEAD...@{u}",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T211939Z-repo-automation-auto-update-gate.json",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "automation-tested + hook-tested",
+  "missing_proof_levels": [
+    "Consumer adoption proof remains queued in repo-automation-consumer-adoption-smoke.",
+    "No real third-party repository migration was attempted."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Reusable automation automatic update",
+      "before": "Owlory had a tested sync/check tool, but normal validation and pre-push workflows did not update the external repo-automation target automatically.",
+      "after": ".githooks/pre-push detects pushes touching manifest-owned reusable automation sources and runs make repo-automation-update, which syncs the external target and verifies check-mode passes.",
+      "proof": [
+        ".githooks/pre-push",
+        "Makefile",
+        "python3 -m unittest automation.tests.test_repo_automation_sync"
+      ]
+    },
+    {
+      "contract": "External target safety",
+      "before": "The sync tool could create or overwrite a target through --sync, which is appropriate for bootstrap but too broad for normal pre-push automation.",
+      "after": "--auto-update refuses missing targets, non-Git targets, and targets with local dirt before syncing; --sync remains available for explicit bootstrap work.",
+      "proof": [
+        "test_auto_update_fails_when_target_is_missing",
+        "test_auto_update_fails_when_target_is_not_git_repo",
+        "test_auto_update_fails_when_target_has_local_dirt",
+        "test_auto_update_syncs_clean_git_target_and_verifies_current"
+      ]
+    },
+    {
+      "contract": "External commit and push behavior",
+      "before": "Remote publication existed, but automatic update behavior was not wired.",
+      "after": "The hook updates local external contents only. External Git commit and remote push remain explicit operator actions; this slice performed that explicit sync/commit/push and external main is mirrored at 7eb3beff41aad923122b8674cf0129ac48c0bf91.",
+      "proof": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-list --left-right --count HEAD...@{u}",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "Pre-push detection is based on changed paths relative to the branch upstream; unusual push shapes may require running make repo-automation-update manually.",
+    "The consumer-adoption slice still needs to prove a non-Owlory repository can use the reusable package."
+  ],
+  "recommended_next_slice": "repo-automation-consumer-adoption-smoke",
+  "recommended_next_reason": "The external package is now bootstrapped, published, and kept current by the Owlory automation path, so the next adjacent proof is a temp consumer-repository adoption smoke.",
+  "external_repo": {
+    "path": "/Users/raelldottin/Documents/Personal/repo-automation",
+    "remote": "https://github.com/raelldottin/repo-automation.git",
+    "branch": "main",
+    "head": "7eb3beff41aad923122b8674cf0129ac48c0bf91",
+    "mirror_status": "0 0",
+    "sync_status": "target is current"
+  },
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T21:19:39Z"
+}

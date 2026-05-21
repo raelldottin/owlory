@@ -1,4 +1,6 @@
-.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check localization-review-drift-check provision-localization-smallest-width-simulator provision-localization-smallest-width-simulator-check automation-check pyright
+.PHONY: architecture fast verify test-domain ui-smoke ui-smoke-proof ui-regression build-provenance release-preflight release-check handoff clean-stop drift-report review-preflight clean-system-metadata verify-app-icons localization-check localization-screenshot-idb-check localization-multisurface-screenshot-idb-check localization-review-drift-check provision-localization-smallest-width-simulator provision-localization-smallest-width-simulator-check automation-check pyright repo-automation-check repo-automation-update
+
+REPO_AUTOMATION_TARGET ?= /Users/raelldottin/Documents/Personal/repo-automation
 
 architecture:
 	./Tools/architecture-lint.sh
@@ -28,6 +30,12 @@ pyright:
 		exit 1; \
 	fi
 	pyright
+
+repo-automation-check:
+	./Tools/repo-automation-sync.sh --check --target "$(REPO_AUTOMATION_TARGET)"
+
+repo-automation-update:
+	./Tools/repo-automation-sync.sh --auto-update --target "$(REPO_AUTOMATION_TARGET)"
 
 drift-report:
 	./Tools/drift-report.sh
