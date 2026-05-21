@@ -130,6 +130,7 @@ fi
 PROJECT_FILE_REL="owlory_xcode/Owlory.xcodeproj/project.pbxproj"
 COMMITTED_PBXPROJ="$(git -C "$GIT_ROOT" show "HEAD:$PROJECT_FILE_REL" 2>/dev/null || printf '')"
 COMMITTED_BUILD_NUMBER=""
+COMMITTED_MARKETING_VERSION=""
 if [ -n "$COMMITTED_PBXPROJ" ]; then
   COMMITTED_BUILD_VALUES="$(printf '%s\n' "$COMMITTED_PBXPROJ" \
     | grep -E "CURRENT_PROJECT_VERSION = [^;]+;" \
@@ -146,13 +147,31 @@ if [ -n "$COMMITTED_PBXPROJ" ]; then
   else
     COMMITTED_BUILD_STATE="unverifiable (HEAD pbxproj has $COMMITTED_BUILD_VALUE_COUNT distinct CURRENT_PROJECT_VERSION values)"
   fi
+
+  COMMITTED_MARKETING_VALUES="$(printf '%s\n' "$COMMITTED_PBXPROJ" \
+    | grep -E "MARKETING_VERSION = [^;]+;" \
+    | sed -E "s/.*MARKETING_VERSION = ([^;]+);.*/\1/" \
+    | sort -u)"
+  COMMITTED_MARKETING_VALUE_COUNT="$(printf '%s\n' "$COMMITTED_MARKETING_VALUES" | count_nonempty_lines)"
+  if [ "$COMMITTED_MARKETING_VALUE_COUNT" = "1" ]; then
+    COMMITTED_MARKETING_VERSION="$(printf '%s\n' "$COMMITTED_MARKETING_VALUES" | first_nonempty_line)"
+    if [ "$MARKETING_VERSION" = "$COMMITTED_MARKETING_VERSION" ]; then
+      COMMITTED_MARKETING_STATE="matches HEAD"
+    else
+      COMMITTED_MARKETING_STATE="differs from HEAD (HEAD has $COMMITTED_MARKETING_VERSION)"
+    fi
+  else
+    COMMITTED_MARKETING_STATE="unverifiable (HEAD pbxproj has $COMMITTED_MARKETING_VALUE_COUNT distinct MARKETING_VERSION values)"
+  fi
 else
   COMMITTED_BUILD_STATE="unverifiable (no pbxproj at HEAD for $PROJECT_FILE_REL)"
+  COMMITTED_MARKETING_STATE="unverifiable (no pbxproj at HEAD for $PROJECT_FILE_REL)"
 fi
 
 echo "Build provenance"
 echo "  Version: v$MARKETING_VERSION ($BUILD_NUMBER)"
 echo "  Version source: owlory_xcode/Owlory.xcodeproj/project.pbxproj"
+echo "  Committed marketing version: $COMMITTED_MARKETING_STATE"
 echo "  Build number source: Xcode CURRENT_PROJECT_VERSION"
 echo "  Committed build number: $COMMITTED_BUILD_STATE"
 echo "  Git commit: $HEAD_SHORT"
@@ -197,6 +216,10 @@ if [ "$REQUIRE_CLEAN" = "1" ]; then
   fi
   if [ -n "$COMMITTED_BUILD_NUMBER" ] && [ "$BUILD_NUMBER" != "$COMMITTED_BUILD_NUMBER" ]; then
     echo "error: pbxproj CURRENT_PROJECT_VERSION '$BUILD_NUMBER' is not committed at HEAD (HEAD has '$COMMITTED_BUILD_NUMBER'); commit the build-number bump before re-running the verifier" >&2
+    REQUIRE_CLEAN_FAILED=1
+  fi
+  if [ -n "$COMMITTED_MARKETING_VERSION" ] && [ "$MARKETING_VERSION" != "$COMMITTED_MARKETING_VERSION" ]; then
+    echo "error: pbxproj MARKETING_VERSION '$MARKETING_VERSION' is not committed at HEAD (HEAD has '$COMMITTED_MARKETING_VERSION'); commit the app-version bump before re-running the verifier" >&2
     REQUIRE_CLEAN_FAILED=1
   fi
   [ "$REQUIRE_CLEAN_FAILED" = "0" ] || exit 1

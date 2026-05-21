@@ -6381,7 +6381,7 @@
     {
       "slice_id": "release-marketing-version-provenance-gate",
       "title": "Require MARKETING_VERSION to match committed HEAD in release provenance",
-      "status": "queued",
+      "status": "done",
       "priority": 74,
       "domain": "release",
       "allowed_paths": [
@@ -6390,6 +6390,7 @@
         ".githooks/pre-push",
         "automation/tests/test_verify_build_provenance.py",
         "automation/tests/test_release_preflight.py",
+        "docs/product/domains/app-runtime.md",
         "docs/workflows/release.md",
         "docs/workflows/validation.md",
         "automation/queue/slices.json",
@@ -6408,9 +6409,9 @@
       "depends_on": [
         "release-versioning-policy-doc"
       ],
-      "max_files_changed": 11,
+      "max_files_changed": 12,
       "entry_condition": "release-versioning-policy-doc has landed and defines MARKETING_VERSION as a committed release identity, not an ad hoc local Xcode edit.",
-      "notes": "Implementation slice. Extend Tools/verify-build-provenance.sh so --require-clean fails when on-disk MARKETING_VERSION differs from the committed HEAD project.pbxproj value, symmetric with the existing CURRENT_PROJECT_VERSION committed-build gate. In informational mode, print whether the committed marketing version matches HEAD without failing. Update focused automation tests to cover matching, dirty/uncommitted marketing-version drift under --require-clean, and advisory output without --require-clean. Update release/preflight docs and hook messaging only as needed. Preserve current build-number behavior and do not bump app version/build metadata. proof_level target: automation-tested."
+      "notes": "Implementation slice. Extend Tools/verify-build-provenance.sh so --require-clean fails when on-disk MARKETING_VERSION differs from the committed HEAD project.pbxproj value, symmetric with the existing CURRENT_PROJECT_VERSION committed-build gate. In informational mode, print whether the committed marketing version matches HEAD without failing. Update focused automation tests to cover matching, dirty/uncommitted marketing-version drift under --require-clean, and advisory output without --require-clean. Update release/preflight docs and hook messaging only as needed. Preserve current build-number behavior and do not bump app version/build metadata. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: Tools/verify-build-provenance.sh now computes committed MARKETING_VERSION from HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj, prints `Committed marketing version: ...`, reports advisory drift without --require-clean, and exits non-zero under --require-clean with app-version remediation when on-disk MARKETING_VERSION differs from HEAD. Added verifier tests for matching committed marketing version, require-clean failure, and advisory mode; release-preflight coverage now asserts the committed marketing-version line. Updated pre-push/release-preflight messaging plus release/validation docs to name both MARKETING_VERSION and CURRENT_PROJECT_VERSION gates. Updated app-runtime status to remove the previous missing MARKETING_VERSION enforcement gap. No project version values, build numbers, app code, or archive behavior changed. Expanded max_files_changed from 11 to 12 to keep app-runtime status synced with the implemented gate. proof_level achieved: automation-tested."
     },
     {
       "slice_id": "release-bump-version-policy-guard",

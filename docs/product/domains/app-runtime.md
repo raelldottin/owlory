@@ -31,9 +31,9 @@
 
 ## Build Provenance And Runtime Mirroring Contract
 
-Implementation status: `Implemented` for local build provenance and archive-readiness preflight; `Partially implemented` for complete app-version provenance until `MARKETING_VERSION` receives the same committed-HEAD gate as `CURRENT_PROJECT_VERSION`.
-Proof level: `BuildInfo`, Xcode stamp scripts, `BuildInfoTests`, `make build-provenance`, and `make release-preflight` prove local build identity and release-readiness gates.
-Missing/deferred: `MARKETING_VERSION` committed-HEAD enforcement and dedicated widget/reminder parity proof remain future work.
+Implementation status: `Implemented` for local build provenance, archive-readiness preflight, and committed-HEAD checks for both `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION`.
+Proof level: `BuildInfo`, Xcode stamp scripts, `BuildInfoTests`, `make build-provenance`, `./Tools/verify-build-provenance.sh --require-clean`, and `make release-preflight` prove local build identity and release-readiness gates.
+Missing/deferred: Dedicated widget/reminder parity proof remains future work.
 
 - A local build should report the Git commit, branch, tag/describe output, dirty status, build date, configuration, and build-number source that produced it.
 - A release archive should be traceable to committed GitHub history, not a local-only Xcode state.

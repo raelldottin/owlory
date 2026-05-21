@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [release-marketing-version-provenance-gate (automation-tested; verify-build-provenance now checks committed MARKETING_VERSION against HEAD, fails --require-clean for app-version drift, and docs/hooks name both app-version and build-number gates)](sessions/2026-05-21/040334-release-marketing-version-provenance-gate.md)
 - [release-versioning-policy-doc (doc-only + automation-tested; added long-term MARKETING_VERSION / CURRENT_PROJECT_VERSION policy for pre-1.0, release bumps, rollback builds, tags/changelog, and enterprise traceability; next slice is MARKETING_VERSION provenance gate)](sessions/2026-05-21/035040-release-versioning-policy-doc.md)
 - [queue-release-versioning-implementation-slices (queue-only; added 3 release implementation slices: policy doc pri 76, MARKETING_VERSION provenance gate pri 75, bump-version policy guard pri 74)](sessions/2026-05-21/034443-queue-release-versioning-implementation-slices.md)
 - [app-history-strip-claude-trailers (build-tested + git-history-rewritten; rewrote pushed main history from old 60576b3..e550c66, removed 84 actual Claude attribution trailers, reworded one grep false-positive commit message, and preserved file tree equivalence)](sessions/2026-05-21/052753-app-history-strip-claude-trailers.md)

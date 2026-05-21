@@ -14,11 +14,12 @@ error: release preflight requires a clean working tree before Archive.
 
 Why this exists:
   Xcode Organizer can archive local uncommitted state. A clean post-push repo is
-  not enough if Archive happened before the build-number bump was committed.
+  not enough if Archive happened before app-version or build-number metadata was
+  committed.
 
 How to fix:
-  Commit the intended changes, especially project.pbxproj build-number bumps, or
-  remove/stash unrelated local files. Then rerun:
+  Commit the intended changes, especially project.pbxproj MARKETING_VERSION or
+  CURRENT_PROJECT_VERSION bumps, or remove/stash unrelated local files. Then rerun:
     make release-preflight
 
 Dirty paths:

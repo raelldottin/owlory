@@ -51,11 +51,20 @@ class VerifyBuildProvenanceCommittedBuildGateTests(unittest.TestCase):
             text=True,
         )
 
-    def _write_pbxproj(self, build_number: str) -> None:
-        self.pbxproj.write_text(_minimal_pbxproj(build_number))
+    def _write_pbxproj(
+        self,
+        build_number: str,
+        marketing_version: str = "1.0.0",
+    ) -> None:
+        self.pbxproj.write_text(_minimal_pbxproj(build_number, marketing_version))
 
-    def _commit_pbxproj(self, build_number: str, message: str) -> None:
-        self._write_pbxproj(build_number)
+    def _commit_pbxproj(
+        self,
+        build_number: str,
+        message: str,
+        marketing_version: str = "1.0.0",
+    ) -> None:
+        self._write_pbxproj(build_number, marketing_version)
         self._run_git(
             "add",
             str(PROJECT_FILE_REL),
@@ -82,6 +91,7 @@ class VerifyBuildProvenanceCommittedBuildGateTests(unittest.TestCase):
             msg=f"expected exit 0; stdout={result.stdout!r} stderr={result.stderr!r}",
         )
         self.assertIn("Committed build number: matches HEAD", result.stdout)
+        self.assertIn("Committed marketing version: matches HEAD", result.stdout)
 
     def test_uncommitted_build_bump_fails_under_require_clean(self) -> None:
         self._commit_pbxproj("20260417081904", "Seed pbxproj")
@@ -118,6 +128,50 @@ class VerifyBuildProvenanceCommittedBuildGateTests(unittest.TestCase):
         )
         self.assertIn(
             "Committed build number: differs from HEAD (HEAD has 20260417081904)",
+            result.stdout,
+        )
+
+    def test_uncommitted_marketing_version_bump_fails_under_require_clean(self) -> None:
+        self._commit_pbxproj(
+            "20260417081904",
+            "Seed pbxproj",
+            marketing_version="0.2.0",
+        )
+        self._write_pbxproj("20260417081904", marketing_version="0.3.0")
+
+        result = self._run_verifier("--require-clean")
+
+        self.assertNotEqual(
+            0,
+            result.returncode,
+            msg=f"expected non-zero exit; stdout={result.stdout!r} stderr={result.stderr!r}",
+        )
+        self.assertIn(
+            "pbxproj MARKETING_VERSION '0.3.0' is not committed at HEAD",
+            result.stderr,
+        )
+        self.assertIn(
+            "commit the app-version bump before re-running the verifier",
+            result.stderr,
+        )
+
+    def test_uncommitted_marketing_version_bump_is_advisory_without_require_clean(self) -> None:
+        self._commit_pbxproj(
+            "20260417081904",
+            "Seed pbxproj",
+            marketing_version="0.2.0",
+        )
+        self._write_pbxproj("20260417081904", marketing_version="0.3.0")
+
+        result = self._run_verifier()
+
+        self.assertEqual(
+            0,
+            result.returncode,
+            msg=f"expected exit 0 in informational mode; stderr={result.stderr!r}",
+        )
+        self.assertIn(
+            "Committed marketing version: differs from HEAD (HEAD has 0.2.0)",
             result.stdout,
         )
 

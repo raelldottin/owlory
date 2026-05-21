@@ -398,7 +398,7 @@ Before any Xcode Archive, run:
 make release-preflight
 ```
 
-This is the archive-readiness gate. It requires a clean tree, `HEAD...@{u}` equal to `0 0`, a committed `CURRENT_PROJECT_VERSION`, and releaseable Build Info provenance. If it fails, do not archive.
+This is the archive-readiness gate. It requires a clean tree, `HEAD...@{u}` equal to `0 0`, committed `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` values, and releaseable Build Info provenance. If it fails, do not archive.
 
 For push-time release provenance enforcement, install the committed hook once:
 

@@ -1,0 +1,76 @@
+{
+  "slice_id": "release-marketing-version-provenance-gate",
+  "status": "done",
+  "summary": "Extended release provenance so MARKETING_VERSION is checked against the committed project.pbxproj at HEAD alongside CURRENT_PROJECT_VERSION. The verifier now prints committed marketing-version state, fails --require-clean for uncommitted app-version bumps, and keeps advisory informational output when --require-clean is not used. Release/pre-push messaging and workflow docs now name both app-version and build-number provenance gates.",
+  "files_touched": [
+    ".githooks/pre-push",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/040334-release-marketing-version-provenance-gate.md",
+    "Tools/release-preflight.sh",
+    "Tools/verify-build-provenance.sh",
+    "automation/handoffs/20260521T080334Z-release-marketing-version-provenance-gate.json",
+    "automation/queue/slices.json",
+    "automation/tests/test_release_preflight.py",
+    "automation/tests/test_verify_build_provenance.py",
+    "docs/product/domains/app-runtime.md",
+    "docs/workflows/release.md",
+    "docs/workflows/validation.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main && git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id release-marketing-version-provenance-gate",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_verify_build_provenance automation.tests.test_release_preflight",
+    "python3 -m json.tool automation/queue/slices.json",
+    "make architecture",
+    "make automation-check",
+    "./Tools/verify-build-provenance.sh",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "automation-tested",
+  "missing_proof_levels": [
+    "No app behavior, archive upload, TestFlight install, App Store Connect, or MDM rollout behavior was changed or claimed."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Release provenance committed app-version gate",
+      "before": "verify-build-provenance reported MARKETING_VERSION but only compared CURRENT_PROJECT_VERSION against the committed HEAD project file.",
+      "after": "verify-build-provenance reports committed MARKETING_VERSION state, treats MARKETING_VERSION drift as advisory in informational mode, and fails --require-clean when MARKETING_VERSION differs from HEAD.",
+      "proof": [
+        "Tools/verify-build-provenance.sh",
+        "automation/tests/test_verify_build_provenance.py",
+        "./Tools/verify-build-provenance.sh"
+      ]
+    },
+    {
+      "contract": "Release/preflight operator messaging",
+      "before": "pre-push, release-preflight, release.md, and validation.md described the committed-HEAD gate mostly as a build-number check.",
+      "after": "operator-facing release messages and docs now state that both MARKETING_VERSION and CURRENT_PROJECT_VERSION must match committed HEAD before Archive/release provenance is accepted.",
+      "proof": [
+        ".githooks/pre-push",
+        "Tools/release-preflight.sh",
+        "docs/workflows/release.md",
+        "docs/workflows/validation.md"
+      ]
+    },
+    {
+      "contract": "App Runtime release identity status",
+      "before": "app-runtime.md named MARKETING_VERSION committed-HEAD enforcement as a remaining gap.",
+      "after": "app-runtime.md now records committed-HEAD checks for MARKETING_VERSION and CURRENT_PROJECT_VERSION as implemented, with widget/reminder parity proof still deferred.",
+      "proof": [
+        "docs/product/domains/app-runtime.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The queued release-bump-version-policy-guard slice still needs to harden and test the bump-version tooling itself.",
+    "./Tools/verify-build-provenance.sh was run before commit, so it reported the working tree as dirty while still proving the new committed marketing-version output shape. Pre-push provenance checks rerun after commit/push from a clean tree."
+  ],
+  "recommended_next_slice": "release-bump-version-policy-guard",
+  "recommended_next_reason": "It is the remaining queued release implementation slice after the policy doc and MARKETING_VERSION provenance gate are complete.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T08:03:34Z"
+}

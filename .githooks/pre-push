@@ -38,12 +38,13 @@ if ! ./Tools/verify-build-provenance.sh --require-clean; then
 Pre-push provenance check failed.
 
 Why this exists:
-  The Xcode CURRENT_PROJECT_VERSION used for TestFlight must be reproducible
-  from the committed project.pbxproj at HEAD.
+  The Xcode MARKETING_VERSION and CURRENT_PROJECT_VERSION used for TestFlight
+  must be reproducible from the committed project.pbxproj at HEAD.
 
 How to fix:
-  If you intentionally bumped the build number, commit the project.pbxproj bump
-  first. If you did not intend the bump, remove it before pushing.
+  If you intentionally bumped the app version or build number, commit the
+  project.pbxproj bump first. If you did not intend the bump, remove it before
+  pushing.
 
 Read next:
   docs/workflows/release.md

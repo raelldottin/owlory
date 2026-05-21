@@ -86,7 +86,7 @@ Owlory ships a committed pre-push hook at `.githooks/pre-push`. Install it once 
 git config core.hooksPath .githooks
 ```
 
-The hook blocks pushes when the working tree is dirty, when `CURRENT_PROJECT_VERSION` differs from the committed `project.pbxproj` at `HEAD`, or when `make build-provenance` fails. Its failure messages explain why the rule exists and the remediation path.
+The hook blocks pushes when the working tree is dirty, when `MARKETING_VERSION` or `CURRENT_PROJECT_VERSION` differs from the committed `project.pbxproj` at `HEAD`, or when `make build-provenance` fails. Its failure messages explain why the rule exists and the remediation path.
 
 This is a push-time guard only. It cannot stop Xcode Organizer from archiving local uncommitted state, so do not use a successful push as an archive proof. Before every TestFlight archive, still run:
 
@@ -110,12 +110,13 @@ Expected output before Archive:
 ```text
 Working tree: clean
 Git mirror: 0 0
+Committed marketing version: matches HEAD
 Committed build number: matches HEAD
 Releaseable: yes
 Release preflight passed.
 ```
 
-If any line fails, do not archive. Commit the build-number bump, push/pull until `HEAD...@{u}` is `0 0`, then rerun `make release-preflight`.
+If any line fails, do not archive. Commit the app-version or build-number bump, push/pull until `HEAD...@{u}` is `0 0`, then rerun `make release-preflight`.
 
 ## Data Channel Boundary
 
@@ -146,7 +147,7 @@ Keep TestFlight and debug data separate by default. Do not point a debug build a
 
 `make release-check` runs `make release-preflight` first, then runs the runtime validation slice. It is intentionally stricter than `make build-provenance`, but `make release-preflight` remains the final required gate immediately before Archive.
 
-The clean-tree gate alone is necessary but not sufficient. `verify-build-provenance.sh --require-clean` also asserts that the on-disk `CURRENT_PROJECT_VERSION` matches the committed value at `HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj`. The verifier reports `Committed build number: matches HEAD` on success and exits non-zero with `pbxproj CURRENT_PROJECT_VERSION '...' is not committed at HEAD` when they diverge. This catches the failure mode where `./Tools/set-build-number.sh --auto` is run before archive without committing the bump, producing a TestFlight build whose `CFBundleVersion` is not reproducible from any committed pbxproj state on any branch.
+The clean-tree gate alone is necessary but not sufficient. `verify-build-provenance.sh --require-clean` also asserts that the on-disk `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` match the committed values at `HEAD:owlory_xcode/Owlory.xcodeproj/project.pbxproj`. The verifier reports `Committed marketing version: matches HEAD` and `Committed build number: matches HEAD` on success, exits non-zero with `pbxproj MARKETING_VERSION '...' is not committed at HEAD` when the app version diverges, and exits non-zero with `pbxproj CURRENT_PROJECT_VERSION '...' is not committed at HEAD` when the build number diverges. This catches the failure mode where `./Tools/bump-version.sh` or `./Tools/set-build-number.sh --auto` is run before archive without committing the bump, producing a TestFlight build whose `CFBundleShortVersionString` or `CFBundleVersion` is not reproducible from committed source.
 
 ## Clean TestFlight Build Prep
 
@@ -162,6 +163,7 @@ make release-check
 The required local gate output is:
 
 ```text
+Committed marketing version: matches HEAD
 Committed build number: matches HEAD
 Working tree: clean
 Releaseable: yes

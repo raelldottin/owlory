@@ -98,6 +98,7 @@ class ReleasePreflightTests(unittest.TestCase):
         )
         self.assertIn("Working tree: clean", result.stdout)
         self.assertIn("Git mirror: 0 0", result.stdout)
+        self.assertIn("Committed marketing version: matches HEAD", result.stdout)
         self.assertIn("Committed build number: matches HEAD", result.stdout)
         self.assertIn("Release preflight passed.", result.stdout)
 
