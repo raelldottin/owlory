@@ -6531,6 +6531,179 @@
       "max_files_changed": 7,
       "entry_condition": "CHANGELOG.md exists with an [Unreleased] section. The release process should no longer allow bump-version to silently skip changelog promotion.",
       "notes": "Implementation slice. Change Tools/bump-version.sh so a missing CHANGELOG.md or missing [Unreleased] heading fails before mutating project.pbxproj, rather than warning and continuing. Add/adjust focused tests in automation/tests/test_bump_version.py proving missing changelog and missing [Unreleased] fail without changing MARKETING_VERSION or CURRENT_PROJECT_VERSION, while valid changelog promotion still passes. Do not bump real MARKETING_VERSION or CURRENT_PROJECT_VERSION. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: Tools/bump-version.sh now validates that CHANGELOG.md exists and contains a ## [Unreleased] section before reading and mutating MARKETING_VERSION or CURRENT_PROJECT_VERSION. Added isolated temp-repo regression tests proving missing changelog and missing [Unreleased] both fail without changing project metadata, while existing valid bump/promotion behavior still passes. Updated release workflow docs to name the hard pre-mutation changelog gate. No real MARKETING_VERSION or CURRENT_PROJECT_VERSION values changed. proof_level achieved: automation-tested."
+    },
+    {
+      "slice_id": "queue-repo-automation-reuse-slices",
+      "title": "Queue reusable repo automation extraction and sync slices",
+      "status": "done",
+      "priority": 90,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 -m json.tool automation/queue/slices.json",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 4,
+      "entry_condition": "User requested a reusable repo automation home outside Owlory and a complete supervised slice ladder for making Owlory automation reusable in other repositories.",
+      "notes": "Queue-only slice. Created /Users/raelldottin/Documents/Personal/repo-automation as the external reusable automation home because /Users/raelldottin/Personal does not exist and the active Personal workspace is /Users/raelldottin/Documents/Personal. Added the contract, sync-tooling, bootstrap, automatic-update, and consumer-adoption slices needed to make Owlory repo automation reusable and keep the external repo automatically updated from Owlory automation changes. proof_level achieved: queue-only."
+    },
+    {
+      "slice_id": "repo-automation-reuse-contract-inventory",
+      "title": "Define reusable repo automation contract and ownership inventory",
+      "status": "queued",
+      "priority": 89,
+      "domain": "automation",
+      "allowed_paths": [
+        "docs/workflows/repo-automation.md",
+        "docs/README.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-reuse-contract-inventory",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 6,
+      "entry_condition": "/Users/raelldottin/Documents/Personal/repo-automation exists as the intended external reusable automation home.",
+      "notes": "Documentation/design slice. Inventory Owlory automation assets and define the reusable automation contract before copying code: reusable supervisor/context/queue schema patterns, prompts, validation helpers, Python type-check gate, handoff conventions, and excluded Owlory-specific state such as app proofs, localization data, product docs, generated artifacts, and live queue history. Decide and document the update direction: Owlory remains the initial source of truth; the external repo-automation folder is a mirrored reusable distribution target until adoption is complete. Document the target path, repo ownership, inclusion/exclusion rules, and how future repositories should consume it. Do not move files or change hooks in this slice. proof_level target: doc-only."
+    },
+    {
+      "slice_id": "repo-automation-sync-tooling",
+      "title": "Add tested tooling to mirror reusable automation into the external repo",
+      "status": "queued",
+      "priority": 88,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/repo-automation-sync.sh",
+        "automation/reusable-manifest.json",
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-sync-tooling",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-reuse-contract-inventory"
+      ],
+      "max_files_changed": 9,
+      "entry_condition": "repo-automation-reuse-contract-inventory has documented the reusable/excluded automation boundaries and target path.",
+      "notes": "Implementation slice. Add an idempotent sync tool that reads a tracked reusable manifest and mirrors only approved reusable automation files/directories from Owlory into /Users/raelldottin/Documents/Personal/repo-automation. The tool must support at least --check and --sync modes, avoid copying live Owlory queue/handoffs/proofs/product state unless explicitly manifest-approved, preserve executable bits where needed, and produce deterministic output suitable for hooks. Add temp-directory unit tests proving inclusion, exclusion, stale-file behavior, check-mode failure, and sync-mode update behavior without touching the real external folder. Do not wire hooks yet. proof_level target: automation-tested."
+    },
+    {
+      "slice_id": "repo-automation-external-repo-bootstrap",
+      "title": "Bootstrap the external repo-automation folder from the tested manifest",
+      "status": "queued",
+      "priority": 87,
+      "domain": "automation",
+      "allowed_paths": [
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-external-repo-bootstrap",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-sync-tooling"
+      ],
+      "max_files_changed": 5,
+      "entry_condition": "repo-automation-sync-tooling has landed with a tested --sync mode and reusable manifest.",
+      "notes": "Bootstrap slice. Initialize /Users/raelldottin/Documents/Personal/repo-automation as a Git repository if it is not already one, then run the tested sync tool to populate the reusable automation distribution. Add a README and bootstrap metadata through the sync manifest rather than ad hoc writes where possible. Commit the external repo if appropriate locally, but do not push to any remote unless a remote already exists and the user has explicitly configured it. Record exact external repo status, commit hash if created, and sync proof in the Owlory handoff. Keep Owlory repo changes limited to documentation/handoff/queue updates. proof_level target: external-bootstrap-tested."
+    },
+    {
+      "slice_id": "repo-automation-auto-update-gate",
+      "title": "Wire automatic updates from Owlory automation changes to repo-automation",
+      "status": "queued",
+      "priority": 86,
+      "domain": "automation",
+      "allowed_paths": [
+        ".githooks/pre-push",
+        "Makefile",
+        "Tools/repo-automation-sync.sh",
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "docs/workflows/validation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-auto-update-gate",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-external-repo-bootstrap"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "The external repo-automation folder has been bootstrapped and the sync tool can prove it is current with Owlory's reusable automation manifest.",
+      "notes": "Implementation slice. Make updates automatic for normal Owlory development by wiring the sync tool into the local validation/push path. Prefer a Makefile target plus pre-push hook integration that runs the sync in deterministic mode when reusable automation changes are present, then verifies the external repo-automation folder is current. The hook must fail loudly if the external target is missing, dirty in an unsafe way, or cannot be updated. Avoid silently committing or pushing the external repo unless that behavior is explicitly documented and gated. Update tests/docs for the hook/check semantics. proof_level target: automation-tested + hook-tested."
+    },
+    {
+      "slice_id": "repo-automation-consumer-adoption-smoke",
+      "title": "Prove reusable automation can bootstrap another repository",
+      "status": "queued",
+      "priority": 85,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/repo-automation-sync.sh",
+        "automation/reusable-manifest.json",
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-consumer-adoption-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-auto-update-gate"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Automatic update gate is wired and /Users/raelldottin/Documents/Personal/repo-automation is current with Owlory reusable automation.",
+      "notes": "Adoption proof slice. Add a dry-run or temp-repo smoke test showing a non-Owlory repository can consume the reusable automation package without Owlory app-specific paths. The proof should exercise bootstrap instructions, required local config, supervisor/context commands where practical, and failure messaging for missing repo-specific configuration. Document remaining manual steps for real repositories. Do not migrate another real repo unless the user explicitly names it. proof_level target: consumer-smoke-tested."
     }
   ]
 }
