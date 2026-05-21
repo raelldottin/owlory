@@ -6556,7 +6556,7 @@
     {
       "slice_id": "repo-automation-reuse-contract-inventory",
       "title": "Define reusable repo automation contract and ownership inventory",
-      "status": "queued",
+      "status": "done",
       "priority": 89,
       "domain": "automation",
       "allowed_paths": [
@@ -6576,7 +6576,7 @@
       "depends_on": [],
       "max_files_changed": 6,
       "entry_condition": "/Users/raelldottin/Documents/Personal/repo-automation exists as the intended external reusable automation home.",
-      "notes": "Documentation/design slice. Inventory Owlory automation assets and define the reusable automation contract before copying code: reusable supervisor/context/queue schema patterns, prompts, validation helpers, Python type-check gate, handoff conventions, and excluded Owlory-specific state such as app proofs, localization data, product docs, generated artifacts, and live queue history. Decide and document the update direction: Owlory remains the initial source of truth; the external repo-automation folder is a mirrored reusable distribution target until adoption is complete. Document the target path, repo ownership, inclusion/exclusion rules, and how future repositories should consume it. Do not move files or change hooks in this slice. proof_level target: doc-only."
+      "notes": "Documentation/design slice. Inventory Owlory automation assets and define the reusable automation contract before copying code: reusable supervisor/context/queue schema patterns, prompts, validation helpers, Python type-check gate, handoff conventions, and excluded Owlory-specific state such as app proofs, localization data, product docs, generated artifacts, and live queue history. Decide and document the update direction: Owlory remains the initial source of truth; the external repo-automation folder is a mirrored reusable distribution target until adoption is complete. Document the target path, repo ownership, inclusion/exclusion rules, and how future repositories should consume it. Do not move files or change hooks in this slice. proof_level target: doc-only.\n\nCompleted on 2026-05-21: added docs/workflows/repo-automation.md and linked it from docs/README.md. The contract names /Users/raelldottin/Documents/Personal/repo-automation as the target, preserves one-way Owlory-to-external sync until an explicit ownership flip, inventories reusable harness assets, excludes Owlory live queue/handoffs/proofs/product/release/localization state, defines the manifest and sync contracts, and sets boundaries for automatic updates and consumer adoption. No files were moved and no hooks were changed. proof_level achieved: doc-only."
     },
     {
       "slice_id": "repo-automation-sync-tooling",

@@ -1,0 +1,62 @@
+{
+  "slice_id": "repo-automation-reuse-contract-inventory",
+  "status": "done",
+  "summary": "Defined the reusable repo automation contract before copying or moving any files. docs/workflows/repo-automation.md now names the external target, one-way sync direction from Owlory to repo-automation, reusable harness inventory, Owlory-specific exclusions, manifest contract, sync contract, automatic update behavior, and consumer repository responsibilities.",
+  "files_touched": [
+    "docs/workflows/repo-automation.md",
+    "docs/README.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T201422Z-repo-automation-reuse-contract-inventory.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/161422-repo-automation-reuse-contract-inventory.md"
+  ],
+  "validations_passed": [
+    "git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-reuse-contract-inventory",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T201422Z-repo-automation-reuse-contract-inventory.json",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "Sync tooling, external repo bootstrap, automatic update hook, and consumer adoption proof remain queued in later slices."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Reusable automation target and source of truth",
+      "before": "The external repo-automation folder existed, but there was no documented sync direction or ownership contract.",
+      "after": "Owlory is documented as the initial source of truth and /Users/raelldottin/Documents/Personal/repo-automation as the one-way reusable distribution target until an explicit ownership flip.",
+      "proof": [
+        "docs/workflows/repo-automation.md"
+      ]
+    },
+    {
+      "contract": "Reusable vs Owlory-specific automation boundary",
+      "before": "The queue named a future extraction, but the reusable and excluded asset classes were not documented.",
+      "after": "Reusable harness assets, parameterization candidates, and excluded Owlory-specific queue, handoff, proof, localization, release, app, and product state are documented.",
+      "proof": [
+        "docs/workflows/repo-automation.md"
+      ]
+    },
+    {
+      "contract": "Next sync-tooling implementation boundary",
+      "before": "The next slice could have guessed which files to sync or touched the external folder directly.",
+      "after": "The manifest, --check/--sync behavior, stale-file limits, and no-hook/no-bootstrap boundary for repo-automation-sync-tooling are documented.",
+      "proof": [
+        "docs/workflows/repo-automation.md"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The reusable automation package is not implemented yet; this slice only defines the contract for the following implementation slices."
+  ],
+  "recommended_next_slice": "repo-automation-sync-tooling",
+  "recommended_next_reason": "The reusable/excluded boundary and target contract are now documented, so the next adjacent step is the manifest-driven sync tool and tests.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T20:14:22Z"
+}
