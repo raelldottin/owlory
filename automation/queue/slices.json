@@ -6706,7 +6706,7 @@
     {
       "slice_id": "repo-automation-consumer-adoption-smoke",
       "title": "Prove reusable automation can bootstrap another repository",
-      "status": "queued",
+      "status": "done",
       "priority": 85,
       "domain": "automation",
       "allowed_paths": [

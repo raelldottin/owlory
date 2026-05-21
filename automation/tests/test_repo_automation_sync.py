@@ -263,5 +263,248 @@ class RepoAutomationSyncTests(unittest.TestCase):
         self.assertIn("result: target is current", result.stdout)
 
 
+class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
+    REUSABLE_PRESENT_PATHS = (
+        "Tools/repo-automation-sync.sh",
+        "automation/README.md",
+        "automation/context/build_context.py",
+        "automation/reusable-manifest.json",
+        "automation/schemas/handoff.schema.json",
+        "automation/schemas/slice.schema.json",
+        "automation/supervisor/policy.py",
+        "automation/supervisor/run_next.py",
+        "automation/supervisor/run_agent.sh",
+        "automation/tests/test_harness.py",
+        "automation/prompts/base.md",
+        "automation/prompts/slice.md",
+        "automation/examples/example-slices.json",
+        "automation/examples/example-handoff.json",
+        "docs/workflows/repo-automation.md",
+        "pyrightconfig.json",
+    )
+
+    OWLORY_SPECIFIC_ABSENT_PATHS = (
+        "automation/queue/slices.json",
+        "automation/handoffs",
+        "automation/proofs",
+        "automation/smoke",
+        "SecondBrain",
+        "owlory_xcode",
+        "localization",
+        "docs/product",
+        "docs/runtime",
+        "Tools/bump-version.sh",
+        "Tools/set-build-number.sh",
+        "Tools/verify-build-provenance.sh",
+        ".githooks/pre-push",
+    )
+
+    def setUp(self) -> None:
+        self.tmpdir = Path(tempfile.mkdtemp(prefix="repo-automation-consumer-"))
+        self.addCleanup(shutil.rmtree, self.tmpdir, ignore_errors=True)
+        self.consumer = self.tmpdir / "consumer-repo"
+        self.consumer.mkdir()
+
+    def bootstrap_consumer(self) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            [
+                str(SYNC_TOOL),
+                "--sync",
+                "--target",
+                str(self.consumer),
+            ],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+
+    def init_consumer_git(self, commit_bootstrap: bool = True) -> None:
+        init = subprocess.run(
+            ["git", "init", "-b", "main"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, init.returncode, msg=init.stderr)
+        for key, value in (
+            ("user.email", "smoke@example.test"),
+            ("user.name", "consumer-smoke"),
+            ("commit.gpgsign", "false"),
+        ):
+            subprocess.run(
+                ["git", "config", key, value],
+                cwd=self.consumer,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        if commit_bootstrap:
+            subprocess.run(
+                ["git", "add", "-A"],
+                cwd=self.consumer,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            subprocess.run(
+                ["git", "commit", "-m", "Bootstrap reusable automation"],
+                cwd=self.consumer,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+    def seed_example_queue(self) -> None:
+        queue_dir = self.consumer / "automation/queue"
+        queue_dir.mkdir(parents=True, exist_ok=True)
+        example = self.consumer / "automation/examples/example-slices.json"
+        shutil.copy(example, queue_dir / "slices.json")
+        (self.consumer / "automation/handoffs").mkdir(parents=True, exist_ok=True)
+        gitdir = self.consumer / ".git"
+        if gitdir.exists():
+            subprocess.run(
+                ["git", "add", "-A"],
+                cwd=self.consumer,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            subprocess.run(
+                ["git", "commit", "-m", "Seed consumer queue"],
+                cwd=self.consumer,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+    def test_consumer_bootstrap_lands_only_reusable_subset(self) -> None:
+        bootstrap = self.bootstrap_consumer()
+        self.assertEqual(0, bootstrap.returncode, msg=bootstrap.stderr)
+
+        for relative in self.REUSABLE_PRESENT_PATHS:
+            self.assertTrue(
+                (self.consumer / relative).exists(),
+                msg=f"reusable asset missing after bootstrap: {relative}",
+            )
+
+        for relative in self.OWLORY_SPECIFIC_ABSENT_PATHS:
+            self.assertFalse(
+                (self.consumer / relative).exists(),
+                msg=f"Owlory-specific path leaked into consumer: {relative}",
+            )
+
+        run_agent = self.consumer / "automation/supervisor/run_agent.sh"
+        self.assertTrue(
+            stat.S_IMODE(run_agent.stat().st_mode) & 0o111,
+            msg="supervisor run_agent.sh must remain executable in consumer",
+        )
+        sync_tool = self.consumer / "Tools/repo-automation-sync.sh"
+        self.assertTrue(
+            stat.S_IMODE(sync_tool.stat().st_mode) & 0o111,
+            msg="repo-automation-sync.sh must remain executable in consumer",
+        )
+
+    def test_consumer_supervisor_fails_loudly_without_queue_file(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        result = subprocess.run(
+            ["python3", "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertIn("automation/queue/slices.json", combined)
+        self.assertIn("FileNotFoundError", combined)
+
+    def test_consumer_context_builder_fails_loudly_without_queue_file(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        result = subprocess.run(
+            [
+                "python3",
+                "automation/context/build_context.py",
+                "--slice-id",
+                "any-slice",
+            ],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertIn("automation/queue/slices.json", combined)
+
+    def test_consumer_supervisor_dry_run_works_with_example_queue(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+        self.seed_example_queue()
+
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        result = subprocess.run(
+            ["python3", "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+        combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertTrue(
+            "selected_slice" in combined or "no eligible queued slice" in combined,
+            msg=f"unexpected dry-run output: {combined[:400]}",
+        )
+        self.assertIn(
+            str(self.consumer),
+            combined,
+            msg="dry-run handoff path should resolve under the consumer repo, not Owlory",
+        )
+
+    def test_consumer_supervisor_requires_git_repo(self) -> None:
+        self.bootstrap_consumer()
+        self.seed_example_queue()
+
+        result = subprocess.run(
+            ["python3", "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertTrue(
+            "git" in combined.lower(),
+            msg=f"expected supervisor to surface git failure, got: {combined[:400]}",
+        )
+
+    def test_consumer_auto_update_round_trip_after_git_init(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        auto = subprocess.run(
+            [
+                str(SYNC_TOOL),
+                "--auto-update",
+                "--target",
+                str(self.consumer),
+            ],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertEqual(0, auto.returncode, msg=auto.stderr)
+        self.assertIn("result: target is current", auto.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

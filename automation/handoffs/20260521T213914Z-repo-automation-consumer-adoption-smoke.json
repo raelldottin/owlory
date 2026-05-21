@@ -1,0 +1,87 @@
+{
+  "slice_id": "repo-automation-consumer-adoption-smoke",
+  "status": "done",
+  "summary": "Added a consumer-adoption smoke proof for the reusable repo-automation package. RepoAutomationConsumerAdoptionSmokeTests bootstraps a temp consumer directory from Owlory's real source + reusable-manifest.json, then exercises six paths: (1) manifest-owned reusable subset arrives while Owlory-specific paths (queue/handoffs/proofs/SecondBrain/owlory_xcode/localization/product+runtime docs/release tooling/Owlory pre-push hook) stay out, (2) supervisor fails loudly with FileNotFoundError on the missing queue path when no slices.json exists, (3) context builder fails loudly under the same condition, (4) supervisor's dry-run succeeds against the example queue inside a git-initialized consumer with bootstrap committed, and resolves handoff paths under the consumer (not Owlory), (5) supervisor surfaces a git failure when run outside a Git working tree, and (6) Tools/repo-automation-sync.sh --auto-update round-trips a clean consumer Git target to current. Also documented the Consumer Adoption Bootstrap sequence, known consumer-side failure modes (raw tracebacks for missing queue / non-Git target), manual steps that remain for a real consumer (Makefile, AGENTS.md equivalent, hooksPath, prompt overrides, pyright includes, remote setup), and what the smoke test does not prove. Did not migrate a real external repository.",
+  "files_touched": [
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T213914Z-repo-automation-consumer-adoption-smoke.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/213914-repo-automation-consumer-adoption-smoke.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-consumer-adoption-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T213914Z-repo-automation-consumer-adoption-smoke.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 6,
+  "max_files_changed_cap": 8,
+  "scope_observed_from": [
+    "automation/reusable-manifest.json (which paths are reusable vs Owlory-specific)",
+    "Tools/repo-automation-sync.sh (--sync, --auto-update, --check semantics)",
+    "automation/supervisor/run_next.py (REPO_ROOT resolution, dirty-tree refusal, queue path)",
+    "automation/context/build_context.py (queue path dependency)",
+    "automation/examples/example-slices.json (starter queue contents)"
+  ],
+  "consumer_failure_modes_captured": [
+    {
+      "condition": "Missing automation/queue/slices.json",
+      "observed": "FileNotFoundError with the missing path in the message from both run_next.py and build_context.py.",
+      "asserted_by": "test_consumer_supervisor_fails_loudly_without_queue_file, test_consumer_context_builder_fails_loudly_without_queue_file"
+    },
+    {
+      "condition": "Consumer directory is not a Git repository",
+      "observed": "subprocess.CalledProcessError from git diff --name-only --relative.",
+      "asserted_by": "test_consumer_supervisor_requires_git_repo"
+    },
+    {
+      "condition": "Consumer has dirty working tree on entry (e.g., post-bootstrap before first commit, or pycache after a supervisor run)",
+      "observed": "Supervisor's own 'stop: repo is dirty outside the next slice scope' message and non-zero exit.",
+      "asserted_by": "Implicit: test_consumer_supervisor_dry_run_works_with_example_queue requires the bootstrap commit and PYTHONDONTWRITEBYTECODE=1 to pass."
+    },
+    {
+      "condition": "Owlory-specific source path present without explicit manifest opt-in",
+      "observed": "Sync tool rejects with 'forbidden Owlory-specific source' error.",
+      "asserted_by": "RepoAutomationSyncTests.test_forbidden_owlory_state_requires_explicit_manifest_approval (pre-existing)."
+    }
+  ],
+  "documented_consumer_setup_steps": [
+    "Tools/repo-automation-sync.sh --sync --target <consumer>",
+    "git init -b main; git config user.email/user.name; commit bootstrap",
+    "Seed automation/queue/slices.json from automation/examples/example-slices.json and create automation/handoffs/",
+    "Add __pycache__/ to .gitignore or run supervisor with PYTHONDONTWRITEBYTECODE=1",
+    "Dry-run supervisor to confirm consumer-scoped handoff path",
+    "Authoring of consumer-specific Makefile, AGENTS.md, hooksPath, prompts, pyright includes, and remote is left to the consumer"
+  ],
+  "gaps_named_for_follow_up": [
+    "Consumer-side failure messaging is raw Python tracebacks for missing queue and non-Git target. A friendlier-message slice would touch automation/supervisor/run_next.py, automation/supervisor/policy.py, and automation/context/build_context.py and update the smoke assertions.",
+    "No real third-party repository has been migrated. The smoke test bootstraps temp consumers only; consumer-adoption-real-repo work requires an explicit user-named target.",
+    "The smoke test does not cover prompt overrides, Makefile portability, or CI integration."
+  ],
+  "not_claimed": [
+    "Any specific external repository has consumed the reusable package end-to-end.",
+    "Consumer-side prompt fragments, Makefile targets, or CI integration are proven portable.",
+    "Friendliness of consumer-facing error messages has been improved (it has only been asserted as the current shape so future regressions are caught).",
+    "Real-repo migration is unblocked beyond the smoke level — a separate slice owns that when a real target is named."
+  ],
+  "residual_risks": [
+    "If automation/reusable-manifest.json adds a new reusable file that the smoke test does not assert on, the smoke proof stays green even though a key file might fail to land in a future consumer. Mitigation: the REUSABLE_PRESENT_PATHS list in the test is keyed to specific files an adopter most needs (supervisor entry, context builder, schemas, prompts, examples, manifest, sync tool, docs).",
+    "Future changes to automation/supervisor/policy.py or run_next.py error paths could silently improve the consumer-side messages — the smoke tests assert specific traceback substrings ('FileNotFoundError', the queue path) and will need updating in that follow-up slice."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty. The natural next bodies of work are (a) consumer-side friendlier error messages, (b) a real third-party repo migration when a target is named by the user, and (c) prompt/Makefile portability proof — none of which are queued yet.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T21:39:14Z"
+}
