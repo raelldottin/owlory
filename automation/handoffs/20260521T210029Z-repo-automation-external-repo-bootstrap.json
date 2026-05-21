@@ -1,0 +1,75 @@
+{
+  "slice_id": "repo-automation-external-repo-bootstrap",
+  "status": "done",
+  "summary": "Bootstrapped /Users/raelldottin/Documents/Personal/repo-automation from the tested reusable manifest. The external folder is now its own Git repository on main, populated with 17 manifest-owned files, locally committed, and verified current with Tools/repo-automation-sync.sh --check. Final external HEAD is ed52956174cdb0add2f7a9574572079a3ad08af6.",
+  "files_touched": [
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T210029Z-repo-automation-external-repo-bootstrap.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/170029-repo-automation-external-repo-bootstrap.md"
+  ],
+  "validations_passed": [
+    "git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-external-repo-bootstrap",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation init -b main",
+    "Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation add . && git -C /Users/raelldottin/Documents/Personal/repo-automation commit -m \"Bootstrap reusable repo automation\"",
+    "Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation add docs/workflows/repo-automation.md && git -C /Users/raelldottin/Documents/Personal/repo-automation commit -m \"Record bootstrap status\"",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation status --short --branch",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD",
+    "git -C /Users/raelldottin/Documents/Personal/repo-automation remote -v",
+    "make architecture",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T210029Z-repo-automation-external-repo-bootstrap.json",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "The first required real-target check after Owlory docs were updated reported `changed: docs/workflows/repo-automation.md`; reran --sync, committed the external doc update, and reran --check successfully."
+  ],
+  "proof_level": "external-bootstrap-tested",
+  "missing_proof_levels": [
+    "Automatic update hooks are not wired yet; repo-automation-auto-update-gate owns that.",
+    "Consumer adoption proof remains queued in repo-automation-consumer-adoption-smoke."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "External reusable automation repository",
+      "before": "/Users/raelldottin/Documents/Personal/repo-automation existed as an empty folder, and Git resolved to the parent Personal workspace.",
+      "after": "/Users/raelldottin/Documents/Personal/repo-automation is its own Git repository on main with bootstrap commit 6ab871bbf957df24e648b02ef002c0efa2d7c609 and final HEAD ed52956174cdb0add2f7a9574572079a3ad08af6.",
+      "proof": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation log -1 --oneline",
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation rev-parse HEAD"
+      ]
+    },
+    {
+      "contract": "Manifest-owned external contents",
+      "before": "The external folder did not contain the reusable automation package.",
+      "after": "The external folder contains the 17 manifest-owned files produced by Tools/repo-automation-sync.sh --sync.",
+      "proof": [
+        "Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation",
+        "Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation"
+      ]
+    },
+    {
+      "contract": "External remote behavior",
+      "before": "No external repository remote behavior had been established.",
+      "after": "No remote is configured for repo-automation, so no external push was attempted.",
+      "proof": [
+        "git -C /Users/raelldottin/Documents/Personal/repo-automation remote -v"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The external repo is current now, but future Owlory reusable automation changes are not automatically synced until repo-automation-auto-update-gate lands."
+  ],
+  "recommended_next_slice": "repo-automation-auto-update-gate",
+  "recommended_next_reason": "The external repo is bootstrapped and check-mode passes, so the next adjacent step is wiring currentness checks or automatic local sync into Owlory's validation/push path.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T21:00:29Z"
+}

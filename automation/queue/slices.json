@@ -6614,7 +6614,7 @@
     {
       "slice_id": "repo-automation-external-repo-bootstrap",
       "title": "Bootstrap the external repo-automation folder from the tested manifest",
-      "status": "queued",
+      "status": "done",
       "priority": 87,
       "domain": "automation",
       "allowed_paths": [
@@ -6636,7 +6636,7 @@
       ],
       "max_files_changed": 5,
       "entry_condition": "repo-automation-sync-tooling has landed with a tested --sync mode and reusable manifest.",
-      "notes": "Bootstrap slice. Initialize /Users/raelldottin/Documents/Personal/repo-automation as a Git repository if it is not already one, then run the tested sync tool to populate the reusable automation distribution. Add a README and bootstrap metadata through the sync manifest rather than ad hoc writes where possible. Commit the external repo if appropriate locally, but do not push to any remote unless a remote already exists and the user has explicitly configured it. Record exact external repo status, commit hash if created, and sync proof in the Owlory handoff. Keep Owlory repo changes limited to documentation/handoff/queue updates. proof_level target: external-bootstrap-tested."
+      "notes": "Bootstrap slice. Initialize /Users/raelldottin/Documents/Personal/repo-automation as a Git repository if it is not already one, then run the tested sync tool to populate the reusable automation distribution. Add a README and bootstrap metadata through the sync manifest rather than ad hoc writes where possible. Commit the external repo if appropriate locally, but do not push to any remote unless a remote already exists and the user has explicitly configured it. Record exact external repo status, commit hash if created, and sync proof in the Owlory handoff. Keep Owlory repo changes limited to documentation/handoff/queue updates. proof_level target: external-bootstrap-tested.\n\nCompleted on 2026-05-21: initialized /Users/raelldottin/Documents/Personal/repo-automation as its own nested Git repository on main because Git previously resolved to the parent Personal workspace. Ran Tools/repo-automation-sync.sh --sync --target /Users/raelldottin/Documents/Personal/repo-automation, which populated 17 manifest-owned reusable automation files, then verified Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation passed with result: target is current. Committed the external repository locally as 6ab871bbf957df24e648b02ef002c0efa2d7c609 (Bootstrap reusable repo automation), then synced and committed the Owlory bootstrap-status doc update as ed52956174cdb0add2f7a9574572079a3ad08af6 (Record bootstrap status). No remote is configured, so no external push was attempted. Owlory repo changes were limited to docs, queue, handoff, and SecondBrain. proof_level achieved: external-bootstrap-tested."
     },
     {
       "slice_id": "repo-automation-auto-update-gate",
