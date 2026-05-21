@@ -60,9 +60,9 @@ The sync manifest must not copy these into the reusable automation distribution 
 
 ## Manifest Contract
 
-The next implementation slice must introduce a tracked manifest, expected at `automation/reusable-manifest.json`, that owns the distribution file list.
+The tracked manifest lives at `automation/reusable-manifest.json` and owns the distribution file list.
 
-The manifest should be explicit rather than glob-heavy. Each entry should identify:
+The manifest is explicit rather than glob-heavy. Each entry identifies:
 
 - source path in Owlory
 - destination path under `repo-automation`
@@ -71,15 +71,16 @@ The manifest should be explicit rather than glob-heavy. Each entry should identi
 - whether stale destination files under that owned path may be deleted
 - whether the entry is reusable now or copied as a template for consumer customization
 
-The sync tool should reject paths outside the repository root and outside the target root. It should not follow symlinks into untracked locations.
+The sync tool rejects paths outside the repository root and outside the target root. It does not follow symlinks into untracked locations.
 
 ## Sync Contract
 
-The sync tool added in the next slice should support:
+Use `Tools/repo-automation-sync.sh` for manifest-owned sync:
 
 - `--check`: report drift between Owlory reusable sources and the external folder without changing files.
 - `--sync`: update the external folder to match the manifest.
 - `--target <path>`: override the target path for tests and future consumers.
+- `--source <path>` and `--manifest <path>`: test hooks for temp repositories and alternate manifests.
 
 The tool must be idempotent. Running `--sync` twice against the same source should produce no second change. Running `--check` after a successful sync should pass.
 
@@ -112,11 +113,11 @@ New repositories must start from examples or templates, not Owlory's live queue,
 
 ## Next Slice Boundary
 
-`repo-automation-sync-tooling` owns the first implementation step:
+`repo-automation-external-repo-bootstrap` owns the next implementation step:
 
-- add the reusable manifest
-- add the sync tool
-- add temp-directory tests
-- keep the real external folder untouched except for explicit check-mode validation
+- initialize `/Users/raelldottin/Documents/Personal/repo-automation` as a Git repository if needed
+- run the tested sync tool in `--sync` mode to populate it
+- run `Tools/repo-automation-sync.sh --check --target /Users/raelldottin/Documents/Personal/repo-automation`
+- record the external repository status and sync proof
 
-It must not wire hooks or bootstrap the external repository. Those are separate slices.
+It must not wire automatic hooks. That is a separate slice.

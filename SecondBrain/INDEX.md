@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [repo-automation-sync-tooling (automation-tested; added manifest-driven repo-automation sync/check tool, reusable manifest, temp-target tests, and validation docs without mutating the real external folder)](sessions/2026-05-21/162935-repo-automation-sync-tooling.md)
 - [repo-automation-reuse-contract-inventory (doc-only; defined reusable automation target, one-way sync direction, manifest contract, exclusions, automatic update boundary, and consumer repo contract)](sessions/2026-05-21/161422-repo-automation-reuse-contract-inventory.md)
 - [queue-repo-automation-reuse-slices (queue-only; created external repo-automation folder and queued contract, sync tooling, bootstrap, automatic-update, and consumer-adoption slices)](sessions/2026-05-21/161224-queue-repo-automation-reuse-slices.md)
 - [release-changelog-required-gate (automation-tested; bump-version now refuses to mutate MARKETING_VERSION/CURRENT_PROJECT_VERSION unless CHANGELOG.md exists with ## [Unreleased], with temp-repo regression coverage)](sessions/2026-05-21/071142-release-changelog-required-gate.md)

@@ -6581,7 +6581,7 @@
     {
       "slice_id": "repo-automation-sync-tooling",
       "title": "Add tested tooling to mirror reusable automation into the external repo",
-      "status": "queued",
+      "status": "done",
       "priority": 88,
       "domain": "automation",
       "allowed_paths": [
@@ -6609,7 +6609,7 @@
       ],
       "max_files_changed": 9,
       "entry_condition": "repo-automation-reuse-contract-inventory has documented the reusable/excluded automation boundaries and target path.",
-      "notes": "Implementation slice. Add an idempotent sync tool that reads a tracked reusable manifest and mirrors only approved reusable automation files/directories from Owlory into /Users/raelldottin/Documents/Personal/repo-automation. The tool must support at least --check and --sync modes, avoid copying live Owlory queue/handoffs/proofs/product state unless explicitly manifest-approved, preserve executable bits where needed, and produce deterministic output suitable for hooks. Add temp-directory unit tests proving inclusion, exclusion, stale-file behavior, check-mode failure, and sync-mode update behavior without touching the real external folder. Do not wire hooks yet. proof_level target: automation-tested."
+      "notes": "Implementation slice. Add an idempotent sync tool that reads a tracked reusable manifest and mirrors only approved reusable automation files/directories from Owlory into /Users/raelldottin/Documents/Personal/repo-automation. The tool must support at least --check and --sync modes, avoid copying live Owlory queue/handoffs/proofs/product state unless explicitly manifest-approved, preserve executable bits where needed, and produce deterministic output suitable for hooks. Add temp-directory unit tests proving inclusion, exclusion, stale-file behavior, check-mode failure, and sync-mode update behavior without touching the real external folder. Do not wire hooks yet. proof_level target: automation-tested.\n\nCompleted on 2026-05-21: added Tools/repo-automation-sync.sh with --check, --sync, --target, --source, and --manifest support; added automation/reusable-manifest.json covering the reusable harness core and excluding Owlory live queue/handoffs/proofs/product/release/localization state; added automation/tests/test_repo_automation_sync.py with temp-source/temp-target coverage for inclusion, check-mode drift without mutation, stale-file deletion only under manifest-owned delete_stale paths, explicit approval for otherwise forbidden Owlory-specific state, missing-target check behavior, executable-bit preservation, and idempotence. Updated repo-automation and validation docs for the implemented command. The real external repo-automation folder was not modified by this slice. proof_level achieved: automation-tested."
     },
     {
       "slice_id": "repo-automation-external-repo-bootstrap",

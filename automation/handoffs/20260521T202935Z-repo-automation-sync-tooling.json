@@ -1,0 +1,75 @@
+{
+  "slice_id": "repo-automation-sync-tooling",
+  "status": "done",
+  "summary": "Added the manifest-driven reusable automation sync/check tool. Tools/repo-automation-sync.sh now supports --check, --sync, --target, --source, and --manifest, mirrors only manifest-approved reusable assets, preserves executable bits when requested, deletes stale files only inside manifest-owned delete_stale paths, and rejects Owlory-specific state unless explicitly approved. Added the initial reusable manifest and temp-directory tests proving sync, drift detection, stale handling, forbidden-source guardrails, executable mode, missing-target behavior, and idempotence.",
+  "files_touched": [
+    "Tools/repo-automation-sync.sh",
+    "automation/reusable-manifest.json",
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "docs/workflows/validation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260521T202935Z-repo-automation-sync-tooling.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/162935-repo-automation-sync-tooling.md"
+  ],
+  "validations_passed": [
+    "git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-sync-tooling",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "tmpdir=$(mktemp -d /tmp/repo-automation-manifest.XXXXXX); Tools/repo-automation-sync.sh --sync --target \"$tmpdir\"; Tools/repo-automation-sync.sh --check --target \"$tmpdir\"; rm -rf \"$tmpdir\"",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "python3 -m json.tool automation/reusable-manifest.json",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T202935Z-repo-automation-sync-tooling.json",
+    "git diff --check"
+  ],
+  "validations_failed": [
+    "Initial temp-target manifest validation used zsh variable name `status`, which is readonly in zsh; reran the same sync/check with neutral variable names and it passed."
+  ],
+  "proof_level": "automation-tested",
+  "missing_proof_levels": [
+    "The real external repo-automation folder is not bootstrapped yet; repo-automation-external-repo-bootstrap owns that.",
+    "Automatic update hooks are not wired yet; repo-automation-auto-update-gate owns that."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Reusable automation manifest",
+      "before": "The reusable automation boundary was documented, but no tracked manifest owned the distribution file list.",
+      "after": "automation/reusable-manifest.json owns the initial reusable harness distribution list and template flags.",
+      "proof": [
+        "automation/reusable-manifest.json",
+        "python3 -m json.tool automation/reusable-manifest.json"
+      ]
+    },
+    {
+      "contract": "Repo automation sync/check behavior",
+      "before": "There was no executable tool for proving or updating the external repo-automation folder.",
+      "after": "Tools/repo-automation-sync.sh supports --check and --sync against the manifest with deterministic drift output and idempotent sync behavior.",
+      "proof": [
+        "Tools/repo-automation-sync.sh",
+        "python3 -m unittest automation.tests.test_repo_automation_sync"
+      ]
+    },
+    {
+      "contract": "Owlory-specific state exclusion",
+      "before": "The exclusion policy was documented only.",
+      "after": "The sync tool rejects forbidden Owlory-specific source prefixes unless a manifest entry explicitly sets allow_owlory_specific.",
+      "proof": [
+        "automation/tests/test_repo_automation_sync.py"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "The external repo-automation folder remains unpopulated by this slice by design; bootstrap is queued next."
+  ],
+  "recommended_next_slice": "repo-automation-external-repo-bootstrap",
+  "recommended_next_reason": "The manifest and tested sync tool now exist, so the next adjacent step is bootstrapping /Users/raelldottin/Documents/Personal/repo-automation and proving check-mode passes against the real target.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T20:29:35Z"
+}
