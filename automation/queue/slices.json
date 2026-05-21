@@ -6448,7 +6448,7 @@
     {
       "slice_id": "release-changelog-foundation",
       "title": "Add repository CHANGELOG.md foundation for marketing-version release notes",
-      "status": "queued",
+      "status": "done",
       "priority": 70,
       "domain": "release",
       "allowed_paths": [
@@ -6474,7 +6474,7 @@
       ],
       "max_files_changed": 8,
       "entry_condition": "The release workflow and bump-version script expect a top-level CHANGELOG.md, but the repository currently has no CHANGELOG.md. Release history exists in SecondBrain and handoffs, but not as a curated marketing-version changelog.",
-      "notes": "Implementation slice. Add a top-level CHANGELOG.md with a stable [Unreleased] section and a concise category shape suitable for App Store/TestFlight/support release notes. Keep it curated, not a dump of SecondBrain or every slice. Update docs/workflows/release.md to require maintaining [Unreleased] during release-relevant work and reviewing it before each MARKETING_VERSION bump. If the existing bump-version fixture test should reference the real changelog shape, adjust only that focused test. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. Do not backfill the current cycle in this slice beyond placeholder headings; that is the next slice. proof_level target: doc-only + automation-tested."
+      "notes": "Implementation slice. Add a top-level CHANGELOG.md with a stable [Unreleased] section and a concise category shape suitable for App Store/TestFlight/support release notes. Keep it curated, not a dump of SecondBrain or every slice. Update docs/workflows/release.md to require maintaining [Unreleased] during release-relevant work and reviewing it before each MARKETING_VERSION bump. If the existing bump-version fixture test should reference the real changelog shape, adjust only that focused test. Do not bump MARKETING_VERSION or CURRENT_PROJECT_VERSION. Do not backfill the current cycle in this slice beyond placeholder headings; that is the next slice. proof_level target: doc-only + automation-tested.\n\nCompleted on 2026-05-21: added top-level CHANGELOG.md with [Unreleased] and stable release-note categories Added, Changed, Fixed, Localization, and Release And Validation. The file explicitly separates curated user/support-facing marketing-version notes from operational history in SecondBrain, handoffs, and queue metadata. Updated docs/workflows/release.md with a Changelog Policy requiring [Unreleased] maintenance and review before MARKETING_VERSION bumps, and moved Normal Release step 1 to review [Unreleased] before running bump-version. Updated the bump-version test fixture to match the new changelog category shape. No current-cycle notes were backfilled, no script behavior changed, and no MARKETING_VERSION or CURRENT_PROJECT_VERSION values changed. proof_level achieved: doc-only + automation-tested."
     },
     {
       "slice_id": "release-changelog-current-cycle-backfill",

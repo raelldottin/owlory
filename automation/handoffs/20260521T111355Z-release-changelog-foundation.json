@@ -1,0 +1,69 @@
+{
+  "slice_id": "release-changelog-foundation",
+  "status": "done",
+  "summary": "Added the repository changelog foundation for marketing-version release notes. CHANGELOG.md now exists with an [Unreleased] section and stable categories for user/support-facing release notes, release.md explains the changelog ownership boundary, and the bump-version fixture now matches the real changelog shape.",
+  "files_touched": [
+    "CHANGELOG.md",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-21/071355-release-changelog-foundation.md",
+    "automation/handoffs/20260521T111355Z-release-changelog-foundation.json",
+    "automation/queue/slices.json",
+    "automation/tests/test_bump_version.py",
+    "docs/workflows/release.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main && git pull --rebase origin main",
+    "python3 automation/context/build_context.py --slice-id release-changelog-foundation",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_bump_version",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260521T111355Z-release-changelog-foundation.json",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only + automation-tested",
+  "missing_proof_levels": [
+    "Current-cycle release notes are intentionally not backfilled in this slice; release-changelog-current-cycle-backfill owns that work.",
+    "bump-version still warns and skips if CHANGELOG.md is missing; release-changelog-required-gate owns making that a hard failure."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "Marketing-version changelog source",
+      "before": "The release workflow and bump-version script referenced CHANGELOG.md, but the repository had no top-level changelog file.",
+      "after": "CHANGELOG.md exists with [Unreleased] and stable release-note categories for the next MARKETING_VERSION cycle.",
+      "proof": [
+        "CHANGELOG.md"
+      ]
+    },
+    {
+      "contract": "Changelog ownership",
+      "before": "Release history existed in SecondBrain, handoffs, and queue metadata but not as curated marketing-version release notes.",
+      "after": "docs/workflows/release.md defines CHANGELOG.md as curated release-note state and keeps operational history in SecondBrain/handoffs/queue metadata.",
+      "proof": [
+        "docs/workflows/release.md#changelog-policy"
+      ]
+    },
+    {
+      "contract": "bump-version fixture alignment",
+      "before": "The bump-version test fixture used a minimal changelog with one bullet directly under [Unreleased].",
+      "after": "The fixture matches the real changelog category shape while preserving existing script behavior tests.",
+      "proof": [
+        "automation/tests/test_bump_version.py",
+        "python3 -m unittest automation.tests.test_bump_version"
+      ]
+    }
+  ],
+  "residual_risks": [
+    "CHANGELOG.md currently has placeholder headings only. release-changelog-current-cycle-backfill must curate current-cycle notes.",
+    "Tools/bump-version.sh still allows missing CHANGELOG.md by warning and continuing. release-changelog-required-gate must harden that behavior."
+  ],
+  "recommended_next_slice": "release-changelog-current-cycle-backfill",
+  "recommended_next_reason": "The changelog foundation now exists, satisfying the entry condition for curating current-cycle [Unreleased] notes.",
+  "repo_clean_status": "clean after commit",
+  "git_mirror_status": "mirrored after push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-21T11:13:55Z"
+}

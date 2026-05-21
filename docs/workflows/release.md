@@ -50,6 +50,22 @@ Enterprise-style management treats this as a governance trail, not a local Xcode
 
 For Owlory, the source of truth remains committed GitHub history plus committed Xcode build settings. Do not accept local-only Xcode edits, unpublished commits, untagged release candidates, or dirty Build Info as release truth.
 
+## Changelog Policy
+
+`CHANGELOG.md` is the curated release-note source for marketing versions. Keep `[Unreleased]` current with user-, tester-, support-, and release-significant changes that may ship in the next `MARKETING_VERSION`.
+
+Do not treat the changelog as operational history. Detailed slice execution, proof artifacts, and internal harness details belong in `SecondBrain/`, `automation/handoffs/`, and `automation/queue/slices.json`. The changelog should summarize outcomes a release reviewer, support responder, or tester needs to understand.
+
+Use the stable `[Unreleased]` categories:
+
+- Added
+- Changed
+- Fixed
+- Localization
+- Release And Validation
+
+Before any `MARKETING_VERSION` bump, review `[Unreleased]`, remove entries that are not release-facing, and make sure each remaining entry can be explained from committed source, handoff evidence, or validation output.
+
 ## Version Control Contract
 
 Implementation status: `Implemented` for local provenance checks, pre-push refusal, and archive-readiness preflight.
@@ -131,8 +147,8 @@ Keep TestFlight and debug data separate by default. Do not point a debug build a
 
 ## Normal Release
 
-1. Run `./Tools/bump-version.sh <major|minor|patch>`.
-2. Review `CHANGELOG.md`.
+1. Review `CHANGELOG.md` `[Unreleased]` for release-facing accuracy.
+2. Run `./Tools/bump-version.sh <major|minor|patch>`.
 3. Run `make build-provenance` to confirm the Xcode version/build and current Git identity.
 4. Run `make fast` or `make verify`.
 5. Commit the version and changelog changes.

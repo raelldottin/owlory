@@ -2,6 +2,7 @@
 
 ## 2026-05-21
 
+- [release-changelog-foundation (doc-only + automation-tested; added top-level CHANGELOG.md with [Unreleased] release-note categories, release.md changelog policy, and aligned bump-version fixture)](sessions/2026-05-21/071355-release-changelog-foundation.md)
 - [queue-release-changelog-slices (queue-only; added changelog foundation, current-cycle backfill, and required-gate slices so marketing-version release notes become curated repo state)](sessions/2026-05-21/070709-queue-release-changelog-slices.md)
 - [release-bump-version-policy-guard (automation-tested; added isolated tests executing real bump-version/set-build-number scripts against temp fixtures for semver bumps, timestamp build numbers, changelog promotion, and invalid-input non-mutation)](sessions/2026-05-21/065050-release-bump-version-policy-guard.md)
 - [release-marketing-version-provenance-gate (automation-tested; verify-build-provenance now checks committed MARKETING_VERSION against HEAD, fails --require-clean for app-version drift, and docs/hooks name both app-version and build-number gates)](sessions/2026-05-21/040334-release-marketing-version-provenance-gate.md)
