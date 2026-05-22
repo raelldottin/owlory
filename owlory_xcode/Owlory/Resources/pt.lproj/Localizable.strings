@@ -395,3 +395,10 @@
 "today.error.history.load" = "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory e tente novamente.";
 "today.error.entry.save" = "Não foi possível guardar a entrada de hoje. Liberte espaço de armazenamento e tente novamente.";
 "write.error.note.sourceConversion.invalidStage" = "Mova a nota para Captura, Nota permanente ou Arquivado primeiro e tente novamente.";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "Concluir";
+"voicecontrol.label.skip" = "Ignorar";
+"voicecontrol.label.edit" = "Editar";
+"voicecontrol.label.addToFocus" = "Adicionar ao foco";
+"voicecontrol.label.startRecording" = "Iniciar gravação";

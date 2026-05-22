@@ -395,3 +395,10 @@
 "today.error.history.load" = "تعذر تحميل الأيام السابقة. أغلق Owlory وأعد فتحه، ثم حاول مرة أخرى.";
 "today.error.entry.save" = "تعذر حفظ إدخال اليوم. حرّر مساحة تخزين وحاول مرة أخرى.";
 "write.error.note.sourceConversion.invalidStage" = "انقل الملاحظة إلى «التقاط» أو «ملاحظة دائمة» أو «مؤرشف» أولاً، ثم حاول مرة أخرى.";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "إكمال";
+"voicecontrol.label.skip" = "تخطي";
+"voicecontrol.label.edit" = "تحرير";
+"voicecontrol.label.addToFocus" = "إضافة إلى التركيز";
+"voicecontrol.label.startRecording" = "بدء التسجيل";

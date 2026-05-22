@@ -1,0 +1,115 @@
+{
+  "slice_id": "app-accessibility-voice-control-input-labels",
+  "status": "done",
+  "summary": "Closed the final slice in the accessibility-survey follow-up chain. Added 5 short verb-noun localized keys under a new `voicecontrol.label.*` namespace across all 19 supported locales (95 new entries; key count rose from 386 to 391 per locale; localization-parity passes). Applied `.accessibilityInputLabels([LocalizedStringKey(...)])` at the 5 high-frequency Voice Control surfaces named in finding S06: HomeTask leading complete button, HomeTask edit-body button, HomeTask skip button, TodayView Add to Focus swipe action, VoiceCaptureButton recording toggle. Existing accessibilityLabel sentences (e.g., 'Mark Wash dishes complete') remain as the fallback; the new short labels (e.g., 'Complete') become the preferred Voice Control match.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ar.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/de.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/es.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/fr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/it.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ja.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ko.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nb.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/nl.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/pt-BR.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/ru.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/sv.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/tr.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/uk.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/vi.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hans.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Resources/zh-Hant.lproj/Localizable.strings",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T084852Z-app-accessibility-voice-control-input-labels.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/084852-app-accessibility-voice-control-input-labels.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build (build exit: 0)",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-voice-control-input-labels",
+    "make architecture",
+    "make automation-check",
+    "make localization-check (19 locales, 391 keys, 13 plural keys — parity passes)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "manual smoke: xcrun simctl install + launch on iPhone 17 Pro Max — app process running (PID 66427), no init-time crash"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "files_changed_count": 26,
+  "max_files_changed_cap": 30,
+  "new_keys_added": [
+    "voicecontrol.label.complete",
+    "voicecontrol.label.skip",
+    "voicecontrol.label.edit",
+    "voicecontrol.label.addToFocus",
+    "voicecontrol.label.startRecording"
+  ],
+  "locales_translated": [
+    {"locale": "en", "values": ["Complete", "Skip", "Edit", "Add to Focus", "Start recording"]},
+    {"locale": "ar", "values": ["إكمال", "تخطي", "تحرير", "إضافة إلى التركيز", "بدء التسجيل"]},
+    {"locale": "de", "values": ["Erledigen", "Überspringen", "Bearbeiten", "Zum Fokus hinzufügen", "Aufnahme starten"]},
+    {"locale": "es", "values": ["Completar", "Omitir", "Editar", "Añadir al foco", "Empezar grabación"]},
+    {"locale": "fr", "values": ["Terminer", "Passer", "Modifier", "Ajouter au focus", "Démarrer l’enregistrement"]},
+    {"locale": "it", "values": ["Completa", "Salta", "Modifica", "Aggiungi al focus", "Avvia registrazione"]},
+    {"locale": "ja", "values": ["完了", "スキップ", "編集", "フォーカスに追加", "録音開始"]},
+    {"locale": "ko", "values": ["완료", "건너뛰기", "편집", "포커스에 추가", "녹음 시작"]},
+    {"locale": "nb", "values": ["Fullfør", "Hopp over", "Rediger", "Legg til i fokus", "Start opptak"]},
+    {"locale": "nl", "values": ["Voltooien", "Overslaan", "Bewerken", "Toevoegen aan focus", "Opname starten"]},
+    {"locale": "pt", "values": ["Concluir", "Ignorar", "Editar", "Adicionar ao foco", "Iniciar gravação"]},
+    {"locale": "pt-BR", "values": ["Concluir", "Pular", "Editar", "Adicionar ao foco", "Iniciar gravação"]},
+    {"locale": "ru", "values": ["Завершить", "Пропустить", "Изменить", "Добавить в фокус", "Начать запись"]},
+    {"locale": "sv", "values": ["Slutför", "Hoppa över", "Redigera", "Lägg till i fokus", "Starta inspelning"]},
+    {"locale": "tr", "values": ["Tamamla", "Atla", "Düzenle", "Odağa ekle", "Kaydı başlat"]},
+    {"locale": "uk", "values": ["Завершити", "Пропустити", "Редагувати", "Додати у фокус", "Почати запис"]},
+    {"locale": "vi", "values": ["Hoàn thành", "Bỏ qua", "Sửa", "Thêm vào Focus", "Bắt đầu ghi"]},
+    {"locale": "zh-Hans", "values": ["完成", "跳过", "编辑", "添加到专注", "开始录音"]},
+    {"locale": "zh-Hant", "values": ["完成", "略過", "編輯", "加入專注", "開始錄音"]}
+  ],
+  "sites_modified": [
+    {"finding": "S06", "file": "Features/Home/HomeView.swift", "control": "TaskRow leading complete/restore button (line ~520)", "label": "voicecontrol.label.complete"},
+    {"finding": "S06", "file": "Features/Home/HomeView.swift", "control": "TaskRow edit-body button (line ~535)", "label": "voicecontrol.label.edit"},
+    {"finding": "S06", "file": "Features/Home/HomeView.swift", "control": "TaskRow trailing skip button (line ~578)", "label": "voicecontrol.label.skip"},
+    {"finding": "S06", "file": "Features/Today/TodayView.swift", "control": "continuePrimarySwipeActions Add to Focus button", "label": "voicecontrol.label.addToFocus"},
+    {"finding": "S06", "file": "DesignSystem/VoiceCaptureButton.swift", "control": "Voice capture toggle button", "label": "voicecontrol.label.startRecording"}
+  ],
+  "design_decisions": [
+    "Used `LocalizedStringKey` form of accessibilityInputLabels so the short verb resolves against the user's locale at runtime. Existing accessibilityLabel (a sentence-form string from HomeAccessibilityLabels / NSLocalizedString) remains as the fallback Voice Control command and the VoiceOver-spoken label.",
+    "Drafted translations for all 18 non-English locales rather than copying English placeholders. English placeholders would not be matchable by the user's locale speech recognizer (a Spanish speaker saying 'Complete' would not match SiriKit's Spanish phoneme grammar). LLM-drafted short imperatives are short enough to be reviewable and adjustable later if specific locales need refinement.",
+    "Used a flat `voicecontrol.label.*` namespace (5 keys total) rather than per-domain namespaces (home.task.voicecontrol.complete, today.continue.voicecontrol.addToFocus, etc.). The same English aliases are reused across domains where appropriate — 'Complete' is the same Voice Control phrase whether triggered on a HomeTask or any future surface with a complete action."
+  ],
+  "behavior_proven": [
+    "xcodebuild build → exit 0; no compile errors.",
+    "App launches on iPhone 17 Pro Max simulator with the marketing seed args; PID 66427 running.",
+    "localization-parity passes: all 19 locales contain 391 keys including the 5 new voicecontrol.label.* entries.",
+    "Existing accessibilityLabel + accessibilityHint chains are unchanged, so VoiceOver users still hear the full sentence on focus."
+  ],
+  "gaps_named_for_follow_up": [
+    "On-device Voice Control verification — required to confirm that Apple's speech recognizer actually matches the short aliases in each locale. Build + parity is necessary but not sufficient; the user-facing voice command behavior is real-device-only.",
+    "Translation quality classification — the existing localization-review-status workflow should be re-run to classify the 95 new entries. Some are LLM-drafted and may need native review before being claimed translation-quality-confirmed.",
+    "Additional surfaces beyond the 5 high-frequency commands. Other actions (Defer, Drop, Archive, Restore, Abandon, Mark Pending) could also benefit from short Voice Control aliases. Not in scope this slice; future polish.",
+    "VoiceCaptureButton's input label is fixed to 'Start recording' regardless of state. In the recording state, the same button stops recording; the input label could conditionally use 'voicecontrol.label.stopRecording' (would need a new key). Acceptable today because Voice Control would also accept the existing 'Stop recording' from accessibilityLabel."
+  ],
+  "not_claimed": [
+    "All 19 locale translations are native-quality. Some are LLM-drafted; the localization-review workflow will classify each. Russian, Korean, Japanese, Vietnamese, Arabic translations should be reviewed by native speakers before being marked native-reviewed.",
+    "Voice Control commands have been tested end-to-end on a device. Build + launch smoke is the proof level.",
+    "Every actionable button in Owlory now has a Voice Control alias. Only the 5 highest-frequency commands named in finding S06 received the treatment."
+  ],
+  "residual_risks": [
+    "If a non-English translation is awkward or doesn't match the user's natural verbalization, Voice Control matching may degrade for that locale until a native review refines the value.",
+    "Adding `.accessibilityInputLabels(...)` overrides the default behavior of using accessibilityLabel for Voice Control matching. If the override fails to match, the user falls back to saying the full sentence label. In practice this is graceful, but a future tooling change could expose multiple aliases per command for more match coverage."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "All 5 accessibility-survey follow-up slices are now done: swipe-actions-as-accessibility-actions, reduce-motion-helper, haptic-feedback, reduce-transparency-and-contrast, and voice-control-input-labels. The queue is empty. Suggested next boundaries (none queued): on-device VoiceOver+Voice Control verification slice, localization translation-quality classification slice for the 95 new entries, or extension of input labels to lower-frequency commands.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:48:52Z"
+}

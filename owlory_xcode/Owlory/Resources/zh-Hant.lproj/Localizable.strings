@@ -395,3 +395,10 @@
 "today.error.history.load" = "無法載入前幾天。請關閉並重新開啟 Owlory，然後再試一次。";
 "today.error.entry.save" = "無法儲存今天的項目。請釋放儲存空間，然後再試一次。";
 "write.error.note.sourceConversion.invalidStage" = "請先將備忘錄移到「擷取」、「永久備忘錄」或「已封存」，然後再試一次。";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "完成";
+"voicecontrol.label.skip" = "略過";
+"voicecontrol.label.edit" = "編輯";
+"voicecontrol.label.addToFocus" = "加入專注";
+"voicecontrol.label.startRecording" = "開始錄音";

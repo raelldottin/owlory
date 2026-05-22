@@ -395,3 +395,10 @@
 "today.error.history.load" = "Kunne ikke laste inn tidligere dager. Lukk og åpne Owlory på nytt, og prøv igjen.";
 "today.error.entry.save" = "Kunne ikke lagre dagens oppføring. Frigjør lagringsplass og prøv igjen.";
 "write.error.note.sourceConversion.invalidStage" = "Flytt notatet til Fangst, Permanent notat eller Arkivert først, og prøv igjen.";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "Fullfør";
+"voicecontrol.label.skip" = "Hopp over";
+"voicecontrol.label.edit" = "Rediger";
+"voicecontrol.label.addToFocus" = "Legg til i fokus";
+"voicecontrol.label.startRecording" = "Start opptak";

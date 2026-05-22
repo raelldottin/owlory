@@ -395,3 +395,10 @@
 "today.error.history.load" = "Не удалось загрузить предыдущие дни. Закройте и снова откройте Owlory, затем повторите попытку.";
 "today.error.entry.save" = "Не удалось сохранить сегодняшнюю запись. Освободите место в хранилище и повторите попытку.";
 "write.error.note.sourceConversion.invalidStage" = "Сначала переместите заметку в «Захват», «Постоянная заметка» или «В архиве», затем повторите попытку.";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "Завершить";
+"voicecontrol.label.skip" = "Пропустить";
+"voicecontrol.label.edit" = "Изменить";
+"voicecontrol.label.addToFocus" = "Добавить в фокус";
+"voicecontrol.label.startRecording" = "Начать запись";

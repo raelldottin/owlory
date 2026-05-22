@@ -395,3 +395,10 @@
 "today.error.history.load" = "无法加载前几天。请关闭并重新打开 Owlory，然后重试。";
 "today.error.entry.save" = "无法保存今天的条目。请释放存储空间，然后重试。";
 "write.error.note.sourceConversion.invalidStage" = "请先将笔记移到“捕获”、“永久笔记”或“已归档”，然后重试。";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "完成";
+"voicecontrol.label.skip" = "跳过";
+"voicecontrol.label.edit" = "编辑";
+"voicecontrol.label.addToFocus" = "添加到专注";
+"voicecontrol.label.startRecording" = "开始录音";

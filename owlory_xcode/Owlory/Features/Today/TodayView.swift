@@ -342,6 +342,7 @@ struct TodayView: View {
                 Label(L("Add to Focus"), systemImage: "plus.circle")
             }
             .tint(OwloryColor.brandPrimary)
+            .accessibilityInputLabels([LocalizedStringKey("voicecontrol.label.addToFocus")])
         }
     }
 

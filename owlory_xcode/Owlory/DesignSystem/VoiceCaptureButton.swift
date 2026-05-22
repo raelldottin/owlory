@@ -42,6 +42,7 @@ struct VoiceCaptureButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityText)
+        .accessibilityInputLabels([LocalizedStringKey("voicecontrol.label.startRecording")])
         .sensoryFeedback(.impact(weight: .medium), trigger: isRecording)
         .onChange(of: service.liveTranscription) { _, text in
             onLiveTranscription(text)

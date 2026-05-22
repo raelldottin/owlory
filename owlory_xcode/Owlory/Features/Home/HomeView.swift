@@ -531,6 +531,7 @@ private struct TaskRow: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel(leadingButtonAccessibilityLabel)
+            .accessibilityInputLabels([LocalizedStringKey("voicecontrol.label.complete")])
 
             Button(action: onSelect) {
                 VStack(alignment: .leading, spacing: 2) {
@@ -568,6 +569,7 @@ private struct TaskRow: View {
             .contentShape(Rectangle())
             .accessibilityLabel(HomeAccessibilityLabels.taskEdit(title: task.title))
             .accessibilityHint("Opens task details.")
+            .accessibilityInputLabels([LocalizedStringKey("voicecontrol.label.edit")])
             .accessibilityIdentifier("home.task.item.\(task.id.uuidString)")
 
             if let audioFile = task.audioFileName {
@@ -585,6 +587,7 @@ private struct TaskRow: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(HomeAccessibilityLabels.taskSkip(title: task.title))
+                .accessibilityInputLabels([LocalizedStringKey("voicecontrol.label.skip")])
             }
         }
         .continueHighlight(isHighlighted)

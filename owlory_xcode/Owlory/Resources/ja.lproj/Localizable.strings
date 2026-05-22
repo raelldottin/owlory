@@ -395,3 +395,10 @@
 "today.error.history.load" = "過去の日を読み込めませんでした。Owloryを閉じて開き直し、もう一度お試しください。";
 "today.error.entry.save" = "今日のエントリーを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。";
 "write.error.note.sourceConversion.invalidStage" = "まずノートを「取り込み」、「恒常メモ」、または「アーカイブ済み」に移動してから、もう一度お試しください。";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "完了";
+"voicecontrol.label.skip" = "スキップ";
+"voicecontrol.label.edit" = "編集";
+"voicecontrol.label.addToFocus" = "フォーカスに追加";
+"voicecontrol.label.startRecording" = "録音開始";

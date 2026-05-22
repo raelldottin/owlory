@@ -395,3 +395,10 @@
 "today.error.history.load" = "Không thể tải các ngày trước. Hãy đóng rồi mở lại Owlory, sau đó thử lại.";
 "today.error.entry.save" = "Không thể lưu mục hôm nay. Hãy giải phóng dung lượng lưu trữ rồi thử lại.";
 "write.error.note.sourceConversion.invalidStage" = "Trước tiên, hãy chuyển ghi chú sang Ghi nhận, Ghi chú vĩnh viễn hoặc Đã lưu trữ, rồi thử lại.";
+
+// MARK: - Voice Control input labels
+"voicecontrol.label.complete" = "Hoàn thành";
+"voicecontrol.label.skip" = "Bỏ qua";
+"voicecontrol.label.edit" = "Sửa";
+"voicecontrol.label.addToFocus" = "Thêm vào Focus";
+"voicecontrol.label.startRecording" = "Bắt đầu ghi";
