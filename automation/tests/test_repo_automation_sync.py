@@ -557,6 +557,84 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
         self.assertIn("invalid JSON in", combined)
         self.assertIn("automation/queue/slices.json", combined)
 
+    def test_consumer_prompt_override_survives_resync(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        sentinel = "PROMPT-OVERRIDE-SURVIVES-RESYNC-SENTINEL-77231"
+        base_md = self.consumer / "automation/prompts/base.md"
+        base_md.write_text(f"# Consumer base prompt\n\n{sentinel}\n", encoding="utf-8")
+
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "commit", "-m", "Override base prompt"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        result = subprocess.run(
+            [str(SYNC_TOOL), "--sync", "--target", str(self.consumer)],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+
+        self.assertIn(
+            sentinel,
+            base_md.read_text(encoding="utf-8"),
+            msg="customized base.md must survive --sync because the prompts entry is template-managed",
+        )
+
+    def test_consumer_added_prompt_file_survives_resync(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        added = self.consumer / "automation/prompts/consumer-custom.md"
+        added_text = "# Consumer-only prompt fragment\n"
+        added.write_text(added_text, encoding="utf-8")
+
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "commit", "-m", "Add consumer prompt"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        result = subprocess.run(
+            [str(SYNC_TOOL), "--sync", "--target", str(self.consumer)],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+
+        self.assertTrue(
+            added.exists(),
+            msg="consumer-added prompt file must survive --sync because the entry sets delete_stale=false",
+        )
+        self.assertEqual(
+            added_text,
+            added.read_text(encoding="utf-8"),
+            msg="consumer-added prompt file must keep its content after --sync",
+        )
+
     def test_consumer_can_override_prompt_fragments(self) -> None:
         self.bootstrap_consumer()
         self.init_consumer_git()

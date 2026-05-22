@@ -1,0 +1,76 @@
+{
+  "slice_id": "repo-automation-template-first-time-only-sync",
+  "status": "done",
+  "summary": "Gave the manifest `template: true` flag a real sync semantic: on a per-file basis, the sync tool now skips copy when the entry is template-managed AND the destination file already exists. Combined with flipping `delete_stale` to false on the two directory template entries (`automation/prompts/` and `automation/examples/`), consumer overrides AND consumer-added files in those directories now survive `--sync`. Added two override-durability tests; updated docs to describe the new first-time-only semantics and remove the previous workaround paths.",
+  "files_touched": [
+    "Tools/repo-automation-sync.sh",
+    "automation/reusable-manifest.json",
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T022048Z-repo-automation-template-first-time-only-sync.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/022048-repo-automation-template-first-time-only-sync.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-template-first-time-only-sync",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T022048Z-repo-automation-template-first-time-only-sync.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 8,
+  "max_files_changed_cap": 10,
+  "scope_observed_from": [
+    "Tools/repo-automation-sync.sh:sync_entries (per-file copy loop)",
+    "Tools/repo-automation-sync.sh:stale_files (delete_stale + template interaction)",
+    "automation/reusable-manifest.json (entries for prompts/, examples/, pyrightconfig.json)"
+  ],
+  "behavior_change": {
+    "before": "delete_stale: false alone did NOT preserve overrides because sync_entries always overwrote source-matched destination files via shutil.copyfile. The template flag was documentation-only.",
+    "after": "template: true now means 'first-time-only sync': per file, when the entry is template AND the destination already exists, both copy and stale removal are skipped. Combined with delete_stale: false on prompts/ and examples/, consumer overrides and consumer-added files in those directories now persist across --sync.",
+    "implementation": "Two small changes in Tools/repo-automation-sync.sh: (1) per-file copy loop adds `if entry.template and target.exists(): continue`. (2) stale_files() guard becomes `if entry.kind != 'directory' or not entry.delete_stale or entry.template: return []`."
+  },
+  "tests_added": [
+    "test_consumer_prompt_override_survives_resync: writes a sentinel into base.md, commits, runs --sync, asserts the sentinel still appears in base.md.",
+    "test_consumer_added_prompt_file_survives_resync: adds automation/prompts/consumer-custom.md, commits, runs --sync, asserts the file and its content remain."
+  ],
+  "behavior_proven": [
+    "Per-file copy in sync_entries respects entry.template + target.exists().",
+    "stale_files() returns [] for template entries even when delete_stale is true, eliminating accidental removal of consumer overrides via the cleanup path.",
+    "Consumer flow: edit -> commit -> --sync -> content preserved.",
+    "Consumer-added files in template directories survive --sync."
+  ],
+  "consumer_constraints_now_documented": [
+    "Owlory updates to template files (base.md, slice.md, review.md, example queue, example handoff, pyrightconfig.json) no longer auto-propagate to a consumer who already has those files. A consumer who wants the upstream content must delete the local file and re-sync, or merge manually.",
+    "Non-template entries (supervisor, context builder, schemas, harness test, docs, sync tool itself, automation/README.md, reusable-manifest.json) remain authoritative on every sync."
+  ],
+  "gaps_named_for_follow_up": [
+    "Workflow templates in manifest (promotes the external repo's CI scaffold into Owlory as reusable templates).",
+    "Real third-party repo migration when a target is named explicitly by the user.",
+    "Generic git-command-failed smoke (5th and final ConfigError emit site).",
+    "Sync tool could grow a --force-templates flag that ignores the template-preserve guard, for consumers who want to deliberately re-baseline. Not implemented; consumer can delete then sync to achieve the same effect."
+  ],
+  "not_claimed": [
+    "All template-flagged entries are equally safe under the new semantic. Three are now template-protected (prompts, examples, pyrightconfig); test coverage focuses on prompts. examples and pyrightconfig are presumed safe by the same code path but not directly asserted.",
+    "The new behavior is fully backward-compatible. Consumers who have already re-synced under the old behavior (and lost overrides) still need to re-establish their customizations once.",
+    "Real third-party repos have been migrated under the new semantic. The smoke test bootstraps temp consumers only."
+  ],
+  "residual_risks": [
+    "Existing consumers may rely on --sync to refresh template files when Owlory updates them. The new behavior breaks that expectation; consumers must explicitly delete locals or merge manually. The docs name this trade-off; behavior change is intentional.",
+    "If a future contributor adds a non-template entry by mistake when they meant template, --sync will overwrite consumer customizations silently. The manifest is small enough that review catches this; a stricter contract (e.g., requiring template entries for any docs-like content) is out of scope."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty. Remaining boundaries: workflow templates in manifest, real third-party migration, generic-git-command-failed smoke. None queued.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T02:20:48Z"
+}
