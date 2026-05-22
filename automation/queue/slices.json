@@ -6887,6 +6887,37 @@
       "max_files_changed": 5,
       "entry_condition": "policy.git_dirty_paths catches CalledProcessError and emits the generic 'git command failed in' ConfigError when .git/ exists.",
       "notes": "Bootstrap consumer, init git + commit bootstrap, seed example queue (committed). Then write garbage to .git/HEAD so subsequent git diff calls fail with a fatal-bad-object-style error while .git/ still exists (so the not-a-git-repo branch doesn't fire). Run supervisor --dry-run, assert: no Traceback, friendly 'git command failed in' substring present, the consumer path is in the message, exit non-zero."
+    },
+    {
+      "slice_id": "repo-automation-sync-force-templates-flag",
+      "title": "Add --force-templates flag for deliberate template re-baseline",
+      "status": "done",
+      "priority": 79,
+      "domain": "automation",
+      "allowed_paths": [
+        "Tools/repo-automation-sync.sh",
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-sync-force-templates-flag",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-template-first-time-only-sync"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "template: true semantic is wired (first-time-only sync + stale-removal skip for template entries).",
+      "notes": "Add `--force-templates` action='store_true' to the sync tool's argparse. Plumb it through to sync_entries via keyword arg. In sync_entries change the existing guard `if entry.template and target.exists(): continue` to `if entry.template and target.exists() and not force_templates: continue`. Do NOT change stale_files() behavior \u2014 consumer-added files in template dirs still survive (delete_stale: false). Add 2 tests: (1) override base.md, sync (preserved), sync --force-templates (overwritten with source); (2) add consumer-only file in prompts/, sync --force-templates, assert the added file still survives. Update docs/workflows/repo-automation.md to describe the flag under the Customizing prompt fragments section."
     }
   ]
 }

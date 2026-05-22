@@ -1,0 +1,72 @@
+{
+  "slice_id": "repo-automation-sync-force-templates-flag",
+  "status": "done",
+  "summary": "Added --force-templates to Tools/repo-automation-sync.sh so consumers can deliberately re-baseline template entries to source content. Plumbing: one new argparse argument; one keyword parameter on sync_entries; the existing first-time-only guard changes from `if entry.template and target.exists()` to `if entry.template and target.exists() and not force_templates`. Stale-file handling is intentionally unchanged: consumer-added files in template directories survive --force-templates because the manifest entries set delete_stale: false. Two new smoke tests assert both behaviors: --force-templates overwrites a consumer override of base.md back to source content, AND --force-templates leaves a consumer-added prompts/consumer-only.md alone. Docs updated under Customizing prompt fragments to describe the flag.",
+  "files_touched": [
+    "Tools/repo-automation-sync.sh",
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T060420Z-repo-automation-sync-force-templates-flag.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/060420-repo-automation-sync-force-templates-flag.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-sync-force-templates-flag",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T060420Z-repo-automation-sync-force-templates-flag.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 7,
+  "max_files_changed_cap": 8,
+  "scope_observed_from": [
+    "Tools/repo-automation-sync.sh argparse layout",
+    "Tools/repo-automation-sync.sh sync_entries first-time-only guard (added in the prior template-first-time-only-sync slice)",
+    "automation/reusable-manifest.json delete_stale: false on template directory entries"
+  ],
+  "behavior_added": {
+    "flag": "--force-templates",
+    "default": "false (preserves current first-time-only behavior)",
+    "effect_when_true": "sync_entries bypasses the template-existence skip so source content overwrites consumer customizations of template files (prompts/base.md, prompts/slice.md, prompts/review.md, examples/*, pyrightconfig.json).",
+    "what_remains_unchanged": "Stale-file removal still respects template-entry behavior (returns [] for template entries unconditionally), so consumer-added files in template directories survive --force-templates. Non-template entries are unchanged either way.",
+    "applies_to": "--sync, --auto-update, --check (drift detection becomes active on template files when --force-templates is set, useful as a dry run of what --sync --force-templates would change)."
+  },
+  "tests_added": [
+    "test_force_templates_overwrites_consumer_override: writes a sentinel into base.md, commits, runs --sync (asserts override preserved), runs --sync --force-templates (asserts override replaced with Owlory source content byte-for-byte).",
+    "test_force_templates_preserves_consumer_added_files: writes automation/prompts/consumer-only.md, commits, runs --sync --force-templates, asserts the consumer-added file and content remain."
+  ],
+  "behavior_proven": [
+    "--force-templates plumbs from argparse through sync_entries correctly.",
+    "Per-file template guard respects the flag: template + target.exists + force_templates = copy; template + target.exists + not force_templates = skip.",
+    "Stale-file removal continues to skip template entries regardless of force flag, preserving consumer-added files.",
+    "Default --sync behavior unchanged when --force-templates is not passed."
+  ],
+  "gaps_named_for_follow_up": [
+    "Workflow templates in manifest (promotes external CI scaffold into Owlory).",
+    "Real third-party repo migration when a target is named explicitly by the user.",
+    "Sync tool template-update-detection notice (proactively warn when an upstream template file has changed even though local is preserved)."
+  ],
+  "not_claimed": [
+    "Every template-flagged entry has been smoke-tested under --force-templates. The smoke focuses on prompts/. examples/ and pyrightconfig.json go through the same code path so are presumed safe.",
+    "The flag has been exercised under --auto-update or --check modes via tests. Only --sync mode is asserted by smoke tests; the other modes go through the same plumbing.",
+    "Real consumer machines have used --force-templates to recover from a deliberate re-baseline. The smoke test bootstraps temp consumers only."
+  ],
+  "residual_risks": [
+    "Consumers who run --force-templates without realizing it overwrites local prompt customizations will lose work. This is the explicit purpose of the flag, but the docs name the trade-off so a casual reader doesn't mistake it for a benign refresh.",
+    "If a future slice changes stale_files() to remove template-dir extras under --force-templates, consumer-added files would also be wiped. The current behavior is intentional and the test asserts it; that test would catch the regression."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue empty. Remaining named boundaries: workflow templates in manifest, real third-party migration, template-update-detection notice.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T06:04:20Z"
+}

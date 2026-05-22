@@ -581,6 +581,105 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
         self.assertIn("invalid JSON in", combined)
         self.assertIn("automation/queue/slices.json", combined)
 
+    def test_force_templates_overwrites_consumer_override(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        sentinel = "FORCE-TEMPLATES-OVERWRITE-SENTINEL-58104"
+        base_md = self.consumer / "automation/prompts/base.md"
+        owlory_base_text = (REPO_ROOT / "automation/prompts/base.md").read_text(encoding="utf-8")
+        base_md.write_text(
+            f"# Consumer override\n\n{sentinel}\n", encoding="utf-8"
+        )
+
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "commit", "-m", "Override base prompt"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        baseline = subprocess.run(
+            [str(SYNC_TOOL), "--sync", "--target", str(self.consumer)],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, baseline.returncode, msg=baseline.stderr)
+        self.assertIn(
+            sentinel,
+            base_md.read_text(encoding="utf-8"),
+            msg="default --sync should preserve the override",
+        )
+
+        forced = subprocess.run(
+            [str(SYNC_TOOL), "--sync", "--force-templates", "--target", str(self.consumer)],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, forced.returncode, msg=forced.stderr)
+        rebaseline = base_md.read_text(encoding="utf-8")
+        self.assertNotIn(
+            sentinel,
+            rebaseline,
+            msg="--force-templates must overwrite the consumer override with the source content",
+        )
+        self.assertEqual(
+            owlory_base_text,
+            rebaseline,
+            msg="--force-templates must produce content identical to the Owlory source base.md",
+        )
+
+    def test_force_templates_preserves_consumer_added_files(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+
+        added = self.consumer / "automation/prompts/consumer-only.md"
+        added_text = "# Consumer-only fragment that should survive --force-templates\n"
+        added.write_text(added_text, encoding="utf-8")
+
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "commit", "-m", "Add consumer-only prompt"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        result = subprocess.run(
+            [str(SYNC_TOOL), "--sync", "--force-templates", "--target", str(self.consumer)],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+
+        self.assertTrue(
+            added.exists(),
+            msg="--force-templates must NOT delete consumer-added files in template directories",
+        )
+        self.assertEqual(
+            added_text,
+            added.read_text(encoding="utf-8"),
+            msg="--force-templates must preserve the content of consumer-added files",
+        )
+
     def test_consumer_prompt_override_survives_resync(self) -> None:
         self.bootstrap_consumer()
         self.init_consumer_git()
