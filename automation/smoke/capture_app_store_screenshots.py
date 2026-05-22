@@ -26,6 +26,7 @@ before each run, so the captured PNGs are always the freshest set.
 
 from __future__ import annotations
 
+import argparse
 import json
 import subprocess
 import sys
@@ -34,19 +35,35 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_DIR = REPO_ROOT / "automation/proofs/app-store-screenshots"
+DEFAULT_OUTPUT_SUBDIR = "automation/proofs/app-store-screenshots"
 DERIVED_DATA_DIR = Path("/tmp/owlory-app-store-derived")
 BUNDLE_ID = "com.raelldottin.owlory"
-DEVICE_NAME = "iPhone 17 Pro Max"
+DEFAULT_DEVICE_NAME = "iPhone 17 Pro Max"
 LAUNCH_ARGS = ["--owlory-ui-testing", "--owlory-ui-seed-marketing"]
-# Logical (point) coordinates for the 5 tab bar items on iPhone 17 Pro Max
-# (440x956 logical, 5 tabs at 88-pt width).
-TAB_COORDS = {
-    "today": (44, 920),
-    "train": (132, 920),
-    "write": (220, 920),
-    "career": (308, 920),
-    "home": (396, 920),
+
+
+def tab_coords_for(width: int, height: int) -> dict[str, tuple[int, int]]:
+    """Five evenly-spaced tab bar centers, with the y just above the home indicator.
+
+    iPhone 17 Pro Max logical 440x956 -> y=920. iPhone 17 logical 402x874 -> y=842.
+    """
+    column_width = width / 5
+    centers_x = [int(column_width * (i + 0.5)) for i in range(5)]
+    tab_y = height - 36  # tab labels sit ~36 points above the home-indicator edge
+    return {
+        "today": (centers_x[0], tab_y),
+        "train": (centers_x[1], tab_y),
+        "write": (centers_x[2], tab_y),
+        "career": (centers_x[3], tab_y),
+        "home": (centers_x[4], tab_y),
+    }
+
+
+# Logical screen sizes per device (Apple-published point dimensions).
+DEVICE_LOGICAL_SIZE = {
+    "iPhone 17 Pro Max": (440, 956),
+    "iPhone 17": (402, 874),
+    "iPhone 17 Pro": (402, 874),
 }
 
 
@@ -60,9 +77,9 @@ def run(command: list[str], *, check: bool = True, capture: bool = False) -> sub
     )
 
 
-def find_simulator_udid() -> str:
+def find_simulator_udid(device_name: str) -> str:
     result = subprocess.run(
-        ["xcrun", "simctl", "list", "devices", DEVICE_NAME, "--json"],
+        ["xcrun", "simctl", "list", "devices", device_name, "--json"],
         capture_output=True,
         text=True,
         check=True,
@@ -72,9 +89,9 @@ def find_simulator_udid() -> str:
         if "iOS" not in runtime:
             continue
         for device in devices:
-            if device.get("name") == DEVICE_NAME and device.get("isAvailable", False):
+            if device.get("name") == device_name and device.get("isAvailable", False):
                 return device["udid"]
-    raise SystemExit(f"No available {DEVICE_NAME} simulator. Install one via Xcode -> Settings -> Platforms.")
+    raise SystemExit(f"No available {device_name} simulator. Install one via Xcode -> Settings -> Platforms.")
 
 
 def ensure_booted(udid: str) -> None:
@@ -120,69 +137,101 @@ def screenshot(udid: str, output_path: Path) -> None:
     ])
 
 
-def tab_tap(udid: str, tab: str) -> None:
-    x, y = TAB_COORDS[tab]
+def tab_tap(udid: str, tab: str, coords: dict[str, tuple[int, int]]) -> None:
+    x, y = coords[tab]
     run(["idb", "ui", "tap", "--udid", udid, str(x), str(y)])
 
 
-def swipe_up(udid: str, *, times: int = 1) -> None:
+def swipe_up(udid: str, width: int, height: int, *, times: int = 1) -> None:
+    center_x = width // 2
+    start_y = int(height * 0.7)
+    end_y = int(height * 0.25)
     for _ in range(times):
         run([
             "idb", "ui", "swipe", "--udid", udid,
-            "220", "700", "220", "250",
+            str(center_x), str(start_y), str(center_x), str(end_y),
             "--duration", "0.3",
         ])
         time.sleep(0.5)
 
 
-def capture_all() -> None:
-    if OUTPUT_DIR.exists():
-        for stale in OUTPUT_DIR.glob("*.png"):
-            stale.unlink()
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Capture 5 App Store screenshots for a given iPhone simulator."
+    )
+    parser.add_argument(
+        "--device-name",
+        default=DEFAULT_DEVICE_NAME,
+        help=f"Simulator device name (default: {DEFAULT_DEVICE_NAME}).",
+    )
+    parser.add_argument(
+        "--output-subdir",
+        default=DEFAULT_OUTPUT_SUBDIR,
+        help=(
+            "Repo-relative output directory for the captured PNGs "
+            f"(default: {DEFAULT_OUTPUT_SUBDIR})."
+        ),
+    )
+    return parser.parse_args()
 
-    udid = find_simulator_udid()
-    print(f"using {DEVICE_NAME} {udid}")
+
+def capture_all(device_name: str, output_subdir: str) -> None:
+    output_dir = REPO_ROOT / output_subdir
+    if output_dir.exists():
+        for stale in output_dir.glob("*.png"):
+            stale.unlink()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    if device_name not in DEVICE_LOGICAL_SIZE:
+        raise SystemExit(
+            f"Unknown device '{device_name}'. Add its logical size to DEVICE_LOGICAL_SIZE."
+        )
+    width, height = DEVICE_LOGICAL_SIZE[device_name]
+    coords = tab_coords_for(width, height)
+
+    udid = find_simulator_udid(device_name)
+    print(f"using {device_name} {udid} ({width}x{height} logical)")
     ensure_booted(udid)
     app_path = build_app(udid)
     launch_with_seed(udid, app_path)
     time.sleep(5)
 
     print("[1/5] Today / Continue dashboard")
-    screenshot(udid, OUTPUT_DIR / "1-today.png")
+    screenshot(udid, output_dir / "1-today.png")
 
     print("[2/5] Write / Capture inbox")
-    tab_tap(udid, "write")
+    tab_tap(udid, "write", coords)
     time.sleep(2)
-    screenshot(udid, OUTPUT_DIR / "2-write.png")
+    screenshot(udid, output_dir / "2-write.png")
 
     print("[4/5] Train view (capture early so it stays paged-in)")
-    tab_tap(udid, "train")
+    tab_tap(udid, "train", coords)
     time.sleep(2)
-    screenshot(udid, OUTPUT_DIR / "4-train.png")
+    screenshot(udid, output_dir / "4-train.png")
 
     print("[5/5] Home protocols + standalone tasks")
-    tab_tap(udid, "home")
+    tab_tap(udid, "home", coords)
     time.sleep(2)
-    screenshot(udid, OUTPUT_DIR / "5-home.png")
+    screenshot(udid, output_dir / "5-home.png")
 
     print("[3/5] Weekly Digest / reflection (Today scrolled to digest card)")
-    tab_tap(udid, "today")
+    tab_tap(udid, "today", coords)
     time.sleep(2)
-    swipe_up(udid, times=2)
+    swipe_up(udid, width, height, times=2)
     time.sleep(1)
-    screenshot(udid, OUTPUT_DIR / "3-digest.png")
+    screenshot(udid, output_dir / "3-digest.png")
 
     print()
     print("Captured 5 screenshots:")
-    for png in sorted(OUTPUT_DIR.glob("*.png")):
+    for png in sorted(output_dir.glob("*.png")):
         size = png.stat().st_size
         print(f"  {png.name}  ({size:,} bytes)")
 
 
 if __name__ == "__main__":
+    args = parse_args()
     try:
-        capture_all()
+        capture_all(args.device_name, args.output_subdir)
     except subprocess.CalledProcessError as error:
         print(f"command failed: {error}", file=sys.stderr)
         raise SystemExit(error.returncode)

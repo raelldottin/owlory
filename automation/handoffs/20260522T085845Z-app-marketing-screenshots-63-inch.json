@@ -1,0 +1,64 @@
+{
+  "slice_id": "app-marketing-screenshots-63-inch",
+  "status": "done",
+  "summary": "Captured 5 App Store screenshots for the 6.3\" device class (iPhone 17 native, 1206x2622) into automation/proofs/app-store-screenshots-6.3/. Parameterized the existing capture_app_store_screenshots.py with --device-name and --output-subdir args; the default invocation still produces the 6.9\" set under the original output path. Added DEVICE_LOGICAL_SIZE table + tab_coords_for(width, height) helper so any iPhone simulator with known logical size can drive the same 5-surface capture flow.",
+  "files_touched": [
+    "automation/smoke/capture_app_store_screenshots.py",
+    "automation/proofs/app-store-screenshots-6.3/1-today.png",
+    "automation/proofs/app-store-screenshots-6.3/2-write.png",
+    "automation/proofs/app-store-screenshots-6.3/3-digest.png",
+    "automation/proofs/app-store-screenshots-6.3/4-train.png",
+    "automation/proofs/app-store-screenshots-6.3/5-home.png",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T085845Z-app-marketing-screenshots-63-inch.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/085845-app-marketing-screenshots-63-inch.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/smoke/capture_app_store_screenshots.py --device-name 'iPhone 17' --output-subdir 'automation/proofs/app-store-screenshots-6.3'",
+    "file automation/proofs/app-store-screenshots-6.3/*.png -> PNG image data, 1206 x 2622, 8-bit/color RGBA (all 5)",
+    "make architecture",
+    "make automation-check (124 tests OK)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-captured",
+  "files_changed_count": 10,
+  "max_files_changed_cap": 10,
+  "device_class_table": {
+    "6.9 inch": {"sample_device": "iPhone 17 Pro Max", "native_px": "1320x2868", "logical_pt": "440x956", "output_dir": "automation/proofs/app-store-screenshots/"},
+    "6.3 inch (this slice)": {"sample_device": "iPhone 17", "native_px": "1206x2622", "logical_pt": "402x874", "output_dir": "automation/proofs/app-store-screenshots-6.3/"}
+  },
+  "design_decisions": [
+    "Parameterized rather than forked. One script with --device-name + --output-subdir args; the defaults preserve the original 6.9\" flow so existing callers (manual or future Makefile target) keep working without changes.",
+    "Computed tab coordinates from device logical size via tab_coords_for(width, height) instead of hard-coding per device. Five evenly-spaced tab centers with y just above the home indicator works on any iPhone with a 5-tab tab bar.",
+    "Did not move the existing 6.9\" output to automation/proofs/app-store-screenshots-6.9/. The original directory is the 'canonical' bucket Apple expects to populate the 6.9\" carousel; existing references stay intact."
+  ],
+  "behavior_proven": [
+    "All 5 PNGs are 1206x2622 8-bit RGBA — exact App Store 6.3\" target.",
+    "Tab navigation works on iPhone 17 with the computed coords (Write/Train/Home/Today tap targets resolved correctly per the script run output).",
+    "make architecture + make automation-check + make pyright + git diff --check all green."
+  ],
+  "gaps_named_for_follow_up": [
+    "App Store Connect also lists 6.5\" (1284x2778) and 6.1\" (1170x2532) buckets. Apple auto-downscales 6.9\" -> 6.7\"/6.5\" and 6.3\" -> 6.1\" for newer apps, so the 2 captured sets cover the modern iPhone roster. If a future Apple change requires explicit 6.5\" / 6.1\" uploads, the same parameterized script handles it by passing a different --device-name.",
+    "iPad bucket (12.9\" / 11\") not captured. Owlory presumably ships iPhone-only; if iPad shipping is added, the script needs a width/height entry for iPad logical sizes (e.g., 1024x1366 for 12.9\" iPad)."
+  ],
+  "not_claimed": [
+    "These PNGs are the screenshots that will ship. The user uploads to App Store Connect and may re-roll any.",
+    "Tab coordinates work on every iPhone simulator. The computed center+bottom-y is reliable for current iPhone shapes; an iPhone SE-style design with a different tab bar position would need explicit overrides.",
+    "On-device rendering matches simulator byte-for-byte. Real-device output may have subtle font/spacing differences."
+  ],
+  "residual_risks": [
+    "If iPhone 17's logical size changes in a future iOS update (Apple has done this for some devices), DEVICE_LOGICAL_SIZE needs updating. The script will fail with a clear 'Unknown device' message rather than producing wrong coordinates.",
+    "The tab coordinate calc assumes a 5-tab tab bar with home-indicator clearance ~36pt. A future Owlory redesign that adds/removes a tab or moves the bar would invalidate the coords."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue empty. Named follow-ups remain: on-device VoiceOver+Switch Control+Voice Control verification, localization translation-quality reclassification for the 95 voicecontrol entries, extend input labels to lower-frequency commands, workflow templates in manifest, real third-party repo migration.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:58:45Z"
+}

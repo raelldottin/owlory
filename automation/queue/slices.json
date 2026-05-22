@@ -7132,6 +7132,34 @@
       "max_files_changed": 12,
       "entry_condition": "iPhone 17 Pro Max simulator available; idb installed; existing OwloryUITestSupport harness has a debug-only resetAppSupport + per-store seed pattern to extend.",
       "notes": "Add --owlory-ui-seed-marketing arg + seedMarketing() inside OwloryUITestSupport.prepareLaunchEnvironmentIfNeeded(). seedMarketing populates: (a) 4 DailyEntry days with realistic focusThree + energy/mood/sleep, (b) 5 WritingNotes across capture/draft/source stages, (c) 1 HouseholdProtocol + 4 HomeTasks, (d) 1 planned + 2 completed TrainingSessions, (e) 2 CareerRecords. Realistic copy authored by Claude per user instruction. Capture driver boots iPhone 17 Pro Max, builds debug, installs, launches with --owlory-ui-testing + --owlory-ui-seed-marketing, taps each tab via idb, saves PNGs at 1320x2868 to automation/proofs/app-store-screenshots/. Output: 5 PNGs in order today.png, write.png, digest.png, train.png, home.png."
+    },
+    {
+      "slice_id": "app-marketing-screenshots-63-inch",
+      "title": "Capture App Store 6.3 inch screenshot bucket (iPhone 17 native, 1206x2622)",
+      "status": "done",
+      "priority": 71,
+      "domain": "marketing",
+      "allowed_paths": [
+        "automation/smoke/capture_app_store_screenshots.py",
+        "automation/proofs/app-store-screenshots-6.3/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-marketing-screenshots-63-inch",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-marketing-screenshots-seed-and-capture"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "iPhone 17 simulator available; OwloryUITestSupport.seedMarketing already wired.",
+      "notes": "Parameterize capture_app_store_screenshots.py with --device-name and --output-subdir args (defaults preserve current 6.9 inch flow). Run against iPhone 17 (6.3 inch, 1206x2622 native) into automation/proofs/app-store-screenshots-6.3/. Same 5 surface order: today, write, digest, train, home."
     }
   ]
 }
