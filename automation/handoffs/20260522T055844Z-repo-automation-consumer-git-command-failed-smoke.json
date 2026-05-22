@@ -1,0 +1,65 @@
+{
+  "slice_id": "repo-automation-consumer-git-command-failed-smoke",
+  "status": "done",
+  "summary": "Closed ConfigError smoke coverage to 5/5 emit sites. Added test_consumer_supervisor_fails_with_friendly_message_on_corrupt_git_repo: bootstraps a consumer, initializes git + commits the bootstrap, seeds the example queue, then writes 'garbage-not-a-valid-ref\\n' into .git/HEAD so the subsequent `git diff --name-only --relative` call exits 129 with 'Not a git repository' warning while the .git/ directory still exists. The supervisor's policy.git_dirty_paths catches the resulting CalledProcessError, hits the else-branch (because .git exists), and raises ConfigError with 'git command failed in <repo_root>: git diff --name-only --relative\\nstderr: ...'. The test asserts no Traceback substring, the 'git command failed in' phrase, and the consumer's path. The supervisor smoke class now has 9 tests + 2 sync-resilience tests added in the prior slice (11 in the smoke class total); the full automation-check has 122.",
+  "files_touched": [
+    "automation/tests/test_repo_automation_sync.py",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T055844Z-repo-automation-consumer-git-command-failed-smoke.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/055844-repo-automation-consumer-git-command-failed-smoke.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-consumer-git-command-failed-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T055844Z-repo-automation-consumer-git-command-failed-smoke.json",
+    "manual probe: garbage-in-.git/HEAD produces exit code 129 from `git diff --name-only --relative` while .git/ persists, so the else-branch of policy.git_dirty_paths fires"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 5,
+  "max_files_changed_cap": 5,
+  "configerror_emit_sites_now_smoke_tested": [
+    {"site": "load_queue missing queue file", "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_without_queue_file + test_consumer_context_builder_fails_with_friendly_message_without_queue_file"},
+    {"site": "git_dirty_paths .git missing", "asserted_by": "test_consumer_supervisor_surfaces_friendly_message_outside_git_repo"},
+    {"site": "git_dirty_paths FileNotFoundError (git not on PATH)", "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_when_git_not_on_path"},
+    {"site": "load_json JSONDecodeError", "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_on_malformed_queue_json"},
+    {"site": "git_dirty_paths CalledProcessError with .git present (generic git failure)", "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_on_corrupt_git_repo (this slice)"}
+  ],
+  "scope_observed_from": [
+    "automation/supervisor/policy.py git_dirty_paths except subprocess.CalledProcessError branch (line ~340)",
+    "git diff --name-only --relative behavior under garbage HEAD: exits 129 with 'Not a git repository' warning, .git/ persists"
+  ],
+  "behavior_proven": [
+    "When .git exists but git diff fails (corrupt HEAD), the supervisor takes the else-branch of git_dirty_paths and reports 'git command failed in <path>' rather than the 'not a Git repository' message.",
+    "The supervisor's _cli_entry catches the ConfigError and prints stop: prefix to stderr; no Python traceback reaches the consumer.",
+    "The corruption pattern (garbage in .git/HEAD) is deterministic across git versions; both Apple-shipped and Homebrew git produce the same exit-129 behavior."
+  ],
+  "gaps_named_for_follow_up": [
+    "Workflow templates in manifest (promotes external CI scaffold into Owlory as reusable templates).",
+    "Real third-party repo migration when a target is named explicitly by the user.",
+    "Sync tool --force-templates flag for consumers who want to re-baseline template files after the first-time-only semantic landed."
+  ],
+  "not_claimed": [
+    "Every git failure mode is covered. The smoke test exercises one realistic corruption pattern (bad HEAD); other corruptions (missing .git/objects, locked .git/index, fsck failures) take the same code path so are presumed safe but not directly asserted.",
+    "policy.git_dirty_paths handles all subprocess error types gracefully. FileNotFoundError and CalledProcessError are caught; OSError variants (permission denied) are not exercised. Their behavior would propagate unmodified — that's a defensible boundary for a smoke proof.",
+    "Real consumer machines have experienced corrupt repos and seen the friendly message. The smoke test bootstraps temp consumers only."
+  ],
+  "residual_risks": [
+    "The test asserts the substring 'git command failed in' verbatim. Changing the policy.ConfigError message text requires updating this assertion in lockstep with the other four ConfigError smoke tests.",
+    "Future git versions could change the exit code or stderr for corrupt HEAD; the test would still detect ConfigError emission, but the assertion on the consumer path remains stable because policy.git_dirty_paths injects repo_root into the message regardless of git's stderr."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty. ConfigError smoke coverage is now 5/5. Remaining named boundaries: workflow templates in manifest, real third-party migration, --force-templates flag.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T05:58:44Z"
+}

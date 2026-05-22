@@ -537,6 +537,30 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
         self.assertNotIn("Traceback", combined)
         self.assertIn("git executable not found on PATH", combined)
 
+    def test_consumer_supervisor_fails_with_friendly_message_on_corrupt_git_repo(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+        self.seed_example_queue()
+
+        head_path = self.consumer / ".git/HEAD"
+        head_path.write_text("garbage-not-a-valid-ref\n", encoding="utf-8")
+
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        result = subprocess.run(
+            ["python3", "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("git command failed in", combined)
+        self.assertIn(str(self.consumer), combined)
+
     def test_consumer_supervisor_fails_with_friendly_message_on_malformed_queue_json(self) -> None:
         self.bootstrap_consumer()
         self.init_consumer_git()

@@ -6858,6 +6858,35 @@
       "max_files_changed": 10,
       "entry_condition": "Prompt override portability slice is committed and the trade-off is documented.",
       "notes": "Investigation showed delete_stale: false alone does NOT make base.md/slice.md overrides survive (sync_entries always overwrites source-matched destinations). Correct fix is to give template: true the additional semantics 'copy on first sync only, preserve if destination exists' in Tools/repo-automation-sync.sh. Apply at the per-file level inside sync_entries: when entry.template is True AND target file exists, skip both copy and stale removal. Flip automation/prompts/ to delete_stale: false for consistency (template entries no longer remove extras). Add 2 new tests: override-survives-sync (modify base.md, run --sync, content preserved) and added-file-survives-sync (add prompts/my-custom.md, run --sync, file preserved). Update docs to describe the new semantic and remove the workaround paths previously documented."
+    },
+    {
+      "slice_id": "repo-automation-consumer-git-command-failed-smoke",
+      "title": "Smoke-test the 5th ConfigError emit site (generic git command failure)",
+      "status": "done",
+      "priority": 80,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/tests/test_repo_automation_sync.py",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-consumer-git-command-failed-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-consumer-error-messages-additional-smoke"
+      ],
+      "max_files_changed": 5,
+      "entry_condition": "policy.git_dirty_paths catches CalledProcessError and emits the generic 'git command failed in' ConfigError when .git/ exists.",
+      "notes": "Bootstrap consumer, init git + commit bootstrap, seed example queue (committed). Then write garbage to .git/HEAD so subsequent git diff calls fail with a fatal-bad-object-style error while .git/ still exists (so the not-a-git-repo branch doesn't fire). Run supervisor --dry-run, assert: no Traceback, friendly 'git command failed in' substring present, the consumer path is in the message, exit non-zero."
     }
   ]
 }
