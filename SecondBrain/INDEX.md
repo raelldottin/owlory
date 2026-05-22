@@ -2,6 +2,7 @@
 
 ## 2026-05-22
 
+- [repo-automation-consumer-prompt-override-portability (consumer-smoke-tested; added test_consumer_can_override_prompt_fragments asserting render_prompt picks up consumer base.md + slice.md overrides via subprocess probe; documented commit-required and re-sync-overwrites constraints with two workaround paths; suite grows to 18 + automation-check 119)](sessions/2026-05-22/021156-repo-automation-consumer-prompt-override-portability.md)
 - [repo-automation-consumer-error-messages-additional-smoke (consumer-smoke-tested; added 2 tests to RepoAutomationConsumerAdoptionSmokeTests covering git-not-on-PATH via isolated symlinked bin and malformed-JSON queue; 4 of 5 ConfigError emit sites now asserted; suite grows to 17 + automation-check 118)](sessions/2026-05-22/020350-repo-automation-consumer-error-messages-additional-smoke.md)
 
 ## 2026-05-21

@@ -1,0 +1,63 @@
+{
+  "slice_id": "repo-automation-consumer-prompt-override-portability",
+  "status": "done",
+  "summary": "Proved that a consumer can override automation/prompts/base.md and automation/prompts/slice.md and have the supervisor's render_prompt use the customized text. Added test_consumer_can_override_prompt_fragments to RepoAutomationConsumerAdoptionSmokeTests: it bootstraps a consumer, rewrites both prompt files with sentinel markers, commits, then subprocess-invokes render_prompt and asserts the markers appear in the rendered output while Owlory's default base.md heading does not. Documented the two consumer-side constraints: prompt overrides must be committed (dirty-tree check), and the manifest's prompts/ entry currently has delete_stale: true so --sync overwrites overrides — consumers must opt out or vendor a separate prompts path.",
+  "files_touched": [
+    "automation/tests/test_repo_automation_sync.py",
+    "docs/workflows/repo-automation.md",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T021156Z-repo-automation-consumer-prompt-override-portability.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/021156-repo-automation-consumer-prompt-override-portability.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-consumer-prompt-override-portability",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T021156Z-repo-automation-consumer-prompt-override-portability.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 6,
+  "max_files_changed_cap": 6,
+  "scope_observed_from": [
+    "automation/supervisor/run_next.py:render_prompt (reads base.md + slice.md from repo_root)",
+    "automation/reusable-manifest.json (prompts entry has delete_stale: true, template: true)",
+    "automation/prompts/base.md, automation/prompts/slice.md (template content)"
+  ],
+  "behavior_proven": [
+    "render_prompt resolves base.md and slice.md against the consumer's own repo_root, not Owlory's.",
+    "Replacing both files with sentinel content produces a rendered prompt that contains those sentinels and does not contain Owlory's default base heading.",
+    "select_next_slice still picks a slice from the consumer's example queue when prompts are customized; queue selection is independent of prompt content."
+  ],
+  "consumer_constraints_documented": [
+    "Prompt overrides must be committed before running the supervisor (otherwise the dirty-tree check refuses).",
+    "Tools/repo-automation-sync.sh --sync overwrites customized prompts/*.md because the manifest entry uses delete_stale: true. Consumers must either skip the entry locally or vendor prompts to a non-manifest-owned path (such as automation/prompts.local/) with a small wrapper."
+  ],
+  "gaps_named_for_follow_up": [
+    "The manifest entry for automation/prompts/ could be changed to delete_stale: false or removed entirely so overrides survive re-sync; this is named in the docs but not implemented in this slice.",
+    "A wrapper that lets consumers point render_prompt at a non-default prompts path (e.g., via env var or config) is not implemented.",
+    "The defensive 'git command failed' branch in policy.git_dirty_paths remains unasserted (one of five ConfigError emit sites)."
+  ],
+  "not_claimed": [
+    "Consumer overrides survive --sync (they do not, by current design).",
+    "render_prompt has been refactored to support multiple prompts directories or a configurable path.",
+    "The review.md prompt fragment has been override-tested (only base.md and slice.md are exercised by render_prompt; review.md is loaded by a separate flow not in scope here)."
+  ],
+  "residual_risks": [
+    "The smoke test asserts the absence of 'Owlory Supervised Slice Run' to confirm the override won. If Owlory's default base.md is later rewritten to remove that heading, the assertion needs updating.",
+    "The subprocess probe in the test imports policy + render_prompt from the consumer's tree; if the supervisor's API surface changes (e.g., render_prompt signature), this probe needs updating in lockstep."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty. Remaining named boundaries: workflow templates in manifest, real third-party migration, generic-git-command-failed smoke assertion. None queued.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T02:11:56Z"
+}

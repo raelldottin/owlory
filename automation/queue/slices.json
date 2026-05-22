@@ -6796,6 +6796,36 @@
       "max_files_changed": 6,
       "entry_condition": "Friendly ConfigError messages already wired in policy.load_json + load_queue + git_dirty_paths.",
       "notes": "Add two assertions inside RepoAutomationConsumerAdoptionSmokeTests: (1) git-not-on-PATH: pass env with stripped PATH to supervisor subprocess; expect 'git executable not found on PATH' substring in stderr, no Traceback, non-zero exit. (2) Malformed JSON: write '{invalid' to automation/queue/slices.json in the consumer; expect 'invalid JSON in' substring, no Traceback. Both tests follow the existing 6-test pattern in the same class."
+    },
+    {
+      "slice_id": "repo-automation-consumer-prompt-override-portability",
+      "title": "Smoke-test consumer prompt fragment override + document re-sync trade-off",
+      "status": "done",
+      "priority": 82,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/tests/test_repo_automation_sync.py",
+        "docs/workflows/repo-automation.md",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-consumer-prompt-override-portability",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-consumer-adoption-smoke"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Consumer adoption smoke proof is committed.",
+      "notes": "Add test_consumer_can_override_prompt_fragments to RepoAutomationConsumerAdoptionSmokeTests. Bootstrap consumer, init git, seed example queue, rewrite automation/prompts/slice.md + base.md with sentinel content, commit, then subprocess-invoke render_prompt and assert the sentinel appears in the rendered output. Add a 'Customizing prompt fragments' subsection to docs/workflows/repo-automation.md explaining that override works at runtime and that the manifest entry currently overwrites the prompts/ directory on --sync (delete_stale: true) \u2014 consumer must either skip the entry or accept re-sync overrides."
     }
   ]
 }

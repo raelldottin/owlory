@@ -557,6 +557,85 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
         self.assertIn("invalid JSON in", combined)
         self.assertIn("automation/queue/slices.json", combined)
 
+    def test_consumer_can_override_prompt_fragments(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+        self.seed_example_queue()
+
+        slice_marker = "CONSUMER-SLICE-PROMPT-OVERRIDE-SENTINEL-91827"
+        base_marker = "CONSUMER-BASE-PROMPT-OVERRIDE-SENTINEL-46352"
+
+        (self.consumer / "automation/prompts/slice.md").write_text(
+            "# Custom Slice Brief\n\nSlice: __SLICE_ID__\n\n"
+            f"{slice_marker}\n",
+            encoding="utf-8",
+        )
+        (self.consumer / "automation/prompts/base.md").write_text(
+            f"# Custom Base\n\n{base_marker}\n",
+            encoding="utf-8",
+        )
+
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "commit", "-m", "Override prompt fragments"],
+            cwd=self.consumer,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        probe = (
+            "import json, sys\n"
+            "from pathlib import Path\n"
+            "sys.path.insert(0, str(Path.cwd()))\n"
+            "from automation.supervisor.run_next import render_prompt\n"
+            "from automation.supervisor import policy\n"
+            "from automation.context.build_context import build_context_bundle\n"
+            "queue_path = Path('automation/queue/slices.json')\n"
+            "schema_path = Path('automation/schemas/slice.schema.json')\n"
+            "queue_data = policy.load_queue(queue_path, schema_path)\n"
+            "slice_record = policy.select_next_slice(queue_data)\n"
+            "bundle = build_context_bundle(\n"
+            "    repo_root=Path.cwd(),\n"
+            "    queue_path=queue_path,\n"
+            "    handoff_dir=Path('automation/handoffs'),\n"
+            "    slice_id=slice_record['slice_id'],\n"
+            "    max_doc_chars=200,\n"
+            ")\n"
+            "rendered = render_prompt(\n"
+            "    Path.cwd(),\n"
+            "    slice_record,\n"
+            "    bundle,\n"
+            "    Path('automation/handoffs/probe.json'),\n"
+            ")\n"
+            "print(rendered)\n"
+        )
+
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        result = subprocess.run(
+            ["python3", "-c", probe],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+
+        self.assertEqual(0, result.returncode, msg=result.stderr)
+        self.assertIn(slice_marker, result.stdout)
+        self.assertIn(base_marker, result.stdout)
+        self.assertNotIn(
+            "Owlory Supervised Slice Run",
+            result.stdout,
+            msg="Owlory's default base.md text should not appear when the consumer has overridden base.md",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
