@@ -50,6 +50,9 @@ struct TrainView: View {
             } message: {
                 Text(store.lastError ?? "")
             }
+            .sensoryFeedback(trigger: store.lastError != nil) { _, newValue in
+                newValue ? .error : nil
+            }
             .onAppear {
                 proxy.scrollToContinueHighlight(highlightedSessionID)
             }

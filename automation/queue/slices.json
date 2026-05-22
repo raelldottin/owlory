@@ -7038,7 +7038,7 @@
       ],
       "max_files_changed": 12,
       "notes": "Add .sensoryFeedback to the 6 user actions named in H01-H06 (task completion success, focus selection, recording impact, playback selection, error notification, protocol step). Use SwiftUI .sensoryFeedback modifier (iOS 17+); confirm minimum deployment target supports it. No new localization keys. Optional: extract a tiny helper to centralize feedback styles if duplication is high. NOTE: do not provide feedback on every state change \u2014 only on user-initiated actions; otherwise it becomes noise.",
-      "status": "queued",
+      "status": "done",
       "entry_condition": "app-accessibility-survey-three-categories committed."
     },
     {

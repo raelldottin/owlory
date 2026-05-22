@@ -31,6 +31,9 @@ struct CareerView: View {
             .sheet(item: $selectedRecord) { record in
                 EditRecordSheet(record: record, store: store, onDismiss: { selectedRecord = nil })
             }
+            .sensoryFeedback(trigger: store.lastError != nil) { _, newValue in
+                newValue ? .error : nil
+            }
             .alert("Couldn't Update Career", isPresented: Binding(
                 get: { store.lastError != nil },
                 set: { if !$0 { store.lastError = nil } }

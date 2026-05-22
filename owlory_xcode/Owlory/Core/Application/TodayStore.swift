@@ -544,6 +544,10 @@ final class TodayStore: OwloryObservableObject {
         }
     }
 
+    var focusThreeCount: Int {
+        currentEntry?.focusThree.count ?? 0
+    }
+
     private func initialState(for entry: DailyEntry) -> DailyEntryState {
         if !entry.eveningReflection.isEmpty {
             return .reflected(entry)

@@ -65,6 +65,9 @@ struct WriteView: View {
             } message: {
                 Text(store.lastError ?? "")
             }
+            .sensoryFeedback(trigger: store.lastError != nil) { _, newValue in
+                newValue ? .error : nil
+            }
             .onAppear {
                 presentHighlightedNoteIfNeeded()
                 proxy.scrollToContinueHighlight(highlightedNoteID)

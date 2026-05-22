@@ -1,0 +1,75 @@
+{
+  "slice_id": "app-accessibility-haptic-feedback",
+  "status": "done",
+  "summary": "Added .sensoryFeedback at 6 user actions named in findings H01-H06: recording start/stop (VoiceCaptureButton, .impact medium), playback toggle (AudioPlaybackButton, .selection), error alerts (.error, on lastError-becomes-non-nil, in 5 views: Train/Write/Career/Home/Today), task completion (Home, .success on completedTaskCount increase), Add to Focus (Today, .selection on focusThreeCount increase), and protocol step completion (Home, .success on completedStepCount increase). Two ViewModifier helpers extracted (HomeHapticsModifier, TodayHapticsModifier) because chained .sensoryFeedback with closures push the SwiftUI body type-checker past its inference budget. Added one focusThreeCount computed property on TodayStore to keep the internal currentEntry private.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+    "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+    "owlory_xcode/Owlory/Core/Application/TodayStore.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/Features/Career/CareerView.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T083710Z-app-accessibility-haptic-feedback.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/083710-app-accessibility-haptic-feedback.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build (build exit: 0)",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-haptic-feedback",
+    "make architecture",
+    "make automation-check (124 tests OK)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "manual smoke: xcrun simctl install + launch on iPhone 17 Pro Max with --owlory-ui-testing --owlory-ui-seed-marketing — app process running (PID 52111), no crash",
+    "python3 -m json.tool automation/queue/slices.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "files_changed_count": 12,
+  "max_files_changed_cap": 12,
+  "sites_modified": [
+    {"finding": "H01", "file": "Features/Home/HomeView.swift", "via": "HomeHapticsModifier", "trigger": "completedTaskCount: Int (computed: store.tasks.count(where: \\.isCompleted))", "feedback": ".success (only when newValue > oldValue)"},
+    {"finding": "H02", "file": "Features/Today/TodayView.swift", "via": "TodayHapticsModifier", "trigger": "focusItemCount: Int (computed on TodayStore as focusThreeCount: currentEntry?.focusThree.count ?? 0)", "feedback": ".selection (only when newValue > oldValue)"},
+    {"finding": "H03", "file": "DesignSystem/VoiceCaptureButton.swift", "via": "inline .sensoryFeedback", "trigger": "isRecording: Bool (computed from service.state == .recording)", "feedback": ".impact(weight: .medium) (fires on every toggle — start and stop)"},
+    {"finding": "H04", "file": "DesignSystem/AudioPlaybackButton.swift", "via": "inline .sensoryFeedback", "trigger": "isPlaying: Bool (computed from player.state == .playing)", "feedback": ".selection (fires on every toggle)"},
+    {"finding": "H05", "file": "Features/{Train,Write,Career,Home,Today}View.swift", "via": "inline (HomeView + TodayView via modifier)", "trigger": "store.lastError != nil", "feedback": ".error (only when newValue == true; the change closure returns nil on the false transition so the dismiss does not haptic)"},
+    {"finding": "H06", "file": "Features/Home/HomeView.swift", "via": "HomeHapticsModifier", "trigger": "completedStepCount: Int (computed: nested loop summing run.steps.filter(where: $0.status == .completed))", "feedback": ".success (only when newValue > oldValue)"}
+  ],
+  "design_decisions": [
+    "Used the iOS 17+ .sensoryFeedback(_:trigger:) modifier with the closure form (oldValue, newValue) -> SensoryFeedback? so feedback only fires on the desired transition direction (e.g., success on completion only, not on uncomplete; error on lastError appearing, not on dismiss).",
+    "Extracted HomeHapticsModifier + TodayHapticsModifier because 2-3 chained .sensoryFeedback modifiers with trailing closures exceeded SwiftUI's body type-checker inference budget (compile error: 'type-check this expression in reasonable time'). Each modifier is a thin ViewModifier struct that takes the trigger values as inputs and applies the feedback modifiers internally. WriteView, CareerView, and TrainView each have a single .sensoryFeedback for the error alert and did not need a modifier.",
+    "Added var focusThreeCount: Int on TodayStore (returns currentEntry?.focusThree.count ?? 0) so TodayHapticsModifier can read it without breaking currentEntry's private access level.",
+    "Audio + voice buttons use isRecording / isPlaying computed Bools via case pattern matching (if case .recording = service.state { return true } else { return false }) since the underlying state is an enum with associated values."
+  ],
+  "behavior_proven": [
+    "xcodebuild -scheme Owlory build → exit 0; no compile errors after extracting helper modifiers and adding the focusThreeCount accessor.",
+    "App launches and runs (PID 52111 in launchctl list) on iPhone 17 Pro Max simulator with the seed args. No init-time crash.",
+    "Architecture lint + automation tests (124) + pyright + diff-check all green.",
+    "Closure-form .sensoryFeedback returns nil to suppress feedback on undesired transitions; verified by inspection of the change closures."
+  ],
+  "gaps_named_for_follow_up": [
+    "On-device confirmation that haptics actually fire on a real iPhone. Simulator does not vibrate; the .sensoryFeedback modifier is no-op on simulator. xcodebuild + launch smoke confirms the code path is reached without crashing, but the user-facing tactile event is only confirmable on a real device.",
+    "H01 (task completion) and H06 (protocol step completion) trigger on Int count changes. If a user marks two tasks complete simultaneously (e.g., via swipe + tap timing), the count jumps by 2 in one frame and only one .success haptic fires. Future refinement could fire per-completion via individual row-level haptics.",
+    "Audio + voice button haptics fire on every state toggle (start AND stop). Some apps fire impact on start and a softer haptic on stop. Not adjusted here since the survey did not differentiate; could be tightened later.",
+    "The HomeView completedStepCount computed property uses a nested for-loop because Swift's type inference choked on the equivalent inline reduce expression. The loop is O(runs × steps); negligible for realistic data sizes."
+  ],
+  "not_claimed": [
+    "Every user-initiated action in Owlory produces haptic feedback. Only the 6 sites named in the accessibility-survey haptic category are wired. Other actions (sheet present, navigation push, picker change) continue with their iOS defaults.",
+    "Real-device haptic confirmation has been performed. Simulator runs do not vibrate; the proof level is build-tested, not device-tested.",
+    "Haptic intensity is finely tuned. Used the SwiftUI defaults: .success / .error / .selection / .impact(weight: .medium). A future polish pass could tune for Owlory's interaction tempo."
+  ],
+  "residual_risks": [
+    "If a future view adds a .sensoryFeedback modifier inline without extracting a ViewModifier wrapper, it may exceed the type-checker budget again. The pattern established here is: when a view's body already has many modifiers + closures, extract the haptic modifiers into a struct.",
+    "The error-alert haptic fires when lastError transitions from nil → non-nil. If the store sets lastError to a NEW non-nil value while it is already non-nil (rare), the trigger value (a Bool) does not change and no second .error haptic fires. Accepted as a limitation; in practice errors are dismissed before the next one is presented."
+  ],
+  "recommended_next_slice": "app-accessibility-reduce-transparency-and-contrast",
+  "recommended_next_reason": "Next-lowest priority in the accessibility-survey follow-up chain (pri 80). Addresses findings M06, M08, M09 — transparency overlays and color-only state indicators (Train status pill in particular).",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:37:10Z"
+}

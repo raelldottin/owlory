@@ -3,6 +3,20 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var store: HomeStore
     @ObservedObject var writeStore: WriteStore
+
+    private var completedTaskCount: Int {
+        store.tasks.count(where: \.isCompleted)
+    }
+
+    private var completedStepCount: Int {
+        var total = 0
+        for run in store.runs {
+            for step in run.steps where step.status == .completed {
+                total += 1
+            }
+        }
+        return total
+    }
     var highlightedTaskID: UUID?
     var highlightedRunID: UUID?
     var highlightedRunSelectionID: UUID?
@@ -102,6 +116,11 @@ struct HomeView: View {
             } message: {
                 Text(store.lastError ?? "")
             }
+            .modifier(HomeHapticsModifier(
+                lastErrorPresent: store.lastError != nil,
+                completedTaskCount: completedTaskCount,
+                completedStepCount: completedStepCount
+            ))
             .onAppear {
                 presentHighlightedRunIfNeeded()
                 proxy.scrollToContinueHighlight(highlightedRunID ?? highlightedTaskID)
@@ -1253,5 +1272,25 @@ private struct ProtocolRunSheet: View {
             Image(systemName: "forward.circle.fill")
                 .foregroundStyle(OwloryColor.textTertiary)
         }
+    }
+}
+
+
+private struct HomeHapticsModifier: ViewModifier {
+    let lastErrorPresent: Bool
+    let completedTaskCount: Int
+    let completedStepCount: Int
+
+    func body(content: Content) -> some View {
+        content
+            .sensoryFeedback(trigger: lastErrorPresent) { _, newValue in
+                newValue ? .error : nil
+            }
+            .sensoryFeedback(trigger: completedTaskCount) { oldValue, newValue in
+                newValue > oldValue ? .success : nil
+            }
+            .sensoryFeedback(trigger: completedStepCount) { oldValue, newValue in
+                newValue > oldValue ? .success : nil
+            }
     }
 }

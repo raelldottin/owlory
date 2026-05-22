@@ -14,9 +14,15 @@ struct AudioPlaybackButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityText)
+        .sensoryFeedback(.selection, trigger: isPlaying)
         .onDisappear {
             player.stop()
         }
+    }
+
+    private var isPlaying: Bool {
+        if case .playing = player.state { return true }
+        return false
     }
 
     @ViewBuilder

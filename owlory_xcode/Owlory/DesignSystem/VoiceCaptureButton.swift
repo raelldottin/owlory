@@ -42,9 +42,15 @@ struct VoiceCaptureButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityText)
+        .sensoryFeedback(.impact(weight: .medium), trigger: isRecording)
         .onChange(of: service.liveTranscription) { _, text in
             onLiveTranscription(text)
         }
+    }
+
+    private var isRecording: Bool {
+        if case .recording = service.state { return true }
+        return false
     }
 
     @ViewBuilder

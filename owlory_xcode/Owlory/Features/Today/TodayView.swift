@@ -72,6 +72,10 @@ struct TodayView: View {
         } message: {
             Text(store.lastError ?? "")
         }
+        .modifier(TodayHapticsModifier(
+            lastErrorPresent: store.lastError != nil,
+            focusItemCount: store.focusThreeCount
+        ))
     }
 
     // MARK: - Welcome
@@ -1972,5 +1976,20 @@ private struct QuickHomeTaskSheet: View {
             }
         }
         .presentationDetents([.medium])
+    }
+}
+
+private struct TodayHapticsModifier: ViewModifier {
+    let lastErrorPresent: Bool
+    let focusItemCount: Int
+
+    func body(content: Content) -> some View {
+        content
+            .sensoryFeedback(trigger: lastErrorPresent) { _, newValue in
+                newValue ? .error : nil
+            }
+            .sensoryFeedback(trigger: focusItemCount) { oldValue, newValue in
+                newValue > oldValue ? .selection : nil
+            }
     }
 }
