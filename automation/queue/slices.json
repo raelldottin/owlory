@@ -7160,6 +7160,37 @@
       "max_files_changed": 10,
       "entry_condition": "iPhone 17 simulator available; OwloryUITestSupport.seedMarketing already wired.",
       "notes": "Parameterize capture_app_store_screenshots.py with --device-name and --output-subdir args (defaults preserve current 6.9 inch flow). Run against iPhone 17 (6.3 inch, 1206x2622 native) into automation/proofs/app-store-screenshots-6.3/. Same 5 surface order: today, write, digest, train, home."
+    },
+    {
+      "slice_id": "app-store-public-support-privacy-pages",
+      "title": "Add public Support and Privacy Policy pages for App Store Connect",
+      "status": "done",
+      "priority": 72,
+      "domain": "marketing",
+      "allowed_paths": [
+        ".github/workflows/pages.yml",
+        "docs/.nojekyll",
+        "docs/README.md",
+        "docs/app-store-connect-urls.md",
+        "docs/support/",
+        "docs/privacy/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-store-public-support-privacy-pages",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-marketing-screenshots-63-inch"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Public GitHub Pages host is expected at https://raelldottin.github.io/owlory/.",
+      "notes": "Create lightweight, accessible static HTML pages at docs/support/index.html and docs/privacy/index.html for App Store Connect Support URL and Privacy Policy URL. Use no analytics, cookies, third-party embeds, external fonts, or unsupported product claims. Add minimal GitHub Pages deployment/configuration and a docs note with the exact URLs to paste."
     }
   ]
 }

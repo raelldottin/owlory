@@ -21,6 +21,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Automation Harness](../automation/README.md) explains the queue-driven supervisor for fresh-run slice chaining.
 - [Reusable Repo Automation](workflows/repo-automation.md) defines the boundary, target folder, sync direction, and exclusion rules for extracting Owlory's repo automation into `/Users/raelldottin/Documents/Personal/repo-automation`.
 - [PR Hygiene](workflows/pr-hygiene.md) defines the PR claim, proof, validation, and merge-handoff expectations.
+- [App Store Connect Public URLs](app-store-connect-urls.md) records the public Support and Privacy Policy URLs used for App Store Connect review metadata.
 - [UI Testing Hygiene](workflows/ui-testing-hygiene.md) defines running-app, screenshot, device, and future XCUITest proof boundaries.
 - [ML Model Posture](runtime/ml-model-posture.md) defines Foundation Models, MLX/custom-model, context-window, and adapter-boundary rules.
 - [ML Privacy And Drafts](runtime/ml-privacy.md) defines local-first, draft-only, fallback, and reviewer expectations for ML/speech/generated-output work.

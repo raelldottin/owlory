@@ -1,0 +1,54 @@
+{
+  "slice_id": "app-store-public-support-privacy-pages",
+  "status": "done",
+  "summary": "Added public static Support and Privacy Policy pages for Owlory under docs/support/index.html and docs/privacy/index.html, documented the App Store Connect URLs, and added a GitHub Pages workflow that publishes only those two public page directories instead of the full internal docs tree.",
+  "files_touched": [
+    ".github/workflows/pages.yml",
+    "docs/.nojekyll",
+    "docs/README.md",
+    "docs/app-store-connect-urls.md",
+    "docs/support/index.html",
+    "docs/privacy/index.html",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T181508Z-app-store-public-support-privacy-pages.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/141407-app-store-public-support-privacy-pages.md"
+  ],
+  "validations_passed": [
+    "python3 automation/context/build_context.py --slice-id app-store-public-support-privacy-pages",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m json.tool automation/queue/slices.json",
+    "static page parser/link/resource check",
+    "python3 -m http.server 8087 --directory docs with curl checks for /support/ and /privacy/",
+    "make architecture",
+    "git diff --check"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "missing_proof_levels": [
+    "GitHub Pages deployment has not run on GitHub Actions from main yet."
+  ],
+  "contract_status_changes": [
+    {
+      "contract": "App Store Connect public Support and Privacy Policy URL metadata",
+      "before": "No repository-managed public Support or Privacy Policy pages were present.",
+      "after": "Repository-managed static source pages exist under docs/support/ and docs/privacy/, with deployment configured to publish them at https://raelldottin.github.io/owlory/support and https://raelldottin.github.io/owlory/privacy.",
+      "proof": [
+        "Local static checks passed.",
+        "Local HTTP curl checks returned 200 text/html for /support/ and /privacy/.",
+        "make architecture passed.",
+        "git diff --check passed."
+      ]
+    }
+  ],
+  "residual_risks": [
+    "GitHub Pages still needs repository Pages source set to GitHub Actions and a successful Deploy public App Store pages workflow run from main.",
+    "support@example.com is an explicit placeholder because no official Owlory support email was found in the repo."
+  ],
+  "recommended_next_slice": "",
+  "recommended_next_reason": "No adjacent queued slice remains for this App Store public-page work.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "not-mirrored",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T18:15:08Z"
+}
