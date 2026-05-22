@@ -1,0 +1,63 @@
+{
+  "slice_id": "repo-automation-consumer-error-messages-additional-smoke",
+  "status": "done",
+  "summary": "Locked in the two ConfigError code paths that the prior consumer-error-messages slice implemented but did not assert. Added two new tests to RepoAutomationConsumerAdoptionSmokeTests: (1) git-not-on-PATH constructs an isolated bin with only a python3 symlink and asserts the supervisor surfaces 'git executable not found on PATH' with no Traceback; (2) malformed-JSON queue writes '{invalid json,' to the consumer's automation/queue/slices.json and asserts 'invalid JSON in' + the queue path in the friendly message. The smoke test class now has 8 tests; the full repo_automation_sync suite has 17; the full automation-check ran 118 tests OK.",
+  "files_touched": [
+    "automation/tests/test_repo_automation_sync.py",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T020350Z-repo-automation-consumer-error-messages-additional-smoke.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/020350-repo-automation-consumer-error-messages-additional-smoke.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id repo-automation-consumer-error-messages-additional-smoke",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "python3 -m unittest automation.tests.test_repo_automation_sync",
+    "make architecture",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T020350Z-repo-automation-consumer-error-messages-additional-smoke.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "consumer-smoke-tested",
+  "files_changed_count": 5,
+  "max_files_changed_cap": 6,
+  "consumer_failure_modes_now_smoke_tested": [
+    {
+      "condition": "git executable not on PATH",
+      "observed": "stop: git executable not found on PATH: <FileNotFoundError text>\\nhint: install Git, or ensure git is on PATH for this process.",
+      "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_when_git_not_on_path"
+    },
+    {
+      "condition": "Malformed JSON in automation/queue/slices.json",
+      "observed": "stop: invalid JSON in <abs path>: <jsondecodeerror>",
+      "asserted_by": "test_consumer_supervisor_fails_with_friendly_message_on_malformed_queue_json"
+    }
+  ],
+  "scope_observed_from": [
+    "automation/supervisor/policy.py (load_json catch on json.JSONDecodeError; git_dirty_paths catch on FileNotFoundError)",
+    "automation/supervisor/run_next.py (_cli_entry stop: prefix)"
+  ],
+  "gaps_named_for_follow_up": [
+    "Workflow templates in the manifest so consumers get a CI scaffold during bootstrap (not queued; user-prioritized boundary).",
+    "Prompt-fragment override portability proof (not queued; user-prioritized boundary).",
+    "Real third-party repo migration when a target is named explicitly by the user."
+  ],
+  "not_claimed": [
+    "Every ConfigError emit site is now asserted. The four asserted paths are: missing queue file (supervisor + context-builder, 2 tests), not-a-git-repo (1 test), git-not-on-PATH (1 test, new), and malformed JSON (1 test, new). The 'git command failed' generic branch in git_dirty_paths is not asserted; that's a defensive branch unreachable through the normal consumer setup.",
+    "A real external repository has experienced these failure modes. The smoke test bootstraps temp consumers only."
+  ],
+  "residual_risks": [
+    "The git-not-on-PATH test relies on shutil.which('python3') resolving to a working interpreter. If a runner has python3 only under a name like python3.13, the test skips with a clear message rather than failing. The test also leaks the symlink into self.tmpdir, which addCleanup tears down.",
+    "The malformed-JSON assertion is substring-based ('invalid JSON in' + the queue path). Editing the policy.ConfigError message text will require updating the asserted substring."
+  ],
+  "recommended_next_slice": null,
+  "recommended_next_reason": "Queue is empty. Remaining named boundaries are workflow-templates-in-manifest, prompt-fragment-override-portability, and real-third-party-migration; none queued.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "pending-push",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T02:03:50Z"
+}

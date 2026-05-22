@@ -6767,6 +6767,35 @@
       "max_files_changed": 10,
       "entry_condition": "Consumer-adoption smoke proof is committed and the queue is empty of higher-priority work.",
       "notes": "Add ConfigError in automation/supervisor/policy.py. Wrap load_json (catch FileNotFoundError + JSONDecodeError), load_queue (named hint for missing queue file pointing at automation/examples/example-slices.json), and git_dirty_paths (catch CalledProcessError + FileNotFoundError; hint git init -b main + commit bootstrap). Wrap main() in run_next.py and build_context.py to catch ConfigError, print to stderr, return 2. Update RepoAutomationConsumerAdoptionSmokeTests assertions: replace 'FileNotFoundError' substring with the new message text, and update test_consumer_supervisor_requires_git_repo to match the new hint. Update docs/workflows/repo-automation.md known-failure-modes section to describe the friendly shape. Cap=10."
+    },
+    {
+      "slice_id": "repo-automation-consumer-error-messages-additional-smoke",
+      "title": "Smoke-test git-not-on-PATH and malformed-JSON ConfigError paths",
+      "status": "done",
+      "priority": 83,
+      "domain": "automation",
+      "allowed_paths": [
+        "automation/tests/test_repo_automation_sync.py",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id repo-automation-consumer-error-messages-additional-smoke",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "python3 -m unittest automation.tests.test_repo_automation_sync",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "repo-automation-consumer-error-messages"
+      ],
+      "max_files_changed": 6,
+      "entry_condition": "Friendly ConfigError messages already wired in policy.load_json + load_queue + git_dirty_paths.",
+      "notes": "Add two assertions inside RepoAutomationConsumerAdoptionSmokeTests: (1) git-not-on-PATH: pass env with stripped PATH to supervisor subprocess; expect 'git executable not found on PATH' substring in stderr, no Traceback, non-zero exit. (2) Malformed JSON: write '{invalid' to automation/queue/slices.json in the consumer; expect 'invalid JSON in' substring, no Traceback. Both tests follow the existing 6-test pattern in the same class."
     }
   ]
 }

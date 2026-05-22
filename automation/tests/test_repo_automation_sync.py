@@ -508,6 +508,55 @@ class RepoAutomationConsumerAdoptionSmokeTests(unittest.TestCase):
         self.assertEqual(0, auto.returncode, msg=auto.stderr)
         self.assertIn("result: target is current", auto.stdout)
 
+    def test_consumer_supervisor_fails_with_friendly_message_when_git_not_on_path(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+        self.seed_example_queue()
+
+        python_only_bin = self.tmpdir / "python-only-bin"
+        python_only_bin.mkdir(exist_ok=True)
+        python_exec = shutil.which("python3")
+        if python_exec is None:
+            self.skipTest("python3 not found on PATH; cannot construct an isolated bin")
+        os.symlink(python_exec, python_only_bin / "python3")
+
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        env["PATH"] = str(python_only_bin)
+
+        result = subprocess.run(
+            [str(python_only_bin / "python3"), "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("git executable not found on PATH", combined)
+
+    def test_consumer_supervisor_fails_with_friendly_message_on_malformed_queue_json(self) -> None:
+        self.bootstrap_consumer()
+        self.init_consumer_git()
+        queue_dir = self.consumer / "automation/queue"
+        queue_dir.mkdir(parents=True, exist_ok=True)
+        (queue_dir / "slices.json").write_text("{invalid json,\n", encoding="utf-8")
+
+        result = subprocess.run(
+            ["python3", "automation/supervisor/run_next.py", "--dry-run"],
+            cwd=self.consumer,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertNotEqual(0, result.returncode)
+        combined = result.stdout + result.stderr
+        self.assertNotIn("Traceback", combined)
+        self.assertIn("invalid JSON in", combined)
+        self.assertIn("automation/queue/slices.json", combined)
+
 
 if __name__ == "__main__":
     unittest.main()

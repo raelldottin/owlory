@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-22
+
+- [repo-automation-consumer-error-messages-additional-smoke (consumer-smoke-tested; added 2 tests to RepoAutomationConsumerAdoptionSmokeTests covering git-not-on-PATH via isolated symlinked bin and malformed-JSON queue; 4 of 5 ConfigError emit sites now asserted; suite grows to 17 + automation-check 118)](sessions/2026-05-22/020350-repo-automation-consumer-error-messages-additional-smoke.md)
+
 ## 2026-05-21
 
 - [repo-automation-consumer-error-messages (consumer-smoke-tested; added policy.ConfigError + targeted catches in load_json/load_queue/git_dirty_paths, wrapped run_next.py + build_context.py CLI entries to print two-line stop+hint messages instead of tracebacks, updated smoke assertions to lock in the friendly shape, refreshed docs)](sessions/2026-05-21/235630-repo-automation-consumer-error-messages.md)
