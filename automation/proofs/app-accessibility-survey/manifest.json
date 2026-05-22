@@ -1,0 +1,240 @@
+{
+  "slice_id": "app-accessibility-survey-three-categories",
+  "audit_timestamp": "2026-05-22T06:35:56Z",
+  "scope": "Survey of three accessibility categories that are not explicitly handled by Owlory today: (1) Reduce Motion / Reduce Transparency / Increase Contrast / Differentiate Without Color, (2) Haptic + sensory feedback, (3) Switch Control / Voice Control input labels / accessibility rotors and custom actions. Audit-only; no code changes.",
+  "method": [
+    "grep `.animation\\(|withAnimation|\\.transition\\(` across owlory_xcode/Owlory/**/*.swift for motion surfaces.",
+    "grep `\\.opacity\\(|\\.blur\\(|Material` for transparency surfaces.",
+    "grep `OwloryColor\\.(success|warning|error|...)` plus inspection of nearby icons/text for color-only state indicators.",
+    "grep `UIImpactFeedback|UINotificationFeedback|UISelectionFeedback|sensoryFeedback|SensoryFeedback` to confirm haptic absence (zero matches).",
+    "grep `accessibilityCustomActions|accessibilityRotor|accessibilityAction|accessibilityInputLabels` to confirm rotor + custom-action absence (zero matches).",
+    "grep `\\.swipeActions` to inventory swipe-gated actions that need a Switch Control / VoiceOver equivalent.",
+    "grep `@Environment\\(\\\\.accessibility(ReduceMotion|ReduceTransparency|DifferentiateWithoutColor|...)` to confirm absence of adaptive environment reads (zero matches)."
+  ],
+  "classification_legend": {
+    "none": "No code path observes or honors the accessibility category at any of the relevant surfaces.",
+    "partial": "Some surfaces honor the category but coverage is incomplete or inconsistent.",
+    "present": "Surface explicitly observes the accessibility category; documented behavior matches Apple HIG.",
+    "n/a": "Category does not apply to this surface."
+  },
+  "categories": [
+    {
+      "id": "motion_transparency_contrast_color",
+      "name": "Reduce Motion / Reduce Transparency / Increase Contrast / Differentiate Without Color",
+      "category_classification": "none",
+      "category_summary": "No `@Environment(\\.accessibilityReduceMotion)`, `\\.accessibilityReduceTransparency`, `\\.colorSchemeContrast`, or `\\.accessibilityDifferentiateWithoutColor` reads anywhere in the app. Animations and transparency are applied unconditionally. Some state indicators pair color with an icon (mitigating the differentiate-without-color concern), but several rely on color alone.",
+      "findings": [
+        {
+          "id": "M01",
+          "surface": "DesignSystem/AppTheme.swift:94 — withAnimation(.easeInOut(duration: 0.2))",
+          "category": "Reduce Motion",
+          "current_behavior": "Animation runs regardless of the user's Reduce Motion preference.",
+          "recommended": "Read @Environment(\\.accessibilityReduceMotion); when true, skip the withAnimation block (apply the state change without animation)."
+        },
+        {
+          "id": "M02",
+          "surface": "Features/Today/TodayView.swift:949 — `.transition(.opacity)` on reflection-saved confirmation",
+          "category": "Reduce Motion",
+          "current_behavior": "Opacity transition fades in/out unconditionally.",
+          "recommended": "Gate the `.transition` modifier on `!reduceMotion`. Fall back to `.identity`."
+        },
+        {
+          "id": "M03",
+          "surface": "Features/Today/TodayView.swift:1195 — `.animation(.easeInOut(duration: 0.15), value: value)` on metric chip",
+          "category": "Reduce Motion",
+          "current_behavior": "Implicit animation fires on every value change.",
+          "recommended": "Skip the .animation modifier when reduceMotion is true."
+        },
+        {
+          "id": "M04",
+          "surface": "Features/Train/TrainView.swift:536 — same .animation pattern on metric chip",
+          "category": "Reduce Motion",
+          "current_behavior": "Same shape as M03.",
+          "recommended": "Same fix as M03."
+        },
+        {
+          "id": "M05",
+          "surface": "Features/Today/TodayView.swift:953, 1377 — withAnimation { ... }",
+          "category": "Reduce Motion",
+          "current_behavior": "Two more unguarded withAnimation blocks.",
+          "recommended": "Wrap with reduceMotion guard or extract a helper `animatedIfAllowed(action:)`."
+        },
+        {
+          "id": "M06",
+          "surface": "Multiple .opacity(0.08-0.30) calls across DesignSystem + TodayView + TrainView (~10 sites)",
+          "category": "Reduce Transparency",
+          "current_behavior": "Color overlays use semitransparent fills unconditionally (e.g., `OwloryColor.brandPrimary.opacity(0.10)`, `OwloryColor.warning.opacity(0.12)`).",
+          "recommended": "Read @Environment(\\.accessibilityReduceTransparency); when true, fall back to a solid fill at higher contrast (e.g., the same hue at full alpha or a paired token like `brandPrimaryHigh`). Lowest-impact fix is a single tokenized helper that returns either the alpha-blended color or a solid alternate."
+        },
+        {
+          "id": "M07",
+          "surface": "Features/Home/HomeView.swift:1233-1236 — Image(systemName: 'checkmark.circle.fill') + 'forward.circle.fill'",
+          "category": "Differentiate Without Color",
+          "current_behavior": "State is conveyed by SF Symbol shape AND OwloryColor.success/warning. Color and shape are both present — this is OK by HIG.",
+          "classification": "present",
+          "recommended": "No change needed; confirm during a visual audit that all status indicators pair shape + color."
+        },
+        {
+          "id": "M08",
+          "surface": "Features/Today/TodayView.swift:1243 — `case 1...2: return OwloryColor.error` (severity tint)",
+          "category": "Differentiate Without Color",
+          "current_behavior": "Returns a color based on a numeric severity score. Need to trace to see if the consuming UI also varies shape/weight/border, or relies on color alone.",
+          "recommended": "Inspect the caller. If color is the only signal, add a shape/icon/label cue (e.g., severity icon, text annotation)."
+        },
+        {
+          "id": "M09",
+          "surface": "Features/Train/TrainView.swift:380-385 — status pill background + border at varying opacities",
+          "category": "Reduce Transparency + Increase Contrast",
+          "current_behavior": "Pill background is `statusPillColor(s).opacity(0.15)` and border `.opacity(0.3)`. Selection vs unselected is conveyed only by these alpha differences.",
+          "recommended": "Under reduceTransparency, use solid background + stronger border. Under increaseContrast (@Environment colorSchemeContrast == .increased), bump opacity and/or border weight."
+        },
+        {
+          "id": "M10",
+          "surface": "All Feature views — no @Environment reads for any of the four accessibility settings",
+          "category": "All four (Reduce Motion / Reduce Transparency / Increase Contrast / Differentiate Without Color)",
+          "current_behavior": "Zero awareness of the four user settings in the codebase.",
+          "recommended": "Introduce a thin AccessibilitySettings observable (or per-view @Environment reads) that exposes the four flags. Adoption then becomes a per-view modifier choice rather than an audit of every animation/opacity call."
+        }
+      ]
+    },
+    {
+      "id": "haptic_sensory_feedback",
+      "name": "Haptic / sensory feedback",
+      "category_classification": "none",
+      "category_summary": "Zero usages of UIImpactFeedback / UINotificationFeedback / UISelectionFeedback / SwiftUI .sensoryFeedback anywhere in the app. Several user actions that would conventionally provide tactile confirmation provide none.",
+      "findings": [
+        {
+          "id": "H01",
+          "surface": "Features/Home/HomeView.swift — task completion (swipe action 'Mark complete' + Today's 'Complete' button)",
+          "current_behavior": "Marks task complete with visual feedback only.",
+          "recommended": ".sensoryFeedback(.success, trigger: completedAt) — light success notification when a task transitions to completed."
+        },
+        {
+          "id": "H02",
+          "surface": "Features/Today/TodayView.swift — Add to Focus action",
+          "current_behavior": "Adds a row to Focus Three with visual confirmation; no haptic.",
+          "recommended": ".sensoryFeedback(.selection, trigger: focusCount) — selection-style click on adding an item."
+        },
+        {
+          "id": "H03",
+          "surface": "DesignSystem/VoiceCaptureButton.swift — start/stop recording",
+          "current_behavior": "Toggles recording state with visual feedback only.",
+          "recommended": ".sensoryFeedback(.impact(weight: .medium), trigger: isRecording) — medium impact at start and stop so the user knows the recording boundary."
+        },
+        {
+          "id": "H04",
+          "surface": "DesignSystem/AudioPlaybackButton.swift — playback start/stop",
+          "current_behavior": "Same shape as H03.",
+          "recommended": ".sensoryFeedback(.selection, trigger: isPlaying)."
+        },
+        {
+          "id": "H05",
+          "surface": "Five .alert presentations across Train/Write/Home/Career/Today views (the 'Couldn't Update X' family)",
+          "current_behavior": "Alert appears with visual feedback only.",
+          "recommended": ".sensoryFeedback(.error, trigger: hasError) — error notification when an alert is presented."
+        },
+        {
+          "id": "H06",
+          "surface": "Features/Home/HomeView.swift — protocol step completion (skip/complete swipe actions)",
+          "current_behavior": "Same shape as H01.",
+          "recommended": ".sensoryFeedback(.success, trigger: stepCompletedAt) for complete; .sensoryFeedback(.selection, trigger: stepSkippedAt) for skip."
+        }
+      ]
+    },
+    {
+      "id": "switch_voice_rotors_actions",
+      "name": "Switch Control / Voice Control input labels / accessibility rotors and custom actions",
+      "category_classification": "none",
+      "category_summary": "Zero accessibilityCustomActions, accessibilityRotor, or accessibilityInputLabels usages. The app has 12 swipeActions call sites whose actions are reachable only via swipe gestures — Switch Control and VoiceOver users have no equivalent way to invoke them unless the same action is also exposed as a tappable button.",
+      "findings": [
+        {
+          "id": "S01",
+          "surface": "Features/Write/WriteView.swift:176, 186, 240, 248 — 4 swipeActions on note rows (advance to source, archive, restore, etc.)",
+          "current_behavior": "Actions are reachable only via swipe; no `.accessibilityAction(named:)` or `.accessibilityAction(.default)` provides a VoiceOver / Switch Control equivalent.",
+          "recommended": "Add `.accessibilityAction(named: L(\"write.row.advance\")) { ... }` for each swipe action so VoiceOver users can invoke them via the rotor and Switch Control users can reach them via tab traversal."
+        },
+        {
+          "id": "S02",
+          "surface": "Features/Home/HomeView.swift:230, 274, 347, 563, 1184 — 5 swipeActions on task / run rows",
+          "current_behavior": "Same shape as S01. The existing localized hint `home.task.accessibility.advanceHint` etc. tells the VoiceOver user the swipe gesture exists, but the gesture itself isn't VoiceOver-invokable without `accessibilityAction`.",
+          "recommended": "Same fix as S01. Existing `home.task.accessibility.markComplete` and family already exist as localized labels — these become the `named:` argument."
+        },
+        {
+          "id": "S03",
+          "surface": "Features/Today/TodayView.swift — 2 swipeActions on Continue rows (continuePrimarySwipeActions + continueStatusSwipeActions)",
+          "current_behavior": "Same shape as S01-S02.",
+          "recommended": "Same fix; localized strings `today.continue.accessibility.focusStatusActions` and `today.continue.accessibility.addToFocus` already exist as hints — promote them to `named:` action labels."
+        },
+        {
+          "id": "S04",
+          "surface": "Features/Career/CareerView.swift:136 — 1 swipeActions",
+          "current_behavior": "Same shape.",
+          "recommended": "Same fix."
+        },
+        {
+          "id": "S05",
+          "surface": "Features/Home/HomeView.swift + Features/Today/TodayView.swift — dense lists of tasks / Continue rows",
+          "current_behavior": "VoiceOver users navigate row-by-row. No rotor entry helps them jump to category boundaries (e.g., today vs upcoming, focused vs all).",
+          "recommended": "Add `.accessibilityRotor(\"Focused tasks\")` and similar rotors on the Today and Home views, populated by the IDs of focused / category-leading rows. Low-priority — only worth doing once the rows are dense enough to feel painful."
+        },
+        {
+          "id": "S06",
+          "surface": "Voice Control across all custom-styled controls",
+          "current_behavior": "Voice Control falls back to the `accessibilityLabel` as the spoken command. For most controls the label is a sentence (e.g., 'Mark Wash dishes complete'). Voice Control users would have to say the full sentence.",
+          "recommended": "For high-frequency controls (mark complete, skip, edit, add to focus, start recording), add `.accessibilityInputLabels([...])` with short verb-noun pairs alongside the existing accessibilityLabel. Example: `[\"Complete\", \"Mark complete\", \"Done\"]`."
+        },
+        {
+          "id": "S07",
+          "surface": "DesignSystem/VoiceCaptureButton.swift + AudioPlaybackButton.swift",
+          "current_behavior": "Both buttons use accessibilityLabel only. No accessibilityCustomActions for secondary behaviors (e.g., pause, scrub).",
+          "recommended": "If pause / scrub are eventually added, expose them via accessibilityCustomActions to avoid hiding them behind gestures."
+        }
+      ]
+    }
+  ],
+  "category_summary_table": {
+    "motion_transparency_contrast_color": {"findings": 10, "highest_severity": "none (no @Environment reads)"},
+    "haptic_sensory_feedback": {"findings": 6, "highest_severity": "none (no haptic surfaces in app)"},
+    "switch_voice_rotors_actions": {"findings": 7, "highest_severity": "swipeActions invisible to Switch Control + VoiceOver users (12 sites)"}
+  },
+  "follow_up_slices_recommended": [
+    {
+      "slice_id": "app-accessibility-swipe-actions-as-accessibility-actions",
+      "priority": 76,
+      "scope": "Add `.accessibilityAction(named:)` for each swipe action across Write/Home/Today/Career views (S01-S04, 12 sites). Use the existing localized hint strings (write.row.accessibility.*, home.task.accessibility.*, today.continue.accessibility.*) as the action names. No new strings needed in the happy path."
+    },
+    {
+      "slice_id": "app-accessibility-reduce-motion-helper",
+      "priority": 77,
+      "scope": "Introduce `@Environment(\\.accessibilityReduceMotion)` reads in TodayView + TrainView + AppTheme; gate the 5 animation/transition sites (M01-M05) on the flag. Add a small `withAnimationIfAllowed(_ animation:_:)` helper if the pattern repeats."
+    },
+    {
+      "slice_id": "app-accessibility-haptic-feedback",
+      "priority": 78,
+      "scope": "Add `.sensoryFeedback` to the 6 user actions named in H01-H06 (task completion, focus add, recording start/stop, playback toggle, error alert presentation, protocol step). No new strings; per-call only."
+    },
+    {
+      "slice_id": "app-accessibility-reduce-transparency-and-contrast",
+      "priority": 80,
+      "scope": "Address M06, M09 (and the M08 trace) by introducing tokenized fills that adapt to reduceTransparency + colorSchemeContrast. Touches OwloryColor + DesignSystem + the immediate Train/Today consumers."
+    },
+    {
+      "slice_id": "app-accessibility-voice-control-input-labels",
+      "priority": 82,
+      "scope": "Add `.accessibilityInputLabels` for high-frequency Voice Control commands (mark complete, skip, edit, add to focus, start recording). Localizable strings get a new namespace `*.voicecontrol.label.*` so non-English speakers get locale-appropriate short forms."
+    }
+  ],
+  "explicit_non_audit_findings": [
+    "VoiceOver coverage is already strong (20 labels + 5 hints + 1 value + custom elements). This audit does not duplicate that; it focuses on the other categories.",
+    "Dynamic Type is also already supported (12 dynamicTypeSize references + SwiftUI's automatic scaling via .font modifiers). Not in scope here.",
+    "Some color-only states are already paired with shape (M07: checkmark.circle.fill + success color), so Differentiate Without Color is partially handled even without an environment read. The remaining concern is the Train status pill (M09) and Today severity tint (M08)."
+  ],
+  "not_claimed": [
+    "Every animation, transparency, or color usage has been inventoried. The findings name the highest-traffic surfaces; smaller decorative animations may exist.",
+    "Every swipeActions site has been traced to confirm whether the same action is also reachable via a button. Two sites might already have a tappable equivalent in their detail view, in which case the accessibilityAction is redundant; the follow-up slice should verify per-site.",
+    "Switch Control physical-device testing has been done. The findings are static-scan and HIG-pattern-based; on-device confirmation of focus order and dwell timing remains.",
+    "Voice Control device testing has been done. The recommendation for accessibilityInputLabels is based on labels-are-long; device confirmation that voice commands actually fail on long labels remains.",
+    "Reduce Motion, Reduce Transparency, or Increase Contrast have been device-tested under the actual settings. Findings reflect code shape, not on-device behavior."
+  ],
+  "proof_level": "doc-only"
+}

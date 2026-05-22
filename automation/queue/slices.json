@@ -6918,6 +6918,192 @@
       "max_files_changed": 8,
       "entry_condition": "template: true semantic is wired (first-time-only sync + stale-removal skip for template entries).",
       "notes": "Add `--force-templates` action='store_true' to the sync tool's argparse. Plumb it through to sync_entries via keyword arg. In sync_entries change the existing guard `if entry.template and target.exists(): continue` to `if entry.template and target.exists() and not force_templates: continue`. Do NOT change stale_files() behavior \u2014 consumer-added files in template dirs still survive (delete_stale: false). Add 2 tests: (1) override base.md, sync (preserved), sync --force-templates (overwritten with source); (2) add consumer-only file in prompts/, sync --force-templates, assert the added file still survives. Update docs/workflows/repo-automation.md to describe the flag under the Customizing prompt fragments section."
+    },
+    {
+      "slice_id": "app-accessibility-survey-three-categories",
+      "title": "Survey Reduce-Motion + Haptics + Switch/Voice/Rotors accessibility gaps",
+      "status": "done",
+      "priority": 75,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "automation/proofs/app-accessibility-survey/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-survey-three-categories",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 6,
+      "entry_condition": "Apple HIG accessibility categories beyond VoiceOver + Dynamic Type are not yet audited in Owlory.",
+      "notes": "Survey three accessibility categories that are NOT explicitly handled in the current codebase: (1) Reduce Motion / Reduce Transparency / Increase Contrast / Differentiate Without Color \u2014 find animations, transparency layers, and color-only state indicators that should adapt to those settings; (2) Haptic / sensory feedback \u2014 find user actions (task completion, focus change, recording start/stop, error) that would benefit from tactile feedback; (3) Switch Control / Voice Control / accessibility rotors + custom actions \u2014 find dense list rows and non-obvious controls that need focus-order, custom inputLabels, or rotor entries. Write the manifest to automation/proofs/app-accessibility-survey/manifest.json with category-grouped findings, classification (none / partial / present), and per-finding remediation recommendations. Queue follow-up fix slices that address the highest-impact gaps. Audit only \u2014 no code or copy changes."
+    },
+    {
+      "slice_id": "app-accessibility-swipe-actions-as-accessibility-actions",
+      "title": "Expose swipe actions to VoiceOver + Switch Control via accessibilityAction",
+      "priority": 76,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/Owlory/Features/Home/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Career/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-swipe-actions-as-accessibility-actions",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make localization-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-accessibility-survey-three-categories"
+      ],
+      "max_files_changed": 12,
+      "notes": "Add .accessibilityAction(named:) for the 12 swipeActions sites named in findings S01-S04. Reuse existing localized hint strings (write.row.accessibility.advanceHint, home.task.accessibility.markComplete/skip/etc., today.continue.accessibility.*). No new localization keys in the happy path. Per-site verify whether the swipe action is already reachable via a tappable button \u2014 if so, the accessibilityAction is redundant; document the per-site call in the handoff.",
+      "status": "queued",
+      "entry_condition": "app-accessibility-survey-three-categories committed."
+    },
+    {
+      "slice_id": "app-accessibility-reduce-motion-helper",
+      "title": "Honor Reduce Motion across animation + transition sites",
+      "priority": 77,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/DesignSystem/AppTheme.swift",
+        "owlory_xcode/Owlory/DesignSystem/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Train/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-reduce-motion-helper",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-accessibility-survey-three-categories"
+      ],
+      "max_files_changed": 8,
+      "notes": "Read @Environment(\\.accessibilityReduceMotion) where needed. Gate findings M01-M05 (AppTheme.swift:94 withAnimation; TodayView.swift:949 .transition; TodayView.swift:1195 .animation; TrainView.swift:536 .animation; TodayView.swift:953/1377 withAnimation). Consider a small DesignSystem/Animations.swift helper exposing `withAnimationIfAllowed(_:_:)` if duplication is high. Audit-test pattern: temporarily set the environment to reduceMotion=true in a unit test and assert no animation fires.",
+      "status": "queued",
+      "entry_condition": "app-accessibility-survey-three-categories committed."
+    },
+    {
+      "slice_id": "app-accessibility-haptic-feedback",
+      "title": "Add sensoryFeedback to task completion, focus, recording, playback, errors",
+      "priority": 78,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Home/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/Owlory/Features/Career/",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "owlory_xcode/Owlory/DesignSystem/AudioPlaybackButton.swift",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-haptic-feedback",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-accessibility-survey-three-categories"
+      ],
+      "max_files_changed": 12,
+      "notes": "Add .sensoryFeedback to the 6 user actions named in H01-H06 (task completion success, focus selection, recording impact, playback selection, error notification, protocol step). Use SwiftUI .sensoryFeedback modifier (iOS 17+); confirm minimum deployment target supports it. No new localization keys. Optional: extract a tiny helper to centralize feedback styles if duplication is high. NOTE: do not provide feedback on every state change \u2014 only on user-initiated actions; otherwise it becomes noise.",
+      "status": "queued",
+      "entry_condition": "app-accessibility-survey-three-categories committed."
+    },
+    {
+      "slice_id": "app-accessibility-reduce-transparency-and-contrast",
+      "title": "Adapt fills + borders to Reduce Transparency + Increase Contrast",
+      "priority": 80,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/DesignSystem/",
+        "owlory_xcode/Owlory/Features/Train/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-reduce-transparency-and-contrast",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-accessibility-survey-three-categories"
+      ],
+      "max_files_changed": 12,
+      "notes": "Address findings M06, M08, M09. Introduce a tokenized fill helper in OwloryColor / DesignSystem that returns either the alpha-blended color or a paired solid color, based on @Environment(\\.accessibilityReduceTransparency). For colorSchemeContrast == .increased, prefer solid backgrounds + stronger borders. Trace TodayView.swift:1243 severity tint to its consumer (M08) \u2014 if color is the only signal, add a shape/text cue.",
+      "status": "queued",
+      "entry_condition": "app-accessibility-survey-three-categories committed."
+    },
+    {
+      "slice_id": "app-accessibility-voice-control-input-labels",
+      "title": "Add accessibilityInputLabels for high-frequency Voice Control commands",
+      "priority": 82,
+      "domain": "accessibility",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Features/Home/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Write/",
+        "owlory_xcode/Owlory/DesignSystem/VoiceCaptureButton.swift",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+        "owlory_xcode/Owlory/Resources/*.lproj/Localizable.strings",
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "SecondBrain/INDEX.md",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/context/build_context.py --slice-id app-accessibility-voice-control-input-labels",
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make automation-check",
+        "make localization-check",
+        "make pyright",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-accessibility-survey-three-categories"
+      ],
+      "max_files_changed": 30,
+      "notes": "Add .accessibilityInputLabels with short verb-noun pairs for high-frequency Voice Control commands (mark complete, skip, edit, add to focus, start recording). Introduce a new localized namespace *.voicecontrol.label.* so non-English speakers get locale-appropriate short forms. Touches en.lproj + all 19 locale .strings files via localization-check. Larger blast radius than the others; explicit cap of 30 acknowledges the locale-fan-out.",
+      "status": "queued",
+      "entry_condition": "app-accessibility-survey-three-categories committed."
     }
   ]
 }

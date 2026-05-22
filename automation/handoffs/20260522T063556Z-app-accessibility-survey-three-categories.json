@@ -1,0 +1,64 @@
+{
+  "slice_id": "app-accessibility-survey-three-categories",
+  "status": "done",
+  "summary": "Surveyed three accessibility categories that the prior VoiceOver + Dynamic Type work did not cover: Reduce Motion / Reduce Transparency / Increase Contrast / Differentiate Without Color (10 findings); Haptic / sensory feedback (6 findings); Switch Control / Voice Control input labels / accessibility rotors and custom actions (7 findings). All three categories classified `none` at the category level: no @Environment reads for any of the four motion/transparency/contrast/color settings; zero haptic API usage anywhere; zero accessibilityCustomActions / accessibilityRotor / accessibilityInputLabels usages. Wrote findings to automation/proofs/app-accessibility-survey/manifest.json with per-surface recommendations. Queued 5 follow-up fix slices (pri 76-82) covering swipeAction-to-accessibilityAction, reduce-motion helper, haptic feedback, reduce-transparency + increase-contrast, and voice-control input labels.",
+  "files_touched": [
+    "automation/proofs/app-accessibility-survey/manifest.json",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T063556Z-app-accessibility-survey-three-categories.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/063556-app-accessibility-survey-three-categories.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-survey-three-categories",
+    "python3 automation/supervisor/run_next.py --dry-run (reports correctly that the next queued slice is blocked by this audit slice's own dirty paths)",
+    "make architecture",
+    "make automation-check",
+    "git diff --check",
+    "python3 -m json.tool automation/proofs/app-accessibility-survey/manifest.json",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T063556Z-app-accessibility-survey-three-categories.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "doc-only",
+  "files_changed_count": 5,
+  "max_files_changed_cap": 6,
+  "scope_observed_from": [
+    "owlory_xcode/Owlory/**/*.swift (motion, transparency, color, haptic, switch/voice/rotor pattern scan)",
+    "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings (already-localized accessibility hint strings that the follow-up slices can repurpose as accessibilityAction names)"
+  ],
+  "categories_audited": [
+    {"id": "motion_transparency_contrast_color", "category_classification": "none", "findings": 10},
+    {"id": "haptic_sensory_feedback", "category_classification": "none", "findings": 6},
+    {"id": "switch_voice_rotors_actions", "category_classification": "none", "findings": 7}
+  ],
+  "follow_up_slices_queued": [
+    {"slice_id": "app-accessibility-swipe-actions-as-accessibility-actions", "priority": 76, "category": "switch_voice_rotors_actions"},
+    {"slice_id": "app-accessibility-reduce-motion-helper", "priority": 77, "category": "motion_transparency_contrast_color"},
+    {"slice_id": "app-accessibility-haptic-feedback", "priority": 78, "category": "haptic_sensory_feedback"},
+    {"slice_id": "app-accessibility-reduce-transparency-and-contrast", "priority": 80, "category": "motion_transparency_contrast_color"},
+    {"slice_id": "app-accessibility-voice-control-input-labels", "priority": 82, "category": "switch_voice_rotors_actions"}
+  ],
+  "gaps_named_for_follow_up": [
+    "Color-only severity tint at TodayView.swift:1243 (finding M08) needs trace to its consumer to confirm whether shape/text are paired or if color alone signals severity.",
+    "On-device behavior under the actual user settings (Reduce Motion, Reduce Transparency, Switch Control dwell timing, Voice Control command recognition) has not been verified.",
+    "Localized `*.voicecontrol.label.*` namespace for the Voice Control input labels slice does not yet exist; that slice will introduce it across all 19 locales."
+  ],
+  "not_claimed": [
+    "Every animation, transparency, or color usage has been inventoried. The findings name the highest-traffic surfaces; smaller decorative effects may exist outside this scan.",
+    "Every swipeActions site has been traced to confirm whether the same action is also reachable via a button. Two sites might already have a tappable equivalent.",
+    "Switch Control or Voice Control have been physical-device tested. Findings are static-scan + HIG-pattern-based.",
+    "Reduce Motion / Reduce Transparency / Increase Contrast have been verified by toggling the actual user setting on a device."
+  ],
+  "residual_risks": [
+    "If a future view adopts one of the four motion/transparency/contrast/color flags inline without going through a shared helper, the codebase will have inconsistent coverage. Recommendation: the reduce-motion-helper slice should set the helper-vs-inline convention.",
+    "The 12 swipeActions sites named in S01-S04 are reachable via swipe only as of today. Until the swipe-actions-as-accessibility-actions slice lands, Switch Control and VoiceOver users genuinely cannot reach those actions without an external workaround."
+  ],
+  "recommended_next_slice": "app-accessibility-swipe-actions-as-accessibility-actions",
+  "recommended_next_reason": "Lowest priority among queued fix slices (76); largest concrete user-impact gap (12 actions invisible to Switch Control + VoiceOver today); existing localized strings already provide the action names so no localization fan-out.",
+  "repo_clean_status": "scope-dirty (5 files staged for the audit slice; supervisor dry-run correctly flagged this against the NEXT slice scope)",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T06:35:56Z"
+}
