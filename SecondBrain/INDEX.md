@@ -2,6 +2,7 @@
 
 ## 2026-05-22
 
+- [privacy-page-support-email-recheck (live-checked; privacy page already shows raell.dottin+support@gmail.com, no source change needed)](sessions/2026-05-22/144212-privacy-page-support-email-recheck.md)
 - [update-public-support-email (static-checked + architecture-tested + live-checked; changed public Support and Privacy contact email to raell.dottin+support@gmail.com, workflow run 26305560699 succeeded)](sessions/2026-05-22/143818-update-public-support-email.md)
 - [github-pages-actions-deployment (remote-configured + live-checked; set GitHub Pages build_type=workflow, pushed public pages commit, workflow run 26305259247 succeeded, support/privacy URLs return 200)](sessions/2026-05-22/143318-github-pages-actions-deployment.md)
 - [app-store-public-support-privacy-pages (doc-only + static-http-checked; added public static Support and Privacy Policy pages plus GitHub Pages workflow scoped to only those page directories; final App Store Connect URLs recorded)](sessions/2026-05-22/141407-app-store-public-support-privacy-pages.md)
