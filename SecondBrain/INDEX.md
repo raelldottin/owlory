@@ -2,7 +2,7 @@
 
 ## 2026-05-22
 
-- [update-public-support-email (static-checked + architecture-tested; changed public Support and Privacy contact email to raell.dottin+support@gmail.com)](sessions/2026-05-22/143818-update-public-support-email.md)
+- [update-public-support-email (static-checked + architecture-tested + live-checked; changed public Support and Privacy contact email to raell.dottin+support@gmail.com, workflow run 26305560699 succeeded)](sessions/2026-05-22/143818-update-public-support-email.md)
 - [github-pages-actions-deployment (remote-configured + live-checked; set GitHub Pages build_type=workflow, pushed public pages commit, workflow run 26305259247 succeeded, support/privacy URLs return 200)](sessions/2026-05-22/143318-github-pages-actions-deployment.md)
 - [app-store-public-support-privacy-pages (doc-only + static-http-checked; added public static Support and Privacy Policy pages plus GitHub Pages workflow scoped to only those page directories; final App Store Connect URLs recorded)](sessions/2026-05-22/141407-app-store-public-support-privacy-pages.md)
 - [release-v1.0.0-marketing-version-bump (build-tested + fast-tested; promoted CHANGELOG Unreleased to v1.0.0, bumped MARKETING_VERSION to 1.0.0, and stamped build 20260522090312)](sessions/2026-05-22/050542-release-v1.0.0-marketing-version-bump.md)
