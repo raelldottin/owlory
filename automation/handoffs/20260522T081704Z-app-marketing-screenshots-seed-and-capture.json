@@ -1,0 +1,80 @@
+{
+  "slice_id": "app-marketing-screenshots-seed-and-capture",
+  "status": "done",
+  "summary": "Generated 5 portrait App Store screenshots at 1320x2868 (iPhone 17 Pro Max native, App Store 6.9\" target). Surfaces in order: Today/Continue dashboard, Write/Capture inbox, Weekly Digest+Reflection card, Train view, Home protocols+tasks. Added --owlory-ui-seed-marketing launch arg + OwloryUITestSupport.seedMarketing() with realistic copy authored under the 'I draft, you review' user instruction: 7 DailyEntry days with varied energy/mood/sleep, a seeded WeeklyDigest for the prior full Monday-Sunday window so the Last Week card renders on Fri/non-Monday days, 5 WritingNotes spanning capture/source/permanent stages, 3 TrainingSessions (1 planned + 2 completed), 2 CareerRecords (1 win + 1 impact), 1 HouseholdProtocol + 4 HomeTasks. Captured via xcrun simctl + idb. Added a reproducible automation/smoke/capture_app_store_screenshots.py that boots the sim, builds, installs, seeds, navigates, and writes the 5 PNGs to automation/proofs/app-store-screenshots/.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+    "automation/smoke/capture_app_store_screenshots.py",
+    "automation/proofs/app-store-screenshots/1-today.png",
+    "automation/proofs/app-store-screenshots/2-write.png",
+    "automation/proofs/app-store-screenshots/3-digest.png",
+    "automation/proofs/app-store-screenshots/4-train.png",
+    "automation/proofs/app-store-screenshots/5-home.png",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T081704Z-app-marketing-screenshots-seed-and-capture.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/081704-app-marketing-screenshots-seed-and-capture.md"
+  ],
+  "validations_passed": [
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build (TEST BUILD SUCCEEDED)",
+    "python3 automation/smoke/capture_app_store_screenshots.py (5 PNGs at 1320x2868, manual run)",
+    "make architecture",
+    "make localization-check (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check (124 tests)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T081704Z-app-marketing-screenshots-seed-and-capture.json",
+    "file automation/proofs/app-store-screenshots/*.png -> PNG image data, 1320 x 2868, 8-bit/color RGBA"
+  ],
+  "validations_failed": [],
+  "proof_level": "screenshot-captured",
+  "files_changed_count": 11,
+  "max_files_changed_cap": 12,
+  "screenshots": [
+    {"order": 1, "file": "1-today.png", "surface": "Today / Continue dashboard", "shows": "Date + Day-in-progress card, Check-in row, Continue list with 3 focus items (Q4 1:1 notes, easy run, dry cleaning) + 2 carried (Strength legs, Take out recycling)"},
+    {"order": 2, "file": "2-write.png", "surface": "Write / Capture inbox", "shows": "All three stages populated: Capture (2 notes), Source Note (2 notes), Permanent Note (1 insight). Each note has a realistic title + body."},
+    {"order": 3, "file": "3-digest.png", "surface": "Weekly Digest + Reflection", "shows": "Evening Reflection entry point + Last Week digest card (2 of 2 done) + Browse Previous Days (6 entries). Frames the feedback loop in one screenshot."},
+    {"order": 4, "file": "4-train.png", "surface": "Train view", "shows": "Today's planned 'Strength: legs (3x8)' session with readiness slider + status pills (Planned/Completed/Skipped) + History starting with '5K easy run Completed'"},
+    {"order": 5, "file": "5-home.png", "surface": "Home protocols + standalone tasks", "shows": "Standalone Tasks: Take out recycling (recurring 7d), Refill dish soap, Schedule dentist (overdue note), Pay quarterly tax estimate. Protocols: Sunday meal prep."}
+  ],
+  "seed_content": {
+    "approach": "Authored under user-confirmed 'I draft, you review' instruction. Copy is specific enough to look like a real productivity user (named projects, named muscle groups, recurrence intervals, completion notes) but not identifying.",
+    "today_focus": ["Finalize Q4 1:1 notes for direct reports", "30-min easy run before dinner", "Pick up dry cleaning by 6 pm"],
+    "prior_week_focus": ["Draft sprint retro talking points", "Strength: legs (3x8)", "Pay quarterly tax estimate", "Pull together onboarding metrics review", "5K easy run", "Schedule dentist appointment"],
+    "writing_notes": ["Idea: weekly batch errands on Saturdays (capture)", "Watch: SwiftUI navigation patterns talk (capture)", "Onboarding redesign — one-pager (source)", "Career conversation prep with manager (source)", "Insight: deep work blocks shrink without protection (permanent)"],
+    "training": ["Strength: legs (3x8) [planned today]", "5K easy run / 5.2K, 27 min [completed -2d]", "Yoga: hip mobility / 35 min flow [completed -4d]"],
+    "career_records": ["Shipped onboarding redesign A/B test [win, +12% activation, n=2,134]", "Led migration kickoff with three teams [impact]"],
+    "home": ["Sunday meal prep protocol (5 steps)", "Take out recycling (recurring 7d)", "Refill dish soap", "Schedule dentist appointment", "Pay quarterly tax estimate"],
+    "digest_seed": "Prior full Monday-Sunday window. keyInsight: 'Career follow-through climbed with protected morning blocks; energy dipped on the day with the lightest sleep.' 12 of 18 done; 4-day streak."
+  },
+  "approach": [
+    "Extended OwloryUITestSupport's existing UI-testing seed pattern with a single new --owlory-ui-seed-marketing arg that triggers a richer seedMarketing() function. seedMarketing() reuses the same file-based repositories (FileTodayEntryRepository + FileItemListRepository) the existing seed functions use, so the data lands in the same on-disk format and the live PatternStore/TodayStore/etc. see it.",
+    "Pre-seeded a WeeklyDigest fixture for the prior full Monday-Sunday window so the Today view's 'Last Week' digest card renders on any day (digest auto-generation only fires on Mondays via WeeklyDigestCadenceRules.targetWindow; pre-seeding bypasses that cadence for the screenshot run).",
+    "Captured at 1320x2868 native via xcrun simctl io screenshot on iPhone 17 Pro Max. This matches the App Store 6.9\" device class directly; the same set is acceptable for 6.7\"/6.5\" carousels via Apple's auto-downscaling.",
+    "Used idb for tab taps and content scrolls. idb takes logical (point) coordinates on this simulator (440x956 logical → 1320x2868 physical at @3x).",
+    "Wrote a reproducible automation/smoke/capture_app_store_screenshots.py so the run is not a one-off. Re-running clears the output directory first."
+  ],
+  "gaps_named_for_follow_up": [
+    "The 3-digest.png shows the Last Week digest card as a NavigationLink row (collapsed) plus Evening Reflection + Browse Previous Days. Tapping the Last Week row via idb did not reliably navigate into DigestListView; a future XCUITest-driven path could surface the dedicated digest history screen if a more dramatic digest visual is wanted.",
+    "Build Info / provenance screen was intentionally not captured per user guidance (not appropriate for the public App Store carousel).",
+    "The 'Last Week 2 of 2 done' label in the Today digest card comes from a presentation calculation, not the seeded totalPlanned/totalDone (which were 18/12). The seeded digest's structured fields render in the expanded disclosure / dedicated DigestListView."
+  ],
+  "not_claimed": [
+    "These exact PNGs are the App Store screenshots that will ship; the user uploads them to App Store Connect and may choose to re-roll any individually.",
+    "The seeded copy reflects any real Owlory user. Names like 'Maya' are absent; copy was kept role-generic ('direct reports', 'manager', 'sprint retro').",
+    "On-device behavior matches the screenshot byte-for-byte. The capture is from the iOS Simulator on macOS; real-device output may have subtle font/spacing differences.",
+    "The capture script handles every edge case. A first-run system prompt (location, notifications, etc.) could intercept; the script does not dismiss prompts."
+  ],
+  "residual_risks": [
+    "If Apple changes the 6.9\" required resolution in App Store Connect, capture_app_store_screenshots.py would need re-targeting (the iPhone 17 Pro Max native size is currently 1320x2868).",
+    "If a future change to TodayView, WriteView, etc. reorders sections, the swipe count and tap coordinates in capture_app_store_screenshots.py may need adjusting.",
+    "seedMarketing() is gated by #if DEBUG inside OwloryUITestSupport and only fires when --owlory-ui-testing is also set. A misconfigured launch (testing flag present, seed arg absent) does nothing; a release build cannot seed marketing data."
+  ],
+  "recommended_next_slice": "app-accessibility-reduce-motion-helper",
+  "recommended_next_reason": "Returning to the accessibility-survey follow-up chain (5 remaining slices, the reduce-motion-helper has the lowest priority at 77).",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:17:04Z"
+}
