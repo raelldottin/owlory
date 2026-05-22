@@ -7068,7 +7068,7 @@
       ],
       "max_files_changed": 12,
       "notes": "Address findings M06, M08, M09. Introduce a tokenized fill helper in OwloryColor / DesignSystem that returns either the alpha-blended color or a paired solid color, based on @Environment(\\.accessibilityReduceTransparency). For colorSchemeContrast == .increased, prefer solid backgrounds + stronger borders. Trace TodayView.swift:1243 severity tint to its consumer (M08) \u2014 if color is the only signal, add a shape/text cue.",
-      "status": "queued",
+      "status": "done",
       "entry_condition": "app-accessibility-survey-three-categories committed."
     },
     {

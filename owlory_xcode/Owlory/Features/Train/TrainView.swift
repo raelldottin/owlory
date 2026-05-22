@@ -288,6 +288,12 @@ private struct SessionCardView: View {
     let session: TrainingSession
     @ObservedObject var store: TrainStore
     let isHighlighted: Bool
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
+    private var increasedContrast: Bool {
+        colorSchemeContrast == .increased
+    }
     @State private var actualActivity = ""
     @State private var readinessLevel = 3
     @State private var readinessNote = ""
@@ -380,12 +386,31 @@ private struct SessionCardView: View {
                                     .font(.subheadline.weight(.medium))
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 6)
-                                    .background(status == s ? statusPillColor(s).opacity(0.15) : Color.clear)
+                                    .background(
+                                        status == s
+                                        ? OwloryAccessibilityContrast.tintedFill(
+                                            statusPillColor(s),
+                                            alpha: 0.15,
+                                            reduceTransparency: reduceTransparency,
+                                            increasedContrast: increasedContrast
+                                        )
+                                        : Color.clear
+                                    )
                                     .foregroundStyle(status == s ? statusPillColor(s) : .secondary)
                                     .clipShape(Capsule())
                                     .overlay(
                                         Capsule()
-                                            .strokeBorder(status == s ? statusPillColor(s).opacity(0.3) : OwloryColor.borderSubtle, lineWidth: 1)
+                                            .strokeBorder(
+                                                status == s
+                                                ? OwloryAccessibilityContrast.tintedBorder(
+                                                    statusPillColor(s),
+                                                    alpha: 0.3,
+                                                    reduceTransparency: reduceTransparency,
+                                                    increasedContrast: increasedContrast
+                                                )
+                                                : OwloryColor.borderSubtle,
+                                                lineWidth: OwloryAccessibilityContrast.borderWidth(1, increasedContrast: increasedContrast)
+                                            )
                                     )
                             }
                             .buttonStyle(.plain)

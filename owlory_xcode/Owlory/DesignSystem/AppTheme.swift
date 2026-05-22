@@ -1,5 +1,54 @@
 import SwiftUI
 
+// MARK: - Accessibility Contrast
+
+/// Helpers that adapt tinted fills + borders to the user's Reduce Transparency
+/// and Increase Contrast preferences. Under default settings the requested
+/// alpha is returned unchanged so existing visuals are preserved.
+enum OwloryAccessibilityContrast {
+    /// Returns the color at the requested alpha. Under Reduce Transparency the
+    /// alpha is raised to a stronger floor; under Increased Contrast the color
+    /// is returned at full alpha.
+    static func tintedFill(
+        _ color: Color,
+        alpha: Double,
+        reduceTransparency: Bool,
+        increasedContrast: Bool
+    ) -> Color {
+        if increasedContrast {
+            return color
+        }
+        if reduceTransparency {
+            return color.opacity(max(alpha, 0.35))
+        }
+        return color.opacity(alpha)
+    }
+
+    /// Returns the border color at the requested alpha. Under Reduce
+    /// Transparency the alpha is raised; under Increased Contrast the alpha is
+    /// pushed even higher so borders read clearly against any background.
+    static func tintedBorder(
+        _ color: Color,
+        alpha: Double,
+        reduceTransparency: Bool,
+        increasedContrast: Bool
+    ) -> Color {
+        if increasedContrast {
+            return color
+        }
+        if reduceTransparency {
+            return color.opacity(max(alpha, 0.55))
+        }
+        return color.opacity(alpha)
+    }
+
+    /// Returns the border width to use. Under Increased Contrast the width is
+    /// doubled to make selection states unambiguous beyond color.
+    static func borderWidth(_ base: CGFloat, increasedContrast: Bool) -> CGFloat {
+        increasedContrast ? base * 2 : base
+    }
+}
+
 // MARK: - Accessibility Motion
 
 /// Helpers that honor the user's Reduce Motion preference uniformly across the

@@ -4,6 +4,12 @@ struct TodayView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
+    private var increasedContrast: Bool {
+        colorSchemeContrast == .increased
+    }
 
     @ObservedObject var store: TodayStore
     @ObservedObject var trainStore: TrainStore
@@ -586,7 +592,15 @@ struct TodayView: View {
                     .foregroundStyle(OwloryColor.warning)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
-                    .background(OwloryColor.warning.opacity(0.12), in: Capsule())
+                    .background(
+                        OwloryAccessibilityContrast.tintedFill(
+                            OwloryColor.warning,
+                            alpha: 0.12,
+                            reduceTransparency: reduceTransparency,
+                            increasedContrast: increasedContrast
+                        ),
+                        in: Capsule()
+                    )
             }
             Image(systemName: "chevron.forward")
                 .font(.caption2.weight(.semibold))

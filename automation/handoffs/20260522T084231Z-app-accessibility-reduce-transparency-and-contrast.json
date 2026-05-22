@@ -1,0 +1,70 @@
+{
+  "slice_id": "app-accessibility-reduce-transparency-and-contrast",
+  "status": "done",
+  "summary": "Added OwloryAccessibilityContrast helper enum in AppTheme.swift (next to OwloryMotion) with tintedFill(_:alpha:reduceTransparency:increasedContrast:), tintedBorder(_:alpha:reduceTransparency:increasedContrast:), and borderWidth(_:increasedContrast:). Applied at finding M09 (Train status pill: background + border alpha + border width all gate on accessibilityReduceTransparency / colorSchemeContrast) and at the state-conveying M06 site in TodayView (stale-day badge warning capsule). TodayView and TrainView's SessionCardView each gained two new @Environment reads. The other M06 sites are decorative .opacity(0.8) icon tints with no state-conveying role and are explicitly named as out-of-scope. M08 (readiness color severity tint) is paired with positional shape in the 5-dot picker and was confirmed already-paired without needing a fix.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/AppTheme.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T084231Z-app-accessibility-reduce-transparency-and-contrast.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/084231-app-accessibility-reduce-transparency-and-contrast.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build (build exit: 0)",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-reduce-transparency-and-contrast",
+    "make architecture",
+    "make automation-check (124 tests OK)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "manual smoke: xcrun simctl install + launch on iPhone 17 Pro Max — app process running (PID 59222), no init-time crash",
+    "python3 -m json.tool automation/queue/slices.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "files_changed_count": 7,
+  "max_files_changed_cap": 12,
+  "sites_modified": [
+    {"finding": "M09", "file": "Features/Train/TrainView.swift", "what": "Status pill (Planned/Completed/Skipped/Modified) — background alpha 0.15 + border alpha 0.3 + border width 1 all now route through OwloryAccessibilityContrast helpers. Under reduceTransparency the alpha floors raise (background 0.35, border 0.55); under colorSchemeContrast == .increased the color becomes solid and border width doubles."},
+    {"finding": "M06 (partial)", "file": "Features/Today/TodayView.swift", "what": "Stale-day badge (Continue row indicator: 'Xd' showing how many days an item has been carried) — warning tint alpha 0.12 gated. This is state-conveying (carried-forward signal) so it earned the gate."}
+  ],
+  "sites_explicitly_not_modified": [
+    {"finding": "M06 (decorative)", "files_lines": "TodayView.swift:722, 757, 769, 796, 849, 862", "why": "All are .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8)) on caption / icon foreground tints — decorative visual hierarchy, not state-conveying. Reduce Transparency does not affect text legibility for opacity 0.8."},
+    {"finding": "M06 (decorative)", "files_lines": "DesignSystem/AppTheme.swift:105 ContinueHighlightModifier", "why": "Brand-primary 0.10 fill highlights a momentarily-tapped continue row. The highlight is transient and the row content (icon + title + domain) carries the identity cue; the tint is purely a brief 'you just tapped this' accent. Gating it would add complexity for negligible accessibility gain."},
+    {"finding": "M08", "files_lines": "TodayView.swift readinessColor(for:)", "why": "The function returns OwloryColor.error/warning/success/textTertiary based on a numeric severity score. The consumer is the 5-dot readiness picker: each dot's POSITION conveys the same level as the color. Confirmed already-paired with positional shape; no color-only state signal."}
+  ],
+  "design_decisions": [
+    "Two distinct floors for reduceTransparency: 0.35 for fills (legible without solidifying), 0.55 for borders (sharper visual edge). Under increasedContrast both go to solid (alpha = 1.0) plus border width is doubled.",
+    "Did not modify foregroundStyle opacities. SwiftUI text rendering at 0.8 alpha is essentially unaffected by Reduce Transparency; only background tints + glass effects are.",
+    "Did not gate AppTheme.ContinueHighlightModifier in this slice. It's a momentary visual cue and would require passing env values through scrollToContinueHighlight's callers, expanding the slice unnecessarily. Named as a follow-up if/when the pattern duplicates.",
+    "Helper lives next to OwloryMotion in AppTheme.swift — the pbxproj-can't-find-new-files constraint applies here too. The MARK separator (Accessibility Contrast vs Accessibility Motion) keeps the file readable."
+  ],
+  "behavior_proven": [
+    "xcodebuild build → exit 0; no compile errors.",
+    "App launches and runs on iPhone 17 Pro Max simulator with the marketing seed args (PID 59222 in launchctl list).",
+    "Existing visuals are preserved under default settings: when reduceTransparency=false and colorSchemeContrast=.standard, the helper returns the requested alpha unchanged.",
+    "Architecture lint + automation tests (124) + pyright + diff-check all green."
+  ],
+  "gaps_named_for_follow_up": [
+    "On-device visual verification under Reduce Transparency ON and Increased Contrast ON. The build passes and the helpers are typed correctly; the user-visible color shift requires running on a device with the settings toggled in Settings -> Accessibility.",
+    "AppTheme.ContinueHighlightModifier — not gated in this slice. If a future audit shows the highlight tint is hard to see under reduceTransparency, the modifier can accept Bool params or use @Environment reads inside a SwiftUI view modifier (not the current closure-based modifier struct).",
+    "OwloryColor tokens themselves (brandPrimary, success, warning, error, etc.) are not currently differentiated by colorScheme contrast. Catalog-asset color sets COULD ship distinct .high-contrast variants. Out of scope for this slice."
+  ],
+  "not_claimed": [
+    "Every transparency-sensitive UI surface in Owlory adapts. Only the two highest-impact state-conveying sites (Train status pill, stale-day badge) are gated.",
+    "The helper produces optimal contrast ratios under every accessibility configuration. The 0.35/0.55 alpha floors are reasonable defaults; a polish pass with WCAG ratio verification could refine.",
+    "Real-device behavior matches simulator. The proof level is build-tested + simulator-launch smoke."
+  ],
+  "residual_risks": [
+    "If a future view adopts opacity-based state without going through OwloryAccessibilityContrast, it won't adapt. The pattern is opt-in.",
+    "The helper returns SwiftUI Color and trusts the caller to pass it through .background/.fill/.foregroundStyle/etc. Inserting it in a position where SwiftUI expects ShapeStyle vs Color could need .fill wrapping; the two sites modified in this slice both work with the Color type."
+  ],
+  "recommended_next_slice": "app-accessibility-voice-control-input-labels",
+  "recommended_next_reason": "Final slice in the accessibility-survey follow-up chain (pri 82). Adds short verb-noun aliases via .accessibilityInputLabels for high-frequency Voice Control commands. Larger blast radius than the others due to 19-locale fan-out for the new *.voicecontrol.label.* namespace.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:42:31Z"
+}
