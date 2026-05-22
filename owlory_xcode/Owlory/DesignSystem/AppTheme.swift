@@ -1,5 +1,33 @@
 import SwiftUI
 
+// MARK: - Accessibility Motion
+
+/// Helpers that honor the user's Reduce Motion preference uniformly across the
+/// app. SwiftUI does not automatically gate `.animation(_:value:)` or
+/// `withAnimation { }` on `accessibilityReduceMotion`; these helpers do, so each
+/// animation site stays a single readable line instead of repeating the guard.
+enum OwloryMotion {
+    /// Returns the supplied animation, or `nil` when the user has Reduce Motion
+    /// enabled. Pair with `.animation(_:value:)`.
+    static func animation(_ animation: Animation?, reduce: Bool) -> Animation? {
+        reduce ? nil : animation
+    }
+
+    /// Runs `body` inside `withAnimation(animation)` unless Reduce Motion is
+    /// enabled, in which case the state change is applied immediately.
+    @discardableResult
+    static func withAnimation<Result>(
+        _ animation: Animation = .default,
+        reduce: Bool,
+        _ body: () throws -> Result
+    ) rethrows -> Result {
+        if reduce {
+            return try body()
+        }
+        return try SwiftUI.withAnimation(animation, body)
+    }
+}
+
 // MARK: - Layout Tokens
 
 enum AppTheme {
@@ -87,11 +115,11 @@ extension View {
 }
 
 extension ScrollViewProxy {
-    func scrollToContinueHighlight<ID: Hashable>(_ id: ID?) {
+    func scrollToContinueHighlight<ID: Hashable>(_ id: ID?, reduceMotion: Bool = false) {
         guard let id else { return }
         let proxy = self
         DispatchQueue.main.async {
-            withAnimation(.easeInOut(duration: 0.2)) {
+            OwloryMotion.withAnimation(.easeInOut(duration: 0.2), reduce: reduceMotion) {
                 proxy.scrollTo(id, anchor: .center)
             }
         }

@@ -7004,7 +7004,7 @@
       ],
       "max_files_changed": 8,
       "notes": "Read @Environment(\\.accessibilityReduceMotion) where needed. Gate findings M01-M05 (AppTheme.swift:94 withAnimation; TodayView.swift:949 .transition; TodayView.swift:1195 .animation; TrainView.swift:536 .animation; TodayView.swift:953/1377 withAnimation). Consider a small DesignSystem/Animations.swift helper exposing `withAnimationIfAllowed(_:_:)` if duplication is high. Audit-test pattern: temporarily set the environment to reduceMotion=true in a unit test and assert no animation fires.",
-      "status": "queued",
+      "status": "done",
       "entry_condition": "app-accessibility-survey-three-categories committed."
     },
     {

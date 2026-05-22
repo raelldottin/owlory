@@ -515,6 +515,7 @@ struct TrainingReadinessScaleRow: View {
     let value: Int
     let anchors: (String, String, String)
     let onChange: (Int) -> Void
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 4) {
@@ -533,7 +534,7 @@ struct TrainingReadinessScaleRow: View {
                         Circle()
                             .fill(level <= value ? trainingReadinessColor(for: value) : OwloryColor.borderSubtle)
                             .frame(width: level == value ? 18 : 14, height: level == value ? 18 : 14)
-                            .animation(.easeInOut(duration: 0.15), value: value)
+                            .animation(OwloryMotion.animation(.easeInOut(duration: 0.15), reduce: reduceMotion), value: value)
                     }
                     .buttonStyle(.plain)
                     .frame(maxWidth: .infinity, minHeight: 44)

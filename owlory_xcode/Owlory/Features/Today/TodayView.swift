@@ -3,6 +3,7 @@ import SwiftUI
 struct TodayView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @ObservedObject var store: TodayStore
     @ObservedObject var trainStore: TrainStore
@@ -966,11 +967,11 @@ struct TodayView: View {
                             AudioPlaybackButton(fileName: audioFile)
                         }
                     }
-                    .transition(.opacity)
+                    .transition(reduceMotion ? .identity : .opacity)
                 } else {
                     Button {
                         store.saveReflection(reflectionText, audioFileName: reflectionAudioFileName)
-                        withAnimation { reflectionSaved = true }
+                        OwloryMotion.withAnimation(reduce: reduceMotion) { reflectionSaved = true }
                     } label: {
                         Text("Save Reflection")
                     }
@@ -1212,7 +1213,7 @@ struct TodayView: View {
                         Circle()
                             .fill(level <= value ? readinessColor(for: value) : OwloryColor.borderSubtle)
                             .frame(width: level == value ? 18 : 14, height: level == value ? 18 : 14)
-                            .animation(.easeInOut(duration: 0.15), value: value)
+                            .animation(OwloryMotion.animation(.easeInOut(duration: 0.15), reduce: reduceMotion), value: value)
                     }
                     .buttonStyle(.plain)
                     .frame(maxWidth: .infinity)
@@ -1394,7 +1395,7 @@ struct TodayView: View {
             }
             if let reflectionNudge = eveningReflectionNudge {
                 Button {
-                    withAnimation {
+                    OwloryMotion.withAnimation(reduce: reduceMotion) {
                         showingReflection = true
                     }
                 } label: {

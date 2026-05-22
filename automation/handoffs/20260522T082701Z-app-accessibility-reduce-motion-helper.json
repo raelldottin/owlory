@@ -1,0 +1,67 @@
+{
+  "slice_id": "app-accessibility-reduce-motion-helper",
+  "status": "done",
+  "summary": "Honored accessibilityReduceMotion at all five animation sites from finding M01-M05. Added a small OwloryMotion helper enum in DesignSystem/AppTheme.swift (inlined alongside existing layout tokens — pbxproj only references files explicitly, so a separate new file would have been orphaned without a manual project-file edit). OwloryMotion.animation(_:reduce:) returns nil when reduce is true; OwloryMotion.withAnimation(_:reduce:_:) skips the SwiftUI wrap entirely when reduce is true. Applied at: AppTheme.scrollToContinueHighlight (signature gained an optional reduceMotion: Bool = false param so existing callers compile unchanged), TodayView reflection transition + save withAnimation + readiness picker .animation + evening-reflection-nudge withAnimation, TrainingReadinessScaleRow .animation. TrainView's SessionCardView did not need the helper — the only Train .animation site is in TrainingReadinessScaleRow which gained its own @Environment read.",
+  "files_touched": [
+    "owlory_xcode/Owlory/DesignSystem/AppTheme.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Train/TrainView.swift",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T082701Z-app-accessibility-reduce-motion-helper.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/082701-app-accessibility-reduce-motion-helper.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build (build exit: 0; no compile errors)",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-reduce-motion-helper",
+    "make architecture",
+    "make automation-check (124 tests OK)",
+    "make pyright (0 errors)",
+    "git diff --check",
+    "manual smoke: xcrun simctl install + launch on iPhone 17 Pro Max with --owlory-ui-testing --owlory-ui-seed-marketing — app process running (PID 39695), no crash",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T082701Z-app-accessibility-reduce-motion-helper.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "files_changed_count": 7,
+  "max_files_changed_cap": 8,
+  "sites_modified": [
+    {"finding": "M01", "file": "DesignSystem/AppTheme.swift", "line": "~94", "before": "withAnimation(.easeInOut(duration: 0.2))", "after": "OwloryMotion.withAnimation(.easeInOut(duration: 0.2), reduce: reduceMotion) — signature gained reduceMotion: Bool = false; default keeps existing callers' behavior"},
+    {"finding": "M02", "file": "Features/Today/TodayView.swift", "line": "~969", "before": ".transition(.opacity)", "after": ".transition(reduceMotion ? .identity : .opacity) — explicit because .transition takes AnyTransition (not Animation?)"},
+    {"finding": "M05a", "file": "Features/Today/TodayView.swift", "line": "~973", "before": "withAnimation { reflectionSaved = true }", "after": "OwloryMotion.withAnimation(reduce: reduceMotion) { reflectionSaved = true }"},
+    {"finding": "M03", "file": "Features/Today/TodayView.swift", "line": "~1215", "before": ".animation(.easeInOut(duration: 0.15), value: value)", "after": ".animation(OwloryMotion.animation(.easeInOut(duration: 0.15), reduce: reduceMotion), value: value)"},
+    {"finding": "M05b", "file": "Features/Today/TodayView.swift", "line": "~1397", "before": "withAnimation { showingReflection = true }", "after": "OwloryMotion.withAnimation(reduce: reduceMotion) { showingReflection = true }"},
+    {"finding": "M04", "file": "Features/Train/TrainView.swift", "line": "~537", "before": ".animation(.easeInOut(duration: 0.15), value: value)", "after": ".animation(OwloryMotion.animation(.easeInOut(duration: 0.15), reduce: reduceMotion), value: value) — TrainingReadinessScaleRow gained @Environment(\\.accessibilityReduceMotion)"}
+  ],
+  "design_decisions": [
+    "Inlined OwloryMotion into AppTheme.swift instead of a standalone DesignSystem/AccessibilityMotion.swift file because Owlory.xcodeproj/project.pbxproj references files by explicit PBXFileReference IDs and would not pick up a new file without a manual project edit. The helper enum sits at the top of AppTheme.swift under its own MARK header.",
+    "Did not change .transition(.opacity) to a no-op when reduceMotion is true — instead switched to .transition(.identity), which still produces a clean appear without animation. .transition takes AnyTransition, not Animation?, so the OwloryMotion.animation form doesn't apply.",
+    "Kept the existing default behavior for AppTheme.scrollToContinueHighlight (reduceMotion: Bool = false) so the 5 existing callers in Write/Home/Today/Train/Career compile unchanged. Those callers can opt-in by passing reduceMotion: reduceMotion. Naming the upgrade as a follow-up rather than chaining 10+ touched files into this slice."
+  ],
+  "behavior_proven": [
+    "xcodebuild -scheme Owlory build → exit 0, no errors.",
+    "App launches and runs (PID 39695 in launchctl list) on iPhone 17 Pro Max simulator with the seed args.",
+    "OwloryMotion.animation returns nil for reduce=true, value for reduce=false (single-line conditional).",
+    "OwloryMotion.withAnimation bypasses SwiftUI.withAnimation entirely when reduce=true (state change still happens, no animation curve)."
+  ],
+  "gaps_named_for_follow_up": [
+    "Five callers of AppTheme.scrollToContinueHighlight (Write/Home/Today/Train/Career views) still pass the default reduceMotion: false. A follow-up could thread @Environment(\\.accessibilityReduceMotion) through each caller so the scroll-to-highlight also honors the preference.",
+    "On-device toggle of Reduce Motion has not been verified visually. The build + launch is clean; visual confirmation that the readiness picker is static and the reflection save fades instantly under reduceMotion=true requires manual simulator testing or an XCUITest fixture."
+  ],
+  "not_claimed": [
+    "Every animation in the app honors reduceMotion. Only the 5 sites named in the accessibility survey's motion category are gated. Other implicit SwiftUI animations (NavigationStack push, sheet present, list reorder) continue with iOS defaults — they're typically duration-controlled by the system already.",
+    "OwloryMotion is the only helper that should exist. A future cleanup could collapse the .transition(reduceMotion ? .identity : .opacity) pattern into a small View extension if it repeats."
+  ],
+  "residual_risks": [
+    "If a new animation site is added in the future without using OwloryMotion (or without reading @Environment(\\.accessibilityReduceMotion)), it will not honor the preference. The helper is opt-in; no static check enforces its use.",
+    "OwloryMotion lives in AppTheme.swift, which is also where ScrollViewProxy.scrollToContinueHighlight lives. Keeping two unrelated concerns in one file is a slight smell; a future refactor could extract a DesignSystem/AccessibilityMotion.swift once someone is willing to update Owlory.xcodeproj/project.pbxproj."
+  ],
+  "recommended_next_slice": "app-accessibility-haptic-feedback",
+  "recommended_next_reason": "Lowest priority among queued accessibility-survey follow-ups (pri 78). 6 user actions named in H01-H06 lack tactile feedback (task completion, focus add, recording start/stop, playback toggle, error alert, protocol step).",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T08:27:01Z"
+}
