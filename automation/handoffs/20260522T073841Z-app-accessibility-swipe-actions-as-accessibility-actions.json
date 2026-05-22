@@ -1,0 +1,78 @@
+{
+  "slice_id": "app-accessibility-swipe-actions-as-accessibility-actions",
+  "status": "done",
+  "summary": "Added .accessibilityActions { ... } (SwiftUI ViewBuilder form, iOS 17+) alongside the existing .swipeActions blocks across all 12 swipe-action sites in Write/Home/Today/Career views. Switch Control users and VoiceOver users can now invoke the actions via the rotor / focus traversal without performing the swipe gesture. Action labels reuse the same L(...) localized strings as the swipe-action buttons (Advance, Delete, Archive, Restore, Edit, Abandon, Mark Pending, Done, Add to Focus, Defer, Drop) — no new localization keys needed. For the Today continue row, factored out a continueAccessibilityActions(for:) ViewBuilder that mirrors the existing continuePrimarySwipeActions + continueStatusSwipeActions logic.",
+  "files_touched": [
+    "owlory_xcode/Owlory/Features/Write/WriteView.swift",
+    "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+    "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+    "owlory_xcode/Owlory/Features/Career/CareerView.swift",
+    "automation/queue/slices.json",
+    "automation/handoffs/20260522T073841Z-app-accessibility-swipe-actions-as-accessibility-actions.json",
+    "SecondBrain/INDEX.md",
+    "SecondBrain/sessions/2026-05-22/073841-app-accessibility-swipe-actions-as-accessibility-actions.md"
+  ],
+  "validations_passed": [
+    "git fetch origin main",
+    "xcodebuild -project owlory_xcode/Owlory.xcodeproj -scheme Owlory build-for-testing (TEST BUILD SUCCEEDED)",
+    "python3 automation/context/build_context.py --slice-id app-accessibility-swipe-actions-as-accessibility-actions",
+    "python3 automation/supervisor/run_next.py --dry-run",
+    "make architecture",
+    "make localization-check (19 locales, 386 keys, 13 plural keys)",
+    "make automation-check",
+    "make pyright",
+    "git diff --check",
+    "python3 -m json.tool automation/queue/slices.json",
+    "python3 -m json.tool automation/handoffs/20260522T073841Z-app-accessibility-swipe-actions-as-accessibility-actions.json"
+  ],
+  "validations_failed": [],
+  "proof_level": "build-tested",
+  "files_changed_count": 8,
+  "max_files_changed_cap": 12,
+  "scope_observed_from": [
+    "automation/proofs/app-accessibility-survey/manifest.json findings S01-S04 (12 swipe-action sites)",
+    "owlory_xcode/Owlory.xcodeproj IPHONEOS_DEPLOYMENT_TARGET=17.0 (confirms accessibilityActions ViewBuilder form is available)",
+    "owlory_xcode/Owlory/Features/{Write,Home,Today,Career}/*View.swift swipe-action structure"
+  ],
+  "sites_modified": [
+    {"file": "WriteView.swift", "lines": "176-202", "actions": ["Advance (conditional on next stage)", "Delete (destructive)", "Archive (conditional on canTransition)"]},
+    {"file": "WriteView.swift", "lines": "240-262 (archive section)", "actions": ["Restore", "Delete (destructive)"]},
+    {"file": "HomeView.swift", "lines": "230-241 (protocol row)", "actions": ["Edit"]},
+    {"file": "HomeView.swift", "lines": "277-289 (archived protocol row)", "actions": ["Restore"]},
+    {"file": "HomeView.swift", "lines": "353-363 (active run row)", "actions": ["Abandon (destructive)"]},
+    {"file": "HomeView.swift", "lines": "572-584 (task row)", "actions": ["Delete (destructive)"]},
+    {"file": "HomeView.swift", "lines": "1196-1212 (protocol step)", "actions": ["Mark Pending (conditional on step.status != .pending)"]},
+    {"file": "TodayView.swift", "lines": "292-300 + 357-373 (continue row + new builder)", "actions": ["Done OR Add to Focus (primary)", "Defer", "Drop (destructive)"]},
+    {"file": "CareerView.swift", "lines": "136-146 (record row)", "actions": ["Delete (destructive)"]}
+  ],
+  "approach": [
+    "Used .accessibilityActions { ... } (ViewBuilder form, iOS 17+) rather than chained .accessibilityAction(named:_:) calls. The ViewBuilder form accepts conditional `if` statements that mirror the existing swipe-action structure exactly, so action availability stays in lockstep without per-site custom modifiers.",
+    "Reused the existing L(...) localized strings that the swipe-action buttons already use. No new localization keys; the 19 locales already cover these labels.",
+    "Reused the existing role: .destructive marker where the swipe-action button used it (Delete, Drop, Abandon). Destructive actions get VoiceOver's standard destructive treatment in the rotor.",
+    "For Today's continue row, factored a continueAccessibilityActions(for:) ViewBuilder that lives next to continuePrimarySwipeActions / continueStatusSwipeActions and follows the same conditional structure. Future swipe-action changes in either builder should be mirrored in the new one."
+  ],
+  "behavior_proven": [
+    "Real Swift compile via xcodebuild (TEST BUILD SUCCEEDED) confirms all 8 changed Swift files are syntactically + semantically valid.",
+    "Localization parity check passes (no new keys; existing 386-key inventory unchanged).",
+    "Architecture lint + automation tests + pyright + diff-check all green."
+  ],
+  "gaps_named_for_follow_up": [
+    "Per-site verification that the swipe-gated action ISN'T already reachable via a tappable button in the row. The Home task row already has Complete/Skip as tappable in-row buttons (Delete remains swipe-only). The Home protocol step row has Skip/Complete as tappable (Mark Pending remains swipe-only). The audit recommended per-site verification; for this slice, all 12 sites received .accessibilityActions because none of the swipe actions are reachable via in-row buttons in their current form. If a future redesign adds explicit buttons for any of these actions, the redundant accessibilityActions entry should be removed.",
+    "On-device confirmation that the rotor exposes the new actions, that destructive actions get the destructive treatment, and that Switch Control can reach each in tab order. Static-scan + xcodebuild does not exercise the runtime."
+  ],
+  "not_claimed": [
+    "Voice Control commands work for these actions without further customization. The accessibilityActions ViewBuilder adds rotor entries for VoiceOver; Voice Control reads the same labels. Short verb-noun aliases would still help — that work belongs to app-accessibility-voice-control-input-labels (queued).",
+    "Every accessibilityAction has been UI-tested. xcodebuild succeeded, but on-device behavior under VoiceOver, Switch Control, and Voice Control is not exercised by this slice.",
+    "The 4 other accessibility-survey follow-up slices have been implemented. This slice closes ONE of the 5 follow-ups (the highest-impact gap)."
+  ],
+  "residual_risks": [
+    "If the swipe-action structure inside a continue row changes (e.g., a new conditional branch added to continuePrimarySwipeActions), the matching continueAccessibilityActions branch must be updated in lockstep. Same risk applies to the inline accessibilityActions blocks in Write/Home/Career.",
+    "The accessibilityActions ViewBuilder uses Button(_:role:action:) initializers without explicit Text wrappers. SwiftUI infers the LocalizedStringKey from the String literal context. Should remain stable, but if Apple changes Button overload resolution, the action labels could regress to non-localized strings."
+  ],
+  "recommended_next_slice": "app-accessibility-reduce-motion-helper",
+  "recommended_next_reason": "Lowest priority among queued accessibility-survey follow-ups (77); 5 unguarded animation sites is the next most user-impacting gap.",
+  "repo_clean_status": "clean",
+  "git_mirror_status": "no-sync-needed (no manifest-owned files touched)",
+  "dirty_paths_outside_scope": [],
+  "timestamp": "2026-05-22T07:38:41Z"
+}

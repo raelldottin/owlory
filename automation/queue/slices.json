@@ -6973,7 +6973,7 @@
       ],
       "max_files_changed": 12,
       "notes": "Add .accessibilityAction(named:) for the 12 swipeActions sites named in findings S01-S04. Reuse existing localized hint strings (write.row.accessibility.advanceHint, home.task.accessibility.markComplete/skip/etc., today.continue.accessibility.*). No new localization keys in the happy path. Per-site verify whether the swipe action is already reachable via a tappable button \u2014 if so, the accessibilityAction is redundant; document the per-site call in the handoff.",
-      "status": "queued",
+      "status": "done",
       "entry_condition": "app-accessibility-survey-three-categories committed."
     },
     {

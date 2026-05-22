@@ -198,6 +198,15 @@ struct WriteView: View {
                         .tint(OwloryColor.textTertiary)
                     }
                 }
+                .accessibilityActions {
+                    if WritingStageRules.nextStage(after: stage) != nil {
+                        Button(L("Advance")) { store.advanceStage(id: note.id) }
+                    }
+                    Button(L("Delete"), role: .destructive) { store.deleteNote(id: note.id) }
+                    if WritingStageRules.canTransition(from: stage, to: .archived) {
+                        Button(L("Archive")) { store.transitionStage(id: note.id, to: .archived) }
+                    }
+                }
                 .accessibilityHint(writeRowAccessibilityHint(for: note))
                 .accessibilityIdentifier("write.note.row.\(note.id.uuidString)")
             }
@@ -251,6 +260,10 @@ struct WriteView: View {
                             } label: {
                                 Label(L("Delete"), systemImage: "trash")
                             }
+                        }
+                        .accessibilityActions {
+                            Button(L("Restore")) { store.transitionStage(id: note.id, to: .capture) }
+                            Button(L("Delete"), role: .destructive) { store.deleteNote(id: note.id) }
                         }
                     }
                 }

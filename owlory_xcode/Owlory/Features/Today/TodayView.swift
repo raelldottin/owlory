@@ -295,6 +295,9 @@ struct TodayView: View {
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         continueStatusSwipeActions(for: item)
                     }
+                    .accessibilityActions {
+                        continueAccessibilityActions(for: item)
+                    }
                     .accessibilityHint(continueAccessibilityHint(for: item))
                     .accessibilityIdentifier(continueAccessibilityIdentifier(for: item))
                 }
@@ -351,6 +354,23 @@ struct TodayView: View {
                     Label(L("Drop"), systemImage: "xmark.circle")
                 }
                 .accessibilityIdentifier(continueActionAccessibilityIdentifier("drop", for: item))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func continueAccessibilityActions(for item: TodayContinuationRules.ContinueItem) -> some View {
+        if let focusItem = focusItem(for: item), focusItem.status != .done {
+            Button(L("Done")) { store.updateStatus(for: focusItem.id, to: .done) }
+        } else if store.canAddContinueItemToFocus(item) {
+            Button(L("Add to Focus")) { store.addContinueItemToFocus(item) }
+        }
+        if let focusItem = focusItem(for: item) {
+            if focusItem.status != .deferred {
+                Button(L("Defer")) { store.updateStatus(for: focusItem.id, to: .deferred) }
+            }
+            if focusItem.status != .dropped {
+                Button(L("Drop"), role: .destructive) { store.updateStatus(for: focusItem.id, to: .dropped) }
             }
         }
     }

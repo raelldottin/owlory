@@ -140,6 +140,9 @@ struct CareerView: View {
                             Label(L("Delete"), systemImage: "trash")
                         }
                     }
+                    .accessibilityActions {
+                        Button(L("Delete"), role: .destructive) { store.deleteRecord(id: record.id) }
+                    }
                 }
             }
         } header: {

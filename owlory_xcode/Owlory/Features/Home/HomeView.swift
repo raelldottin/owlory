@@ -235,6 +235,9 @@ struct HomeView: View {
                         }
                         .tint(OwloryColor.brandPrimary)
                     }
+                    .accessibilityActions {
+                        Button(L("Edit")) { editingProtocol = proto }
+                    }
                     .accessibilityIdentifier("home.protocol.item.\(proto.id.uuidString)")
                 }
             }
@@ -278,6 +281,9 @@ struct HomeView: View {
                                 Label(L("Restore"), systemImage: "arrow.uturn.backward")
                             }
                             .tint(OwloryColor.brandPrimary)
+                        }
+                        .accessibilityActions {
+                            Button(L("Restore")) { store.unarchiveProtocol(id: proto.id) }
                         }
                     }
                 }
@@ -350,6 +356,9 @@ struct HomeView: View {
                         } label: {
                             Label(L("Abandon"), systemImage: "xmark.circle")
                         }
+                    }
+                    .accessibilityActions {
+                        Button(L("Abandon"), role: .destructive) { store.abandonRun(id: run.id) }
                     }
             }
         } header: {
@@ -566,6 +575,9 @@ private struct TaskRow: View {
             } label: {
                 Label(L("Delete"), systemImage: "trash")
             }
+        }
+        .accessibilityActions {
+            Button(L("Delete"), role: .destructive) { store.deleteTask(id: task.id) }
         }
     }
 
@@ -1188,6 +1200,11 @@ private struct ProtocolRunSheet: View {
                                 } label: {
                                     Label(L("Mark Pending"), systemImage: "arrow.uturn.backward.circle")
                                 }
+                            }
+                        }
+                        .accessibilityActions {
+                            if step.status != .pending {
+                                Button(L("Mark Pending")) { store.revertStep(runID: run.id, stepID: step.id) }
                             }
                         }
                         .accessibilityElement(children: .contain)
