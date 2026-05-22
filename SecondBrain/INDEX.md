@@ -2,6 +2,7 @@
 
 ## 2026-05-22
 
+- [github-pages-actions-deployment (remote-configured + live-checked; set GitHub Pages build_type=workflow, pushed public pages commit, workflow run 26305259247 succeeded, support/privacy URLs return 200)](sessions/2026-05-22/143318-github-pages-actions-deployment.md)
 - [app-store-public-support-privacy-pages (doc-only + static-http-checked; added public static Support and Privacy Policy pages plus GitHub Pages workflow scoped to only those page directories; final App Store Connect URLs recorded)](sessions/2026-05-22/141407-app-store-public-support-privacy-pages.md)
 - [release-v1.0.0-marketing-version-bump (build-tested + fast-tested; promoted CHANGELOG Unreleased to v1.0.0, bumped MARKETING_VERSION to 1.0.0, and stamped build 20260522090312)](sessions/2026-05-22/050542-release-v1.0.0-marketing-version-bump.md)
 - [app-marketing-screenshots-63-inch (screenshot-captured; parameterized capture_app_store_screenshots.py with --device-name + --output-subdir; captured 5 PNGs at 1206x2622 to automation/proofs/app-store-screenshots-6.3/ — exact App Store Connect 6.3" target; existing 6.9" set unchanged)](sessions/2026-05-22/085845-app-marketing-screenshots-63-inch.md)
