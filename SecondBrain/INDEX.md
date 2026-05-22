@@ -2,6 +2,7 @@
 
 ## 2026-05-22
 
+- [release-v1.0.0-marketing-version-bump (build-tested + fast-tested; promoted CHANGELOG Unreleased to v1.0.0, bumped MARKETING_VERSION to 1.0.0, and stamped build 20260522090312)](sessions/2026-05-22/050542-release-v1.0.0-marketing-version-bump.md)
 - [app-marketing-screenshots-63-inch (screenshot-captured; parameterized capture_app_store_screenshots.py with --device-name + --output-subdir; captured 5 PNGs at 1206x2622 to automation/proofs/app-store-screenshots-6.3/ — exact App Store Connect 6.3" target; existing 6.9" set unchanged)](sessions/2026-05-22/085845-app-marketing-screenshots-63-inch.md)
 - [app-accessibility-voice-control-input-labels (build-tested; added 5 new voicecontrol.label.* keys across 19 locales — 95 new entries — and applied .accessibilityInputLabels at 5 high-frequency Voice Control surfaces; key count 386 -> 391 per locale; closes the 5-slice accessibility-survey follow-up chain)](sessions/2026-05-22/084852-app-accessibility-voice-control-input-labels.md)
 - [app-accessibility-reduce-transparency-and-contrast (build-tested; added OwloryAccessibilityContrast helper enum in AppTheme.swift; gated Train status pill background+border+width and TodayView stale-day badge tint on accessibilityReduceTransparency + colorSchemeContrast; documented decorative .opacity(0.8) sites and readiness picker as already-paired)](sessions/2026-05-22/084231-app-accessibility-reduce-transparency-and-contrast.md)

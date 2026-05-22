@@ -8,6 +8,18 @@ This file is user- and support-facing. It summarizes changes that matter for Tes
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Localization
+
+### Release And Validation
+
+## [1.0.0] - 2026-05-22
+
+### Added
+
 - Added localized resources and semantic copy routing across Today, Train, Write, Home, Patterns, reminders, accessibility labels, and helper-generated copy.
 - Added repo-managed localization review, all-locale review packets, native/fluent review intake, drift checks, and simulator-based HIG/accessibility proof lanes.
 - Added release Build Info and provenance workflows that tie installed app version/build metadata back to committed Git source and clean archive readiness.
