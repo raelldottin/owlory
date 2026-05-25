@@ -298,10 +298,9 @@ def render_md(rows: list[dict[str, Any]]) -> str:
     out.append("")
     out.append("- It does NOT mean a native or fluent reviewer accepted the translation.")
     out.append("- It does NOT mean translation quality is proven for that entry.")
-    out.append("- It does NOT change `provenance.native_reviewed` — that flag remains `false` for every locale until human native review supplies corrected values.")
+    out.append("- It does NOT change `provenance.native_reviewed`; native-review state comes only from the per-locale return file and per-entry `native_review` metadata.")
     out.append("")
-    out.append("Native review still belongs to `app-localization-native-review-intake`, which remains blocked.")
-    out.append("")
+    out.append("New post-review entries can remain pending even when a locale return file has earlier native/fluent review provenance.")
     return "\n".join(out) + "\n"
 
 

@@ -18,7 +18,7 @@
     "review_date": "2026-05-18",
     "method": "Human native/fluent all-locale review pass reported by project owner in Codex prompt: \"native/fluent review is complete for all localization\".",
     "native_reviewed": true,
-    "accepted_scope": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 9 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
+    "accepted_scope": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 14 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
     "source_signal": "User prompt in Codex conversation on 2026-05-18: native/fluent review is complete for all localization.",
     "previous_draft_provenance": {
       "reviewer": "claude-opus-4-7 (LLM, not native French / Français reviewer)",
@@ -39,7 +39,7 @@
       ]
     },
     "post_packet_additions": {
-      "total_pending_entries": 9,
+      "total_pending_entries": 14,
       "slices": [
         {
           "slice_id": "app-error-message-fix-store-templates",
@@ -63,6 +63,20 @@
           "date": "2026-05-20",
           "keys": [
             "write.error.note.sourceConversion.invalidStage"
+          ],
+          "review_status": "needs-layout-check",
+          "reviewer": "Codex automated draft (not native/fluent reviewer)",
+          "native_reviewed": false
+        },
+        {
+          "slice_id": "app-accessibility-voice-control-input-labels",
+          "date": "2026-05-25",
+          "keys": [
+            "voicecontrol.label.complete",
+            "voicecontrol.label.skip",
+            "voicecontrol.label.edit",
+            "voicecontrol.label.addToFocus",
+            "voicecontrol.label.startRecording"
           ],
           "review_status": "needs-layout-check",
           "reviewer": "Codex automated draft (not native/fluent reviewer)",
@@ -93,6 +107,20 @@
         "date": "2026-05-20",
         "keys": [
           "write.error.note.sourceConversion.invalidStage"
+        ],
+        "review_status": "needs-layout-check",
+        "reviewer": "Codex automated draft (not native/fluent reviewer)",
+        "native_reviewed": false
+      },
+      {
+        "slice_id": "app-accessibility-voice-control-input-labels",
+        "date": "2026-05-25",
+        "keys": [
+          "voicecontrol.label.complete",
+          "voicecontrol.label.skip",
+          "voicecontrol.label.edit",
+          "voicecontrol.label.addToFocus",
+          "voicecontrol.label.startRecording"
         ],
         "review_status": "needs-layout-check",
         "reviewer": "Codex automated draft (not native/fluent reviewer)",
@@ -132,18 +160,19 @@
     ]
   },
   "summary": {
-    "review_entry_count": 428,
+    "review_entry_count": 433,
     "status_counts": {
       "native-reviewed": 417,
-      "needs-layout-check": 11
+      "needs-layout-check": 16
     },
     "lqa_counts": {
-      "passed": 417,
-      "warning": 11
+      "passed": 404,
+      "warning": 29,
+      "reverted": 0
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 386,
+    "strings_entry_count": 391,
     "plural_entry_count": 42,
     "native_review": {
       "locale": "fr",
@@ -152,8 +181,8 @@
       "review_date": "2026-05-18",
       "accepted_entries": 417,
       "basis": "project-owner-reported native/fluent all-locale review pass",
-      "pending_post_packet_entries": 9,
-      "scope_note": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 9 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
+      "pending_post_packet_entries": 14,
+      "scope_note": "Project-owner-reported native/fluent review covers 417 unchanged entries. The 14 post-review additions and 2 post-review source updates are automated drafts and are not claimed native/fluent-reviewed.",
       "pending_source_update_entries": 2
     }
   },
@@ -645,14 +674,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -678,14 +709,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -711,14 +744,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -812,13 +847,15 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -1115,14 +1152,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -1386,14 +1425,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -1453,14 +1494,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -4307,14 +4350,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -4578,13 +4623,15 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -4678,14 +4725,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -5833,14 +5882,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -6750,14 +6801,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -6783,14 +6836,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -6816,14 +6871,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -7631,14 +7688,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -8514,13 +8573,15 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -8614,14 +8675,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -8851,14 +8914,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -8918,14 +8983,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -8951,14 +9018,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -9018,14 +9087,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -9051,14 +9122,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -9151,14 +9224,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -9251,14 +9326,16 @@
       "resource_type": "strings",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -10960,14 +11037,16 @@
       "resource_type": "stringsdict",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -10995,14 +11074,16 @@
       "resource_type": "stringsdict",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -11030,14 +11111,16 @@
       "resource_type": "stringsdict",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -11065,14 +11148,16 @@
       "resource_type": "stringsdict",
       "locale": "fr",
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -12461,19 +12546,18 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "English source changed after reported native/fluent review; automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
-        "auto_fix_action": "Removed raw diagnostic interpolation from accessibility speech and added retry guidance."
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
       },
       "native_review": {
         "accepted": false,
@@ -12642,19 +12726,18 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "English source changed after reported native/fluent review; automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
-        "auto_fix_action": "Removed raw diagnostic interpolation from accessibility speech and added retry guidance."
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
       },
       "native_review": {
         "accepted": false,
@@ -13417,14 +13500,16 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "passed",
+        "status": "warning",
         "checks_run": [
           "empty-value",
           "identical-to-english-outside-keep",
           "length-outlier",
           "mojibake-suspect"
         ],
-        "issues": [],
+        "issues": [
+          "identical-to-english-outside-keep: reviewed_value matches English source but review_status is not keep-english-term"
+        ],
         "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
         "second_pass_date": "2026-05-15",
         "auto_fix_action": null
@@ -14536,18 +14621,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14570,18 +14654,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14604,18 +14687,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14638,18 +14720,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14672,18 +14753,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14706,18 +14786,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14740,18 +14819,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14774,18 +14852,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14808,18 +14885,17 @@
       "locale": "fr",
       "post_packet_addition": true,
       "lqa": {
-        "status": "warning",
+        "status": "passed",
         "checks_run": [
           "format-specifier-parity",
           "empty-value",
           "identical-to-english-outside-keep",
-          "hig-resolution-guidance"
+          "length-outlier",
+          "mojibake-suspect"
         ],
-        "issues": [
-          "Automated localized draft pending native/fluent acceptance."
-        ],
-        "second_pass_reviewer": "Codex automated draft (not native/fluent reviewer)",
-        "second_pass_date": "2026-05-20",
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
         "auto_fix_action": null
       },
       "native_review": {
@@ -14827,6 +14903,171 @@
         "reviewer": null,
         "review_date": null,
         "basis": "Added after the project-owner-reported 2026-05-18 native/fluent review pass; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "voicecontrol.label.complete",
+      "english_value": "Complete",
+      "reviewed_value": "Terminer",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-25",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "fr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "voicecontrol.label.skip",
+      "english_value": "Skip",
+      "reviewed_value": "Passer",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-25",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "fr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "voicecontrol.label.edit",
+      "english_value": "Edit",
+      "reviewed_value": "Modifier",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-25",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "fr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "voicecontrol.label.addToFocus",
+      "english_value": "Add to Focus",
+      "reviewed_value": "Ajouter au focus",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-25",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "fr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      }
+    },
+    {
+      "key": "voicecontrol.label.startRecording",
+      "english_value": "Start recording",
+      "reviewed_value": "Démarrer l’enregistrement",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-05-25",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "fr",
+      "post_packet_addition": true,
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      },
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
         "pending_native_review": true
       }
     }

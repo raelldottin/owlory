@@ -17,8 +17,8 @@ The dashboard is reporting-only:
   reported here only reflects what the return files already say.
 
 A locale is considered "native-reviewed" only when its `provenance.native_reviewed`
-flag is `true`. The current state has zero native-reviewed locales because all
-review returns were produced by `claude-opus-4-7` (LLM) on 2026-05-15.
+flag is `true`. The dashboard reports the current return-file state; it does not
+infer translation quality from LQA output or generated review packets.
 
 Usage:
 

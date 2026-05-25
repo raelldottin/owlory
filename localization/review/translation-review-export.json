@@ -16488,83 +16488,83 @@
     },
     {
       "comment": "",
-      "english_value": "Playback error: %@",
+      "english_value": "Playback failed. Double-tap to try again.",
       "key": "audio.playback.accessibility.error",
       "locales": {
         "ar": {
-          "current_value": "خطأ في التشغيل: %@",
+          "current_value": "تعذر التشغيل. اضغط مرتين للمحاولة مرة أخرى.",
           "status": "draft-translation"
         },
         "de": {
-          "current_value": "Wiedergabefehler: %@",
+          "current_value": "Wiedergabe fehlgeschlagen. Doppeltippen Sie, um es erneut zu versuchen.",
           "status": "draft-translation"
         },
         "en": {
-          "current_value": "Playback error: %@",
+          "current_value": "Playback failed. Double-tap to try again.",
           "status": "english-source"
         },
         "es": {
-          "current_value": "Error de reproducción: %@",
+          "current_value": "La reproducción falló. Toca dos veces para intentarlo de nuevo.",
           "status": "draft-translation"
         },
         "fr": {
-          "current_value": "Erreur de lecture : %@",
+          "current_value": "La lecture a échoué. Touchez deux fois pour réessayer.",
           "status": "draft-translation"
         },
         "it": {
-          "current_value": "Errore di riproduzione: %@",
+          "current_value": "Riproduzione non riuscita. Tocca due volte per riprovare.",
           "status": "draft-translation"
         },
         "ja": {
-          "current_value": "再生エラー: %@",
+          "current_value": "再生できませんでした。もう一度試すにはダブルタップしてください。",
           "status": "draft-translation"
         },
         "ko": {
-          "current_value": "재생 오류: %@",
+          "current_value": "재생에 실패했습니다. 다시 시도하려면 두 번 탭하세요.",
           "status": "draft-translation"
         },
         "nb": {
-          "current_value": "Avspillingsfeil: %@",
+          "current_value": "Avspillingen mislyktes. Dobbelttrykk for å prøve igjen.",
           "status": "draft-translation"
         },
         "nl": {
-          "current_value": "Afspeelfout: %@",
+          "current_value": "Afspelen is mislukt. Tik dubbel om het opnieuw te proberen.",
           "status": "draft-translation"
         },
         "pt": {
-          "current_value": "Erro de reprodução: %@",
+          "current_value": "A reprodução falhou. Toque duas vezes para tentar novamente.",
           "status": "draft-translation"
         },
         "pt-BR": {
-          "current_value": "Erro de reprodução: %@",
+          "current_value": "A reprodução falhou. Toque duas vezes para tentar novamente.",
           "status": "draft-translation"
         },
         "ru": {
-          "current_value": "Ошибка воспроизведения: %@",
+          "current_value": "Не удалось воспроизвести. Дважды коснитесь, чтобы повторить попытку.",
           "status": "draft-translation"
         },
         "sv": {
-          "current_value": "Uppspelningsfel: %@",
+          "current_value": "Uppspelningen misslyckades. Dubbeltryck för att försöka igen.",
           "status": "draft-translation"
         },
         "tr": {
-          "current_value": "Oynatma hatası: %@",
+          "current_value": "Oynatma başarısız oldu. Tekrar denemek için çift dokunun.",
           "status": "draft-translation"
         },
         "uk": {
-          "current_value": "Помилка відтворення: %@",
+          "current_value": "Не вдалося відтворити. Двічі торкніться, щоб повторити спробу.",
           "status": "draft-translation"
         },
         "vi": {
-          "current_value": "Lỗi phát: %@",
+          "current_value": "Phát lại không thành công. Nhấn đúp để thử lại.",
           "status": "draft-translation"
         },
         "zh-Hans": {
-          "current_value": "播放错误：%@",
+          "current_value": "播放失败。轻点两下以重试。",
           "status": "draft-translation"
         },
         "zh-Hant": {
-          "current_value": "播放錯誤：%@",
+          "current_value": "播放失敗。點兩下以重試。",
           "status": "draft-translation"
         }
       },
@@ -16733,6 +16733,90 @@
         },
         "zh-Hant": {
           "current_value": "停止播放",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't save the career record. Free up storage and try again.",
+      "key": "career.error.record.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ سجل المسار المهني. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Der Karriere-Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save the career record. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar el registro de carrera. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer l’entrée de carrière. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare il record di carriera. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "キャリア記録を保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "커리어 기록을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre karriereoppføringen. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan de carrièrevermelding niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar o registo de carreira. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar o registro de carreira. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить карьерную запись. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara karriärposten. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Kariyer kaydı kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти кар’єрний запис. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu hồ sơ sự nghiệp. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存事业记录。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存事業記錄。請釋放儲存空間，然後再試一次。",
           "status": "draft-translation"
         }
       },
@@ -20597,6 +20681,258 @@
         },
         "zh-Hant": {
           "current_value": "來源備忘錄",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't save the protocol. Free up storage and try again.",
+      "key": "home.error.protocol.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ البروتوكول. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Das Protokoll konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save the protocol. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar el protocolo. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer le protocole. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare il protocollo. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "プロトコルを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "프로토콜을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre protokollen. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan het protocol niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar o protocolo. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar o protocolo. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить протокол. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara protokollet. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Protokol kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти протокол. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu quy trình. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存协议。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存協定。請釋放儲存空間，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't save the protocol run. Free up storage and try again.",
+      "key": "home.error.run.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ تشغيل البروتوكول. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Der Protokolldurchlauf konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save the protocol run. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar la ejecución del protocolo. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer l’exécution du protocole. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare l’esecuzione del protocollo. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "プロトコル実行を保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "프로토콜 실행을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre protokollkjøringen. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan de protocoluitvoering niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar a execução do protocolo. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar a execução do protocolo. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить запуск протокола. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara protokollkörningen. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Protokol çalıştırması kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти запуск протоколу. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu lượt chạy quy trình. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存协议运行。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存協定執行。請釋放儲存空間，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't save the task. Free up storage and try again.",
+      "key": "home.error.task.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ المهمة. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Die Aufgabe konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save the task. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar la tarea. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer la tâche. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare l’attività. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "タスクを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "작업을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre oppgaven. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan de taak niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar a tarefa. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar a tarefa. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить задачу. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara uppgiften. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Görev kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти завдання. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu tác vụ. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存任务。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存任務。請釋放儲存空間，然後再試一次。",
           "status": "draft-translation"
         }
       },
@@ -26400,6 +26736,174 @@
     },
     {
       "comment": "",
+      "english_value": "Couldn't save today's entry. Free up storage and try again.",
+      "key": "today.error.entry.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ إدخال اليوم. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Der heutige Eintrag konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save today's entry. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar la entrada de hoy. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer l’entrée d’aujourd’hui. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare la voce di oggi. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "今日のエントリーを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "오늘 항목을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre dagens oppføring. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan de invoer van vandaag niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar a entrada de hoje. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar a entrada de hoje. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить сегодняшнюю запись. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara dagens inlägg. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Bugünkü giriş kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти сьогоднішній запис. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu mục hôm nay. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存今天的条目。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存今天的項目。請釋放儲存空間，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't load previous days. Close and reopen Owlory, then try again.",
+      "key": "today.error.history.load",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر تحميل الأيام السابقة. أغلق Owlory وأعد فتحه، ثم حاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Vorherige Tage konnten nicht geladen werden. Schließen Sie Owlory, öffnen Sie es erneut und versuchen Sie es noch einmal.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't load previous days. Close and reopen Owlory, then try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudieron cargar los días anteriores. Cierra y vuelve a abrir Owlory; luego inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible de charger les jours précédents. Fermez puis rouvrez Owlory, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile caricare i giorni precedenti. Chiudi e riapri Owlory, quindi riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "過去の日を読み込めませんでした。Owloryを閉じて開き直し、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "이전 날짜를 불러올 수 없습니다. Owlory를 닫았다가 다시 연 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke laste inn tidligere dager. Lukk og åpne Owlory på nytt, og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan vorige dagen niet laden. Sluit Owlory en open het opnieuw. Probeer het daarna opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível carregar os dias anteriores. Feche e reabra o Owlory, depois tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось загрузить предыдущие дни. Закройте и снова откройте Owlory, затем повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att läsa in tidigare dagar. Stäng och öppna Owlory igen och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Önceki günler yüklenemedi. Owlory’yi kapatıp yeniden açın, ardından tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося завантажити попередні дні. Закрийте й знову відкрийте Owlory, а потім повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể tải các ngày trước. Hãy đóng rồi mở lại Owlory, sau đó thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法加载前几天。请关闭并重新打开 Owlory，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法載入前幾天。請關閉並重新開啟 Owlory，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
       "english_value": "high-readiness",
       "key": "today.focus.suggestion.band.high",
       "locales": {
@@ -29255,84 +29759,168 @@
       "resource_type": "strings"
     },
     {
-      "comment": "",
-      "english_value": "Error: %@",
-      "key": "voice.capture.accessibility.error",
+      "comment": "Error message templates",
+      "english_value": "Couldn't save the session. Free up storage and try again.",
+      "key": "train.error.session.save",
       "locales": {
         "ar": {
-          "current_value": "خطأ: %@",
+          "current_value": "تعذر حفظ الجلسة. حرّر مساحة تخزين وحاول مرة أخرى.",
           "status": "draft-translation"
         },
         "de": {
-          "current_value": "Fehler: %@",
+          "current_value": "Die Sitzung konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
           "status": "draft-translation"
         },
         "en": {
-          "current_value": "Error: %@",
+          "current_value": "Couldn't save the session. Free up storage and try again.",
           "status": "english-source"
         },
         "es": {
-          "current_value": "Error: %@",
-          "status": "english-placeholder"
+          "current_value": "No se pudo guardar la sesión. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
         },
         "fr": {
-          "current_value": "Erreur : %@",
+          "current_value": "Impossible d’enregistrer la séance. Libérez de l’espace de stockage, puis réessayez.",
           "status": "draft-translation"
         },
         "it": {
-          "current_value": "Errore: %@",
+          "current_value": "Impossibile salvare la sessione. Libera spazio di archiviazione e riprova.",
           "status": "draft-translation"
         },
         "ja": {
-          "current_value": "エラー: %@",
+          "current_value": "セッションを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
           "status": "draft-translation"
         },
         "ko": {
-          "current_value": "오류: %@",
+          "current_value": "세션을 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
           "status": "draft-translation"
         },
         "nb": {
-          "current_value": "Feil: %@",
+          "current_value": "Kunne ikke lagre økten. Frigjør lagringsplass og prøv igjen.",
           "status": "draft-translation"
         },
         "nl": {
-          "current_value": "Fout: %@",
+          "current_value": "Kan de sessie niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
           "status": "draft-translation"
         },
         "pt": {
-          "current_value": "Erro: %@",
+          "current_value": "Não foi possível guardar a sessão. Liberte espaço de armazenamento e tente novamente.",
           "status": "draft-translation"
         },
         "pt-BR": {
-          "current_value": "Erro: %@",
+          "current_value": "Não foi possível salvar a sessão. Libere espaço de armazenamento e tente novamente.",
           "status": "draft-translation"
         },
         "ru": {
-          "current_value": "Ошибка: %@",
+          "current_value": "Не удалось сохранить тренировку. Освободите место в хранилище и повторите попытку.",
           "status": "draft-translation"
         },
         "sv": {
-          "current_value": "Fel: %@",
+          "current_value": "Det gick inte att spara passet. Frigör lagringsutrymme och försök igen.",
           "status": "draft-translation"
         },
         "tr": {
-          "current_value": "Hata: %@",
+          "current_value": "Oturum kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
           "status": "draft-translation"
         },
         "uk": {
-          "current_value": "Помилка: %@",
+          "current_value": "Не вдалося зберегти тренування. Звільніть місце в сховищі та повторіть спробу.",
           "status": "draft-translation"
         },
         "vi": {
-          "current_value": "Lỗi: %@",
+          "current_value": "Không thể lưu buổi tập. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
           "status": "draft-translation"
         },
         "zh-Hans": {
-          "current_value": "错误：%@",
+          "current_value": "无法保存训练会话。请释放存储空间，然后重试。",
           "status": "draft-translation"
         },
         "zh-Hant": {
-          "current_value": "錯誤：%@",
+          "current_value": "無法儲存訓練工作階段。請釋放儲存空間，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Recording failed. Double-tap to try again.",
+      "key": "voice.capture.accessibility.error",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر التسجيل. اضغط مرتين للمحاولة مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Aufnahme fehlgeschlagen. Doppeltippen Sie, um es erneut zu versuchen.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Recording failed. Double-tap to try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "La grabación falló. Toca dos veces para intentarlo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "L’enregistrement a échoué. Touchez deux fois pour réessayer.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Registrazione non riuscita. Tocca due volte per riprovare.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "録音できませんでした。もう一度試すにはダブルタップしてください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "녹음에 실패했습니다. 다시 시도하려면 두 번 탭하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Opptaket mislyktes. Dobbelttrykk for å prøve igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Opnemen is mislukt. Tik dubbel om het opnieuw te proberen.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "A gravação falhou. Toque duas vezes para tentar novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "A gravação falhou. Toque duas vezes para tentar novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось записать. Дважды коснитесь, чтобы повторить попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Inspelningen misslyckades. Dubbeltryck för att försöka igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Kayıt başarısız oldu. Tekrar denemek için çift dokunun.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося записати. Двічі торкніться, щоб повторити спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Ghi âm không thành công. Nhấn đúp để thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "录音失败。轻点两下以重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "錄音失敗。點兩下以重試。",
           "status": "draft-translation"
         }
       },
@@ -29669,6 +30257,426 @@
         },
         "zh-Hant": {
           "current_value": "轉錄中",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Add to Focus",
+      "key": "voicecontrol.label.addToFocus",
+      "locales": {
+        "ar": {
+          "current_value": "إضافة إلى التركيز",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Zum Fokus hinzufügen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Add to Focus",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Añadir al foco",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Ajouter au focus",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Aggiungi al focus",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "フォーカスに追加",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "포커스에 추가",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Legg til i fokus",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Toevoegen aan focus",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Adicionar ao foco",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Adicionar ao foco",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Добавить в фокус",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Lägg till i fokus",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Odağa ekle",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Додати у фокус",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Thêm vào Focus",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "添加到专注",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "加入專注",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Complete",
+      "key": "voicecontrol.label.complete",
+      "locales": {
+        "ar": {
+          "current_value": "إكمال",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Erledigen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Complete",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Completar",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Terminer",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Completa",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "完了",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "완료",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Fullfør",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Voltooien",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Concluir",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Concluir",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Завершить",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Slutför",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Tamamla",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Завершити",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Hoàn thành",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "完成",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "完成",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Edit",
+      "key": "voicecontrol.label.edit",
+      "locales": {
+        "ar": {
+          "current_value": "تحرير",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Bearbeiten",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Edit",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Editar",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Modifier",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Modifica",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "編集",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "편집",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Rediger",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Bewerken",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Editar",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Editar",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Изменить",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Redigera",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Düzenle",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Редагувати",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Sửa",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "编辑",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "編輯",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Skip",
+      "key": "voicecontrol.label.skip",
+      "locales": {
+        "ar": {
+          "current_value": "تخطي",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Überspringen",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Skip",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Omitir",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Passer",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Salta",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "スキップ",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "건너뛰기",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Hopp over",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Overslaan",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Ignorar",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Pular",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Пропустить",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Hoppa över",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Atla",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Пропустити",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Bỏ qua",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "跳过",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "略過",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Start recording",
+      "key": "voicecontrol.label.startRecording",
+      "locales": {
+        "ar": {
+          "current_value": "بدء التسجيل",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Aufnahme starten",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Start recording",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Empezar grabación",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Démarrer l’enregistrement",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Avvia registrazione",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "録音開始",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "녹음 시작",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Start opptak",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Opname starten",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Iniciar gravação",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Iniciar gravação",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Начать запись",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Starta inspelning",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Kaydı başlat",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Почати запис",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Bắt đầu ghi",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "开始录音",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "開始錄音",
           "status": "draft-translation"
         }
       },
@@ -31433,6 +32441,174 @@
         },
         "zh-Hant": {
           "current_value": "你有 %d 則捕捉內容待處理。試著把其中一則發展成來源筆記。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Couldn't save the note. Free up storage and try again.",
+      "key": "write.error.note.save",
+      "locales": {
+        "ar": {
+          "current_value": "تعذر حفظ الملاحظة. حرّر مساحة تخزين وحاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Die Notiz konnte nicht gespeichert werden. Geben Sie Speicherplatz frei und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Couldn't save the note. Free up storage and try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "No se pudo guardar la nota. Libera espacio de almacenamiento e inténtalo de nuevo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Impossible d’enregistrer la note. Libérez de l’espace de stockage, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Impossibile salvare la nota. Libera spazio di archiviazione e riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "ノートを保存できませんでした。ストレージの空き容量を増やして、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "노트를 저장할 수 없습니다. 저장 공간을 확보한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Kunne ikke lagre notatet. Frigjør lagringsplass og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Kan de notitie niet bewaren. Maak opslagruimte vrij en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Não foi possível guardar a nota. Liberte espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Não foi possível salvar a nota. Libere espaço de armazenamento e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Не удалось сохранить заметку. Освободите место в хранилище и повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Det gick inte att spara anteckningen. Frigör lagringsutrymme och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Not kaydedilemedi. Depolama alanı açıp tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Не вдалося зберегти нотатку. Звільніть місце в сховищі та повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Không thể lưu ghi chú. Hãy giải phóng dung lượng lưu trữ rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "无法保存笔记。请释放存储空间，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "無法儲存備忘錄。請釋放儲存空間，然後再試一次。",
+          "status": "draft-translation"
+        }
+      },
+      "resource_type": "strings"
+    },
+    {
+      "comment": "",
+      "english_value": "Move the note to Capture, Permanent Note, or Archived first, then try again.",
+      "key": "write.error.note.sourceConversion.invalidStage",
+      "locales": {
+        "ar": {
+          "current_value": "انقل الملاحظة إلى «التقاط» أو «ملاحظة دائمة» أو «مؤرشف» أولاً، ثم حاول مرة أخرى.",
+          "status": "draft-translation"
+        },
+        "de": {
+          "current_value": "Verschieben Sie die Notiz zuerst zu „Erfassung“, „Dauerhafte Notiz“ oder „Archiviert“ und versuchen Sie es erneut.",
+          "status": "draft-translation"
+        },
+        "en": {
+          "current_value": "Move the note to Capture, Permanent Note, or Archived first, then try again.",
+          "status": "english-source"
+        },
+        "es": {
+          "current_value": "Mueve la nota a Captura, Nota permanente o Archivado primero y vuelve a intentarlo.",
+          "status": "draft-translation"
+        },
+        "fr": {
+          "current_value": "Déplacez d’abord la note vers Capture, Note permanente ou Archivé, puis réessayez.",
+          "status": "draft-translation"
+        },
+        "it": {
+          "current_value": "Sposta prima la nota in Acquisizione, Nota permanente o Archiviato, poi riprova.",
+          "status": "draft-translation"
+        },
+        "ja": {
+          "current_value": "まずノートを「取り込み」、「恒常メモ」、または「アーカイブ済み」に移動してから、もう一度お試しください。",
+          "status": "draft-translation"
+        },
+        "ko": {
+          "current_value": "먼저 노트를 캡처, 영구 메모 또는 보관됨으로 이동한 다음 다시 시도하세요.",
+          "status": "draft-translation"
+        },
+        "nb": {
+          "current_value": "Flytt notatet til Fangst, Permanent notat eller Arkivert først, og prøv igjen.",
+          "status": "draft-translation"
+        },
+        "nl": {
+          "current_value": "Verplaats de notitie eerst naar Vastleggen, Permanente notitie of Gearchiveerd en probeer het opnieuw.",
+          "status": "draft-translation"
+        },
+        "pt": {
+          "current_value": "Mova a nota para Captura, Nota permanente ou Arquivado primeiro e tente novamente.",
+          "status": "draft-translation"
+        },
+        "pt-BR": {
+          "current_value": "Mova a nota para Captura, Nota permanente ou Arquivado primeiro e tente novamente.",
+          "status": "draft-translation"
+        },
+        "ru": {
+          "current_value": "Сначала переместите заметку в «Захват», «Постоянная заметка» или «В архиве», затем повторите попытку.",
+          "status": "draft-translation"
+        },
+        "sv": {
+          "current_value": "Flytta först anteckningen till Fångst, Permanent anteckning eller Arkiverad och försök igen.",
+          "status": "draft-translation"
+        },
+        "tr": {
+          "current_value": "Notu önce Yakalama, Kalıcı not veya Arşivlendi aşamasına taşıyın, ardından tekrar deneyin.",
+          "status": "draft-translation"
+        },
+        "uk": {
+          "current_value": "Спочатку перемістіть нотатку до «Захоплення», «Постійна нотатка» або «Заархівовано», а потім повторіть спробу.",
+          "status": "draft-translation"
+        },
+        "vi": {
+          "current_value": "Trước tiên, hãy chuyển ghi chú sang Ghi nhận, Ghi chú vĩnh viễn hoặc Đã lưu trữ, rồi thử lại.",
+          "status": "draft-translation"
+        },
+        "zh-Hans": {
+          "current_value": "请先将笔记移到“捕获”、“永久笔记”或“已归档”，然后重试。",
+          "status": "draft-translation"
+        },
+        "zh-Hant": {
+          "current_value": "請先將備忘錄移到「擷取」、「永久備忘錄」或「已封存」，然後再試一次。",
           "status": "draft-translation"
         }
       },
@@ -35311,86 +36487,86 @@
     "english-source": "English source key/value reviewed as product copy."
   },
   "summary": {
-    "csv_row_count": 7961,
+    "csv_row_count": 8227,
     "locale_count": 19,
     "plural_review_entry_count": 42,
     "status_by_locale": {
       "ar": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       },
       "de": {
-        "draft-translation": 402,
+        "draft-translation": 416,
         "english-placeholder": 17
       },
       "en": {
-        "english-source": 419
+        "english-source": 433
       },
       "es": {
-        "draft-translation": 401,
-        "english-placeholder": 18
+        "draft-translation": 416,
+        "english-placeholder": 17
       },
       "fr": {
-        "draft-translation": 390,
+        "draft-translation": 404,
         "english-placeholder": 29
       },
       "it": {
-        "draft-translation": 402,
+        "draft-translation": 416,
         "english-placeholder": 17
       },
       "ja": {
-        "draft-translation": 407,
+        "draft-translation": 421,
         "english-placeholder": 12
       },
       "ko": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       },
       "nb": {
-        "draft-translation": 401,
+        "draft-translation": 415,
         "english-placeholder": 18
       },
       "nl": {
-        "draft-translation": 390,
+        "draft-translation": 404,
         "english-placeholder": 29
       },
       "pt": {
-        "draft-translation": 400,
+        "draft-translation": 414,
         "english-placeholder": 19
       },
       "pt-BR": {
-        "draft-translation": 400,
+        "draft-translation": 414,
         "english-placeholder": 19
       },
       "ru": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       },
       "sv": {
-        "draft-translation": 401,
+        "draft-translation": 415,
         "english-placeholder": 18
       },
       "tr": {
-        "draft-translation": 406,
+        "draft-translation": 420,
         "english-placeholder": 13
       },
       "uk": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       },
       "vi": {
-        "draft-translation": 406,
+        "draft-translation": 420,
         "english-placeholder": 13
       },
       "zh-Hans": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       },
       "zh-Hant": {
-        "draft-translation": 408,
+        "draft-translation": 422,
         "english-placeholder": 11
       }
     },
-    "strings_key_count": 377
+    "strings_key_count": 391
   }
 }

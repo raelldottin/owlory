@@ -12,7 +12,6 @@ Files:
 
 - `translation-review-export.csv` - reviewer-friendly flat rows for `Localizable.strings` and `Localizable.stringsdict` values. Newlines are escaped as `\n` so each review row stays on one CSV line.
 - `translation-review-export.json` - structured packet preserving locale values, status labels, and summary counts.
-- Per-locale return files under `<locale>/` record accepted review state. All 18 non-English locale return files are native/fluent-reviewed as of 2026-05-18.
 
 Status labels:
 

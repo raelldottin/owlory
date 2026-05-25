@@ -2,6 +2,7 @@
 
 ## 2026-05-25
 
+- [localization-review-drift-risk-fix (automation-tested + localization-checked; refreshed review packets and all 18 return files for the 5 voicecontrol.label.* keys, kept them as pending automated drafts, and restored automation-check to green)](sessions/2026-05-25/063755-localization-review-drift-risk-fix.md)
 - [reminders-stale-prediction-suppression-and-mutation-cancel (simulator-tested + domain-tested; extracted ReminderSuppressionRules so a prediction key fires only when an active match exists today, and added onItemCompleted cancels to TrainStore rename+delete and HomeStore rename+delete — closes the activity-drift and stale-prediction holes)](sessions/2026-05-25/020200-reminders-stale-prediction-suppression-and-mutation-cancel.md)
 - [reminders-terminal-status-cancel-simulator-proof (simulator-tested on iPhone 17 / iOS 26.5; six XCTests driving real UNUserNotificationCenter confirm the cancel chain removes pending owlory.reminder.\<key\> requests for Train .completed/.modified/.skipped and Home recurring .completed/.skipped, while .planned leaves the request intact)](sessions/2026-05-25/012848-reminders-terminal-status-cancel-simulator-proof.md)
 - [reminders-suppress-notifications-for-skipped-items (domain-tested; skipped Train sessions and skipped recurring Home tasks now fire onItemCompleted at resolution and enter completedKeys for bulk reschedule, so missed-window reminders no longer fire after the user skips)](sessions/2026-05-25/001803-reminders-suppress-notifications-for-skipped-items.md)

@@ -17,8 +17,8 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 
 | Status | Count |
 | --- | ---: |
-| `native-reviewed` | 7542 |
-| `needs-layout-check` | 0 |
+| `native-reviewed` | 7506 |
+| `needs-layout-check` | 288 |
 | `needs-product-decision` | 0 |
 | `keep-english-term` | 0 |
 | `needs-translation` | 0 |
@@ -30,8 +30,8 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 
 | LQA status | Count |
 | --- | ---: |
-| `passed` | 7478 |
-| `warning` | 64 |
+| `passed` | 7443 |
+| `warning` | 351 |
 | `reverted` | 0 |
 
 `lqa.status=passed` means deterministic checks plus an LLM second-pass have no machine-detectable issues for that entry. It is NOT a native-review claim.
@@ -40,24 +40,24 @@ Flipping a locale to native-reviewed requires a human review pass that updates t
 
 | Locale | Language | Entries | Native? | native-reviewed | needs-layout-check | needs-product-decision | keep-english-term | needs-translation | reject | LQA passed | LQA warn | LQA reverted | LQA date | Reviewer | Review date |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ar` | Arabic / العربية | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 417 | 2 | 0 | 2026-05-15 | `Native/fluent Arabic / العربية reviewer (reported by project owner)` | 2026-05-18 |
-| `nl` | Dutch / Nederlands | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Dutch / Nederlands reviewer (reported by project owner)` | 2026-05-18 |
-| `fr` | French / Français | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent French / Français reviewer (reported by project owner)` | 2026-05-18 |
-| `de` | German / Deutsch | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native German human reviewer (reported by project owner)` | 2026-05-18 |
-| `it` | Italian / Italiano | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Italian / Italiano reviewer (reported by project owner)` | 2026-05-18 |
-| `ja` | Japanese / 日本語 | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 409 | 10 | 0 | 2026-05-15 | `Native/fluent Japanese / 日本語 reviewer (reported by project owner)` | 2026-05-18 |
-| `ko` | Korean / 한국어 | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 412 | 7 | 0 | 2026-05-15 | `Native/fluent Korean / 한국어 reviewer (reported by project owner)` | 2026-05-18 |
-| `nb` | Norwegian Bokmål / Norsk Bokmål | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Norwegian Bokmål / Norsk Bokmål reviewer (reported by project owner)` | 2026-05-18 |
-| `pt` | Portuguese / Português | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Portuguese / Português reviewer (reported by project owner)` | 2026-05-18 |
-| `pt-BR` | Brazilian Portuguese / Português (Brasil) | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Brazilian Portuguese / Português (Brasil) reviewer (reported by project owner)` | 2026-05-18 |
-| `ru` | Russian / Русский | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Russian / Русский reviewer (reported by project owner)` | 2026-05-18 |
-| `es` | Spanish / Español | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Spanish / Español reviewer (reported by project owner)` | 2026-05-18 |
-| `sv` | Swedish / Svenska | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Swedish / Svenska reviewer (reported by project owner)` | 2026-05-18 |
-| `zh-Hans` | Simplified Chinese / 简体中文 | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 396 | 23 | 0 | 2026-05-15 | `Native/fluent Simplified Chinese / 简体中文 reviewer (reported by project owner)` | 2026-05-18 |
-| `zh-Hant` | Traditional Chinese / 繁體中文 | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 401 | 18 | 0 | 2026-05-15 | `Native/fluent Traditional Chinese / 繁體中文 reviewer (reported by project owner)` | 2026-05-18 |
-| `tr` | Turkish / Türkçe | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 416 | 3 | 0 | 2026-05-15 | `Native/fluent Turkish / Türkçe reviewer (reported by project owner)` | 2026-05-18 |
-| `uk` | Ukrainian / Українська | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 419 | 0 | 0 | 2026-05-15 | `Native/fluent Ukrainian / Українська reviewer (reported by project owner)` | 2026-05-18 |
-| `vi` | Vietnamese / Tiếng Việt | 419 | yes | 419 | 0 | 0 | 0 | 0 | 0 | 418 | 1 | 0 | 2026-05-15 | `Native/fluent Vietnamese / Tiếng Việt reviewer (reported by project owner)` | 2026-05-18 |
+| `ar` | Arabic / العربية | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 420 | 13 | 0 | 2026-05-15 | `Native/fluent Arabic / العربية reviewer (reported by project owner)` | 2026-05-18 |
+| `nl` | Dutch / Nederlands | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 404 | 29 | 0 | 2026-05-15 | `Native/fluent Dutch / Nederlands reviewer (reported by project owner)` | 2026-05-18 |
+| `fr` | French / Français | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 404 | 29 | 0 | 2026-05-15 | `Native/fluent French / Français reviewer (reported by project owner)` | 2026-05-18 |
+| `de` | German / Deutsch | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 416 | 17 | 0 | 2026-05-15 | `Native German human reviewer (reported by project owner)` | 2026-05-18 |
+| `it` | Italian / Italiano | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 416 | 17 | 0 | 2026-05-15 | `Native/fluent Italian / Italiano reviewer (reported by project owner)` | 2026-05-18 |
+| `ja` | Japanese / 日本語 | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 411 | 22 | 0 | 2026-05-15 | `Native/fluent Japanese / 日本語 reviewer (reported by project owner)` | 2026-05-18 |
+| `ko` | Korean / 한국어 | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 415 | 18 | 0 | 2026-05-15 | `Native/fluent Korean / 한국어 reviewer (reported by project owner)` | 2026-05-18 |
+| `nb` | Norwegian Bokmål / Norsk Bokmål | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 415 | 18 | 0 | 2026-05-15 | `Native/fluent Norwegian Bokmål / Norsk Bokmål reviewer (reported by project owner)` | 2026-05-18 |
+| `pt` | Portuguese / Português | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 414 | 19 | 0 | 2026-05-15 | `Native/fluent Portuguese / Português reviewer (reported by project owner)` | 2026-05-18 |
+| `pt-BR` | Brazilian Portuguese / Português (Brasil) | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 414 | 19 | 0 | 2026-05-15 | `Native/fluent Brazilian Portuguese / Português (Brasil) reviewer (reported by project owner)` | 2026-05-18 |
+| `ru` | Russian / Русский | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 422 | 11 | 0 | 2026-05-15 | `Native/fluent Russian / Русский reviewer (reported by project owner)` | 2026-05-18 |
+| `es` | Spanish / Español | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 416 | 17 | 0 | 2026-05-15 | `Native/fluent Spanish / Español reviewer (reported by project owner)` | 2026-05-18 |
+| `sv` | Swedish / Svenska | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 415 | 18 | 0 | 2026-05-15 | `Native/fluent Swedish / Svenska reviewer (reported by project owner)` | 2026-05-18 |
+| `zh-Hans` | Simplified Chinese / 简体中文 | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 399 | 34 | 0 | 2026-05-15 | `Native/fluent Simplified Chinese / 简体中文 reviewer (reported by project owner)` | 2026-05-18 |
+| `zh-Hant` | Traditional Chinese / 繁體中文 | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 404 | 29 | 0 | 2026-05-15 | `Native/fluent Traditional Chinese / 繁體中文 reviewer (reported by project owner)` | 2026-05-18 |
+| `tr` | Turkish / Türkçe | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 417 | 16 | 0 | 2026-05-15 | `Native/fluent Turkish / Türkçe reviewer (reported by project owner)` | 2026-05-18 |
+| `uk` | Ukrainian / Українська | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 422 | 11 | 0 | 2026-05-15 | `Native/fluent Ukrainian / Українська reviewer (reported by project owner)` | 2026-05-18 |
+| `vi` | Vietnamese / Tiếng Việt | 433 | yes | 417 | 16 | 0 | 0 | 0 | 0 | 419 | 14 | 0 | 2026-05-15 | `Native/fluent Vietnamese / Tiếng Việt reviewer (reported by project owner)` | 2026-05-18 |
 
 ## Reading guide
 

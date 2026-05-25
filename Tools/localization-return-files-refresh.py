@@ -68,6 +68,7 @@ KEEP_ENGLISH_TERM_VALUES = {
     "OK", "URL", "Build", "Podcast", "Video", "Check-in",
     "%@", "%@ / 5", "%d/%d", "%d%%",
 }
+AUTO_DRAFT_REVIEWER = "Codex automated draft (not native/fluent reviewer)"
 
 
 def find_return_file(locale: str) -> Path:
@@ -136,6 +137,8 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
     data = json.loads(return_path.read_text(encoding="utf-8"))
     existing = data.get("resources", [])
     seen = existing_entry_keys(existing)
+    provenance = data.get("provenance", {})
+    post_native_review = bool(provenance.get("native_reviewed", False))
 
     # Load current resources
     en_strings = load_strings(RES / "en.lproj/Localizable.strings")
@@ -144,7 +147,21 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
     locale_sdict = load_stringsdict_triples(RES / f"{locale}.lproj/Localizable.stringsdict")
 
     reviewer = data.get("provenance", {}).get("reviewer", "claude-opus-4-7 (LLM, not native " + LANGUAGE_NAMES.get(locale, locale) + " reviewer)")
+    if post_native_review:
+        reviewer = AUTO_DRAFT_REVIEWER
     today = str(date.today())
+    native_review_pending = {
+        "accepted": False,
+        "reviewer": None,
+        "review_date": None,
+        "basis": (
+            "Added after the "
+            + str(provenance.get("review_date", "recorded"))
+            + " native/fluent review pass recorded in this return file; "
+            "no native/fluent acceptance is claimed for this key."
+        ),
+        "pending_native_review": True,
+    }
 
     new_string_entries = 0
     new_sdict_entries = 0
@@ -166,7 +183,7 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
                 "Auto-added by Tools/localization-return-files-refresh.py. "
                 "LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout."
             )
-        existing.append({
+        entry = {
             "key": key,
             "english_value": english,
             "reviewed_value": reviewed,
@@ -177,7 +194,10 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
             "resource_type": "strings",
             "locale": locale,
             "post_packet_addition": True,
-        })
+        }
+        if post_native_review:
+            entry["native_review"] = native_review_pending
+        existing.append(entry)
         new_string_entries += 1
 
     # Walk stringsdict triples
@@ -197,7 +217,7 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
                 "Auto-added by Tools/localization-return-files-refresh.py. "
                 "LLM-drafted plural value; not native-reviewed. Verify grammar and on-device layout."
             )
-        existing.append({
+        entry = {
             "key": triple[0],
             "plural_variable": triple[1],
             "plural_category": triple[2],
@@ -210,7 +230,10 @@ def refresh_locale(locale: str, apply: bool) -> dict[str, int]:
             "resource_type": "stringsdict",
             "locale": locale,
             "post_packet_addition": True,
-        })
+        }
+        if post_native_review:
+            entry["native_review"] = native_review_pending
+        existing.append(entry)
         new_sdict_entries += 1
 
     # Refresh summary counts
