@@ -435,4 +435,68 @@ final class TrainStoreTests: XCTestCase {
         )
     }
 
+    // MARK: - Mutation cancels stale reminders
+
+    func testRenamingPlannedActivityCallsOnItemCompletedHookForOldKey() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updatePlannedActivity(id: id, plannedActivity: "Evening Jog")
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forTrainingSession: "Morning Run")],
+            "Renaming the planned activity must cancel the OLD key's pending reminder; otherwise the user keeps getting a missed-window notification for an activity they have already renamed away from."
+        )
+    }
+
+    func testRenamingPlannedActivityToSameNormalizedValueDoesNotFireHook() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updatePlannedActivity(id: id, plannedActivity: "  morning run  ")
+
+        XCTAssertTrue(
+            recordedKeys.isEmpty,
+            "Predictor keys are case-insensitive and trimmed, so a cosmetic edit that normalizes to the same key must not cancel the reminder."
+        )
+    }
+
+    func testDeletingSessionCallsOnItemCompletedHookWithSessionKey() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.deleteSession(id: id)
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forTrainingSession: "Morning Run")],
+            "Deleting a session must cancel its pending reminder; otherwise the missed-window notification fires for a session that no longer exists."
+        )
+    }
+
 }
