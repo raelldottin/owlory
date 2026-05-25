@@ -7221,6 +7221,34 @@
       ],
       "max_files_changed": 10,
       "notes": "Skipped Train sessions and skipped recurring Home tasks still received missed-window reminders because (a) TrainStore.updateSession and HomeStore.skipTask did not fire the onItemCompleted cancel hook for skipped status, and (b) RootTabView.refreshRuntimeArtifacts only added completed/modified Train sessions and completed Home tasks to completedKeys. Treat skipped as a terminal user disposition for reminder suppression purposes only; do not log skipped items to CompletionHistoryStore."
+    },
+    {
+      "slice_id": "reminders-terminal-status-cancel-simulator-proof",
+      "title": "Prove terminal-status reminder cancellation against real UNUserNotificationCenter on the iOS simulator",
+      "status": "done",
+      "priority": 74,
+      "domain": "reminders",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/OwloryCoreTests/ReminderSchedulerTerminalStatusCancelIntegrationTests.swift",
+        "Tools/validate.sh",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=reminders",
+        "make test-domain DOMAIN=train",
+        "make test-domain DOMAIN=home",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "reminders-suppress-notifications-for-skipped-items"
+      ],
+      "max_files_changed": 4,
+      "notes": "Domain-tested proof was insufficient because the prior slice only verified that TrainStore/HomeStore call the onItemCompleted callback for terminal statuses, not that the callback actually removes pending requests from the real UNUserNotificationCenter. Add an XCTest that requests provisional notification authorization on the simulator, schedules a pending request with the exact ReminderScheduler identifier scheme, wires TrainStore/HomeStore with the real cancelCompletedReminder closure, applies the terminal status, awaits the async cancel Task, and asserts the pending request is gone. Cover Train .completed/.modified/.skipped and Home recurring .completed/.skipped paths."
     }
   ]
 }

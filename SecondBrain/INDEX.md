@@ -2,6 +2,7 @@
 
 ## 2026-05-25
 
+- [reminders-terminal-status-cancel-simulator-proof (simulator-tested on iPhone 17 / iOS 26.5; six XCTests driving real UNUserNotificationCenter confirm the cancel chain removes pending owlory.reminder.\<key\> requests for Train .completed/.modified/.skipped and Home recurring .completed/.skipped, while .planned leaves the request intact)](sessions/2026-05-25/012848-reminders-terminal-status-cancel-simulator-proof.md)
 - [reminders-suppress-notifications-for-skipped-items (domain-tested; skipped Train sessions and skipped recurring Home tasks now fire onItemCompleted at resolution and enter completedKeys for bulk reschedule, so missed-window reminders no longer fire after the user skips)](sessions/2026-05-25/001803-reminders-suppress-notifications-for-skipped-items.md)
 
 ## 2026-05-22

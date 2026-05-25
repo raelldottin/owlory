@@ -101,7 +101,8 @@ run_domain() {
       run_xcode_tests \
         -only-testing:OwloryCoreTests/CompletionTimePredictorTests \
         -only-testing:OwloryCoreTests/ReminderSchedulingRulesTests \
-        -only-testing:OwloryCoreTests/ProtocolScheduleNotificationRulesTests
+        -only-testing:OwloryCoreTests/ProtocolScheduleNotificationRulesTests \
+        -only-testing:OwloryCoreTests/ReminderSchedulerTerminalStatusCancelIntegrationTests
       ;;
     runtime)
       run_xcode_tests \

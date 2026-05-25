@@ -112,6 +112,7 @@
 		B016 /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A121 /* HomeStore.swift */; };
 		B017 /* WriteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B105 /* WriteStoreTests.swift */; };
 		B018 /* TrainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B106 /* TrainStoreTests.swift */; };
+		B701 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B702 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift */; };
 		B019 /* CareerStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B107 /* CareerStoreTests.swift */; };
 		B020 /* HomeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108 /* HomeStoreTests.swift */; };
 		B021 /* ReadinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A123 /* ReadinessRules.swift */; };
@@ -364,6 +365,7 @@
 		B104 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
 		B105 /* WriteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStoreTests.swift; sourceTree = "<group>"; };
 		B106 /* TrainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainStoreTests.swift; sourceTree = "<group>"; };
+		B702 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulerTerminalStatusCancelIntegrationTests.swift; sourceTree = "<group>"; };
 		B107 /* CareerStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerStoreTests.swift; sourceTree = "<group>"; };
 		B108 /* HomeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreTests.swift; sourceTree = "<group>"; };
 		B109 /* ReadinessRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessRulesTests.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				B103 /* WritingStageRulesTests.swift */,
 				B105 /* WriteStoreTests.swift */,
 				B106 /* TrainStoreTests.swift */,
+				B702 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift */,
 				B107 /* CareerStoreTests.swift */,
 				B108 /* HomeStoreTests.swift */,
 				B109 /* ReadinessRulesTests.swift */,
@@ -1053,6 +1056,7 @@
 				B016 /* HomeStore.swift in Sources */,
 				B017 /* WriteStoreTests.swift in Sources */,
 				B018 /* TrainStoreTests.swift in Sources */,
+				B701 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift in Sources */,
 				B019 /* CareerStoreTests.swift in Sources */,
 				B021 /* ReadinessRules.swift in Sources */,
 				B022 /* ReadinessRulesTests.swift in Sources */,
