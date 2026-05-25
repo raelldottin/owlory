@@ -117,6 +117,32 @@ A future repository should consume `repo-automation` as a reusable package or te
 
 New repositories must start from examples or templates, not Owlory's live queue, handoffs, proofs, or SecondBrain history.
 
+## Clean GitHub Stop Contract
+
+Reusable automation assumes every task ends with a clean GitHub stop across all touched repositories. A clean stop requires:
+
+1. all changes committed in logical commits
+2. the current branch pushed to its GitHub upstream
+3. `git status --short` returning no output
+4. `git rev-list --left-right --count HEAD...@{u}` returning `0 0`
+
+This applies even in multi-agent workspaces. If another agent leaves dirt in a repo, inspect it, commit or deliberately preserve it, push the resulting branch, and report the exact state. If a branch has no upstream, credentials fail, or a push is rejected, record that blocker explicitly and do not call the stop clean.
+
+## Agent Runner Selection
+
+`automation/supervisor/run_agent.sh` is the reusable launch wrapper for fresh slice agents. Its default `auto` mode supports both Codex and Claude Code without changing `policy.agent_command_template` in every consumer queue.
+
+The wrapper chooses Claude Code when it detects that the supervisor was invoked from a Claude Code process tree and a `claude` executable is available. Outside Claude Code it preserves the previous Codex-first behavior: use `codex` when present, then fall back to `claude` if Codex is not installed. Operators can pin a runner with:
+
+```bash
+REPO_AUTOMATION_AGENT_RUNNER=claude python3 automation/supervisor/run_next.py
+REPO_AUTOMATION_AGENT_RUNNER=codex python3 automation/supervisor/run_next.py
+```
+
+Codex runs with the existing no-approval, workspace-write invocation. Claude Code runs non-interactively with prompt stdin, `--print`, `--input-format text`, `--no-session-persistence`, `--permission-mode bypassPermissions`, and `--add-dir <repo_root>`.
+
+Consumer repositories can override executable names with `REPO_AUTOMATION_CODEX_BIN` or `REPO_AUTOMATION_CLAUDE_BIN`. `OWLORY_CODEX_BIN` remains supported for existing Codex setups. Consumers that require a stricter Claude local policy can set `REPO_AUTOMATION_CLAUDE_PERMISSION_MODE` to another Claude Code permission mode.
+
 ## Bootstrap Status
 
 As of 2026-05-21, `/Users/raelldottin/Documents/Personal/repo-automation` is initialized as a Git repository on `main`. The bootstrap commit is `6ab871bbf957df24e648b02ef002c0efa2d7c609`. Exact publication commits are recorded in Owlory handoffs so this manifest-synced workflow doc does not have to change for every external commit.
