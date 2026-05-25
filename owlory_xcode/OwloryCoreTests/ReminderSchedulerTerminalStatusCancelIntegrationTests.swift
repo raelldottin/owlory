@@ -77,6 +77,45 @@ final class ReminderSchedulerTerminalStatusCancelIntegrationTests: XCTestCase {
         )
     }
 
+    func testRenamingTrainSessionRemovesPendingReminderForOldKey() async throws {
+        let oldActivity = uniqueActivity("Morning run rename")
+        let newActivity = uniqueActivity("Evening jog rename")
+        let oldIdentifier = try await schedulePendingReminderForTrainSession(named: oldActivity)
+
+        let store = makeTrainStore()
+        store.addSession(plannedActivity: oldActivity)
+        let sessionId = store.sessions[0].id
+
+        store.updatePlannedActivity(id: sessionId, plannedActivity: newActivity)
+
+        try await waitForCancelTask()
+
+        let pending = await center.pendingNotificationRequests()
+        XCTAssertFalse(
+            pending.contains { $0.identifier == oldIdentifier },
+            "Renaming away from the old activity must remove the pending reminder keyed to the old name."
+        )
+    }
+
+    func testDeletingTrainSessionRemovesPendingReminder() async throws {
+        let activity = uniqueActivity("Morning run delete")
+        let identifier = try await schedulePendingReminderForTrainSession(named: activity)
+
+        let store = makeTrainStore()
+        store.addSession(plannedActivity: activity)
+        let sessionId = store.sessions[0].id
+
+        store.deleteSession(id: sessionId)
+
+        try await waitForCancelTask()
+
+        let pending = await center.pendingNotificationRequests()
+        XCTAssertFalse(
+            pending.contains { $0.identifier == identifier },
+            "Deleting a session must remove the pending reminder that was keyed to it."
+        )
+    }
+
     // MARK: - Home
 
     func testSkippingRecurringHomeTaskRemovesPendingReminder() async throws {
@@ -89,6 +128,51 @@ final class ReminderSchedulerTerminalStatusCancelIntegrationTests: XCTestCase {
         try await assertTerminalHomeTaskActionRemovesPendingReminder { store, id in
             store.toggleComplete(id: id)
         }
+    }
+
+    func testRenamingHomeTaskRemovesPendingReminderForOldKey() async throws {
+        let oldTitle = uniqueActivity("Water plants rename")
+        let newTitle = uniqueActivity("Water seedlings rename")
+        let oldIdentifier = try await schedulePendingReminderForHomeTask(titled: oldTitle)
+
+        let store = makeHomeStore()
+        store.addTask(title: oldTitle, isRecurring: true)
+        let taskId = store.tasks[0].id
+
+        store.updateTask(
+            id: taskId,
+            title: newTitle,
+            notes: "",
+            isRecurring: true,
+            recurrenceIntervalDays: nil
+        )
+
+        try await waitForCancelTask()
+
+        let pending = await center.pendingNotificationRequests()
+        XCTAssertFalse(
+            pending.contains { $0.identifier == oldIdentifier },
+            "Renaming a recurring task must remove the pending reminder keyed to the old title."
+        )
+    }
+
+    func testDeletingHomeTaskRemovesPendingReminder() async throws {
+        let title = uniqueActivity("Water plants delete")
+        let identifier = try await schedulePendingReminderForHomeTask(titled: title)
+
+        let store = makeHomeStore()
+        store.addTask(title: title, isRecurring: true)
+        let taskId = store.tasks[0].id
+
+        store.deleteTask(id: taskId)
+
+        try await waitForCancelTask()
+
+        let pending = await center.pendingNotificationRequests()
+        XCTAssertFalse(
+            pending.contains { $0.identifier == identifier },
+            "Deleting a task must remove the pending reminder keyed to its title."
+        )
     }
 
     // MARK: - Shared assertions

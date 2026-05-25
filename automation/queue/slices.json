@@ -7249,6 +7249,43 @@
       ],
       "max_files_changed": 4,
       "notes": "Domain-tested proof was insufficient because the prior slice only verified that TrainStore/HomeStore call the onItemCompleted callback for terminal statuses, not that the callback actually removes pending requests from the real UNUserNotificationCenter. Add an XCTest that requests provisional notification authorization on the simulator, schedules a pending request with the exact ReminderScheduler identifier scheme, wires TrainStore/HomeStore with the real cancelCompletedReminder closure, applies the terminal status, awaits the async cancel Task, and asserts the pending request is gone. Cover Train .completed/.modified/.skipped and Home recurring .completed/.skipped paths."
+    },
+    {
+      "slice_id": "reminders-stale-prediction-suppression-and-mutation-cancel",
+      "title": "Suppress prediction reminders without an active session/task and cancel reminders on rename/delete mutations",
+      "status": "done",
+      "priority": 75,
+      "domain": "reminders",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/reminders.md",
+        "docs/product/domain-index.md",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+        "owlory_xcode/Owlory/Core/Domain/ReminderSuppressionRules.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/ReminderSchedulerTerminalStatusCancelIntegrationTests.swift",
+        "owlory_xcode/OwloryCoreTests/ReminderSuppressionRulesTests.swift",
+        "owlory_xcode/OwloryCoreTests/TrainStoreTests.swift",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "Tools/validate.sh",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "make test-domain DOMAIN=reminders",
+        "make test-domain DOMAIN=train",
+        "make test-domain DOMAIN=home",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "reminders-terminal-status-cancel-simulator-proof"
+      ],
+      "max_files_changed": 14,
+      "notes": "Two remaining stale-reminder paths surfaced after the terminal-status fix: (a) renaming a Train session's plannedActivity or a Home task's title left the OLD key's pending reminder live; deleting either left the reminder live. (b) A prediction key with no active matching session/task today still scheduled a reminder because the suppression filter only added terminal today-sessions to completedKeys. Extract the suppression set construction into a new ReminderSuppressionRules domain rule (\"a prediction key fires a reminder only when an active match exists\": Train .planned today-session for the key, OR Home recurring task that is currently active for the key). Update RootTabView.refreshRuntimeArtifacts to call the rule. Add onItemCompleted cancel calls to TrainStore.updatePlannedActivity (old key), TrainStore.deleteSession, HomeStore.updateTask (old key when title changed), and HomeStore.deleteTask. Add simulator integration tests proving the cancel chain reaches UNUserNotificationCenter for each mutation path."
     }
   ]
 }

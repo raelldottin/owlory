@@ -19,6 +19,7 @@
 ## Depends On
 
 - `CompletionTimePredictor` for pure prediction logic.
+- `ReminderSuppressionRules` for the resolved-today / active-match policy that decides which predictor keys must enter the `completedKeys` set passed to `ReminderSchedulingRules`. A prediction key fires a reminder only when there is something to act on right now: a Train session for today still in `.planned` for that activity, OR a Home recurring task that is active (recurring, not currently completed or skipped) for that title. Any prediction key without an active match is suppressed; this subsumes the prior "terminal today session" rule and closes the stale-prediction gap where an activity with historical completions but no today item still received a reminder.
 - `ReminderSchedulingRules` for pure reminder timing and suppression policy.
 - `CompletionHistoryStore` for records and predictions.
 - `ReminderScheduler` for UserNotifications integration.
@@ -37,6 +38,8 @@
 - Keep reminder eligibility and deadline policy in `ReminderSchedulingRules`.
 - Keep `UserNotifications` calls inside `ReminderScheduler`.
 - Preserve resolved-today suppression so reminders do not nag work the user has already dispositioned today. A Train session marked completed, modified, or skipped, and a recurring Home task marked completed or skipped, are all terminal user dispositions; their predictor keys must enter the `completedKeys` set passed to `ReminderSchedulingRules.plan`, and the per-item `onItemCompleted` cancel hook must fire synchronously at the moment of resolution so a pending notification cannot still fire after the user has decided not to act today. Only Train sessions reverted to planned, and Home tasks restored from skipped, leave a pending reminder in place.
+- Treat the per-item `onItemCompleted` cancel hook as a contract for any mutation that invalidates a previously-keyed reminder: renaming a Train session's `plannedActivity` or a Home recurring task's `title` must fire the hook with the OLD predictor key, and deleting either item must fire the hook with its key. The bulk reschedule cleans up at the next foreground entry, but the per-item cancel closes the window between mutation and next reschedule so the user does not see a reminder for a name they have already renamed or deleted.
+- Predictions without an active match for today must not fire. The `ReminderSuppressionRules` rule encodes this: if there is no Train `.planned` today session for the prediction's activity (or no active recurring Home task for the prediction's title), the key is included in `completedKeys`. This is intentional — predictions reflect historical activity, not commitment to act today, so a "you missed your usual training window" reminder only makes sense when there is a session to act on.
 - Preserve dedupe by clearing existing Owlory reminder and protocol-schedule requests before adding the current plan.
 - Scheduling currently happens when app wiring calls `ReminderScheduler.reschedule`, including launch and foreground entry.
 - Protocol schedule notifications use identifiers prefixed with `owlory.protocol-schedule.` with a deterministic scheme per protocol/kind, separate from the `owlory.reminder.` prefix used by prediction and prompt notifications.

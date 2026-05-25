@@ -88,7 +88,12 @@ final class TrainStore: OwloryObservableObject {
 
     func updatePlannedActivity(id: UUID, plannedActivity: String) {
         guard let index = sessions.firstIndex(where: { $0.id == id }) else { return }
+        let oldKey = CompletionTimePredictor.key(forTrainingSession: sessions[index].plannedActivity)
+        let newKey = CompletionTimePredictor.key(forTrainingSession: plannedActivity)
         sessions[index].plannedActivity = plannedActivity
+        if oldKey != newKey {
+            onItemCompleted?(oldKey)
+        }
         persist()
     }
 
@@ -105,7 +110,10 @@ final class TrainStore: OwloryObservableObject {
     }
 
     func deleteSession(id: UUID) {
-        sessions.removeAll { $0.id == id }
+        guard let index = sessions.firstIndex(where: { $0.id == id }) else { return }
+        let key = CompletionTimePredictor.key(forTrainingSession: sessions[index].plannedActivity)
+        sessions.remove(at: index)
+        onItemCompleted?(key)
         persist()
     }
 

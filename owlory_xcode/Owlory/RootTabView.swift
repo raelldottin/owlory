@@ -292,35 +292,15 @@ struct RootTabView: View {
     /// ask the scheduler to reschedule notifications for pending items.
     private func refreshRuntimeArtifacts() {
         let now = Date()
-        var completedKeys = Set<String>()
-
-        // Home recurring tasks resolved today (completed or skipped)
-        for task in homeStore.completedTasks where task.isRecurring {
-            completedKeys.insert(CompletionTimePredictor.key(forHomeTask: task.title))
-        }
-        for task in homeStore.skippedTasks where task.isRecurring {
-            completedKeys.insert(CompletionTimePredictor.key(forHomeTask: task.title))
-        }
-
-        // Training sessions resolved today (completed, modified, or skipped)
-        for session in trainStore.todaySessions
-            where session.status == .completed
-                || session.status == .modified
-                || session.status == .skipped {
-            completedKeys.insert(
-                CompletionTimePredictor.key(forTrainingSession: session.plannedActivity))
-        }
-
-        // Protocol runs completed today
         let calendar = Calendar.current
-        let todayStart = calendar.startOfDay(for: now)
-        for run in homeStore.completedRuns {
-            if let completedAt = run.completedAt,
-               calendar.startOfDay(for: completedAt) == todayStart {
-                completedKeys.insert(
-                    CompletionTimePredictor.key(forProtocolRun: run.protocolTitle))
-            }
-        }
+        let completedKeys = ReminderSuppressionRules.suppressionKeys(
+            predictionKeys: completionHistory.predictions.keys,
+            todayTrainingSessions: trainStore.todaySessions,
+            homeTasks: homeStore.tasks,
+            completedHomeRuns: homeStore.completedRuns,
+            now: now,
+            calendar: calendar
+        )
 
         let promptNotifications = currentTodayEntry.map {
             TodayStore.promptNotifications(

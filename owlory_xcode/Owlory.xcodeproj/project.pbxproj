@@ -74,6 +74,7 @@
 		A064 /* ContinuePipelineTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A163 /* ContinuePipelineTrace.swift */; };
 		A065 /* RecurringRolloverPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164 /* RecurringRolloverPlanner.swift */; };
 		A066 /* ReminderSchedulingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A165 /* ReminderSchedulingRules.swift */; };
+		A701 /* ReminderSuppressionRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A705 /* ReminderSuppressionRules.swift */; };
 		A067 /* ReminderScheduleTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A166 /* ReminderScheduleTrace.swift */; };
 		A068 /* WeeklyDigestCadenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167 /* WeeklyDigestCadenceRules.swift */; };
 		A069 /* PatternNudgeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A168 /* PatternNudgeRules.swift */; };
@@ -168,6 +169,8 @@
 		B070 /* RecurringRolloverPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164 /* RecurringRolloverPlanner.swift */; };
 		B071 /* RecurringRolloverPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129 /* RecurringRolloverPlannerTests.swift */; };
 		B072 /* ReminderSchedulingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A165 /* ReminderSchedulingRules.swift */; };
+		A702 /* ReminderSuppressionRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A705 /* ReminderSuppressionRules.swift */; };
+		B703 /* ReminderSuppressionRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B704 /* ReminderSuppressionRulesTests.swift */; };
 		B073 /* ReminderScheduleTrace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A166 /* ReminderScheduleTrace.swift */; };
 		B074 /* ReminderSchedulingRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130 /* ReminderSchedulingRulesTests.swift */; };
 		B075 /* WeeklyDigestCadenceRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A167 /* WeeklyDigestCadenceRules.swift */; };
@@ -303,6 +306,8 @@
 		A163 /* ContinuePipelineTrace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuePipelineTrace.swift; sourceTree = "<group>"; };
 		A164 /* RecurringRolloverPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringRolloverPlanner.swift; sourceTree = "<group>"; };
 		A165 /* ReminderSchedulingRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulingRules.swift; sourceTree = "<group>"; };
+		A705 /* ReminderSuppressionRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSuppressionRules.swift; sourceTree = "<group>"; };
+		B704 /* ReminderSuppressionRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSuppressionRulesTests.swift; sourceTree = "<group>"; };
 		A166 /* ReminderScheduleTrace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduleTrace.swift; sourceTree = "<group>"; };
 		A167 /* WeeklyDigestCadenceRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestCadenceRules.swift; sourceTree = "<group>"; };
 		A168 /* PatternNudgeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternNudgeRules.swift; sourceTree = "<group>"; };
@@ -544,6 +549,7 @@
 				A177 /* ProtocolScheduleNotificationRules.swift */,
 				A158 /* RecurrenceRules.swift */,
 				A165 /* ReminderSchedulingRules.swift */,
+				A705 /* ReminderSuppressionRules.swift */,
 				A160 /* ContinueCandidateRules.swift */,
 				A159 /* ContinueRankingRules.swift */,
 				A123 /* ReadinessRules.swift */,
@@ -684,6 +690,7 @@
 				B105 /* WriteStoreTests.swift */,
 				B106 /* TrainStoreTests.swift */,
 				B702 /* ReminderSchedulerTerminalStatusCancelIntegrationTests.swift */,
+				B704 /* ReminderSuppressionRulesTests.swift */,
 				B107 /* CareerStoreTests.swift */,
 				B108 /* HomeStoreTests.swift */,
 				B109 /* ReadinessRulesTests.swift */,
@@ -1019,6 +1026,7 @@
 				A082 /* HomeAccessibilityLabels.swift in Sources */,
 				A083 /* WeeklyDigestPresentationFormatting.swift in Sources */,
 				A066 /* ReminderSchedulingRules.swift in Sources */,
+				A701 /* ReminderSuppressionRules.swift in Sources */,
 				A055 /* CompletionHistoryStore.swift in Sources */,
 				A056 /* ReminderScheduler.swift in Sources */,
 				A059 /* RecurrenceRules.swift in Sources */,
@@ -1116,6 +1124,8 @@
 				B091 /* ProtocolScheduleRules.swift in Sources */,
 				B093 /* ProtocolScheduleNotificationRules.swift in Sources */,
 				B072 /* ReminderSchedulingRules.swift in Sources */,
+				A702 /* ReminderSuppressionRules.swift in Sources */,
+				B703 /* ReminderSuppressionRulesTests.swift in Sources */,
 				B056 /* CompletionHistoryStore.swift in Sources */,
 				B057 /* CompletionTimePredictorTests.swift in Sources */,
 				B074 /* ReminderSchedulingRulesTests.swift in Sources */,

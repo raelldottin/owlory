@@ -202,15 +202,23 @@ final class HomeStore: OwloryObservableObject {
 
     func updateTask(id: UUID, title: String, notes: String, isRecurring: Bool, recurrenceIntervalDays: Int?) {
         guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
+        let oldKey = CompletionTimePredictor.key(forHomeTask: tasks[index].title)
+        let newKey = CompletionTimePredictor.key(forHomeTask: title)
         tasks[index].title = title
         tasks[index].notes = notes
         tasks[index].isRecurring = isRecurring
         tasks[index].recurrenceIntervalDays = recurrenceIntervalDays
+        if oldKey != newKey {
+            onItemCompleted?(oldKey)
+        }
         persistTasks()
     }
 
     func deleteTask(id: UUID) {
-        tasks.removeAll { $0.id == id }
+        guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
+        let key = CompletionTimePredictor.key(forHomeTask: tasks[index].title)
+        tasks.remove(at: index)
+        onItemCompleted?(key)
         persistTasks()
     }
 

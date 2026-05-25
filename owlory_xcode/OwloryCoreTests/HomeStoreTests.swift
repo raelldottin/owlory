@@ -293,6 +293,65 @@ final class HomeStoreTests: XCTestCase {
         )
     }
 
+    func testRenamingTaskCallsOnItemCompletedHookForOldKey() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addTask(title: "Water plants", isRecurring: true)
+        let id = store.tasks[0].id
+
+        store.updateTask(
+            id: id,
+            title: "Water seedlings",
+            notes: "",
+            isRecurring: true,
+            recurrenceIntervalDays: nil
+        )
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forHomeTask: "Water plants")],
+            "Renaming a recurring task must cancel the OLD key's pending reminder."
+        )
+    }
+
+    func testRenamingTaskToSameNormalizedTitleDoesNotFireHook() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addTask(title: "Water plants", isRecurring: true)
+        let id = store.tasks[0].id
+
+        store.updateTask(
+            id: id,
+            title: "  WATER plants ",
+            notes: "",
+            isRecurring: true,
+            recurrenceIntervalDays: nil
+        )
+
+        XCTAssertTrue(
+            recordedKeys.isEmpty,
+            "Predictor keys are case-insensitive and trimmed, so a cosmetic title edit must not cancel the reminder."
+        )
+    }
+
+    func testDeletingTaskCallsOnItemCompletedHookWithTaskKey() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addTask(title: "Water plants", isRecurring: true)
+        let id = store.tasks[0].id
+
+        store.deleteTask(id: id)
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forHomeTask: "Water plants")],
+            "Deleting a task must cancel its pending reminder; otherwise the missed-window notification fires for a task that no longer exists."
+        )
+    }
+
     func testRestoreTaskMovesSkippedTaskBackToActive() {
         let store = makeStore()
         store.addTask(title: "Call plumber")
