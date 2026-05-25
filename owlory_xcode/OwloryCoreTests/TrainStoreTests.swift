@@ -342,13 +342,15 @@ final class TrainStoreTests: XCTestCase {
         XCTAssertEqual(store2.sessions[0].status, .skipped)
     }
 
-    // MARK: - Completion fires reminder cancellation
+    // MARK: - Terminal status fires reminder cancellation
     //
-    // Regression for the user-reported bug where a completed train item still
-    // received a "window has passed" notification because nothing cancelled
-    // the pending reminder synchronously at completion time. The schedule-time
+    // Regression for the user-reported bug where resolving a Train session
+    // still left a "window has passed" notification pending. Completing,
+    // modifying, or skipping a session is a terminal user disposition, and
+    // each must synchronously cancel the pending reminder. The schedule-time
     // suppression in ReminderScheduler.reschedule() only protects against
-    // bulk re-schedules; per-item completion needs its own cancel hook.
+    // bulk re-schedules; per-item resolution needs its own cancel hook.
+    // Only .planned (the non-terminal status) leaves the reminder in place.
 
     func testCompletingSessionCallsOnItemCompletedHookWithPredictorKey() {
         let now = makeDate("2026-04-08T09:00:00Z")
@@ -392,7 +394,7 @@ final class TrainStoreTests: XCTestCase {
         )
     }
 
-    func testNonCompletionStatusDoesNotCallOnItemCompletedHook() {
+    func testSkippingSessionAlsoCallsOnItemCompletedHook() {
         let now = makeDate("2026-04-08T09:00:00Z")
         var recordedKeys: [String] = []
         let store = TrainStore(
@@ -406,9 +408,30 @@ final class TrainStoreTests: XCTestCase {
 
         store.updateSession(id: id, actualActivity: "", status: .skipped, reflection: "")
 
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forTrainingSession: "Morning Run")],
+            "Skipping is a terminal user disposition and must cancel the pending reminder so a skipped session does not still fire a missed-window notification."
+        )
+    }
+
+    func testRevertingSessionToPlannedDoesNotCallOnItemCompletedHook() {
+        let now = makeDate("2026-04-08T09:00:00Z")
+        var recordedKeys: [String] = []
+        let store = TrainStore(
+            repository: InMemoryItemListRepository<TrainingSession>(),
+            clock: FixedClock(now: now),
+            onItemCompleted: { key in recordedKeys.append(key) }
+        )
+
+        store.addSession(plannedActivity: "Morning Run")
+        let id = store.sessions[0].id
+
+        store.updateSession(id: id, actualActivity: "", status: .planned, reflection: "")
+
         XCTAssertTrue(
             recordedKeys.isEmpty,
-            "Only .completed and .modified should fire the cancellation hook; .skipped is neither completion nor modification."
+            "Only terminal statuses (.completed, .modified, .skipped) fire the cancellation hook; .planned is non-terminal and must leave any pending reminder in place."
         )
     }
 

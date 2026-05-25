@@ -7191,6 +7191,36 @@
       "max_files_changed": 10,
       "entry_condition": "Public GitHub Pages host is expected at https://raelldottin.github.io/owlory/.",
       "notes": "Create lightweight, accessible static HTML pages at docs/support/index.html and docs/privacy/index.html for App Store Connect Support URL and Privacy Policy URL. Use no analytics, cookies, third-party embeds, external fonts, or unsupported product claims. Add minimal GitHub Pages deployment/configuration and a docs note with the exact URLs to paste."
+    },
+    {
+      "slice_id": "reminders-suppress-notifications-for-skipped-items",
+      "title": "Stop missed-window reminders from firing for skipped Train and Home items",
+      "status": "done",
+      "priority": 73,
+      "domain": "reminders",
+      "allowed_paths": [
+        "automation/queue/slices.json",
+        "automation/handoffs/",
+        "docs/product/domains/reminders.md",
+        "docs/product/domains/train.md",
+        "docs/product/domains/home.md",
+        "owlory_xcode/Owlory/Core/Application/TrainStore.swift",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/RootTabView.swift",
+        "owlory_xcode/OwloryCoreTests/TrainStoreTests.swift",
+        "owlory_xcode/OwloryCoreTests/HomeStoreTests.swift",
+        "SecondBrain/sessions/"
+      ],
+      "required_validations": [
+        "python3 automation/supervisor/run_next.py --dry-run",
+        "make architecture",
+        "git diff --check"
+      ],
+      "depends_on": [
+        "app-store-public-support-privacy-pages"
+      ],
+      "max_files_changed": 10,
+      "notes": "Skipped Train sessions and skipped recurring Home tasks still received missed-window reminders because (a) TrainStore.updateSession and HomeStore.skipTask did not fire the onItemCompleted cancel hook for skipped status, and (b) RootTabView.refreshRuntimeArtifacts only added completed/modified Train sessions and completed Home tasks to completedKeys. Treat skipped as a terminal user disposition for reminder suppression purposes only; do not log skipped items to CompletionHistoryStore."
     }
   ]
 }

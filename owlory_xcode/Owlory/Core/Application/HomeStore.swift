@@ -188,6 +188,9 @@ final class HomeStore: OwloryObservableObject {
         tasks[index].isCompleted = false
         tasks[index].isSkipped = true
         tasks[index].lastSkipped = clock.now
+        onItemCompleted?(
+            CompletionTimePredictor.key(forHomeTask: tasks[index].title)
+        )
         persistTasks()
     }
 

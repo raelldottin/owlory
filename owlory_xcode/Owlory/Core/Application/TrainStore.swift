@@ -77,6 +77,8 @@ final class TrainStore: OwloryObservableObject {
                 activity: sessions[index].plannedActivity,
                 completedAt: clock.now
             )
+        }
+        if status == .completed || status == .modified || status == .skipped {
             onItemCompleted?(
                 CompletionTimePredictor.key(forTrainingSession: sessions[index].plannedActivity)
             )

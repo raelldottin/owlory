@@ -279,6 +279,20 @@ final class HomeStoreTests: XCTestCase {
         )
     }
 
+    func testSkippingTaskCallsOnItemCompletedHookWithPredictorKey() {
+        var recordedKeys: [String] = []
+        let store = makeStore { key in recordedKeys.append(key) }
+
+        store.addTask(title: "Water plants")
+        store.skipTask(id: store.tasks[0].id)
+
+        XCTAssertEqual(
+            recordedKeys,
+            [CompletionTimePredictor.key(forHomeTask: "Water plants")],
+            "Skipping is a terminal user disposition and must cancel the pending reminder so a skipped task does not still fire a missed-window notification."
+        )
+    }
+
     func testRestoreTaskMovesSkippedTaskBackToActive() {
         let store = makeStore()
         store.addTask(title: "Call plumber")

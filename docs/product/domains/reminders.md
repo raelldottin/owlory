@@ -36,7 +36,7 @@
 - Keep statistical logic pure.
 - Keep reminder eligibility and deadline policy in `ReminderSchedulingRules`.
 - Keep `UserNotifications` calls inside `ReminderScheduler`.
-- Preserve completed-today suppression so reminders do not nag completed work.
+- Preserve resolved-today suppression so reminders do not nag work the user has already dispositioned today. A Train session marked completed, modified, or skipped, and a recurring Home task marked completed or skipped, are all terminal user dispositions; their predictor keys must enter the `completedKeys` set passed to `ReminderSchedulingRules.plan`, and the per-item `onItemCompleted` cancel hook must fire synchronously at the moment of resolution so a pending notification cannot still fire after the user has decided not to act today. Only Train sessions reverted to planned, and Home tasks restored from skipped, leave a pending reminder in place.
 - Preserve dedupe by clearing existing Owlory reminder and protocol-schedule requests before adding the current plan.
 - Scheduling currently happens when app wiring calls `ReminderScheduler.reschedule`, including launch and foreground entry.
 - Protocol schedule notifications use identifiers prefixed with `owlory.protocol-schedule.` with a deterministic scheme per protocol/kind, separate from the `owlory.reminder.` prefix used by prediction and prompt notifications.

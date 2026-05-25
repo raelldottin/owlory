@@ -294,14 +294,19 @@ struct RootTabView: View {
         let now = Date()
         var completedKeys = Set<String>()
 
-        // Home tasks completed today
+        // Home recurring tasks resolved today (completed or skipped)
         for task in homeStore.completedTasks where task.isRecurring {
             completedKeys.insert(CompletionTimePredictor.key(forHomeTask: task.title))
         }
+        for task in homeStore.skippedTasks where task.isRecurring {
+            completedKeys.insert(CompletionTimePredictor.key(forHomeTask: task.title))
+        }
 
-        // Training sessions completed/modified today
+        // Training sessions resolved today (completed, modified, or skipped)
         for session in trainStore.todaySessions
-            where session.status == .completed || session.status == .modified {
+            where session.status == .completed
+                || session.status == .modified
+                || session.status == .skipped {
             completedKeys.insert(
                 CompletionTimePredictor.key(forTrainingSession: session.plannedActivity))
         }

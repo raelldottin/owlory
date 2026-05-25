@@ -1,5 +1,9 @@
 # Second Brain Index
 
+## 2026-05-25
+
+- [reminders-suppress-notifications-for-skipped-items (domain-tested; skipped Train sessions and skipped recurring Home tasks now fire onItemCompleted at resolution and enter completedKeys for bulk reschedule, so missed-window reminders no longer fire after the user skips)](sessions/2026-05-25/001803-reminders-suppress-notifications-for-skipped-items.md)
+
 ## 2026-05-22
 
 - [privacy-page-support-email-recheck (live-checked; privacy page already shows raell.dottin+support@gmail.com, no source change needed)](sessions/2026-05-22/144212-privacy-page-support-email-recheck.md)
