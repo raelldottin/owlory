@@ -38,12 +38,16 @@ When taking over or reviewing a broad dirty change set, run `make review-preflig
 1. Update the `SecondBrain` entry with changed files and validation results.
 2. Run the narrowest honest validation path.
 3. Report exact commands, failures, reruns, and residual risk.
-4. If claiming all actionable work is complete, run `make clean-stop`.
-5. Name the next best slice when useful.
+4. Commit every changed repo in logical commits and push each current branch to its GitHub upstream.
+5. Verify each touched or explicitly requested repo has `git status --short` empty and `git rev-list --left-right --count HEAD...@{u}` equal to `0 0`.
+6. If claiming all actionable work is complete, run `make clean-stop`.
+7. Name the next best slice when useful.
 
 ## Clean-Stop Standard
 
 All currently actionable slices are complete only when the queue has no eligible or open queued/in-progress entries, the repo is clean, `HEAD` is mirrored with upstream, and any remaining work is represented as `blocked` or `deferred` slices with explicit entry conditions.
+
+For task handoff, a clean stop also requires every touched repository to be committed and pushed to GitHub. If a repo has no upstream, a rejected push, failing credential, or another external blocker, state that blocker explicitly and do not call the stop clean.
 
 Use:
 

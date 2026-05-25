@@ -56,6 +56,8 @@ Automation handoffs must also preserve review evidence: `contract_status_changes
 
 Use `make clean-stop` when deciding whether all currently actionable work is complete. A clean repo alone is not enough; a clean queue alone is not enough.
 
+For any task handoff, clean stop also means every touched repository has been committed and pushed to GitHub. Before final response, verify `git status --short` is empty and `git rev-list --left-right --count HEAD...@{u}` returns `0 0` for each touched or explicitly requested repo. If an upstream, credential, or rejected-push blocker prevents that, state the blocker and do not claim a clean stop.
+
 The command checks three levels:
 
 - queue state: no `queued`, `in_progress`, or future `ready` slices remain
