@@ -54,6 +54,7 @@ Current contract status lives in [Roadmap Status](../workflows/roadmap-status.md
 - Backgrounds and reading surfaces use layered neutrals.
 - Success uses muted green, warning/deferred states use muted amber, and destructive actions use system red.
 - `owlory_xcode/Owlory/DesignSystem/AppTheme.swift` is the implementation source of truth for layout tokens and semantic color roles.
+- See [Design System Tokens](../design-system.md) for resolved brand hex values and the full token inventory.
 
 ## Read Next
 

@@ -7,6 +7,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Repo Map](repo-map.md) is the cold-start guide for future agents and context-compacted sessions.
 - [Golden Principles](golden-principles.md) states the compact drift-control principles for architecture, validation, and handoff.
 - [Architecture Overview](architecture/overview.md) explains the current repo shape and major seams.
+- [Design System Tokens](design-system.md) lists resolved brand hex values, semantic color roles, layout tokens, and accessibility helpers so agents do not need to grep the asset catalog.
 - [Boundary Model](architecture/boundaries.md) defines allowed dependency direction and shared-code rules.
 - [Product Overview](product/overview.md) captures cross-domain product posture, core surfaces, and experience principles.
 - [Domain Index](product/domain-index.md) maps product areas to owning code, tests, and validation.
