@@ -93,6 +93,9 @@
 		A082 /* HomeAccessibilityLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A181 /* HomeAccessibilityLabels.swift */; };
 		A083 /* WeeklyDigestPresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A182 /* WeeklyDigestPresentationFormatting.swift */; };
 		B096 /* WeeklyDigestPresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A182 /* WeeklyDigestPresentationFormatting.swift */; };
+		A084 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A183 /* HomeProtocolSchedulePresentationFormatting.swift */; };
+		B098 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A183 /* HomeProtocolSchedulePresentationFormatting.swift */; };
+		B099 /* HomeProtocolSchedulePresentationFormattingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -325,6 +328,8 @@
 		A180 /* ReadinessSummaryPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessSummaryPresentation.swift; sourceTree = "<group>"; };
 		A181 /* HomeAccessibilityLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAccessibilityLabels.swift; sourceTree = "<group>"; };
 		A182 /* WeeklyDigestPresentationFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestPresentationFormatting.swift; sourceTree = "<group>"; };
+		A183 /* HomeProtocolSchedulePresentationFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocolSchedulePresentationFormatting.swift; sourceTree = "<group>"; };
+		B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocolSchedulePresentationFormattingTests.swift; sourceTree = "<group>"; };
 		L101 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L102 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L103 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -604,6 +609,7 @@
 				A180 /* ReadinessSummaryPresentation.swift */,
 				A181 /* HomeAccessibilityLabels.swift */,
 				A182 /* WeeklyDigestPresentationFormatting.swift */,
+				A183 /* HomeProtocolSchedulePresentationFormatting.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -700,6 +706,7 @@
 				B133 /* ReadinessOutcomeRulesTests.swift */,
 				B112 /* WeeklyDigestRulesTests.swift */,
 				B140 /* WeeklyDigestPresentationFormattingTests.swift */,
+				B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */,
 				B131 /* WeeklyDigestCadenceRulesTests.swift */,
 				B113 /* WritingVelocityTests.swift */,
 				B114 /* TrainingConsistencyTests.swift */,
@@ -1025,6 +1032,7 @@
 				A081 /* ReadinessSummaryPresentation.swift in Sources */,
 				A082 /* HomeAccessibilityLabels.swift in Sources */,
 				A083 /* WeeklyDigestPresentationFormatting.swift in Sources */,
+				A084 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */,
 				A066 /* ReminderSchedulingRules.swift in Sources */,
 				A701 /* ReminderSuppressionRules.swift in Sources */,
 				A055 /* CompletionHistoryStore.swift in Sources */,
@@ -1086,8 +1094,10 @@
 				B033 /* WeeklyDigestRules.swift in Sources */,
 				B075 /* WeeklyDigestCadenceRules.swift in Sources */,
 				B096 /* WeeklyDigestPresentationFormatting.swift in Sources */,
+				B098 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */,
 				B034 /* WeeklyDigestRulesTests.swift in Sources */,
 				B095 /* WeeklyDigestPresentationFormattingTests.swift in Sources */,
+				B099 /* HomeProtocolSchedulePresentationFormattingTests.swift in Sources */,
 				B076 /* WeeklyDigestCadenceRulesTests.swift in Sources */,
 				B035 /* WritingVelocityTests.swift in Sources */,
 				B036 /* TrainingConsistencyTests.swift in Sources */,

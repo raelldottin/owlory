@@ -41,6 +41,7 @@ let package = Package(
                 "DigestInsightStoreTests.swift",
                 "FocusSuggestionRulesTests.swift",
                 "HomeStoreTests.swift",
+                "HomeProtocolSchedulePresentationFormattingTests.swift",
                 "MLServiceContractTests.swift",
                 "MLSuggestionTests.swift",
                 "PatternEngineTests.swift",

@@ -84,6 +84,7 @@ run_domain() {
         -only-testing:OwloryCoreTests/HomeStoreTests \
         -only-testing:OwloryCoreTests/ProtocolLifecycleRulesTests \
         -only-testing:OwloryCoreTests/ProtocolScheduleRulesTests \
+        -only-testing:OwloryCoreTests/HomeProtocolSchedulePresentationFormattingTests \
         -only-testing:OwloryCoreTests/RecurrenceRulesTests \
         -only-testing:OwloryCoreTests/RecurringRolloverPlannerTests
       ;;

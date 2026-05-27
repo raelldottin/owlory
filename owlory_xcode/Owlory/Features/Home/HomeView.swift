@@ -850,7 +850,10 @@ private struct EditProtocolSheet: View {
                     TextField("Step 1\nStep 2\nStep 3", text: $stepsText, axis: .vertical)
                         .lineLimit(4...10)
                 }
-                ProtocolScheduleSection(draft: $scheduleDraft)
+                ProtocolScheduleSection(
+                    draft: $scheduleDraft,
+                    runs: store.runs.filter { $0.protocolID == proto.id }
+                )
                 sourceNoteSection
                 archiveSection
             }
@@ -984,6 +987,7 @@ private struct AddProtocolSheet: View {
 
 private struct ProtocolScheduleSection: View {
     @Binding var draft: ProtocolScheduleRules.Draft
+    var runs: [ProtocolRun] = []
 
     var body: some View {
         Section(L("Schedule")) {
@@ -1023,6 +1027,7 @@ private struct ProtocolScheduleSection: View {
     private var scheduleHelpText: String {
         let summary = ProtocolScheduleRules.summary(
             for: ProtocolScheduleRules.schedule(from: draft, calendar: .current),
+            runs: runs,
             now: Date(),
             calendar: .current
         )
@@ -1031,110 +1036,6 @@ private struct ProtocolScheduleSection: View {
             for: summary,
             calendar: .current
         )
-    }
-}
-
-private enum HomeProtocolSchedulePresentationFormatting {
-    static func summaryText(
-        for summary: ProtocolScheduleRules.ScheduleSummary,
-        calendar: Calendar
-    ) -> String {
-        scheduleText(
-            preset: summary.preset,
-            startDate: summary.startDate,
-            endDate: summary.endDate,
-            isOverdue: summary.status == .overdue,
-            calendar: calendar
-        )
-    }
-
-    static func helpText(
-        for summary: ProtocolScheduleRules.Summary?,
-        calendar: Calendar
-    ) -> String {
-        guard let summary else {
-            return NSLocalizedString(
-                "home.protocol.schedule.help.anytime",
-                comment: "Home protocol schedule help text when no schedule window is selected."
-            )
-        }
-
-        let label = scheduleText(
-            preset: summary.preset,
-            startDate: summary.startDate,
-            endDate: summary.endDate,
-            isOverdue: summary.state == .overdue,
-            calendar: calendar
-        )
-
-        return String.localizedStringWithFormat(
-            NSLocalizedString(
-                "home.protocol.schedule.help.scheduled",
-                comment: "Home protocol schedule help text with the selected schedule label."
-            ),
-            label
-        )
-    }
-
-    private static func scheduleText(
-        preset: ProtocolSchedulePreset,
-        startDate: Date,
-        endDate: Date,
-        isOverdue: Bool,
-        calendar: Calendar
-    ) -> String {
-        switch preset {
-        case .today:
-            return NSLocalizedString(
-                isOverdue
-                    ? "home.protocol.schedule.today.passed"
-                    : "home.protocol.schedule.today",
-                comment: "Home protocol schedule label for a today window."
-            )
-        case .weekend:
-            return NSLocalizedString(
-                isOverdue
-                    ? "home.protocol.schedule.weekend.passed"
-                    : "home.protocol.schedule.weekend",
-                comment: "Home protocol schedule label for a weekend window."
-            )
-        case .thisWeek:
-            return NSLocalizedString(
-                isOverdue
-                    ? "home.protocol.schedule.thisWeek.passed"
-                    : "home.protocol.schedule.thisWeek",
-                comment: "Home protocol schedule label for a this-week window."
-            )
-        case .custom:
-            let key = isOverdue
-                ? "home.protocol.schedule.custom.passed"
-                : "home.protocol.schedule.custom"
-            return String.localizedStringWithFormat(
-                NSLocalizedString(
-                    key,
-                    comment: "Home protocol schedule label for a custom date window."
-                ),
-                rangeLabel(start: startDate, end: endDate, calendar: calendar)
-            )
-        }
-    }
-
-    private static func rangeLabel(start: Date, end: Date, calendar: Calendar) -> String {
-        if calendar.startOfDay(for: start) == calendar.startOfDay(for: end) {
-            return dayLabel(start, calendar: calendar)
-        }
-
-        return "\(dayLabel(start, calendar: calendar)) - \(dayLabel(end, calendar: calendar))"
-    }
-
-    private static func dayLabel(_ date: Date, calendar: Calendar) -> String {
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.timeZone = calendar.timeZone
-        formatter.locale = calendar.locale
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
     }
 }
 
