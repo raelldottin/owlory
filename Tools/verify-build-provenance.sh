@@ -6,6 +6,7 @@ set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT_FILE="$ROOT/owlory_xcode/Owlory.xcodeproj/project.pbxproj"
 REQUIRE_CLEAN=0
+REFUSE_RELEASED_VERSION=0
 EXPECTED_BUILD=""
 EXPECTED_COMMIT=""
 
@@ -14,13 +15,18 @@ usage() {
 usage:
   ./Tools/verify-build-provenance.sh
   ./Tools/verify-build-provenance.sh --require-clean
+  ./Tools/verify-build-provenance.sh --require-clean --refuse-released-version
   ./Tools/verify-build-provenance.sh --expected-build <build-number> --expected-commit <git-sha>
 
 Options:
-  --expected-build <value>   Fail if Xcode CURRENT_PROJECT_VERSION differs from a TestFlight/build value.
-  --expected-commit <sha>    Fail if the current Git commit does not match the supplied short or full SHA.
-  --require-clean            Fail when the working tree has uncommitted changes.
-  -h, --help                 Show this help.
+  --expected-build <value>      Fail if Xcode CURRENT_PROJECT_VERSION differs from a TestFlight/build value.
+  --expected-commit <sha>       Fail if the current Git commit does not match the supplied short or full SHA.
+  --require-clean               Fail when the working tree has uncommitted changes or the on-disk
+                                MARKETING_VERSION/CURRENT_PROJECT_VERSION differs from HEAD.
+  --refuse-released-version     Fail when MARKETING_VERSION matches an existing v$MARKETING_VERSION tag
+                                whose commit differs from HEAD. Use this for archive-readiness gates,
+                                not for general push-time checks.
+  -h, --help                    Show this help.
 EOF_USAGE
 }
 
@@ -70,6 +76,9 @@ while [ "$#" -gt 0 ]; do
       ;;
     --require-clean)
       REQUIRE_CLEAN=1
+      ;;
+    --refuse-released-version)
+      REFUSE_RELEASED_VERSION=1
       ;;
     -h|--help|help)
       usage
@@ -222,14 +231,17 @@ if [ "$REQUIRE_CLEAN" = "1" ]; then
     echo "error: pbxproj MARKETING_VERSION '$MARKETING_VERSION' is not committed at HEAD (HEAD has '$COMMITTED_MARKETING_VERSION'); commit the app-version bump before re-running the verifier" >&2
     REQUIRE_CLEAN_FAILED=1
   fi
+  [ "$REQUIRE_CLEAN_FAILED" = "0" ] || exit 1
+fi
+
+if [ "$REFUSE_RELEASED_VERSION" = "1" ]; then
   if git -C "$GIT_ROOT" rev-parse --verify --quiet "refs/tags/v$MARKETING_VERSION" >/dev/null; then
     TAG_COMMIT="$(git -C "$GIT_ROOT" rev-parse "v$MARKETING_VERSION^{commit}" 2>/dev/null || printf '')"
     if [ -n "$TAG_COMMIT" ] && [ "$TAG_COMMIT" != "$HEAD_FULL" ]; then
       echo "error: MARKETING_VERSION '$MARKETING_VERSION' is already tagged as 'v$MARKETING_VERSION' at $TAG_COMMIT" >&2
       echo "error: App Store Connect closes a version's pre-release train once it is approved and rejects re-uploads with CFBundleShortVersionString == prior version" >&2
       echo "error: bump the version with ./Tools/bump-version.sh <major|minor|patch> before archiving a new build" >&2
-      REQUIRE_CLEAN_FAILED=1
+      exit 1
     fi
   fi
-  [ "$REQUIRE_CLEAN_FAILED" = "0" ] || exit 1
 fi

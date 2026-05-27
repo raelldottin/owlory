@@ -328,7 +328,7 @@ class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
             text=True,
         )
 
-    def test_require_clean_refuses_when_marketing_version_matches_existing_tag(self) -> None:
+    def test_refuse_released_version_refuses_when_marketing_version_matches_existing_tag(self) -> None:
         self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
         released_sha = self._commit("Release v1.0.0")
         self._git("tag", "v1.0.0")
@@ -336,7 +336,7 @@ class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
         self._write_pbxproj(marketing_version="1.0.0", build_number="20260201000000")
         self._commit("Re-stamp build without bumping version")
 
-        result = self._run_verify("--require-clean")
+        result = self._run_verify("--require-clean", "--refuse-released-version")
 
         self.assertNotEqual(0, result.returncode)
         self.assertIn(
@@ -345,7 +345,7 @@ class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
         )
         self.assertIn("./Tools/bump-version.sh", result.stderr)
 
-    def test_require_clean_passes_when_marketing_version_bumped_past_tag(self) -> None:
+    def test_refuse_released_version_passes_when_marketing_version_bumped_past_tag(self) -> None:
         self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
         self._commit("Release v1.0.0")
         self._git("tag", "v1.0.0")
@@ -353,7 +353,7 @@ class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
         self._write_pbxproj(marketing_version="1.0.1", build_number="20260201000000")
         self._commit("Release v1.0.1")
 
-        result = self._run_verify("--require-clean")
+        result = self._run_verify("--require-clean", "--refuse-released-version")
 
         self.assertEqual(
             0,
@@ -361,17 +361,37 @@ class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
             msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
         )
 
-    def test_require_clean_passes_when_head_equals_release_tag_commit(self) -> None:
+    def test_refuse_released_version_passes_when_head_equals_release_tag_commit(self) -> None:
         self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
         self._commit("Release v1.0.0")
         self._git("tag", "v1.0.0")
+
+        result = self._run_verify("--require-clean", "--refuse-released-version")
+
+        self.assertEqual(
+            0,
+            result.returncode,
+            msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
+        )
+
+    def test_require_clean_alone_allows_post_release_commits_without_bump(self) -> None:
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
+        self._commit("Release v1.0.0")
+        self._git("tag", "v1.0.0")
+
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
+        (self.tmpdir / "follow-up.md").write_text("notes\n", encoding="utf-8")
+        self._commit("Post-release follow-up without version bump")
 
         result = self._run_verify("--require-clean")
 
         self.assertEqual(
             0,
             result.returncode,
-            msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
+            msg=(
+                "pre-push --require-clean must allow post-release commits "
+                f"so the next [Unreleased] cycle can develop; stdout={result.stdout!r} stderr={result.stderr!r}"
+            ),
         )
 
 

@@ -65,7 +65,7 @@ EOF
   exit 1
 fi
 
-"$ROOT/Tools/verify-build-provenance.sh" --require-clean
+"$ROOT/Tools/verify-build-provenance.sh" --require-clean --refuse-released-version
 make -C "$ROOT" build-provenance
 
 echo "Release preflight passed."
