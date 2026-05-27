@@ -402,3 +402,34 @@
 "voicecontrol.label.edit" = "Modifier";
 "voicecontrol.label.addToFocus" = "Ajouter au focus";
 "voicecontrol.label.startRecording" = "Démarrer l’enregistrement";
+
+// MARK: - Onboarding tour
+"Skip" = "Skip";
+"Back" = "Back";
+"Next" = "Next";
+"Get Started" = "Get Started";
+"Welcome to Owlory" = "Welcome to Owlory";
+"Your private, local-first command center for everyday life." = "Your private, local-first command center for everyday life.";
+"Owlory keeps daily planning, training, writing, career, and home in one place." = "Owlory keeps daily planning, training, writing, career, and home in one place.";
+"Everything stays on your device. There is no account and no sync." = "Everything stays on your device. There is no account and no sync.";
+"This quick tour explains what each tab is for so you know where to start." = "This quick tour explains what each tab is for so you know where to start.";
+"Your daily command center." = "Your daily command center.";
+"Check in with energy, mood, and sleep, then pick up to three focus items for the day." = "Check in with energy, mood, and sleep, then pick up to three focus items for the day.";
+"Continue picks up unfinished work from every other tab so nothing slips silently." = "Continue picks up unfinished work from every other tab so nothing slips silently.";
+"End the day with an evening reflection that feeds your weekly digest." = "End the day with an evening reflection that feeds your weekly digest.";
+"One training session a day, tracked honestly." = "One training session a day, tracked honestly.";
+"Plan today's session, log your readiness, and capture what you actually did." = "Plan today's session, log your readiness, and capture what you actually did.";
+"Recurring sessions roll forward automatically when the day changes." = "Recurring sessions roll forward automatically when the day changes.";
+"Reflections can be typed or dictated and stay attached to each session." = "Reflections can be typed or dictated and stay attached to each session.";
+"A low-friction inbox for unfinished thought." = "A low-friction inbox for unfinished thought.";
+"Capture an idea fast — no folder, tag, or category required." = "Capture an idea fast — no folder, tag, or category required.";
+"Promote captures into source notes, tasks, or protocols later, only when it helps." = "Promote captures into source notes, tasks, or protocols later, only when it helps.";
+"Write is forgiving: catch the thought first, sort it never if you like." = "Write is forgiving: catch the thought first, sort it never if you like.";
+"Your private record of wins, impact, and stories." = "Your private record of wins, impact, and stories.";
+"Log wins, impact moments, and interview-ready stories with supporting metrics." = "Log wins, impact moments, and interview-ready stories with supporting metrics.";
+"Use it to prep for reviews, recruiter calls, or your next career conversation." = "Use it to prep for reviews, recruiter calls, or your next career conversation.";
+"Records stay local — nothing is shared unless you choose to export it." = "Records stay local — nothing is shared unless you choose to export it.";
+"Recurring tasks and household protocols." = "Recurring tasks and household protocols.";
+"Track recurring chores and one-off tasks without losing visibility." = "Track recurring chores and one-off tasks without losing visibility.";
+"Build multi-step protocols for routines like meal prep, travel, or move-out." = "Build multi-step protocols for routines like meal prep, travel, or move-out.";
+"Run a protocol to step through it once, and let Owlory remember the cadence." = "Run a protocol to step through it once, and let Owlory remember the cadence.";

@@ -20,8 +20,22 @@ struct RootTabView: View {
     @State private var selectedTab: OwloryTab = .today
     @State private var continueHighlightTarget: TodayContinuationRules.HighlightTarget?
     @State private var continueSelectionID = UUID()
+    @State private var showingOnboarding: Bool = OnboardingPresentationPolicy.shouldShowOnLaunch()
 
     var body: some View {
+        tabContent
+            .fullScreenCover(isPresented: $showingOnboarding) {
+                OnboardingView(onComplete: completeOnboarding)
+            }
+    }
+
+    private func completeOnboarding() {
+        OnboardingCompletion.markComplete()
+        showingOnboarding = false
+    }
+
+    @ViewBuilder
+    private var tabContent: some View {
         TabView(selection: $selectedTab) {
             NavigationStack {
                 TodayView(
