@@ -222,5 +222,14 @@ if [ "$REQUIRE_CLEAN" = "1" ]; then
     echo "error: pbxproj MARKETING_VERSION '$MARKETING_VERSION' is not committed at HEAD (HEAD has '$COMMITTED_MARKETING_VERSION'); commit the app-version bump before re-running the verifier" >&2
     REQUIRE_CLEAN_FAILED=1
   fi
+  if git -C "$GIT_ROOT" rev-parse --verify --quiet "refs/tags/v$MARKETING_VERSION" >/dev/null; then
+    TAG_COMMIT="$(git -C "$GIT_ROOT" rev-parse "v$MARKETING_VERSION^{commit}" 2>/dev/null || printf '')"
+    if [ -n "$TAG_COMMIT" ] && [ "$TAG_COMMIT" != "$HEAD_FULL" ]; then
+      echo "error: MARKETING_VERSION '$MARKETING_VERSION' is already tagged as 'v$MARKETING_VERSION' at $TAG_COMMIT" >&2
+      echo "error: App Store Connect closes a version's pre-release train once it is approved and rejects re-uploads with CFBundleShortVersionString == prior version" >&2
+      echo "error: bump the version with ./Tools/bump-version.sh <major|minor|patch> before archiving a new build" >&2
+      REQUIRE_CLEAN_FAILED=1
+    fi
+  fi
   [ "$REQUIRE_CLEAN_FAILED" = "0" ] || exit 1
 fi

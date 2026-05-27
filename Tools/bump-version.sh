@@ -82,6 +82,16 @@ TMP="$(mktemp)"
   /^## \[Unreleased\]/ && !promoted {
     print "## [Unreleased]"
     print ""
+    print "### Added"
+    print ""
+    print "### Changed"
+    print ""
+    print "### Fixed"
+    print ""
+    print "### Localization"
+    print ""
+    print "### Release And Validation"
+    print ""
     print "## [" new "] - " today
     promoted = 1
     next

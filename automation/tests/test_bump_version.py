@@ -13,6 +13,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REAL_BUMP_VERSION = REPO_ROOT / "Tools" / "bump-version.sh"
 REAL_SET_BUILD_NUMBER = REPO_ROOT / "Tools" / "set-build-number.sh"
+REAL_VERIFY_BUILD_PROVENANCE = REPO_ROOT / "Tools" / "verify-build-provenance.sh"
 PROJECT_FILE_REL = Path("owlory_xcode/Owlory.xcodeproj/project.pbxproj")
 
 
@@ -212,6 +213,166 @@ class ReleaseVersionScriptTests(unittest.TestCase):
 
                 self.assertNotEqual(0, result.returncode)
                 self.assertEqual(before_pbxproj, self.pbxproj.read_text(encoding="utf-8"))
+
+    def test_bump_version_preserves_unreleased_subsection_skeleton(self) -> None:
+        self._seed_project()
+        unreleased_seed = (
+            "# Changelog\n"
+            "\n"
+            "## [Unreleased]\n"
+            "\n"
+            "### Added\n"
+            "\n"
+            "- New capability X.\n"
+            "\n"
+            "### Changed\n"
+            "\n"
+            "### Fixed\n"
+            "\n"
+            "- Closed reminder gap.\n"
+            "\n"
+            "### Localization\n"
+            "\n"
+            "### Release And Validation\n"
+            "\n"
+            "## [0.2.3] - 2026-01-01\n"
+            "\n"
+            "- Previous release.\n"
+        )
+        self.changelog.write_text(unreleased_seed, encoding="utf-8")
+
+        result = self._run(self.bump_version, "patch")
+
+        self.assertEqual(
+            0,
+            result.returncode,
+            msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
+        )
+        new_changelog = self.changelog.read_text(encoding="utf-8")
+
+        unreleased_start = new_changelog.index("## [Unreleased]")
+        next_version_start = new_changelog.index("## [0.2.4]")
+        unreleased_block = new_changelog[unreleased_start:next_version_start]
+        for header in (
+            "### Added",
+            "### Changed",
+            "### Fixed",
+            "### Localization",
+            "### Release And Validation",
+        ):
+            self.assertIn(
+                header,
+                unreleased_block,
+                msg=f"[Unreleased] must retain '{header}' skeleton after a bump",
+            )
+        self.assertNotIn(
+            "- New capability X.",
+            unreleased_block,
+            msg="[Unreleased] entries must move to the promoted version section",
+        )
+        self.assertNotIn(
+            "- Closed reminder gap.",
+            unreleased_block,
+            msg="[Unreleased] entries must move to the promoted version section",
+        )
+
+        new_version_block = new_changelog[next_version_start:new_changelog.index("## [0.2.3]")]
+        self.assertIn("- New capability X.", new_version_block)
+        self.assertIn("- Closed reminder gap.", new_version_block)
+
+
+class VerifyBuildProvenanceTagGuardTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.tmpdir = Path(tempfile.mkdtemp(prefix="verify-build-provenance-"))
+        self.addCleanup(shutil.rmtree, self.tmpdir, ignore_errors=True)
+
+        tools_dir = self.tmpdir / "Tools"
+        tools_dir.mkdir(parents=True)
+        self.verify = tools_dir / "verify-build-provenance.sh"
+        shutil.copy2(REAL_VERIFY_BUILD_PROVENANCE, self.verify)
+        os.chmod(self.verify, 0o755)
+
+        self.pbxproj = self.tmpdir / PROJECT_FILE_REL
+        self.pbxproj.parent.mkdir(parents=True)
+
+        self._git("init", "--quiet", "--initial-branch=main")
+        self._git("config", "user.email", "test@example.com")
+        self._git("config", "user.name", "Verify Test")
+        self._git("config", "commit.gpgsign", "false")
+
+    def _git(self, *args: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            ["git", *args],
+            cwd=self.tmpdir,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+
+    def _write_pbxproj(self, marketing_version: str, build_number: str) -> None:
+        self.pbxproj.write_text(
+            _minimal_pbxproj(marketing_version, build_number),
+            encoding="utf-8",
+        )
+
+    def _commit(self, message: str) -> str:
+        self._git("add", "-A")
+        self._git("commit", "--quiet", "-m", message)
+        return self._git("rev-parse", "HEAD").stdout.strip()
+
+    def _run_verify(self, *args: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            [str(self.verify), *args],
+            cwd=self.tmpdir,
+            capture_output=True,
+            text=True,
+        )
+
+    def test_require_clean_refuses_when_marketing_version_matches_existing_tag(self) -> None:
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
+        released_sha = self._commit("Release v1.0.0")
+        self._git("tag", "v1.0.0")
+
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260201000000")
+        self._commit("Re-stamp build without bumping version")
+
+        result = self._run_verify("--require-clean")
+
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn(
+            "MARKETING_VERSION '1.0.0' is already tagged as 'v1.0.0' at " + released_sha,
+            result.stderr,
+        )
+        self.assertIn("./Tools/bump-version.sh", result.stderr)
+
+    def test_require_clean_passes_when_marketing_version_bumped_past_tag(self) -> None:
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
+        self._commit("Release v1.0.0")
+        self._git("tag", "v1.0.0")
+
+        self._write_pbxproj(marketing_version="1.0.1", build_number="20260201000000")
+        self._commit("Release v1.0.1")
+
+        result = self._run_verify("--require-clean")
+
+        self.assertEqual(
+            0,
+            result.returncode,
+            msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
+        )
+
+    def test_require_clean_passes_when_head_equals_release_tag_commit(self) -> None:
+        self._write_pbxproj(marketing_version="1.0.0", build_number="20260101000000")
+        self._commit("Release v1.0.0")
+        self._git("tag", "v1.0.0")
+
+        result = self._run_verify("--require-clean")
+
+        self.assertEqual(
+            0,
+            result.returncode,
+            msg=f"stdout={result.stdout!r} stderr={result.stderr!r}",
+        )
 
 
 if __name__ == "__main__":
