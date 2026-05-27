@@ -16,6 +16,31 @@ This file is user- and support-facing. It summarizes changes that matter for Tes
 
 ### Release And Validation
 
+## [1.0.1] - 2026-05-27
+
+### Added
+
+- Published external App Store support and privacy pages and linked the App Store listing from the README.
+
+### Changed
+
+### Fixed
+
+- Honored the configured run cadence in protocol schedule helper copy.
+- Suppressed missed-window reminders for skipped Train and Home items.
+- Closed activity-drift and stale-prediction reminder gaps so terminal-status items stop firing reminders.
+
+### Localization
+
+- Refreshed localization review drift records against the latest source strings.
+
+### Release And Validation
+
+- Required pushed clean-stop completion in the release-gate stack.
+- Synced the reusable automation clean-stop policy across release tooling.
+- Added Train store rename and delete cancel-hook test coverage.
+- Recorded simulator proof of terminal-status reminder cancellation.
+
 ## [1.0.0] - 2026-05-22
 
 ### Added
