@@ -108,6 +108,7 @@
 		A0a2 /* TodayContinueSkipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a2 /* TodayContinueSkipStore.swift */; };
 		A0a3 /* SolarSunset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a3 /* SolarSunset.swift */; };
 		A0a4 /* TimeZoneLocationEstimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a4 /* TimeZoneLocationEstimator.swift */; };
+		A0a5 /* Provenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a5 /* Provenance.swift */; };
 		B143 /* FocusItemHistoryRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195 /* FocusItemHistoryRules.swift */; };
 		B144 /* FocusItemHistoryRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B142 /* FocusItemHistoryRulesTests.swift */; };
 		B145 /* DuskModeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197 /* DuskModeRules.swift */; };
@@ -120,6 +121,8 @@
 		B155 /* TimeZoneLocationEstimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a4 /* TimeZoneLocationEstimator.swift */; };
 		B156 /* SolarSunsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B157 /* SolarSunsetTests.swift */; };
 		B158 /* TimeZoneLocationEstimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159 /* TimeZoneLocationEstimatorTests.swift */; };
+		B160 /* Provenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a5 /* Provenance.swift */; };
+		B161 /* ProvenanceCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B162 /* ProvenanceCodableTests.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -366,6 +369,8 @@
 		A1a2 /* TodayContinueSkipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayContinueSkipStore.swift; sourceTree = "<group>"; };
 		A1a3 /* SolarSunset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSunset.swift; sourceTree = "<group>"; };
 		A1a4 /* TimeZoneLocationEstimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneLocationEstimator.swift; sourceTree = "<group>"; };
+		A1a5 /* Provenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provenance.swift; sourceTree = "<group>"; };
+		B162 /* ProvenanceCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceCodableTests.swift; sourceTree = "<group>"; };
 		B142 /* FocusItemHistoryRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRulesTests.swift; sourceTree = "<group>"; };
 		B147 /* DuskModeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeRulesTests.swift; sourceTree = "<group>"; };
 		B150 /* DuskModeResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeResolverTests.swift; sourceTree = "<group>"; };
@@ -596,6 +601,7 @@
 				A197 /* DuskModeRules.swift */,
 				A1a1 /* SkipForTodayRules.swift */,
 				A1a3 /* SolarSunset.swift */,
+				A1a5 /* Provenance.swift */,
 				A171 /* DailyPlanningRules.swift */,
 				A172 /* FocusSuggestionRules.swift */,
 				A173 /* VoiceTranscriptionRoutingRules.swift */,
@@ -761,6 +767,7 @@
 				B153 /* SkipForTodayRulesTests.swift */,
 				B157 /* SolarSunsetTests.swift */,
 				B159 /* TimeZoneLocationEstimatorTests.swift */,
+				B162 /* ProvenanceCodableTests.swift */,
 				B135 /* DailyPlanningRulesTests.swift */,
 				B136 /* FocusSuggestionRulesTests.swift */,
 				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
@@ -1054,6 +1061,7 @@
 				A0a2 /* TodayContinueSkipStore.swift in Sources */,
 				A0a3 /* SolarSunset.swift in Sources */,
 				A0a4 /* TimeZoneLocationEstimator.swift in Sources */,
+				A0a5 /* Provenance.swift in Sources */,
 				A072 /* DailyPlanningRules.swift in Sources */,
 				A073 /* FocusSuggestionRules.swift in Sources */,
 				A074 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1145,6 +1153,7 @@
 				B151 /* SkipForTodayRules.swift in Sources */,
 				B154 /* SolarSunset.swift in Sources */,
 				B155 /* TimeZoneLocationEstimator.swift in Sources */,
+				B160 /* Provenance.swift in Sources */,
 				B083 /* DailyPlanningRules.swift in Sources */,
 				B085 /* FocusSuggestionRules.swift in Sources */,
 				B087 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1159,6 +1168,7 @@
 				B152 /* SkipForTodayRulesTests.swift in Sources */,
 				B156 /* SolarSunsetTests.swift in Sources */,
 				B158 /* TimeZoneLocationEstimatorTests.swift in Sources */,
+				B161 /* ProvenanceCodableTests.swift in Sources */,
 				B084 /* DailyPlanningRulesTests.swift in Sources */,
 				B086 /* FocusSuggestionRulesTests.swift in Sources */,
 				B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */,

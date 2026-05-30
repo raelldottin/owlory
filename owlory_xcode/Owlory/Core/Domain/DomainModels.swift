@@ -57,6 +57,8 @@ struct FocusItem: Identifiable, Equatable, Codable {
     var createdFromDate: Date?
     var linkedRecordID: UUID?
     var origin: FocusItemOrigin?
+    /// How the item entered Owlory. `nil` means user-authored (default).
+    var provenance: Provenance?
 
     init(
         id: UUID = UUID(),
@@ -65,7 +67,8 @@ struct FocusItem: Identifiable, Equatable, Codable {
         status: FocusItemStatus = .planned,
         createdFromDate: Date? = nil,
         linkedRecordID: UUID? = nil,
-        origin: FocusItemOrigin? = nil
+        origin: FocusItemOrigin? = nil,
+        provenance: Provenance? = nil
     ) {
         self.id = id
         self.title = title
@@ -74,6 +77,7 @@ struct FocusItem: Identifiable, Equatable, Codable {
         self.createdFromDate = createdFromDate
         self.linkedRecordID = linkedRecordID
         self.origin = origin
+        self.provenance = provenance
     }
 }
 
@@ -163,7 +167,8 @@ struct DailyEntry: Identifiable, Equatable, Codable {
                     status: item.status ?? .planned,
                     createdFromDate: item.createdFromDate,
                     linkedRecordID: item.linkedRecordID,
-                    origin: item.origin
+                    origin: item.origin,
+                    provenance: item.provenance
                 )
             )
         }
@@ -200,6 +205,7 @@ struct DailyEntry: Identifiable, Equatable, Codable {
         let createdFromDate: Date?
         let linkedRecordID: UUID?
         let origin: FocusItemOrigin?
+        let provenance: Provenance?
     }
 }
 

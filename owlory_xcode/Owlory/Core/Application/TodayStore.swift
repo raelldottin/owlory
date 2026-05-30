@@ -118,10 +118,17 @@ final class TodayStore: OwloryObservableObject {
         title: String,
         domain: LifeDomain,
         linkedRecordID: UUID? = nil,
-        origin: FocusItemOrigin? = nil
+        origin: FocusItemOrigin? = nil,
+        provenance: Provenance? = nil
     ) {
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        let item = FocusItem(title: title, domain: domain, linkedRecordID: linkedRecordID, origin: origin)
+        let item = FocusItem(
+            title: title,
+            domain: domain,
+            linkedRecordID: linkedRecordID,
+            origin: origin,
+            provenance: provenance
+        )
         mutateEntry { entry in
             entry = DailyPlanningRules.addingFocusItem(item, to: entry)
         }
@@ -391,7 +398,8 @@ final class TodayStore: OwloryObservableObject {
         addFocusItem(
             title: suggestion.title,
             domain: suggestion.domain,
-            linkedRecordID: suggestion.linkedRecordID
+            linkedRecordID: suggestion.linkedRecordID,
+            provenance: .focusSuggestion
         )
         focusSuggestionDrafts.removeAll { $0.id == id }
         dismissedFocusSuggestionKeys.remove(suggestion.key)
