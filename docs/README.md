@@ -12,6 +12,7 @@ Use this tree for progressive disclosure. Load the smallest doc that answers the
 - [Boundary Model](architecture/boundaries.md) defines allowed dependency direction and shared-code rules.
 - [Product Overview](product/overview.md) captures cross-domain product posture, core surfaces, and experience principles.
 - [Domain Index](product/domain-index.md) maps product areas to owning code, tests, and validation.
+- [Today Continue Source ID Audit](product/domains/today-continue-source-ids.md) catalogs which Continue sources expose record-stable IDs and which use carry-forward synthetic UUIDs.
 - [Validation Workflows](workflows/validation.md) lists invokable checks, including the `make clean-stop` completion gate, and when to use them.
 - [Localization String Inventory](workflows/localization-string-inventory.md) classifies source-string extraction status before translation work.
 - [Localization Dynamic Formatting](workflows/localization-dynamic-formatting.md) defines layer ownership for counts, dates, statuses, notifications, and display-label localization.

@@ -7387,7 +7387,7 @@
     {
       "slice_id": "today-continue-stable-source-ids-audit",
       "title": "Audit Continue source coverage for stable source IDs / deep links",
-      "status": "deferred",
+      "status": "done",
       "priority": 35,
       "domain": "today",
       "allowed_paths": [
@@ -7403,7 +7403,6 @@
         "make fast"
       ],
       "max_files_changed": 8,
-      "entry_condition": "Re-open after a written audit of all six Continue sources catalogs which already expose deep-link-stable IDs (e.g. trainingSession, homeTask) and which derive from synthetic IDs that would change on reorder. Document the audit before adding code.",
       "notes": "Roadmap-status open slice. Several sources already have stable IDs; gap is unaudited.",
       "depends_on": []
     },
