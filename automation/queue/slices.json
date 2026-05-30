@@ -7286,6 +7286,282 @@
       ],
       "max_files_changed": 14,
       "notes": "Two remaining stale-reminder paths surfaced after the terminal-status fix: (a) renaming a Train session's plannedActivity or a Home task's title left the OLD key's pending reminder live; deleting either left the reminder live. (b) A prediction key with no active matching session/task today still scheduled a reminder because the suppression filter only added terminal today-sessions to completedKeys. Extract the suppression set construction into a new ReminderSuppressionRules domain rule (\"a prediction key fires a reminder only when an active match exists\": Train .planned today-session for the key, OR Home recurring task that is currently active for the key). Update RootTabView.refreshRuntimeArtifacts to call the rule. Add onItemCompleted cancel calls to TrainStore.updatePlannedActivity (old key), TrainStore.deleteSession, HomeStore.updateTask (old key when title changed), and HomeStore.deleteTask. Add simulator integration tests proving the cancel chain reaches UNUserNotificationCenter for each mutation path."
+    },
+    {
+      "slice_id": "dusk-mode-asset-catalog-colorset",
+      "title": "Move duskOverlay from inline Color literal to asset-catalog colorset",
+      "status": "done",
+      "priority": 60,
+      "domain": "design-system",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/DesignSystem/AppTheme.swift",
+        "owlory_xcode/Owlory/Resources/Assets.xcassets/",
+        "docs/design-system.md",
+        "docs/design-guide.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "git diff --check"
+      ],
+      "max_files_changed": 6,
+      "notes": "Design guide target state \u00a710.2: 'asset-catalog dusk* token variants for principled, dark-mode-aware adaptation'. v1 ships as inline Color literal in AppTheme.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "dusk-mode-settings-toggle",
+      "title": "Settings \u2192 Appearance \u2192 Dusk Mode toggle (Auto / On / Off)",
+      "status": "done",
+      "priority": 59,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/DuskModeRules.swift",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Features/Today/",
+        "owlory_xcode/Owlory/Features/Settings/",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/design-guide.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 12,
+      "notes": "Design guide target state \u00a710.2: 'User control: Settings \u2192 Appearance \u2192 Dusk Mode with values Auto / On / Off. Default Auto.' v1 ships always-Auto."
+    },
+    {
+      "slice_id": "today-continue-skip-for-today",
+      "title": "Add Skip for today as a derived-row hide action",
+      "status": "done",
+      "priority": 58,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Core/Persistence/",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/Owlory/Resources/en.lproj/Localizable.strings",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/product/domains/today.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast",
+        "git diff --check"
+      ],
+      "max_files_changed": 14,
+      "notes": "Roadmap-status open slice: 'Add Skip for today as a derived-row hide action that does not mutate source objects by default.' Must auto-clear on date rollover.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "dusk-mode-astronomical-sunset",
+      "title": "Replace fixed-hour Dusk activation with local astronomical sunset",
+      "status": "deferred",
+      "priority": 30,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/DuskModeRules.swift",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/Owlory/Core/Infrastructure/",
+        "owlory_xcode/Owlory/Owlory.entitlements",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/design-guide.md",
+        "docs/runtime/",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 12,
+      "entry_condition": "Re-open after user decides whether to add CoreLocation permission (and the accompanying permission-prompt copy) or to compute sunset purely from date+latitude with a default location. Both branches need a runtime/ml-style posture doc decision.",
+      "notes": "Design guide \u00a710.2 target state. Pure-date solar position works without permissions but isn't actually local; CoreLocation is accurate but adds permission UX. Pick before implementing.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "today-continue-stable-source-ids-audit",
+      "title": "Audit Continue source coverage for stable source IDs / deep links",
+      "status": "deferred",
+      "priority": 35,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/OwloryDeepLink.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinuationRules.swift",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueItemAssembler.swift",
+        "owlory_xcode/Owlory/Features/Today/TodayView.swift",
+        "docs/product/domains/today.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Re-open after a written audit of all six Continue sources catalogs which already expose deep-link-stable IDs (e.g. trainingSession, homeTask) and which derive from synthetic IDs that would change on reorder. Document the audit before adding code.",
+      "notes": "Roadmap-status open slice. Several sources already have stable IDs; gap is unaudited.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "today-continue-persisted-provenance",
+      "title": "Persist generated-item provenance for Continue sources",
+      "status": "deferred",
+      "priority": 25,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/",
+        "owlory_xcode/Owlory/Core/Persistence/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/product/domains/today.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 14,
+      "entry_condition": "Re-open after a domain-model decision about how to attach provenance to persisted records without breaking existing DailyEntry decoding. The roadmap explicitly says: 'Add persisted generated-item provenance only where a persisted generated record actually exists.'",
+      "notes": "Roadmap-status open slice. Depends on a model design pass.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "today-continue-prune-migrate",
+      "title": "Prune/migrate invalid Continue artifacts",
+      "status": "deferred",
+      "priority": 20,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/product/domains/today.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "depends_on": [
+        "today-continue-persisted-provenance"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Re-open after today-continue-persisted-provenance ships. Roadmap explicitly gates: 'Add prune/migrate behavior only after invalid artifact suppression has shipped safely and user-authored payload has a migration path.'",
+      "notes": "Roadmap-status open slice. Blocked by upstream provenance work."
+    },
+    {
+      "slice_id": "home-protocol-overdue-stale-treatment",
+      "title": "Home protocol overdue / stale window UX beyond template labels",
+      "status": "deferred",
+      "priority": 28,
+      "domain": "home",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/ProtocolScheduleRules.swift",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "owlory_xcode/Owlory/Features/Home/HomeView.swift",
+        "docs/product/domains/home.md",
+        "owlory_xcode/OwloryCoreTests/",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Re-open after the product decision about how overdue protocols should appear: a distinct row badge, a sorted section, an automatic auto-skip, or none. Current contract forbids auto-abandon/auto-complete when a window ends. Decision must precede code.",
+      "notes": "Roadmap-status: 'Overdue/stale treatment beyond Home template labels and the future Home-project model remain open.'",
+      "depends_on": []
+    },
+    {
+      "slice_id": "performance-signposts-voice-paths",
+      "title": "Add signposts for voice capture, transcription, and protocol run lifecycle",
+      "status": "deferred",
+      "priority": 22,
+      "domain": "runtime",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Application/PerformanceTelemetry.swift",
+        "owlory_xcode/Owlory/Core/Infrastructure/AudioCaptureService.swift",
+        "owlory_xcode/Owlory/Core/Infrastructure/SpeechTranscriptionService.swift",
+        "owlory_xcode/Owlory/Core/Application/HomeStore.swift",
+        "docs/workflows/performance-observability.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 10,
+      "entry_condition": "Re-open with a written list of named signposts (one per protected path) plus the support/release/perf question each signpost is intended to answer. Roadmap explicitly: 'Add signposts only for important runtime paths that support, release, or performance work needs to explain later.'",
+      "notes": "Roadmap-status open slice. Needs path selection before code.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "ml-eval-fixtures-expansion",
+      "title": "Expand ML eval fixtures and fake-response coverage",
+      "status": "deferred",
+      "priority": 18,
+      "domain": "ml",
+      "allowed_paths": [
+        "owlory_xcode/OwloryCoreTests/",
+        "owlory_xcode/Owlory/Core/Application/",
+        "docs/workflows/ml-qa.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast"
+      ],
+      "max_files_changed": 8,
+      "entry_condition": "Re-open after a new generated-output surface is queued. Current production ML drafting/structured-capture is placeholder/deleted per ml-model-posture; eval fixtures only matter again once a new ML adapter is queued.",
+      "notes": "Roadmap-status open slice. ML posture gates work.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "ui-regression-batch-7-localization-layout-shell",
+      "title": "Lane 2 Batch 7: localization layout launch-shell regression",
+      "status": "queued",
+      "priority": 26,
+      "domain": "ui-test",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make ui-regression DOMAIN=localization"
+      ],
+      "max_files_changed": 6,
+      "notes": "Roadmap-status: queued and selected. Representative locale launch-shell stability under locale launch arguments (en/de/ar/zh-Hans). Does NOT claim translation quality, all-locale layout, screenshot/device/TestFlight proof.",
+      "depends_on": []
+    },
+    {
+      "slice_id": "ui-regression-batch-6-patterns-digest-insight",
+      "title": "Lane 2 Batch 6: Patterns digest insight rendering regression",
+      "status": "queued",
+      "priority": 25,
+      "domain": "ui-test",
+      "allowed_paths": [
+        "owlory_xcode/OwloryUITests/",
+        "owlory_xcode/Owlory/Core/Application/OwloryUITestSupport.swift",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "docs/workflows/ui-testing-hygiene.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make ui-regression"
+      ],
+      "max_files_changed": 8,
+      "notes": "Roadmap-status: queued. Patterns digest insight rendering Lane 2 batch. Lower priority than Batch 7.",
+      "depends_on": []
     }
   ]
 }

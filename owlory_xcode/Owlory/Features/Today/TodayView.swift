@@ -32,6 +32,20 @@ struct TodayView: View {
     @State private var showingQuickCareerRecord = false
     @State private var showingQuickHomeTask = false
     @State private var showingBuildInfo = false
+    @State private var showingSettings = false
+
+    @StateObject private var skipStore = TodayContinueSkipStore()
+
+    @AppStorage(DuskModePreferenceStorage.key)
+    private var duskPreferenceRaw: String = DuskModePreference.auto.rawValue
+
+    private var duskPreference: DuskModePreference {
+        DuskModePreference(rawValue: duskPreferenceRaw) ?? .auto
+    }
+
+    private var duskActive: Bool {
+        DuskModeResolver.isActive(preference: duskPreference, at: Date())
+    }
 
     var body: some View {
         Group {
@@ -46,17 +60,29 @@ struct TodayView: View {
         .navigationBarTitleDisplayMode(usesInlineNavigationTitle ? .inline : .automatic)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showingBuildInfo = true
+                Menu {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Label(L("Settings"), systemImage: "gearshape")
+                    }
+                    Button {
+                        showingBuildInfo = true
+                    } label: {
+                        Label(L("Build Info"), systemImage: "info.circle")
+                    }
                 } label: {
-                    Image(systemName: "info.circle")
+                    Image(systemName: "ellipsis.circle")
                 }
-                .accessibilityLabel("Open build info")
-                .accessibilityHint("Shows the app version, build number, and git commit for bug reports.")
+                .accessibilityLabel(L("More"))
+                .accessibilityHint(L("Open app settings or build info."))
             }
         }
         .sheet(isPresented: $showingBuildInfo) {
             BuildInfoView(onDismiss: { showingBuildInfo = false })
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView()
         }
         .sheet(isPresented: $showingQuickTrainSession) {
             QuickTrainSheet(store: trainStore, onDismiss: { showingQuickTrainSession = false })
@@ -82,7 +108,7 @@ struct TodayView: View {
             lastErrorPresent: store.lastError != nil,
             focusItemCount: store.focusThreeCount
         ))
-        .duskTint(DuskModeRules.isActive(at: Date()))
+        .duskTint(duskActive)
     }
 
     // MARK: - Welcome
@@ -291,7 +317,10 @@ struct TodayView: View {
 
     @ViewBuilder
     private var continueSection: some View {
-        let items = continueItems
+        let items = SkipForTodayRules.apply(
+            to: continueItems,
+            skippedKeys: skipStore.skippedKeysToday
+        )
         if !items.isEmpty {
             Section {
                 ForEach(items) { item in
@@ -369,6 +398,14 @@ struct TodayView: View {
                 .accessibilityIdentifier(continueActionAccessibilityIdentifier("drop", for: item))
             }
         }
+
+        Button {
+            skipStore.skip(sourceKey: item.source.key)
+        } label: {
+            Label(L("Skip for today"), systemImage: "eye.slash")
+        }
+        .tint(.secondary)
+        .accessibilityIdentifier(continueActionAccessibilityIdentifier("skip", for: item))
     }
 
     @ViewBuilder
@@ -385,6 +422,9 @@ struct TodayView: View {
             if focusItem.status != .dropped {
                 Button(L("Drop"), role: .destructive) { store.updateStatus(for: focusItem.id, to: .dropped) }
             }
+        }
+        Button(L("Skip for today")) {
+            skipStore.skip(sourceKey: item.source.key)
         }
     }
 

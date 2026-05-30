@@ -145,10 +145,10 @@ enum OwloryColor {
 
     // MARK: Signature
 
-    /// Warm overlay used by Dusk Mode. v1 ships as a single Color literal so
-    /// no asset catalog change is required; v2 should migrate this to a
-    /// `dusk*` colorset with light/dark variants.
-    static let duskOverlay = Color(.sRGB, red: 0.95, green: 0.55, blue: 0.30, opacity: 1.0)
+    /// Warm overlay used by Dusk Mode. Backed by an asset-catalog colorset
+    /// with light and dark variants so the warmth reads correctly under both
+    /// system appearances.
+    static let duskOverlay = Color("duskOverlay")
 }
 
 private struct ContinueHighlightModifier: ViewModifier {
