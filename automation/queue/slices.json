@@ -7409,7 +7409,7 @@
     {
       "slice_id": "today-continue-persisted-provenance",
       "title": "Persist generated-item provenance for Continue sources",
-      "status": "deferred",
+      "status": "done",
       "priority": 25,
       "domain": "today",
       "allowed_paths": [
@@ -7425,7 +7425,6 @@
         "make fast"
       ],
       "max_files_changed": 14,
-      "entry_condition": "Re-open after a domain-model decision about how to attach provenance to persisted records without breaking existing DailyEntry decoding. The roadmap explicitly says: 'Add persisted generated-item provenance only where a persisted generated record actually exists.'",
       "notes": "Roadmap-status open slice. Depends on a model design pass.",
       "depends_on": []
     },
@@ -7478,7 +7477,7 @@
     {
       "slice_id": "performance-signposts-voice-paths",
       "title": "Add signposts for voice capture, transcription, and protocol run lifecycle",
-      "status": "deferred",
+      "status": "done",
       "priority": 22,
       "domain": "runtime",
       "allowed_paths": [
@@ -7494,7 +7493,6 @@
         "make fast"
       ],
       "max_files_changed": 10,
-      "entry_condition": "Re-open with a written list of named signposts (one per protected path) plus the support/release/perf question each signpost is intended to answer. Roadmap explicitly: 'Add signposts only for important runtime paths that support, release, or performance work needs to explain later.'",
       "notes": "Roadmap-status open slice. Needs path selection before code.",
       "depends_on": []
     },

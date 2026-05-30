@@ -386,19 +386,24 @@ final class HomeStore: OwloryObservableObject {
     }
 
     func completeStep(runID: UUID, stepID: UUID) {
-        guard let runIndex = runs.firstIndex(where: { $0.id == runID }) else { return }
-        let result = ProtocolLifecycleRules.resolveStep(
-            in: runs[runIndex],
-            stepID: stepID,
-            resolution: .complete,
-            at: clock.now
-        )
-        guard result.run != runs[runIndex] else { return }
-        runs[runIndex] = result.run
-        if result.didCompleteRun {
-            logProtocolRunCompletion(runIndex: runIndex)
+        PerformanceTelemetry.measure(
+            "homeProtocolRun.complete",
+            category: .homeProtocol
+        ) {
+            guard let runIndex = runs.firstIndex(where: { $0.id == runID }) else { return }
+            let result = ProtocolLifecycleRules.resolveStep(
+                in: runs[runIndex],
+                stepID: stepID,
+                resolution: .complete,
+                at: clock.now
+            )
+            guard result.run != runs[runIndex] else { return }
+            runs[runIndex] = result.run
+            if result.didCompleteRun {
+                logProtocolRunCompletion(runIndex: runIndex)
+            }
+            persistRuns()
         }
-        persistRuns()
     }
 
     func skipStep(runID: UUID, stepID: UUID) {

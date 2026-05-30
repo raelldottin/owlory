@@ -62,6 +62,10 @@ final class AudioCaptureService: OwloryObservableObject {
     // MARK: - Recording
 
     func startRecording(for recordID: UUID) throws {
+        PerformanceTelemetry.notice(
+            "voiceCapture.start record=\(recordID.uuidString)",
+            category: .voice
+        )
         stopLiveCapture()
         liveTranscription = ""
 
@@ -111,6 +115,7 @@ final class AudioCaptureService: OwloryObservableObject {
     }
 
     func stopRecordingAndTranscribe() async {
+        PerformanceTelemetry.notice("voiceCapture.stop", category: .voice)
         stopLiveCapture()
         state = .transcribing
 

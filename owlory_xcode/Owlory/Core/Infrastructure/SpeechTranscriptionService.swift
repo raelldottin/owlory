@@ -8,15 +8,20 @@ protocol SpeechTranscriptionService {
 
 struct OnDeviceSpeechTranscriptionService: SpeechTranscriptionService {
     func transcribe(fileURL: URL) async -> String {
-        #if !os(watchOS)
-        if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, *) {
-            if let transcript = await transcribeWithSpeechAnalyzer(fileURL: fileURL), !transcript.isEmpty {
-                return transcript
+        await PerformanceTelemetry.measureAsync(
+            "speechTranscription.run",
+            category: .transcription
+        ) {
+            #if !os(watchOS)
+            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, *) {
+                if let transcript = await transcribeWithSpeechAnalyzer(fileURL: fileURL), !transcript.isEmpty {
+                    return transcript
+                }
             }
-        }
-        #endif
+            #endif
 
-        return await transcribeWithLegacyRecognizer(fileURL: fileURL)
+            return await transcribeWithLegacyRecognizer(fileURL: fileURL)
+        }
     }
 
     #if !os(watchOS)
