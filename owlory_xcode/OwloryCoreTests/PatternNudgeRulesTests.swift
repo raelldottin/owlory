@@ -97,9 +97,66 @@ final class PatternNudgeRulesTests: XCTestCase {
         XCTAssertNil(PatternNudgeRules.domainNudge(from: nil))
     }
 
+    func testDomainNudgeSuppressesTrainingWhenStandaloneSessionsExist() {
+        let snapshot = makeSnapshot(
+            domainBalance: DomainBalancePattern(
+                domainShares: [.training: 0, .writing: 0.4, .career: 0.3, .home: 0.3],
+                neglectedDomains: [.training]
+            ),
+            trainingConsistency: TrainingConsistencyPattern(
+                sessionsPlanned: 3,
+                sessionsCompleted: 1,
+                sessionsModified: 0,
+                sessionsSkipped: 0
+            )
+        )
+
+        XCTAssertNil(
+            PatternNudgeRules.domainNudge(from: snapshot),
+            "Training nudge must not fire when training has standalone sessions outside Focus."
+        )
+    }
+
+    func testDomainNudgeFiresTrainingWhenNoTrainingActivityAndNoConsistencyPattern() {
+        let snapshot = makeSnapshot(
+            domainBalance: DomainBalancePattern(
+                domainShares: [.training: 0, .writing: 0.4, .career: 0.3, .home: 0.3],
+                neglectedDomains: [.training]
+            )
+        )
+
+        XCTAssertEqual(
+            PatternNudgeRules.domainNudge(from: snapshot)?.domain,
+            .training,
+            "Training nudge must still fire when neither Focus nor standalone training activity exists."
+        )
+    }
+
+    func testDomainNudgeFiresTrainingWhenConsistencyPatternIsAllZero() {
+        let snapshot = makeSnapshot(
+            domainBalance: DomainBalancePattern(
+                domainShares: [.training: 0, .writing: 0.4, .career: 0.3, .home: 0.3],
+                neglectedDomains: [.training]
+            ),
+            trainingConsistency: TrainingConsistencyPattern(
+                sessionsPlanned: 0,
+                sessionsCompleted: 0,
+                sessionsModified: 0,
+                sessionsSkipped: 0
+            )
+        )
+
+        XCTAssertEqual(
+            PatternNudgeRules.domainNudge(from: snapshot)?.domain,
+            .training,
+            "A zero-activity consistency pattern must not suppress the training nudge."
+        )
+    }
+
     private func makeSnapshot(
         carryForward: CarryForwardPattern? = nil,
-        domainBalance: DomainBalancePattern? = nil
+        domainBalance: DomainBalancePattern? = nil,
+        trainingConsistency: TrainingConsistencyPattern? = nil
     ) -> PatternSnapshot {
         PatternSnapshot(
             generatedAt: Date(),
@@ -112,7 +169,8 @@ final class PatternNudgeRulesTests: XCTestCase {
                 droppedCount: 0
             ),
             carryForward: carryForward,
-            domainBalance: domainBalance
+            domainBalance: domainBalance,
+            trainingConsistency: trainingConsistency
         )
     }
 }
