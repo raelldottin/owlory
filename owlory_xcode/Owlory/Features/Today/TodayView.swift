@@ -1168,6 +1168,7 @@ struct TodayView: View {
                                 .foregroundStyle(.secondary)
                                 .italic()
                                 .padding(.top, 4)
+                                .accessibilityIdentifier("today.digest.keyInsight")
                         }
 
                         NavigationLink {
@@ -1181,6 +1182,7 @@ struct TodayView: View {
                                 .foregroundStyle(OwloryColor.brandPrimary)
                         }
                         .padding(.top, 4)
+                        .accessibilityIdentifier("today.digest.viewAll")
                     }
                 } label: {
                     HStack {
@@ -1193,12 +1195,14 @@ struct TodayView: View {
                             systemImage: "calendar.badge.clock"
                         )
                             .font(.subheadline.weight(.medium))
+                            .accessibilityIdentifier("today.digest.weekLabel")
                         Spacer()
                         Text(WeeklyDigestPresentationFormatting.collapsedCompletionSummary(for: digest))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
+                .accessibilityIdentifier("today.digest.section")
             }
         }
     }

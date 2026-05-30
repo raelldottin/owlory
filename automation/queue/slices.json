@@ -7523,7 +7523,7 @@
     {
       "slice_id": "ui-regression-batch-7-localization-layout-shell",
       "title": "Lane 2 Batch 7: localization layout launch-shell regression",
-      "status": "queued",
+      "status": "done",
       "priority": 26,
       "domain": "ui-test",
       "allowed_paths": [
@@ -7537,13 +7537,13 @@
         "make ui-regression DOMAIN=localization"
       ],
       "max_files_changed": 6,
-      "notes": "Roadmap-status: queued and selected. Representative locale launch-shell stability under locale launch arguments (en/de/ar/zh-Hans). Does NOT claim translation quality, all-locale layout, screenshot/device/TestFlight proof.",
+      "notes": "Roadmap-status: queued and selected. Representative locale launch-shell stability under locale launch arguments (en/de/ar/zh-Hans). Does NOT claim translation quality, all-locale layout, screenshot/device/TestFlight proof. | Verified 2026-05-30: LocalizationLayoutRegression already shipped in OwloryUITests with en/de/ar/zh-Hans launch-shell coverage; Makefile DOMAIN=localization filter already wired.",
       "depends_on": []
     },
     {
       "slice_id": "ui-regression-batch-6-patterns-digest-insight",
       "title": "Lane 2 Batch 6: Patterns digest insight rendering regression",
-      "status": "queued",
+      "status": "deferred",
       "priority": 25,
       "domain": "ui-test",
       "allowed_paths": [
@@ -7559,7 +7559,8 @@
       ],
       "max_files_changed": 8,
       "notes": "Roadmap-status: queued. Patterns digest insight rendering Lane 2 batch. Lower priority than Batch 7.",
-      "depends_on": []
+      "depends_on": [],
+      "entry_condition": "Re-open after investigating why .accessibilityIdentifier on DisclosureGroup labels and Section content inside a lazy List is not surfacing in XCUITest queries (verified 2026-05-30: attempted scroll-then-query with both identifier-based and predicate-based matching from PatternsDigestInsightRegression failed). The Today dashboard already exposes 'today.digest.section', 'today.digest.weekLabel', 'today.digest.keyInsight', 'today.digest.viewAll' identifiers but they are not reachable via app.descendants(matching:identifier:).firstMatch. Possible paths: (a) anchor identifiers on staticTexts inside the disclosure-group label closure rather than the DisclosureGroup itself, (b) add a fresh test-only seed that pre-expands the section via launch-arg state, (c) match via NSPredicate against the localized 'Last Week' label."
     }
   ]
 }

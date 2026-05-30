@@ -1446,3 +1446,4 @@ final class LocalizationAccessibilityRegression: XCTestCase {
         }
     }
 }
+
