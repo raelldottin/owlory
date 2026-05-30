@@ -7430,7 +7430,7 @@
     {
       "slice_id": "today-continue-prune-migrate",
       "title": "Prune/migrate invalid Continue artifacts",
-      "status": "deferred",
+      "status": "queued",
       "priority": 20,
       "domain": "today",
       "allowed_paths": [
@@ -7448,7 +7448,7 @@
         "today-continue-persisted-provenance"
       ],
       "max_files_changed": 10,
-      "entry_condition": "Re-open after today-continue-persisted-provenance ships. Roadmap explicitly gates: 'Add prune/migrate behavior only after invalid artifact suppression has shipped safely and user-authored payload has a migration path.'",
+      "entry_condition": "Upstream today-continue-invalid-artifact-suppression has shipped (2026-05-30, commit landed). The original roadmap gate is satisfied; this slice can be scoped and started. Open question still to settle before code: what's the migration path for user-authored payload that points to records that simply moved (e.g., note re-categorized) vs. records that are truly gone?",
       "notes": "Roadmap-status open slice. Blocked by upstream provenance work."
     },
     {
@@ -7556,6 +7556,29 @@
       "max_files_changed": 8,
       "notes": "Shipped 2026-05-30 as PatternsDigestInsightRegression. Uses NSPredicate text matching against the rendered relative-week label rather than .accessibilityIdentifier (DisclosureGroup label closures do not surface identifiers through XCUITest queries). Wired into Makefile DOMAIN=patterns and the no-DOMAIN regression union.",
       "depends_on": []
+    },
+    {
+      "slice_id": "today-continue-invalid-artifact-suppression",
+      "title": "Suppress Continue focus-item sources whose linked record was deleted",
+      "status": "done",
+      "priority": 24,
+      "domain": "today",
+      "allowed_paths": [
+        "owlory_xcode/Owlory/Core/Domain/",
+        "owlory_xcode/Owlory/Core/Application/TodayContinueSourceComposer.swift",
+        "owlory_xcode/Owlory.xcodeproj/project.pbxproj",
+        "owlory_xcode/OwloryCoreTests/",
+        "docs/product/domains/today.md",
+        "automation/queue/slices.json"
+      ],
+      "required_validations": [
+        "make architecture",
+        "make fast",
+        "git diff --check"
+      ],
+      "depends_on": [],
+      "max_files_changed": 8,
+      "notes": "Composer currently emits focusItem and carriedFocusItem sources from todayEntry.focusThree without checking whether the item's linkedRecordID/origin still resolves to an existing record. Add a pure rule + wire it in. Unblocks today-continue-prune-migrate, which is gated on this work shipping safely. Training-session ghost detection is intentionally scoped out of v1 because the composer only sees todaySessions, not the full session set; that's a follow-up."
     }
   ]
 }

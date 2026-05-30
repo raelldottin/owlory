@@ -89,6 +89,15 @@ enum TodayContinueSourceComposer {
             runs: homeRuns
         )
 
+        let knownRecordIDs = ContinueArtifactValidityRules.KnownRecordIDs(
+            trainingSessions: nil, // composer only sees todaySessions; full set is a follow-up
+            homeTasks: Set(homeTasks.map(\.id)),
+            homeRuns: Set(homeRuns.map(\.id)),
+            homeProtocols: Set(homeProtocols.map(\.id)),
+            writingNotes: Set(writingNotes.map(\.id)),
+            careerRecords: nil // not currently passed in
+        )
+
         return sourceOrder.flatMap { step -> [Candidate] in
             switch step {
             case .currentFocus:
@@ -99,7 +108,8 @@ enum TodayContinueSourceComposer {
                     activeHomeTaskIDs: activeHomeTaskIDs,
                     inProgressWritingNoteIDs: inProgressWritingNoteIDs,
                     protocolTitles: protocolTitles,
-                    protocolRecordIDs: protocolRecordIDs
+                    protocolRecordIDs: protocolRecordIDs,
+                    knownRecordIDs: knownRecordIDs
                 )
             case .dueTodayTraining:
                 return dueTodayTrainingCandidates(from: todaySessions)
@@ -111,7 +121,8 @@ enum TodayContinueSourceComposer {
                     activeHomeTaskIDs: activeHomeTaskIDs,
                     inProgressWritingNoteIDs: inProgressWritingNoteIDs,
                     protocolTitles: protocolTitles,
-                    protocolRecordIDs: protocolRecordIDs
+                    protocolRecordIDs: protocolRecordIDs,
+                    knownRecordIDs: knownRecordIDs
                 )
             case .activeHomeProtocolRun:
                 return activeHomeProtocolRunCandidates(from: homeRuns)
@@ -130,11 +141,16 @@ enum TodayContinueSourceComposer {
         activeHomeTaskIDs: Set<UUID>,
         inProgressWritingNoteIDs: Set<UUID>,
         protocolTitles: Set<String>,
-        protocolRecordIDs: Set<UUID>
+        protocolRecordIDs: Set<UUID>,
+        knownRecordIDs: ContinueArtifactValidityRules.KnownRecordIDs
     ) -> [Candidate] {
         items.compactMap { item in
             guard ContinueCandidateRules.isCurrentFocusCandidate(item),
                   staleByKey[itemKey(title: item.title, domain: item.domain)] == nil else {
+                return nil
+            }
+
+            guard ContinueArtifactValidityRules.isValid(item, against: knownRecordIDs) else {
                 return nil
             }
 
@@ -195,9 +211,14 @@ enum TodayContinueSourceComposer {
         activeHomeTaskIDs: Set<UUID>,
         inProgressWritingNoteIDs: Set<UUID>,
         protocolTitles: Set<String>,
-        protocolRecordIDs: Set<UUID>
+        protocolRecordIDs: Set<UUID>,
+        knownRecordIDs: ContinueArtifactValidityRules.KnownRecordIDs
     ) -> [Candidate] {
         items.compactMap { item in
+            guard ContinueArtifactValidityRules.isValid(item, against: knownRecordIDs) else {
+                return nil
+            }
+
             guard isLinkedTrainingFocusStillActionable(
                 item,
                 actionableTrainingSessionIDs: actionableTrainingSessionIDs

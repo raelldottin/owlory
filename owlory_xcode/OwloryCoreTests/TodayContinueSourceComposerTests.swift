@@ -44,6 +44,16 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             protocolTitle: "Kitchen reset",
             createdAt: today
         )
+        // The focus item's linkedRecordID must resolve to an existing note;
+        // otherwise the new invalid-artifact suppression filters the row.
+        // Archived stage so the note doesn't also surface as an
+        // inProgressWriting candidate alongside `note` below.
+        let outlineNote = WritingNote(
+            id: linkedRecordID,
+            title: "Outline draft",
+            body: "",
+            stage: .archived
+        )
         let note = WritingNote(title: "Essay source", body: "", stage: .source)
 
         let candidates = TodayContinueSourceComposer.compose(
@@ -56,7 +66,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             todaySessions: [session],
             homeTasks: [homeTask],
             homeRuns: [run],
-            writingNotes: [note]
+            writingNotes: [outlineNote, note]
         )
 
         XCTAssertEqual(candidates.map(\.step), [
@@ -176,6 +186,11 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             linkedRecordID: noteID,
             origin: origin
         )
+        // The note must exist for the focus item to survive invalid-artifact
+        // suppression. Stage `.archived` is non-in-progress so the composer
+        // doesn't also promote it as an inProgressWriting source — keeping
+        // currentFocus as the only candidate path.
+        let backingNote = WritingNote(id: noteID, title: "Essay source", body: "", stage: .archived)
 
         let candidates = TodayContinueSourceComposer.compose(
             todayEntry: DailyEntry(date: today, focusThree: [focus]),
@@ -183,7 +198,7 @@ final class TodayContinueSourceComposerTests: XCTestCase {
             todaySessions: [],
             homeTasks: [],
             homeRuns: [],
-            writingNotes: []
+            writingNotes: [backingNote]
         )
 
         XCTAssertEqual(candidates.first?.origin, origin)
