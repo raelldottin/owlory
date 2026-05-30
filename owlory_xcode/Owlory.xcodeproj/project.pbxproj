@@ -100,8 +100,12 @@
 		B099 /* HomeProtocolSchedulePresentationFormattingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */; };
 		A095 /* FocusItemHistoryRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195 /* FocusItemHistoryRules.swift */; };
 		A096 /* LineageRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196 /* LineageRibbon.swift */; };
+		A097 /* DuskModeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197 /* DuskModeRules.swift */; };
+		A098 /* DuskTintModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A198 /* DuskTintModifier.swift */; };
 		B143 /* FocusItemHistoryRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195 /* FocusItemHistoryRules.swift */; };
 		B144 /* FocusItemHistoryRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B142 /* FocusItemHistoryRulesTests.swift */; };
+		B145 /* DuskModeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197 /* DuskModeRules.swift */; };
+		B146 /* DuskModeRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B147 /* DuskModeRulesTests.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -340,7 +344,10 @@
 		B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocolSchedulePresentationFormattingTests.swift; sourceTree = "<group>"; };
 		A195 /* FocusItemHistoryRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRules.swift; sourceTree = "<group>"; };
 		A196 /* LineageRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineageRibbon.swift; sourceTree = "<group>"; };
+		A197 /* DuskModeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeRules.swift; sourceTree = "<group>"; };
+		A198 /* DuskTintModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskTintModifier.swift; sourceTree = "<group>"; };
 		B142 /* FocusItemHistoryRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRulesTests.swift; sourceTree = "<group>"; };
+		B147 /* DuskModeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeRulesTests.swift; sourceTree = "<group>"; };
 		L101 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L102 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L103 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -540,6 +547,7 @@
 				A126 /* AudioPlaybackButton.swift */,
 				A191 /* LocalizationHelpers.swift */,
 				A196 /* LineageRibbon.swift */,
+				A198 /* DuskTintModifier.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -560,6 +568,7 @@
 				A103 /* DomainModels.swift */,
 				A112 /* CarryForwardRules.swift */,
 				A195 /* FocusItemHistoryRules.swift */,
+				A197 /* DuskModeRules.swift */,
 				A171 /* DailyPlanningRules.swift */,
 				A172 /* FocusSuggestionRules.swift */,
 				A173 /* VoiceTranscriptionRoutingRules.swift */,
@@ -709,6 +718,7 @@
 			children = (
 				B101 /* CarryForwardRulesTests.swift */,
 				B142 /* FocusItemHistoryRulesTests.swift */,
+				B147 /* DuskModeRulesTests.swift */,
 				B135 /* DailyPlanningRulesTests.swift */,
 				B136 /* FocusSuggestionRulesTests.swift */,
 				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
@@ -994,6 +1004,8 @@
 				A012 /* CarryForwardRules.swift in Sources */,
 				A095 /* FocusItemHistoryRules.swift in Sources */,
 				A096 /* LineageRibbon.swift in Sources */,
+				A097 /* DuskModeRules.swift in Sources */,
+				A098 /* DuskTintModifier.swift in Sources */,
 				A072 /* DailyPlanningRules.swift in Sources */,
 				A073 /* FocusSuggestionRules.swift in Sources */,
 				A074 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1080,6 +1092,7 @@
 				B003 /* TodayStore.swift in Sources */,
 				B004 /* CarryForwardRules.swift in Sources */,
 				B143 /* FocusItemHistoryRules.swift in Sources */,
+				B145 /* DuskModeRules.swift in Sources */,
 				B083 /* DailyPlanningRules.swift in Sources */,
 				B085 /* FocusSuggestionRules.swift in Sources */,
 				B087 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1089,6 +1102,7 @@
 				B007 /* WritingStageRules.swift in Sources */,
 				B008 /* CarryForwardRulesTests.swift in Sources */,
 				B144 /* FocusItemHistoryRulesTests.swift in Sources */,
+				B146 /* DuskModeRulesTests.swift in Sources */,
 				B084 /* DailyPlanningRulesTests.swift in Sources */,
 				B086 /* FocusSuggestionRulesTests.swift in Sources */,
 				B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */,

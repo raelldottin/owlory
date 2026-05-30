@@ -36,7 +36,7 @@ struct LineageRibbon: View {
             EmptyView()
         } else {
             ribbon
-                .frame(width: max(width, 3))
+                .frame(width: width)
                 .accessibilityHidden(true)
         }
     }

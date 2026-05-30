@@ -34,6 +34,7 @@ System semantic colors (`.primary`, `.secondary`, etc.) remain appropriate for s
 | --- | --- |
 | `cardCornerRadius` | `16` |
 | `sectionSpacing` | `16` |
+| `rowSpacing` | `12` |
 | `compactSpacing` | `8` |
 | `cardPadding` | `12` |
 | `elevationShadowRadius` | `4` |

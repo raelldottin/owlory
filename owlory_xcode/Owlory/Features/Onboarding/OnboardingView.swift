@@ -58,7 +58,7 @@ struct OnboardingView: View {
     }
 
     private var pageIndicator: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: AppTheme.compactSpacing) {
             ForEach(0..<pages.count, id: \.self) { index in
                 Circle()
                     .fill(index == pageIndex ? OwloryColor.brandPrimary : OwloryColor.borderSubtle)
@@ -145,7 +145,7 @@ private struct OnboardingPageView: View {
 
             iconBadge
 
-            VStack(spacing: 12) {
+            VStack(spacing: AppTheme.rowSpacing) {
                 Text(L(page.title))
                     .font(.largeTitle.weight(.semibold))
                     .multilineTextAlignment(.center)
@@ -170,7 +170,7 @@ private struct OnboardingPageView: View {
                     }
                 }
             }
-            .padding(16)
+            .padding(AppTheme.sectionSpacing)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
@@ -189,7 +189,8 @@ private struct OnboardingPageView: View {
                 .fill(OwloryColor.brandPrimary.opacity(0.12))
                 .frame(width: 112, height: 112)
             Image(systemName: page.systemImage)
-                .font(.system(size: 48, weight: .semibold))
+                .font(.largeTitle.weight(.semibold))
+                .imageScale(.large)
                 .foregroundStyle(OwloryColor.brandPrimary)
         }
         .accessibilityHidden(true)

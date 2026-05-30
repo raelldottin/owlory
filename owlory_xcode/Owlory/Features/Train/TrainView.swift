@@ -212,7 +212,7 @@ struct TrainView: View {
                         TextField("Notes (optional)", text: $readinessNote, axis: .vertical)
                             .lineLimit(2...4)
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: AppTheme.rowSpacing) {
                             Label {
                                 Text("Training")
                             } icon: {
@@ -346,7 +346,7 @@ private struct SessionCardView: View {
                             store.updateReadinessNote(id: session.id, readinessNote: newValue)
                         }
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: AppTheme.rowSpacing) {
                         Label {
                             Text("Training")
                         } icon: {
@@ -377,7 +377,7 @@ private struct SessionCardView: View {
                     Text("Status")
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
-                    HStack(spacing: 8) {
+                    HStack(spacing: AppTheme.compactSpacing) {
                         ForEach(TrainingStatus.editableCases, id: \.rawValue) { s in
                             Button {
                                 status = s

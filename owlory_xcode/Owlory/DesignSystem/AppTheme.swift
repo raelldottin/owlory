@@ -82,6 +82,7 @@ enum OwloryMotion {
 enum AppTheme {
     static let cardCornerRadius: CGFloat = 16
     static let sectionSpacing: CGFloat = 16
+    static let rowSpacing: CGFloat = 12
     static let compactSpacing: CGFloat = 8
     static let cardPadding: CGFloat = 12
     static let elevationShadowRadius: CGFloat = 4
@@ -141,6 +142,13 @@ enum OwloryColor {
     /// Destructive actions use system red for platform consistency.
     static let error = Color.red
     static let info = Color("owloryInfo")
+
+    // MARK: Signature
+
+    /// Warm overlay used by Dusk Mode. v1 ships as a single Color literal so
+    /// no asset catalog change is required; v2 should migrate this to a
+    /// `dusk*` colorset with light/dark variants.
+    static let duskOverlay = Color(.sRGB, red: 0.95, green: 0.55, blue: 0.30, opacity: 1.0)
 }
 
 private struct ContinueHighlightModifier: ViewModifier {

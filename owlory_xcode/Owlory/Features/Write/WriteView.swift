@@ -677,7 +677,7 @@ private struct NoteDetailView: View {
         actionTitle: String?,
         action: (() -> Void)?
     ) -> some View {
-        HStack(spacing: 12) {
+        HStack(spacing: AppTheme.rowSpacing) {
             Label(L(title), systemImage: systemImage)
             Spacer()
             Text(status)

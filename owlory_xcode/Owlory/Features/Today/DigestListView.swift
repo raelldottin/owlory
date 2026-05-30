@@ -41,7 +41,7 @@ private struct DigestRowView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(weekLabel)
                 .font(.subheadline.weight(.medium))
-            HStack(spacing: 12) {
+            HStack(spacing: AppTheme.rowSpacing) {
                 Label(
                     WeeklyDigestPresentationFormatting.rowDaysActiveValue(digest.daysWithEntries),
                     systemImage: "calendar"

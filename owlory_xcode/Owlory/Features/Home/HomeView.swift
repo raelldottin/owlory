@@ -325,7 +325,7 @@ struct HomeView: View {
                         )
                     )
                         .font(.caption)
-                        .foregroundStyle(summary.status == .overdue ? .orange : .secondary)
+                        .foregroundStyle(summary.status == .overdue ? OwloryColor.warning : .secondary)
                 }
             }
             Spacer(minLength: 8)
@@ -516,7 +516,7 @@ private struct TaskRow: View {
     let onSelect: () -> Void
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: AppTheme.rowSpacing) {
             Button {
                 if task.isSkipped {
                     store.restoreTask(id: task.id)
@@ -538,7 +538,7 @@ private struct TaskRow: View {
                     Text(task.title)
                         .strikethrough(task.isCompleted)
                         .foregroundStyle(task.isCompleted || task.isSkipped ? .secondary : .primary)
-                    HStack(spacing: 8) {
+                    HStack(spacing: AppTheme.compactSpacing) {
                         if task.isRecurring {
                             HStack(spacing: 2) {
                                 Image(systemName: "arrow.trianglehead.2.counterclockwise")
@@ -1073,7 +1073,7 @@ private struct ProtocolRunSheet: View {
 
                 Section {
                     ForEach(currentRun.steps) { step in
-                        HStack(spacing: 12) {
+                        HStack(spacing: AppTheme.rowSpacing) {
                             if step.status == .pending {
                                 Button {
                                     store.completeStep(runID: run.id, stepID: step.id)

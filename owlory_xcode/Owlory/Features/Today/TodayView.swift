@@ -82,6 +82,7 @@ struct TodayView: View {
             lastErrorPresent: store.lastError != nil,
             focusItemCount: store.focusThreeCount
         ))
+        .duskTint(DuskModeRules.isActive(at: Date()))
     }
 
     // MARK: - Welcome
@@ -256,7 +257,7 @@ struct TodayView: View {
                             .foregroundStyle(.secondary)
                     }
                 } else {
-                    HStack(spacing: 12) {
+                    HStack(spacing: AppTheme.rowSpacing) {
                         Label {
                             Text(LocalizedStringKey(checkInTitle))
                         } icon: {
@@ -684,7 +685,7 @@ struct TodayView: View {
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
-                        HStack(spacing: 12) {
+                        HStack(spacing: AppTheme.rowSpacing) {
                             Button {
                                 store.acceptFocusSuggestion(id: draft.id)
                             } label: {
@@ -1571,7 +1572,7 @@ private struct PreviousDayRow: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(dateLabel)
                 .font(.subheadline.weight(.medium))
-            HStack(spacing: 12) {
+            HStack(spacing: AppTheme.rowSpacing) {
                 Label("\(entry.focusThree.count)", systemImage: "checklist")
                 if entry.energy > 0 || entry.mood > 0 || entry.sleepQuality > 0 {
                     Label(readinessLabel, systemImage: "heart.text.clipboard")
@@ -1714,7 +1715,7 @@ private struct PreviousDayDetailView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(item.title)
                             .font(.subheadline.weight(.medium))
-                        HStack(spacing: 8) {
+                        HStack(spacing: AppTheme.compactSpacing) {
                             Text(item.domain.localizedDisplayName)
                             Text(item.status.localizedDisplayName)
                             if let status = resolveStatus(for: item) {
