@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Siste uke";
 "weeklyDigest.summary.doneOfPlanned" = "%d av %d ferdig";
 "weeklyDigest.summary.empty" = "Ingen planlagte Fokus-elementer";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Planlagt for %@";
 "home.protocol.schedule.custom.passed" = "Vindu passert - %@";
 "home.protocol.schedule.help.anytime" = "Når som helst. Planlegging merker bare protokollmalen og avslutter aldri automatisk en aktiv kjøring.";

@@ -109,4 +109,19 @@ enum HomeProtocolSchedulePresentationFormatting {
         formatter.timeStyle = .none
         return formatter.string(from: date)
     }
+
+    /// Whole-day count since the window's end date, only when the summary is
+    /// `.overdue`. Returns at least 1 to avoid a "0 days overdue" badge on a
+    /// window that ended earlier today.
+    static func daysOverdue(
+        for summary: ProtocolScheduleRules.ScheduleSummary,
+        now: Date,
+        calendar: Calendar
+    ) -> Int? {
+        guard summary.status == .overdue else { return nil }
+        let todayStart = calendar.startOfDay(for: now)
+        let endStart = calendar.startOfDay(for: summary.endDate)
+        let components = calendar.dateComponents([.day], from: endStart, to: todayStart)
+        return max(components.day ?? 0, 1)
+    }
 }

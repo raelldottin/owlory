@@ -209,6 +209,7 @@
 "weeklyDigest.summary.doneOfPlanned" = "%d of %d done";
 "weeklyDigest.summary.empty" = "No planned Focus items";
 
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Scheduled for %@";
 "home.protocol.schedule.custom.passed" = "Window passed - %@";
 "home.protocol.schedule.help.anytime" = "Anytime. Scheduling only labels the protocol template and never ends an active run automatically.";

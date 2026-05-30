@@ -134,6 +134,59 @@ final class HomeProtocolSchedulePresentationFormattingTests: XCTestCase {
         )
     }
 
+    func testDaysOverdueReturnsNilWhenStatusNotOverdue() {
+        let summary = ProtocolScheduleRules.ScheduleSummary(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z"),
+            status: .active
+        )
+
+        XCTAssertNil(
+            HomeProtocolSchedulePresentationFormatting.daysOverdue(
+                for: summary,
+                now: date("2026-05-05T12:00:00Z"),
+                calendar: calendar
+            )
+        )
+    }
+
+    func testDaysOverdueCountsWholeDaysSinceEnd() {
+        let summary = ProtocolScheduleRules.ScheduleSummary(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z"),
+            status: .overdue
+        )
+
+        XCTAssertEqual(
+            HomeProtocolSchedulePresentationFormatting.daysOverdue(
+                for: summary,
+                now: date("2026-05-04T12:00:00Z"),
+                calendar: calendar
+            ),
+            3
+        )
+    }
+
+    func testDaysOverdueClampsToOneWhenWindowEndedToday() {
+        let summary = ProtocolScheduleRules.ScheduleSummary(
+            preset: .today,
+            startDate: date("2026-05-05T00:00:00Z"),
+            endDate: date("2026-05-05T00:00:00Z"),
+            status: .overdue
+        )
+
+        XCTAssertEqual(
+            HomeProtocolSchedulePresentationFormatting.daysOverdue(
+                for: summary,
+                now: date("2026-05-05T18:00:00Z"),
+                calendar: calendar
+            ),
+            1
+        )
+    }
+
     // MARK: - Helpers
 
     private func date(_ value: String) -> Date {

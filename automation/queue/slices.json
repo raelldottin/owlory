@@ -7457,7 +7457,7 @@
     {
       "slice_id": "home-protocol-overdue-stale-treatment",
       "title": "Home protocol overdue / stale window UX beyond template labels",
-      "status": "deferred",
+      "status": "done",
       "priority": 28,
       "domain": "home",
       "allowed_paths": [
@@ -7473,7 +7473,6 @@
         "make fast"
       ],
       "max_files_changed": 10,
-      "entry_condition": "Re-open after the product decision about how overdue protocols should appear: a distinct row badge, a sorted section, an automatic auto-skip, or none. Current contract forbids auto-abandon/auto-complete when a window ends. Decision must precede code.",
       "notes": "Roadmap-status: 'Overdue/stale treatment beyond Home template labels and the future Home-project model remain open.'",
       "depends_on": []
     },

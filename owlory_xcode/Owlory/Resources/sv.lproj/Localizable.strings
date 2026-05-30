@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Senaste veckan";
 "weeklyDigest.summary.doneOfPlanned" = "%d av %d klara";
 "weeklyDigest.summary.empty" = "Inga planerade Fokus-objekt";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Schemalagt för %@";
 "home.protocol.schedule.custom.passed" = "Fönster passerat - %@";
 "home.protocol.schedule.help.anytime" = "När som helst. Schemaläggning märker bara protokollmallen och avslutar aldrig automatiskt en aktiv körning.";

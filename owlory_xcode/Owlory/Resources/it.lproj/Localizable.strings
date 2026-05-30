@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Settimana più recente";
 "weeklyDigest.summary.doneOfPlanned" = "%d di %d completati";
 "weeklyDigest.summary.empty" = "Nessun elemento Focus pianificato";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Programmato per %@";
 "home.protocol.schedule.custom.passed" = "Finestra passata - %@";
 "home.protocol.schedule.help.anytime" = "In qualsiasi momento. La pianificazione etichetta solo il modello di protocollo e non termina mai automaticamente un'esecuzione attiva.";

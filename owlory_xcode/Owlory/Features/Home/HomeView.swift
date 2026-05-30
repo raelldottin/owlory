@@ -4,6 +4,11 @@ struct HomeView: View {
     @ObservedObject var store: HomeStore
     @ObservedObject var writeStore: WriteStore
 
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var contrast
+
+    private var increasedContrast: Bool { contrast == .increased }
+
     private var completedTaskCount: Int {
         store.tasks.count(where: \.isCompleted)
     }
@@ -312,11 +317,14 @@ struct HomeView: View {
 
     @ViewBuilder
     private func protocolLabel(for proto: HouseholdProtocol) -> some View {
-        HStack(alignment: .top, spacing: 8) {
+        HStack(alignment: .top, spacing: AppTheme.compactSpacing) {
             Image(systemName: "list.clipboard")
                 .foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 2) {
-                Text(proto.title)
+                HStack(spacing: AppTheme.compactSpacing) {
+                    Text(proto.title)
+                    overdueBadge(for: proto)
+                }
                 if let summary = store.scheduleSummary(for: proto) {
                     Text(
                         HomeProtocolSchedulePresentationFormatting.summaryText(
@@ -341,6 +349,45 @@ struct HomeView: View {
             .accessibilityLabel("Archive Protocol")
             .accessibilityIdentifier("home.protocol.archive.\(proto.id.uuidString)")
         }
+    }
+
+    @ViewBuilder
+    private func overdueBadge(for proto: HouseholdProtocol) -> some View {
+        if let summary = store.scheduleSummary(for: proto),
+           let days = HomeProtocolSchedulePresentationFormatting.daysOverdue(
+               for: summary,
+               now: Date(),
+               calendar: .current
+           ) {
+            Text(overdueBadgeText(days: days))
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(OwloryColor.warning)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(
+                    OwloryAccessibilityContrast.tintedFill(
+                        OwloryColor.warning,
+                        alpha: 0.12,
+                        reduceTransparency: reduceTransparency,
+                        increasedContrast: increasedContrast
+                    ),
+                    in: Capsule()
+                )
+                .accessibilityIdentifier("home.protocol.overdueBadge.\(proto.id.uuidString)")
+        }
+    }
+
+    private func overdueBadgeText(days: Int) -> String {
+        // Keep abbreviated to match the staleDayCount "Nd" badge convention
+        // in Today Continue. Plural-friendly across locales.
+        String.localizedStringWithFormat(
+            NSLocalizedString(
+                "home.protocol.overdue.badge",
+                value: "%dd overdue",
+                comment: "Capsule badge on a Home protocol row showing how many days the schedule is overdue. %d is the day count."
+            ),
+            days
+        )
     }
 
     // MARK: - Active Runs

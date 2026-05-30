@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Tuần gần nhất";
 "weeklyDigest.summary.doneOfPlanned" = "%d trên %d xong";
 "weeklyDigest.summary.empty" = "Không có mục trọng tâm đã lên kế hoạch";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Đã lên lịch cho %@";
 "home.protocol.schedule.custom.passed" = "Khung đã qua - %@";
 "home.protocol.schedule.help.anytime" = "Bất cứ lúc nào. Lịch trình chỉ gắn nhãn cho mẫu quy trình và không bao giờ tự động kết thúc lần chạy đang diễn ra.";

@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "가장 최근 주";
 "weeklyDigest.summary.doneOfPlanned" = "%d / %d 완료";
 "weeklyDigest.summary.empty" = "계획된 포커스 항목 없음";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "%@로 예정";
 "home.protocol.schedule.custom.passed" = "시간대 종료 - %@";
 "home.protocol.schedule.help.anytime" = "언제든지. 일정은 프로토콜 템플릿에 라벨만 붙이며, 실행 중인 작업을 자동으로 종료하지 않습니다.";

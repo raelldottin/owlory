@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Найостанніший тиждень";
 "weeklyDigest.summary.doneOfPlanned" = "%d з %d виконано";
 "weeklyDigest.summary.empty" = "Немає запланованих елементів Фокусу";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Заплановано на %@";
 "home.protocol.schedule.custom.passed" = "Вікно минуло - %@";
 "home.protocol.schedule.help.anytime" = "Будь-коли. Розклад лише позначає шаблон протоколу та ніколи автоматично не завершує активний запуск.";

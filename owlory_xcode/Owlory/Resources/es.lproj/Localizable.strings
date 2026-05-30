@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Semana más reciente";
 "weeklyDigest.summary.doneOfPlanned" = "%d de %d hechos";
 "weeklyDigest.summary.empty" = "Sin elementos de Foco planificados";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Programado para %@";
 "home.protocol.schedule.custom.passed" = "Ventana pasada - %@";
 "home.protocol.schedule.help.anytime" = "En cualquier momento. La programación solo etiqueta la plantilla de protocolo y nunca termina automáticamente una ejecución activa.";

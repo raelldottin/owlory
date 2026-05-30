@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "最近一週";
 "weeklyDigest.summary.doneOfPlanned" = "%d / %d 已完成";
 "weeklyDigest.summary.empty" = "沒有規劃的專注項目";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "已排程於 %@";
 "home.protocol.schedule.custom.passed" = "窗口已過 - %@";
 "home.protocol.schedule.help.anytime" = "隨時。排程只為協定範本加標籤,絕不會自動結束進行中的執行。";

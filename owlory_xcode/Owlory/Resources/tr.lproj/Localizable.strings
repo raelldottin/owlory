@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "En son hafta";
 "weeklyDigest.summary.doneOfPlanned" = "%d / %d tamamlandı";
 "weeklyDigest.summary.empty" = "Planlanmış odak öğesi yok";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "%@ için planlandı";
 "home.protocol.schedule.custom.passed" = "Pencere geçti - %@";
 "home.protocol.schedule.help.anytime" = "Her zaman. Zamanlama yalnızca protokol şablonunu etiketler ve aktif bir çalıştırmayı asla otomatik olarak sona erdirmez.";

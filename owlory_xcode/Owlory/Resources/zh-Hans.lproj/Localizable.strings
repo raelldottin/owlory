@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "最近一周";
 "weeklyDigest.summary.doneOfPlanned" = "%d / %d 已完成";
 "weeklyDigest.summary.empty" = "没有计划的专注项目";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "已排程于 %@";
 "home.protocol.schedule.custom.passed" = "窗口已过 - %@";
 "home.protocol.schedule.help.anytime" = "随时。排程只为协议模板加标签，绝不会自动结束活动中的运行。";

@@ -210,6 +210,7 @@
 "weeklyDigest.relative.mostRecentWeek" = "Semana mais recente";
 "weeklyDigest.summary.doneOfPlanned" = "%d de %d concluído";
 "weeklyDigest.summary.empty" = "Sem itens de Focus planeados";
+"home.protocol.overdue.badge" = "%dd overdue";
 "home.protocol.schedule.custom" = "Agendado para %@";
 "home.protocol.schedule.custom.passed" = "Janela passou - %@";
 "home.protocol.schedule.help.anytime" = "A qualquer momento. O agendamento apenas etiqueta o modelo de protocolo e nunca termina automaticamente uma execução ativa.";
