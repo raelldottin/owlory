@@ -7430,7 +7430,7 @@
     {
       "slice_id": "today-continue-prune-migrate",
       "title": "Prune/migrate invalid Continue artifacts",
-      "status": "queued",
+      "status": "done",
       "priority": 20,
       "domain": "today",
       "allowed_paths": [
@@ -7448,8 +7448,7 @@
         "today-continue-persisted-provenance"
       ],
       "max_files_changed": 10,
-      "entry_condition": "Upstream today-continue-invalid-artifact-suppression has shipped (2026-05-30, commit landed). The original roadmap gate is satisfied; this slice can be scoped and started. Open question still to settle before code: what's the migration path for user-authored payload that points to records that simply moved (e.g., note re-categorized) vs. records that are truly gone?",
-      "notes": "Roadmap-status open slice. Blocked by upstream provenance work."
+      "notes": "Shipped 2026-05-30. Decision: delete invalid focus items outright (no migration path, no review bucket). TodayStore.pruneInvalidFocusItems() removes focus-three and carry-forward items whose linked record is missing; called from RootTabView.synchronizeTodayPresentationArtifacts alongside the existing protocol-artifact GC. 4 unit tests cover the delete path, no-op on clean state, carry-forward pruning, and origin-pointing-to-live-record preservation."
     },
     {
       "slice_id": "home-protocol-overdue-stale-treatment",

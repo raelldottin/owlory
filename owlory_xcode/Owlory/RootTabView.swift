@@ -356,6 +356,16 @@ struct RootTabView: View {
         todayStore.garbageCollectHomeProtocolFocusArtifacts(
             protocolRecordIDs: Set(homeStore.protocols.map(\.id) + homeStore.runs.map(\.id))
         )
+        todayStore.pruneInvalidFocusItems(
+            knownRecordIDs: ContinueArtifactValidityRules.KnownRecordIDs(
+                trainingSessions: nil, // see ContinueArtifactValidityRules: full set is follow-up
+                homeTasks: Set(homeStore.tasks.map(\.id)),
+                homeRuns: Set(homeStore.runs.map(\.id)),
+                homeProtocols: Set(homeStore.protocols.map(\.id)),
+                writingNotes: Set(writeStore.notes.map(\.id)),
+                careerRecords: nil
+            )
+        )
         todayStore.markLinkedFocusItemsDone(for: completedFocusSources)
     }
 

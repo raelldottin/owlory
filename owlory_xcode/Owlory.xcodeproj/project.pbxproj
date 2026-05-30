@@ -126,6 +126,7 @@
 		B161 /* ProvenanceCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B162 /* ProvenanceCodableTests.swift */; };
 		B163 /* ContinueArtifactValidityRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a6 /* ContinueArtifactValidityRules.swift */; };
 		B164 /* ContinueArtifactValidityRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165 /* ContinueArtifactValidityRulesTests.swift */; };
+		B166 /* TodayStorePruneInvalidFocusItemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B167 /* TodayStorePruneInvalidFocusItemsTests.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -376,6 +377,7 @@
 		A1a6 /* ContinueArtifactValidityRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueArtifactValidityRules.swift; sourceTree = "<group>"; };
 		B162 /* ProvenanceCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceCodableTests.swift; sourceTree = "<group>"; };
 		B165 /* ContinueArtifactValidityRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueArtifactValidityRulesTests.swift; sourceTree = "<group>"; };
+		B167 /* TodayStorePruneInvalidFocusItemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayStorePruneInvalidFocusItemsTests.swift; sourceTree = "<group>"; };
 		B142 /* FocusItemHistoryRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRulesTests.swift; sourceTree = "<group>"; };
 		B147 /* DuskModeRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeRulesTests.swift; sourceTree = "<group>"; };
 		B150 /* DuskModeResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeResolverTests.swift; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 				B159 /* TimeZoneLocationEstimatorTests.swift */,
 				B162 /* ProvenanceCodableTests.swift */,
 				B165 /* ContinueArtifactValidityRulesTests.swift */,
+				B167 /* TodayStorePruneInvalidFocusItemsTests.swift */,
 				B135 /* DailyPlanningRulesTests.swift */,
 				B136 /* FocusSuggestionRulesTests.swift */,
 				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
@@ -1179,6 +1182,7 @@
 				B158 /* TimeZoneLocationEstimatorTests.swift in Sources */,
 				B161 /* ProvenanceCodableTests.swift in Sources */,
 				B164 /* ContinueArtifactValidityRulesTests.swift in Sources */,
+				B166 /* TodayStorePruneInvalidFocusItemsTests.swift in Sources */,
 				B084 /* DailyPlanningRulesTests.swift in Sources */,
 				B086 /* FocusSuggestionRulesTests.swift in Sources */,
 				B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */,

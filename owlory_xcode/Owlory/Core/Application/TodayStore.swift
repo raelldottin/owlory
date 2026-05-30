@@ -211,6 +211,37 @@ final class TodayStore: OwloryObservableObject {
         )
     }
 
+    /// Removes Focus items whose linked record has been deleted. Pairs with
+    /// the compose-time suppression in `TodayContinueSourceComposer`: that
+    /// rule hides ghost rows from Continue without mutating data; this
+    /// method prunes the underlying focus-three / carry-forward storage so
+    /// the ghosts don't outlive their referenced records on disk.
+    ///
+    /// User-authored items (no record link) are always kept. The current
+    /// product decision is to delete invalid items outright rather than
+    /// strip the record link or move them to a review bucket — see slice
+    /// today-continue-prune-migrate.
+    func pruneInvalidFocusItems(knownRecordIDs: ContinueArtifactValidityRules.KnownRecordIDs) {
+        guard let entry = currentEntry else { return }
+
+        let hasInvalidFocus = entry.focusThree.contains {
+            !ContinueArtifactValidityRules.isValid($0, against: knownRecordIDs)
+        }
+        let hasInvalidCarryForward = entry.carryForward.contains {
+            !ContinueArtifactValidityRules.isValid($0, against: knownRecordIDs)
+        }
+        guard hasInvalidFocus || hasInvalidCarryForward else { return }
+
+        mutateEntry { entry in
+            entry.focusThree.removeAll {
+                !ContinueArtifactValidityRules.isValid($0, against: knownRecordIDs)
+            }
+            entry.carryForward.removeAll {
+                !ContinueArtifactValidityRules.isValid($0, against: knownRecordIDs)
+            }
+        }
+    }
+
     func garbageCollectHomeProtocolFocusArtifacts(protocolRecordIDs: Set<UUID>) {
         guard !protocolRecordIDs.isEmpty,
               let entry = currentEntry else { return }
