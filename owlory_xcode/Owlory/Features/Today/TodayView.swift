@@ -567,10 +567,13 @@ struct TodayView: View {
 
     private func continueRow(for item: TodayContinuationRules.ContinueItem) -> some View {
         HStack(spacing: 10) {
-            Image(systemName: domainIcon(item.domain))
-                .font(.subheadline)
-                .foregroundStyle(OwloryColor.brandPrimary)
-                .frame(width: 24)
+            HStack(spacing: 6) {
+                lineageRibbon(for: item)
+                Image(systemName: domainIcon(item.domain))
+                    .font(.subheadline)
+                    .foregroundStyle(OwloryColor.brandPrimary)
+                    .frame(width: 24)
+            }
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.title)
                     .font(.subheadline)
@@ -639,6 +642,20 @@ struct TodayView: View {
             .components(separatedBy: .whitespacesAndNewlines)
             .filter { !$0.isEmpty }
             .joined(separator: " ")
+    }
+
+    @ViewBuilder
+    private func lineageRibbon(for item: TodayContinuationRules.ContinueItem) -> some View {
+        if let focus = focusItem(for: item), focus.createdFromDate != nil {
+            let arc = FocusItemHistoryRules.arc(
+                for: focus,
+                in: store.recentEntries,
+                today: Date()
+            )
+            if !arc.isEmpty {
+                LineageRibbon(dayStatuses: arc)
+            }
+        }
     }
 
     @ViewBuilder

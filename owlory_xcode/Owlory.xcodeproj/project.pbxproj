@@ -98,6 +98,10 @@
 		A084 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A183 /* HomeProtocolSchedulePresentationFormatting.swift */; };
 		B098 /* HomeProtocolSchedulePresentationFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A183 /* HomeProtocolSchedulePresentationFormatting.swift */; };
 		B099 /* HomeProtocolSchedulePresentationFormattingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */; };
+		A095 /* FocusItemHistoryRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195 /* FocusItemHistoryRules.swift */; };
+		A096 /* LineageRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196 /* LineageRibbon.swift */; };
+		B143 /* FocusItemHistoryRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A195 /* FocusItemHistoryRules.swift */; };
+		B144 /* FocusItemHistoryRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B142 /* FocusItemHistoryRulesTests.swift */; };
 		L001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = L100 /* Localizable.strings */; };
 		L002 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = L200 /* Localizable.stringsdict */; };
 		B001 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103 /* DomainModels.swift */; };
@@ -334,6 +338,9 @@
 		A182 /* WeeklyDigestPresentationFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDigestPresentationFormatting.swift; sourceTree = "<group>"; };
 		A183 /* HomeProtocolSchedulePresentationFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocolSchedulePresentationFormatting.swift; sourceTree = "<group>"; };
 		B141 /* HomeProtocolSchedulePresentationFormattingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocolSchedulePresentationFormattingTests.swift; sourceTree = "<group>"; };
+		A195 /* FocusItemHistoryRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRules.swift; sourceTree = "<group>"; };
+		A196 /* LineageRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineageRibbon.swift; sourceTree = "<group>"; };
+		B142 /* FocusItemHistoryRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusItemHistoryRulesTests.swift; sourceTree = "<group>"; };
 		L101 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L102 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		L103 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -532,6 +539,7 @@
 				A148 /* VoiceCaptureResult.swift */,
 				A126 /* AudioPlaybackButton.swift */,
 				A191 /* LocalizationHelpers.swift */,
+				A196 /* LineageRibbon.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -551,6 +559,7 @@
 			children = (
 				A103 /* DomainModels.swift */,
 				A112 /* CarryForwardRules.swift */,
+				A195 /* FocusItemHistoryRules.swift */,
 				A171 /* DailyPlanningRules.swift */,
 				A172 /* FocusSuggestionRules.swift */,
 				A173 /* VoiceTranscriptionRoutingRules.swift */,
@@ -699,6 +708,7 @@
 			isa = PBXGroup;
 			children = (
 				B101 /* CarryForwardRulesTests.swift */,
+				B142 /* FocusItemHistoryRulesTests.swift */,
 				B135 /* DailyPlanningRulesTests.swift */,
 				B136 /* FocusSuggestionRulesTests.swift */,
 				B137 /* VoiceTranscriptionRoutingRulesTests.swift */,
@@ -982,6 +992,8 @@
 				A010 /* HomeView.swift in Sources */,
 				A011 /* AppTheme.swift in Sources */,
 				A012 /* CarryForwardRules.swift in Sources */,
+				A095 /* FocusItemHistoryRules.swift in Sources */,
+				A096 /* LineageRibbon.swift in Sources */,
 				A072 /* DailyPlanningRules.swift in Sources */,
 				A073 /* FocusSuggestionRules.swift in Sources */,
 				A074 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1067,6 +1079,7 @@
 				B002 /* Clock.swift in Sources */,
 				B003 /* TodayStore.swift in Sources */,
 				B004 /* CarryForwardRules.swift in Sources */,
+				B143 /* FocusItemHistoryRules.swift in Sources */,
 				B083 /* DailyPlanningRules.swift in Sources */,
 				B085 /* FocusSuggestionRules.swift in Sources */,
 				B087 /* VoiceTranscriptionRoutingRules.swift in Sources */,
@@ -1075,6 +1088,7 @@
 				B006 /* InMemoryTodayEntryRepository.swift in Sources */,
 				B007 /* WritingStageRules.swift in Sources */,
 				B008 /* CarryForwardRulesTests.swift in Sources */,
+				B144 /* FocusItemHistoryRulesTests.swift in Sources */,
 				B084 /* DailyPlanningRulesTests.swift in Sources */,
 				B086 /* FocusSuggestionRulesTests.swift in Sources */,
 				B088 /* VoiceTranscriptionRoutingRulesTests.swift in Sources */,
