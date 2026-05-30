@@ -221,19 +221,18 @@ A thin vertical thread on Continue rows visualizing how many days each Focus ite
 
 After local evening hours, Today's surface dims to a warmer palette so the app visibly responds to time of day.
 
-**v1 (this slice).**
-- Activation: deterministic local-time threshold (active 18:00–05:00 local). No geolocation, no astronomical sunset.
-- User control: none yet — always Auto. A Settings sheet is queued (see Target).
-- Color shift: a single `OwloryColor.duskOverlay` warm overlay at low opacity over the Today List background. No row-level color changes in v1.
+**Current (shipped).**
+- Activation: astronomical sunset via `SolarSunset` (NOAA-style) using a timezone-derived approximate location from `TimeZoneLocationEstimator`. Falls back to fixed 18:00–05:00 local hours when sunset/sunrise can't be computed (polar day/night).
+- User control: `Settings → Appearance → Dusk Mode` (Auto / On / Off, default Auto), accessed via the ellipsis menu in Today's toolbar.
+- Color shift: `OwloryColor.duskOverlay` asset-catalog colorset with light/dark variants, applied as a low-opacity overlay on the Today List background.
 - Motion: 600ms cross-fade on activation, instant under Reduce Motion.
 - Accessibility: skipped entirely under Increase Contrast (readability wins). Never reduces text contrast below WCAG AA at the chosen opacity.
 - Scope: Today tab only. Other tabs stay neutral.
 
-**Target state (subsequent slices).**
-- User control: `Settings → Appearance → Dusk Mode` with values `Auto / On / Off`, default `Auto`.
-- Color shift: asset-catalog `dusk*` token variants for principled, dark-mode-aware adaptation.
-- Astronomical sunset via system APIs where available.
-- Possible row-level type/icon tonal shift, not just background.
+**Possible follow-ups.**
+- Real-location refinement (CoreLocation, only with a posture decision — currently violates local-first principle without one).
+- Row-level type/icon tonal shift, not just background.
+- User-configurable sunset offset (e.g., "start Dusk Mode 30 min before sunset").
 
 No third signature moment ships without explicit revision of this guide.
 

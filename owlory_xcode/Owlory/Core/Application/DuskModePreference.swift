@@ -23,10 +23,18 @@ enum DuskModeResolver {
     static func isActive(
         preference: DuskModePreference,
         at date: Date,
+        sunset: Date? = nil,
+        sunrise: Date? = nil,
         calendar: Calendar = .current
     ) -> Bool {
         switch preference {
-        case .auto: return DuskModeRules.isActive(at: date, calendar: calendar)
+        case .auto:
+            return DuskModeRules.isActive(
+                at: date,
+                sunset: sunset,
+                sunrise: sunrise,
+                calendar: calendar
+            )
         case .on: return true
         case .off: return false
         }

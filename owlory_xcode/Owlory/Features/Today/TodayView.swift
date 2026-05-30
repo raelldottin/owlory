@@ -44,7 +44,24 @@ struct TodayView: View {
     }
 
     private var duskActive: Bool {
-        DuskModeResolver.isActive(preference: duskPreference, at: Date())
+        let now = Date()
+        let coords = TimeZoneLocationEstimator.estimate(for: .current, now: now)
+        let sunset = SolarSunset.localSunset(
+            date: now,
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        )
+        let sunrise = SolarSunset.localSunrise(
+            date: now,
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        )
+        return DuskModeResolver.isActive(
+            preference: duskPreference,
+            at: now,
+            sunset: sunset,
+            sunrise: sunrise
+        )
     }
 
     var body: some View {

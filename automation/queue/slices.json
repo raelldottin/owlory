@@ -7363,7 +7363,7 @@
     {
       "slice_id": "dusk-mode-astronomical-sunset",
       "title": "Replace fixed-hour Dusk activation with local astronomical sunset",
-      "status": "deferred",
+      "status": "done",
       "priority": 30,
       "domain": "today",
       "allowed_paths": [
@@ -7381,7 +7381,6 @@
         "make fast"
       ],
       "max_files_changed": 12,
-      "entry_condition": "Re-open after user decides whether to add CoreLocation permission (and the accompanying permission-prompt copy) or to compute sunset purely from date+latitude with a default location. Both branches need a runtime/ml-style posture doc decision.",
       "notes": "Design guide \u00a710.2 target state. Pure-date solar position works without permissions but isn't actually local; CoreLocation is accurate but adds permission UX. Pick before implementing.",
       "depends_on": []
     },
