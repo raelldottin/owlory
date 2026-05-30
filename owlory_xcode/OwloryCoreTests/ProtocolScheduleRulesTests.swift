@@ -212,14 +212,138 @@ final class ProtocolScheduleRulesTests: XCTestCase {
             )
         ]
 
+        // 1-day cadence: a run on day X is within cadence on day X+1.
         let status = ProtocolScheduleRules.scheduleStatus(
             for: schedule,
             runs: runs,
-            now: date("2026-05-03T09:00:00Z"),
+            now: date("2026-05-02T09:00:00Z"),
             calendar: calendar
         )
 
         XCTAssertEqual(status, .satisfied)
+    }
+
+    func testScheduleStatusReturnsOverdueWhenInWindowRunIsOlderThanCadence() {
+        // Same in-window run, but the cadence (1 day for `today` preset) has
+        // elapsed twice over. Old behavior would have returned `.satisfied`
+        // forever; the new contract resurfaces overdue once the cadence
+        // window without a fresh run passes.
+        let schedule = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Morning routine",
+                createdAt: date("2026-05-01T08:00:00Z")
+            )
+        ]
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-05T09:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .overdue)
+    }
+
+    func testScheduleStatusReturnsSatisfiedWhenRunWithinWeeklyCadence() {
+        // The user's reported case: a `thisWeek` preset (7-day cadence) with
+        // a run inside the rolling 7-day window before `now` must not flag
+        // the schedule as overdue, even though the original window has passed.
+        let schedule = HouseholdProtocolSchedule(
+            preset: .thisWeek,
+            startDate: date("2026-05-04T00:00:00Z"),
+            endDate: date("2026-05-10T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Weekly review",
+                createdAt: date("2026-05-08T18:00:00Z")
+            )
+        ]
+
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-14T12:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .satisfied)
+    }
+
+    func testScheduleStatusReturnsOverdueWhenLastRunPredatesWeeklyCadence() {
+        let schedule = HouseholdProtocolSchedule(
+            preset: .thisWeek,
+            startDate: date("2026-05-04T00:00:00Z"),
+            endDate: date("2026-05-10T00:00:00Z")
+        )
+        let runs = [
+            ProtocolRun(
+                protocolID: UUID(),
+                protocolTitle: "Weekly review",
+                createdAt: date("2026-05-05T18:00:00Z")
+            )
+        ]
+
+        // 14 days after the original window end is well outside the 7-day
+        // cadence, so the protocol must resurface as overdue.
+        let status = ProtocolScheduleRules.scheduleStatus(
+            for: schedule,
+            runs: runs,
+            now: date("2026-05-24T12:00:00Z"),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(status, .overdue)
+    }
+
+    func testRecurrenceCadenceDaysDerivesFromWindowWidth() {
+        let oneDay = HouseholdProtocolSchedule(
+            preset: .today,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-01T00:00:00Z")
+        )
+        XCTAssertEqual(
+            ProtocolScheduleRules.recurrenceCadenceDays(for: oneDay, calendar: calendar),
+            1
+        )
+
+        let week = HouseholdProtocolSchedule(
+            preset: .thisWeek,
+            startDate: date("2026-05-04T00:00:00Z"),
+            endDate: date("2026-05-10T00:00:00Z")
+        )
+        XCTAssertEqual(
+            ProtocolScheduleRules.recurrenceCadenceDays(for: week, calendar: calendar),
+            7
+        )
+
+        let weekend = HouseholdProtocolSchedule(
+            preset: .weekend,
+            startDate: date("2026-05-09T00:00:00Z"),
+            endDate: date("2026-05-10T00:00:00Z")
+        )
+        XCTAssertEqual(
+            ProtocolScheduleRules.recurrenceCadenceDays(for: weekend, calendar: calendar),
+            2
+        )
+
+        let custom = HouseholdProtocolSchedule(
+            preset: .custom,
+            startDate: date("2026-05-01T00:00:00Z"),
+            endDate: date("2026-05-14T00:00:00Z")
+        )
+        XCTAssertEqual(
+            ProtocolScheduleRules.recurrenceCadenceDays(for: custom, calendar: calendar),
+            14
+        )
     }
 
     func testScheduleStatusReturnsSatisfiedWhenRunStartedAfterWindowStart() {
@@ -289,7 +413,7 @@ final class ProtocolScheduleRulesTests: XCTestCase {
         let summary = ProtocolScheduleRules.summary(
             for: schedule,
             runs: runs,
-            now: date("2026-05-03T09:00:00Z"),
+            now: date("2026-05-02T09:00:00Z"),
             calendar: calendar
         )
 

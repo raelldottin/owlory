@@ -47,11 +47,14 @@ enum ProtocolScheduleRules {
         let state: WindowState
     }
 
-    /// Run-aware classification of a schedule. `.overdue` requires that the
-    /// window has passed and no run was started on or after the window's start
-    /// day; if a run was started during or after the window, the schedule is
-    /// `.satisfied` instead. This is Home schedule state only — it does not
-    /// drive Today Continue admission or any run lifecycle.
+    /// Run-aware classification of a schedule. The schedule's window width
+    /// acts as an implicit recurrence cadence: a `today` preset means a 1-day
+    /// cadence, `weekend` is a 2-day cadence, `thisWeek` is 7 days, and
+    /// `custom` is its span (inclusive). When the window has passed, the
+    /// schedule is `.satisfied` only if a run started within that cadence
+    /// before `now` — old in-window runs no longer keep a recurring protocol
+    /// satisfied indefinitely. This is Home schedule state only — it does
+    /// not drive Today Continue admission or any run lifecycle.
     enum ScheduleStatus: Equatable {
         case upcoming
         case active
@@ -166,10 +169,13 @@ enum ProtocolScheduleRules {
 
     /// Run-aware schedule classification. `runs` should already be filtered to
     /// runs of the protocol that owns this schedule; the rule does not look at
-    /// `protocolID` here. A run satisfies a passed window if its `createdAt`
-    /// day is on or after the window's start day (windows are day-resolution).
-    /// Schedules never auto-start, auto-complete, or auto-abandon a run; this
-    /// function only classifies.
+    /// `protocolID` here. A passed window is `.satisfied` only when a run
+    /// started within the rolling cadence period before `now`, where the
+    /// cadence is the schedule's window width (inclusive day count). This
+    /// matches the user-level expectation that "ran within the cadence = not
+    /// overdue" for recurring protocols, rather than the older "ran ever
+    /// after window start = satisfied forever" behavior.
+    /// Schedules never auto-start, auto-complete, or auto-abandon a run.
     static func scheduleStatus(
         for schedule: HouseholdProtocolSchedule,
         runs: [ProtocolRun],
@@ -183,12 +189,29 @@ enum ProtocolScheduleRules {
         case .active:
             return .active
         case .overdue:
+            let cadenceDays = recurrenceCadenceDays(for: schedule, calendar: calendar)
+            let nowStart = calendar.startOfDay(for: now)
+            guard let cadenceStart = calendar.date(byAdding: .day, value: -cadenceDays, to: nowStart) else {
+                return .overdue
+            }
             return runStarted(
-                onOrAfter: schedule.startDate,
+                onOrAfter: cadenceStart,
                 in: runs,
                 calendar: calendar
             ) ? .satisfied : .overdue
         }
+    }
+
+    /// The schedule's window width in whole days, treated as the protocol's
+    /// implicit recurrence cadence. Single-day windows return 1.
+    static func recurrenceCadenceDays(
+        for schedule: HouseholdProtocolSchedule,
+        calendar: Calendar
+    ) -> Int {
+        let startDay = calendar.startOfDay(for: schedule.startDate)
+        let endDay = calendar.startOfDay(for: schedule.endDate)
+        let components = calendar.dateComponents([.day], from: startDay, to: endDay)
+        return max((components.day ?? 0) + 1, 1)
     }
 
     /// Run-aware semantic schedule summary for Home presentation. `.satisfied`

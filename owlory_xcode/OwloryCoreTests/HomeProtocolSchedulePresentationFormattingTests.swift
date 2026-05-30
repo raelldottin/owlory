@@ -42,7 +42,7 @@ final class HomeProtocolSchedulePresentationFormattingTests: XCTestCase {
         let summary = ProtocolScheduleRules.summary(
             for: schedule,
             runs: runs,
-            now: date("2026-05-03T09:00:00Z"),
+            now: date("2026-05-02T09:00:00Z"),
             calendar: calendar
         )
 
