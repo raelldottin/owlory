@@ -1447,3 +1447,69 @@ final class LocalizationAccessibilityRegression: XCTestCase {
     }
 }
 
+/// Lane 2 Batch 6: Patterns digest insight rendering on Today's last-week
+/// section. Proof level: running-app-smoke. These checks intentionally do
+/// NOT claim screenshot proof, device proof, TestFlight proof, or coverage
+/// of the standalone DigestList / DigestDetail surfaces.
+///
+/// The matching strategy intentionally uses NSPredicate-based content
+/// matching against the rendered "Last Week" relative label rather than
+/// accessibility identifiers — SwiftUI's `Label` inside a `DisclosureGroup`
+/// composes a single accessibility element whose identifier modifier does
+/// not surface as a queryable `staticText` in XCUITest as of iOS 26.5.
+final class PatternsDigestInsightRegression: XCTestCase {
+    private var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testSeededFreshDayRendersLastWeekDigestSection() throws {
+        launch(arguments: ["--owlory-ui-seed-marketing"])
+        assertTodayDashboardVisible()
+
+        // The Today dashboard is a long List; the digest section lives below
+        // the fold. Scroll until the relative-week label enters the AT tree.
+        let weekLabelPredicate = NSPredicate(
+            format: "label CONTAINS[c] %@ OR label CONTAINS[c] %@",
+            "Last Week", "Most Recent Week"
+        )
+        let weekLabel = scrollUntilElementMatching(weekLabelPredicate)
+        XCTAssertTrue(
+            weekLabel.exists,
+            "Expected the digest section's relative week label to be reachable after scrolling."
+        )
+    }
+
+    private func scrollUntilElementMatching(
+        _ predicate: NSPredicate,
+        maxSwipes: Int = 6
+    ) -> XCUIElement {
+        let element = app.descendants(matching: .any).matching(predicate).firstMatch
+        var attempts = 0
+        while !element.exists && attempts < maxSwipes {
+            app.swipeUp()
+            attempts += 1
+        }
+        return element
+    }
+
+    private func launch(arguments: [String]) {
+        app.launchArguments = ["--owlory-ui-testing"] + arguments
+        app.launch()
+    }
+
+    private func assertTodayDashboardVisible() {
+        let dashboardHeader = app.staticTexts["today.dashboard.header"]
+        XCTAssertTrue(
+            dashboardHeader.waitForExistence(timeout: 15),
+            "Expected the Today dashboard header to render after the seeded fresh-day launch."
+        )
+    }
+}
+

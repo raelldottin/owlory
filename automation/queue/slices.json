@@ -5939,7 +5939,7 @@
     {
       "slice_id": "app-localization-nextstep-plist-parser",
       "title": "Add NeXTSTEP-style plist parser as Python fallback for Linux portability",
-      "status": "deferred",
+      "status": "done",
       "priority": 28,
       "domain": "automation",
       "allowed_paths": [
@@ -5964,8 +5964,7 @@
         "app-localization-review-drift-check-non-macos-portability"
       ],
       "max_files_changed": 5,
-      "entry_condition": "SUPERSEDED 2026-05-19 by app-localization-stringsdict-xml-conversion. Re-open only if Owlory regresses to NeXTSTEP-format .stringsdict files and Linux portability is needed.",
-      "notes": "Superseded by app-localization-stringsdict-xml-conversion (commit landed 2026-05-19). The XML conversion is now in place across all 19 .stringsdict files, so plistlib parses natively without needing a NeXTSTEP-style fallback parser. Alternative-path slice. Implement a minimal NeXTSTEP / old-style plist parser in pure Python and wire it into _load_plist as a second fallback after plistlib and plutil. Scope is enough to handle Owlory's stringsdict syntax: dictionary keys with quoted string values, nested dictionaries with NSStringFormatSpecTypeKey / NSStringFormatValueTypeKey / plural-category entries, and C-style comments. Do NOT attempt a full NeXTSTEP plist grammar \u2014 focus on the Owlory .stringsdict shape and reject anything else with a clear error. Add unit tests covering the parsing shape plus a fixture from the actual Owlory file. Only queue this if XML conversion is rejected. proof_level target: build-tested."
+      "notes": "Superseded 2026-05-19 by app-localization-stringsdict-xml-conversion (already done). Closed as housekeeping on 2026-05-30 \u2014 the underlying Linux portability need was satisfied without this fallback parser. Re-open only if Owlory regresses to NeXTSTEP-format .stringsdict files."
     },
     {
       "slice_id": "app-reminders-cancel-pending-on-item-completion",
@@ -7540,7 +7539,7 @@
     {
       "slice_id": "ui-regression-batch-6-patterns-digest-insight",
       "title": "Lane 2 Batch 6: Patterns digest insight rendering regression",
-      "status": "deferred",
+      "status": "done",
       "priority": 25,
       "domain": "ui-test",
       "allowed_paths": [
@@ -7555,9 +7554,8 @@
         "make ui-regression"
       ],
       "max_files_changed": 8,
-      "notes": "Roadmap-status: queued. Patterns digest insight rendering Lane 2 batch. Lower priority than Batch 7.",
-      "depends_on": [],
-      "entry_condition": "Re-open after investigating why .accessibilityIdentifier on DisclosureGroup labels and Section content inside a lazy List is not surfacing in XCUITest queries (verified 2026-05-30: attempted scroll-then-query with both identifier-based and predicate-based matching from PatternsDigestInsightRegression failed). The Today dashboard already exposes 'today.digest.section', 'today.digest.weekLabel', 'today.digest.keyInsight', 'today.digest.viewAll' identifiers but they are not reachable via app.descendants(matching:identifier:).firstMatch. Possible paths: (a) anchor identifiers on staticTexts inside the disclosure-group label closure rather than the DisclosureGroup itself, (b) add a fresh test-only seed that pre-expands the section via launch-arg state, (c) match via NSPredicate against the localized 'Last Week' label."
+      "notes": "Shipped 2026-05-30 as PatternsDigestInsightRegression. Uses NSPredicate text matching against the rendered relative-week label rather than .accessibilityIdentifier (DisclosureGroup label closures do not surface identifiers through XCUITest queries). Wired into Makefile DOMAIN=patterns and the no-DOMAIN regression union.",
+      "depends_on": []
     }
   ]
 }

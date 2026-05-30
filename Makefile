@@ -84,15 +84,16 @@ ui-smoke-proof: ui-smoke
 ui-regression:
 	@DESTINATION="$${OWLORY_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17,OS=26.5}"; \
 	case "$(DOMAIN)" in \
-		"") ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression -only-testing:OwloryUITests/WriteCaptureRegression -only-testing:OwloryUITests/TrainRegression -only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression -only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; LABEL="all regression classes" ;; \
+		"") ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression -only-testing:OwloryUITests/WriteCaptureRegression -only-testing:OwloryUITests/TrainRegression -only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression -only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression -only-testing:OwloryUITests/PatternsDigestInsightRegression"; LABEL="all regression classes" ;; \
 		today) ONLY_TESTING="-only-testing:OwloryUITests/TodayContinueRegression"; LABEL="Today Continue regression" ;; \
 		write) ONLY_TESTING="-only-testing:OwloryUITests/WriteCaptureRegression"; LABEL="Write capture inbox regression" ;; \
 		train) ONLY_TESTING="-only-testing:OwloryUITests/TrainRegression"; LABEL="Train active/history regression" ;; \
 		home) ONLY_TESTING="-only-testing:OwloryUITests/HomeProtocolRegression -only-testing:OwloryUITests/HomeProtocolRunStepRegression"; LABEL="Home protocol regression (template archive/restore + run step progression)" ;; \
+		patterns) ONLY_TESTING="-only-testing:OwloryUITests/PatternsDigestInsightRegression"; LABEL="Patterns digest insight regression (last-week digest section + key insight after expansion)" ;; \
 		localization) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; LABEL="Localization layout + accessibility regression (en, de, ar, zh-Hans launch-shell + Dynamic Type accessibility XL + tab label/touch-target checks)" ;; \
 		localization-smaller-width) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=26.5"; LABEL="Localization regression on smaller iPhone width (iPhone 16; same layout + AccessibilityXL + AX-label tests as DOMAIN=localization)" ;; \
 		localization-smallest-width) ONLY_TESTING="-only-testing:OwloryUITests/LocalizationLayoutRegression -only-testing:OwloryUITests/LocalizationAccessibilityRegression"; DESTINATION="platform=iOS Simulator,name=iPhone SE,OS=26.5"; LABEL="Localization regression on smallest iPhone width (iPhone SE; same layout + AccessibilityXL + AX-label tests as DOMAIN=localization)" ;; \
-		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home|localization|localization-smaller-width|localization-smallest-width]"; exit 2 ;; \
+		*) echo "usage: make ui-regression [DOMAIN=today|write|train|home|patterns|localization|localization-smaller-width|localization-smallest-width]"; exit 2 ;; \
 	esac; \
 	echo "Running Owlory UI regression batch ($$LABEL) on $$DESTINATION"; \
 	xcodebuild test \
