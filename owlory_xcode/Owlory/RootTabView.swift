@@ -149,6 +149,7 @@ struct RootTabView: View {
             .tag(OwloryTab.home)
         }
         .fontDesign(.rounded)
+        .environment(\.isDuskActive, duskActive)
         .tint(duskActive ? OwloryColor.brandAccent : OwloryColor.brandPrimary)
         .duskTint(duskActive)
         .onAppear {

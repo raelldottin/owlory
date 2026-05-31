@@ -290,6 +290,7 @@ private struct SessionCardView: View {
     let isHighlighted: Bool
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    @Environment(\.isDuskActive) private var isDuskActive
 
     private var increasedContrast: Bool {
         colorSchemeContrast == .increased
@@ -389,7 +390,7 @@ private struct SessionCardView: View {
                                     .background(
                                         status == s
                                         ? OwloryAccessibilityContrast.tintedFill(
-                                            statusPillColor(s),
+                                            statusPillColor(s, duskActive: isDuskActive),
                                             alpha: 0.22,
                                             reduceTransparency: reduceTransparency,
                                             increasedContrast: increasedContrast
@@ -403,7 +404,7 @@ private struct SessionCardView: View {
                                             .strokeBorder(
                                                 status == s
                                                 ? OwloryAccessibilityContrast.tintedBorder(
-                                                    statusPillColor(s),
+                                                    statusPillColor(s, duskActive: isDuskActive),
                                                     alpha: 0.65,
                                                     reduceTransparency: reduceTransparency,
                                                     increasedContrast: increasedContrast
@@ -621,9 +622,9 @@ func trainingReadinessSummary(for value: Int) -> String {
     ReadinessSummaryPresentation.trainingReadinessSummary(for: value)
 }
 
-private func statusPillColor(_ status: TrainingStatus) -> Color {
+private func statusPillColor(_ status: TrainingStatus, duskActive: Bool = false) -> Color {
     switch status {
-    case .planned: return OwloryColor.brandAccent
+    case .planned: return OwloryColor.pillBorder(duskActive: duskActive)
     case .completed: return OwloryColor.success
     case .modified: return OwloryColor.warning
     case .skipped: return OwloryColor.error
@@ -643,6 +644,7 @@ func trainingReadinessColor(for value: Int) -> Color {
 
 private struct StatusBadge: View {
     let status: TrainingStatus
+    @Environment(\.isDuskActive) private var isDuskActive
 
     var body: some View {
         Text(status.localizedDisplayName)
@@ -668,7 +670,7 @@ private struct StatusBadge: View {
 
     private var color: Color {
         switch status {
-        case .planned: return OwloryColor.brandAccent
+        case .planned: return OwloryColor.pillBorder(duskActive: isDuskActive)
         case .completed: return OwloryColor.success
         case .modified: return OwloryColor.warning
         case .skipped: return OwloryColor.error

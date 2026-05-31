@@ -6,6 +6,7 @@ struct TodayView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    @Environment(\.isDuskActive) private var isDuskActive
 
     private var increasedContrast: Bool {
         colorSchemeContrast == .increased
@@ -628,7 +629,7 @@ struct TodayView: View {
                     .padding(.vertical, 2)
                     .background(
                         OwloryAccessibilityContrast.tintedFill(
-                            OwloryColor.brandAccent,
+                            OwloryColor.pillBorder(duskActive: isDuskActive),
                             alpha: 0.22,
                             reduceTransparency: reduceTransparency,
                             increasedContrast: increasedContrast
@@ -638,7 +639,7 @@ struct TodayView: View {
                     .overlay(
                         Capsule().strokeBorder(
                             OwloryAccessibilityContrast.tintedBorder(
-                                OwloryColor.brandAccent,
+                                OwloryColor.pillBorder(duskActive: isDuskActive),
                                 alpha: 0.6,
                                 reduceTransparency: reduceTransparency,
                                 increasedContrast: increasedContrast

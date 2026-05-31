@@ -140,6 +140,30 @@ private extension UIFont {
 }
 #endif
 
+// MARK: - Environment
+
+private struct IsDuskActiveKey: EnvironmentKey {
+    static let defaultValue: Bool = false
+}
+
+extension EnvironmentValues {
+    /// Whether Dusk Mode is currently active. Set once at RootTabView so any
+    /// descendant view can adapt without re-computing sunset/sunrise.
+    var isDuskActive: Bool {
+        get { self[IsDuskActiveKey.self] }
+        set { self[IsDuskActiveKey.self] = newValue }
+    }
+}
+
+extension OwloryColor {
+    /// Pill border color that pops against the current ambient surface.
+    /// Gold during the day, teal at dusk so the rim stays contrasted against
+    /// the warm dusk wash and the secondary brand color also lands.
+    static func pillBorder(duskActive: Bool) -> Color {
+        duskActive ? brandSecondary : brandAccent
+    }
+}
+
 // MARK: - Layout Tokens
 
 enum AppTheme {
