@@ -22,6 +22,34 @@ struct RootTabView: View {
     @State private var continueSelectionID = UUID()
     @State private var showingOnboarding: Bool = OnboardingPresentationPolicy.shouldShowOnLaunch()
 
+    @AppStorage(DuskModePreferenceStorage.key)
+    private var duskPreferenceRaw: String = DuskModePreference.auto.rawValue
+
+    private var duskPreference: DuskModePreference {
+        DuskModePreference(rawValue: duskPreferenceRaw) ?? .auto
+    }
+
+    private var duskActive: Bool {
+        let now = Date()
+        let coords = TimeZoneLocationEstimator.estimate(for: .current, now: now)
+        let sunset = SolarSunset.localSunset(
+            date: now,
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        )
+        let sunrise = SolarSunset.localSunrise(
+            date: now,
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        )
+        return DuskModeResolver.isActive(
+            preference: duskPreference,
+            at: now,
+            sunset: sunset,
+            sunrise: sunrise
+        )
+    }
+
     var body: some View {
         tabContent
             .fullScreenCover(isPresented: $showingOnboarding) {
@@ -120,7 +148,9 @@ struct RootTabView: View {
             }
             .tag(OwloryTab.home)
         }
-        .tint(OwloryColor.brandPrimary)
+        .fontDesign(.rounded)
+        .tint(duskActive ? OwloryColor.brandAccent : OwloryColor.brandPrimary)
+        .duskTint(duskActive)
         .onAppear {
             synchronizeTodayPresentationArtifacts()
             refreshRuntimeArtifacts()

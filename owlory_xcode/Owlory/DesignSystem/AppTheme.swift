@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 // MARK: - Accessibility Contrast
 
@@ -76,6 +79,66 @@ enum OwloryMotion {
         return try SwiftUI.withAnimation(animation, body)
     }
 }
+
+// MARK: - Appearance
+
+/// One-shot UIKit appearance setup. Promotes nav bar titles, tab bar labels,
+/// and toolbar text to SF Rounded so UIKit-rendered chrome matches the
+/// SwiftUI `.fontDesign(.rounded)` body of the app.
+enum OwloryAppearance {
+    static func applyRoundedFontAppearance() {
+        #if canImport(UIKit)
+        let largeTitleDescriptor = UIFontDescriptor
+            .preferredFontDescriptor(withTextStyle: .largeTitle)
+            .withDesign(.rounded) ?? UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+        let titleDescriptor = UIFontDescriptor
+            .preferredFontDescriptor(withTextStyle: .headline)
+            .withDesign(.rounded) ?? UIFontDescriptor.preferredFontDescriptor(withTextStyle: .headline)
+        let tabFontDescriptor = UIFontDescriptor
+            .preferredFontDescriptor(withTextStyle: .caption2)
+            .withDesign(.rounded) ?? UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption2)
+
+        let largeTitleFont = UIFont(descriptor: largeTitleDescriptor, size: 0)
+            .withWeight(.bold)
+        let titleFont = UIFont(descriptor: titleDescriptor, size: 0)
+            .withWeight(.semibold)
+        let tabFont = UIFont(descriptor: tabFontDescriptor, size: 0)
+            .withWeight(.medium)
+
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.configureWithDefaultBackground()
+        navAppearance.largeTitleTextAttributes = [.font: largeTitleFont]
+        navAppearance.titleTextAttributes = [.font: titleFont]
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().compactAppearance = navAppearance
+
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithDefaultBackground()
+        let itemAppearance = UITabBarItemAppearance()
+        itemAppearance.normal.titleTextAttributes = [.font: tabFont]
+        itemAppearance.selected.titleTextAttributes = [.font: tabFont]
+        tabAppearance.stackedLayoutAppearance = itemAppearance
+        tabAppearance.inlineLayoutAppearance = itemAppearance
+        tabAppearance.compactInlineLayoutAppearance = itemAppearance
+        UITabBar.appearance().standardAppearance = tabAppearance
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabAppearance
+        }
+        #endif
+    }
+}
+
+#if canImport(UIKit)
+private extension UIFont {
+    func withWeight(_ weight: UIFont.Weight) -> UIFont {
+        let descriptor = fontDescriptor.addingAttributes([
+            .traits: [UIFontDescriptor.TraitKey.weight: weight]
+        ])
+        return UIFont(descriptor: descriptor, size: 0)
+    }
+}
+#endif
 
 // MARK: - Layout Tokens
 
@@ -159,7 +222,11 @@ private struct ContinueHighlightModifier: ViewModifier {
             .background {
                 if isHighlighted {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(OwloryColor.brandPrimary.opacity(0.10))
+                        .fill(OwloryColor.brandAccent.opacity(0.14))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .strokeBorder(OwloryColor.brandAccent.opacity(0.35), lineWidth: 1)
+                        }
                 }
             }
     }

@@ -4,6 +4,9 @@ import SwiftUI
 /// (instant transition) and Increase Contrast (no overlay, readability wins).
 ///
 /// The overlay is non-hit-testing — it never blocks underlying controls.
+/// Renders a top-anchored gradient so the wash reads as a horizon glow rather
+/// than a flat veil, doubling down on the dusk identity now that gold anchors
+/// the palette.
 struct DuskTintModifier: ViewModifier {
     let isActive: Bool
 
@@ -14,12 +17,35 @@ struct DuskTintModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .background {
+                if isActive && !increasedContrast {
+                    LinearGradient(
+                        stops: [
+                            .init(color: OwloryColor.duskOverlay.opacity(0.22), location: 0.0),
+                            .init(color: OwloryColor.brandAccent.opacity(0.10), location: 0.45),
+                            .init(color: Color.clear, location: 1.0),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
+                }
+            }
             .overlay {
                 if isActive && !increasedContrast {
-                    OwloryColor.duskOverlay
-                        .opacity(0.05)
-                        .allowsHitTesting(false)
-                        .transition(.opacity)
+                    LinearGradient(
+                        stops: [
+                            .init(color: Color.clear, location: 0.7),
+                            .init(color: OwloryColor.duskOverlay.opacity(0.08), location: 1.0),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
                 }
             }
             .animation(

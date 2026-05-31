@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 @main
 struct OwloryApp: App {
@@ -16,6 +19,7 @@ struct OwloryApp: App {
 
     init() {
         OwloryUITestSupport.prepareLaunchEnvironmentIfNeeded()
+        OwloryAppearance.applyRoundedFontAppearance()
 
         let router = OwloryDeepLinkRouter()
         _deepLinkRouter = StateObject(wrappedValue: router)

@@ -623,7 +623,7 @@ func trainingReadinessSummary(for value: Int) -> String {
 
 private func statusPillColor(_ status: TrainingStatus) -> Color {
     switch status {
-    case .planned: return OwloryColor.brandPrimary
+    case .planned: return OwloryColor.brandAccent
     case .completed: return OwloryColor.success
     case .modified: return OwloryColor.warning
     case .skipped: return OwloryColor.error
@@ -665,7 +665,7 @@ private struct StatusBadge: View {
 
     private var color: Color {
         switch status {
-        case .planned: return OwloryColor.brandPrimary
+        case .planned: return OwloryColor.brandAccent
         case .completed: return OwloryColor.success
         case .modified: return OwloryColor.warning
         case .skipped: return OwloryColor.error
