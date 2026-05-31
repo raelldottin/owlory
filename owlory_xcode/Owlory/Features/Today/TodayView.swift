@@ -134,8 +134,12 @@ struct TodayView: View {
     // MARK: - Dashboard
 
     private var dashboardView: some View {
-        List {
+        let promoteReflection = eveningReflectionNudge != nil
+        return List {
             dashboardHeader
+            if promoteReflection {
+                dashboardReflection
+            }
             checkInSection
             continueSection
             focusSuggestionSection
@@ -143,7 +147,9 @@ struct TodayView: View {
             domainWriteCard
             domainCareerCard
             domainHomeCard
-            dashboardReflection
+            if !promoteReflection {
+                dashboardReflection
+            }
             lastWeekSection
             previousDaysSection
         }
