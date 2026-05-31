@@ -605,7 +605,8 @@ struct TodayView: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.title)
-                    .font(.subheadline)
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(OwloryColor.textPrimary)
                 HStack(spacing: 6) {
                     Text(item.domain.localizedDisplayName)
                         .font(.caption)
@@ -621,18 +622,29 @@ struct TodayView: View {
             Spacer()
             if let staleDayCount = item.staleDayCount {
                 Text("\(staleDayCount)d")
-                    .font(.caption2.weight(.medium))
-                    .foregroundStyle(OwloryColor.warning)
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(OwloryColor.textPrimary)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(
                         OwloryAccessibilityContrast.tintedFill(
-                            OwloryColor.warning,
-                            alpha: 0.12,
+                            OwloryColor.brandAccent,
+                            alpha: 0.22,
                             reduceTransparency: reduceTransparency,
                             increasedContrast: increasedContrast
                         ),
                         in: Capsule()
+                    )
+                    .overlay(
+                        Capsule().strokeBorder(
+                            OwloryAccessibilityContrast.tintedBorder(
+                                OwloryColor.brandAccent,
+                                alpha: 0.6,
+                                reduceTransparency: reduceTransparency,
+                                increasedContrast: increasedContrast
+                            ),
+                            lineWidth: 1
+                        )
                     )
             }
             Image(systemName: "chevron.forward")

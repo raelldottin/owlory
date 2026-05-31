@@ -21,9 +21,9 @@ struct DuskTintModifier: ViewModifier {
                 if isActive && !increasedContrast {
                     LinearGradient(
                         stops: [
-                            .init(color: OwloryColor.duskOverlay.opacity(0.22), location: 0.0),
-                            .init(color: OwloryColor.brandAccent.opacity(0.10), location: 0.45),
-                            .init(color: Color.clear, location: 1.0),
+                            .init(color: OwloryColor.duskOverlay.opacity(0.35), location: 0.0),
+                            .init(color: OwloryColor.brandAccent.opacity(0.18), location: 0.5),
+                            .init(color: OwloryColor.duskOverlay.opacity(0.22), location: 1.0),
                         ],
                         startPoint: .top,
                         endPoint: .bottom
@@ -37,8 +37,10 @@ struct DuskTintModifier: ViewModifier {
                 if isActive && !increasedContrast {
                     LinearGradient(
                         stops: [
-                            .init(color: Color.clear, location: 0.7),
-                            .init(color: OwloryColor.duskOverlay.opacity(0.08), location: 1.0),
+                            .init(color: OwloryColor.duskOverlay.opacity(0.12), location: 0.0),
+                            .init(color: Color.clear, location: 0.30),
+                            .init(color: Color.clear, location: 0.75),
+                            .init(color: OwloryColor.duskOverlay.opacity(0.10), location: 1.0),
                         ],
                         startPoint: .top,
                         endPoint: .bottom

@@ -390,13 +390,13 @@ private struct SessionCardView: View {
                                         status == s
                                         ? OwloryAccessibilityContrast.tintedFill(
                                             statusPillColor(s),
-                                            alpha: 0.15,
+                                            alpha: 0.22,
                                             reduceTransparency: reduceTransparency,
                                             increasedContrast: increasedContrast
                                         )
                                         : Color.clear
                                     )
-                                    .foregroundStyle(status == s ? statusPillColor(s) : .secondary)
+                                    .foregroundStyle(status == s ? OwloryColor.textPrimary : .secondary)
                                     .clipShape(Capsule())
                                     .overlay(
                                         Capsule()
@@ -404,12 +404,12 @@ private struct SessionCardView: View {
                                                 status == s
                                                 ? OwloryAccessibilityContrast.tintedBorder(
                                                     statusPillColor(s),
-                                                    alpha: 0.3,
+                                                    alpha: 0.65,
                                                     reduceTransparency: reduceTransparency,
                                                     increasedContrast: increasedContrast
                                                 )
                                                 : OwloryColor.borderSubtle,
-                                                lineWidth: OwloryAccessibilityContrast.borderWidth(1, increasedContrast: increasedContrast)
+                                                lineWidth: OwloryAccessibilityContrast.borderWidth(status == s ? 1.5 : 1, increasedContrast: increasedContrast)
                                             )
                                     )
                             }
@@ -649,9 +649,12 @@ private struct StatusBadge: View {
             .font(.caption2.weight(.medium))
             .padding(.horizontal, 8)
             .padding(.vertical, 2)
-            .background(color.opacity(0.15))
-            .foregroundStyle(color)
+            .background(color.opacity(0.22))
+            .foregroundStyle(OwloryColor.textPrimary)
             .clipShape(Capsule())
+            .overlay(
+                Capsule().strokeBorder(color.opacity(0.6), lineWidth: 1)
+            )
             .accessibilityLabel(
                 String.localizedStringWithFormat(
                     NSLocalizedString(

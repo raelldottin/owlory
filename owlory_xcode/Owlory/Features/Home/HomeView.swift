@@ -360,18 +360,29 @@ struct HomeView: View {
                calendar: .current
            ) {
             Text(overdueBadgeText(days: days))
-                .font(.caption2.weight(.medium))
-                .foregroundStyle(OwloryColor.warning)
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(OwloryColor.textPrimary)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
                 .background(
                     OwloryAccessibilityContrast.tintedFill(
-                        OwloryColor.warning,
-                        alpha: 0.12,
+                        OwloryColor.brandAccent,
+                        alpha: 0.22,
                         reduceTransparency: reduceTransparency,
                         increasedContrast: increasedContrast
                     ),
                     in: Capsule()
+                )
+                .overlay(
+                    Capsule().strokeBorder(
+                        OwloryAccessibilityContrast.tintedBorder(
+                            OwloryColor.brandAccent,
+                            alpha: 0.6,
+                            reduceTransparency: reduceTransparency,
+                            increasedContrast: increasedContrast
+                        ),
+                        lineWidth: 1
+                    )
                 )
                 .accessibilityIdentifier("home.protocol.overdueBadge.\(proto.id.uuidString)")
         }
@@ -403,6 +414,7 @@ struct HomeView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(run.protocolTitle)
                                     .font(.subheadline.weight(.medium))
+                                    .foregroundStyle(OwloryColor.textPrimary)
                                 Text(activeRunSubtitle(for: run))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
@@ -583,8 +595,9 @@ private struct TaskRow: View {
             Button(action: onSelect) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(task.title)
+                        .font(.body.weight(.medium))
                         .strikethrough(task.isCompleted)
-                        .foregroundStyle(task.isCompleted || task.isSkipped ? .secondary : .primary)
+                        .foregroundStyle(task.isCompleted || task.isSkipped ? Color.secondary : OwloryColor.textPrimary)
                     HStack(spacing: AppTheme.compactSpacing) {
                         if task.isRecurring {
                             HStack(spacing: 2) {

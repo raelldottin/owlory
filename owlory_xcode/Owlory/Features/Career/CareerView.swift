@@ -106,7 +106,7 @@ struct CareerView: View {
                             HStack {
                                 Text(record.title)
                                     .font(.subheadline.weight(.medium))
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(OwloryColor.textPrimary)
                                 Spacer()
                                 if record.audioFileName != nil {
                                     Image(systemName: "waveform")

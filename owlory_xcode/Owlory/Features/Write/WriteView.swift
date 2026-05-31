@@ -158,7 +158,7 @@ struct WriteView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(note.title)
                                 .font(.subheadline.weight(.medium))
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(OwloryColor.textPrimary)
                             if !note.body.isEmpty {
                                 Text(note.body)
                                     .font(.caption)
