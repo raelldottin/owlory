@@ -238,6 +238,38 @@ enum OwloryColor {
     static let duskOverlay = Color("duskOverlay")
 }
 
+private struct CompletedItemTintModifier: ViewModifier {
+    let isComplete: Bool
+    @Environment(\.isDuskActive) private var isDuskActive
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var contrast
+
+    private var increasedContrast: Bool { contrast == .increased }
+
+    func body(content: Content) -> some View {
+        if isComplete {
+            content.listRowBackground(
+                OwloryAccessibilityContrast.tintedFill(
+                    OwloryColor.pillBorder(duskActive: isDuskActive),
+                    alpha: 0.22,
+                    reduceTransparency: reduceTransparency,
+                    increasedContrast: increasedContrast
+                )
+            )
+        } else {
+            content
+        }
+    }
+}
+
+extension View {
+    /// Tints the row background of a List row with the brand pill color
+    /// (gold by day, teal at dusk) when `isComplete` is true. No-op otherwise.
+    func completedItemTint(_ isComplete: Bool) -> some View {
+        modifier(CompletedItemTintModifier(isComplete: isComplete))
+    }
+}
+
 private struct ContinueHighlightModifier: ViewModifier {
     let isHighlighted: Bool
 

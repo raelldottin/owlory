@@ -225,7 +225,13 @@ struct TodayView: View {
 
     private var checkInSection: some View {
         Section {
-            DisclosureGroup(isExpanded: $showingCheckin) {
+            checkInDisclosure
+                .completedItemTint(TodayStore.hasCheckIn(currentEntry))
+        }
+    }
+
+    private var checkInDisclosure: some View {
+        DisclosureGroup(isExpanded: $showingCheckin) {
                 readinessRow(
                     label: "Energy",
                     value: currentEntry.energy,
@@ -293,7 +299,6 @@ struct TodayView: View {
                     }
                 }
             }
-        }
     }
 
     private var readinessSummaryLabel: String {
@@ -1022,7 +1027,21 @@ struct TodayView: View {
 
     private var dashboardReflection: some View {
         Section {
-            DisclosureGroup(isExpanded: $showingReflection) {
+            reflectionDisclosure
+                .completedItemTint(reflectionSaved || !currentEntry.eveningReflection.isEmpty)
+        }
+        .onAppear {
+            let existing = currentEntry.eveningReflection
+            if !existing.isEmpty {
+                reflectionText = existing
+                reflectionSaved = true
+                showingReflection = false
+            }
+        }
+    }
+
+    private var reflectionDisclosure: some View {
+        DisclosureGroup(isExpanded: $showingReflection) {
                 HStack(alignment: .top) {
                     TextField("What mattered today?", text: $reflectionText, axis: .vertical)
                         .lineLimit(3...6)
@@ -1080,15 +1099,6 @@ struct TodayView: View {
                     }
                 }
             }
-        }
-        .onAppear {
-            let existing = currentEntry.eveningReflection
-            if !existing.isEmpty {
-                reflectionText = existing
-                reflectionSaved = true
-                showingReflection = false
-            }
-        }
     }
 
     // MARK: - Last Week Digest
