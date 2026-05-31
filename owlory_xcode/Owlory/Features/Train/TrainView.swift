@@ -124,6 +124,7 @@ struct TrainView: View {
                     .id(session.id)
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
+                    .completedItemTint(session.status == .completed || session.status == .modified)
                 }
                 .onDelete { offsets in
                     let ids = offsets.map { todaySessions[$0].id }
@@ -179,6 +180,7 @@ struct TrainView: View {
                     .id(session.id)
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.history.item.\(session.id.uuidString)")
+                    .completedItemTint(session.status == .completed || session.status == .modified)
                 }
             } header: {
                 Text("History")
