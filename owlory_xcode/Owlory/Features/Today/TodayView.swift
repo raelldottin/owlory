@@ -221,6 +221,36 @@ struct TodayView: View {
         )
     }
 
+    // MARK: - Engagement (per-domain "did the user act today")
+
+    private var trainEngagedToday: Bool {
+        let sessions = trainStore.todaySessions
+        return !sessions.isEmpty && sessions.contains { $0.status != .planned }
+    }
+
+    private var writeEngagedToday: Bool {
+        let calendar = Calendar.current
+        return writeStore.notes.contains { calendar.isDateInToday($0.createdDate) }
+    }
+
+    private var careerEngagedToday: Bool {
+        let calendar = Calendar.current
+        return careerStore.records.contains { calendar.isDateInToday($0.date) }
+    }
+
+    private var homeEngagedToday: Bool {
+        let calendar = Calendar.current
+        let taskAction = homeStore.tasks.contains { task in
+            (task.lastCompleted.map(calendar.isDateInToday) ?? false) ||
+                (task.lastSkipped.map(calendar.isDateInToday) ?? false)
+        }
+        let runAction = homeStore.runs.contains { run in
+            calendar.isDateInToday(run.createdAt) ||
+                (run.completedAt.map(calendar.isDateInToday) ?? false)
+        }
+        return taskAction || runAction
+    }
+
     // MARK: - Check-in
 
     private var checkInSection: some View {
@@ -807,6 +837,7 @@ struct TodayView: View {
                         .foregroundStyle(OwloryColor.brandPrimary.opacity(0.8))
                 }
             }
+            .completedItemTint(trainEngagedToday)
             Button {
                 showingQuickTrainSession = true
             } label: {
@@ -814,6 +845,7 @@ struct TodayView: View {
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
+            .completedItemTint(trainEngagedToday)
         } header: {
             Label(L("Train"), systemImage: "figure.run")
         }
@@ -856,6 +888,7 @@ struct TodayView: View {
                     }
                 }
             }
+            .completedItemTint(writeEngagedToday)
             Button {
                 showingQuickCapture = true
             } label: {
@@ -863,6 +896,7 @@ struct TodayView: View {
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
+            .completedItemTint(writeEngagedToday)
         } header: {
             Label(L("Write"), systemImage: "square.and.pencil")
         }
@@ -885,6 +919,7 @@ struct TodayView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .completedItemTint(careerEngagedToday)
             Button {
                 showingQuickCareerRecord = true
             } label: {
@@ -892,6 +927,7 @@ struct TodayView: View {
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
+            .completedItemTint(careerEngagedToday)
         } header: {
             Label(L("Career"), systemImage: "briefcase")
         }
@@ -949,6 +985,7 @@ struct TodayView: View {
                     }
                 }
             }
+            .completedItemTint(homeEngagedToday)
             Button {
                 showingQuickHomeTask = true
             } label: {
@@ -956,6 +993,7 @@ struct TodayView: View {
                     .font(.subheadline)
                     .foregroundStyle(OwloryColor.brandPrimary)
             }
+            .completedItemTint(homeEngagedToday)
         } header: {
             Label(L("Home"), systemImage: "house")
         }
