@@ -160,19 +160,19 @@
     ]
   },
   "summary": {
-    "review_entry_count": 433,
+    "review_entry_count": 463,
     "status_counts": {
       "native-reviewed": 417,
-      "needs-layout-check": 16
+      "needs-layout-check": 46
     },
     "lqa_counts": {
-      "passed": 411,
+      "passed": 441,
       "warning": 22,
       "reverted": 0
     },
     "lqa_run_date": "2026-05-15",
     "lqa_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
-    "strings_entry_count": 391,
+    "strings_entry_count": 421,
     "plural_entry_count": 42,
     "native_review": {
       "locale": "ja",
@@ -15072,6 +15072,996 @@
         "review_date": null,
         "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
         "pending_native_review": true
+      }
+    },
+    {
+      "key": "home.protocol.overdue.badge",
+      "english_value": "%dd overdue",
+      "reviewed_value": "%d日超過",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Skip",
+      "english_value": "Skip",
+      "reviewed_value": "スキップ",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Back",
+      "english_value": "Back",
+      "reviewed_value": "戻る",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Next",
+      "english_value": "Next",
+      "reviewed_value": "次へ",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Get Started",
+      "english_value": "Get Started",
+      "reviewed_value": "始める",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Welcome to Owlory",
+      "english_value": "Welcome to Owlory",
+      "reviewed_value": "Owloryへようこそ",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Your private, local-first command center for everyday life.",
+      "english_value": "Your private, local-first command center for everyday life.",
+      "reviewed_value": "日常のための、プライベートでローカル優先のコマンドセンター。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Owlory keeps daily planning, training, writing, career, and home in one place.",
+      "english_value": "Owlory keeps daily planning, training, writing, career, and home in one place.",
+      "reviewed_value": "Owloryは毎日の計画、トレーニング、執筆、キャリア、ホームを一か所にまとめます。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Everything stays on your device. There is no account and no sync.",
+      "english_value": "Everything stays on your device. There is no account and no sync.",
+      "reviewed_value": "すべてはデバイス内に保存されます。アカウントも同期もありません。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "This quick tour explains what each tab is for so you know where to start.",
+      "english_value": "This quick tour explains what each tab is for so you know where to start.",
+      "reviewed_value": "この短いツアーでは各タブの役割を説明し、どこから始めればよいかがわかります。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Your daily command center.",
+      "english_value": "Your daily command center.",
+      "reviewed_value": "毎日のコマンドセンター。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Check in with energy, mood, and sleep, then pick up to three focus items for the day.",
+      "english_value": "Check in with energy, mood, and sleep, then pick up to three focus items for the day.",
+      "reviewed_value": "エネルギー、気分、睡眠をチェックインし、その日のフォーカス項目を最大3つ選びましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Continue picks up unfinished work from every other tab so nothing slips silently.",
+      "english_value": "Continue picks up unfinished work from every other tab so nothing slips silently.",
+      "reviewed_value": "「続ける」は他のすべてのタブの未完了の作業をまとめ、何も見落とさないようにします。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "End the day with an evening reflection that feeds your weekly digest.",
+      "english_value": "End the day with an evening reflection that feeds your weekly digest.",
+      "reviewed_value": "一日の終わりに、週次サマリーに反映される夕方の振り返りを行いましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "One training session a day, tracked honestly.",
+      "english_value": "One training session a day, tracked honestly.",
+      "reviewed_value": "1日1回のトレーニングセッションを、正直に記録。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Plan today's session, log your readiness, and capture what you actually did.",
+      "english_value": "Plan today's session, log your readiness, and capture what you actually did.",
+      "reviewed_value": "今日のセッションを計画し、コンディションを記録し、実際に行ったことを残しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Recurring sessions roll forward automatically when the day changes.",
+      "english_value": "Recurring sessions roll forward automatically when the day changes.",
+      "reviewed_value": "繰り返しのセッションは、日付が変わると自動的に繰り越されます。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Reflections can be typed or dictated and stay attached to each session.",
+      "english_value": "Reflections can be typed or dictated and stay attached to each session.",
+      "reviewed_value": "振り返りは入力でも音声入力でも可能で、各セッションに紐づいたまま残ります。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "A low-friction inbox for unfinished thought.",
+      "english_value": "A low-friction inbox for unfinished thought.",
+      "reviewed_value": "未完成の思いつきのための、気軽な受信箱。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Capture an idea fast — no folder, tag, or category required.",
+      "english_value": "Capture an idea fast — no folder, tag, or category required.",
+      "reviewed_value": "アイデアをすばやくキャプチャ — フォルダもタグもカテゴリも不要です。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Promote captures into source notes, tasks, or protocols later, only when it helps.",
+      "english_value": "Promote captures into source notes, tasks, or protocols later, only when it helps.",
+      "reviewed_value": "キャプチャは後で、役立つときだけソースノートやタスク、プロトコルに昇格できます。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Write is forgiving: catch the thought first, sort it never if you like.",
+      "english_value": "Write is forgiving: catch the thought first, sort it never if you like.",
+      "reviewed_value": "「書く」は寛容です。まず思いつきを捕まえ、お望みなら整理しなくても構いません。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Your private record of wins, impact, and stories.",
+      "english_value": "Your private record of wins, impact, and stories.",
+      "reviewed_value": "成果、影響、エピソードのプライベートな記録。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Log wins, impact moments, and interview-ready stories with supporting metrics.",
+      "english_value": "Log wins, impact moments, and interview-ready stories with supporting metrics.",
+      "reviewed_value": "成果、インパクトのある瞬間、裏付けとなる指標つきの面接向けエピソードを記録しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Use it to prep for reviews, recruiter calls, or your next career conversation.",
+      "english_value": "Use it to prep for reviews, recruiter calls, or your next career conversation.",
+      "reviewed_value": "評価面談やリクルーターとの通話、次のキャリアの会話の準備に活用しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Records stay local — nothing is shared unless you choose to export it.",
+      "english_value": "Records stay local — nothing is shared unless you choose to export it.",
+      "reviewed_value": "記録はローカルに保存されます — エクスポートを選ばない限り、何も共有されません。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Recurring tasks and household protocols.",
+      "english_value": "Recurring tasks and household protocols.",
+      "reviewed_value": "繰り返しのタスクと家庭プロトコル。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Track recurring chores and one-off tasks without losing visibility.",
+      "english_value": "Track recurring chores and one-off tasks without losing visibility.",
+      "reviewed_value": "繰り返しの家事や単発のタスクを、見落とさずに把握しましょう。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Build multi-step protocols for routines like meal prep, travel, or move-out.",
+      "english_value": "Build multi-step protocols for routines like meal prep, travel, or move-out.",
+      "reviewed_value": "食事の準備、旅行、引っ越しなどのルーティン向けに、複数ステップのプロトコルを作成できます。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
+      }
+    },
+    {
+      "key": "Run a protocol to step through it once, and let Owlory remember the cadence.",
+      "english_value": "Run a protocol to step through it once, and let Owlory remember the cadence.",
+      "reviewed_value": "プロトコルを実行して一度なぞれば、あとはOwloryがそのペースを覚えてくれます。",
+      "review_status": "needs-layout-check",
+      "reviewer": "Codex automated draft (not native/fluent reviewer)",
+      "review_date": "2026-06-01",
+      "reviewer_notes": "Auto-added by Tools/localization-return-files-refresh.py. LLM-drafted value; not native-reviewed. Verify wording, grammar, and on-device layout.",
+      "resource_type": "strings",
+      "locale": "ja",
+      "post_packet_addition": true,
+      "native_review": {
+        "accepted": false,
+        "reviewer": null,
+        "review_date": null,
+        "basis": "Added after the 2026-05-18 native/fluent review pass recorded in this return file; no native/fluent acceptance is claimed for this key.",
+        "pending_native_review": true
+      },
+      "lqa": {
+        "status": "passed",
+        "checks_run": [
+          "format-specifier-parity",
+          "empty-value",
+          "identical-to-english-outside-keep",
+          "length-outlier",
+          "mojibake-suspect"
+        ],
+        "issues": [],
+        "second_pass_reviewer": "claude-opus-4-7 (LLM, automated LQA + second-pass)",
+        "second_pass_date": "2026-05-15",
+        "auto_fix_action": null
       }
     }
   ]
