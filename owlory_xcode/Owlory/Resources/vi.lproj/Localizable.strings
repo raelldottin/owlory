@@ -167,6 +167,10 @@
 "Days active" = "Số ngày hoạt động";
 "Defer" = "Hoãn";
 "Delete this note?" = "Xóa ghi chú này?";
+"Delete this record?" = "Xóa bản ghi này?";
+"Delete this task?" = "Xóa nhiệm vụ này?";
+"Delete this protocol?" = "Xóa quy trình này?";
+"Delete this session?" = "Xóa phiên này?";
 "Details (optional)" = "Chi tiết (tùy chọn)";
 "Dismiss" = "Đóng";
 "Domain Intentions" = "Ý định lĩnh vực";

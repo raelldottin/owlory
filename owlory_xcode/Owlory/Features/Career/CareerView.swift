@@ -6,6 +6,7 @@ struct CareerView: View {
     @State private var selectedType: CareerRecordType = .win
     @State private var showingAdd = false
     @State private var selectedRecord: CareerRecord?
+    @State private var pendingDeleteRecordID: UUID?
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -14,6 +15,9 @@ struct CareerView: View {
                 recordsList
             }
             .scrollDismissesKeyboard(.interactively)
+            .deleteConfirmation(L("Delete this record?"), item: $pendingDeleteRecordID) { id in
+                store.deleteRecord(id: id)
+            }
             .navigationTitle("Career")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -138,13 +142,13 @@ struct CareerView: View {
                     .id(record.id)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            store.deleteRecord(id: record.id)
+                            pendingDeleteRecordID = record.id
                         } label: {
                             Label(L("Delete"), systemImage: "trash")
                         }
                     }
                     .accessibilityActions {
-                        Button(L("Delete"), role: .destructive) { store.deleteRecord(id: record.id) }
+                        Button(L("Delete"), role: .destructive) { pendingDeleteRecordID = record.id }
                     }
                 }
             }

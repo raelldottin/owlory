@@ -576,6 +576,7 @@ private struct TaskRow: View {
     @ObservedObject var store: HomeStore
     let isHighlighted: Bool
     let onSelect: () -> Void
+    @State private var pendingDelete: UUID?
 
     var body: some View {
         HStack(spacing: AppTheme.rowSpacing) {
@@ -656,13 +657,16 @@ private struct TaskRow: View {
         .continueHighlight(isHighlighted)
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
-                store.deleteTask(id: task.id)
+                pendingDelete = task.id
             } label: {
                 Label(L("Delete"), systemImage: "trash")
             }
         }
         .accessibilityActions {
-            Button(L("Delete"), role: .destructive) { store.deleteTask(id: task.id) }
+            Button(L("Delete"), role: .destructive) { pendingDelete = task.id }
+        }
+        .deleteConfirmation(L("Delete this task?"), item: $pendingDelete) { id in
+            store.deleteTask(id: id)
         }
     }
 
@@ -882,6 +886,7 @@ private struct EditProtocolSheet: View {
     @State private var title: String
     @State private var stepsText: String
     @State private var scheduleDraft: ProtocolScheduleRules.Draft
+    @State private var pendingDelete: UUID?
 
     init(
         proto: HouseholdProtocol,
@@ -947,6 +952,10 @@ private struct EditProtocolSheet: View {
                 }
             }
         }
+        .deleteConfirmation(L("Delete this protocol?"), item: $pendingDelete) { id in
+            store.deleteProtocol(id: id)
+            onDismiss()
+        }
         .presentationDetents([.medium, .large])
     }
 
@@ -990,8 +999,7 @@ private struct EditProtocolSheet: View {
             }
 
             Button(role: .destructive) {
-                store.deleteProtocol(id: proto.id)
-                onDismiss()
+                pendingDelete = proto.id
             } label: {
                 Label(L("Delete"), systemImage: "trash")
             }

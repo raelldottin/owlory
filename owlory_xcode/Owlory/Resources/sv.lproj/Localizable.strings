@@ -167,6 +167,10 @@
 "Days active" = "Aktiva dagar";
 "Defer" = "Skjut upp";
 "Delete this note?" = "Ta bort denna anteckning?";
+"Delete this record?" = "Ta bort denna post?";
+"Delete this task?" = "Ta bort denna uppgift?";
+"Delete this protocol?" = "Ta bort detta protokoll?";
+"Delete this session?" = "Ta bort denna session?";
 "Details (optional)" = "Detaljer (valfritt)";
 "Dismiss" = "Avvisa";
 "Domain Intentions" = "Domänavsikter";

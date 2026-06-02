@@ -167,6 +167,10 @@
 "Days active" = "Aktif günler";
 "Defer" = "Ertele";
 "Delete this note?" = "Bu not silinsin mi?";
+"Delete this record?" = "Bu kayıt silinsin mi?";
+"Delete this task?" = "Bu görev silinsin mi?";
+"Delete this protocol?" = "Bu protokol silinsin mi?";
+"Delete this session?" = "Bu oturum silinsin mi?";
 "Details (optional)" = "Detaylar (isteğe bağlı)";
 "Dismiss" = "Kapat";
 "Domain Intentions" = "Alan niyetleri";

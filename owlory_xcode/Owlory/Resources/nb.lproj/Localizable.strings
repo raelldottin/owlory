@@ -167,6 +167,10 @@
 "Days active" = "Aktive dager";
 "Defer" = "Utsett";
 "Delete this note?" = "Slette dette notatet?";
+"Delete this record?" = "Slette denne oppføringen?";
+"Delete this task?" = "Slette denne oppgaven?";
+"Delete this protocol?" = "Slette denne protokollen?";
+"Delete this session?" = "Slette denne økten?";
 "Details (optional)" = "Detaljer (valgfritt)";
 "Dismiss" = "Lukk";
 "Domain Intentions" = "Domeneintensjoner";

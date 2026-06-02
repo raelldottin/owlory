@@ -167,6 +167,10 @@
 "Days active" = "Активных дней";
 "Defer" = "Отложить";
 "Delete this note?" = "Удалить эту заметку?";
+"Delete this record?" = "Удалить эту запись?";
+"Delete this task?" = "Удалить эту задачу?";
+"Delete this protocol?" = "Удалить этот протокол?";
+"Delete this session?" = "Удалить эту сессию?";
 "Details (optional)" = "Подробности (необязательно)";
 "Dismiss" = "Закрыть";
 "Domain Intentions" = "Намерения по областям";

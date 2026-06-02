@@ -167,6 +167,10 @@
 "Days active" = "أيام النشاط";
 "Defer" = "تأجيل";
 "Delete this note?" = "حذف هذه الملاحظة؟";
+"Delete this record?" = "حذف هذا السجل؟";
+"Delete this task?" = "حذف هذه المهمة؟";
+"Delete this protocol?" = "حذف هذا البروتوكول؟";
+"Delete this session?" = "حذف هذه الجلسة؟";
 "Details (optional)" = "التفاصيل (اختياري)";
 "Dismiss" = "إغلاق";
 "Domain Intentions" = "نوايا النطاق";

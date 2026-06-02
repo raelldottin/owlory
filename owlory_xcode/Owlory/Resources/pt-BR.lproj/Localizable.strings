@@ -167,6 +167,10 @@
 "Days active" = "Dias ativos";
 "Defer" = "Adiar";
 "Delete this note?" = "Excluir esta nota?";
+"Delete this record?" = "Excluir este registro?";
+"Delete this task?" = "Excluir esta tarefa?";
+"Delete this protocol?" = "Excluir este protocolo?";
+"Delete this session?" = "Excluir esta sessão?";
 "Details (optional)" = "Detalhes (opcional)";
 "Dismiss" = "Dispensar";
 "Domain Intentions" = "Intenções por domínio";

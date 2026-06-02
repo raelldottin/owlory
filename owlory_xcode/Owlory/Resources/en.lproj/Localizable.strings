@@ -164,6 +164,10 @@
 "Days active" = "Days active";
 "Defer" = "Defer";
 "Delete this note?" = "Delete this note?";
+"Delete this record?" = "Delete this record?";
+"Delete this task?" = "Delete this task?";
+"Delete this protocol?" = "Delete this protocol?";
+"Delete this session?" = "Delete this session?";
 "Details (optional)" = "Details (optional)";
 "Dismiss" = "Dismiss";
 "Domain Intentions" = "Domain Intentions";

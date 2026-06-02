@@ -167,6 +167,10 @@
 "Days active" = "Активних днів";
 "Defer" = "Відкласти";
 "Delete this note?" = "Видалити цю нотатку?";
+"Delete this record?" = "Видалити цей запис?";
+"Delete this task?" = "Видалити це завдання?";
+"Delete this protocol?" = "Видалити цей протокол?";
+"Delete this session?" = "Видалити цю сесію?";
 "Details (optional)" = "Подробиці (необов'язково)";
 "Dismiss" = "Закрити";
 "Domain Intentions" = "Наміри за доменом";

@@ -19,6 +19,7 @@ struct WriteView: View {
     @State private var selectedNote: WritingNote?
     @State private var lastPresentedHighlightedNoteSelectionID: UUID?
     @State private var isArchivedNotesExpanded = false
+    @State private var pendingDeleteNoteID: UUID?
 
     private var calibration: CalibrationRules.Calibration? {
         guard let snapshot = patternStore.weeklySnapshot else { return nil }
@@ -39,6 +40,13 @@ struct WriteView: View {
                 archiveSection
             }
             .scrollDismissesKeyboard(.interactively)
+            .deleteConfirmation(
+                L("Delete this note?"),
+                item: $pendingDeleteNoteID,
+                message: L("This removes the note from Write. Archived notes can be kept without appearing in active stages.")
+            ) { id in
+                store.deleteNote(id: id)
+            }
             .navigationTitle("Write")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -188,7 +196,7 @@ struct WriteView: View {
                 }
                 .swipeActions(edge: .trailing) {
                     Button(role: .destructive) {
-                        store.deleteNote(id: note.id)
+                        pendingDeleteNoteID = note.id
                     } label: {
                         Label(L("Delete"), systemImage: "trash")
                     }
@@ -205,7 +213,7 @@ struct WriteView: View {
                     if WritingStageRules.nextStage(after: stage) != nil {
                         Button(L("Advance")) { store.advanceStage(id: note.id) }
                     }
-                    Button(L("Delete"), role: .destructive) { store.deleteNote(id: note.id) }
+                    Button(L("Delete"), role: .destructive) { pendingDeleteNoteID = note.id }
                     if WritingStageRules.canTransition(from: stage, to: .archived) {
                         Button(L("Archive")) { store.transitionStage(id: note.id, to: .archived) }
                     }
@@ -260,14 +268,14 @@ struct WriteView: View {
                         }
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                store.deleteNote(id: note.id)
+                                pendingDeleteNoteID = note.id
                             } label: {
                                 Label(L("Delete"), systemImage: "trash")
                             }
                         }
                         .accessibilityActions {
                             Button(L("Restore")) { store.transitionStage(id: note.id, to: .capture) }
-                            Button(L("Delete"), role: .destructive) { store.deleteNote(id: note.id) }
+                            Button(L("Delete"), role: .destructive) { pendingDeleteNoteID = note.id }
                         }
                     }
                 }

@@ -11,6 +11,7 @@ struct TrainView: View {
     @State private var isRecurring = false
     @State private var recurrenceDays = 1
     @State private var isReadinessExpanded = true
+    @State private var pendingDeleteSessionID: UUID?
 
     private var calibration: CalibrationRules.Calibration? {
         guard let snapshot = patternStore.weeklySnapshot else { return nil }
@@ -28,6 +29,9 @@ struct TrainView: View {
                 historySection
             }
             .scrollDismissesKeyboard(.interactively)
+            .deleteConfirmation(L("Delete this session?"), item: $pendingDeleteSessionID) { id in
+                store.deleteSession(id: id)
+            }
             .navigationTitle("Train")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -125,11 +129,15 @@ struct TrainView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
                     .completedItemTint(session.status == .completed || session.status == .modified)
-                }
-                .onDelete { offsets in
-                    let ids = offsets.map { todaySessions[$0].id }
-                    for id in ids {
-                        store.deleteSession(id: id)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            pendingDeleteSessionID = session.id
+                        } label: {
+                            Label(L("Delete"), systemImage: "trash")
+                        }
+                    }
+                    .accessibilityActions {
+                        Button(L("Delete"), role: .destructive) { pendingDeleteSessionID = session.id }
                     }
                 }
                 Button {

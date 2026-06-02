@@ -167,6 +167,10 @@
 "Days active" = "活動日数";
 "Defer" = "後回し";
 "Delete this note?" = "このメモを削除しますか?";
+"Delete this record?" = "この記録を削除しますか?";
+"Delete this task?" = "このタスクを削除しますか?";
+"Delete this protocol?" = "このプロトコルを削除しますか?";
+"Delete this session?" = "このセッションを削除しますか?";
 "Details (optional)" = "詳細(任意)";
 "Dismiss" = "閉じる";
 "Domain Intentions" = "ドメインの意図";

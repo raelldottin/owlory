@@ -167,6 +167,10 @@
 "Days active" = "活跃天数";
 "Defer" = "推迟";
 "Delete this note?" = "删除此笔记?";
+"Delete this record?" = "删除此记录?";
+"Delete this task?" = "删除此任务?";
+"Delete this protocol?" = "删除此协议?";
+"Delete this session?" = "删除此会话?";
 "Details (optional)" = "详情(可选)";
 "Dismiss" = "关闭";
 "Domain Intentions" = "领域意图";

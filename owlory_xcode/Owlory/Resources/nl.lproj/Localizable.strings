@@ -167,6 +167,10 @@
 "Days active" = "Actieve dagen";
 "Defer" = "Uitstellen";
 "Delete this note?" = "Deze notitie verwijderen?";
+"Delete this record?" = "Dit record verwijderen?";
+"Delete this task?" = "Deze taak verwijderen?";
+"Delete this protocol?" = "Dit protocol verwijderen?";
+"Delete this session?" = "Deze sessie verwijderen?";
 "Details (optional)" = "Details (optioneel)";
 "Dismiss" = "Sluiten";
 "Domain Intentions" = "Domeinintenties";

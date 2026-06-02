@@ -102,6 +102,7 @@
 		A096 /* LineageRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196 /* LineageRibbon.swift */; };
 		A097 /* DuskModeRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197 /* DuskModeRules.swift */; };
 		A098 /* DuskTintModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A198 /* DuskTintModifier.swift */; };
+		A09A /* DeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19A /* DeleteConfirmation.swift */; };
 		A099 /* DuskModePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199 /* DuskModePreference.swift */; };
 		A0a0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a0 /* SettingsView.swift */; };
 		A0a1 /* SkipForTodayRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1a1 /* SkipForTodayRules.swift */; };
@@ -368,6 +369,7 @@
 		A196 /* LineageRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineageRibbon.swift; sourceTree = "<group>"; };
 		A197 /* DuskModeRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModeRules.swift; sourceTree = "<group>"; };
 		A198 /* DuskTintModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskTintModifier.swift; sourceTree = "<group>"; };
+		A19A /* DeleteConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmation.swift; sourceTree = "<group>"; };
 		A199 /* DuskModePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuskModePreference.swift; sourceTree = "<group>"; };
 		A1a0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1a1 /* SkipForTodayRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipForTodayRules.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				A191 /* LocalizationHelpers.swift */,
 				A196 /* LineageRibbon.swift */,
 				A198 /* DuskTintModifier.swift */,
+				A19A /* DeleteConfirmation.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -1087,6 +1090,7 @@
 				A096 /* LineageRibbon.swift in Sources */,
 				A097 /* DuskModeRules.swift in Sources */,
 				A098 /* DuskTintModifier.swift in Sources */,
+				A09A /* DeleteConfirmation.swift in Sources */,
 				A099 /* DuskModePreference.swift in Sources */,
 				A0a0 /* SettingsView.swift in Sources */,
 				A0a1 /* SkipForTodayRules.swift in Sources */,

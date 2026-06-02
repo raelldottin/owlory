@@ -167,6 +167,10 @@
 "Days active" = "Aktive Tage";
 "Defer" = "Aufschieben";
 "Delete this note?" = "Diese Notiz löschen?";
+"Delete this record?" = "Diesen Eintrag löschen?";
+"Delete this task?" = "Diese Aufgabe löschen?";
+"Delete this protocol?" = "Dieses Protokoll löschen?";
+"Delete this session?" = "Diese Sitzung löschen?";
 "Details (optional)" = "Details (optional)";
 "Dismiss" = "Schließen";
 "Domain Intentions" = "Bereichsabsichten";

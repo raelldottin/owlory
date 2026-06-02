@@ -167,6 +167,10 @@
 "Days active" = "Jours actifs";
 "Defer" = "Reporter";
 "Delete this note?" = "Supprimer cette note ?";
+"Delete this record?" = "Supprimer cette entrée ?";
+"Delete this task?" = "Supprimer cette tâche ?";
+"Delete this protocol?" = "Supprimer ce protocole ?";
+"Delete this session?" = "Supprimer cette session ?";
 "Details (optional)" = "Détails (facultatif)";
 "Dismiss" = "Ignorer";
 "Domain Intentions" = "Intentions par domaine";
