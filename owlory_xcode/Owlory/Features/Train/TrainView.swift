@@ -128,7 +128,6 @@ struct TrainView: View {
                     .id(session.id)
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.item.\(session.id.uuidString)")
-                    .completedItemTint(session.status == .completed || session.status == .modified)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             pendingDeleteSessionID = session.id
@@ -188,7 +187,6 @@ struct TrainView: View {
                     .id(session.id)
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("train.session.history.item.\(session.id.uuidString)")
-                    .completedItemTint(session.status == .completed || session.status == .modified)
                 }
             } header: {
                 Text("History")

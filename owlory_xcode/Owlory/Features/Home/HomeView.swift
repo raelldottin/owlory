@@ -167,7 +167,6 @@ struct HomeView: View {
                         onSelect: { editingTask = task }
                     )
                     .id(task.id)
-                    .completedItemTint(task.isCompleted)
                 }
             }
         } header: {
@@ -212,7 +211,6 @@ struct HomeView: View {
                         onSelect: { editingTask = task }
                     )
                     .id(task.id)
-                    .completedItemTint(task.isCompleted)
                 }
             }
         }

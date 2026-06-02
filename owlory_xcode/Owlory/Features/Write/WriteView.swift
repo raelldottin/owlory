@@ -220,7 +220,6 @@ struct WriteView: View {
                 }
                 .accessibilityHint(writeRowAccessibilityHint(for: note))
                 .accessibilityIdentifier("write.note.row.\(note.id.uuidString)")
-                .completedItemTint(note.stage == .published)
             }
         } header: {
             HStack {
