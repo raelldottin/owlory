@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ 低";
 "readiness.axis.tier.okay" = "%@ 普通";
 "readiness.axis.tier.high" = "%@ 高";
-"readiness.summary.tier.low" = "準備度: 低";
-"readiness.summary.tier.okay" = "準備度: 普通";
-"readiness.summary.tier.high" = "準備度: 高";
-"readiness.session.readout" = "準備度 %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d / %d 完了";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: 準備度が低い";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: 準備度は普通";

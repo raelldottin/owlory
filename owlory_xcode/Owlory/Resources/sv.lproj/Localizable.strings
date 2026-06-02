@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ låg";
 "readiness.axis.tier.okay" = "%@ ok";
 "readiness.axis.tier.high" = "%@ hög";
-"readiness.summary.tier.low" = "Beredskap låg";
-"readiness.summary.tier.okay" = "Beredskap ok";
-"readiness.summary.tier.high" = "Beredskap hög";
-"readiness.session.readout" = "Beredskap %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d av %d slutförda";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: låg beredskap";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: måttlig beredskap";

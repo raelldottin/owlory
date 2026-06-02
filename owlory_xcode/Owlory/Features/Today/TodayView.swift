@@ -1865,7 +1865,6 @@ private struct QuickTrainSheet: View {
     @ObservedObject var store: TrainStore
     let onDismiss: () -> Void
     @State private var activity = ""
-    @State private var readinessLevel = 3
     @State private var isRecurring = false
     @State private var recurrenceDays = 1
 
@@ -1873,19 +1872,6 @@ private struct QuickTrainSheet: View {
         NavigationStack {
             Form {
                 TextField("What's the session?", text: $activity)
-                Section(L("Readiness")) {
-                    TrainingReadinessScaleRow(
-                        label: "Training",
-                        value: readinessLevel,
-                        anchors: (
-                            String(localized: "readiness.anchor.low"),
-                            String(localized: "readiness.anchor.okay"),
-                            String(localized: "readiness.anchor.high")
-                        )
-                    ) { value in
-                        readinessLevel = value
-                    }
-                }
                 Toggle("Repeat this session", isOn: $isRecurring)
                 if isRecurring {
                     Stepper(value: $recurrenceDays, in: 1...365) {
@@ -1903,7 +1889,6 @@ private struct QuickTrainSheet: View {
                     Button(L("Add")) {
                         store.addSession(
                             plannedActivity: activity,
-                            readinessLevel: readinessLevel,
                             isRecurring: isRecurring,
                             recurrenceIntervalDays: isRecurring ? recurrenceDays : nil
                         )

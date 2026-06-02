@@ -39,16 +39,12 @@ final class TrainStore: OwloryObservableObject {
     @discardableResult
     func addSession(
         plannedActivity: String,
-        readinessLevel: Int = 3,
-        readinessNote: String = "",
         isRecurring: Bool = false,
         recurrenceIntervalDays: Int? = nil
     ) -> UUID {
         let session = TrainingSession(
             date: clock.now,
             plannedActivity: plannedActivity,
-            readinessLevel: readinessLevel,
-            readinessNote: readinessNote,
             isRecurring: isRecurring,
             recurrenceIntervalDays: recurrenceIntervalDays
         )
@@ -94,18 +90,6 @@ final class TrainStore: OwloryObservableObject {
         if oldKey != newKey {
             onItemCompleted?(oldKey)
         }
-        persist()
-    }
-
-    func updateReadinessNote(id: UUID, readinessNote: String) {
-        guard let index = sessions.firstIndex(where: { $0.id == id }) else { return }
-        sessions[index].readinessNote = readinessNote
-        persist()
-    }
-
-    func updateReadinessLevel(id: UUID, readinessLevel: Int) {
-        guard let index = sessions.firstIndex(where: { $0.id == id }) else { return }
-        sessions[index].readinessLevel = readinessLevel
         persist()
     }
 

@@ -3,7 +3,6 @@
 ## Owns
 
 - Training sessions.
-- Training-specific readiness signal and optional notes.
 - Session status updates: planned, completed, modified, skipped.
 - Recurring training session rollover.
 - Training reflections and voice transcription fallback.

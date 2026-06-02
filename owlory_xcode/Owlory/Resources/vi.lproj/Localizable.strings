@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ thấp";
 "readiness.axis.tier.okay" = "%@ ổn";
 "readiness.axis.tier.high" = "%@ cao";
-"readiness.summary.tier.low" = "Sẵn sàng thấp";
-"readiness.summary.tier.okay" = "Sẵn sàng ổn";
-"readiness.summary.tier.high" = "Sẵn sàng cao";
-"readiness.session.readout" = "Sẵn sàng %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d trên %d hoàn thành";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: sẵn sàng thấp";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: sẵn sàng vừa phải";

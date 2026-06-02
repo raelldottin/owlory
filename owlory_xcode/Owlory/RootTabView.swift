@@ -290,7 +290,6 @@ struct RootTabView: View {
                     $0.id.uuidString,
                     $0.plannedActivity,
                     $0.status.rawValue,
-                    "\( $0.readinessLevel)",
                     dateToken($0.date),
                 ].joined(separator: "|")
             }

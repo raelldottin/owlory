@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ 낮음";
 "readiness.axis.tier.okay" = "%@ 보통";
 "readiness.axis.tier.high" = "%@ 높음";
-"readiness.summary.tier.low" = "준비도 낮음";
-"readiness.summary.tier.okay" = "준비도 보통";
-"readiness.summary.tier.high" = "준비도 높음";
-"readiness.session.readout" = "준비도 %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d / %d 완료";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: 준비도 낮음";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: 준비도 보통";

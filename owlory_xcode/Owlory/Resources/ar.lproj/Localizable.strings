@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ منخفض";
 "readiness.axis.tier.okay" = "%@ متوسط";
 "readiness.axis.tier.high" = "%@ عالٍ";
-"readiness.summary.tier.low" = "جاهزية منخفضة";
-"readiness.summary.tier.okay" = "جاهزية متوسطة";
-"readiness.summary.tier.high" = "جاهزية عالية";
-"readiness.session.readout" = "الجاهزية %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d من %d مكتمل";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: جاهزية منخفضة";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: جاهزية متوسطة";

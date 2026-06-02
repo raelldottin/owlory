@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ низький";
 "readiness.axis.tier.okay" = "%@ нормальний";
 "readiness.axis.tier.high" = "%@ високий";
-"readiness.summary.tier.low" = "Готовність низька";
-"readiness.summary.tier.okay" = "Готовність нормальна";
-"readiness.summary.tier.high" = "Готовність висока";
-"readiness.session.readout" = "Готовність %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d з %d виконано";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: низька готовність";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: помірна готовність";

@@ -6,11 +6,8 @@ struct TrainView: View {
     var highlightedSessionID: UUID?
     @State private var showingAddSession = false
     @State private var plannedActivity = ""
-    @State private var readinessLevel = 3
-    @State private var readinessNote = ""
     @State private var isRecurring = false
     @State private var recurrenceDays = 1
-    @State private var isReadinessExpanded = true
     @State private var pendingDeleteSessionID: UUID?
 
     private var calibration: CalibrationRules.Calibration? {
@@ -205,36 +202,6 @@ struct TrainView: View {
                     Text("Plan")
                 }
                 Section {
-                    DisclosureGroup(isExpanded: $isReadinessExpanded) {
-                        TrainingReadinessScaleRow(
-                            label: "Readiness",
-                            value: readinessLevel,
-                            anchors: (
-                                String(localized: "readiness.anchor.low"),
-                                String(localized: "readiness.anchor.okay"),
-                                String(localized: "readiness.anchor.high")
-                            )
-                        ) { value in
-                            readinessLevel = value
-                        }
-                        TextField("Notes (optional)", text: $readinessNote, axis: .vertical)
-                            .lineLimit(2...4)
-                    } label: {
-                        HStack(spacing: AppTheme.rowSpacing) {
-                            Label {
-                                Text("Training")
-                            } icon: {
-                                Image(systemName: "heart.text.square")
-                            }
-                                .font(.subheadline.weight(.medium))
-                            Spacer()
-                            Text(trainingReadinessSummary(for: readinessLevel))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-                Section {
                     Toggle("Repeat this session", isOn: $isRecurring)
                     if isRecurring {
                         Stepper(value: $recurrenceDays, in: 1...365) {
@@ -255,8 +222,6 @@ struct TrainView: View {
                     Button(L("Add")) {
                         store.addSession(
                             plannedActivity: plannedActivity,
-                            readinessLevel: readinessLevel,
-                            readinessNote: readinessNote,
                             isRecurring: isRecurring,
                             recurrenceIntervalDays: isRecurring ? recurrenceDays : nil
                         )
@@ -271,11 +236,8 @@ struct TrainView: View {
 
     private func resetAddSession() {
         plannedActivity = ""
-        readinessLevel = 3
-        readinessNote = ""
         isRecurring = false
         recurrenceDays = 1
-        isReadinessExpanded = true
         showingAddSession = false
     }
 
@@ -304,14 +266,11 @@ private struct SessionCardView: View {
         colorSchemeContrast == .increased
     }
     @State private var actualActivity = ""
-    @State private var readinessLevel = 3
-    @State private var readinessNote = ""
     @State private var reflection = ""
     @State private var status: TrainingStatus = .planned
     @State private var reflectionAudioFileName: String?
     @State private var reflectionAudioTranscription: String?
     @State private var reflectionCaptureID = UUID()
-    @State private var isReadinessExpanded = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -334,44 +293,6 @@ private struct SessionCardView: View {
             }
 
             if session.status == .planned {
-                DisclosureGroup(isExpanded: $isReadinessExpanded) {
-                    TrainingReadinessScaleRow(
-                        label: "Readiness",
-                        value: readinessLevel,
-                        anchors: (
-                            String(localized: "readiness.anchor.low"),
-                            String(localized: "readiness.anchor.okay"),
-                            String(localized: "readiness.anchor.high")
-                        )
-                    ) { value in
-                        readinessLevel = value
-                        store.updateReadinessLevel(id: session.id, readinessLevel: value)
-                    }
-
-                    TextField("Readiness notes (optional)", text: $readinessNote, axis: .vertical)
-                        .font(.caption)
-                        .lineLimit(1...3)
-                        .onChange(of: readinessNote) { _, newValue in
-                            store.updateReadinessNote(id: session.id, readinessNote: newValue)
-                        }
-                } label: {
-                    HStack(spacing: AppTheme.rowSpacing) {
-                        Label {
-                            Text("Training")
-                        } icon: {
-                            Image(systemName: "heart.text.square")
-                        }
-                        .font(.subheadline.weight(.medium))
-                        Spacer()
-                        Text(trainingReadinessSummary(for: readinessLevel))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .accessibilityIdentifier("train.session.readiness.\(session.id.uuidString)")
-
-                Divider()
-
                 // What did you actually do?
                 VStack(alignment: .leading, spacing: 4) {
                     Text("What did you actually do?")
@@ -479,25 +400,6 @@ private struct SessionCardView: View {
                 .accessibilityIdentifier("train.session.save.\(session.id.uuidString)")
                 .disabled(status == .planned)
             } else {
-                HStack(spacing: 6) {
-                    Image(systemName: "heart.text.square")
-                        .foregroundStyle(trainingReadinessColor(for: session.readinessLevel))
-                        .font(.caption)
-                    Text(ReadinessSummaryPresentation.sessionReadinessReadout(level: session.readinessLevel))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                if !session.readinessNote.isEmpty {
-                    HStack(alignment: .top, spacing: 4) {
-                        Image(systemName: "note.text")
-                            .foregroundStyle(.secondary)
-                            .font(.caption)
-                        Text(session.readinessNote)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
                 // What did you actually do?
                 if !session.actualActivity.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {
@@ -538,96 +440,11 @@ private struct SessionCardView: View {
         }
         .continueHighlight(isHighlighted)
         .onAppear {
-            readinessLevel = session.readinessLevel
-            readinessNote = session.readinessNote
             actualActivity = session.actualActivity
             reflection = session.reflection
             status = session.status
         }
     }
-}
-
-struct TrainingReadinessScaleRow: View {
-    let label: String
-    let value: Int
-    let anchors: (String, String, String)
-    let onChange: (Int) -> Void
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    var body: some View {
-        VStack(spacing: 4) {
-            HStack(spacing: 0) {
-                Label {
-                    Text(LocalizedStringKey(label))
-                } icon: {
-                    Image(systemName: "heart.text.square")
-                }
-                .font(.subheadline)
-                .frame(width: 90, alignment: .leading)
-                ForEach(1...5, id: \.self) { level in
-                    Button {
-                        onChange(level)
-                    } label: {
-                        Circle()
-                            .fill(level <= value ? trainingReadinessColor(for: value) : OwloryColor.borderSubtle)
-                            .frame(width: level == value ? 18 : 14, height: level == value ? 18 : 14)
-                            .animation(OwloryMotion.animation(.easeInOut(duration: 0.15), reduce: reduceMotion), value: value)
-                    }
-                    .buttonStyle(.plain)
-                    .frame(maxWidth: .infinity, minHeight: 44)
-                    .accessibilityLabel(trainingReadinessScaleAccessibilityLabel(level: level, isSelected: level == value))
-                }
-            }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(trainingReadinessScaleAccessibilityLabel(level: value, isSelected: false))
-            .accessibilityValue("\(value)")
-            .accessibilityAdjustableAction { direction in
-                switch direction {
-                case .increment:
-                    if value < 5 { onChange(value + 1) }
-                case .decrement:
-                    if value > 1 { onChange(value - 1) }
-                @unknown default:
-                    break
-                }
-            }
-            HStack(spacing: 0) {
-                Spacer()
-                    .frame(width: 90)
-                Text(anchors.0)
-                    .frame(maxWidth: .infinity)
-                Spacer()
-                    .frame(maxWidth: .infinity)
-                Text(anchors.1)
-                    .frame(maxWidth: .infinity)
-                Spacer()
-                    .frame(maxWidth: .infinity)
-                Text(anchors.2)
-                    .frame(maxWidth: .infinity)
-            }
-            .font(.caption2)
-            .foregroundStyle(.tertiary)
-            .accessibilityHidden(true)
-        }
-    }
-
-    private func trainingReadinessScaleAccessibilityLabel(level: Int, isSelected: Bool) -> String {
-        let key = isSelected
-            ? "today.readiness.scale.accessibility.selected"
-            : "today.readiness.scale.accessibility"
-        return String.localizedStringWithFormat(
-            NSLocalizedString(
-                key,
-                comment: "Training readiness scale accessibility label with dimension name and level."
-            ),
-            NSLocalizedString(label, comment: "Training readiness dimension label."),
-            level
-        )
-    }
-}
-
-func trainingReadinessSummary(for value: Int) -> String {
-    ReadinessSummaryPresentation.trainingReadinessSummary(for: value)
 }
 
 private func statusPillColor(_ status: TrainingStatus, duskActive: Bool = false) -> Color {
@@ -636,15 +453,6 @@ private func statusPillColor(_ status: TrainingStatus, duskActive: Bool = false)
     case .completed: return OwloryColor.success
     case .modified: return OwloryColor.warning
     case .skipped: return OwloryColor.error
-    }
-}
-
-func trainingReadinessColor(for value: Int) -> Color {
-    switch value {
-    case 1...2: return OwloryColor.error
-    case 3: return OwloryColor.warning
-    case 4...5: return OwloryColor.success
-    default: return OwloryColor.textTertiary
     }
 }
 

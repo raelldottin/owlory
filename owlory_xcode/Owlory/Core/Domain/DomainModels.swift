@@ -335,8 +335,6 @@ struct TrainingSession: Identifiable, Equatable, Codable {
     var plannedActivity: String
     var actualActivity: String
     var status: TrainingStatus
-    var readinessLevel: Int
-    var readinessNote: String
     var reflection: String
     var reflectionAudioFileName: String?
     var reflectionAudioTranscription: String?
@@ -349,8 +347,6 @@ struct TrainingSession: Identifiable, Equatable, Codable {
         plannedActivity: String,
         actualActivity: String = "",
         status: TrainingStatus = .planned,
-        readinessLevel: Int = 3,
-        readinessNote: String = "",
         reflection: String = "",
         reflectionAudioFileName: String? = nil,
         reflectionAudioTranscription: String? = nil,
@@ -362,8 +358,6 @@ struct TrainingSession: Identifiable, Equatable, Codable {
         self.plannedActivity = plannedActivity
         self.actualActivity = actualActivity
         self.status = status
-        self.readinessLevel = readinessLevel
-        self.readinessNote = readinessNote
         self.reflection = reflection
         self.reflectionAudioFileName = reflectionAudioFileName
         self.reflectionAudioTranscription = reflectionAudioTranscription
@@ -377,8 +371,6 @@ struct TrainingSession: Identifiable, Equatable, Codable {
         case plannedActivity
         case actualActivity
         case status
-        case readinessLevel
-        case readinessNote
         case reflection
         case reflectionAudioFileName
         case reflectionAudioTranscription
@@ -393,8 +385,6 @@ struct TrainingSession: Identifiable, Equatable, Codable {
         plannedActivity = try container.decode(String.self, forKey: .plannedActivity)
         actualActivity = try container.decodeIfPresent(String.self, forKey: .actualActivity) ?? ""
         status = try container.decodeIfPresent(TrainingStatus.self, forKey: .status) ?? .planned
-        readinessLevel = try container.decodeIfPresent(Int.self, forKey: .readinessLevel) ?? 3
-        readinessNote = try container.decodeIfPresent(String.self, forKey: .readinessNote) ?? ""
         reflection = try container.decodeIfPresent(String.self, forKey: .reflection) ?? ""
         reflectionAudioFileName = try container.decodeIfPresent(String.self, forKey: .reflectionAudioFileName)
         reflectionAudioTranscription = try container.decodeIfPresent(String.self, forKey: .reflectionAudioTranscription)

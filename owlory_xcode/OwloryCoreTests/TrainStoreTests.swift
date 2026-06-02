@@ -22,15 +22,16 @@ final class TrainStoreTests: XCTestCase {
         let now = makeDate("2026-04-08T09:00:00Z")
         let store = makeStore(now: now)
 
-        store.addSession(plannedActivity: "Run 5K", readinessNote: "Feeling good")
+        store.addSession(plannedActivity: "Run 5K")
         XCTAssertEqual(store.sessions.count, 1)
         XCTAssertEqual(store.sessions[0].plannedActivity, "Run 5K")
-        XCTAssertEqual(store.sessions[0].readinessLevel, 3)
-        XCTAssertEqual(store.sessions[0].readinessNote, "Feeling good")
         XCTAssertEqual(store.sessions[0].status, .planned)
     }
 
-    func testTrainingSessionDecodesLegacyPayloadWithoutReadinessLevel() throws {
+    func testTrainingSessionDecodesLegacyPayloadWithUnknownReadinessKeys() throws {
+        // Sessions persisted by older app versions still carry readinessLevel /
+        // readinessNote keys. Decoding must tolerate and ignore them now that the
+        // Train readiness signal has been removed.
         let json = """
         {
             "id": "00000000-0000-0000-0000-000000000001",
@@ -38,6 +39,7 @@ final class TrainStoreTests: XCTestCase {
             "plannedActivity": "Legacy run",
             "actualActivity": "",
             "status": "planned",
+            "readinessLevel": 4,
             "readinessNote": "Steady",
             "reflection": "",
             "isRecurring": false
@@ -49,8 +51,7 @@ final class TrainStoreTests: XCTestCase {
         let session = try decoder.decode(TrainingSession.self, from: json)
 
         XCTAssertEqual(session.plannedActivity, "Legacy run")
-        XCTAssertEqual(session.readinessLevel, 3)
-        XCTAssertEqual(session.readinessNote, "Steady")
+        XCTAssertEqual(session.status, .planned)
     }
 
     func testTodaySessionReturnsTodaysSession() {
@@ -125,18 +126,6 @@ final class TrainStoreTests: XCTestCase {
         let id = store.sessions[0].id
         store.deleteSession(id: id)
         XCTAssertTrue(store.sessions.isEmpty)
-    }
-
-    func testUpdateReadinessLevelPersistsTrainingSignal() {
-        let now = makeDate("2026-04-08T09:00:00Z")
-        let store = makeStore(now: now)
-
-        store.addSession(plannedActivity: "Yoga")
-        let id = store.sessions[0].id
-
-        store.updateReadinessLevel(id: id, readinessLevel: 5)
-
-        XCTAssertEqual(store.sessions[0].readinessLevel, 5)
     }
 
     func testAddSessionReturnsUUID() {

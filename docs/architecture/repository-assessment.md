@@ -18,7 +18,7 @@ Owlory is organized around one Xcode project in `owlory_xcode/`, a Swift package
 ## Likely Domains
 
 - Today: daily entry, planning, readiness check-in, carry-forward, evening reflection, focus suggestions.
-- Train: training sessions, readiness notes, recurring session rollover, reflection.
+- Train: training sessions, recurring session rollover, reflection.
 - Write: writing notes, stage progression, dormant/active pipeline visibility.
 - Career: wins, impact, stories, metrics, career assets.
 - Home: home tasks, recurring task reset, protocols, protocol runs.

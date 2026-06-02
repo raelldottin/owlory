@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ faible";
 "readiness.axis.tier.okay" = "%@ correct";
 "readiness.axis.tier.high" = "%@ élevé";
-"readiness.summary.tier.low" = "Préparation faible";
-"readiness.summary.tier.okay" = "Préparation correcte";
-"readiness.summary.tier.high" = "Préparation élevée";
-"readiness.session.readout" = "Préparation %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@ : %d sur %d terminés";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@ : préparation faible";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@ : préparation modérée";

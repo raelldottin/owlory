@@ -26,7 +26,7 @@ Current contract status lives in [Roadmap Status](../workflows/roadmap-status.md
 ## Core Surfaces
 
 - `Today` is the daily command center.
-- `Train` tracks one training practice per day with readiness and reflection.
+- `Train` tracks one training practice per day with reflection.
 - `Write` is the low-friction thinking inbox and capture inbox for unfinished thought, including thoughts that may later become tasks, notes, or protocols.
 - `Career` stores wins, impact, stories, and supporting metrics.
 - `Home` manages recurring tasks, protocols, and protocol runs.

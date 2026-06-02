@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ laag";
 "readiness.axis.tier.okay" = "%@ oké";
 "readiness.axis.tier.high" = "%@ hoog";
-"readiness.summary.tier.low" = "Gereedheid laag";
-"readiness.summary.tier.okay" = "Gereedheid oké";
-"readiness.summary.tier.high" = "Gereedheid hoog";
-"readiness.session.readout" = "Gereedheid %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d van %d voltooid";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: lage gereedheid";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: matige gereedheid";

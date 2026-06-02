@@ -92,10 +92,6 @@ enum OwloryUITestSupport {
     }
 
     #if DEBUG
-    private static func seedCopy(_ key: String) -> String {
-        NSLocalizedString(key, tableName: "MarketingSeed", bundle: .main, value: key, comment: "Marketing screenshot seed copy")
-    }
-
     private static func resetAppSupport(fileManager: FileManager) {
         let appSupport = OwloryAppSupportPath.appSupportDirectory(fileManager: fileManager)
         for rootDirectory in [
@@ -267,19 +263,19 @@ enum OwloryUITestSupport {
         // Focus Three for today — a balanced mix across domains.
         let focusToday: [FocusItem] = [
             FocusItem(
-                title: seedCopy("Finalize Q4 1:1 notes for direct reports"),
+                title: "Finalize Q4 1:1 notes for direct reports",
                 domain: .career,
                 status: .planned,
                 createdFromDate: today
             ),
             FocusItem(
-                title: seedCopy("30-min easy run before dinner"),
+                title: "30-min easy run before dinner",
                 domain: .training,
                 status: .planned,
                 createdFromDate: today
             ),
             FocusItem(
-                title: seedCopy("Pick up dry cleaning by 6 pm"),
+                title: "Pick up dry cleaning by 6 pm",
                 domain: .home,
                 status: .planned,
                 createdFromDate: today
@@ -293,20 +289,20 @@ enum OwloryUITestSupport {
         let moodSeries = [3, 4, 4, 3, 4, 5, 4]
         let sleepSeries = [3, 4, 4, 3, 4, 4, 4]
         let priorFocusTitles = [
-            seedCopy("Draft sprint retro talking points"),
-            seedCopy("Strength: legs (3x8)"),
-            seedCopy("Pay quarterly tax estimate"),
-            seedCopy("Pull together onboarding metrics review"),
-            seedCopy("5K easy run"),
-            seedCopy("Schedule dentist appointment")
+            "Draft sprint retro talking points",
+            "Strength: legs (3x8)",
+            "Pay quarterly tax estimate",
+            "Pull together onboarding metrics review",
+            "5K easy run",
+            "Schedule dentist appointment"
         ]
         let priorReflections = [
-            seedCopy("Felt scattered — meetings ate the morning. Plan deep work earlier."),
-            seedCopy("Energy held through evening. Run cleared the mental fog."),
-            seedCopy("Hit all three. Good rhythm. Sleep mattered."),
-            seedCopy("Lost momentum after lunch. Try lighter midday meal."),
-            seedCopy("Best day this week. Protected morning paid off."),
-            seedCopy("Solid. Career review prep moving the needle.")
+            "Felt scattered — meetings ate the morning. Plan deep work earlier.",
+            "Energy held through evening. Run cleared the mental fog.",
+            "Hit all three. Good rhythm. Sleep mattered.",
+            "Lost momentum after lunch. Try lighter midday meal.",
+            "Best day this week. Protected morning paid off.",
+            "Solid. Career review prep moving the needle."
         ]
 
         // priorEntries[i] describes the day i+1 days back (i in 0..5 → days back 1..6).
@@ -352,32 +348,32 @@ enum OwloryUITestSupport {
         // notes (worked-up drafts), 1 permanent (a synthesized insight).
         let writingNotes: [WritingNote] = [
             WritingNote(
-                title: seedCopy("Idea: weekly batch errands on Saturdays"),
-                body: seedCopy("Group DMV, dry cleaning, hardware-store loops into one Saturday block. Test for 3 weeks."),
+                title: "Idea: weekly batch errands on Saturdays",
+                body: "Group DMV, dry cleaning, hardware-store loops into one Saturday block. Test for 3 weeks.",
                 stage: .capture,
                 createdDate: calendar.date(byAdding: .hour, value: -2, to: now) ?? now
             ),
             WritingNote(
-                title: seedCopy("Watch: SwiftUI navigation patterns talk"),
-                body: seedCopy("WWDC25 session on programmatic navigation. Compare NavigationStack vs SplitView trade-offs."),
+                title: "Watch: SwiftUI navigation patterns talk",
+                body: "WWDC25 session on programmatic navigation. Compare NavigationStack vs SplitView trade-offs.",
                 stage: .capture,
                 createdDate: calendar.date(byAdding: .day, value: -1, to: now) ?? now
             ),
             WritingNote(
-                title: seedCopy("Onboarding redesign — one-pager"),
-                body: seedCopy("Problem: 41% of new users never reach Focus Three on day one. Hypothesis: reduce the capture-vs-plan choice during day 1. Test variant A swaps the empty-state to suggest 3 sample focus items."),
+                title: "Onboarding redesign — one-pager",
+                body: "Problem: 41% of new users never reach Focus Three on day one. Hypothesis: reduce the capture-vs-plan choice during day 1. Test variant A swaps the empty-state to suggest 3 sample focus items.",
                 stage: .source,
                 createdDate: calendar.date(byAdding: .day, value: -2, to: now) ?? now
             ),
             WritingNote(
-                title: seedCopy("Career conversation prep with manager"),
-                body: seedCopy("Topics: scope expansion, mentorship of new hires, Q1 OKRs alignment. Win to lead with: shipped onboarding A/B with +12% activation."),
+                title: "Career conversation prep with manager",
+                body: "Topics: scope expansion, mentorship of new hires, Q1 OKRs alignment. Win to lead with: shipped onboarding A/B with +12% activation.",
                 stage: .source,
                 createdDate: calendar.date(byAdding: .day, value: -3, to: now) ?? now
             ),
             WritingNote(
-                title: seedCopy("Insight: deep work blocks shrink without protection"),
-                body: seedCopy("Three consecutive weeks where morning blocks were broken by reactive Slack — output dropped measurably. Calendar the 9-11 block as immovable starting next week."),
+                title: "Insight: deep work blocks shrink without protection",
+                body: "Three consecutive weeks where morning blocks were broken by reactive Slack — output dropped measurably. Calendar the 9-11 block as immovable starting next week.",
                 stage: .permanent,
                 createdDate: calendar.date(byAdding: .day, value: -5, to: now) ?? now
             )
@@ -391,26 +387,22 @@ enum OwloryUITestSupport {
         let trainingSessions: [TrainingSession] = [
             TrainingSession(
                 date: today,
-                plannedActivity: seedCopy("Strength: legs (3x8)"),
-                status: .planned,
-                readinessLevel: 4,
-                readinessNote: seedCopy("Slept well. Light soreness from yesterday's run.")
+                plannedActivity: "Strength: legs (3x8)",
+                status: .planned
             ),
             TrainingSession(
                 date: calendar.date(byAdding: .day, value: -2, to: today) ?? today,
-                plannedActivity: seedCopy("5K easy run"),
-                actualActivity: seedCopy("5.2K easy run, 27 min"),
+                plannedActivity: "5K easy run",
+                actualActivity: "5.2K easy run, 27 min",
                 status: .completed,
-                readinessLevel: 4,
-                reflection: seedCopy("Steady pace, breath in control. Could have pushed last K.")
+                reflection: "Steady pace, breath in control. Could have pushed last K."
             ),
             TrainingSession(
                 date: calendar.date(byAdding: .day, value: -4, to: today) ?? today,
-                plannedActivity: seedCopy("Yoga: hip mobility"),
-                actualActivity: seedCopy("Yoga: hip mobility (35 min flow)"),
+                plannedActivity: "Yoga: hip mobility",
+                actualActivity: "Yoga: hip mobility (35 min flow)",
                 status: .completed,
-                readinessLevel: 3,
-                reflection: seedCopy("Hips opening. Add this twice a week instead of one.")
+                reflection: "Hips opening. Add this twice a week instead of one."
             )
         ]
         try? FileItemListRepository<TrainingSession>(
@@ -420,13 +412,13 @@ enum OwloryUITestSupport {
 
         // Home: 1 protocol + 4 tasks. Mix of recurring + one-off.
         let mealPrepProtocol = HouseholdProtocol(
-            title: seedCopy("Sunday meal prep"),
+            title: "Sunday meal prep",
             steps: [
-                seedCopy("Plan menu for the week"),
-                seedCopy("Inventory pantry + write list"),
-                seedCopy("Shop within 60 min"),
-                seedCopy("Cook proteins + grains in bulk"),
-                seedCopy("Portion lunches into 5 containers")
+                "Plan menu for the week",
+                "Inventory pantry + write list",
+                "Shop within 60 min",
+                "Cook proteins + grains in bulk",
+                "Portion lunches into 5 containers"
             ]
         )
         try? FileItemListRepository<HouseholdProtocol>(
@@ -436,21 +428,21 @@ enum OwloryUITestSupport {
 
         let homeTasks: [HomeTask] = [
             HomeTask(
-                title: seedCopy("Take out recycling"),
+                title: "Take out recycling",
                 isRecurring: true,
                 recurrenceIntervalDays: 7,
-                notes: seedCopy("Bin out before Tuesday 6 am pickup.")
+                notes: "Bin out before Tuesday 6 am pickup."
             ),
             HomeTask(
-                title: seedCopy("Refill dish soap")
+                title: "Refill dish soap"
             ),
             HomeTask(
-                title: seedCopy("Schedule dentist appointment"),
-                notes: seedCopy("Six-month checkup overdue by two weeks.")
+                title: "Schedule dentist appointment",
+                notes: "Six-month checkup overdue by two weeks."
             ),
             HomeTask(
-                title: seedCopy("Pay quarterly tax estimate"),
-                notes: seedCopy("Federal + state. Due 15th.")
+                title: "Pay quarterly tax estimate",
+                notes: "Federal + state. Due 15th."
             )
         ]
         try? FileItemListRepository<HomeTask>(
@@ -496,7 +488,7 @@ enum OwloryUITestSupport {
                 domainActivity: [.career: 7, .training: 5, .home: 6],
                 stalledItemCount: 1,
                 streakDays: 4,
-                keyInsight: seedCopy("Career follow-through climbed with protected morning blocks; energy dipped on the day with the lightest sleep.")
+                keyInsight: "Career follow-through climbed with protected morning blocks; energy dipped on the day with the lightest sleep."
             )
             try? FileItemListRepository<WeeklyDigest>(
                 directory: "Digests",
@@ -509,16 +501,16 @@ enum OwloryUITestSupport {
             CareerRecord(
                 date: calendar.date(byAdding: .day, value: -1, to: today) ?? today,
                 type: .win,
-                title: seedCopy("Shipped onboarding redesign A/B test"),
-                body: seedCopy("Variant A (sample focus suggestions in empty state) launched to 50% of new users. Day-1 activation lifted +12% over control across the first 2,000 cohorts."),
-                metrics: seedCopy("+12% activation; n=2,134")
+                title: "Shipped onboarding redesign A/B test",
+                body: "Variant A (sample focus suggestions in empty state) launched to 50% of new users. Day-1 activation lifted +12% over control across the first 2,000 cohorts.",
+                metrics: "+12% activation; n=2,134"
             ),
             CareerRecord(
                 date: calendar.date(byAdding: .day, value: -4, to: today) ?? today,
                 type: .impact,
-                title: seedCopy("Led migration kickoff with three teams"),
-                body: seedCopy("Aligned backend, mobile, and platform on the schema migration plan. Walked through the rollback path, owners, and acceptance gates. No open blockers exiting the meeting."),
-                metrics: seedCopy("3 teams aligned; 0 blockers")
+                title: "Led migration kickoff with three teams",
+                body: "Aligned backend, mobile, and platform on the schema migration plan. Walked through the rollback path, owners, and acceptance gates. No open blockers exiting the meeting.",
+                metrics: "3 teams aligned; 0 blockers"
             )
         ]
         try? FileItemListRepository<CareerRecord>(

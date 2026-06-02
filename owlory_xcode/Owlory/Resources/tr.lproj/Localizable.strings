@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ düşük";
 "readiness.axis.tier.okay" = "%@ iyi";
 "readiness.axis.tier.high" = "%@ yüksek";
-"readiness.summary.tier.low" = "Hazırlık düşük";
-"readiness.summary.tier.okay" = "Hazırlık iyi";
-"readiness.summary.tier.high" = "Hazırlık yüksek";
-"readiness.session.readout" = "Hazırlık %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d / %d tamamlandı";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: düşük hazırlık";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: orta hazırlık";

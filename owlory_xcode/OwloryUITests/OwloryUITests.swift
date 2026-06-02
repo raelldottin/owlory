@@ -836,12 +836,6 @@ final class TrainRegression: XCTestCase {
         )
         XCTAssertTrue(app.staticTexts[dueTodayTrainingContinueFixtureTitle].exists)
 
-        let readinessIdentifier = "train.session.readiness.\(dueTodayTrainingContinueFixtureSessionID)"
-        let readinessDisclosure = app.buttons[readinessIdentifier]
-        if readinessDisclosure.waitForExistence(timeout: 3), readinessDisclosure.isHittable {
-            readinessDisclosure.tap()
-        }
-
         let completedIdentifier = "train.session.status.completed.\(dueTodayTrainingContinueFixtureSessionID)"
         let completedButton = app.buttons[completedIdentifier]
         scrollToElement(completedButton)

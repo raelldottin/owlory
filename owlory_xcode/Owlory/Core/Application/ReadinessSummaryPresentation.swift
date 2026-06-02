@@ -45,25 +45,6 @@ enum ReadinessSummaryPresentation {
         ].joined(separator: " · ")
     }
 
-    static func trainingReadinessSummary(for value: Int) -> String {
-        switch value {
-        case 1...2: return localized("readiness.summary.tier.low")
-        case 3: return localized("readiness.summary.tier.okay")
-        case 4...5: return localized("readiness.summary.tier.high")
-        default: return localized("readiness.checkin.summary.tap")
-        }
-    }
-
-    static func sessionReadinessReadout(level: Int) -> String {
-        String.localizedStringWithFormat(
-            NSLocalizedString(
-                "readiness.session.readout",
-                comment: "Train session readout such as Readiness 4/5, shown on resolved cards."
-            ),
-            level
-        )
-    }
-
     private static func axisTier(_ name: String, value: Int) -> String {
         let key: String
         switch value {

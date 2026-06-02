@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ низкий";
 "readiness.axis.tier.okay" = "%@ нормальный";
 "readiness.axis.tier.high" = "%@ высокий";
-"readiness.summary.tier.low" = "Готовность низкая";
-"readiness.summary.tier.okay" = "Готовность нормальная";
-"readiness.summary.tier.high" = "Готовность высокая";
-"readiness.session.readout" = "Готовность %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d из %d выполнено";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: низкая готовность";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: умеренная готовность";

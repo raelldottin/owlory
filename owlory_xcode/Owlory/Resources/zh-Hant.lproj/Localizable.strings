@@ -304,10 +304,6 @@
 "readiness.axis.tier.low" = "%@ 低";
 "readiness.axis.tier.okay" = "%@ 尚可";
 "readiness.axis.tier.high" = "%@ 高";
-"readiness.summary.tier.low" = "就緒度低";
-"readiness.summary.tier.okay" = "就緒度尚可";
-"readiness.summary.tier.high" = "就緒度高";
-"readiness.session.readout" = "就緒度 %d/5";
 "weeklyDigest.highlight.bestDay.summary" = "%@: %d / %d 已完成";
 "weeklyDigest.highlight.hardestDay.summary.low" = "%@: 就緒度低";
 "weeklyDigest.highlight.hardestDay.summary.moderate" = "%@: 就緒度中等";
